@@ -28,7 +28,7 @@ class IrrlichtEngine
 
 public:
 
-    IrrlichtEngine* device;
+    IrrlichtDevice* device;
 
     /*! Ersatz für den Konstruktor.
 

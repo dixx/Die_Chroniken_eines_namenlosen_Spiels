@@ -32,7 +32,6 @@
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrklang\irrKlang-1.4.0\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\source\Irrlicht&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Lua\5.2.1\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Die Chroniken eines namenlosen Spiels/GFX}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1146221294" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG_MODE=1"/>

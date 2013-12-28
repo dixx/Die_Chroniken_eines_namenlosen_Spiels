@@ -1,0 +1,4 @@
+DEBUG/*.o
+DEBUG/*.d
+DEBUG/*.log
+DEBUG/*.exe

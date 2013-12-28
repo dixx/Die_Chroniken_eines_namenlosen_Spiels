@@ -32,6 +32,7 @@
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrklang\irrKlang-1.4.0\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\source\Irrlicht&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Lua\5.2.1\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Die Chroniken eines namenlosen Spiels/GFX}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1146221294" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG_MODE=1"/>
@@ -69,8 +70,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="GFX" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GFX"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -157,5 +157,10 @@
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings">
+		<doc-comment-owner id="org.eclipse.cdt.ui.doxygen">
+			<path value=""/>
+		</doc-comment-owner>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

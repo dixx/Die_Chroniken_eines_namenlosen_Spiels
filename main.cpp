@@ -25,8 +25,7 @@ s32 main()
     // deshalb zerstören wir es und geben den benutzten Speicher wieder frei.
     device->drop();
     // Nun können wir das eigentliche Entchen mit den Config-Werten erstellen.
-    Eventreceiver& eventreceiver = Eventreceiver::getInstance();
-    eventreceiver.setEventReactionActive( false, false, false );
+    Eventreceiver::getInstance().setEventReactionActive( false, false, false );
     device = createDevice(
             config.getRenderMode(),
             config.getScreenSize(),
@@ -34,20 +33,25 @@ s32 main()
             config.isFullScreen(),
             true,
             config.isFullScreen(),
-            &eventreceiver
+            &Eventreceiver::getInstance()
     );
     if ( device == 0 )
         return 1;
-    io::IFileSystem* filesystem = device->getFileSystem();
-    video::IVideoDriver* driver = device->getVideoDriver();
-//    scene::ISceneManager* scenemanager = device->getSceneManager();
-    logfile.setNewFilesystem( filesystem );
-    config.setNewFilesystem( filesystem );
+    // Logfile und Konfigfile müssen noch auf das neue Dateisystem umgehängt
+    // werden.
+    logfile.setNewFilesystem( device->getFileSystem() );
+    config.setNewFilesystem( device->getFileSystem() );
     logfile.writeLine( Logfile::DETAIL, "3D-Entchen erfolgreich erstellt." );
     logfile.writeLine( Logfile::DETAIL, "    Version: IrrLicht ",
             device->getVersion() );
-    logfile.writeLine( Logfile::DETAIL, "    Treiber: ", driver->getName() );
+    logfile.writeLine( Logfile::DETAIL, "    Treiber: ",
+            device->getVideoDriver() );
 
+    // todo load gamestatemanager
+    // todo main loop
+    // todo cleanup
 
+    if ( device )
+        device->drop();
     return 0;
 }

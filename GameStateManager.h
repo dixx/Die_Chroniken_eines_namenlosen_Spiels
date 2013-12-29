@@ -46,10 +46,10 @@ public:
     /*! \brief Ersatz für den Konstruktor.
 
       Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
-      \param -
+      \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
       \return Referenz auf die einzige Instanz dieser Klasse
 	*/
-    static GameStateManager& getInstance();
+    static GameStateManager& getInstance( IrrlichtDevice* device = 0 );
 
     /*! \brief Aktualisiert den momentan aktiven Status.
       \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
@@ -83,7 +83,7 @@ private:
 	core::array<GameState*> states_;
 	GameState* currentState_;
 
-    GameStateManager();
+    GameStateManager( IrrlichtDevice* device );
     GameStateManager( const GameStateManager& );
     GameStateManager& operator=( const GameStateManager& );
     ~GameStateManager();

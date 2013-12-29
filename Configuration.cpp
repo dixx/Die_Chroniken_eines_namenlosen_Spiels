@@ -124,9 +124,8 @@ void Configuration::writeConfigFile( const c8* filename )
     inhalt += colorDepht_;
     inhalt += "\r\nvideo.fullscreen = ";
     inhalt += ( fullscreen_ == true ) ? "true" : "false";
-    inhalt += "\r\n# modi: DIRECT3D9=a, DIRECT3D8=b, OPENGL=c,\r\n";
-    inhalt += "#       SOFTWARE=d (BAAAD!), BURNINGSVIDEO=e, NULL=f, userdefi";
-    inhalt += "ned=u\r\n";
+    inhalt += "\r\n# modi: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), ";
+    inhalt += "BURNINGSVIDEO, NULL\r\n";
     inhalt += "video.rendermode = ";
     switch ( rendermode_ )
     {

@@ -94,23 +94,3 @@ Logfile::~Logfile()
 {
     closeLogfile();
 }
-
-
-
-void Logfile::openLogfile()
-{
-    logfile_ = fs_->createAndWriteFile( filename_, true );
-    if ( logfile_ == 0 )
-        exit( 1 );
-}
-
-
-
-void Logfile::closeLogfile()
-{
-    if ( logfile_ != 0 )
-    {
-        logfile_->drop();
-        logfile_ = 0;
-    }
-}

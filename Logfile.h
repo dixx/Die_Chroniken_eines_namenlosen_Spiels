@@ -181,8 +181,21 @@ private:
     Logfile& operator=( const Logfile& );  // Instanz ist nicht zuweisbar
     ~Logfile();  // dtor. Instanz zerstoert sich bei Programmende
 
-    inline void openLogfile();
-    inline void closeLogfile();
+    inline void openLogfile()
+    {
+        logfile_ = fs_->createAndWriteFile( filename_, true );
+        if ( logfile_ == 0 )
+            exit( 1 );
+    }
+
+    inline void closeLogfile()
+    {
+        if ( logfile_ != 0 )
+        {
+            logfile_->drop();
+            logfile_ = 0;
+        }
+    }
 
 };
 // Ende class Logfile

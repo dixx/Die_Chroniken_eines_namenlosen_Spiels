@@ -1,3 +1,7 @@
+/*! \file "DoxyDocumentation.h"
+  \brief Dokumentation für das Spiel
+*/
+
 /*! \mainpage Die Chroniken eines namenlosen Spiels
 
 Dieses Manual betrifft das Spiel selbst, die Codebasis und verwendete Werkzeuge.

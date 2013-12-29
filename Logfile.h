@@ -183,7 +183,7 @@ private:
 
     inline void openLogfile()
     {
-        logfile_ = fs_->createAndWriteFile( filename_, true );
+        logfile_ = fs_->createAndWriteFile( filename_, /* append = */ true );
         if ( logfile_ == 0 )
             exit( 1 );
     }

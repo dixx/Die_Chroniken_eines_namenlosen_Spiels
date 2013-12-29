@@ -78,7 +78,7 @@ Logfile::Logfile( io::IFileSystem* fs, const c8* filename,
 {
     if ( fs_ == 0 )
         exit( 1 );
-    logfile_ = fs_->createAndWriteFile( filename_, false );
+    logfile_ = fs_->createAndWriteFile( filename_ );
     if ( logfile_ == 0 )
         exit( 1 );
     newLineSize_ = newLine_.size();

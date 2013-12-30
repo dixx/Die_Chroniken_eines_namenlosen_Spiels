@@ -75,7 +75,7 @@ private:
 
     inline void createLogfile();
     inline void readConfig();
-    inline bool createDeviceFromConfig();
+    bool createDeviceFromConfig();
     inline void prepareFrameDeltaTime();
     inline void updateFrameDeltaTime();
 #ifdef _DEBUG_MODE

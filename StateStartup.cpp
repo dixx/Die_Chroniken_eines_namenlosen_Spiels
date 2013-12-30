@@ -32,31 +32,10 @@ StateStartup::StateStartup( IrrlichtDevice* device)
         Logfile::getInstance().emergencyExit(
                 "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Loading..." );
-    Configuration& config = Configuration::getInstance();
-    GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
-    helpers.validateFileExistence( "GFX/Spiellogo.png" );
-    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
-            "GFX/Spiellogo.png" );
-    gui::IGUIImage* loadingScreenImageFrame =
-            device_->getGUIEnvironment()->addImage(
-                    core::recti( core::dimension2di( 0, 0 ),
-                            config.getScreenSize() ) );
-    loadingScreenImageFrame->setImage( loadingScreenImage );
-    loadingScreenImageFrame->setScaleImage( true );
-    loadingText_ = device_->getGUIEnvironment()->addStaticText(
-            L"Lade Klassen...",
-            core::recti(
-                    core::dimension2di( 9, config.getScreenSize().Height - 30 ),
-                    config.getScreenSize()
-            )
-    );
-    loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
-    helpers.validateFileExistence( "GFX/Dooling_font.xml" );
-    helpers.validateFileExistence( "GFX/Dooling_font.png" );
-    helpers.validateFileExistence( "GFX/Dooling_font_readme.txt" );
-    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
-            "GFX/Dooling_font.xml" );
-    loadingText_->setOverrideFont( font );
+    GenericHelperMethods::getInstance( device_ );
+    // todo create class that loads all needed fonts!
+    createLoadingScreenImage();
+    createLoadingScreenText();
 }
 
 
@@ -126,3 +105,41 @@ bool StateStartup::handleGuiEvents()
 
 
 /* private */
+
+
+
+void StateStartup::createLoadingScreenImage()
+{
+    GenericHelperMethods::getInstance().validateFileExistence(
+            "GFX/Spiellogo.png" );
+    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
+            "GFX/Spiellogo.png" );
+    gui::IGUIImage* loadingScreenImageFrame =
+            device_->getGUIEnvironment()->addImage(
+                    core::recti( core::dimension2di( 0, 0 ),
+                            Configuration::getInstance().getScreenSize() ) );
+    loadingScreenImageFrame->setImage( loadingScreenImage );
+    loadingScreenImageFrame->setScaleImage( true );
+}
+
+
+
+void StateStartup::createLoadingScreenText()
+{
+    core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
+    loadingText_ = device_->getGUIEnvironment()->addStaticText(
+            L"Lade Klassen...",
+            core::recti(
+                    core::dimension2di( 9, screenSize.Height - 30 ),
+                    screenSize
+            )
+    );
+    loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
+    helpers.validateFileExistence( "GFX/Dooling_font.xml" );
+    helpers.validateFileExistence( "GFX/Dooling_font.png" );
+    helpers.validateFileExistence( "GFX/Dooling_font_readme.txt" );
+    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
+            "GFX/Dooling_font.xml" );
+    loadingText_->setOverrideFont( font );
+}

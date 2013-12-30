@@ -68,6 +68,9 @@ private:
     StateStartup( const StateStartup& );
     StateStartup& operator=( const StateStartup& );
 
+    void createLoadingScreenImage();
+    void createLoadingScreenText();
+
 };
 // Ende class StateStartup
 

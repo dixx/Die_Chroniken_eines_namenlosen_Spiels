@@ -1,11 +1,11 @@
 #include "StateStartup.h"
 #include "Configuration.h"
 #include "Constants.h"
+#include "GenericHelperMethods.h"
 #include "Logfile.h"
 //#include "Camera.h"
 //#include "Collision.h"
 //#include "Eventreceiver.h"
-//#include "GenericHelperMethods.h"
 //#include "Ground.h"
 //#include "Hero.h"
 //#include "Mauspfeil.h"
@@ -32,15 +32,13 @@ StateStartup::StateStartup( IrrlichtDevice* device)
         Logfile::getInstance().emergencyExit(
                 "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Loading..." );
+    GenericHelperMethods::getInstance( device_ ).validateFileExistence(
+            "GFX/Spiellogo.png" );
     video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
             "GFX/Spiellogo.png" );
-    // todo replace with generic helper method!
-    if ( loadingScreenImage == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Datei 'GFX/Spiellogo.png' nicht gefunden! Abbruch." );
     gui::IGUIImage* loadingScreenImageFrame =
             device_->getGUIEnvironment()->addImage(
-                    core::recti( core::dimension2di( 0, 0),
+                    core::recti( core::dimension2di( 0, 0 ),
                             Configuration::getInstance().getScreenSize() ) );
     loadingScreenImageFrame->setImage( loadingScreenImage );
     loadingScreenImageFrame->setScaleImage( true );

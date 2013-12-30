@@ -33,7 +33,6 @@ StateStartup::StateStartup( IrrlichtDevice* device)
                 "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Loading..." );
     GenericHelperMethods::getInstance( device_ );
-    // todo create class that loads all needed fonts!
     createLoadingScreenImage();
     createLoadingScreenText();
 }
@@ -136,10 +135,10 @@ void StateStartup::createLoadingScreenText()
             )
     );
     loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
-    helpers.validateFileExistence( "GFX/Dooling_font.xml" );
-    helpers.validateFileExistence( "GFX/Dooling_font.png" );
-    helpers.validateFileExistence( "GFX/Dooling_font_readme.txt" );
+    helpers.validateFileExistence( "GFX/FONTS/Dooling_font.xml" );
+    helpers.validateFileExistence( "GFX/FONTS/Dooling_font.png" );
+    helpers.validateFileExistence( "GFX/FONTS/Dooling_font_readme.txt" );
     gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
-            "GFX/Dooling_font.xml" );
+            "GFX/FONTS/Dooling_font.xml" );
     loadingText_->setOverrideFont( font );
 }

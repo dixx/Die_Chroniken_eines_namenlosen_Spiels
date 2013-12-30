@@ -63,6 +63,7 @@ private:
 
     IrrlichtDevice* device_;
     u32 classCounter_;
+    gui::IGUIStaticText* loadingText_;
 
     StateStartup( const StateStartup& );
     StateStartup& operator=( const StateStartup& );

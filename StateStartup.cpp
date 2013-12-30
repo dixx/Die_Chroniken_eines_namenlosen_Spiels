@@ -32,16 +32,31 @@ StateStartup::StateStartup( IrrlichtDevice* device)
         Logfile::getInstance().emergencyExit(
                 "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Loading..." );
-    GenericHelperMethods::getInstance( device_ ).validateFileExistence(
-            "GFX/Spiellogo.png" );
+    Configuration& config = Configuration::getInstance();
+    GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
+    helpers.validateFileExistence( "GFX/Spiellogo.png" );
     video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
             "GFX/Spiellogo.png" );
     gui::IGUIImage* loadingScreenImageFrame =
             device_->getGUIEnvironment()->addImage(
                     core::recti( core::dimension2di( 0, 0 ),
-                            Configuration::getInstance().getScreenSize() ) );
+                            config.getScreenSize() ) );
     loadingScreenImageFrame->setImage( loadingScreenImage );
     loadingScreenImageFrame->setScaleImage( true );
+    loadingText_ = device_->getGUIEnvironment()->addStaticText(
+            L"Lade Klassen...",
+            core::recti(
+                    core::dimension2di( 9, config.getScreenSize().Height - 30 ),
+                    config.getScreenSize()
+            )
+    );
+    loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
+    helpers.validateFileExistence( "GFX/Dooling_font.xml" );
+    helpers.validateFileExistence( "GFX/Dooling_font.png" );
+    helpers.validateFileExistence( "GFX/Dooling_font_readme.txt" );
+    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
+            "GFX/Dooling_font.xml" );
+    loadingText_->setOverrideFont( font );
 }
 
 
@@ -59,7 +74,7 @@ void StateStartup::update( f32 frameDeltaTime )
     switch( classCounter_ )
     {
         case 0:
-            // print stuff on the screen
+            loadingText_->setText( L"Lade Zufall..." );
             Zufall::getInstance().start( device_->getTimer()->getRealTime() );
             break;
             //#ifdef _DEBUG_MODE

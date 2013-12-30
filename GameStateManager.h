@@ -40,7 +40,7 @@ public:
         GAME,         //!< Das Spiel selbst
         SHUTDOWN,     //!< Herunterfahren des Spiels
 
-        STATES_COUNT  //!< Anzahl verfuegbarer Spiel-Stati
+        STATES_COUNT  //!< Anzahl verfügbarer Spiel-Stati
 	};
 
     /*! \brief Ersatz für den Konstruktor.

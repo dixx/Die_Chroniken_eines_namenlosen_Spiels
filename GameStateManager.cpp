@@ -19,12 +19,21 @@ GameState* GameStateManager::getActiveState()
 
 
 
+void GameStateManager::setActiveState( State state )
+{
+    if ( state == STARTUP )
+        currentState_ = states_[ state ];
+}
+
+
+
 /* private */
 
 
 
 GameStateManager::GameStateManager( IrrlichtDevice* device )
-: device_(device)
+: device_(device),
+  currentState_(0)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
@@ -33,8 +42,8 @@ GameStateManager::GameStateManager( IrrlichtDevice* device )
     states_[ STARTUP ] = new StateStartup( device_ );
     //states_[ MAIN_MENU ] = new GameState();
     //states_[ GAME ] = new GameState();
-	currentState_ = states_[ STARTUP ];
 	// todo check if a state does really NOT need a start and end method!
+	// todo check if it would be better to init states on demand!
 }
 
 

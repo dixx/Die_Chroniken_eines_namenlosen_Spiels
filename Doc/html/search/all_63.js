@@ -4,5 +4,6 @@ var searchData=
   ['col_5fmagicpink',['COL_MAGICPINK',['../_constants_8h.html#a08650b633a699c482f2c1a7aacaa4e3e',1,'Constants.h']]],
   ['configuration',['Configuration',['../class_configuration.html',1,'']]],
   ['configuration_2eh',['Configuration.h',['../_configuration_8h.html',1,'']]],
-  ['constants_2eh',['Constants.h',['../_constants_8h.html',1,'']]]
+  ['constants_2eh',['Constants.h',['../_constants_8h.html',1,'']]],
+  ['createtimer',['createTimer',['../class_timer_manager.html#a6a42c73cc5c258009fe04a0583496354',1,'TimerManager']]]
 ];

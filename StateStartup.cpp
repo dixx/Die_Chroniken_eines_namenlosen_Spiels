@@ -11,7 +11,7 @@
 //#include "Mauspfeil.h"
 //#include "ObjectManager.h"
 //#include "Scripting.h"
-//#include "TimerManager.h"
+#include "TimerManager.h"
 //#include "Ton.h"
 //#include "Weather.h"
 //#include "World.h"
@@ -55,12 +55,15 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Zufall..." );
             Zufall::getInstance().start( device_->getTimer()->getRealTime() );
             break;
+        case 1:
+            loadingText_->setText( L"Lade TimerManager..." );
+            TimerManager::getInstance();
+            break;
             //#ifdef _DEBUG_MODE
             //    DebugShapesManager::getInstance( driver );
             //    Debugwindow::getInstance( device );
             //#endif
             //    GenericHelperMethods::getInstance( device );
-            //    TimerManager::getInstance();
             //    Scripting::getInstance();
             //    ObjectManager::getInstance( device );
             //    Collision::getInstance( scenemanager );

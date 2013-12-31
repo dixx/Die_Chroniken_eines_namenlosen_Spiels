@@ -17,7 +17,7 @@
 //#include "World.h"
 #include "Zufall.h"
 #ifdef _DEBUG_MODE
-//#include "DebugShapesManager.h"
+#include "DebugShapesManager.h"
 #include "Debugwindow.h"
 #endif
 
@@ -54,7 +54,7 @@ void StateStartup::update( f32 frameDeltaTime )
         case 0:
 #ifdef _DEBUG_MODE
             loadingText_->setText( L"Lade Debug-Zeug..." );
-            //    DebugShapesManager::getInstance( driver );
+            DebugShapesManager::getInstance( device_->getVideoDriver() );
             Debugwindow::getInstance( device_ );
 #endif
             break;

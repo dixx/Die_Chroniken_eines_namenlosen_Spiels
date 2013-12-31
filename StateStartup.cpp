@@ -18,7 +18,7 @@
 #include "Zufall.h"
 #ifdef _DEBUG_MODE
 //#include "DebugShapesManager.h"
-//#include "Debugwindow.h"
+#include "Debugwindow.h"
 #endif
 
 
@@ -52,18 +52,20 @@ void StateStartup::update( f32 frameDeltaTime )
     switch( classCounter_ )
     {
         case 0:
+#ifdef _DEBUG_MODE
+            loadingText_->setText( L"Lade Debug-Zeug..." );
+            //    DebugShapesManager::getInstance( driver );
+            Debugwindow::getInstance( device_ );
+#endif
+            break;
+        case 1:
             loadingText_->setText( L"Lade Zufall..." );
             Zufall::getInstance().start( device_->getTimer()->getRealTime() );
             break;
-        case 1:
+        case 2:
             loadingText_->setText( L"Lade TimerManager..." );
             TimerManager::getInstance();
             break;
-            //#ifdef _DEBUG_MODE
-            //    DebugShapesManager::getInstance( driver );
-            //    Debugwindow::getInstance( device );
-            //#endif
-            //    GenericHelperMethods::getInstance( device );
             //    Scripting::getInstance();
             //    ObjectManager::getInstance( device );
             //    Collision::getInstance( scenemanager );
@@ -80,11 +82,11 @@ void StateStartup::update( f32 frameDeltaTime )
                 //Menues::getInstance().transitTo( Menues::MENUE_HAUPTMENUE );
         default:
             classCounter_ = 0;
+            return;
             // change active gamestate
             break;
     }
     classCounter_++;
-    //frameDeltaTime += 1.0f;
 }
 #pragma GCC diagnostic error "-Wunused-parameter"
 

@@ -8,7 +8,7 @@
 //#include "Eventreceiver.h"
 //#include "Ground.h"
 //#include "Hero.h"
-//#include "Mauspfeil.h"
+#include "Mauspfeil.h"
 //#include "ObjectManager.h"
 #include "Scripting.h"
 #include "TimerManager.h"
@@ -53,7 +53,7 @@ void StateStartup::update( f32 frameDeltaTime )
     {
         case 0:
 #ifdef _DEBUG_MODE
-            loadingText_->setText( L"Lade Käfer..." );
+            loadingText_->setText( L"Lade Kammerjäger..." );
             DebugShapesManager::getInstance( device_->getVideoDriver() );
             Debugwindow::getInstance( device_ );
 #endif
@@ -74,9 +74,12 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Klänge..." );
             Ton::getInstance( device_->getFileSystem() );
             break;
+        case 5:
+            loadingText_->setText( L"Lade Zeigefinger..." );
+            Mauspfeil::getInstance( device_ );
+            break;
             //    ObjectManager::getInstance( device );
             //    Collision::getInstance( scenemanager );
-            //    Mauspfeil::getInstance( device );
             //    Weather::getInstance( scenemanager );
             //    Ground::getInstance( device );
             //    Camera::getInstance( scenemanager );

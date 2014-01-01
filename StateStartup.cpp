@@ -10,7 +10,7 @@
 //#include "Hero.h"
 //#include "Mauspfeil.h"
 //#include "ObjectManager.h"
-//#include "Scripting.h"
+#include "Scripting.h"
 #include "TimerManager.h"
 //#include "Ton.h"
 //#include "Weather.h"
@@ -66,7 +66,10 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade TimerManager..." );
             TimerManager::getInstance();
             break;
-            //    Scripting::getInstance();
+        case 3:
+            loadingText_->setText( L"Lade LUA-Engine..." );
+            Scripting::getInstance();
+            break;
             //    ObjectManager::getInstance( device );
             //    Collision::getInstance( scenemanager );
             //    Ton::getInstance( filesystem );

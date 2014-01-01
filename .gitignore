@@ -1,5 +1,8 @@
 /Debug
+!/Debug/*.dll
+!/Debug/*.CFG
 !/Debug/GFX
 !/Debug/SFX
+!/Debug/SCRIPTS
 /Doc/html
 *Thumbs.db

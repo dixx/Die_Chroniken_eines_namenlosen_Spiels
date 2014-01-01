@@ -53,25 +53,25 @@ void StateStartup::update( f32 frameDeltaTime )
     {
         case 0:
 #ifdef _DEBUG_MODE
-            loadingText_->setText( L"Lade Debug-Zeug..." );
+            loadingText_->setText( L"Lade Käfer..." );
             DebugShapesManager::getInstance( device_->getVideoDriver() );
             Debugwindow::getInstance( device_ );
 #endif
             break;
         case 1:
-            loadingText_->setText( L"Lade Zufall..." );
+            loadingText_->setText( L"Lade Zufälle..." );
             Zufall::getInstance().start( device_->getTimer()->getRealTime() );
             break;
         case 2:
-            loadingText_->setText( L"Lade TimerManager..." );
+            loadingText_->setText( L"Lade Zeitverwaltung..." );
             TimerManager::getInstance();
             break;
         case 3:
-            loadingText_->setText( L"Lade LUA-Engine..." );
+            loadingText_->setText( L"Lade Schreibmaschine..." );
             Scripting::getInstance();
             break;
         case 4:
-            loadingText_->setText( L"Lade irrKlang..." );
+            loadingText_->setText( L"Lade Klänge..." );
             Ton::getInstance( device_->getFileSystem() );
             break;
             //    ObjectManager::getInstance( device );

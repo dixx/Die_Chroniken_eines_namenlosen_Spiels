@@ -2,6 +2,12 @@ var searchData=
 [
   ['coding_20conventions',['Coding Conventions',['../code_conventions.html',1,'code']]],
   ['col_5fmagicpink',['COL_MAGICPINK',['../_constants_8h.html#a08650b633a699c482f2c1a7aacaa4e3e',1,'Constants.h']]],
+  ['collision',['Collision',['../class_collision.html',1,'']]],
+  ['collision_2eh',['Collision.h',['../_collision_8h.html',1,'']]],
+  ['collisiondodgevector',['collisionDodgeVector',['../class_collision.html#a27e1d895ae8be298dd1b039961ce7582',1,'Collision']]],
+  ['collisionnode',['collisionNode',['../class_collision.html#a5f43baec93287d4fda3a06b1e400ffe6',1,'Collision']]],
+  ['collisionpoint',['collisionPoint',['../class_collision.html#ab2e88422cb866120eb4e554749cef194',1,'Collision']]],
+  ['collisiontriangle',['collisionTriangle',['../class_collision.html#a9ac74aacb8f4be54eb20cdbbba9bd308',1,'Collision']]],
   ['configuration',['Configuration',['../class_configuration.html',1,'']]],
   ['configuration_2eh',['Configuration.h',['../_configuration_8h.html',1,'']]],
   ['constants_2eh',['Constants.h',['../_constants_8h.html',1,'']]],

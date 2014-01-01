@@ -1,13 +1,13 @@
 #include "StateStartup.h"
+//#include "Camera.h"
+#include "Collision.h"
 #include "Configuration.h"
 #include "Constants.h"
-#include "GenericHelperMethods.h"
-#include "Logfile.h"
-//#include "Camera.h"
-//#include "Collision.h"
 //#include "Eventreceiver.h"
+#include "GenericHelperMethods.h"
 //#include "Ground.h"
 //#include "Hero.h"
+#include "Logfile.h"
 #include "Mauspfeil.h"
 //#include "ObjectManager.h"
 #include "Scripting.h"
@@ -78,8 +78,11 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Zeigefinger..." );
             Mauspfeil::getInstance( device_ );
             break;
+        case 6:
+            loadingText_->setText( L"Lade Zusammenstöße..." );
+            Collision::getInstance( device_->getSceneManager() );
+            break;
             // wer benötigt wen zum Laden und Zerstören:
-            //    Collision::getInstance( scenemanager );
             //    Weather::getInstance( scenemanager );
             //    ObjectManager::getInstance( device ); --> Collision
             //

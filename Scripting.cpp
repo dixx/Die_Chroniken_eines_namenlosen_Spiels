@@ -235,10 +235,13 @@ void Scripting::addLuaSearchPath( const c8* path )
 
 core::stringc Scripting::stackDump()
 {
-    core::stringc message = "--- Stack Dump ---";
-    message += "total in stack ";
-    message += lua_gettop( luaVM_ );
-    message += '\n';
+    s32 items = lua_gettop( luaVM_ );
+    if ( items == 0 )
+        return "--- Stack is empty ---";
+    core::stringc message = "--- Stack Dump ---\n";
+    message += "total in stack: ";
+    message += items;
+    message += "\n";
     for ( register s32 i = 1; i <= lua_gettop( luaVM_ ); ++i )
     {
         switch ( lua_type( luaVM_, i ) )
@@ -270,6 +273,6 @@ core::stringc Scripting::stackDump()
             message += "  ...WHICH IS OUTSIDE THE STACK!";
         message += "\n  ";
     }
-    message += "\n--- Ende Stack Dump ---\n";
+    message += "--- Ende Stack Dump ---";
     return message;
 }

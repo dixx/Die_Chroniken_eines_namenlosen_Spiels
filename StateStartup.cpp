@@ -13,7 +13,7 @@
 #include "Scripting.h"
 #include "TimerManager.h"
 #include "Ton.h"
-//#include "Weather.h"
+#include "Weather.h"
 //#include "World.h"
 #include "Zufall.h"
 #ifdef _DEBUG_MODE
@@ -82,8 +82,11 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Zusammenstöße..." );
             Collision::getInstance( device_->getSceneManager() );
             break;
+        case 7:
+            loadingText_->setText( L"Lade Wetter..." );
+            Weather::getInstance( device_->getSceneManager() );
+            break;
             // wer benötigt wen zum Laden und Zerstören:
-            //    Weather::getInstance( scenemanager );
             //    ObjectManager::getInstance( device ); --> Collision
             //
             //    Ground::getInstance( device ); --> ObjectManager, Collision

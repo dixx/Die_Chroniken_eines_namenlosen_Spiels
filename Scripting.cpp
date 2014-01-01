@@ -24,7 +24,7 @@ void Scripting::runScriptFile( const c8* filename )
 
 core::stringc Scripting::getObjectDataFromScript( const c8* filename )
 {
-    // todo refactor!
+    // todo refactor method!
     lua_getglobal( luaVM_, "getObjectDataFromScript" );
     lua_pushstring( luaVM_, filename );
     errorHandler(

@@ -78,15 +78,17 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Zeigefinger..." );
             Mauspfeil::getInstance( device_ );
             break;
-            //    ObjectManager::getInstance( device );
+            // wer benötigt wen zum Laden und Zerstören:
             //    Collision::getInstance( scenemanager );
             //    Weather::getInstance( scenemanager );
-            //    Ground::getInstance( device );
-            //    Camera::getInstance( scenemanager );
-            //    Hero::getInstance( scenemanager );
-            //    World::getInstance();
+            //    ObjectManager::getInstance( device ); --> Collision
+            //
+            //    Ground::getInstance( device ); --> ObjectManager, Collision
+            //    Camera::getInstance( scenemanager ); --> Ground
+            //    Hero::getInstance( scenemanager ); --> Ground, ObjectManager
+            //    World::getInstance(); --> alles
             // todo refactor or even remove Menues!
-                //Menues::getInstance( device );
+                //Menues::getInstance( device ); --> World
                 // ...
                 //Menues::getInstance().transitTo( Menues::MENUE_HAUPTMENUE );
         default:

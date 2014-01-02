@@ -102,7 +102,7 @@ private:
 
     void calculateSunMoonCirclesY();
     void setFog();
-//    void createLights();
+    void createLights();
     void calculateLightValues();
     inline void clearArrays();
 

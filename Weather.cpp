@@ -2,7 +2,7 @@
 #include "Configuration.h"
 #include "Constants.h"
 #include "Logfile.h"
-//#include "ObjectManager.h"
+#include "ObjectManager.h"
 #include "TimerManager.h"
 #ifdef _DEBUG_MODE
 #include "Debugwindow.h"
@@ -30,7 +30,7 @@ void Weather::load()
     smgr_->setShadowColor( video::SColor( 50, 0, 0, 0 ) );
     calculateSunMoonCirclesY();
     setFog();
-//    createLights();
+    createLights();
     calculateLightValues();
 }
 
@@ -187,28 +187,28 @@ void Weather::setFog()
 
 
 
-//void Weather::createLights()
-//{
-//    for ( register u32 i = 0; i < 7; ++i )
-//    {
-//        dayLightSource_[i] = smgr_->addLightSceneNode(
-//                ObjectManager::getInstance().weatherNodes,
-//                core::vector3df( 0.0f, 0.0f, 0.0f ),
-//                video::SColorf( 1.0f, 1.0f, 1.0f ),
-//                lightRadius_,
-//                ID_WELTBELEUCHTUNG
-//        );
-//        dayLightSource_[i]->setName( "Weltlicht" );
-//        dayLightSource_[i]->setLightType( video::ELT_DIRECTIONAL );
-//        dayLightSource_[i]->enableCastShadow( false );
-//        dayLightSource_[i]->setVisible( true );
-//        dayLightSource_[i]->setRotation(
-//                ( i < 6 )
-//                ? core::vector3df( 0.0f, 60.0f * static_cast<f32>( i ), 0.0f )
-//                : core::vector3df( 90.0f, 0.0f, 0.0f )
-//        );
-//    }
-//}
+void Weather::createLights()
+{
+    for ( register u32 i = 0; i < 7; ++i )
+    {
+        dayLightSource_[i] = smgr_->addLightSceneNode(
+                ObjectManager::getInstance().weatherNodes,
+                core::vector3df( 0.0f, 0.0f, 0.0f ),
+                video::SColorf( 1.0f, 1.0f, 1.0f ),
+                lightRadius_,
+                ID_WELTBELEUCHTUNG
+        );
+        dayLightSource_[i]->setName( "Weltlicht" );
+        dayLightSource_[i]->setLightType( video::ELT_DIRECTIONAL );
+        dayLightSource_[i]->enableCastShadow( false );
+        dayLightSource_[i]->setVisible( true );
+        dayLightSource_[i]->setRotation(
+                ( i < 6 )
+                ? core::vector3df( 0.0f, 60.0f * static_cast<f32>( i ), 0.0f )
+                : core::vector3df( 90.0f, 0.0f, 0.0f )
+        );
+    }
+}
 
 
 

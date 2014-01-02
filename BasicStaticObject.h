@@ -64,6 +64,13 @@ public:
     */
     scene::ISceneNode* nodeInterface() const;
 
+    /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Objekts
+               zurück.
+      \param -
+      \return \a core::vector3df Länge und Richtung des nächsten Schrittes
+    */
+    const core::vector3df& getNextStep() const;
+
 protected:
 
     BufferCullMeshSceneNode* node_;
@@ -71,6 +78,8 @@ protected:
     scene::IMesh* loadMesh();
 
 private:
+
+    core::vector3df nextStep_;
 
     BasicStaticObject( const BasicStaticObject& );
     void operator=( const BasicStaticObject& );

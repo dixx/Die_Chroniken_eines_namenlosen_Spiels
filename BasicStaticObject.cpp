@@ -12,7 +12,8 @@ BasicStaticObject::BasicStaticObject(
         bool isParent
 )
 : Basic3DObject(objectData, smgr, true),
-  node_(0)
+  node_(0),
+  nextStep_(VEC_3DF_NULL)
 {
     init();
     if ( !isParent )
@@ -50,6 +51,13 @@ f32 BasicStaticObject::getCollisionRadius() const
 scene::ISceneNode* BasicStaticObject::nodeInterface() const
 {
     return static_cast<scene::ISceneNode*>(node_);
+}
+
+
+
+const core::vector3df& BasicStaticObject::getNextStep() const
+{
+    return nextStep_;
 }
 
 

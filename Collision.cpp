@@ -2,9 +2,8 @@
 #include "Constants.h"
 #include "Debugwindow.h"
 #include "Eventreceiver.h"
-//#include "Hero.h"
 #include "Logfile.h"
-//#include "ObjectManager.h"
+#include "ObjectManager.h"
 #include "Zufall.h"
 
 
@@ -124,87 +123,87 @@ bool Collision::isRayIntersectingWithWalkableNodesAroundHero(
 }
 
 
-// todo refactor so that any movable object can be used!
-//bool Collision::isHeroCollidingWithNodes()
-//{
-//    bool isCollision = false;
-//    Hero& hero = Hero::getInstance();
-//    scene::IAnimatedMeshSceneNode* heroNode = hero.getNode();
-//    f32 heroRadius = hero.getCollisionRadius();
-//    const core::vector3df& heroCenter = heroNode->getAbsolutePosition();
-//    core::aabbox3df heroBB = core::aabbox3df(
-//            heroCenter - heroRadius, heroCenter + heroRadius );
-//#ifdef _DEBUG_MODE
-//    heroNode->setMaterialFlag( video::EMF_POINTCLOUD, false );
-//#endif
-//    Basic3DObject* object = 0;
-//    scene::ISceneNode* objectNode = 0;
-//    f32 objectRadius = 0.0f;
-//    f32 minDistance = 0.0f;
-//    core::vector3df distance;
-//    for( iter_ = collidableObjects_.begin(); iter_ != collidableObjects_.end();
-//            ++iter_ )
-//    {
-//        object = *iter_;
-//        objectNode = object->nodeInterface();
-//        objectRadius = object->getCollisionRadius();
-//        if ( objectRadius > core::ROUNDING_ERROR_f32 ) // Lebewesen?
-//        {
-//            minDistance = heroRadius + objectRadius;
-//            distance = objectNode->getAbsolutePosition() - heroCenter;
-//            distance.Y = 0.0f;
-//            if ( ( distance.getLength() - minDistance ) < 0.0f )
-//            {
-//                isCollision = true;
-//                collisionDodgeVector = distance
-//                        - core::vector3df( distance ).setLength(
-//                                minDistance + 0.01f )
-//                        + hero.getNextStep();
-//            }
-//        }
-//        else
-//        {
-//            if( objectNode->getTransformedBoundingBox().intersectsWithBox(
-//                    heroBB ) )
-//            {
-//#ifdef _DEBUG_MODE
-//                heroNode->setMaterialFlag( video::EMF_POINTCLOUD, true );
-//#endif
-//                isCollision = true;
-//                collisionDodgeVector = hero.getNextStep();
-//            }
-//        }
-//        if ( isCollision )
-//        {
-//#ifdef _DEBUG_MODE
-//            Debugwindow::getInstance().addLine( L"collision with: ",
-//                    object->getName() );
-//            Debugwindow::getInstance().addLine( L"HeroCollisionRadius: ",
-//                    heroRadius );
-//            Debugwindow::getInstance().addLine( L"ObjectCollisionRadius: ",
-//                    object->getCollisionRadius() );
-//#endif
-//            return true;
-//        }
-//    }
-//    return false;
-//}
+
+bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
+{
+    bool isCollision = false;
+    scene::ISceneNode* objectNode = object->nodeInterface();
+    f32 objectRadius = object->getCollisionRadius();
+    const core::vector3df& objectCenter = objectNode->getAbsolutePosition();
+    core::aabbox3df heroBB = core::aabbox3df(
+            objectCenter - objectRadius, objectCenter + objectRadius );
+#ifdef _DEBUG_MODE
+    objectNode->setMaterialFlag( video::EMF_POINTCLOUD, false );
+#endif
+    Basic3DObject* obstacle = 0;
+    scene::ISceneNode* obstacleNode = 0;
+    f32 obstacleRadius = 0.0f;
+    f32 minDistance = 0.0f;
+    core::vector3df distance;
+    for( iter_ = collidableObjects_.begin(); iter_ != collidableObjects_.end();
+            ++iter_ )
+    {
+        obstacle = *iter_;
+        obstacleNode = obstacle->nodeInterface();
+        if ( obstacleNode == objectNode ) // see "intuitive pointer equality"
+            continue;
+        obstacleRadius = obstacle->getCollisionRadius();
+        if ( obstacleRadius > core::ROUNDING_ERROR_f32 ) // Lebewesen?
+        {
+            minDistance = objectRadius + obstacleRadius;
+            distance = obstacleNode->getAbsolutePosition() - objectCenter;
+            distance.Y = 0.0f;
+            if ( ( distance.getLength() - minDistance ) < 0.0f )
+            {
+                isCollision = true;
+                collisionDodgeVector = distance
+                        - core::vector3df( distance ).setLength(
+                                minDistance + 0.01f )
+                        + object->getNextStep();
+            }
+        }
+        else
+        {
+            if( obstacleNode->getTransformedBoundingBox().intersectsWithBox(
+                    heroBB ) )
+            {
+#ifdef _DEBUG_MODE
+                objectNode->setMaterialFlag( video::EMF_POINTCLOUD, true );
+#endif
+                isCollision = true;
+                collisionDodgeVector = object->getNextStep();
+            }
+        }
+        if ( isCollision )
+        {
+#ifdef _DEBUG_MODE
+            Debugwindow& dw = Debugwindow::getInstance();
+            dw.addLine( L"collision with: ", obstacle->getName() );
+            dw.addLine( L"ObjectCollisionRadius: ", objectRadius );
+            dw.addLine( L"ObstacleCollisionRadius: ",
+                    obstacle->getCollisionRadius() );
+#endif
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
-//bool Collision::isMouseIntersectingWithWorld()
-//{
-//    return isRayIntersectingWithWorld(
-//            colliman_->getRayFromScreenCoordinates(
-//                    core::position2di(
-//                            Eventreceiver::getInstance().getMouseX(),
-//                            Eventreceiver::getInstance().getMouseY()
-//                    ),
-//                    smgr_->getActiveCamera()
-//            ),
-//            ObjectManager::getInstance().nodesRespondingToMouse
-//    );
-//}
+bool Collision::isMouseIntersectingWithWorld()
+{
+    return isRayIntersectingWithWorld(
+            colliman_->getRayFromScreenCoordinates(
+                    core::position2di(
+                            Eventreceiver::getInstance().getMouseX(),
+                            Eventreceiver::getInstance().getMouseY()
+                    ),
+                    smgr_->getActiveCamera()
+            ),
+            ObjectManager::getInstance().nodesRespondingToMouse
+    );
+}
 
 
 

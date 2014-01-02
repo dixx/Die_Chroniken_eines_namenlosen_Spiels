@@ -2,6 +2,7 @@
 #include "Collision.h"
 #include "Constants.h"
 #include "GenericHelperMethods.h"
+#include "Constants.h"
 #include "Logfile.h"
 #include "ObjectManager.h"
 
@@ -17,7 +18,8 @@ BasicLifeform::BasicLifeform(
   isMoving_(false),
   wasMoving_(false),
   speed_(1.0f),
-  movementDelta_(0.0f)
+  movementDelta_(0.0f),
+  nextStep_(VEC_3DF_NULL)
 {
     if ( smgr_ == 0 )
     {
@@ -45,6 +47,7 @@ BasicLifeform::~BasicLifeform()
 void BasicLifeform::update( f32 frameDeltaTime )
 {
     movementDelta_ = speed_ * frameDeltaTime;
+    calculateNextStep();
 }
 
 
@@ -66,6 +69,13 @@ f32 BasicLifeform::getCollisionRadius() const
 scene::ISceneNode* BasicLifeform::nodeInterface() const
 {
     return static_cast<scene::ISceneNode*>(node_);
+}
+
+
+
+const core::vector3df& BasicLifeform::getNextStep() const
+{
+    return nextStep_;
 }
 
 
@@ -125,6 +135,14 @@ void BasicLifeform::init()
     Collision::getInstance().addAnimatedMeshNodeToWorld( node_ );
     node_->setVisible( false );
     calculateCollisionRadius();
+}
+
+
+
+void BasicLifeform::calculateNextStep()
+{
+    nextStep_ = VEC_3DF_NULL;//targetPosition_ - currentPosition_;
+    nextStep_.setLength( movementDelta_ );
 }
 
 

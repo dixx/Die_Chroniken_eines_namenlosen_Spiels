@@ -63,6 +63,14 @@ public:
     */
     virtual scene::ISceneNode* nodeInterface() const = 0;
 
+    /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Objekts
+               zurück.
+      \attention Methode ist pure virtual!
+      \param -
+      \return \a core::vector3df Länge und Richtung des nächsten Schrittes
+    */
+    virtual const core::vector3df& getNextStep() const = 0;
+
 protected:
 
     core::stringc type_;

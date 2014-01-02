@@ -85,7 +85,7 @@ public:
       \param -
       \return `true` wenn ein Knoten getroffen wurde, ansonsten `false`
     */
-//    bool isMouseIntersectingWithWorld();
+    bool isMouseIntersectingWithWorld();
 
     /*! \brief Abfrage, ob ein Strahl durch irgendeinen Knoten durchgeht.
       \param ray (\a core::line3df&) ein 3D-Strahl
@@ -103,10 +103,11 @@ public:
     bool isRayIntersectingWithWalkableNodesAroundHero(
             const core::line3df& ray );
 
-    /*! \brief Abfrage, ob der Held mit irgendeinem Knoten kollidiert.
+    /*! \brief Abfrage, ob ein Objekt mit irgendeinem Knoten kollidiert.
+      \param object (\a Basic3DObject*) Objekt
       \return `true` wenn eine Kollision vorliegt, ansonsten `false`
     */
-//    bool isHeroCollidingWithNodes();
+    bool isObjectCollidingWithNodes( Basic3DObject* object );
 
 private:
 

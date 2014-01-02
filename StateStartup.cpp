@@ -1,5 +1,5 @@
 #include "StateStartup.h"
-//#include "Camera.h"
+#include "Camera.h"
 #include "Collision.h"
 #include "Configuration.h"
 #include "Constants.h"
@@ -94,8 +94,11 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Fußboden..." );
             Ground::getInstance( device_ );
             break;
+        case 10:
+            loadingText_->setText( L"Lade Auge..." );
+            Camera::getInstance( device_->getSceneManager() );
+            break;
             // wer benötigt wen zum Laden und Zerstören:
-            //    Camera::getInstance( scenemanager ); --> Ground
             //    Hero::getInstance( scenemanager ); --> Ground, ObjectManager
             //    World::getInstance(); --> alles
             // todo refactor or even remove Menues!

@@ -4,6 +4,7 @@ var searchData=
   ['debug',['DEBUG',['../class_logfile.html#ac243a34521f8f72bd21453a03abbf0c4a54aa568e68e2ead5c7023a7200b4a2d2',1,'Logfile']]],
   ['debugwindow',['Debugwindow',['../class_debugwindow.html',1,'']]],
   ['debugwindow_2eh',['Debugwindow.h',['../_debugwindow_8h.html',1,'']]],
+  ['decorativenodes',['decorativeNodes',['../class_object_manager.html#a45bca66a5ef4693ff1e295807e6b7a92',1,'ObjectManager']]],
   ['detail',['DETAIL',['../class_logfile.html#ac243a34521f8f72bd21453a03abbf0c4a974c1abc60788fb8914a6a58167c5a15',1,'Logfile']]],
   ['dim_5f2df_5fnull',['DIM_2DF_NULL',['../_constants_8h.html#afc865b93852e0459b84db8ab3021630e',1,'Constants.h']]],
   ['dim_5f2di_5fnull',['DIM_2DI_NULL',['../_constants_8h.html#aafb0117c02475da7448459c38a36183e',1,'Constants.h']]],

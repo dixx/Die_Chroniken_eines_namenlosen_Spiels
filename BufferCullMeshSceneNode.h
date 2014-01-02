@@ -76,6 +76,8 @@ public:
 	//! This function is needed for inserting the node into the scene hirachy on a
 	//! optimal position for minimizing renderstate changes, but can also be used
 	//! to directly modify the material of a scene node.
+	//! \param i (\a u32) index of desired material
+	//! \return the material
 	virtual video::SMaterial& getMaterial( u32 i );
 	
 	//! returns amount of materials used by this scene node.
@@ -97,6 +99,11 @@ public:
     //! Creates shadow volume scene node as child of this node
     //! and returns a pointer to it.
     //! \note Since Irrlicht 1.8 this must be implemented here.
+    //! \param shadowMesh (\a const \a scene::IMesh*) Mesh des Schattens
+    //! \param id
+    //! \param zfailmethod
+    //! \param infinity
+    //! \return a 3d shadow scene node
     virtual scene::IShadowVolumeSceneNode* addShadowVolumeSceneNode(
             const scene::IMesh* shadowMesh,
             s32 id,

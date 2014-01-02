@@ -2,7 +2,7 @@
 #include "Collision.h"
 #include "Constants.h"
 #include "GenericHelperMethods.h"
-//#include "Ground.h"
+#include "Ground.h"
 #include "Logfile.h"
 #include "Scripting.h"
 #include "TimerManager.h"
@@ -45,7 +45,7 @@ u32 now = device_->getTimer()->getRealTime();
         }
         // Auf Boden positionieren
         core::vector3df pos = object->getNode()->getPosition();
-        //pos.Y = Ground::getInstance().getHeight( pos.X, pos.Z );
+        pos.Y = Ground::getInstance().getHeight( pos.X, pos.Z );
         object->getNode()->setPosition( pos );
         staticObjects_.push_back( object );
     }
@@ -88,7 +88,7 @@ u32 now = device_->getTimer()->getRealTime();
         }
         // Auf Boden positionieren
         core::vector3df pos = npc->getNode()->getPosition();
-        //pos.Y = Ground::getInstance().getHeight( pos.X, pos.Z );
+        pos.Y = Ground::getInstance().getHeight( pos.X, pos.Z );
         npc->getNode()->setPosition( pos );
         npcs_.push_back( npc );
     }

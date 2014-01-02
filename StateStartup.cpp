@@ -5,11 +5,11 @@
 #include "Constants.h"
 //#include "Eventreceiver.h"
 #include "GenericHelperMethods.h"
-//#include "Ground.h"
+#include "Ground.h"
 //#include "Hero.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
-//#include "ObjectManager.h"
+#include "ObjectManager.h"
 #include "Scripting.h"
 #include "TimerManager.h"
 #include "Ton.h"
@@ -90,8 +90,11 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Wetter..." );
             Weather::getInstance( device_->getSceneManager() );
             break;
+        case 9:
+            loadingText_->setText( L"Lade Fußboden..." );
+            Ground::getInstance( device_ );
+            break;
             // wer benötigt wen zum Laden und Zerstören:
-            //    Ground::getInstance( device ); --> ObjectManager, Collision
             //    Camera::getInstance( scenemanager ); --> Ground
             //    Hero::getInstance( scenemanager ); --> Ground, ObjectManager
             //    World::getInstance(); --> alles

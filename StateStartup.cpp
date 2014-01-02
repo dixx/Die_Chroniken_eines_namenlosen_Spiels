@@ -3,7 +3,6 @@
 #include "Collision.h"
 #include "Configuration.h"
 #include "Constants.h"
-//#include "Eventreceiver.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
 //#include "Hero.h"
@@ -63,7 +62,7 @@ void StateStartup::update( f32 frameDeltaTime )
             Zufall::getInstance().start( device_->getTimer()->getRealTime() );
             break;
         case 2:
-            loadingText_->setText( L"Lade Zeitverwaltung..." );
+            loadingText_->setText( L"Lade Uhren..." );
             TimerManager::getInstance();
             break;
         case 3:

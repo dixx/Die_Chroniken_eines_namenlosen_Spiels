@@ -124,7 +124,7 @@ public:
 
 private:
 
-    // todo refactor usage of device here!
+    // todo refactor usage of device here! mebbe invent a new timer?
     IrrlichtDevice* device_; // only needed by debug timing. duh.
     scene::ISceneManager* smgr_;
     core::array<BasicStaticObject*> staticObjects_;

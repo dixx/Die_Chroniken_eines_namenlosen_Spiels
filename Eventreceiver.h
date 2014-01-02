@@ -53,8 +53,7 @@ public:
       \param event (\a SEvent&) Event vom Betriebssystem.
       \return `true` wenn Event erfolgreich behandelt wurde, ansonsten `false`
     */
-    virtual bool OnEvent( const SEvent& event );
-    // todo check if it must be virtual! if so, change dtor to virtual!
+    bool OnEvent( const SEvent& event );
 
     /*! \brief Merker für die letzten Tastenzustände.
 

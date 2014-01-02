@@ -83,12 +83,14 @@ void StateStartup::update( f32 frameDeltaTime )
             Collision::getInstance( device_->getSceneManager() );
             break;
         case 7:
+            loadingText_->setText( L"Lade Dinge..." );
+            ObjectManager::getInstance( device_ );
+            break;
+        case 8:
             loadingText_->setText( L"Lade Wetter..." );
             Weather::getInstance( device_->getSceneManager() );
             break;
             // wer benötigt wen zum Laden und Zerstören:
-            //    ObjectManager::getInstance( device ); --> Collision
-            //
             //    Ground::getInstance( device ); --> ObjectManager, Collision
             //    Camera::getInstance( scenemanager ); --> Ground
             //    Hero::getInstance( scenemanager ); --> Ground, ObjectManager

@@ -1,10 +1,8 @@
 /*! \file    Constants.h
-  \date    23.11.2011
-  \author  dixx
   \brief   Konstanten und Defines
-  \details Hier werden einige Konstanten und Defines definiert, die von
-           verschiedenen Stellen aus genutzt werden, vor allem für
-           Variablen-Instanzierungen.
+
+  Hier werden einige Konstanten und Defines definiert, die von verschiedenen
+  Stellen aus genutzt werden, vor allem für Variablen-Instanzierungen.
 */
 
 #ifndef CONSTANTS_H_
@@ -19,10 +17,10 @@
 
 using namespace irr;
 // Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Ueberblick zu behalten.
+// immer explizit angegeben, um den Überblick zu behalten.
 
-//! @name Einige vorgewaehlte geometrische Groessen, vorwiegend zum Instanzieren
-//! \attention Multiplikation mit Vektoren dauert laenger als neu Erstellen!
+//! @name Einige vorgewählte geometrische Größen, vorwiegend zum Instanzieren
+//! \attention Multiplikation mit Vektoren dauert länger als neu Erstellen!
 //! @{
 
 //! Nulldimension 2D Float
@@ -43,10 +41,10 @@ const core::vector3di VEC_3DI_NULL = core::vector3di( 0 );
 
 
 
-//! @name Einige vorgewaehlte Farben
+//! @name Einige vorgewählte Farben
 //! @{
 
-//! Magic Pink wird NUR fuer Transparenz genutzt
+//! Magic Pink wird NUR für Transparenz genutzt
 const video::SColor COL_MAGICPINK = video::SColor( 255, 250,   0, 250 );
 const video::SColor COL_WHITE     = video::SColor( 255, 255, 255, 255 );
 const video::SColor COL_LIGHTGREY = video::SColor( 255, 175, 175, 175 );
@@ -62,7 +60,7 @@ const video::SColor COL_PURPLE    = video::SColor( 255,  80,  30,  90 );
 
 
 //! \todo management of collision relevant IDs should be done by collisionmanager, right?
-//! @name IDs und Flags fuer Szenenknoten, wichig fuer Kollisionsabfrage
+//! @name IDs und Flags für Szenenknoten, wichig für Kollisionsabfrage
 //! @{
 #define  ID_NICHT_VERWENDEN         0x0
 #define  ID_ERSTE_BENUTZBARE        0x1

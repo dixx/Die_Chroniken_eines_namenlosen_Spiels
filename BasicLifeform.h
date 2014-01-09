@@ -44,6 +44,12 @@ public:
     */
     virtual void update( const f32 frameDeltaTime );
 
+    /*! \brief Setzt die neue Zielposition des Lebewesens.
+      \param target (\a const \a core::vector3df) neues Ziel
+      \return -
+    */
+    virtual void moveTo( const core::vector3df target );
+
     /*! \brief Liefert einen Zeiger auf den 3D-Knoten des Objekts, oder 0 wenn
                kein Knoten existiert.
       \param -
@@ -80,18 +86,24 @@ protected:
     f32 speed_;
     f32 movementDelta_;
     f32 collisionRadius_;
+    core::vector3df currentPosition_;
+    core::vector3df targetPosition_;
+    core::vector3df positionOffset_;
+    core::vector3df rotation_;
     core::vector3df nextStep_;
+    f32 maxJumpHeight_;
 
     scene::IAnimatedMesh* loadMesh();
+    void init();
+    void calculateNextStep();
+    inline void calculateCollisionRadius();
+    void updateMovement();
+    inline void stopMovement();
 
 private:
 
     BasicLifeform( const BasicLifeform& );
     void operator=( const BasicLifeform& );
-
-    void init();
-    void calculateNextStep();
-    inline void calculateCollisionRadius();
 
 };
 // Ende class BasicLifeform

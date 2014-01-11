@@ -76,10 +76,9 @@ void BasicLifeform::update( f32 frameDeltaTime )
                 node_->setPosition(
                         currentPosition_ + positionOffset_ + nextStep_ );
                 node_->updateAbsolutePosition();
-                if ( collision.isObjectCollidingWithNodes( this ) )
-                    stopMovement();
-                else
-                    updateMovement();
+                collision.isObjectCollidingWithNodes( this ) ?
+                        stopMovement()
+                        : updateMovement();
             }
             else
             {
@@ -162,36 +161,9 @@ scene::IAnimatedMesh* BasicLifeform::loadMesh()
 
 
 
-void BasicLifeform::init()
-{
-    smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, core::matrix4() );
-    node_ = smgr_->addAnimatedMeshSceneNode(
-            loadMesh(),
-            ObjectManager::getInstance().getBaseNodeByType( type_ ),
-            ObjectManager::getInstance().getBaseIdByType( type_ )
-    );
-    currentPosition_ = loadPosition();
-    targetPosition_ = currentPosition_;
-    positionOffset_ = loadOffset();
-    rotation_ = loadRotation();
-    node_->setScale( loadScale() );
-    node_->setName( name_ );
-    node_->setRotation( rotation_ );
-    node_->setPosition( currentPosition_ + positionOffset_ );
-    node_->updateAbsolutePosition();
-    node_->setMaterialTexture( 0, loadMainTexture() );
-    for ( u32 i = 0; i < node_->getMaterialCount(); ++i )
-        loadFilterAndEffects( node_->getMaterial( i ) );
-    Collision::getInstance().addAnimatedMeshNodeToWorld( node_ );
-    node_->setVisible( false );
-    calculateCollisionRadius();
-}
-
-
-
 void BasicLifeform::calculateNextStep()
 {
-    nextStep_ = VEC_3DF_NULL;//targetPosition_ - currentPosition_;
+    nextStep_ = targetPosition_ - currentPosition_;
     nextStep_.setLength( movementDelta_ );
 }
 
@@ -230,3 +202,31 @@ void BasicLifeform::stopMovement()
 
 
 /* private */
+
+
+
+void BasicLifeform::init()
+{
+    smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, core::matrix4() );
+    node_ = smgr_->addAnimatedMeshSceneNode(
+            loadMesh(),
+            ObjectManager::getInstance().getBaseNodeByType( type_ ),
+            ObjectManager::getInstance().getBaseIdByType( type_ )
+    );
+    currentPosition_ = loadPosition();
+    targetPosition_ = currentPosition_;
+    positionOffset_ = loadOffset();
+    rotation_ = loadRotation();
+    node_->setScale( loadScale() );
+    node_->setName( name_ );
+    node_->setRotation( rotation_ );
+    node_->setPosition( currentPosition_ + positionOffset_ );
+    node_->updateAbsolutePosition();
+    node_->setMaterialTexture( 0, loadMainTexture() );
+    for ( u32 i = 0; i < node_->getMaterialCount(); ++i )
+        loadFilterAndEffects( node_->getMaterial( i ) );
+    Collision::getInstance().addAnimatedMeshNodeToWorld( node_ );
+    node_->setVisible( false );
+    calculateCollisionRadius();
+    //node_->addShadowVolumeSceneNode(); todo Durch Blob-Schatten ersetzen
+}

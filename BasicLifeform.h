@@ -94,7 +94,6 @@ protected:
     f32 maxJumpHeight_;
 
     scene::IAnimatedMesh* loadMesh();
-    void init();
     void calculateNextStep();
     inline void calculateCollisionRadius();
     void updateMovement();
@@ -104,6 +103,8 @@ private:
 
     BasicLifeform( const BasicLifeform& );
     void operator=( const BasicLifeform& );
+
+    void init();
 
 };
 // Ende class BasicLifeform

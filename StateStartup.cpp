@@ -5,7 +5,6 @@
 #include "Constants.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
-//#include "Hero.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
@@ -45,7 +44,6 @@ StateStartup::~StateStartup()
 
 
 
-#pragma GCC diagnostic ignored "-Wunused-parameter"
 void StateStartup::update( f32 frameDeltaTime )
 {
     switch( classCounter_ )
@@ -98,7 +96,6 @@ void StateStartup::update( f32 frameDeltaTime )
             Camera::getInstance( device_->getSceneManager() );
             break;
             // wer benötigt wen zum Laden und Zerstören:
-            //    Hero::getInstance( scenemanager ); --> Ground, ObjectManager
             //    World::getInstance(); --> alles
             // todo refactor or even remove Menues!
                 //Menues::getInstance( device ); --> World
@@ -111,6 +108,7 @@ void StateStartup::update( f32 frameDeltaTime )
             break;
     }
     classCounter_++;
+#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
 #pragma GCC diagnostic error "-Wunused-parameter"
 

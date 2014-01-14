@@ -65,8 +65,8 @@ Ton::Ton( io::IFileSystem* fs )
     log.writeLine( Logfile::INFO, "Sound-Entchen erfolgreich erstellt." );
     log.writeLine( Logfile::INFO, "    Version: IrrKlang ", "1.4.0" );
     log.write( Logfile::INFO, "    Treiber: ", soundEngine_->getDriverName() );
-    log.writeLine( Logfile::INFO, ", Multi-Fred: ",
-            ( soundEngine_->isMultiThreaded() ) ? "true" : "false" );
+    log.writeLine( Logfile::INFO,
+            soundEngine_->isMultiThreaded() ? ", Multi-Fred" : "" );
     sndGuiArray_.clear();
     initAllSounds();
 }

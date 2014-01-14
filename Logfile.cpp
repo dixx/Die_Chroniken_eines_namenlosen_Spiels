@@ -17,7 +17,7 @@ void Logfile::setNewFilesystem( io::IFileSystem* fs )
         exit( 1 );
     fs_ = fs;
     openLogfile();
-    writeLine( DEBUG, "Logdatei auf neues Entchen umgehaengt." );
+    writeLine( DEBUG, "Logdatei auf neues Entchen umgehängt." );
     closeLogfile();
 }
 

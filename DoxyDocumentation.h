@@ -52,7 +52,7 @@ können. Für die Architektur gelten weitere Regeln:
   "teuer" ist
 - Versuche, keine lokalen Variablen zu erstellen, wenn diese direkt danach
   von der Funktion zurückgegeben werden
-- Nutze Initialisierungslisten für Klassen, vermeide Member-Assignment wo es
+- Nutze Initialisierungslisten für Klassen, vermeide Member-Assignment, wo es
   geht
 - Für nicht-Integrale Datentypen, versuche Referenzen statt Zeigern zu nutzen
 - Für Konstruktoren mit nur einem Parameter, benutze Schlüsselwort "explicit";

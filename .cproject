@@ -28,16 +28,16 @@
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level.1272860726" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.more" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level.2073522952" name="Debug Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1646367425" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8.1\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrklang\irrKlang-1.4.0\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\source\Irrlicht&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Lua\5.2.1\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8.1\source\Irrlicht&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1146221294" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="_DEBUG_MODE=1"/>
 									<listOptionValue builtIn="false" value="NULL=0"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.685116359" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -m32 -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align -isystem&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\include&quot; -isystem&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\source\Irrlicht&quot;" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.685116359" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -m32 -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align -isystem&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8.1\include&quot; -isystem&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8.1\source\Irrlicht&quot;" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.warnings.extrawarn.393033764" name="Extra warnings (-Wextra)" superClass="gnu.cpp.compiler.option.warnings.extrawarn" value="true" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.warnings.toerrors.28967562" name="Warnings as errors (-Werror)" superClass="gnu.cpp.compiler.option.warnings.toerrors" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1205559849" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -56,7 +56,7 @@
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="Lua52"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.940176103" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8\lib\Win32-gcc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrlicht\irrlicht-1.8.1\lib\Win32-gcc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Irrklang\irrKlang-1.4.0\lib\Win32-gcc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Lua\5.2.1\lib&quot;"/>
 								</option>

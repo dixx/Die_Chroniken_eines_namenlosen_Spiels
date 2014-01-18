@@ -35,6 +35,26 @@ public:
 	// Destruktor
 	virtual ~GameState() {};
 
+    /*!
+     *
+     */
+    //virtual void start() = 0;
+
+    /*!
+     *
+     */
+    //virtual void end() = 0;
+
+    /*!
+     *
+     */
+    //virtual void pause() = 0;
+
+    /*!
+     *
+     */
+    //virtual void resume() = 0;
+
     /*! \brief Aktualisiert den Status.
       \attention Methode ist pure virtual!
       \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in

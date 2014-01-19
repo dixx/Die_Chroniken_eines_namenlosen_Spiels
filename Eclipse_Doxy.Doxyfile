@@ -44,7 +44,7 @@ PROJECT_BRIEF = "Versuch, ein Spiel zu entwickeln"
 # exceed 55 pixels and the maximum width should not exceed 200 pixels. 
 # Doxygen will copy the logo to the output directory.
 
-PROJECT_LOGO = "C:\Users\dixx\workspace\Die Chroniken eines namenlosen Spiels\dev_media\chroniken.jpg"
+PROJECT_LOGO = "C:\Users\dixx\workspace\Die_Chroniken_eines_namenlosen_Spiels\dev_media\chroniken.jpg"
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 

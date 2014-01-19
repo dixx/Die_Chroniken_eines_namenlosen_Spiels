@@ -1,6 +1,9 @@
 /*! \file Eventreceiver.h
   \brief Klasse (Singleton) zur Behandlung von Tastatur/Maus, GUI und anderen
          Events.
+  \note The code is based on version 1.2a of the MastEventReceiver code,
+        © (Copyright) Robert E. Demarest, AKA Mastiff or Mastiff Odit.
+        A thousand thanks to him!
 */
 
 #ifndef _EVENTRECEIVER_HEADER

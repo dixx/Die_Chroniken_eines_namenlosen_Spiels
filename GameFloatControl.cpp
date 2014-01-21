@@ -77,7 +77,6 @@ void GameFloatControl::stop()
     Logfile::getInstance().writeLine( Logfile::INFO, "" );
     Logfile::getInstance().writeLine( Logfile::INFO,
             "'Die Chroniken eines namenlosen Spiels' wurde normal beendet." );
-    // device wird im dtor von Ablaufsteuerung gedropt.
 }
 
 

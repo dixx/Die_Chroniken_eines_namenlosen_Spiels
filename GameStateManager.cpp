@@ -12,9 +12,16 @@ GameStateManager& GameStateManager::getInstance( IrrlichtDevice* device )
 
 
 
-GameState* GameStateManager::getActiveState()
+void GameStateManager::update( f32 frameDeltaTime )
 {
-    return currentState_;
+    currentState_->update( frameDeltaTime );
+}
+
+
+
+void GameStateManager::draw()
+{
+    currentState_->draw();
 }
 
 

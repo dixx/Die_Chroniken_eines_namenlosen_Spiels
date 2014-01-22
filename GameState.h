@@ -26,6 +26,13 @@ class GameState
 
 public:
 
+    enum internalState {
+        STARTING = 0,
+        RUNNING,
+        STOPPING,
+        STOPPED
+    };
+
     /*! \brief Konstruktor.
       \param -
       \return -

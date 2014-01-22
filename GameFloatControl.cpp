@@ -42,9 +42,9 @@ void GameFloatControl::run()
         if ( !device_->isWindowActive() )
             device_->yield();
         updateFrameDeltaTime();
-        gamestates.getActiveState()->update( frameDeltaTime_ );
+        gamestates.update( frameDeltaTime_ );
         eventreceiver.setKeysLastState();
-        gamestates.getActiveState()->draw();
+        gamestates.draw();
 #ifdef _DEBUG_MODE
         printFPS();
 #endif

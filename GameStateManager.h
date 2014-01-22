@@ -51,11 +51,18 @@ public:
 	*/
     static GameStateManager& getInstance( IrrlichtDevice* device = 0 );
 
-    /*! \brief Liefert den momentan aktiven Status zurück.
-      \param -
-      \return \a GameState* Zeiger auf den momentan aktiven Spiel-State
+    /*! \brief Aktualisiert den momentan aktiven Status.
+      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
+             Sekunden
+      \return -
     */
-	GameState* getActiveState();
+    void update( const f32 frameDeltaTime );
+
+    /*! \brief Zeichnet den momentan aktiven Status auf den Bildschirm.
+      \param -
+      \return -
+    */
+    void draw();
 
     /*! \brief Setzt einen neuen Spiel-State als 'aktiv'.
       \param state (\a State) zu aktivierender Spiel-State

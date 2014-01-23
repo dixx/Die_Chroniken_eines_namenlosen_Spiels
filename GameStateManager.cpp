@@ -14,7 +14,21 @@ GameStateManager& GameStateManager::getInstance( IrrlichtDevice* device )
 
 void GameStateManager::update( f32 frameDeltaTime )
 {
-    currentState_->update( frameDeltaTime );
+    switch ( currentState_->currentInternalState() )
+    {
+        case GameState::RUNNING:
+            currentState_->update( frameDeltaTime );
+            break;
+        case GameState::STARTING:
+            currentState_->start( frameDeltaTime );
+            break;
+        case GameState::STOPPED:
+            // change state
+            break;
+        default:
+            currentState_->shutdown( frameDeltaTime );
+            break;
+    }
 }
 
 

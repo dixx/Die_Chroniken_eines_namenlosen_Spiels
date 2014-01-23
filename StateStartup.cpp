@@ -33,6 +33,8 @@ StateStartup::StateStartup( IrrlichtDevice* device)
     GenericHelperMethods::getInstance( device_ );
     createLoadingScreenImage();
     createLoadingScreenText();
+    fader_ = device_->getGUIEnvironment()->addInOutFader();
+    transitTo( STARTING );
 }
 
 
@@ -41,6 +43,16 @@ StateStartup::~StateStartup()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
 }
+
+
+
+void StateStartup::start( f32 frameDeltaTime )
+{
+    if ( fader_->isReady() )
+        transitTo( RUNNING );
+#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
+}
+#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
@@ -102,11 +114,22 @@ void StateStartup::update( f32 frameDeltaTime )
                 // ...
                 //Menues::getInstance().transitTo( Menues::MENUE_HAUPTMENUE );
         default:
-            classCounter_ = 0;
-            return; // todo change active gamestate instead
+            // todo change active gamestate
+            loadingText_->setText( L"" );
+            transitTo( STOPPING );
             break;
     }
     classCounter_++;
+#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
+}
+#pragma GCC diagnostic error "-Wunused-parameter"
+
+
+
+void StateStartup::shutdown( f32 frameDeltaTime )
+{
+    if ( fader_->isReady() )
+        transitTo( STOPPED );
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
 #pragma GCC diagnostic error "-Wunused-parameter"
@@ -139,12 +162,15 @@ void StateStartup::createLoadingScreenImage()
             "GFX/Spiellogo.png" );
     video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
             "GFX/Spiellogo.png" );
-    gui::IGUIImage* loadingScreenImageFrame =
-            device_->getGUIEnvironment()->addImage(
-                    core::recti( core::dimension2di( 0, 0 ),
-                            Configuration::getInstance().getScreenSize() ) );
-    loadingScreenImageFrame->setImage( loadingScreenImage );
-    loadingScreenImageFrame->setScaleImage( true );
+    loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage(
+            core::recti(
+                    core::dimension2di( 0, 0 ),
+                    Configuration::getInstance().getScreenSize()
+            )
+    );
+    loadingScreenImageFrame_->setImage( loadingScreenImage );
+    loadingScreenImageFrame_->setScaleImage( true );
+    loadingScreenImageFrame_->setEnabled( false );
 }
 
 
@@ -154,7 +180,7 @@ void StateStartup::createLoadingScreenText()
     core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
     loadingText_ = device_->getGUIEnvironment()->addStaticText(
-            L"Lade Klassen...",
+            L"",
             core::recti(
                     core::dimension2di( 9, screenSize.Height - 30 ),
                     screenSize
@@ -167,4 +193,28 @@ void StateStartup::createLoadingScreenText()
     gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
             "GFX/FONTS/Dooling_font.xml" );
     loadingText_->setOverrideFont( font );
+}
+
+
+
+void StateStartup::transitTo( internalState state )
+{
+    switch ( state )
+    {
+        case STARTING:
+            currentInternalState_ = STARTING;
+            fader_->fadeIn( 400 );
+            loadingScreenImageFrame_->setEnabled( true );
+            break;
+        case RUNNING:
+            currentInternalState_ = RUNNING;
+            break;
+        case STOPPING:
+            currentInternalState_ = STOPPING;
+            fader_->fadeOut( 900 );
+            break;
+        default:
+            currentInternalState_ = STOPPED;
+            break;
+    }
 }

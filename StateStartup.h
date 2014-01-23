@@ -40,6 +40,20 @@ public:
     // Destruktor
     ~StateStartup();
 
+    /*! \brief Aktualisiert die Startup-Phase des Status.
+      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
+             Sekunden
+      \return -
+    */
+    void start( const f32 frameDeltaTime );
+
+    /*! \brief Aktualisiert die Shutdown-Phase Status.
+      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
+             Sekunden
+      \return -
+    */
+    void shutdown( const f32 frameDeltaTime );
+
     /*! \brief Aktualisiert den Status.
       \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
              Sekunden
@@ -63,13 +77,16 @@ private:
 
     IrrlichtDevice* device_;
     u32 classCounter_;
+    gui::IGUIImage* loadingScreenImageFrame_;
     gui::IGUIStaticText* loadingText_;
+    gui::IGUIInOutFader* fader_;
 
     StateStartup( const StateStartup& );
     StateStartup& operator=( const StateStartup& );
 
     void createLoadingScreenImage();
     void createLoadingScreenText();
+    void transitTo( internalState state );
 
 };
 // Ende class StateStartup

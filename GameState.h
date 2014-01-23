@@ -26,41 +26,32 @@ class GameState
 
 public:
 
+    /*! \brief Werte, die der momentane Status des GameState annehmen kann.
+    */
     enum internalState {
-        STARTING = 0,
-        RUNNING,
-        STOPPING,
-        STOPPED
+        INITIAL = 0,  //!< nicht im Code verwenden!
+        STARTING,     //!< GameState startet gerade
+        RUNNING,      //!< GameState läuft gerade
+        STOPPING,     //!< GameState beendet sich gerade
+        STOPPED       //!< GameState ist beendet
     };
 
     /*! \brief Konstruktor.
       \param -
       \return -
     */
-    GameState() {};
+    GameState() : currentInternalState_(INITIAL) {};
 
 	// Destruktor
 	virtual ~GameState() {};
 
-    /*!
-     *
-     */
-    //virtual void start() = 0;
-
-    /*!
-     *
-     */
-    //virtual void end() = 0;
-
-    /*!
-     *
-     */
-    //virtual void pause() = 0;
-
-    /*!
-     *
-     */
-    //virtual void resume() = 0;
+    /*! \brief Aktualisiert die Startup-Phase des Status.
+      \attention Methode ist pure virtual!
+      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
+             Sekunden
+      \return -
+    */
+    virtual void start( const f32 frameDeltaTime ) = 0;
 
     /*! \brief Aktualisiert den Status.
       \attention Methode ist pure virtual!
@@ -69,6 +60,14 @@ public:
       \return -
     */
     virtual void update( const f32 frameDeltaTime ) = 0;
+
+    /*! \brief Aktualisiert die Shutdown-Phase Status.
+      \attention Methode ist pure virtual!
+      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
+             Sekunden
+      \return -
+    */
+    virtual void shutdown( const f32 frameDeltaTime ) = 0;
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
       \attention Methode ist pure virtual!
@@ -83,6 +82,26 @@ public:
       \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
     */
 	virtual bool handleGuiEvents() = 0;
+
+    /*! \brief Liefert den momentanen Status des GameState.
+      \param -
+      \return \a internalState momentaner Status
+     */
+    internalState currentInternalState() { return currentInternalState_; };
+
+    /*!
+     *
+     */
+    //virtual void pause() = 0;
+
+    /*!
+     *
+     */
+    //virtual void resume() = 0;
+
+protected:
+
+    internalState currentInternalState_;
 
 private:
 

@@ -34,7 +34,7 @@ bool GameFloatControl::start()
 
 void GameFloatControl::run()
 {
-    GameStateManager& gamestates = GameStateManager::getInstance();
+    GameStateManager& game = GameStateManager::getInstance();
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
     prepareFrameDeltaTime();
     while ( device_->run() )
@@ -42,9 +42,9 @@ void GameFloatControl::run()
         if ( !device_->isWindowActive() )
             device_->yield();
         updateFrameDeltaTime();
-        gamestates.update( frameDeltaTime_ );
+        game.update( frameDeltaTime_ );
         eventreceiver.setKeysLastState();
-        gamestates.draw();
+        game.draw();
 #ifdef _DEBUG_MODE
         printFPS();
 #endif

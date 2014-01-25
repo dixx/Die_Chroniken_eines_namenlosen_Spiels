@@ -114,7 +114,8 @@ void StateStartup::update( f32 frameDeltaTime )
                 // ...
                 //Menues::getInstance().transitTo( Menues::MENUE_HAUPTMENUE );
         default:
-            // todo change active gamestate
+            GameStateManager::getInstance().requestNewState(
+                    GameStateManager::SHUTDOWN );
             loadingText_->setText( L"" );
             transitTo( STOPPING );
             break;

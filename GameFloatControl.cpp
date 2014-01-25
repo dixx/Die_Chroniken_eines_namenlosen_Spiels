@@ -25,8 +25,7 @@ bool GameFloatControl::start()
     device_->drop();
     if ( createDeviceFromConfig() == FAILED )
         return FAILED;
-    GameStateManager::getInstance( device_ ).setActiveState(
-            GameStateManager::STARTUP );
+    GameStateManager::getInstance( device_ );
     return SUCCEEDED;
 }
 

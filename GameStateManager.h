@@ -14,6 +14,8 @@
 #include <irrlicht.h>
 #include "GameState.h"
 
+class GameState; // forward declaration
+
 using namespace irr;
 // Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
 // immer explizit angegeben, um den Überblick zu behalten.
@@ -35,7 +37,8 @@ public:
     /*! \brief Die verschiedenen Stati, die das Spiel annehmen kann
     */
 	enum State {
-	    STARTUP = 0,  //!< Initialisieren des Spiels
+	    NOSTATE = 0,  //!< Unzulässiger GameState
+	    STARTUP,      //!< Initialisieren des Spiels
 	    MAIN_MENU,    //!< Das Hauptmenü und dessen Untermenüs
         GAME,         //!< Das Spiel selbst
         SHUTDOWN,     //!< Herunterfahren des Spiels
@@ -64,22 +67,27 @@ public:
     */
     void draw();
 
-    /*! \brief Setzt einen neuen Spiel-State als 'aktiv'.
-      \param state (\a State) zu aktivierender Spiel-State
+    /*! \brief Fragt Wechsel zu einem neuen Spiel-State an.
+      \param desiredState (\a State) zu aktivierender Spiel-State
       \return -
     */
-	void setActiveState( State state );
+	void requestNewState( State desiredState );
 
 private:
 
     IrrlichtDevice* device_;
-	core::array<GameState*> states_;
 	GameState* currentState_;
+    State requestedState_;
+    State runningState_;
 
     GameStateManager( IrrlichtDevice* device );
     GameStateManager( const GameStateManager& );
     GameStateManager& operator=( const GameStateManager& );
     ~GameStateManager();
+
+    inline void switchState();
+    inline void validateRequestForStartup();
+    inline void unknownStateRequested();
 
 };
 // Ende class GameStateManager

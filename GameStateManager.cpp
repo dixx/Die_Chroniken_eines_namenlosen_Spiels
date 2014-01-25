@@ -14,7 +14,7 @@ GameStateManager& GameStateManager::getInstance( IrrlichtDevice* device )
 
 void GameStateManager::update( f32 frameDeltaTime )
 {
-    switch ( currentState_->currentInternalState() )
+    switch ( currentState_->currentInternalState() ) // ordered by propability
     {
         case GameState::RUNNING:
             currentState_->update( frameDeltaTime );
@@ -23,7 +23,7 @@ void GameStateManager::update( f32 frameDeltaTime )
             currentState_->start( frameDeltaTime );
             break;
         case GameState::STOPPED:
-            // change state
+            switchState(); // POTENTIALBUG we might loose one frame of drawing here!
             break;
         default:
             currentState_->shutdown( frameDeltaTime );
@@ -35,15 +35,26 @@ void GameStateManager::update( f32 frameDeltaTime )
 
 void GameStateManager::draw()
 {
-    currentState_->draw();
+    if ( currentState_ )
+        currentState_->draw();
 }
 
 
 
-void GameStateManager::setActiveState( State state )
+void GameStateManager::requestNewState( State desiredState )
 {
-    if ( state == STARTUP )
-        currentState_ = states_[ state ];
+    switch ( desiredState )
+    {
+        case STARTUP:
+            validateRequestForStartup();
+            break;
+        case SHUTDOWN:
+            requestedState_ = SHUTDOWN;  // Anfrage von SHUTDOWN ist immer zulässig.
+            break;
+        default:
+            unknownStateRequested();
+            break;
+    }
 }
 
 
@@ -54,17 +65,15 @@ void GameStateManager::setActiveState( State state )
 
 GameStateManager::GameStateManager( IrrlichtDevice* device )
 : device_(device),
-  currentState_(0)
+  currentState_(0),
+  requestedState_(NOSTATE),
+  runningState_(NOSTATE)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
                 "Entchen in [GameStateManager] nicht mehr gefunden! Abbruch." );
-	states_.reallocate( STATES_COUNT );
-    states_[ STARTUP ] = new StateStartup( device_ );
-    //states_[ MAIN_MENU ] = new GameState();
-    //states_[ GAME ] = new GameState();
-	// todo check if a state does really NOT need a start and end method!
-	// todo check if it would be better to init states on demand!
+    requestNewState( STARTUP );
+    switchState();
 }
 
 
@@ -72,8 +81,51 @@ GameStateManager::GameStateManager( IrrlichtDevice* device )
 GameStateManager::~GameStateManager()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
+    if ( currentState_)
+        delete currentState_;
     currentState_ = 0;
-    for ( register u32 i = 0; i < 1; ++i)//states_.size(); ++i )
-        delete states_[ i ];
     device_ = 0;
+}
+
+
+
+void GameStateManager::switchState()
+{
+    if ( currentState_ )
+        delete currentState_;
+    switch ( requestedState_ )
+    {
+        case STARTUP:
+            currentState_ = new StateStartup( device_ );
+            break;
+        default: // SHUTDOWN
+            device_->closeDevice(); // create GameState Shutdown later
+            currentState_ = 0;
+            break;
+    }
+    runningState_ = requestedState_;
+}
+
+
+
+void GameStateManager::validateRequestForStartup()
+{
+    switch ( runningState_ )
+    {
+        case NOSTATE:
+            requestedState_ = STARTUP;
+            break;
+        default:
+            Logfile::getInstance().emergencyExit(
+                    "Unzulässige Anforderung von GameState STARTUP! Abbruch." );
+            break;
+    }
+}
+
+
+
+void GameStateManager::unknownStateRequested()
+{
+    Logfile::getInstance().emergencyExit(
+            "Unbekannter GameState angefordert! Abbruch." );
 }

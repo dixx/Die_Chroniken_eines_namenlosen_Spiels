@@ -1,9 +1,9 @@
 /*! \file GameState.h
-  \brief Klasse stellt Interface fuer Spiel-Stati bereit.
+  \brief Klasse stellt Interface für Spiel-Stati bereit.
 */
 
-#ifndef _GAMESTATE_H_EADER
-#define _GAMESTATE_H_EADER
+#ifndef _GAMESTATE_HEADER
+#define _GAMESTATE_HEADER
 
 // Linken der IRRLICHT-DLL, nur in VisualStudio nötig
 //#ifdef _IRR_WINDOWS_
@@ -11,6 +11,7 @@
 //#endif
 
 #include <irrlicht.h>
+#include "GameStateManager.h"
 
 using namespace irr;
 // Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
@@ -29,7 +30,7 @@ public:
     /*! \brief Werte, die der momentane Status des GameState annehmen kann.
     */
     enum internalState {
-        INITIAL = 0,  //!< nicht im Code verwenden!
+        INITIAL = 0,  //!< unzulässiger Status
         STARTING,     //!< GameState startet gerade
         RUNNING,      //!< GameState läuft gerade
         STOPPING,     //!< GameState beendet sich gerade

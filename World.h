@@ -29,8 +29,7 @@ class World
 
 public:
 
-    /*! \enum Welten
-      \brief Jede Welt erhält eine ID.
+    /*! \brief Jede Welt erhält eine ID.
     */
     enum World_ID
     {

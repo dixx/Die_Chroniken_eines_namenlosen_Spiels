@@ -21,7 +21,7 @@
 
 
 
-StateStartup::StateStartup( IrrlichtDevice* device)
+StateStartup::StateStartup( IrrlichtDevice* device )
 : GameState(),
   device_(device),
   classCounter_(0)
@@ -204,7 +204,7 @@ void StateStartup::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            fader_->fadeIn( 400 );
+            fader_->fadeIn( 700 );
             loadingScreenImageFrame_->setEnabled( true );
             break;
         case RUNNING:

@@ -72,11 +72,17 @@ public:
 private:
 
     IrrlichtDevice* device_;
+    video::IVideoDriver* driver_;
+    video::ITexture* menueScreenImageCatalogue_;
+    video::ITexture* mainMenueTexture_;
+    video::SColor mainMenueBgColor_;
 
     StateMainMenue( const StateMainMenue& );
     StateMainMenue& operator=( const StateMainMenue& );
 
     void transitTo( internalState state );
+    void loadTextures();
+    void extractImagesFromCatalogue();
 
 };
 // Ende class StateMainMenue

@@ -1,6 +1,7 @@
 #include "GameStateManager.h"
 #include "Logfile.h"
 #include "StateStartup.h"
+#include "StateMainMenue.h"
 
 
 
@@ -23,7 +24,7 @@ void GameStateManager::update( f32 frameDeltaTime )
             currentState_->start( frameDeltaTime );
             break;
         case GameState::STOPPED:
-            switchState(); // POTENTIALBUG we might loose one frame of drawing here!
+            switchState(); // POTENTIALBUG we loose one frame of drawing here.
             break;
         default:
             currentState_->shutdown( frameDeltaTime );
@@ -47,6 +48,9 @@ void GameStateManager::requestNewState( State desiredState )
     {
         case STARTUP:
             validateRequestForStartup();
+            break;
+        case MAIN_MENU:
+            validateRequestForMainMenu();
             break;
         case SHUTDOWN:
             requestedState_ = SHUTDOWN;  // Anfrage von SHUTDOWN ist immer zulässig.
@@ -98,6 +102,9 @@ void GameStateManager::switchState()
         case STARTUP:
             currentState_ = new StateStartup( device_ );
             break;
+        case MAIN_MENU:
+            currentState_ = new StateMainMenue( device_ );
+            break;
         default: // SHUTDOWN
             device_->closeDevice(); // create GameState Shutdown later
             currentState_ = 0;
@@ -118,6 +125,23 @@ void GameStateManager::validateRequestForStartup()
         default:
             Logfile::getInstance().emergencyExit(
                     "Unzulässige Anforderung von GameState STARTUP! Abbruch." );
+            break;
+    }
+}
+
+
+
+void GameStateManager::validateRequestForMainMenu()
+{
+    switch ( runningState_ )
+    {
+        case STARTUP:
+            requestedState_ = MAIN_MENU;
+            break;
+        default:
+            Logfile::getInstance().emergencyExit(
+                    "Unzulässige Anforderung von GameState MAIN_MENU! Abbruch."
+            );
             break;
     }
 }

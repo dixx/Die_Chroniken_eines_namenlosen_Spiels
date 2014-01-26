@@ -85,8 +85,9 @@ private:
     GameStateManager& operator=( const GameStateManager& );
     ~GameStateManager();
 
-    inline void switchState();
+    void switchState();
     inline void validateRequestForStartup();
+    inline void validateRequestForMainMenu();
     inline void unknownStateRequested();
 
 };

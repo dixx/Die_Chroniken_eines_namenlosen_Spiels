@@ -153,6 +153,7 @@ bool GameFloatControl::createDeviceFromConfig()
             device_->getVersion() );
     logfile.writeLine( Logfile::DETAIL, "    Treiber: ",
             device_->getVideoDriver()->getName() );
+    device_->getCursorControl()->setVisible( false );
     return SUCCEEDED;
  }
 

@@ -85,7 +85,8 @@ void StateStartup::update( f32 frameDeltaTime )
             break;
         case 5:
             loadingText_->setText( L"Lade Zeigefinger..." );
-            Mauspfeil::getInstance( device_ );
+            Mauspfeil::getInstance( device_ ).setCurrentArrow(
+                                Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;
         case 6:
             loadingText_->setText( L"Lade Zusammenstöße..." );
@@ -115,7 +116,7 @@ void StateStartup::update( f32 frameDeltaTime )
                 //Menues::getInstance().transitTo( Menues::MENUE_HAUPTMENUE );
         default:
             GameStateManager::getInstance().requestNewState(
-                    GameStateManager::SHUTDOWN );
+                    GameStateManager::MAIN_MENU );
             loadingText_->setText( L"" );
             transitTo( STOPPING );
             break;
@@ -139,7 +140,7 @@ void StateStartup::shutdown( f32 frameDeltaTime )
 
 void StateStartup::draw()
 {
-    device_->getVideoDriver()->beginScene( true, true, COL_BLACK );
+    device_->getVideoDriver()->beginScene();
     device_->getGUIEnvironment()->drawAll();
     device_->getVideoDriver()->endScene();
 }

@@ -83,6 +83,7 @@ private:
     void transitTo( internalState state );
     void loadTextures();
     void extractImagesFromCatalogue();
+    void createMainMenu();
 
 };
 // Ende class StateMainMenue

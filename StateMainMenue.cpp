@@ -15,7 +15,7 @@ StateMainMenue::StateMainMenue( IrrlichtDevice* device )
   driver_(0),
   menueScreenImageCatalogue_(0),
   mainMenueTexture_(0),
-  mainMenueBgColor_(video::SColor( 255, 255, 245, 240 ))
+  mainMenueBgColor_(video::SColor( 255, 248, 245, 240 ))
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
@@ -24,6 +24,7 @@ StateMainMenue::StateMainMenue( IrrlichtDevice* device )
     device_->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
     loadTextures();
     extractImagesFromCatalogue();
+    createMainMenu();
     transitTo( STARTING );
 }
 
@@ -70,7 +71,7 @@ void StateMainMenue::shutdown( f32 frameDeltaTime )
 
 void StateMainMenue::draw()
 {
-    device_->getVideoDriver()->beginScene( true, true, mainMenueBgColor_ );
+    device_->getVideoDriver()->beginScene( true, false, mainMenueBgColor_ );
     //device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
     Mauspfeil::getInstance().draw();
@@ -150,4 +151,28 @@ void StateMainMenue::extractImagesFromCatalogue()
     wholeImage->drop();
     driver_->disableFeature( video::EVDF_BILINEAR_FILTER, false );
     driver_->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, true );
+}
+
+
+
+void StateMainMenue::createMainMenu()
+{
+    gui::IGUIEnvironment* guienv = device_->getGUIEnvironment();
+    u32 texWidth = mainMenueTexture_->getSize().Width;
+    u32 texHeight = mainMenueTexture_->getSize().Height;
+    core::dimension2du screen = Configuration::getInstance().getScreenSize();
+
+    gui::IGUIElement* root = guienv->getRootGUIElement();
+
+    gui::IGUIImage* menueBgImage = guienv->addImage(
+            core::recti(
+                    screen.Width - 20 - texWidth ,
+                    screen.Height - 20 - texHeight,
+                    screen.Width - 20,
+                    screen.Height - 20
+            ),  // Abmessungen auf Bildschirm
+            root,  // parent
+            1  // id
+    );
+    menueBgImage->setImage( mainMenueTexture_ );
 }

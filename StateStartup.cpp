@@ -217,6 +217,9 @@ void StateStartup::transitTo( internalState state )
             break;
         default:
             currentInternalState_ = STOPPED;
+            loadingScreenImageFrame_->remove();
+            loadingText_->remove();
+            fader_->remove();
             break;
     }
 }

@@ -147,10 +147,12 @@ void StateStartup::draw()
 
 
 
-bool StateStartup::handleGuiEvents()
+bool StateStartup::handleGuiEvents( const irr::SEvent& event )
 {
+#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> event
     return false;
 }
+#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 

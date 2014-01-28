@@ -79,10 +79,10 @@ public:
 
     /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des Status.
       \attention Methode ist pure virtual!
-      \param -
+      \param event (\a irr::SEvent&) Event-Referenz
       \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
     */
-	virtual bool handleGuiEvents() = 0;
+	virtual bool handleGuiEvents( const irr::SEvent& event ) = 0;
 
     /*! \brief Liefert den momentanen Status des GameState.
       \param -

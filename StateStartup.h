@@ -68,10 +68,10 @@ public:
     void draw();
 
     /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des Status.
-      \param -
+      \param event (\a irr::SEvent&) Event-Referenz
       \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
     */
-    bool handleGuiEvents();
+    bool handleGuiEvents( const irr::SEvent& event );
 
 private:
 

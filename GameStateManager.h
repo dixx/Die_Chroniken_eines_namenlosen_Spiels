@@ -67,6 +67,13 @@ public:
     */
     void draw();
 
+    /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des momentan
+               aktiven Status.
+      \param event (\a irr::SEvent&) Event-Referenz
+      \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
+    */
+    bool handleGuiEvents( const irr::SEvent& event );
+
     /*! \brief Fragt Wechsel zu einem neuen Spiel-State an.
       \param desiredState (\a State) zu aktivierender Spiel-State
       \return -

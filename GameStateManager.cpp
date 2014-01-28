@@ -42,6 +42,16 @@ void GameStateManager::draw()
 
 
 
+bool GameStateManager::handleGuiEvents( const irr::SEvent& event )
+{
+    if ( currentState_ )
+        return currentState_->handleGuiEvents( event );
+    else
+        return false;
+}
+
+
+
 void GameStateManager::requestNewState( State desiredState )
 {
     switch ( desiredState )

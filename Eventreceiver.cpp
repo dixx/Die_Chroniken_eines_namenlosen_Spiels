@@ -1,5 +1,5 @@
 #include "Eventreceiver.h"
-//#include "Menues.h"
+#include "GameStateManager.h"
 
 
 
@@ -25,20 +25,16 @@ bool Eventreceiver::OnEvent( const SEvent& event )
     {
         switch ( event.MouseInput.Event )
         {
+            case EMIE_MOUSE_MOVED:
+                mouseY_ = event.MouseInput.Y;
+                mouseX_ = event.MouseInput.X;
+                break;
             case EMIE_LMOUSE_PRESSED_DOWN:
                 LMBIsDown_ = reactOnMouse_;
                 thereWasKeyEvent_ = true;
                 break;
             case EMIE_LMOUSE_LEFT_UP:
                 LMBIsDown_ = false;
-                thereWasKeyEvent_ = true;
-                break;
-            case EMIE_MMOUSE_PRESSED_DOWN:
-                MMBIsDown_ = reactOnMouse_;
-                thereWasKeyEvent_ = true;
-                break;
-            case EMIE_MMOUSE_LEFT_UP:
-                MMBIsDown_ = false;
                 thereWasKeyEvent_ = true;
                 break;
             case EMIE_RMOUSE_PRESSED_DOWN:
@@ -49,9 +45,13 @@ bool Eventreceiver::OnEvent( const SEvent& event )
                 RMBIsDown_ = false;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_MOUSE_MOVED:
-                mouseY_ = event.MouseInput.Y;
-                mouseX_ = event.MouseInput.X;
+            case EMIE_MMOUSE_PRESSED_DOWN:
+                MMBIsDown_ = reactOnMouse_;
+                thereWasKeyEvent_ = true;
+                break;
+            case EMIE_MMOUSE_LEFT_UP:
+                MMBIsDown_ = false;
+                thereWasKeyEvent_ = true;
                 break;
             case EMIE_MOUSE_WHEEL:
                 if ( reactOnMouse_ )
@@ -64,7 +64,7 @@ bool Eventreceiver::OnEvent( const SEvent& event )
     } //end Mouse-Events
     if ( reactOnGUI_ && event.EventType == EET_GUI_EVENT )
     {
-        return false;//Menues::getInstance().hasGUIEventBeenProcessed( event );
+        return GameStateManager::getInstance().handleGuiEvents( event );
     } //end GUI-Events
     // Event konnte oder sollte nicht behandelt werden, wird nun von OS
     // behandelt.

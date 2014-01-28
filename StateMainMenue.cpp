@@ -322,7 +322,9 @@ bool StateMainMenue::mainMenueButtonHandler()
             //transitTo( MENUE_MITWIRKENDE );
             break;
         case ID_HM_EXITBUTTON:
-            device_->closeDevice();
+            GameStateManager::getInstance().requestNewState(
+                                GameStateManager::SHUTDOWN );
+            transitTo( STOPPING );
             break;
         default:
             Logfile::getInstance().writeLine( Logfile::DEBUG,

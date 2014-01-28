@@ -6,6 +6,7 @@
 #include "GenericHelperMethods.h"
 #include "Mauspfeil.h"
 #include "Logfile.h"
+#include "Ton.h"
 
 
 
@@ -15,7 +16,9 @@ StateMainMenue::StateMainMenue( IrrlichtDevice* device )
   driver_(0),
   menueScreenImageCatalogue_(0),
   mainMenueTexture_(0),
-  mainMenueBgColor_(video::SColor( 255, 248, 245, 240 ))
+  mainMenueBgColor_(video::SColor( 255, 248, 245, 240 )),
+  callerID_(0),
+  hover_(false)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
@@ -80,9 +83,71 @@ void StateMainMenue::draw()
 
 
 
-bool StateMainMenue::handleGuiEvents()
+bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
 {
-    return false;
+    bool result = false;
+    gui::IGUIElement* caller_ = event.GUIEvent.Caller;
+    gui::EGUI_ELEMENT_TYPE callerType_ = caller_->getType();
+    callerID_ = caller_->getID();
+    switch ( event.GUIEvent.EventType )
+    {
+        case gui::EGET_ELEMENT_HOVERED:
+            //printf("hover_. Caller: %i\n", this->callerID_);
+            if ( callerType_ == gui::EGUIET_BUTTON )
+            {
+                ((gui::IGUIButton*)caller_)->setImage(
+                        menueScreenImageCatalogue_,
+                        core::recti( 661, 115, 976, 204 )
+                );
+                Ton::getInstance().playGUISound( Ton::SND_GUI_HOVER );
+            }
+            hover_ = true;
+            break;
+        case gui::EGET_ELEMENT_LEFT:
+            //printf("no more hover_. Caller: %i\n", this->callerID_);
+            if ( callerType_ == gui::EGUIET_BUTTON )
+            {
+                ((gui::IGUIButton*)caller_)->setImage(
+                        menueScreenImageCatalogue_,
+                        core::recti( 654, 22, 966, 110 )
+                );
+            }
+            hover_ = false;
+            break;
+        case gui::EGET_BUTTON_CLICKED:
+            switch ( 1 )
+            {
+                case 1:
+                    result = mainMenueButtonHandler();
+                    break;
+//                case MENUE_NEUER_SPIELER:
+//                    result = newPlayerMenueButtonHandler();
+//                    break;
+//                case MENUE_HAUPTMENUE_LADEN:
+//                    result = loadMenueButtonHandler();
+//                    break;
+//                case MENUE_HAUPTMENUE_EINSTELLUNGEN:
+//                    result = prefsMenueButtonHandler();
+//                    break;
+//                case MENUE_MITWIRKENDE:
+//                    result = aboutMenueButtonHandler();
+//                    break;
+                default:
+                    break;
+            }
+            break;
+        case gui::EGET_ELEMENT_FOCUSED:
+            //printf("InFocus, Caller: %i\n", this->callerID_);
+            break;
+        case gui::EGET_ELEMENT_FOCUS_LOST:
+            //printf("OutOfFocus, Caller: %i\n", this->callerID_);
+            break;
+        default:
+            Logfile::getInstance().writeLine( Logfile::DEBUG,
+                    "unbehandelter GUI-Event, Caller: %i\n", callerID_);
+            break;
+    }
+    return result;
 }
 
 
@@ -135,6 +200,7 @@ void StateMainMenue::extractImagesFromCatalogue()
             menueScreenImageCatalogue_->getName() );
     if ( !wholeImage )
         Logfile::getInstance().emergencyExit( "Bild nicht geladen!" );
+    driver_->makeColorKeyTexture( menueScreenImageCatalogue_, COL_MAGICPINK );
     // Ausschneiden des mainMenue-Hintergrundbildes als eigene Textur
     core::dimension2du menueTextureSize = core::dimension2du( 436, 555 );
     video::IImage* partialImage = driver_->createImage(
@@ -172,7 +238,97 @@ void StateMainMenue::createMainMenu()
                     screen.Height - 20
             ),  // Abmessungen auf Bildschirm
             root,  // parent
-            1  // id
+            ID_HM_BGIMAGE  // id
     );
     menueBgImage->setImage( mainMenueTexture_ );
+
+    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
+    gui::IGUIButton* newButton = guienv->addButton(
+            core::recti( core::position2di( 85, 63 ), buttonSize),
+            menueBgImage,
+            ID_HM_NEWBUTTON,
+            L"Neues Spiel"
+    );
+    changeStyleOfButton( newButton );
+
+    gui::IGUIButton* resumeButton = guienv->addButton(
+            core::recti( core::position2di( 85, 134 ), buttonSize ),
+            menueBgImage, ID_HM_RESUMEBUTTON, L"Fortsetzen"
+    );
+    changeStyleOfButton( resumeButton );
+
+    gui::IGUIButton* loadButton = guienv->addButton(
+            core::recti( core::position2di( 85, 207 ), buttonSize ),
+            menueBgImage, ID_HM_LOADBUTTON, L"Laden"
+    );
+    changeStyleOfButton( loadButton );
+
+    gui::IGUIButton* prefsButton = guienv->addButton(
+            core::recti( core::position2di( 85, 288 ), buttonSize ),
+            menueBgImage, ID_HM_PREFSBUTTON, L"Einstellungen"
+    );
+    changeStyleOfButton( prefsButton );
+
+    gui::IGUIButton* aboutButton = guienv->addButton(
+            core::recti( core::position2di( 85, 356 ), buttonSize ),
+            menueBgImage, ID_HM_ABOUTBUTTON, L"Mitwirkende"
+    );
+    changeStyleOfButton( aboutButton );
+
+    gui::IGUIButton* exitButton = guienv->addButton(
+            core::recti( core::position2di( 85, 416 ), buttonSize ),
+            menueBgImage, ID_HM_EXITBUTTON, L"Beenden"
+    );
+    changeStyleOfButton( exitButton );
+}
+
+
+
+void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
+{
+    button->setImage(
+            menueScreenImageCatalogue_,
+            core::recti( 654, 22, 966, 110 )
+    );
+    button->setPressedImage(
+            menueScreenImageCatalogue_,
+            core::recti( 661, 115, 976, 204 )
+    );
+    button->setIsPushButton( false );
+    button->setDrawBorder( false );
+    button->setUseAlphaChannel( true );
+    button->setVisible( true );
+}
+
+
+
+bool StateMainMenue::mainMenueButtonHandler()
+{
+    switch ( callerID_ )
+    {
+        case ID_HM_NEWBUTTON:
+            //transitTo( MENUE_NEUER_SPIELER );
+            break;
+        case ID_HM_RESUMEBUTTON:
+            //transitTo( MENUE_SPIEL_LAEUFT );
+            break;
+        case ID_HM_LOADBUTTON:
+            //transitTo( MENUE_HAUPTMENUE_LADEN );
+            break;
+        case ID_HM_PREFSBUTTON:
+            //transitTo( MENUE_HAUPTMENUE_EINSTELLUNGEN );
+            break;
+        case ID_HM_ABOUTBUTTON:
+            //transitTo( MENUE_MITWIRKENDE );
+            break;
+        case ID_HM_EXITBUTTON:
+            device_->closeDevice();
+            break;
+        default:
+            Logfile::getInstance().writeLine( Logfile::DEBUG,
+                    "unbekannter Knopf geklickt, Caller: %i\n", callerID_ );
+            break;
+    }
+    Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
+    return false;
 }

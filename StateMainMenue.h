@@ -64,18 +64,45 @@ public:
     void draw();
 
     /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des Status.
-      \param -
+      \param event (\a irr::SEvent&) Event-Referenz
       \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
     */
-    bool handleGuiEvents();
+    bool handleGuiEvents( const irr::SEvent& event );
 
 private:
+
+    enum GUI_ITEM
+    {
+        ID_HM_ROOT = 0,  //!< Hauptmenue Root-Element
+        ID_HM_BGIMAGE,  //!< Hauptmenue Hintergrundbild
+        ID_HM_NEWBUTTON,  //!< Neu-Button im Hauptmenue
+        ID_HM_RESUMEBUTTON,  //!< Fortsetzen-Button im Hauptmenue
+        ID_HM_LOADBUTTON,  //!< Laden-Button im Hauptmenue
+        ID_HM_PREFSBUTTON,  //!< Einstellungen-Button im Hauptmenue
+        ID_HM_ABOUTBUTTON,  //!< Mitwirkende-Button im Hauptmenue
+        ID_HM_EXITBUTTON,  //!< Exit-Button im Hauptmenue
+        ID_NP_ROOT,  //!< NewPlayerMenue Root-Element
+        ID_NP_BGIMAGE,  //!< NewPlayerMenue Hintergrundbild
+        ID_NP_EXITBUTTON,  //!< Exit-Button im NewPlayerMenue
+        ID_LO_ROOT,  //!< LoadMenue Root-Element
+        ID_LO_BGIMAGE,  //!< LoadMenue Hintergrundbild
+        ID_LO_EXITBUTTON,  //!< Exit-Button im LoadMenue
+        ID_PR_ROOT,  //!< PrefsMenue Root-Element
+        ID_PR_BGIMAGE,  //!< PrefsMenue Hintergrundbild
+        ID_PR_EXITBUTTON,  //!< Exit-Button im PrefsMenue
+        ID_AB_ROOT,  //!< AboutMenue Root-Element
+        ID_AB_BGIMAGE,  //!< AboutMenue Hintergrundbild
+        ID_AB_EXITBUTTON,  //!< Exit-Button im AboutMenue
+        ID_COUNT  //!< Anzahl verfuegbarer Items, sicherheitsrelevant!
+    };
 
     IrrlichtDevice* device_;
     video::IVideoDriver* driver_;
     video::ITexture* menueScreenImageCatalogue_;
     video::ITexture* mainMenueTexture_;
     video::SColor mainMenueBgColor_;
+    s32 callerID_;
+    bool hover_;
 
     StateMainMenue( const StateMainMenue& );
     StateMainMenue& operator=( const StateMainMenue& );
@@ -84,6 +111,8 @@ private:
     void loadTextures();
     void extractImagesFromCatalogue();
     void createMainMenu();
+    inline void changeStyleOfButton( gui::IGUIButton* button );
+    bool mainMenueButtonHandler();
 
 };
 // Ende class StateMainMenue

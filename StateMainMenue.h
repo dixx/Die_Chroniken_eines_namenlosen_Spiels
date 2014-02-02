@@ -112,6 +112,8 @@ private:
     void extractImagesFromCatalogue();
     void createMainMenu();
     inline void changeStyleOfButton( gui::IGUIButton* button );
+    inline void focusButton( gui::IGUIButton* button );
+    inline void normalizeButton( gui::IGUIButton* button );
     bool mainMenueButtonHandler();
 
 };

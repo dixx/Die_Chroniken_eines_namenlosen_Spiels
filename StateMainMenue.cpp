@@ -95,10 +95,7 @@ bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
             //printf("hover_. Caller: %i\n", this->callerID_);
             if ( callerType_ == gui::EGUIET_BUTTON )
             {
-                ((gui::IGUIButton*)caller_)->setImage(
-                        menueScreenImageCatalogue_,
-                        core::recti( 661, 115, 976, 204 )
-                );
+                focusButton( static_cast<gui::IGUIButton*>( caller_ ) );
                 Ton::getInstance().playGUISound( Ton::SND_GUI_HOVER );
             }
             hover_ = true;
@@ -107,10 +104,7 @@ bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
             //printf("no more hover_. Caller: %i\n", this->callerID_);
             if ( callerType_ == gui::EGUIET_BUTTON )
             {
-                ((gui::IGUIButton*)caller_)->setImage(
-                        menueScreenImageCatalogue_,
-                        core::recti( 654, 22, 966, 110 )
-                );
+                normalizeButton( static_cast<gui::IGUIButton*>( caller_ ) );
             }
             hover_ = false;
             break;
@@ -286,10 +280,7 @@ void StateMainMenue::createMainMenu()
 
 void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
 {
-    button->setImage(
-            menueScreenImageCatalogue_,
-            core::recti( 654, 22, 966, 110 )
-    );
+    normalizeButton( button );
     button->setPressedImage(
             menueScreenImageCatalogue_,
             core::recti( 661, 115, 976, 204 )
@@ -298,6 +289,26 @@ void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
     button->setDrawBorder( false );
     button->setUseAlphaChannel( true );
     button->setVisible( true );
+}
+
+
+
+void StateMainMenue::normalizeButton( gui::IGUIButton* button )
+{
+    button->setImage(
+            menueScreenImageCatalogue_,
+            core::recti( 654, 22, 966, 110 )
+    );
+}
+
+
+
+void StateMainMenue::focusButton( gui::IGUIButton* button )
+{
+    button->setImage(
+            menueScreenImageCatalogue_,
+            core::recti( 661, 115, 976, 204 )
+    );
 }
 
 

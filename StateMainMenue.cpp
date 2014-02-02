@@ -10,18 +10,18 @@
 
 
 
-StateMainMenue::StateMainMenue( IrrlichtDevice* device )
+StateMainMenu::StateMainMenu( IrrlichtDevice* device )
 : GameState(),
   driver_(0),
   guienv_(0),
-  menueScreenImageCatalogue_(0),
-  mainMenueTexture_(0),
-  mainMenueBgColor_(video::SColor( 255, 248, 245, 240 )),
+  menuScreenImageCatalogue_(0),
+  mainMenuTexture_(0),
+  mainMenuBgColor_(video::SColor( 255, 248, 245, 240 )),
   hover_(false)
 {
     if ( device == 0 )
         Logfile::getInstance().emergencyExit(
-                "Entchen in [StateMainMenue] nicht mehr gefunden! Abbruch." );
+                "Entchen in [StateMainMenu] nicht mehr gefunden! Abbruch." );
     driver_ = device->getVideoDriver();
     guienv_ = device->getGUIEnvironment();
     device->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
@@ -33,7 +33,7 @@ StateMainMenue::StateMainMenue( IrrlichtDevice* device )
 
 
 
-StateMainMenue::~StateMainMenue()
+StateMainMenu::~StateMainMenu()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
     guienv_->clear();
@@ -41,7 +41,7 @@ StateMainMenue::~StateMainMenue()
 
 
 
-void StateMainMenue::start( f32 frameDeltaTime )
+void StateMainMenu::start( f32 frameDeltaTime )
 {
     transitTo( RUNNING );
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
@@ -50,7 +50,7 @@ void StateMainMenue::start( f32 frameDeltaTime )
 
 
 
-void StateMainMenue::update( f32 frameDeltaTime )
+void StateMainMenu::update( f32 frameDeltaTime )
 {
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
@@ -64,7 +64,7 @@ void StateMainMenue::update( f32 frameDeltaTime )
 
 
 
-void StateMainMenue::shutdown( f32 frameDeltaTime )
+void StateMainMenu::shutdown( f32 frameDeltaTime )
 {
     transitTo( STOPPED );
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
@@ -73,9 +73,9 @@ void StateMainMenue::shutdown( f32 frameDeltaTime )
 
 
 
-void StateMainMenue::draw()
+void StateMainMenu::draw()
 {
-    driver_->beginScene( true, false, mainMenueBgColor_ );
+    driver_->beginScene( true, false, mainMenuBgColor_ );
     guienv_->drawAll();
     Mauspfeil::getInstance().draw();
     driver_->endScene();
@@ -83,7 +83,7 @@ void StateMainMenue::draw()
 
 
 
-bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
+bool StateMainMenu::handleGuiEvents( const irr::SEvent& event )
 {
     bool result = false;
     gui::IGUIElement* caller = event.GUIEvent.Caller;
@@ -110,7 +110,7 @@ bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
             switch ( 1 )
             {
                 case 1:
-                    result = mainMenueButtonHandler( callerId );
+                    result = mainMenuButtonHandler( callerId );
                     break;
 //                case MENUE_NEUER_SPIELER:
 //                    result = newPlayerMenueButtonHandler();
@@ -148,7 +148,7 @@ bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
 
 
 
-void StateMainMenue::transitTo( internalState state )
+void StateMainMenu::transitTo( internalState state )
 {
     switch ( state )
     {
@@ -173,26 +173,26 @@ void StateMainMenue::transitTo( internalState state )
 
 
 
-void StateMainMenue::loadTextures()
+void StateMainMenu::loadTextures()
 {
     GenericHelperMethods& helper = GenericHelperMethods::getInstance();
     driver_->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, false );
     helper.validateFileExistence( "GFX/menues1.bmp" );
-    menueScreenImageCatalogue_ = driver_->getTexture( "GFX/menues1.bmp" );
+    menuScreenImageCatalogue_ = driver_->getTexture( "GFX/menues1.bmp" );
     driver_->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, true );
 }
 
 
 
-void StateMainMenue::extractImagesFromCatalogue()
+void StateMainMenu::extractImagesFromCatalogue()
 {
     driver_->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, false );
     driver_->disableFeature( video::EVDF_BILINEAR_FILTER, true );
     video::IImage* wholeImage = driver_->createImageFromFile(
-            menueScreenImageCatalogue_->getName() );
+            menuScreenImageCatalogue_->getName() );
     if ( !wholeImage )
         Logfile::getInstance().emergencyExit( "Bild nicht geladen!" );
-    driver_->makeColorKeyTexture( menueScreenImageCatalogue_, COL_MAGICPINK );
+    driver_->makeColorKeyTexture( menuScreenImageCatalogue_, COL_MAGICPINK );
     // Ausschneiden des mainMenue-Hintergrundbildes als eigene Textur
     core::dimension2du menueTextureSize = core::dimension2du( 436, 555 );
     video::IImage* partialImage = driver_->createImage(
@@ -202,10 +202,10 @@ void StateMainMenue::extractImagesFromCatalogue()
             core::position2di( 0, 0 ),
             core::recti( core::position2di( 588, 212 ), menueTextureSize )
     );
-    mainMenueTexture_ = driver_->addTexture(
+    mainMenuTexture_ = driver_->addTexture(
             "GFX/mainMenueTexture.virtual", partialImage );
     partialImage->drop();
-    driver_->makeColorKeyTexture( mainMenueTexture_, COL_MAGICPINK );
+    driver_->makeColorKeyTexture( mainMenuTexture_, COL_MAGICPINK );
     wholeImage->drop();
     driver_->disableFeature( video::EVDF_BILINEAR_FILTER, false );
     driver_->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, true );
@@ -213,10 +213,10 @@ void StateMainMenue::extractImagesFromCatalogue()
 
 
 
-void StateMainMenue::createMainMenu()
+void StateMainMenu::createMainMenu()
 {
-    u32 texWidth = mainMenueTexture_->getSize().Width;
-    u32 texHeight = mainMenueTexture_->getSize().Height;
+    u32 texWidth = mainMenuTexture_->getSize().Width;
+    u32 texHeight = mainMenuTexture_->getSize().Height;
     core::dimension2du screen = Configuration::getInstance().getScreenSize();
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
 
@@ -232,7 +232,7 @@ void StateMainMenue::createMainMenu()
             root,  // parent
             ID_HM_BGIMAGE  // id
     );
-    menueBgImage->setImage( mainMenueTexture_ );
+    menueBgImage->setImage( mainMenuTexture_ );
 
     gui::IGUIButton* newButton = guienv_->addButton(
             core::recti( core::position2di( 85, 63 ), buttonSize ),
@@ -268,10 +268,10 @@ void StateMainMenue::createMainMenu()
 
 
 
-void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
+void StateMainMenu::changeStyleOfButton( gui::IGUIButton* button)
 {
     normalizeButton( button );
-    button->setPressedImage(  menueScreenImageCatalogue_,
+    button->setPressedImage(  menuScreenImageCatalogue_,
             core::recti( 661, 115, 976, 204 ) );
     button->setIsPushButton( false );
     button->setDrawBorder( false );
@@ -281,23 +281,23 @@ void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
 
 
 
-void StateMainMenue::normalizeButton( gui::IGUIButton* button )
+void StateMainMenu::normalizeButton( gui::IGUIButton* button )
 {
-    button->setImage( menueScreenImageCatalogue_,
+    button->setImage( menuScreenImageCatalogue_,
             core::recti( 654, 22, 966, 110 ) );
 }
 
 
 
-void StateMainMenue::focusButton( gui::IGUIButton* button )
+void StateMainMenu::focusButton( gui::IGUIButton* button )
 {
-    button->setImage( menueScreenImageCatalogue_,
+    button->setImage( menuScreenImageCatalogue_,
             core::recti( 661, 115, 976, 204 ) );
 }
 
 
 
-bool StateMainMenue::mainMenueButtonHandler( s32 callerId )
+bool StateMainMenu::mainMenuButtonHandler( s32 callerId )
 {
     switch ( callerId )
     {

@@ -113,7 +113,7 @@ void GameStateManager::switchState()
             currentState_ = new StateStartup( device_ );
             break;
         case MAIN_MENU:
-            currentState_ = new StateMainMenue( device_ );
+            currentState_ = new StateMainMenu( device_ );
             break;
         default: // SHUTDOWN
             device_->closeDevice(); // create GameState Shutdown later

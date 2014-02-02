@@ -1,9 +1,9 @@
-/*! \file StateMainMenue.h
+/*! \file StateMainMenu.h
   \brief Klasse stellt Schnittstelle für dem Spiel vorgelagerte Menüs bereit.
 */
 
-#ifndef _STATEMAINMENUE_HEADER
-#define _STATEMAINMENUE_HEADER
+#ifndef _STATEMAINMENU_HEADER
+#define _STATEMAINMENU_HEADER
 
 // Linken der IRRLICHT-DLL, nur in VisualStudio nötig
 //#ifdef _IRR_WINDOWS_
@@ -17,12 +17,12 @@ using namespace irr;
 // Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
 // immer explizit angegeben, um den Überblick zu behalten.
 
-/*! \class StateMainMenue StateMainMenue.h "StateMainMenue.h"
+/*! \class StateMainMenu StateMainMenu.h "StateMainMenu.h"
   \brief Schnittstelle für dem Spiel vorgelagerte Menüs.
-  \note Instanzierung: `StateMainMenue* myStateMainMenue = new StateMainMenue();`
-		\n Benutzen: `myStateMainMenue->update();`
+  \note Instanzierung: `StateMainMenu* myStateMainMenu = new StateMainMenu();`
+		\n Benutzen: `myStateMainMenu->update();`
 */
-class StateMainMenue : public GameState
+class StateMainMenu : public GameState
 {
 
 public:
@@ -31,10 +31,10 @@ public:
       \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
       \return -
     */
-    StateMainMenue( IrrlichtDevice* device );
+    StateMainMenu( IrrlichtDevice* device );
 
     // Destruktor
-    ~StateMainMenue();
+    ~StateMainMenu();
 
     /*! \brief Aktualisiert die Startup-Phase des Status.
       \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
@@ -98,13 +98,13 @@ private:
 
     video::IVideoDriver* driver_;
     gui::IGUIEnvironment* guienv_;
-    video::ITexture* menueScreenImageCatalogue_;
-    video::ITexture* mainMenueTexture_;
-    video::SColor mainMenueBgColor_;
+    video::ITexture* menuScreenImageCatalogue_;
+    video::ITexture* mainMenuTexture_;
+    video::SColor mainMenuBgColor_;
     bool hover_;
 
-    StateMainMenue( const StateMainMenue& );
-    StateMainMenue& operator=( const StateMainMenue& );
+    StateMainMenu( const StateMainMenu& );
+    StateMainMenu& operator=( const StateMainMenu& );
 
     void transitTo( internalState state );
     void loadTextures();
@@ -113,10 +113,10 @@ private:
     inline void changeStyleOfButton( gui::IGUIButton* button );
     inline void focusButton( gui::IGUIButton* button );
     inline void normalizeButton( gui::IGUIButton* button );
-    bool mainMenueButtonHandler( s32 callerId );
+    bool mainMenuButtonHandler( s32 callerId );
 
 };
-// Ende class StateMainMenue
+// Ende class StateMainMenu
 
 #endif
-// Ende Header-Datei StateMainMenue
+// Ende Header-Datei StateMainMenu

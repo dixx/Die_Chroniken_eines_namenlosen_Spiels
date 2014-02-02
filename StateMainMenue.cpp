@@ -12,19 +12,19 @@
 
 StateMainMenue::StateMainMenue( IrrlichtDevice* device )
 : GameState(),
-  device_(device),
   driver_(0),
+  guienv_(0),
   menueScreenImageCatalogue_(0),
   mainMenueTexture_(0),
   mainMenueBgColor_(video::SColor( 255, 248, 245, 240 )),
-  callerID_(0),
   hover_(false)
 {
-    if ( device_ == 0 )
+    if ( device == 0 )
         Logfile::getInstance().emergencyExit(
                 "Entchen in [StateMainMenue] nicht mehr gefunden! Abbruch." );
-    driver_ = device_->getVideoDriver();
-    device_->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
+    driver_ = device->getVideoDriver();
+    guienv_ = device->getGUIEnvironment();
+    device->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
     loadTextures();
     extractImagesFromCatalogue();
     createMainMenu();
@@ -36,6 +36,7 @@ StateMainMenue::StateMainMenue( IrrlichtDevice* device )
 StateMainMenue::~StateMainMenue()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
+    guienv_->clear();
 }
 
 
@@ -74,11 +75,10 @@ void StateMainMenue::shutdown( f32 frameDeltaTime )
 
 void StateMainMenue::draw()
 {
-    device_->getVideoDriver()->beginScene( true, false, mainMenueBgColor_ );
-    //device_->getSceneManager()->drawAll();
-    device_->getGUIEnvironment()->drawAll();
+    driver_->beginScene( true, false, mainMenueBgColor_ );
+    guienv_->drawAll();
     Mauspfeil::getInstance().draw();
-    device_->getVideoDriver()->endScene();
+    driver_->endScene();
 }
 
 
@@ -86,25 +86,23 @@ void StateMainMenue::draw()
 bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
 {
     bool result = false;
-    gui::IGUIElement* caller_ = event.GUIEvent.Caller;
-    gui::EGUI_ELEMENT_TYPE callerType_ = caller_->getType();
-    callerID_ = caller_->getID();
+    gui::IGUIElement* caller = event.GUIEvent.Caller;
+    gui::EGUI_ELEMENT_TYPE callerType = caller->getType();
+    s32 callerId = caller->getID();
     switch ( event.GUIEvent.EventType )
     {
         case gui::EGET_ELEMENT_HOVERED:
-            //printf("hover_. Caller: %i\n", this->callerID_);
-            if ( callerType_ == gui::EGUIET_BUTTON )
+            if ( callerType == gui::EGUIET_BUTTON )
             {
-                focusButton( static_cast<gui::IGUIButton*>( caller_ ) );
+                focusButton( static_cast<gui::IGUIButton*>( caller ) );
                 Ton::getInstance().playGUISound( Ton::SND_GUI_HOVER );
             }
             hover_ = true;
             break;
         case gui::EGET_ELEMENT_LEFT:
-            //printf("no more hover_. Caller: %i\n", this->callerID_);
-            if ( callerType_ == gui::EGUIET_BUTTON )
+            if ( callerType == gui::EGUIET_BUTTON )
             {
-                normalizeButton( static_cast<gui::IGUIButton*>( caller_ ) );
+                normalizeButton( static_cast<gui::IGUIButton*>( caller ) );
             }
             hover_ = false;
             break;
@@ -112,7 +110,7 @@ bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
             switch ( 1 )
             {
                 case 1:
-                    result = mainMenueButtonHandler();
+                    result = mainMenueButtonHandler( callerId );
                     break;
 //                case MENUE_NEUER_SPIELER:
 //                    result = newPlayerMenueButtonHandler();
@@ -138,7 +136,7 @@ bool StateMainMenue::handleGuiEvents( const irr::SEvent& event )
             break;
         default:
             Logfile::getInstance().writeLine( Logfile::DEBUG,
-                    "unbehandelter GUI-Event, Caller: %i\n", callerID_);
+                    "unbehandelter GUI-Event, Caller: %i\n", callerId );
             break;
     }
     return result;
@@ -217,14 +215,14 @@ void StateMainMenue::extractImagesFromCatalogue()
 
 void StateMainMenue::createMainMenu()
 {
-    gui::IGUIEnvironment* guienv = device_->getGUIEnvironment();
     u32 texWidth = mainMenueTexture_->getSize().Width;
     u32 texHeight = mainMenueTexture_->getSize().Height;
     core::dimension2du screen = Configuration::getInstance().getScreenSize();
+    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
 
-    gui::IGUIElement* root = guienv->getRootGUIElement();
+    gui::IGUIElement* root = guienv_->getRootGUIElement();
 
-    gui::IGUIImage* menueBgImage = guienv->addImage(
+    gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti(
                     screen.Width - 20 - texWidth ,
                     screen.Height - 20 - texHeight,
@@ -236,40 +234,32 @@ void StateMainMenue::createMainMenu()
     );
     menueBgImage->setImage( mainMenueTexture_ );
 
-    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
-    gui::IGUIButton* newButton = guienv->addButton(
-            core::recti( core::position2di( 85, 63 ), buttonSize),
-            menueBgImage,
-            ID_HM_NEWBUTTON,
-            L"Neues Spiel"
+    gui::IGUIButton* newButton = guienv_->addButton(
+            core::recti( core::position2di( 85, 63 ), buttonSize ),
+            menueBgImage, ID_HM_NEWBUTTON, L"Neues Spiel"
     );
     changeStyleOfButton( newButton );
-
-    gui::IGUIButton* resumeButton = guienv->addButton(
+    gui::IGUIButton* resumeButton = guienv_->addButton(
             core::recti( core::position2di( 85, 134 ), buttonSize ),
             menueBgImage, ID_HM_RESUMEBUTTON, L"Fortsetzen"
     );
     changeStyleOfButton( resumeButton );
-
-    gui::IGUIButton* loadButton = guienv->addButton(
+    gui::IGUIButton* loadButton = guienv_->addButton(
             core::recti( core::position2di( 85, 207 ), buttonSize ),
             menueBgImage, ID_HM_LOADBUTTON, L"Laden"
     );
     changeStyleOfButton( loadButton );
-
-    gui::IGUIButton* prefsButton = guienv->addButton(
+    gui::IGUIButton* prefsButton = guienv_->addButton(
             core::recti( core::position2di( 85, 288 ), buttonSize ),
             menueBgImage, ID_HM_PREFSBUTTON, L"Einstellungen"
     );
     changeStyleOfButton( prefsButton );
-
-    gui::IGUIButton* aboutButton = guienv->addButton(
+    gui::IGUIButton* aboutButton = guienv_->addButton(
             core::recti( core::position2di( 85, 356 ), buttonSize ),
             menueBgImage, ID_HM_ABOUTBUTTON, L"Mitwirkende"
     );
     changeStyleOfButton( aboutButton );
-
-    gui::IGUIButton* exitButton = guienv->addButton(
+    gui::IGUIButton* exitButton = guienv_->addButton(
             core::recti( core::position2di( 85, 416 ), buttonSize ),
             menueBgImage, ID_HM_EXITBUTTON, L"Beenden"
     );
@@ -281,10 +271,8 @@ void StateMainMenue::createMainMenu()
 void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
 {
     normalizeButton( button );
-    button->setPressedImage(
-            menueScreenImageCatalogue_,
-            core::recti( 661, 115, 976, 204 )
-    );
+    button->setPressedImage(  menueScreenImageCatalogue_,
+            core::recti( 661, 115, 976, 204 ) );
     button->setIsPushButton( false );
     button->setDrawBorder( false );
     button->setUseAlphaChannel( true );
@@ -295,27 +283,23 @@ void StateMainMenue::changeStyleOfButton( gui::IGUIButton* button)
 
 void StateMainMenue::normalizeButton( gui::IGUIButton* button )
 {
-    button->setImage(
-            menueScreenImageCatalogue_,
-            core::recti( 654, 22, 966, 110 )
-    );
+    button->setImage( menueScreenImageCatalogue_,
+            core::recti( 654, 22, 966, 110 ) );
 }
 
 
 
 void StateMainMenue::focusButton( gui::IGUIButton* button )
 {
-    button->setImage(
-            menueScreenImageCatalogue_,
-            core::recti( 661, 115, 976, 204 )
-    );
+    button->setImage( menueScreenImageCatalogue_,
+            core::recti( 661, 115, 976, 204 ) );
 }
 
 
 
-bool StateMainMenue::mainMenueButtonHandler()
+bool StateMainMenue::mainMenueButtonHandler( s32 callerId )
 {
-    switch ( callerID_ )
+    switch ( callerId )
     {
         case ID_HM_NEWBUTTON:
             //transitTo( MENUE_NEUER_SPIELER );
@@ -339,7 +323,7 @@ bool StateMainMenue::mainMenueButtonHandler()
             break;
         default:
             Logfile::getInstance().writeLine( Logfile::DEBUG,
-                    "unbekannter Knopf geklickt, Caller: %i\n", callerID_ );
+                    "unbekannter Knopf geklickt, Caller: %i\n", callerId );
             break;
     }
     Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );

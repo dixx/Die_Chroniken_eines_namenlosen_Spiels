@@ -96,12 +96,11 @@ private:
         ID_COUNT  //!< Anzahl verfuegbarer Items, sicherheitsrelevant!
     };
 
-    IrrlichtDevice* device_;
     video::IVideoDriver* driver_;
+    gui::IGUIEnvironment* guienv_;
     video::ITexture* menueScreenImageCatalogue_;
     video::ITexture* mainMenueTexture_;
     video::SColor mainMenueBgColor_;
-    s32 callerID_;
     bool hover_;
 
     StateMainMenue( const StateMainMenue& );
@@ -114,7 +113,7 @@ private:
     inline void changeStyleOfButton( gui::IGUIButton* button );
     inline void focusButton( gui::IGUIButton* button );
     inline void normalizeButton( gui::IGUIButton* button );
-    bool mainMenueButtonHandler();
+    bool mainMenueButtonHandler( s32 callerId );
 
 };
 // Ende class StateMainMenue

@@ -215,25 +215,19 @@ void StateMainMenu::extractImagesFromCatalogue()
 
 void StateMainMenu::createMainMenu()
 {
-    u32 texWidth = mainMenuTexture_->getSize().Width;
-    u32 texHeight = mainMenuTexture_->getSize().Height;
-    core::dimension2du screen = Configuration::getInstance().getScreenSize();
+    core::dimension2du textureSize = mainMenuTexture_->getSize();
+    core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    core::position2di imagePosition = core::position2di(
+            screenSize.Width - 20 - textureSize.Width,
+            screenSize.Height - 20 - textureSize.Height
+    );
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
 
-    gui::IGUIElement* root = guienv_->getRootGUIElement();
-
     gui::IGUIImage* menueBgImage = guienv_->addImage(
-            core::recti(
-                    screen.Width - 20 - texWidth ,
-                    screen.Height - 20 - texHeight,
-                    screen.Width - 20,
-                    screen.Height - 20
-            ),  // Abmessungen auf Bildschirm
-            root,  // parent
-            ID_HM_BGIMAGE  // id
+            core::recti( imagePosition, textureSize ),
+            guienv_->getRootGUIElement(), ID_HM_BGIMAGE, L"Hauptmenü"
     );
     menueBgImage->setImage( mainMenuTexture_ );
-
     gui::IGUIButton* newButton = guienv_->addButton(
             core::recti( core::position2di( 85, 63 ), buttonSize ),
             menueBgImage, ID_HM_NEWBUTTON, L"Neues Spiel"
@@ -264,35 +258,6 @@ void StateMainMenu::createMainMenu()
             menueBgImage, ID_HM_EXITBUTTON, L"Beenden"
     );
     changeStyleOfButton( exitButton );
-}
-
-
-
-void StateMainMenu::changeStyleOfButton( gui::IGUIButton* button)
-{
-    normalizeButton( button );
-    button->setPressedImage(  menuScreenImageCatalogue_,
-            core::recti( 661, 115, 976, 204 ) );
-    button->setIsPushButton( false );
-    button->setDrawBorder( false );
-    button->setUseAlphaChannel( true );
-    button->setVisible( true );
-}
-
-
-
-void StateMainMenu::normalizeButton( gui::IGUIButton* button )
-{
-    button->setImage( menuScreenImageCatalogue_,
-            core::recti( 654, 22, 966, 110 ) );
-}
-
-
-
-void StateMainMenu::focusButton( gui::IGUIButton* button )
-{
-    button->setImage( menuScreenImageCatalogue_,
-            core::recti( 661, 115, 976, 204 ) );
 }
 
 
@@ -328,4 +293,33 @@ bool StateMainMenu::mainMenuButtonHandler( s32 callerId )
     }
     Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
     return false;
+}
+
+
+
+void StateMainMenu::changeStyleOfButton( gui::IGUIButton* button)
+{
+    normalizeButton( button );
+    button->setPressedImage(  menuScreenImageCatalogue_,
+            core::recti( 661, 115, 976, 204 ) );
+    button->setIsPushButton( false );
+    button->setDrawBorder( false );
+    button->setUseAlphaChannel( true );
+    button->setVisible( true );
+}
+
+
+
+void StateMainMenu::normalizeButton( gui::IGUIButton* button )
+{
+    button->setImage( menuScreenImageCatalogue_,
+            core::recti( 654, 22, 966, 110 ) );
+}
+
+
+
+void StateMainMenu::focusButton( gui::IGUIButton* button )
+{
+    button->setImage( menuScreenImageCatalogue_,
+            core::recti( 661, 115, 976, 204 ) );
 }

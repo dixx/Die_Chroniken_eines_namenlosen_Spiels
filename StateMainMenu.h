@@ -74,32 +74,30 @@ private:
     enum MENU
     {
         NONE  = 0,
-        MAIN  = 10,
-        NEW   = 100,
-        LOAD  = 1000,
-        PREFS = 10000,
-        ABOUT = 100000
+        MAIN  = 0x100000,
+        NEW   = 0x200000,
+        LOAD  = 0x300000,
+        PREFS = 0x400000,
+        ABOUT = 0x800000
     };
 
     enum GUI_ITEM
     {
-        ID_MAIN_BGIMAGE = MAIN,  //!< Hauptmenü Hintergrundbild
-        ID_MAIN_NEWBUTTON,  //!< Neu-Button im Hauptmenü
-        ID_MAIN_RESUMEBUTTON,  //!< Fortsetzen-Button im Hauptmenü
-        ID_MAIN_LOADBUTTON,  //!< Laden-Button im Hauptmenü
-        ID_MAIN_PREFSBUTTON,  //!< Einstellungen-Button im Hauptmenü
-        ID_MAIN_ABOUTBUTTON,  //!< Mitwirkende-Button im Hauptmenü
-        ID_MAIN_EXITBUTTON,  //!< Exit-Button im Hauptmenü
-        ID_NEW_BGIMAGE = NEW,  //!< NewPlayerMenü Hintergrundbild
-        ID_NEW_EXITBUTTON,  //!< Exit-Button im NewPlayerMenü
-        ID_LOAD_BGIMAGE = LOAD,  //!< LoadMenü Hintergrundbild
-        ID_LOAD_EXITBUTTON,  //!< Exit-Button im LoadMenü
-        ID_PREFS_BGIMAGE = PREFS,  //!< PrefsMenü Hintergrundbild
-        ID_PREFS_EXITBUTTON,  //!< Exit-Button im PrefsMenü
-        ID_ABOUT_BGIMAGE = ABOUT,  //!< AboutMenü Hintergrundbild
-        ID_ABOUT_EXITBUTTON,  //!< Exit-Button im AboutMenü
-
-        ID_COUNT  //!< Anzahl verfügbarer Menü-Items
+        ID_MAIN_BGIMAGE       = MAIN,   //!< Hauptmenü Hintergrundbild
+        ID_MAIN_NEWBUTTON,              //!< Neu-Button im Hauptmenü
+        ID_MAIN_RESUMEBUTTON,           //!< Fortsetzen-Button im Hauptmenü
+        ID_MAIN_LOADBUTTON,             //!< Laden-Button im Hauptmenü
+        ID_MAIN_PREFSBUTTON,            //!< Einstellungen-Button im Hauptmenü
+        ID_MAIN_ABOUTBUTTON,            //!< Mitwirkende-Button im Hauptmenü
+        ID_MAIN_EXITBUTTON,             //!< Exit-Button im Hauptmenü
+        ID_NEW_BGIMAGE        = NEW,    //!< NewPlayerMenü Hintergrundbild
+        ID_NEW_EXITBUTTON,              //!< Exit-Button im NewPlayerMenü
+        ID_LOAD_BGIMAGE       = LOAD,   //!< LoadMenü Hintergrundbild
+        ID_LOAD_EXITBUTTON,             //!< Exit-Button im LoadMenü
+        ID_PREFS_BGIMAGE      = PREFS,  //!< PrefsMenü Hintergrundbild
+        ID_PREFS_EXITBUTTON,            //!< Exit-Button im PrefsMenü
+        ID_ABOUT_BGIMAGE      = ABOUT,  //!< AboutMenü Hintergrundbild
+        ID_ABOUT_EXITBUTTON             //!< Exit-Button im AboutMenü
     };
 
     video::IVideoDriver* driver_;

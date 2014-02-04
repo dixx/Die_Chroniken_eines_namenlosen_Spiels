@@ -71,29 +71,35 @@ public:
 
 private:
 
+    enum MENU
+    {
+        NONE  = 0,
+        MAIN  = 10,
+        NEW   = 100,
+        LOAD  = 1000,
+        PREFS = 10000,
+        ABOUT = 100000
+    };
+
     enum GUI_ITEM
     {
-        //ID_HM_ROOT = 0,  //!< Hauptmenue Root-Element
-        ID_HM_BGIMAGE,  //!< Hauptmenue Hintergrundbild
-        ID_HM_NEWBUTTON,  //!< Neu-Button im Hauptmenue
-        ID_HM_RESUMEBUTTON,  //!< Fortsetzen-Button im Hauptmenue
-        ID_HM_LOADBUTTON,  //!< Laden-Button im Hauptmenue
-        ID_HM_PREFSBUTTON,  //!< Einstellungen-Button im Hauptmenue
-        ID_HM_ABOUTBUTTON,  //!< Mitwirkende-Button im Hauptmenue
-        ID_HM_EXITBUTTON,  //!< Exit-Button im Hauptmenue
-        //ID_NP_ROOT,  //!< NewPlayerMenue Root-Element
-        ID_NP_BGIMAGE,  //!< NewPlayerMenue Hintergrundbild
-        ID_NP_EXITBUTTON,  //!< Exit-Button im NewPlayerMenue
-        //ID_LO_ROOT,  //!< LoadMenue Root-Element
-        ID_LO_BGIMAGE,  //!< LoadMenue Hintergrundbild
-        ID_LO_EXITBUTTON,  //!< Exit-Button im LoadMenue
-        //ID_PR_ROOT,  //!< PrefsMenue Root-Element
-        ID_PR_BGIMAGE,  //!< PrefsMenue Hintergrundbild
-        ID_PR_EXITBUTTON,  //!< Exit-Button im PrefsMenue
-        //ID_AB_ROOT,  //!< AboutMenue Root-Element
-        ID_AB_BGIMAGE,  //!< AboutMenue Hintergrundbild
-        ID_AB_EXITBUTTON,  //!< Exit-Button im AboutMenue
-        ID_COUNT  //!< Anzahl verfuegbarer Items, sicherheitsrelevant!
+        ID_MAIN_BGIMAGE = MAIN,  //!< Hauptmenü Hintergrundbild
+        ID_MAIN_NEWBUTTON,  //!< Neu-Button im Hauptmenü
+        ID_MAIN_RESUMEBUTTON,  //!< Fortsetzen-Button im Hauptmenü
+        ID_MAIN_LOADBUTTON,  //!< Laden-Button im Hauptmenü
+        ID_MAIN_PREFSBUTTON,  //!< Einstellungen-Button im Hauptmenü
+        ID_MAIN_ABOUTBUTTON,  //!< Mitwirkende-Button im Hauptmenü
+        ID_MAIN_EXITBUTTON,  //!< Exit-Button im Hauptmenü
+        ID_NEW_BGIMAGE = NEW,  //!< NewPlayerMenü Hintergrundbild
+        ID_NEW_EXITBUTTON,  //!< Exit-Button im NewPlayerMenü
+        ID_LOAD_BGIMAGE = LOAD,  //!< LoadMenü Hintergrundbild
+        ID_LOAD_EXITBUTTON,  //!< Exit-Button im LoadMenü
+        ID_PREFS_BGIMAGE = PREFS,  //!< PrefsMenü Hintergrundbild
+        ID_PREFS_EXITBUTTON,  //!< Exit-Button im PrefsMenü
+        ID_ABOUT_BGIMAGE = ABOUT,  //!< AboutMenü Hintergrundbild
+        ID_ABOUT_EXITBUTTON,  //!< Exit-Button im AboutMenü
+
+        ID_COUNT  //!< Anzahl verfügbarer Menü-Items
     };
 
     video::IVideoDriver* driver_;
@@ -102,6 +108,7 @@ private:
     video::ITexture* mainMenuTexture_;
     video::SColor mainMenuBgColor_;
     bool hover_;
+    MENU currentMenu_;
 
     StateMainMenu( const StateMainMenu& );
     StateMainMenu& operator=( const StateMainMenu& );
@@ -111,9 +118,22 @@ private:
     void extractImagesFromCatalogue();
     void createMainMenu();
     bool mainMenuButtonHandler( s32 callerId );
+    void createNewPlayerMenu();
+    bool newPlayerMenuButtonHandler( s32 callerId );
+    void createLoadGameMenu();
+    bool loadGameMenuButtonHandler( s32 callerId );
+    void createPreferencesMenu();
+    bool preferencesMenuButtonHandler( s32 callerId );
+    void createAboutMenu();
+    bool aboutMenuButtonHandler( s32 callerId );
     inline void changeStyleOfButton( gui::IGUIButton* button );
     inline void normalizeButton( gui::IGUIButton* button );
     inline void focusButton( gui::IGUIButton* button );
+    void unknownCaller( s32 callerId );
+    void switchToMenu( MENU menu );
+    inline void displayMenu( MENU menu );
+    inline void hideMenu( MENU menu );
+    void updateWithChildren( gui::IGUIElement* element, bool enable );
 
 };
 // Ende class StateMainMenu

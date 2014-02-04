@@ -17,7 +17,8 @@ StateMainMenu::StateMainMenu( IrrlichtDevice* device )
   menuScreenImageCatalogue_(0),
   mainMenuTexture_(0),
   mainMenuBgColor_(video::SColor( 255, 248, 245, 240 )),
-  hover_(false)
+  hover_(false),
+  currentMenu_(NONE)
 {
     if ( device == 0 )
         Logfile::getInstance().emergencyExit(
@@ -28,6 +29,11 @@ StateMainMenu::StateMainMenu( IrrlichtDevice* device )
     loadTextures();
     extractImagesFromCatalogue();
     createMainMenu();
+    createNewPlayerMenu();
+    createLoadGameMenu();
+    createPreferencesMenu();
+    createAboutMenu();
+    switchToMenu( MAIN );
     transitTo( STARTING );
 }
 
@@ -107,23 +113,23 @@ bool StateMainMenu::handleGuiEvents( const irr::SEvent& event )
             hover_ = false;
             break;
         case gui::EGET_BUTTON_CLICKED:
-            switch ( 1 )
+            switch ( currentMenu_ )
             {
-                case 1:
+                case MAIN:
                     result = mainMenuButtonHandler( callerId );
                     break;
-//                case MENUE_NEUER_SPIELER:
-//                    result = newPlayerMenueButtonHandler();
-//                    break;
-//                case MENUE_HAUPTMENUE_LADEN:
-//                    result = loadMenueButtonHandler();
-//                    break;
-//                case MENUE_HAUPTMENUE_EINSTELLUNGEN:
-//                    result = prefsMenueButtonHandler();
-//                    break;
-//                case MENUE_MITWIRKENDE:
-//                    result = aboutMenueButtonHandler();
-//                    break;
+                case NEW:
+                    result = newPlayerMenuButtonHandler( callerId );
+                    break;
+                case LOAD:
+                    result = loadGameMenuButtonHandler( callerId );
+                    break;
+                case PREFS:
+                    result = preferencesMenuButtonHandler( callerId );
+                    break;
+                case ABOUT:
+                    result = aboutMenuButtonHandler( callerId );
+                    break;
                 default:
                     break;
             }
@@ -222,77 +228,250 @@ void StateMainMenu::createMainMenu()
             screenSize.Height - 20 - textureSize.Height
     );
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
-
     gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti( imagePosition, textureSize ),
-            guienv_->getRootGUIElement(), ID_HM_BGIMAGE, L"Hauptmenü"
+            guienv_->getRootGUIElement(), ID_MAIN_BGIMAGE, L"Hauptmenü"
     );
     menueBgImage->setImage( mainMenuTexture_ );
     gui::IGUIButton* newButton = guienv_->addButton(
             core::recti( core::position2di( 85, 63 ), buttonSize ),
-            menueBgImage, ID_HM_NEWBUTTON, L"Neues Spiel"
+            menueBgImage, ID_MAIN_NEWBUTTON, L"Neues Spiel"
     );
     changeStyleOfButton( newButton );
     gui::IGUIButton* resumeButton = guienv_->addButton(
             core::recti( core::position2di( 85, 134 ), buttonSize ),
-            menueBgImage, ID_HM_RESUMEBUTTON, L"Fortsetzen"
+            menueBgImage, ID_MAIN_RESUMEBUTTON, L"Fortsetzen"
     );
     changeStyleOfButton( resumeButton );
     gui::IGUIButton* loadButton = guienv_->addButton(
             core::recti( core::position2di( 85, 207 ), buttonSize ),
-            menueBgImage, ID_HM_LOADBUTTON, L"Laden"
+            menueBgImage, ID_MAIN_LOADBUTTON, L"Laden"
     );
     changeStyleOfButton( loadButton );
     gui::IGUIButton* prefsButton = guienv_->addButton(
             core::recti( core::position2di( 85, 288 ), buttonSize ),
-            menueBgImage, ID_HM_PREFSBUTTON, L"Einstellungen"
+            menueBgImage, ID_MAIN_PREFSBUTTON, L"Einstellungen"
     );
     changeStyleOfButton( prefsButton );
     gui::IGUIButton* aboutButton = guienv_->addButton(
             core::recti( core::position2di( 85, 356 ), buttonSize ),
-            menueBgImage, ID_HM_ABOUTBUTTON, L"Mitwirkende"
+            menueBgImage, ID_MAIN_ABOUTBUTTON, L"Mitwirkende"
     );
     changeStyleOfButton( aboutButton );
     gui::IGUIButton* exitButton = guienv_->addButton(
             core::recti( core::position2di( 85, 416 ), buttonSize ),
-            menueBgImage, ID_HM_EXITBUTTON, L"Beenden"
+            menueBgImage, ID_MAIN_EXITBUTTON, L"Beenden"
     );
     changeStyleOfButton( exitButton );
+    hideMenu( MAIN );
 }
 
 
 
 bool StateMainMenu::mainMenuButtonHandler( s32 callerId )
 {
+    bool result = true;
     switch ( callerId )
     {
-        case ID_HM_NEWBUTTON:
-            //transitTo( MENUE_NEUER_SPIELER );
+        case ID_MAIN_NEWBUTTON:
+            switchToMenu( NEW );
             break;
-        case ID_HM_RESUMEBUTTON:
-            //transitTo( MENUE_SPIEL_LAEUFT );
+        case ID_MAIN_RESUMEBUTTON:
+            //( MENUE_SPIEL_LAEUFT );
             break;
-        case ID_HM_LOADBUTTON:
-            //transitTo( MENUE_HAUPTMENUE_LADEN );
+        case ID_MAIN_LOADBUTTON:
+            switchToMenu( LOAD );
             break;
-        case ID_HM_PREFSBUTTON:
-            //transitTo( MENUE_HAUPTMENUE_EINSTELLUNGEN );
+        case ID_MAIN_PREFSBUTTON:
+            switchToMenu( PREFS );
             break;
-        case ID_HM_ABOUTBUTTON:
-            //transitTo( MENUE_MITWIRKENDE );
+        case ID_MAIN_ABOUTBUTTON:
+            switchToMenu( ABOUT );
             break;
-        case ID_HM_EXITBUTTON:
+        case ID_MAIN_EXITBUTTON:
             GameStateManager::getInstance().requestNewState(
                                 GameStateManager::SHUTDOWN );
             transitTo( STOPPING );
             break;
         default:
-            Logfile::getInstance().writeLine( Logfile::DEBUG,
-                    "unbekannter Knopf geklickt, Caller: %i\n", callerId );
+            unknownCaller( callerId );
+            result = false;
             break;
     }
     Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
-    return false;
+    return result;
+}
+
+
+
+void StateMainMenu::createNewPlayerMenu()
+{
+    core::dimension2du textureSize = mainMenuTexture_->getSize();
+    core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    core::position2di imagePosition = core::position2di(
+            screenSize.Width - 20 - textureSize.Width,
+            screenSize.Height - 20 - textureSize.Height
+    );
+    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
+    gui::IGUIImage* menueBgImage = guienv_->addImage(
+            core::recti( imagePosition, textureSize ),
+            guienv_->getRootGUIElement(), ID_NEW_BGIMAGE, L"Neuer Spieler"
+    );
+    menueBgImage->setImage( mainMenuTexture_ );
+    gui::IGUIButton* exitButton = guienv_->addButton(
+            core::recti( core::position2di( 85, 416 ), buttonSize ),
+            menueBgImage, ID_NEW_EXITBUTTON, L"Zurück"
+    );
+    changeStyleOfButton( exitButton );
+    hideMenu( NEW );
+}
+
+
+
+bool StateMainMenu::newPlayerMenuButtonHandler( s32 callerId )
+{
+    bool result = true;
+    switch ( callerId )
+    {
+        case ID_NEW_EXITBUTTON:
+            switchToMenu( MAIN );
+            break;
+        default:
+            unknownCaller( callerId );
+            result = false;
+            break;
+    }
+    Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
+    return result;
+}
+
+
+
+void StateMainMenu::createLoadGameMenu()
+{
+    core::dimension2du textureSize = mainMenuTexture_->getSize();
+    core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    core::position2di imagePosition = core::position2di(
+            screenSize.Width - 20 - textureSize.Width,
+            screenSize.Height - 20 - textureSize.Height
+    );
+    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
+    gui::IGUIImage* menueBgImage = guienv_->addImage(
+            core::recti( imagePosition, textureSize ),
+            guienv_->getRootGUIElement(), ID_LOAD_BGIMAGE, L"Spiel laden"
+    );
+    menueBgImage->setImage( mainMenuTexture_ );
+    gui::IGUIButton* exitButton = guienv_->addButton(
+            core::recti( core::position2di( 85, 416 ), buttonSize ),
+            menueBgImage, ID_LOAD_EXITBUTTON, L"Zurück"
+    );
+    changeStyleOfButton( exitButton );
+    hideMenu( LOAD );
+}
+
+
+
+bool StateMainMenu::loadGameMenuButtonHandler( s32 callerId )
+{
+    bool result = true;
+    switch ( callerId )
+    {
+        case ID_LOAD_EXITBUTTON:
+            switchToMenu( MAIN );
+            break;
+        default:
+            unknownCaller( callerId );
+            result = false;
+            break;
+    }
+    Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
+    return result;
+}
+
+
+
+void StateMainMenu::createPreferencesMenu()
+{
+    core::dimension2du textureSize = mainMenuTexture_->getSize();
+    core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    core::position2di imagePosition = core::position2di(
+            screenSize.Width - 20 - textureSize.Width,
+            screenSize.Height - 20 - textureSize.Height
+    );
+    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
+    gui::IGUIImage* menueBgImage = guienv_->addImage(
+            core::recti( imagePosition, textureSize ),
+            guienv_->getRootGUIElement(), ID_PREFS_BGIMAGE, L"Einstellungen"
+    );
+    menueBgImage->setImage( mainMenuTexture_ );
+    gui::IGUIButton* exitButton = guienv_->addButton(
+            core::recti( core::position2di( 85, 416 ), buttonSize ),
+            menueBgImage, ID_PREFS_EXITBUTTON, L"Zurück"
+    );
+    changeStyleOfButton( exitButton );
+    hideMenu( PREFS );
+}
+
+
+
+bool StateMainMenu::preferencesMenuButtonHandler( s32 callerId )
+{
+    bool result = true;
+    switch ( callerId )
+    {
+        case ID_PREFS_EXITBUTTON:
+            switchToMenu( MAIN );
+            break;
+        default:
+            unknownCaller( callerId );
+            result = false;
+            break;
+    }
+    Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
+    return result;
+}
+
+
+
+void StateMainMenu::createAboutMenu()
+{
+    core::dimension2du textureSize = mainMenuTexture_->getSize();
+    core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    core::position2di imagePosition = core::position2di(
+            screenSize.Width - 20 - textureSize.Width,
+            screenSize.Height - 20 - textureSize.Height
+    );
+    core::dimension2du buttonSize = core::dimension2du( 313, 88 );
+    gui::IGUIImage* menueBgImage = guienv_->addImage(
+            core::recti( imagePosition, textureSize ),
+            guienv_->getRootGUIElement(), ID_ABOUT_BGIMAGE, L"Über..."
+    );
+    menueBgImage->setImage( mainMenuTexture_ );
+    gui::IGUIButton* exitButton = guienv_->addButton(
+            core::recti( core::position2di( 85, 416 ), buttonSize ),
+            menueBgImage, ID_ABOUT_EXITBUTTON, L"Zurück"
+    );
+    changeStyleOfButton( exitButton );
+    hideMenu( ABOUT );
+}
+
+
+
+bool StateMainMenu::aboutMenuButtonHandler( s32 callerId )
+{
+    bool result = true;
+    switch ( callerId )
+    {
+        case ID_ABOUT_EXITBUTTON:
+            switchToMenu( MAIN );
+            break;
+        default:
+            unknownCaller( callerId );
+            result = false;
+            break;
+    }
+    Ton::getInstance().playGUISound( Ton::SND_GUI_CLICKBUTTON );
+    return result;
 }
 
 
@@ -305,7 +484,6 @@ void StateMainMenu::changeStyleOfButton( gui::IGUIButton* button)
     button->setIsPushButton( false );
     button->setDrawBorder( false );
     button->setUseAlphaChannel( true );
-    button->setVisible( true );
 }
 
 
@@ -322,4 +500,56 @@ void StateMainMenu::focusButton( gui::IGUIButton* button )
 {
     button->setImage( menuScreenImageCatalogue_,
             core::recti( 661, 115, 976, 204 ) );
+}
+
+
+
+void StateMainMenu::unknownCaller( s32 callerId )
+{
+    Logfile::getInstance().writeLine( Logfile::DEBUG,
+                        "unbekannter Knopf geklickt, CallerID: ", callerId );
+}
+
+
+
+void StateMainMenu::switchToMenu( MENU menu )
+{
+    if ( menu )
+    {
+        hideMenu( currentMenu_ );
+        currentMenu_ = menu;
+        displayMenu( currentMenu_ );
+    }
+}
+
+
+
+void StateMainMenu::displayMenu( MENU menu )
+{
+    updateWithChildren( guienv_->getRootGUIElement()->getElementFromId( menu ),
+            true );
+}
+
+
+
+void StateMainMenu::hideMenu( MENU menu )
+{
+    updateWithChildren( guienv_->getRootGUIElement()->getElementFromId( menu ),
+            false );
+}
+
+
+
+void StateMainMenu::updateWithChildren( gui::IGUIElement* element, bool enable )
+{
+    if ( !element )
+        return;
+    element->setVisible( enable );
+    element->setEnabled( enable );
+    core::list<gui::IGUIElement*> children = element->getChildren();
+    if ( children.empty() )
+        return;
+    core::list<gui::IGUIElement*>::Iterator it = children.begin();
+    for ( ; it != children.end(); ++it )
+        updateWithChildren( (*it), enable );
 }

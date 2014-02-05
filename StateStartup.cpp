@@ -110,10 +110,6 @@ void StateStartup::update( f32 frameDeltaTime )
             break;
             // wer benötigt wen zum Laden und Zerstören:
             //    World::getInstance(); --> alles  todo REFACTOR as own gamestate!
-            // todo refactor or even remove Menues!
-                //Menues::getInstance( device ); --> World
-                // ...
-                //Menues::getInstance().transitTo( Menues::MENUE_HAUPTMENUE );
         default:
             GameStateManager::getInstance().requestNewState(
                     GameStateManager::MAIN_MENU );

@@ -43,7 +43,8 @@ public:
     */
     GameState() : currentInternalState_(INITIAL) {};
 
-	// Destruktor
+    /*! \brief Destruktor.
+    */
 	virtual ~GameState() {};
 
     /*! \brief Aktualisiert die Startup-Phase des Status.

@@ -37,7 +37,8 @@ public:
     */
     StateStartup( IrrlichtDevice* device );
 
-    // Destruktor
+    /*! \brief Destruktor.
+    */
     ~StateStartup();
 
     /*! \brief Aktualisiert die Startup-Phase des Status.

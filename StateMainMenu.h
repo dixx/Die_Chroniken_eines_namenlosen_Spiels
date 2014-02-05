@@ -33,7 +33,8 @@ public:
     */
     StateMainMenu( IrrlichtDevice* device );
 
-    // Destruktor
+    /*! \brief Destruktor.
+    */
     ~StateMainMenu();
 
     /*! \brief Aktualisiert die Startup-Phase des Status.

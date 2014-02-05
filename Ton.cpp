@@ -24,6 +24,7 @@ void Ton::preload( const c8* filename )
         Logfile::getInstance().writeLine( Logfile::DEBUG,
                 " konnte nicht geladen werden!" );
     }
+    snd->getPlayLength(); // workaround for a may-be-bug in preloading
 }
 
 

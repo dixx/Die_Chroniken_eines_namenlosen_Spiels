@@ -1,137 +1,98 @@
-#include "StateStartup.h"
-#include "Camera.h"
-#include "Collision.h"
+#include "StateUnloadGameContent.h"
 #include "Configuration.h"
-#include "Constants.h"
+#include "GameStateManager.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
 #include "Logfile.h"
-#include "Mauspfeil.h"
 #include "ObjectManager.h"
-#include "Scripting.h"
-#include "TimerManager.h"
-#include "Ton.h"
 #include "Weather.h"
-#include "Zufall.h"
-#ifdef _DEBUG_MODE
-#include "DebugShapesManager.h"
-#include "Debugwindow.h"
-#endif
 
 
 
-StateStartup::StateStartup( IrrlichtDevice* device )
+StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
 : GameState(),
   device_(device),
-  classCounter_(0)
+  moduleCounter_(0)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
-                "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
-    device_->setWindowCaption( L"Lade..." );
-    GenericHelperMethods::getInstance( device_ );
+                "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
+    device_->setWindowCaption( L"Entlade..." );
     createLoadingScreenImage();
     createLoadingScreenText();
-    fader_ = device_->getGUIEnvironment()->addInOutFader();
     transitTo( STARTING );
 }
 
 
 
-StateStartup::~StateStartup()
+StateUnloadGameContent::~StateUnloadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
 }
 
 
 
-void StateStartup::start( f32 frameDeltaTime )
+void StateUnloadGameContent::start( f32 frameDeltaTime )
 {
-    if ( fader_->isReady() )
-        transitTo( RUNNING );
+    transitTo( RUNNING );
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
 #pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
-void StateStartup::update( f32 frameDeltaTime )
+void StateUnloadGameContent::update( f32 frameDeltaTime )
 {
-    switch( classCounter_ )
+    switch( moduleCounter_ )
     {
         case 0:
-#ifdef _DEBUG_MODE
-            loadingText_->setText( L"Lade Kammerjäger..." );
-            DebugShapesManager::getInstance( device_->getVideoDriver() );
-            Debugwindow::getInstance( device_ );
-#endif
+            loadingText_->setText( L"Schließe Augen..." );
+            //Camera::getInstance().lockToNode( 0 );
             break;
         case 1:
-            loadingText_->setText( L"Lade Zufälle..." );
-            Zufall::getInstance().start( device_->getTimer()->getRealTime() );
+            loadingText_->setText( L"Verliere Bewußtsein..." );
+            //Hero::getInstance().unload();
             break;
         case 2:
-            loadingText_->setText( L"Lade Uhren..." );
-            TimerManager::getInstance();
+            loadingText_->setText( L"Werde dumm..." );
+            //...fahre KI runter
             break;
         case 3:
-            loadingText_->setText( L"Lade Schreibmaschine..." );
-            Scripting::getInstance();
+            loadingText_->setText( L"Lasse alles los..." );
+            //ObjectManager::getInstance().unload();
             break;
         case 4:
-            loadingText_->setText( L"Lade Klänge..." );
-            Ton::getInstance( device_->getFileSystem() );
+            loadingText_->setText( L"Verliere Bodenständigkeit..." );
+            //Ground::getInstance().unload();
             break;
         case 5:
-            loadingText_->setText( L"Lade Zeigefinger..." );
-            Mauspfeil::getInstance( device_ ).setCurrentArrow(
-                                Mauspfeil::MAUSPFEIL_UNSICHTBAR );
-            break;
-        case 6:
-            loadingText_->setText( L"Lade Zusammenstöße..." );
-            Collision::getInstance( device_->getSceneManager() );
-            break;
-        case 7:
-            loadingText_->setText( L"Lade Dinge..." );
-            ObjectManager::getInstance( device_ );
-            break;
-        case 8:
-            loadingText_->setText( L"Lade Wetter..." );
-            Weather::getInstance( device_->getSceneManager() );
-            break;
-        case 9:
-            loadingText_->setText( L"Lade Fußboden..." );
-            Ground::getInstance( device_ );
-            break;
-        case 10:
-            loadingText_->setText( L"Lade Auge..." );
-            Camera::getInstance( device_->getSceneManager() );
+            loadingText_->setText( L"Gehe nach drinnen..." );
+            //Weather::getInstance().unload();
             break;
         default:
+            loadingText_->setText( L"" );
             GameStateManager::getInstance().requestNewState(
                     GameStateManager::MAIN_MENU );
-            loadingText_->setText( L"" );
             transitTo( STOPPING );
             break;
     }
-    classCounter_++;
+    moduleCounter_++;
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
 #pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
-void StateStartup::shutdown( f32 frameDeltaTime )
+void StateUnloadGameContent::shutdown( f32 frameDeltaTime )
 {
-    if ( fader_->isReady() )
-        transitTo( STOPPED );
+    transitTo( STOPPED );
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
 #pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
-void StateStartup::draw()
+void StateUnloadGameContent::draw()
 {
     device_->getVideoDriver()->beginScene();
     device_->getGUIEnvironment()->drawAll();
@@ -140,7 +101,7 @@ void StateStartup::draw()
 
 
 
-bool StateStartup::handleGuiEvents( const irr::SEvent& event )
+bool StateUnloadGameContent::handleGuiEvents( const irr::SEvent& event )
 {
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> event
     return false;
@@ -153,7 +114,7 @@ bool StateStartup::handleGuiEvents( const irr::SEvent& event )
 
 
 
-void StateStartup::createLoadingScreenImage()
+void StateUnloadGameContent::createLoadingScreenImage()
 {
     GenericHelperMethods::getInstance().validateFileExistence(
             "GFX/Spiellogo.png" );
@@ -172,7 +133,7 @@ void StateStartup::createLoadingScreenImage()
 
 
 
-void StateStartup::createLoadingScreenText()
+void StateUnloadGameContent::createLoadingScreenText()
 {
     core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
@@ -194,13 +155,12 @@ void StateStartup::createLoadingScreenText()
 
 
 
-void StateStartup::transitTo( internalState state )
+void StateUnloadGameContent::transitTo( internalState state )
 {
     switch ( state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            fader_->fadeIn( 700 );
             loadingScreenImageFrame_->setEnabled( true );
             break;
         case RUNNING:
@@ -208,13 +168,11 @@ void StateStartup::transitTo( internalState state )
             break;
         case STOPPING:
             currentInternalState_ = STOPPING;
-            fader_->fadeOut( 900 );
             break;
         default:
             currentInternalState_ = STOPPED;
             loadingScreenImageFrame_->remove();
             loadingText_->remove();
-            fader_->remove();
             break;
     }
 }

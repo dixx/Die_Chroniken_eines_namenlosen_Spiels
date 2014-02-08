@@ -84,6 +84,7 @@ private:
 
     enum GUI_ITEM
     {
+        ID_ROOT = 1,
         ID_MAIN_BGIMAGE       = MAIN,   //!< Hauptmenü Hintergrundbild
         ID_MAIN_NEWBUTTON,              //!< Neu-Button im Hauptmenü
         ID_MAIN_RESUMEBUTTON,           //!< Fortsetzen-Button im Hauptmenü
@@ -108,6 +109,7 @@ private:
     video::SColor mainMenuBgColor_;
     bool hover_;
     MENU currentMenu_;
+    gui::IGUIElement* menuRoot_;
 
     StateMainMenu( const StateMainMenu& );
     StateMainMenu& operator=( const StateMainMenu& );
@@ -133,6 +135,7 @@ private:
     inline void displayMenu( MENU menu );
     inline void hideMenu( MENU menu );
     void updateWithChildren( gui::IGUIElement* element, bool enable );
+    void removeChildren( gui::IGUIElement* element );
 
 };
 // Ende class StateMainMenu

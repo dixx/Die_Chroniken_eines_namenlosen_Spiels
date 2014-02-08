@@ -25,6 +25,7 @@ StateMainMenu::StateMainMenu( IrrlichtDevice* device )
                 "Entchen in [StateMainMenu] nicht mehr gefunden! Abbruch." );
     driver_ = device->getVideoDriver();
     guienv_ = device->getGUIEnvironment();
+    menuRoot_ = guienv_->addModalScreen( guienv_->getRootGUIElement() );
     device->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
     loadTextures();
     extractImagesFromCatalogue();
@@ -42,7 +43,18 @@ StateMainMenu::StateMainMenu( IrrlichtDevice* device )
 StateMainMenu::~StateMainMenu()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    guienv_->clear();
+    //guienv_->clear(); // NEVER DO THAT UNTIL YOU CLOSE THE PROGRAM!
+    removeChildren( menuRoot_->getElementFromId( MAIN ) );
+    menuRoot_->getElementFromId( MAIN )->remove();
+    removeChildren( menuRoot_->getElementFromId( NEW ) );
+    menuRoot_->getElementFromId( NEW )->remove();
+    removeChildren( menuRoot_->getElementFromId( LOAD ) );
+    menuRoot_->getElementFromId( LOAD )->remove();
+    removeChildren( menuRoot_->getElementFromId( PREFS ) );
+    menuRoot_->getElementFromId( PREFS )->remove();
+    removeChildren( menuRoot_->getElementFromId( ABOUT ) );
+    menuRoot_->getElementFromId( ABOUT )->remove();
+    // menuRoot_ removes itself after all children are gone
 }
 
 
@@ -230,7 +242,7 @@ void StateMainMenu::createMainMenu()
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
     gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti( imagePosition, textureSize ),
-            guienv_->getRootGUIElement(), ID_MAIN_BGIMAGE, L"Hauptmenü"
+            menuRoot_, ID_MAIN_BGIMAGE, L"Hauptmenü"
     );
     menueBgImage->setImage( mainMenuTexture_ );
     gui::IGUIButton* newButton = guienv_->addButton(
@@ -277,7 +289,9 @@ bool StateMainMenu::mainMenuButtonHandler( s32 callerId )
             switchToMenu( NEW );
             break;
         case ID_MAIN_RESUMEBUTTON:
-            //( MENUE_SPIEL_LAEUFT );
+            GameStateManager::getInstance().requestNewState(
+                                GameStateManager::LOAD );
+            transitTo( STOPPING );
             break;
         case ID_MAIN_LOADBUTTON:
             switchToMenu( LOAD );
@@ -315,7 +329,7 @@ void StateMainMenu::createNewPlayerMenu()
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
     gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti( imagePosition, textureSize ),
-            guienv_->getRootGUIElement(), ID_NEW_BGIMAGE, L"Neuer Spieler"
+            menuRoot_, ID_NEW_BGIMAGE, L"Neuer Spieler"
     );
     menueBgImage->setImage( mainMenuTexture_ );
     gui::IGUIButton* exitButton = guienv_->addButton(
@@ -358,7 +372,7 @@ void StateMainMenu::createLoadGameMenu()
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
     gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti( imagePosition, textureSize ),
-            guienv_->getRootGUIElement(), ID_LOAD_BGIMAGE, L"Spiel laden"
+            menuRoot_, ID_LOAD_BGIMAGE, L"Spiel laden"
     );
     menueBgImage->setImage( mainMenuTexture_ );
     gui::IGUIButton* exitButton = guienv_->addButton(
@@ -401,7 +415,7 @@ void StateMainMenu::createPreferencesMenu()
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
     gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti( imagePosition, textureSize ),
-            guienv_->getRootGUIElement(), ID_PREFS_BGIMAGE, L"Einstellungen"
+            menuRoot_, ID_PREFS_BGIMAGE, L"Einstellungen"
     );
     menueBgImage->setImage( mainMenuTexture_ );
     gui::IGUIButton* exitButton = guienv_->addButton(
@@ -444,7 +458,7 @@ void StateMainMenu::createAboutMenu()
     core::dimension2du buttonSize = core::dimension2du( 313, 88 );
     gui::IGUIImage* menueBgImage = guienv_->addImage(
             core::recti( imagePosition, textureSize ),
-            guienv_->getRootGUIElement(), ID_ABOUT_BGIMAGE, L"Über..."
+            menuRoot_, ID_ABOUT_BGIMAGE, L"Über..."
     );
     menueBgImage->setImage( mainMenuTexture_ );
     gui::IGUIButton* exitButton = guienv_->addButton(
@@ -526,16 +540,14 @@ void StateMainMenu::switchToMenu( MENU menu )
 
 void StateMainMenu::displayMenu( MENU menu )
 {
-    updateWithChildren( guienv_->getRootGUIElement()->getElementFromId( menu ),
-            true );
+    updateWithChildren( menuRoot_->getElementFromId( menu ), true );
 }
 
 
 
 void StateMainMenu::hideMenu( MENU menu )
 {
-    updateWithChildren( guienv_->getRootGUIElement()->getElementFromId( menu ),
-            false );
+    updateWithChildren( menuRoot_->getElementFromId( menu ), false );
 }
 
 
@@ -552,4 +564,22 @@ void StateMainMenu::updateWithChildren( gui::IGUIElement* element, bool enable )
     core::list<gui::IGUIElement*>::Iterator it = children.begin();
     for ( ; it != children.end(); ++it )
         updateWithChildren( (*it), enable );
+}
+
+
+
+void StateMainMenu::removeChildren( gui::IGUIElement* element )
+{
+    if ( !element )
+        return;
+    const core::list<gui::IGUIElement*>& children = element->getChildren();
+    if ( children.empty() )
+        return;
+    while ( true )
+    {
+        removeChildren( *(children.getLast()) );
+        element->removeChild( *(children.getLast()) );
+        if ( children.empty() )
+            break;
+    }
 }

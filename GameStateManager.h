@@ -40,7 +40,9 @@ public:
 	    NOSTATE = 0,  //!< Unzulässiger GameState
 	    STARTUP,      //!< Initialisieren des Spiels
 	    MAIN_MENU,    //!< Das Hauptmenü und dessen Untermenüs
+        LOAD,         //!< Lädt das Spiel
         GAME,         //!< Das Spiel selbst
+        UNLOAD,       //!< Entlädt das Spiel
         SHUTDOWN,     //!< Herunterfahren des Spiels
 
         STATES_COUNT  //!< Anzahl verfügbarer Spiel-Stati
@@ -93,8 +95,11 @@ private:
     ~GameStateManager();
 
     void switchState();
-    inline void validateRequestForStartup();
-    inline void validateRequestForMainMenu();
+    void validateRequestForStartup();
+    void validateRequestForMainMenu();
+    void validateRequestForLoad();
+    void validateRequestForGame();
+    void validateRequestForUnload();
     inline void unknownStateRequested();
 
 };

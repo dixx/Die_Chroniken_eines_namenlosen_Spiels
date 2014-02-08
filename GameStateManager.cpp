@@ -1,6 +1,9 @@
 #include "GameStateManager.h"
 #include "Logfile.h"
+#include "StateLoadGameContent.h"
+#include "StatePlayTheGame.h"
 #include "StateStartup.h"
+#include "StateUnloadGameContent.h"
 #include "StateMainMenu.h"
 
 
@@ -62,6 +65,15 @@ void GameStateManager::requestNewState( State desiredState )
         case MAIN_MENU:
             validateRequestForMainMenu();
             break;
+        case LOAD:
+            validateRequestForLoad();
+            break;
+        case GAME:
+            validateRequestForGame();
+            break;
+        case UNLOAD:
+            validateRequestForUnload();
+            break;
         case SHUTDOWN:
             requestedState_ = SHUTDOWN;  // Anfrage von SHUTDOWN ist immer zulässig.
             break;
@@ -115,6 +127,15 @@ void GameStateManager::switchState()
         case MAIN_MENU:
             currentState_ = new StateMainMenu( device_ );
             break;
+        case LOAD:
+            currentState_ = new StateLoadGameContent( device_ );
+            break;
+        case GAME:
+            currentState_ = new StatePlayTheGame( device_ );
+            break;
+        case UNLOAD:
+            currentState_ = new StateUnloadGameContent( device_ );
+            break;
         default: // SHUTDOWN
             device_->closeDevice(); // create GameState Shutdown later
             currentState_ = 0;
@@ -146,12 +167,61 @@ void GameStateManager::validateRequestForMainMenu()
     switch ( runningState_ )
     {
         case STARTUP:
+        case UNLOAD:
             requestedState_ = MAIN_MENU;
             break;
         default:
             Logfile::getInstance().emergencyExit(
                     "Unzulässige Anforderung von GameState MAIN_MENU! Abbruch."
             );
+            break;
+    }
+}
+
+
+
+void GameStateManager::validateRequestForLoad()
+{
+    switch ( runningState_ )
+    {
+        case MAIN_MENU:
+            requestedState_ = LOAD;
+            break;
+        default:
+            Logfile::getInstance().emergencyExit(
+                    "Unzulässige Anforderung von GameState LOAD! Abbruch." );
+            break;
+    }
+}
+
+
+
+void GameStateManager::validateRequestForGame()
+{
+    switch ( runningState_ )
+    {
+        case LOAD:
+            requestedState_ = GAME;
+            break;
+        default:
+            Logfile::getInstance().emergencyExit(
+                    "Unzulässige Anforderung von GameState GAME! Abbruch." );
+            break;
+    }
+}
+
+
+
+void GameStateManager::validateRequestForUnload()
+{
+    switch ( runningState_ )
+    {
+        case GAME:
+            requestedState_ = UNLOAD;
+            break;
+        default:
+            Logfile::getInstance().emergencyExit(
+                    "Unzulässige Anforderung von GameState UNLOAD! Abbruch." );
             break;
     }
 }

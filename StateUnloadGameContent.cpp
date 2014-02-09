@@ -1,9 +1,11 @@
 #include "StateUnloadGameContent.h"
 #include "Configuration.h"
+#include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
 #include "Logfile.h"
+#include "Mauspfeil.h"
 #include "ObjectManager.h"
 #include "Weather.h"
 
@@ -162,6 +164,10 @@ void StateUnloadGameContent::transitTo( internalState state )
         case STARTING:
             currentInternalState_ = STARTING;
             loadingScreenImageFrame_->setEnabled( true );
+            Eventreceiver::getInstance().setEventReactionActive(
+                    false, false, false );
+            Mauspfeil::getInstance().setCurrentArrow(
+                    Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;
         case RUNNING:
             currentInternalState_ = RUNNING;

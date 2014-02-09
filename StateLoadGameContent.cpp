@@ -1,9 +1,11 @@
 #include "StateLoadGameContent.h"
 #include "Configuration.h"
+#include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
 #include "Logfile.h"
+#include "Mauspfeil.h"
 #include "ObjectManager.h"
 #include "Weather.h"
 
@@ -166,6 +168,10 @@ void StateLoadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
+            Eventreceiver::getInstance().setEventReactionActive(
+                    false, false, false );
+            Mauspfeil::getInstance().setCurrentArrow(
+                    Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             loadingScreenImageFrame_->setEnabled( true );
             break;
         case RUNNING:

@@ -1,4 +1,5 @@
 #include "StatePlayTheGame.h"
+#include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
@@ -87,6 +88,10 @@ void StatePlayTheGame::transitTo( internalState state )
             break;
         case RUNNING:
             currentInternalState_ = RUNNING;
+            Eventreceiver::getInstance().setEventReactionActive(
+                    true, true, true );
+            Mauspfeil::getInstance().setCurrentArrow(
+                    Mauspfeil::MAUSPFEIL_SELECT );
             break;
         case STOPPING:
             currentInternalState_ = STOPPING;

@@ -13,7 +13,7 @@ StatePlayTheGame::StatePlayTheGame( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
                 "Entchen in [StatePlayTheGame] nicht mehr gefunden! Abbruch." );
-    Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
+    device_->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
     transitTo( STARTING );
 }
 
@@ -22,7 +22,6 @@ StatePlayTheGame::StatePlayTheGame( IrrlichtDevice* device )
 StatePlayTheGame::~StatePlayTheGame()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
 }
 
 

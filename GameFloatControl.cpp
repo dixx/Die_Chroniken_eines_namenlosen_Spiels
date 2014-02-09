@@ -4,7 +4,9 @@
 #include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "Logfile.h"
-
+#ifdef _DEBUG_MODE
+#include "Debugwindow.h"
+#endif
 
 
 GameFloatControl& GameFloatControl::getInstance()
@@ -26,6 +28,9 @@ bool GameFloatControl::start()
     if ( createDeviceFromConfig() == FAILED )
         return FAILED;
     GameStateManager::getInstance( device_ );
+#ifdef _DEBUG_MODE
+    Debugwindow::getInstance( device_ );
+#endif
     return SUCCEEDED;
 }
 
@@ -43,10 +48,10 @@ void GameFloatControl::run()
         updateFrameDeltaTime();
         game.update( frameDeltaTime_ );
         eventreceiver.setKeysLastState();
-        game.draw();
 #ifdef _DEBUG_MODE
         printFPS();
 #endif
+        game.draw();
     }
     //        if ( gameIsRunning )
     //            checkInputForGame();
@@ -187,7 +192,7 @@ void GameFloatControl::printFPS()
     {
         core::stringw str = L"FPS:";
         str += fps_;
-        device_->setWindowCaption( str.c_str() );
+        Debugwindow::getInstance().addLine( str.c_str() );
         lastFPS_ = fps_;
     }
 }

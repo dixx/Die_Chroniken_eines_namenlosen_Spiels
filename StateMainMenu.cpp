@@ -530,9 +530,13 @@ void StateMainMenu::switchToMenu( MENU menu )
 {
     if ( menu )
     {
+        Eventreceiver::getInstance().setEventReactionActive(
+                false, false, false );
         hideMenu( currentMenu_ );
         currentMenu_ = menu;
         displayMenu( currentMenu_ );
+        Eventreceiver::getInstance().setEventReactionActive(
+                true, true, true );
     }
 }
 

@@ -15,7 +15,6 @@
 #include "Zufall.h"
 #ifdef _DEBUG_MODE
 #include "DebugShapesManager.h"
-#include "Debugwindow.h"
 #endif
 
 
@@ -66,7 +65,6 @@ void StateStartup::update( f32 frameDeltaTime )
 #ifdef _DEBUG_MODE
             loadingText_->setText( L"Lade Kammerjäger..." );
             DebugShapesManager::getInstance( device_->getVideoDriver() );
-            Debugwindow::getInstance( device_ );
 #endif
             break;
         case 1:

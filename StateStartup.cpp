@@ -41,6 +41,9 @@ StateStartup::StateStartup( IrrlichtDevice* device )
 StateStartup::~StateStartup()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
+    loadingScreenImageFrame_->remove();
+    loadingText_->remove();
+    fader_->remove();
 }
 
 
@@ -212,9 +215,6 @@ void StateStartup::transitTo( internalState state )
             break;
         default:
             currentInternalState_ = STOPPED;
-            loadingScreenImageFrame_->remove();
-            loadingText_->remove();
-            fader_->remove();
             break;
     }
 }

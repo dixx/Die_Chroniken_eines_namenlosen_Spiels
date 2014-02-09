@@ -58,15 +58,16 @@ bool Debugwindow::isVisible() const
 
 
 Debugwindow::Debugwindow( IrrlichtDevice* device )
-: device_(device), content_(L""), newLine_(L"\r\n")
+: device_(device),
+  content_(L""),
+  newLine_(L"\r\n")
 {
     if ( device_ == 0 )
     {
         Logfile::getInstance().emergencyExit(
                 "Entchen in [Debugwindow] nicht mehr gefunden! Abbruch." );
     }
-    guienv_ = device_->getGUIEnvironment();
-    dwin_ = guienv_->addStaticText(
+    dwin_ = device_->getGUIEnvironment()->addStaticText(
         L"",
         core::recti( VEC_2DI_NULL, core::vector2di( 300, 300 ) ),
         false,
@@ -76,6 +77,7 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
         true
     );
     dwin_->setVisible( false );
+    dwin_->setEnabled( false );
     dwin_->setOverrideColor( COL_GREEN );
     dwin_->setBackgroundColor( video::SColor( 160,  0,  0,  0 ) );
     displayTimer_ = device_->getTimer()->getRealTime();
@@ -86,4 +88,5 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
 Debugwindow::~Debugwindow()
 {
     // nothing to do here
+    dwin_->remove();
 }

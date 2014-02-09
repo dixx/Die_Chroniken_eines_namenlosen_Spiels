@@ -31,6 +31,8 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
 StateLoadGameContent::~StateLoadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
+    loadingScreenImageFrame_->remove();
+    loadingText_->remove();
 }
 
 
@@ -182,8 +184,6 @@ void StateLoadGameContent::transitTo( internalState state )
             break;
         default:
             currentInternalState_ = STOPPED;
-            loadingScreenImageFrame_->remove();
-            loadingText_->remove();
             break;
     }
 }

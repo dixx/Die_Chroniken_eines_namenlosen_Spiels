@@ -155,7 +155,6 @@ public:
 private:
 
     IrrlichtDevice* device_;  // das Entchen
-    gui::IGUIEnvironment* guienv_;  // IRRLICHT GUI Zeiger
     gui::IGUIStaticText* dwin_;  // das GUI-Element "Fenster"
     core::stringw content_;  // Inhalt des Fensters
     core::stringw newLine_;  // Maske für einen Zeilenumbruch

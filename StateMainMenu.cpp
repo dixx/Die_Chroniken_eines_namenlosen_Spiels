@@ -55,6 +55,7 @@ StateMainMenu::~StateMainMenu()
     removeChildren( menuRoot_->getElementFromId( ABOUT ) );
     menuRoot_->getElementFromId( ABOUT )->remove();
     // menuRoot_ removes itself after all children are gone
+    driver_->removeTexture( mainMenuTexture_ );
 }
 
 

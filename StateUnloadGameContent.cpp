@@ -73,6 +73,10 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             loadingText_->setText( L"Gehe nach drinnen..." );
             Weather::getInstance().unload();
             break;
+        case 6:
+            loadingText_->setText( L"Vergiss das Gesehene..." );
+            device_->getSceneManager()->getMeshCache()->clearUnusedMeshes();
+            break;
         default:
             loadingText_->setText( L"" );
             GameStateManager::getInstance().requestNewState(

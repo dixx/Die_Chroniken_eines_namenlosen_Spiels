@@ -52,19 +52,21 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
     {
         case 0:
             loadingText_->setText( L"Lade Sonnenschein..." );
-            //Weather::getInstance().load();
+            Weather::getInstance().load();
             break;
         case 1:
             loadingText_->setText( L"Lade Fußboden..." );
-            //Ground::getInstance().load( ( levelName_ + ".map" ).c_str() );
+            Ground::getInstance().load( ( levelName_ + ".map" ).c_str() );
             break;
         case 2:
             loadingText_->setText( L"Lade Dinge..." );
-            //ObjectManager::getInstance().loadSolids( ( levelName_ + ".solids" ).c_str() );
+            ObjectManager::getInstance().loadSolids(
+                    ( levelName_ + ".solids" ).c_str() );
             break;
         case 3:
             loadingText_->setText( L"Lade zappelnde Dinge..." );
-            //ObjectManager::getInstance().loadNPCs( ( levelName_ + ".npcs" ).c_str() );
+            ObjectManager::getInstance().loadNPCs(
+                    ( levelName_ + ".npcs" ).c_str() );
             break;
         case 4:
             loadingText_->setText( L"Lade Würfelmaschine..." );

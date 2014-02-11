@@ -63,15 +63,15 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             break;
         case 3:
             loadingText_->setText( L"Lasse alles los..." );
-            //ObjectManager::getInstance().unload();
+            ObjectManager::getInstance().unload();
             break;
         case 4:
             loadingText_->setText( L"Verliere Bodenständigkeit..." );
-            //Ground::getInstance().unload();
+            Ground::getInstance().unload();
             break;
         case 5:
             loadingText_->setText( L"Gehe nach drinnen..." );
-            //Weather::getInstance().unload();
+            Weather::getInstance().unload();
             break;
         default:
             loadingText_->setText( L"" );

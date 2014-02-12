@@ -88,13 +88,12 @@ u32 now = device_->getTimer()->getRealTime();
         mapTiles_[ position ] = tile;
     }
 #ifdef _DEBUG_MODE
-Logfile::getInstance().write( Logfile::DEBUG, "", tileList.size() );
-Logfile::getInstance().write(
-        Logfile::DETAIL,
-        " Kartenteile in ",
-        device_->getTimer()->getRealTime() - now
-);
-Logfile::getInstance().writeLine( Logfile::DETAIL, "ms erstellt." );
+    core::stringw logText = L"";
+    logText += tileList.size();
+    logText += " Kartenteile in ";
+    logText += device_->getTimer()->getRealTime() - now;
+    logText += "ms erstellt.";
+    Logfile::getInstance().writeLine( Logfile::DETAIL, logText.c_str() );
 #endif
     tileList.clear();
     // einmal updaten, um Held setzen zu können
@@ -343,14 +342,15 @@ Ground::~Ground()
 
 void Ground::clearArrays()
 {
+    Collision& colliMan = Collision::getInstance();
     if ( mapTiles_.size() > 0 )
     {
         for ( register u32 i = 0; i < mapTiles_.size(); ++i )
         {
             if ( mapTiles_[ i ] )
             {
-                Collision::getInstance().removeObjectFromRangedDetection(
-                        mapTiles_[ i ] );
+                colliMan.removeObjectFromRangedDetection( mapTiles_[ i ] );
+                colliMan.removeNodeFromWorld( mapTiles_[ i ]->nodeInterface() );
                 delete mapTiles_[ i ];
                 mapTiles_[ i ] = 0;
             }

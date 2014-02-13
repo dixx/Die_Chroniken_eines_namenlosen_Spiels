@@ -207,6 +207,13 @@ bool Collision::isMouseIntersectingWithWorld()
 
 
 
+void Collision::clearRemainingSelectors()
+{
+    walkableSelector_->removeAllTriangleSelectors();
+}
+
+
+
 /* private */
 
 

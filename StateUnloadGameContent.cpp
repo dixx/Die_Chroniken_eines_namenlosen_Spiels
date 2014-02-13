@@ -1,4 +1,5 @@
 #include "StateUnloadGameContent.h"
+#include "Collision.h"
 #include "Configuration.h"
 #include "Eventreceiver.h"
 #include "GameStateManager.h"
@@ -63,7 +64,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             break;
         case 3:
             loadingText_->setText( L"Lasse alles los..." );
-            ObjectManager::getInstance().unload();
+//            ObjectManager::getInstance().unload();
             break;
         case 4:
             loadingText_->setText( L"Verliere Bodenständigkeit..." );
@@ -76,6 +77,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
         case 6:
             loadingText_->setText( L"Vergiss das Gesehene..." );
             device_->getSceneManager()->getMeshCache()->clearUnusedMeshes();
+            Collision::getInstance().clearRemainingSelectors();
             break;
         default:
             loadingText_->setText( L"" );

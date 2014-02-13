@@ -109,6 +109,12 @@ public:
     */
     bool isObjectCollidingWithNodes( Basic3DObject* object );
 
+    /*! \brief Entfernt alle Triangleselektoren.
+      \param -
+      \return -
+    */
+    void clearRemainingSelectors();
+
 private:
 
     scene::ISceneManager* smgr_;

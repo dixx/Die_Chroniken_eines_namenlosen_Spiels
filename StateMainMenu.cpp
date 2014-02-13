@@ -7,11 +7,17 @@
 #include "Mauspfeil.h"
 #include "Logfile.h"
 #include "Ton.h"
+#ifdef _DEBUG_MODE
+#include "DebugStatistics.h"
+#endif
 
 
 
 StateMainMenu::StateMainMenu( IrrlichtDevice* device )
 : GameState(),
+#ifdef _DEBUG_MODE
+  device_(device),
+#endif
   driver_(0),
   guienv_(0),
   menuScreenImageCatalogue_(0),
@@ -77,6 +83,12 @@ void StateMainMenu::update( f32 frameDeltaTime )
                             GameStateManager::SHUTDOWN );
         transitTo( STOPPING );
     }
+#ifdef _DEBUG_MODE
+    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F1 ) )
+    {
+        ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
+    }
+#endif
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
 #pragma GCC diagnostic error "-Wunused-parameter"

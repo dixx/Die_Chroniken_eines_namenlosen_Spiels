@@ -102,6 +102,9 @@ private:
         ID_ABOUT_EXITBUTTON             //!< Exit-Button im AboutMenü
     };
 
+#ifdef _DEBUG_MODE
+    IrrlichtDevice* device_;
+#endif
     video::IVideoDriver* driver_;
     gui::IGUIEnvironment* guienv_;
     video::ITexture* menuScreenImageCatalogue_;

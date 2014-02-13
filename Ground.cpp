@@ -342,15 +342,12 @@ Ground::~Ground()
 
 void Ground::clearArrays()
 {
-    Collision& colliMan = Collision::getInstance();
     if ( mapTiles_.size() > 0 )
     {
         for ( register u32 i = 0; i < mapTiles_.size(); ++i )
         {
             if ( mapTiles_[ i ] )
             {
-                colliMan.removeObjectFromRangedDetection( mapTiles_[ i ] );
-                colliMan.removeNodeFromWorld( mapTiles_[ i ]->nodeInterface() );
                 delete mapTiles_[ i ];
                 mapTiles_[ i ] = 0;
             }

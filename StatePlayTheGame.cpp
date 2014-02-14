@@ -3,7 +3,9 @@
 #include "GameStateManager.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
-
+#ifdef _DEBUG_MODE
+#include "Debugwindow.h"
+#endif
 
 
 StatePlayTheGame::StatePlayTheGame( IrrlichtDevice* device )
@@ -59,6 +61,9 @@ void StatePlayTheGame::draw()
     device_->getVideoDriver()->beginScene();
     device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
+#ifdef _DEBUG_MODE
+    Debugwindow::getInstance().show();
+#endif
     Mauspfeil::getInstance().draw();
     device_->getVideoDriver()->endScene();
 }

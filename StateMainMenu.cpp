@@ -9,6 +9,7 @@
 #include "Ton.h"
 #ifdef _DEBUG_MODE
 #include "DebugStatistics.h"
+#include "Debugwindow.h"
 #endif
 
 
@@ -85,9 +86,9 @@ void StateMainMenu::update( f32 frameDeltaTime )
     }
 #ifdef _DEBUG_MODE
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F1 ) )
-    {
         ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
-    }
+    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
+        Debugwindow::getInstance().toggle();
 #endif
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
@@ -108,6 +109,9 @@ void StateMainMenu::draw()
 {
     driver_->beginScene( true, false, mainMenuBgColor_ );
     guienv_->drawAll();
+#ifdef _DEBUG_MODE
+    Debugwindow::getInstance().show();
+#endif
     Mauspfeil::getInstance().draw();
     driver_->endScene();
 }

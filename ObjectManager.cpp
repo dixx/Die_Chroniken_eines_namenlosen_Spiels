@@ -424,8 +424,6 @@ void ObjectManager::clearArrays()
             {
                 Collision::getInstance().removeObjectFromRangedDetection(
                         staticObjects_[ i ] );
-                Collision::getInstance().removeNodeFromWorld(
-                        staticObjects_[ i ]->nodeInterface() );
                 delete staticObjects_[ i ];
                 staticObjects_[ i ] = 0;
             }
@@ -440,8 +438,6 @@ void ObjectManager::clearArrays()
             {
                 Collision::getInstance().removeObjectFromRangedDetection(
                         npcs_[ i ] );
-                Collision::getInstance().removeNodeFromWorld(
-                        npcs_[ i ]->nodeInterface() );
                 delete npcs_[ i ];
                 npcs_[ i ] = 0;
             }

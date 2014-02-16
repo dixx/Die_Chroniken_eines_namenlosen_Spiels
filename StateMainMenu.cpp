@@ -11,6 +11,7 @@
 #include "DebugStatistics.h"
 #include "Debugwindow.h"
 #include "Collision.h"
+#include "ObjectManager.h"
 #endif
 
 
@@ -92,6 +93,8 @@ void StateMainMenu::update( f32 frameDeltaTime )
         Debugwindow::getInstance().toggle();
     Debugwindow::getInstance().addLine( L"loaded selectors: ",
             Collision::getInstance().loadedSelectors() );
+    Debugwindow::getInstance().addLine( L"loaded nodes: ",
+            ObjectManager::getInstance().loadedNodes() );
 #endif
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }

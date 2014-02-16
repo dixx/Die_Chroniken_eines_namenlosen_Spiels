@@ -114,12 +114,9 @@ public:
     void removeObjectFromAreaOfView(Basic3DObject* object);
 
 #ifdef _DEBUG_MODE
-    /*! \brief Schaltet verschiedene Debugmodi durch.
-      \param -
-      \return -
-    */
     void switchStaticsDebugMode();
     void switchNPCsDebugMode();
+    u32 loadedNodes();
 #endif
 
 private:

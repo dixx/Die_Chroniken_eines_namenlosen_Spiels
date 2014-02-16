@@ -315,6 +315,21 @@ void ObjectManager::switchNPCsDebugMode()
         }
     }
 }
+u32 ObjectManager::loadedNodes()
+{
+    return worldNode->getChildren().size() - 11 +
+            nodesRespondingToMouse->getChildren().size() +
+            walkableNodes->getChildren().size() +
+            walkableNodesInRange->getChildren().size() +
+            corpseNodes->getChildren().size() +
+            lifeformNodes->getChildren().size() +
+            inventoryNodes->getChildren().size() +
+            interactiveNodes->getChildren().size() +
+            obstacleNodes->getChildren().size() +
+            decorativeNodes->getChildren().size() +
+            weatherNodes->getChildren().size() +
+            bulletNodes->getChildren().size();
+}
 #endif
 
 

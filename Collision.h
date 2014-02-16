@@ -115,6 +115,10 @@ public:
     */
     void clearRemainingSelectors();
 
+#ifdef _DEBUG_MODE
+    u32 loadedSelectors();
+#endif
+
 private:
 
     scene::ISceneManager* smgr_;

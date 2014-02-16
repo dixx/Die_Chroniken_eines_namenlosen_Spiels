@@ -10,6 +10,7 @@
 #ifdef _DEBUG_MODE
 #include "DebugStatistics.h"
 #include "Debugwindow.h"
+#include "Collision.h"
 #endif
 
 
@@ -89,6 +90,8 @@ void StateMainMenu::update( f32 frameDeltaTime )
         ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
         Debugwindow::getInstance().toggle();
+    Debugwindow::getInstance().addLine( L"loaded selectors: ",
+            Collision::getInstance().loadedSelectors() );
 #endif
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }

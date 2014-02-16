@@ -44,11 +44,11 @@ void Collision::addAnimatedMeshNodeToWorld(
 
 void Collision::removeNodeFromWorld( scene::ISceneNode* node )
 {
-    scene::ITriangleSelector* sel = node->getTriangleSelector();
-    if ( sel )
+    selector_ = node->getTriangleSelector();
+    if ( selector_ )
     {
         node->setTriangleSelector( 0 );
-        sel->drop();
+        selector_->drop();
     }
 }
 
@@ -212,6 +212,14 @@ void Collision::clearRemainingSelectors()
     walkableSelector_->removeAllTriangleSelectors();
 }
 
+
+
+#ifdef _DEBUG_MODE
+u32 Collision::loadedSelectors()
+{
+    return walkableSelector_->getSelectorCount() + collidableObjects_.size();
+}
+#endif
 
 
 /* private */

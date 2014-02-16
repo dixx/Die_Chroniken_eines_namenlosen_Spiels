@@ -64,7 +64,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             break;
         case 3:
             loadingText_->setText( L"Lasse alles los..." );
-//            ObjectManager::getInstance().unload();
+            ObjectManager::getInstance().unload();
             break;
         case 4:
             loadingText_->setText( L"Verliere Bodenständigkeit..." );
@@ -78,6 +78,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             loadingText_->setText( L"Vergiss das Gesehene..." );
             device_->getSceneManager()->getMeshCache()->clearUnusedMeshes();
             Collision::getInstance().clearRemainingSelectors();
+            device_->getVideoDriver()->removeAllHardwareBuffers();
             break;
         default:
             loadingText_->setText( L"" );

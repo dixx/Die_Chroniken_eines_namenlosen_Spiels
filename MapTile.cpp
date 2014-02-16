@@ -88,9 +88,6 @@ void MapTile::init()
         meshManipulator->recalculateNormals( dummyMesh, true );
         GenericHelperMethods::getInstance().pushMeshToVRAM( dummyMesh );
         node_->updateAbsolutePosition();
-        node_->setMaterialTexture( 0, loadMainTexture() );
-        for ( u32 i = 0; i < node_->getMaterialCount(); ++i )
-            loadFilterAndEffects( node_->getMaterial( i ) );
         node_->setMaterialFlag( video::EMF_LIGHTING, false );
         Collision::getInstance().addStaticMeshNodeToWorld( node_ );
         node_->setVisible( false );

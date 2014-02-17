@@ -80,8 +80,11 @@ scene::IMesh* BasicStaticObject::loadMesh()
         {
             GenericHelperMethods::getInstance().validateFileExistence(
                     meshFileName );
-            mesh = smgr_->getMeshManipulator()->createMeshCopy(
-                    smgr_->getMesh( meshFileName ) );
+            //scene::IMesh* dm= smgr_->getMesh( meshFileName );
+            mesh = smgr_->getMesh( meshFileName );//smgr_->getMeshManipulator()->createMeshCopy(
+                   // dm );
+            //smgr_->getMeshCache()->removeMesh( dm );
+            /* TODO check if copy is really necessary since 1.8 */
         }
     }
     else

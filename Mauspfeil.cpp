@@ -137,6 +137,7 @@ Mauspfeil::Mauspfeil( IrrlichtDevice* device )
             "GFX/Mauszeiger.bmp" );
     imageCatalog_ = device->getVideoDriver()->getTexture(
             "GFX/Mauszeiger.bmp" );
+    imageCatalog_->grab(); // to not accidently remove the texture elsewhere
     device_->getVideoDriver()->makeColorKeyTexture(
             imageCatalog_, COL_MAGICPINK );
     hotSpot_ = imageSize_.getCenter();
@@ -212,6 +213,7 @@ Mauspfeil::Mauspfeil( IrrlichtDevice* device )
 Mauspfeil::~Mauspfeil()
 {
     clearArrays();
+    imageCatalog_->drop();
 }
 
 

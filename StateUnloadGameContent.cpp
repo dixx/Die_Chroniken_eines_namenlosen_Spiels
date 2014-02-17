@@ -79,6 +79,9 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             device_->getSceneManager()->getMeshCache()->clearUnusedMeshes();
             Collision::getInstance().clearRemainingSelectors();
             device_->getVideoDriver()->removeAllHardwareBuffers();
+            loadingScreenImageFrame_->getImage()->grab();
+            device_->getVideoDriver()->removeAllTextures();
+            loadingScreenImageFrame_->getImage()->drop();
             break;
         default:
             loadingText_->setText( L"" );

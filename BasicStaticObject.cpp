@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "GenericHelperMethods.h"
 #include "ObjectManager.h"
+#include "Logfile.h"
 
 
 
@@ -27,6 +28,7 @@ BasicStaticObject::~BasicStaticObject()
     if ( node_ )
     {
         Collision::getInstance().removeNodeFromWorld( node_ );
+        node_->getMesh()->drop();
         node_->remove();  // drop und delete werden implizit ausgeführt
         node_ = 0;
     }
@@ -80,11 +82,10 @@ scene::IMesh* BasicStaticObject::loadMesh()
         {
             GenericHelperMethods::getInstance().validateFileExistence(
                     meshFileName );
-            //scene::IMesh* dm= smgr_->getMesh( meshFileName );
-            mesh = smgr_->getMesh( meshFileName );//smgr_->getMeshManipulator()->createMeshCopy(
-                   // dm );
-            //smgr_->getMeshCache()->removeMesh( dm );
-            /* TODO check if copy is really necessary since 1.8 */
+            scene::IMesh* dummyMesh = smgr_->getMesh( meshFileName );
+            mesh = smgr_->getMeshManipulator()->createMeshCopy(
+                    dummyMesh ); // TODO test if you can remove this part!
+            smgr_->getMeshCache()->removeMesh( dummyMesh );
         }
     }
     else

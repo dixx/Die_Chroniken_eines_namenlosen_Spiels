@@ -45,6 +45,7 @@ BasicLifeform::~BasicLifeform()
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
     Collision::getInstance().removeNodeFromWorld( node_ );
     node_->removeAll(); // removes children
+    smgr_->getMeshCache()->removeMesh( node_->getMesh() );
     node_->remove();
 }
 

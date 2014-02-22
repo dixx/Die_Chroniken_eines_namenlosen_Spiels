@@ -27,7 +27,7 @@ void GameStateManager::update( f32 frameDeltaTime )
             currentState_->start( frameDeltaTime );
             break;
         case GameState::STOPPED:
-            switchState(); // POTENTIALBUG we loose one frame of drawing here.
+            switchState();
             break;
         default:
             currentState_->shutdown( frameDeltaTime );

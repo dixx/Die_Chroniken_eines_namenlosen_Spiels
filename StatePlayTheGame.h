@@ -79,6 +79,9 @@ private:
     StatePlayTheGame& operator=( const StatePlayTheGame& );
 
     void transitTo( internalState state );
+    void checkInputForGame( f32 frameDeltaTime );
+    void checkCameraSpecificInput( f32 frameDeltaTime );
+    void checkGameSpecificInput();
 
 };
 // Ende class StatePlayTheGame

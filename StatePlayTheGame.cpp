@@ -1,5 +1,6 @@
 #include "StatePlayTheGame.h"
 #include "Camera.h"
+#include "Collision.h"
 #include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "Ground.h"
@@ -44,7 +45,7 @@ void StatePlayTheGame::start( f32 frameDeltaTime )
 
 void StatePlayTheGame::update( f32 frameDeltaTime )
 {
-    // checkInputForGame();
+    checkInputForGame( frameDeltaTime );
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
         GameStateManager::getInstance().requestNewState(
@@ -123,4 +124,81 @@ void StatePlayTheGame::transitTo( internalState state )
             currentInternalState_ = STOPPED;
             break;
     }
+}
+
+
+
+void StatePlayTheGame::checkInputForGame( f32 frameDeltaTime )
+{
+    Eventreceiver& receiver = Eventreceiver::getInstance();
+#ifdef _DEBUG_MODE
+    Camera& camera = Camera::getInstance();
+    Hero& hero = Hero::getInstance();
+    if ( ( receiver.isKeyDown( KEY_CAPITAL )
+            && !receiver.wasKeyDown( KEY_CAPITAL ) )
+            | ( !receiver.isKeyDown( KEY_CAPITAL )
+                    && ( receiver.isShiftDown() ^ receiver.wasShiftDown() ) ) )
+    {
+        hero.current()->toggleSpeed();
+        camera.toggleSpeed();
+    }
+    if ( receiver.hasKeyJustBeenReleased( KEY_F2 ) )
+        Ground::getInstance().switchDebugMode();
+    if ( receiver.hasKeyJustBeenReleased( KEY_F3 ) )
+        ObjectManager::getInstance().switchStaticsDebugMode();
+    if ( receiver.hasKeyJustBeenReleased( KEY_F4 ) )
+        ObjectManager::getInstance().switchNPCsDebugMode();
+#endif
+    checkCameraSpecificInput( frameDeltaTime );
+    checkGameSpecificInput();
+}
+
+
+
+void StatePlayTheGame::checkCameraSpecificInput( f32 frameDeltaTime )
+{
+    Eventreceiver& receiver = Eventreceiver::getInstance();
+    Camera& camera = Camera::getInstance();
+    if ( !core::equals( receiver.getMouseWheel(), 0.0f ) )
+        camera.startZooming( receiver.getMouseWheel() );
+    if ( receiver.isMMBDown() )
+    {
+        register s32 delta = receiver.getMouseLastX() - receiver.getMouseX();
+        if ( delta != 0 )
+        {
+            if ( frameDeltaTime < 0.003f )
+                camera.rotate( static_cast<f32>( delta ) * 0.003f );
+            else
+                camera.rotate( static_cast<f32>( delta ) * frameDeltaTime );
+        }
+    }
+    if ( receiver.isKeyDown( KEY_KEY_Q ) )
+        camera.rotate( frameDeltaTime );
+    if ( receiver.isKeyDown( KEY_KEY_E ) )
+        camera.rotate( -frameDeltaTime );
+}
+
+
+
+void StatePlayTheGame::checkGameSpecificInput()
+{
+    Eventreceiver& receiver = Eventreceiver::getInstance();
+    Collision& collision = Collision::getInstance();
+    Hero& hero = Hero::getInstance();
+#ifdef _DEBUG_MODE
+    if ( receiver.isRMBDown() )
+        if ( collision.isMouseIntersectingWithWorld() )
+        {
+            Debugwindow::getInstance().addLine( L"name: ",
+                    collision.collisionNode->getName() );
+            Debugwindow::getInstance().addLine( L"id: ",
+                    collision.collisionNode->getID() );
+        }
+#endif
+    if ( receiver.isLMBDown() )
+        if ( collision.isMouseIntersectingWithWorld() )
+            hero.current()->moveTo( collision.collisionPoint, true );
+    if ( !receiver.isLMBDown() && receiver.wasLMBDown() )
+        if ( collision.isMouseIntersectingWithWorld() )
+            hero.current()->moveTo( collision.collisionPoint, false );
 }

@@ -1,8 +1,12 @@
 #include "StatePlayTheGame.h"
 #include "Eventreceiver.h"
 #include "GameStateManager.h"
+#include "Ground.h"
+#include "Hero.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
+#include "ObjectManager.h"
+#include "Weather.h"
 #ifdef _DEBUG_MODE
 #include "Debugwindow.h"
 #endif
@@ -39,11 +43,17 @@ void StatePlayTheGame::start( f32 frameDeltaTime )
 
 void StatePlayTheGame::update( f32 frameDeltaTime )
 {
-    GameStateManager::getInstance().requestNewState( GameStateManager::UNLOAD );
-    transitTo( STOPPING );
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
+    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
+    {
+        GameStateManager::getInstance().requestNewState(
+                GameStateManager::UNLOAD );
+        transitTo( STOPPING );
+    }
+    Weather::getInstance().update();
+    Ground::getInstance().update();
+    ObjectManager::getInstance().update( frameDeltaTime );
+    Hero::getInstance().current()->update( frameDeltaTime );
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 

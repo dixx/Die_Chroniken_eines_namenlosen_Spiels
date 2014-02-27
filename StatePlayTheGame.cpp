@@ -44,12 +44,19 @@ void StatePlayTheGame::start( f32 frameDeltaTime )
 
 void StatePlayTheGame::update( f32 frameDeltaTime )
 {
+    // checkInputForGame();
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
         GameStateManager::getInstance().requestNewState(
                 GameStateManager::UNLOAD );
         transitTo( STOPPING );
     }
+#ifdef _DEBUG_MODE
+    if ( Eventreceiver::getInstance().hasKeyJustBeenPressedDown( KEY_F1 ) )
+        Debugwindow::getInstance().toggle();
+    Debugwindow::getInstance().addLine( L"Dreiecke: ",
+            device_->getVideoDriver()->getPrimitiveCountDrawn() );
+#endif
     Weather::getInstance().update();
     Ground::getInstance().update();
     ObjectManager::getInstance().update( frameDeltaTime );

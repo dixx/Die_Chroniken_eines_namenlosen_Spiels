@@ -4,6 +4,7 @@
 #include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "Logfile.h"
+#include "TimerManager.h"
 #ifdef _DEBUG_MODE
 #include "Debugwindow.h"
 #endif
@@ -46,6 +47,7 @@ void GameFloatControl::run()
         if ( !device_->isWindowActive() )
             device_->yield();
         updateFrameDeltaTime();
+        TimerManager::getInstance().tick( frameDeltaTime_ );
         game.update( frameDeltaTime_ );
         eventreceiver.setKeysLastState();
 #ifdef _DEBUG_MODE
@@ -53,25 +55,6 @@ void GameFloatControl::run()
 #endif
         game.draw();
     }
-    //        if ( gameIsRunning )
-    //            checkInputForGame();
-    //        if ( gameIsRunning )
-    //        {
-    //            timermanager.tick( frameDeltaTime_ );
-    //            world.update( frameDeltaTime_ );
-    //#ifdef _DEBUG_MODE
-    //            debugwindow.addLine( L"Cam above Ground: ",
-    //                    Ground::getInstance().getHeightFromPosition(
-    //                            camera.getCurrentPosition() ).Y );
-    //#endif
-    //        }
-    //#ifdef _DEBUG_MODE
-    //        debugwindow.addLine( L"Dreiecke: ",
-    //                videoDriver->getPrimitiveCountDrawn() );
-    //        debugwindow.show();
-    //        if ( eventreceiver.hasKeyJustBeenPressedDown( KEY_F1 ) )
-    //            debugwindow.toggle();
-    //#endif
 }
 
 
@@ -188,7 +171,7 @@ void GameFloatControl::updateFrameDeltaTime()
 void GameFloatControl::printFPS()
 {
     fps_ = device_->getVideoDriver()->getFPS();
-    if ( lastFPS_ != fps_ )
+    //if ( lastFPS_ != fps_ )
     {
         core::stringw str = L"FPS:";
         str += fps_;

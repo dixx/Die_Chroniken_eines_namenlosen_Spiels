@@ -2,6 +2,7 @@ Die Chroniken eines namenlosen Spiels
 =====================================
 
 bladibladibla RPG yaddayadda Eigenbau blafasel.
+Wir wollen all die falschen Entscheidungen selber treffen, all den schlechten Code selber schreiben, all die Bugs selber beheben, sprich: lernen.
 
 
 CREDITS

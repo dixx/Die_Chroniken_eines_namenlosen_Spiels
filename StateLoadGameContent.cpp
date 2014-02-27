@@ -79,7 +79,8 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             break;
         case 6:
             loadingText_->setText( L"Lade Augen..." );
-            //Camera::getInstance().lockToNode( Hero::getInstance().getNode() );
+            Camera::getInstance().lockToNode(
+                    Hero::getInstance().current()->nodeInterface() );
             break;
         default:
             loadingText_->setText( L"" );

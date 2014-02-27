@@ -1,4 +1,5 @@
 #include "StatePlayTheGame.h"
+#include "Camera.h"
 #include "Eventreceiver.h"
 #include "GameStateManager.h"
 #include "Ground.h"
@@ -53,6 +54,7 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
     Ground::getInstance().update();
     ObjectManager::getInstance().update( frameDeltaTime );
     Hero::getInstance().current()->update( frameDeltaTime );
+    Camera::getInstance().update( frameDeltaTime );
 }
 
 

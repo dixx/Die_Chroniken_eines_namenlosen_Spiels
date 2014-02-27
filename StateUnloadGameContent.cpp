@@ -1,4 +1,5 @@
 #include "StateUnloadGameContent.h"
+#include "Camera.h"
 #include "Collision.h"
 #include "Configuration.h"
 #include "Eventreceiver.h"

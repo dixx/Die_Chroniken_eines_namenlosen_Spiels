@@ -1,4 +1,5 @@
 #include "StateLoadGameContent.h"
+#include "Camera.h"
 #include "Configuration.h"
 #include "Eventreceiver.h"
 #include "GameStateManager.h"

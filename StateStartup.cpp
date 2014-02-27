@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
+#include "Hero.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
@@ -107,6 +108,10 @@ void StateStartup::update( f32 frameDeltaTime )
         case 10:
             loadingText_->setText( L"Lade Auge..." );
             Camera::getInstance( device_->getSceneManager() );
+            break;
+        case 11:
+            loadingText_->setText( L"Lade Ego..." );
+            Hero::getInstance( device_->getSceneManager() );
             break;
         default:
             GameStateManager::getInstance().requestNewState(

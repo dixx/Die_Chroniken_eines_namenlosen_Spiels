@@ -5,6 +5,7 @@
 #include "GameStateManager.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
+#include "Hero.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
@@ -56,7 +57,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             break;
         case 1:
             loadingText_->setText( L"Verliere Bewußtsein..." );
-            //Hero::getInstance().unload();
+            Hero::getInstance().unload();
             break;
         case 2:
             loadingText_->setText( L"Werde dumm..." );

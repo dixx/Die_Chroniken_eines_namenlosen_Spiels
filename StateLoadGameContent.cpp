@@ -4,6 +4,7 @@
 #include "GameStateManager.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
+#include "Hero.h"
 #include "Logfile.h"
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
@@ -74,7 +75,7 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             break;
         case 5:
             loadingText_->setText( L"Lade das Wichtigste von allem..." );
-            //Hero::getInstance().load();
+            Hero::getInstance().load(); //TODO später aus Savegame laden!
             break;
         case 6:
             loadingText_->setText( L"Lade Augen..." );

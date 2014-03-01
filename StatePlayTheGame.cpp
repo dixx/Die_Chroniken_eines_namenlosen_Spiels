@@ -78,7 +78,8 @@ void StatePlayTheGame::shutdown( f32 frameDeltaTime )
 
 void StatePlayTheGame::draw()
 {
-    device_->getVideoDriver()->beginScene();
+    device_->getVideoDriver()->beginScene( true, true,
+            Weather::getInstance().getSkyColor() );
     device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
 #ifdef _DEBUG_MODE

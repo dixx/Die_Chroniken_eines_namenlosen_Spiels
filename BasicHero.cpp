@@ -72,11 +72,13 @@ void BasicHero::toggleSpeed()
 void BasicHero::init()
 {
     speed_ = 4.0f;
+    maxJumpHeight_ = 1.8f;
     node_->setMaterialFlag( video::EMF_LIGHTING, true );
     node_->setMaterialFlag( video::EMF_NORMALIZE_NORMALS, true);
     node_->setMD2Animation( scene::EMAT_STAND );
     //node->setFrameLoop( 1, 40 );
     //node->setLoopMode( true );
+    node_->setVisible( true );
 }
 
 

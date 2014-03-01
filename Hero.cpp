@@ -15,8 +15,8 @@ Hero& Hero::getInstance( scene::ISceneManager* sceneManager )
 void Hero::load()
 {
     core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK";
-    heroData += "@MOFFS0.0x14.2x0.0@MROTA0.0x-90.0x0.0@MSCAL0.6x0.6x0.6";
-    heroData += "@POSXZ20.0x20.0";
+    heroData += "@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0@MSCAL0.025x0.025x0.025";
+    heroData += "@POSXZ11.0x11.0";
     heroData += "@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
     hero_ = new HeroPunk( heroData, smgr_ );
 }

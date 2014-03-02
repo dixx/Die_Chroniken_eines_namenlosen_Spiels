@@ -9,6 +9,7 @@
 #include "Logfile.h"
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
+#include "SaveGames.h"
 #include "Scripting.h"
 #include "TimerManager.h"
 #include "Ton.h"
@@ -113,6 +114,14 @@ void StateStartup::update( f32 frameDeltaTime )
             loadingText_->setText( L"Lade Ego..." );
             Hero::getInstance( device_->getSceneManager() );
             break;
+        case 12:
+        {
+            loadingText_->setText( L"Lade Vergangenheit..." );
+            SaveGames* savegame = new SaveGames( device_->getFileSystem() );
+            savegame->loadNewest();
+            delete savegame;
+            break;
+        }
         default:
             GameStateManager::getInstance().requestNewState(
                     GameStateManager::MAIN_MENU );
@@ -206,7 +215,7 @@ void StateStartup::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            fader_->fadeIn( 700 );
+            fader_->fadeIn( 900 );
             loadingScreenImageFrame_->setEnabled( true );
             break;
         case RUNNING:

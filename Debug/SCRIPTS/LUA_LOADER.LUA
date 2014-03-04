@@ -92,3 +92,12 @@ function getScriptFiles( filename )
 end
 
 
+---------------------------------------------------------
+--
+-- finde die
+--
+---------------------------------------------------------
+function getNewestSavegame()
+    --local lfs = require "lfs"
+    return lfs.currentdir()
+end

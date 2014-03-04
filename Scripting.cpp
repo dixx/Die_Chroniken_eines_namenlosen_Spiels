@@ -33,6 +33,7 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
     if ( lua_istable( luaVM_, lua_gettop( luaVM_ ) ) == 0 )
     {
         lua_close( luaVM_ );
+        luaVM_ = 0;
         Logfile::getInstance().emergencyExit(
                 "[Script-VM]: LUA_LOADER::getObjectDataFromScript() hat kein" \
                 " Table geliefert! Abbruch."
@@ -91,6 +92,27 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
     while ( lua_gettop( luaVM_ ) )
         lua_pop( luaVM_, 1 );
     return data;
+}
+
+
+
+core::stringc Scripting::getNewestSavegame()
+{
+    lua_getglobal( luaVM_, "getNewestSavegame" );
+    errorHandler(
+            lua_pcall( luaVM_, 1, 1, 0 ),
+            "Scripting::getNewestSavegame()"
+    );
+    if ( lua_isstring( luaVM_, lua_gettop( luaVM_ ) ) == 0 )
+    {
+        Logfile::getInstance().emergencyExit(
+                "[Script-VM]: LUA_LOADER::getNewestSavegame() hat keinen" \
+                " String geliefert! Abbruch."
+        );
+    }
+    core::stringc filename = lua_tolstring( luaVM_, -1, 0 );
+    lua_pop( luaVM_, 1 );
+    return filename;
 }
 
 
@@ -210,6 +232,7 @@ void Scripting::errorHandler( const s32 errorCode, const c8* errorMessage )
         Logfile::getInstance().writeLine(
                 Logfile::INFO, "[Script-VM]: ", stackDump() );
         lua_close( luaVM_ );
+        luaVM_ = 0;
         Logfile::getInstance().emergencyExit( "[Script-VM]: Abbruch." );
     }
 }

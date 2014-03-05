@@ -2,6 +2,12 @@
 #include "Logfile.h"
 #include "GenericHelperMethods.h"
 
+#define NO_ARGS 0
+#define TAKES_ARGS 1
+#define NO_RETURN_VALUE 0
+#define RETURNS_VALUE 1
+#define NO_ERROR_CALLBACK 0
+
 
 
 Scripting& Scripting::getInstance()
@@ -17,7 +23,10 @@ void Scripting::runScriptFile( const c8* filename )
     // LUA-Scriptdatei wird geladen
     errorHandler( luaL_loadfile( luaVM_, filename ), filename );
     // geladene Scriptdatei wird ausgeführt
-    errorHandler( lua_pcall( luaVM_, 0, 0, 0 ), "runScriptFile()" );
+    errorHandler(
+            lua_pcall( luaVM_, NO_ARGS, NO_RETURN_VALUE, NO_ERROR_CALLBACK ),
+            "runScriptFile()"
+    );
 }
 
 
@@ -27,7 +36,7 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
     lua_getglobal( luaVM_, "getObjectDataFromScript" );
     lua_pushstring( luaVM_, filename );
     errorHandler(
-            lua_pcall( luaVM_, 1, 1, 0 ),
+            lua_pcall( luaVM_, TAKES_ARGS, RETURNS_VALUE, NO_ERROR_CALLBACK ),
             "Scripting::getObjectDataFromScript()"
     );
     if ( lua_istable( luaVM_, lua_gettop( luaVM_ ) ) == 0 )
@@ -100,7 +109,7 @@ core::stringc Scripting::getNewestSavegame()
 {
     lua_getglobal( luaVM_, "getNewestSavegame" );
     errorHandler(
-            lua_pcall( luaVM_, 1, 1, 0 ),
+            lua_pcall( luaVM_, NO_ARGS, RETURNS_VALUE, NO_ERROR_CALLBACK ),
             "Scripting::getNewestSavegame()"
     );
     if ( lua_isstring( luaVM_, lua_gettop( luaVM_ ) ) == 0 )
@@ -122,16 +131,15 @@ core::stringc Scripting::getNewestSavegame()
 
 
 Scripting::Scripting()
-: nextStringValue_(""), nextFloatValue_(0.0f)
+: nextStringValue_(""),
+  nextFloatValue_(0.0f)
 {
     // DEPRECATED since 5.1:
     //luaVM_ = lua_open();
     luaVM_ = luaL_newstate();
     if ( !luaVM_ )
-    {
         Logfile::getInstance().emergencyExit(
                 "LUA Script-VM konnte nicht gestartet werden! Abbruch." );
-    }
     luaL_openlibs( luaVM_ );  // LUA-Libs werden geladen
     addLuaSearchPath( "/SCRIPTS/" );  // Suchpfad für Scriptdateien in LUA
     runScriptFile( "SCRIPTS/LUA_LOADER.LUA" );

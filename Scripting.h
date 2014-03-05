@@ -53,12 +53,6 @@ public:
     */
     core::stringc getObjectDataFromScript( const c8* filename );
 
-    /*! \brief Gibt den Dateinamen des neuesten Savegames zurück.
-      \param -
-      \return \a core::stringc Dateiname
-    */
-    core::stringc getNewestSavegame();
-
 private:
 
     lua_State* luaVM_;

@@ -105,27 +105,6 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
 
 
 
-core::stringc Scripting::getNewestSavegame()
-{
-    lua_getglobal( luaVM_, "getNewestSavegame" );
-    errorHandler(
-            lua_pcall( luaVM_, NO_ARGS, RETURNS_VALUE, NO_ERROR_CALLBACK ),
-            "Scripting::getNewestSavegame()"
-    );
-    if ( lua_isstring( luaVM_, lua_gettop( luaVM_ ) ) == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "[Script-VM]: LUA_LOADER::getNewestSavegame() hat keinen" \
-                " String geliefert! Abbruch."
-        );
-    }
-    core::stringc filename = lua_tolstring( luaVM_, -1, 0 );
-    lua_pop( luaVM_, 1 );
-    return filename;
-}
-
-
-
 /* private */
 
 

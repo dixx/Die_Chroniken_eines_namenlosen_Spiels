@@ -91,13 +91,3 @@ function getScriptFiles( filename )
     return alles
 end
 
-
----------------------------------------------------------
---
--- finde die
---
----------------------------------------------------------
-function getNewestSavegame()
-    --local lfs = require "lfs"
-    return lfs.currentdir()
-end

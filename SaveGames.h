@@ -42,15 +42,16 @@ public:
     */
     void load( u8* filename );
 
-    /*! \brief Lädt das neueste Savegame.
+    /*! \brief Findet das neueste Savegame.
       \param -
-      \return -
+      \return \a io::path& Dateiname des neuesten Savegames, oder ""
     */
-    void loadNewest();
+    const io::path& findNewest();
 
 private:
 
     io::IFileSystem* fs_;
+    io::path savegameName_;
 
     SaveGames( const SaveGames& );
     SaveGames& operator=( const SaveGames& );

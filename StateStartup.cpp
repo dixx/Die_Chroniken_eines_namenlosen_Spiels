@@ -117,7 +117,7 @@ void StateStartup::update( f32 frameDeltaTime )
         case 12:
         {
             loadingText_->setText( L"Lade Vergangenheit..." );
-            SaveGames* savegame = new SaveGames( device_->getFileSystem() );
+            SaveGames* savegame = new SaveGames( device_ );
             savegame->findNewest();
             delete savegame;
             break;

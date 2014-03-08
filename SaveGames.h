@@ -27,10 +27,10 @@ class SaveGames
 public:
 
     /*! \brief Konstruktor.
-      \param fs (\a io::IFileSystem*) Zeiger auf das Irrlicht-Dateisystem
+      \param fs (\a IrrlichtDevice*) Zeiger auf das Irrlicht-Entchen
       \return Zeiger auf das instanzierte Klassenobjekt
     */
-    SaveGames( io::IFileSystem* fs );
+    SaveGames( IrrlichtDevice* device );
 
 	/*! \brief Destruktor
     */
@@ -40,7 +40,13 @@ public:
       \param filename (\a u8*) Pfad und Dateiname des Savegames.
       \return -
     */
-    void load( u8* filename );
+    void load( const io::path& filename );
+
+    /*! \brief Schreibt ein Savegame.
+      \param filename (\a u8*) Pfad und Dateiname des Savegames.
+      \return -
+    */
+    void write( const io::path& filename );
 
     /*! \brief Findet das neueste Savegame.
       \param -
@@ -50,6 +56,7 @@ public:
 
 private:
 
+    IrrlichtDevice* device_;
     io::IFileSystem* fs_;
     io::path savegameName_;
 

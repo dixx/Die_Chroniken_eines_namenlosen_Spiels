@@ -59,9 +59,14 @@ private:
     IrrlichtDevice* device_;
     io::IFileSystem* fs_;
     io::path savegameName_;
+    io::path applicationDirectory_;
+    io::path savegamesDirectory_;
 
     SaveGames( const SaveGames& );
     SaveGames& operator=( const SaveGames& );
+
+    template <typename T>
+    inline T read( io::IReadFile* stream );
 
 };
 // Ende class SaveGames

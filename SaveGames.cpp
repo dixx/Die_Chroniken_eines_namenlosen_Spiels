@@ -36,7 +36,20 @@ SaveGames::~SaveGames()
 
 void SaveGames::load( const io::path& filename )
 {
+    Logfile& log = Logfile::getInstance();
     GenericHelperMethods::getInstance().validateFileExistence( filename );
+    io::IReadFile* stream = fs_->createAndOpenFile( filename );
+    u8 version = read<u8>( stream );
+    if ( version != 1 )
+    {
+        log.write( Logfile::DEBUG, "Savegame-Version ", version );
+        log.emergencyExit( " unbekannt! Abbruch." );
+    }
+    u32 timestamp = read<u32>( stream );
+    //
+    log.writeLine( Logfile::DEBUG, "hero: ", readString( stream ) );
+    //
+    stream->drop();
 }
 
 
@@ -56,7 +69,7 @@ const io::path& SaveGames::findNewest()
     {
         if ( dirTree->getFileName( i ).find( ".sav" ) != -1 )
         {
-            /**/write( dirTree->getFullFileName( i ) );
+            /**/save( dirTree->getFullFileName( i ) );
             stream = fs_->createAndOpenFile( dirTree->getFullFileName( i ) );
             version = read<u8>( stream );
             if ( version != 1 )
@@ -74,21 +87,24 @@ const io::path& SaveGames::findNewest()
         }
     }
     dirTree->drop();
-    log.writeLine( Logfile::DEBUG, "savegame found: ", savegameName_ );
     return savegameName_;
 }
 
 // TODO on successful character creation, create one savegame, clone the other two from it.
 
 
-void SaveGames::write( const io::path& filename )
+void SaveGames::save( const io::path& filename )
 {
-    io::IWriteFile* savegame = fs_->createAndWriteFile( filename );
+    io::IWriteFile* stream = fs_->createAndWriteFile( filename, false );
     u8 version = 1;
-    savegame->write( &version, sizeof( u8 ) );
+    stream->write( &version, sizeof( u8 ) );
     u32 timestamp = device_->getTimer()->getRealTime();
-    savegame->write( &timestamp, sizeof( u32 ) );
-    savegame->drop();
+    stream->write( &timestamp, sizeof( u32 ) );
+    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK";
+    u32 count = ( heroData.size() + 1 ); // + 1 == trailing \0
+    stream->write( &count, sizeof( u32 ) );
+    stream->write( heroData.c_str(), count );
+    stream->drop();
 }
 
 
@@ -97,13 +113,26 @@ void SaveGames::write( const io::path& filename )
 
 
 
-template <typename T>
-T SaveGames::read( io::IReadFile* stream )
+template <typename T> T SaveGames::read( io::IReadFile* stream )
 {
-    T buffer = 0;
+    T buffer;
     u32 bytes = sizeof( typeof( buffer ) );
     if ( stream->read( &buffer, bytes ) < static_cast<s32>( bytes ) )
         Logfile::getInstance().emergencyExit(
                 "Unbekanntes Savegame-Format! Abbruch." );
     return buffer;
+}
+
+
+
+core::stringc SaveGames::readString( io::IReadFile* stream )
+{
+    u32 count = read<u32>( stream );
+    u8* buffer = new u8[count];
+    if ( stream->read( buffer, count ) < static_cast<s32>( count ) )
+        Logfile::getInstance().emergencyExit(
+                "Unbekanntes Savegame-Format! Abbruch." );
+    core::stringc ret = core::stringc( buffer );
+    delete[] buffer;
+    return ret;
 }

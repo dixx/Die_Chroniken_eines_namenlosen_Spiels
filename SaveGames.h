@@ -46,9 +46,9 @@ public:
       \param filename (\a u8*) Pfad und Dateiname des Savegames.
       \return -
     */
-    void write( const io::path& filename );
+    void save( const io::path& filename );
 
-    /*! \brief Findet das neueste Savegame.
+    /*! \brief Findet das neueste Savegame. Natürlich im Ordner /SAVEGAMES.
       \param -
       \return \a io::path& Dateiname des neuesten Savegames, oder ""
     */
@@ -65,8 +65,8 @@ private:
     SaveGames( const SaveGames& );
     SaveGames& operator=( const SaveGames& );
 
-    template <typename T>
-    inline T read( io::IReadFile* stream );
+    template <typename T> inline T read( io::IReadFile* stream );
+    inline core::stringc readString( io::IReadFile* stream );
 
 };
 // Ende class SaveGames

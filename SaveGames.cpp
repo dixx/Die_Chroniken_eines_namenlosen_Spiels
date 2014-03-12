@@ -88,7 +88,7 @@ const io::path& SaveGames::findNewest()
         }
     }
     dirTree->drop();
-    /**/load( savegameName_ );
+    /**/if ( !savegameName_.empty() ) load( savegameName_ );
     return savegameName_;
 }
 

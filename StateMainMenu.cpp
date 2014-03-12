@@ -6,6 +6,7 @@
 #include "GenericHelperMethods.h"
 #include "Mauspfeil.h"
 #include "Logfile.h"
+#include "SaveGames.h"
 #include "Ton.h"
 #ifdef _DEBUG_MODE
 #include "DebugStatistics.h"
@@ -278,6 +279,10 @@ void StateMainMenu::createMainMenu()
             menueBgImage, ID_MAIN_RESUMEBUTTON, L"Fortsetzen"
     );
     changeStyleOfButton( resumeButton );
+    SaveGames* savegame = new SaveGames( device_ );
+    if ( savegame->findNewest().empty() )
+        menueBgImage->removeChild( resumeButton );
+    delete savegame;
     gui::IGUIButton* loadButton = guienv_->addButton(
             core::recti( core::position2di( 85, 207 ), buttonSize ),
             menueBgImage, ID_MAIN_LOADBUTTON, L"Laden"

@@ -66,7 +66,12 @@ private:
     SaveGames& operator=( const SaveGames& );
 
     template <typename T> inline T read( io::IReadFile* stream );
-    inline core::stringc readString( io::IReadFile* stream );
+    core::stringc readString( io::IReadFile* stream );
+    template <typename T> inline void write( io::IWriteFile* stream,
+            const T& number );
+    inline void writeString( io::IWriteFile* stream,
+            const core::stringc& text );
+    template <typename T> inline void skip( io::IReadFile* stream );
 
 };
 // Ende class SaveGames

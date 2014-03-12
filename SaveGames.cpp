@@ -45,9 +45,10 @@ void SaveGames::load( const io::path& filename )
         log.write( Logfile::DEBUG, "Savegame-Version ", version );
         log.emergencyExit( " unbekannt! Abbruch." );
     }
-    u32 timestamp = read<u32>( stream );
     //
+    skip<u32>( stream );
     log.writeLine( Logfile::DEBUG, "hero: ", readString( stream ) );
+    log.writeLine( Logfile::DEBUG, "level: ", readString( stream ) );
     //
     stream->drop();
 }
@@ -56,7 +57,6 @@ void SaveGames::load( const io::path& filename )
 
 const io::path& SaveGames::findNewest()
 {
-    Logfile& log = Logfile::getInstance();
     savegameName_ = "";
     io::IReadFile* stream = 0;
     u32 lastTimestamp = 0;
@@ -74,8 +74,9 @@ const io::path& SaveGames::findNewest()
             version = read<u8>( stream );
             if ( version != 1 )
             {
-                log.write( Logfile::DEBUG, "Savegame-Version ", version );
-                log.emergencyExit( " unbekannt! Abbruch." );
+                Logfile::getInstance().write( Logfile::DEBUG,
+                        "Savegame-Version ", version );
+                Logfile::getInstance().emergencyExit( " unbekannt! Abbruch." );
             }
             timestamp = read<u32>( stream );
             if ( timestamp > lastTimestamp )
@@ -87,6 +88,7 @@ const io::path& SaveGames::findNewest()
         }
     }
     dirTree->drop();
+    /**/load( savegameName_ );
     return savegameName_;
 }
 
@@ -96,14 +98,16 @@ const io::path& SaveGames::findNewest()
 void SaveGames::save( const io::path& filename )
 {
     io::IWriteFile* stream = fs_->createAndWriteFile( filename, false );
-    u8 version = 1;
-    stream->write( &version, sizeof( u8 ) );
-    u32 timestamp = device_->getTimer()->getRealTime();
-    stream->write( &timestamp, sizeof( u32 ) );
-    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK";
-    u32 count = ( heroData.size() + 1 ); // + 1 == trailing \0
-    stream->write( &count, sizeof( u32 ) );
-    stream->write( heroData.c_str(), count );
+    if ( !stream )
+    {
+        Logfile::getInstance().write( Logfile::INFO, "Savegame ", filename);
+        Logfile::getInstance().emergencyExit(
+                " konnte nicht geschrieben werden! Abbruch." );
+    }
+    write<u8>( stream, 1 ); // version
+    write<u32>( stream, device_->getTimer()->getRealTime() ); // TODO fix bug!
+    writeString( stream, "ONAMEder edle Testheld@OTYPEPUNK" );
+    writeString( stream, "Level_X" );
     stream->drop();
 }
 
@@ -136,3 +140,32 @@ core::stringc SaveGames::readString( io::IReadFile* stream )
     delete[] buffer;
     return ret;
 }
+
+
+
+template <typename T> void SaveGames::write( io::IWriteFile* stream,
+        const T& number )
+{
+    stream->write( &number, sizeof( T ) );
+}
+// explicit instantiations:
+template void SaveGames::write<u8>( io::IWriteFile* stream, const u8& number );
+template void SaveGames::write<u32>( io::IWriteFile* stream, const u32& number );
+
+
+
+void SaveGames::writeString( io::IWriteFile* stream, const core::stringc& text )
+{
+    u32 count = text.size() + 1; // + 1 == trailing \0
+    stream->write( &count, sizeof( u32 ) );
+    stream->write( text.c_str(), count );
+}
+
+
+
+template <typename T> void SaveGames::skip( io::IReadFile* stream )
+{
+    stream->seek( sizeof( T ), true );
+}
+// explicit instantiations:
+template void SaveGames::skip<u32>( io::IReadFile* stream );

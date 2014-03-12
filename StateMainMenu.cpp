@@ -376,8 +376,13 @@ bool StateMainMenu::newPlayerMenuButtonHandler( s32 callerId )
     switch ( callerId )
     {
         case ID_NEW_EXITBUTTON:
+        {
+            SaveGames* savegame = new SaveGames( device_ );
+            savegame->save( "SAVEGAMES/test.sav" );
+            delete savegame;
             switchToMenu( MAIN );
             break;
+        }
         default:
             unknownCaller( callerId );
             result = false;

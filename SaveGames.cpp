@@ -2,8 +2,11 @@
 #include "GenericHelperMethods.h"
 #include "Logfile.h"
 
+// these defines are for better readability only
 #define IS_FOLDER true
-#define APPEND true
+#define UNKNOWN_SAVEGAME_FORMAT "Unbekanntes Savegame-Format! Abbruch."
+#define BROKEN_STREAM "Schreiben in Savegame-Datei fehlgeschlagen! Abbruch."
+#define CURRENT_VERSION 2
 
 
 
@@ -36,20 +39,13 @@ SaveGames::~SaveGames()
 
 void SaveGames::load( const io::path& filename )
 {
-    Logfile& log = Logfile::getInstance();
+    /**/Logfile& log = Logfile::getInstance();
     GenericHelperMethods::getInstance().validateFileExistence( filename );
     io::IReadFile* stream = fs_->createAndOpenFile( filename );
-    u8 version = read<u8>( stream );
-    if ( version != 1 )
-    {
-        log.write( Logfile::DEBUG, "Savegame-Version ", version );
-        log.emergencyExit( " unbekannt! Abbruch." );
-    }
-    //
-    skip<u32>( stream );
-    log.writeLine( Logfile::DEBUG, "hero: ", readString( stream ) );
-    log.writeLine( Logfile::DEBUG, "level: ", readString( stream ) );
-    //
+    checkVersion( read<u8>( stream ) );
+    skip<u32>( stream ); // so far, timestamp is here of no interest
+    /**/log.writeLine( Logfile::DEBUG, "hero: ", readString( stream ) );
+    /**/log.writeLine( Logfile::DEBUG, "level: ", readString( stream ) );
     stream->drop();
 }
 
@@ -60,7 +56,6 @@ const io::path& SaveGames::findNewest()
     savegameName_ = "";
     io::IReadFile* stream = 0;
     u32 lastTimestamp = 0;
-    u8 version = 0;
     u32 timestamp = 0;
     fs_->changeWorkingDirectoryTo( savegamesDirectory_ );
     io::IFileList* dirTree = fs_->createFileList();
@@ -69,15 +64,8 @@ const io::path& SaveGames::findNewest()
     {
         if ( dirTree->getFileName( i ).find( ".sav" ) != -1 )
         {
-            /**/save( dirTree->getFullFileName( i ) );
             stream = fs_->createAndOpenFile( dirTree->getFullFileName( i ) );
-            version = read<u8>( stream );
-            if ( version != 1 )
-            {
-                Logfile::getInstance().write( Logfile::DEBUG,
-                        "Savegame-Version ", version );
-                Logfile::getInstance().emergencyExit( " unbekannt! Abbruch." );
-            }
+            checkVersion( read<u8>( stream ) );
             timestamp = read<u32>( stream );
             if ( timestamp > lastTimestamp )
             {
@@ -88,7 +76,6 @@ const io::path& SaveGames::findNewest()
         }
     }
     dirTree->drop();
-    /**/if ( !savegameName_.empty() ) load( savegameName_ );
     return savegameName_;
 }
 
@@ -97,14 +84,13 @@ const io::path& SaveGames::findNewest()
 
 void SaveGames::save( const io::path& filename )
 {
-    io::IWriteFile* stream = fs_->createAndWriteFile( filename, false );
+    io::IWriteFile* stream = fs_->createAndWriteFile( filename );
     if ( !stream )
     {
-        Logfile::getInstance().write( Logfile::INFO, "Savegame ", filename);
-        Logfile::getInstance().emergencyExit(
-                " konnte nicht geschrieben werden! Abbruch." );
+        Logfile::getInstance().writeLine( Logfile::INFO, "Savegame: ", filename);
+        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
     }
-    write<u8>( stream, 1 ); // version
+    write<u8>( stream, CURRENT_VERSION );
     write<u32>( stream, device_->getTimer()->getRealTime() ); // TODO fix bug!
     writeString( stream, "ONAMEder edle Testheld@OTYPEPUNK" );
     writeString( stream, "Level_X" );
@@ -122,8 +108,7 @@ template <typename T> T SaveGames::read( io::IReadFile* stream )
     T buffer;
     u32 bytes = sizeof( typeof( buffer ) );
     if ( stream->read( &buffer, bytes ) < static_cast<s32>( bytes ) )
-        Logfile::getInstance().emergencyExit(
-                "Unbekanntes Savegame-Format! Abbruch." );
+        Logfile::getInstance().emergencyExit( UNKNOWN_SAVEGAME_FORMAT );
     return buffer;
 }
 
@@ -134,8 +119,7 @@ core::stringc SaveGames::readString( io::IReadFile* stream )
     u32 count = read<u32>( stream );
     u8* buffer = new u8[count];
     if ( stream->read( buffer, count ) < static_cast<s32>( count ) )
-        Logfile::getInstance().emergencyExit(
-                "Unbekanntes Savegame-Format! Abbruch." );
+        Logfile::getInstance().emergencyExit( UNKNOWN_SAVEGAME_FORMAT );
     core::stringc ret = core::stringc( buffer );
     delete[] buffer;
     return ret;
@@ -146,7 +130,9 @@ core::stringc SaveGames::readString( io::IReadFile* stream )
 template <typename T> void SaveGames::write( io::IWriteFile* stream,
         const T& number )
 {
-    stream->write( &number, sizeof( T ) );
+    if ( stream->write( &number, sizeof( T ) )
+            < static_cast<s32>( sizeof( T ) ) )
+        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
 }
 // explicit instantiations:
 template void SaveGames::write<u8>( io::IWriteFile* stream, const u8& number );
@@ -157,15 +143,33 @@ template void SaveGames::write<u32>( io::IWriteFile* stream, const u32& number )
 void SaveGames::writeString( io::IWriteFile* stream, const core::stringc& text )
 {
     u32 count = text.size() + 1; // + 1 == trailing \0
-    stream->write( &count, sizeof( u32 ) );
-    stream->write( text.c_str(), count );
+    if ( stream->write( &count, sizeof( u32 ) )
+            < static_cast<s32>( sizeof( u32 ) ) )
+        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
+    if ( stream->write( text.c_str(), count ) < static_cast<s32>( count ) )
+        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
 }
 
 
 
 template <typename T> void SaveGames::skip( io::IReadFile* stream )
 {
-    stream->seek( sizeof( T ), true );
+    if ( !stream->seek( sizeof( T ), true ) )
+        Logfile::getInstance().emergencyExit( UNKNOWN_SAVEGAME_FORMAT );
 }
 // explicit instantiations:
 template void SaveGames::skip<u32>( io::IReadFile* stream );
+
+
+
+void SaveGames::checkVersion( u8 version )
+{
+    // TODO create backward-compatibility later
+    if ( version != CURRENT_VERSION )
+    {
+        core::stringc errorMessage = "Savegame-Version ";
+        errorMessage += version;
+        errorMessage += " unbekannt! Abbruch.";
+        Logfile::getInstance().emergencyExit( errorMessage );
+    }
+}

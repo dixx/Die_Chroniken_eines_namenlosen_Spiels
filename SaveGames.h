@@ -69,9 +69,9 @@ private:
     core::stringc readString( io::IReadFile* stream );
     template <typename T> inline void write( io::IWriteFile* stream,
             const T& number );
-    inline void writeString( io::IWriteFile* stream,
-            const core::stringc& text );
+    void writeString( io::IWriteFile* stream, const core::stringc& text );
     template <typename T> inline void skip( io::IReadFile* stream );
+    inline void checkVersion( u8 version );
 
 };
 // Ende class SaveGames

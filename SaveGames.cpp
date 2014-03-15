@@ -3,17 +3,16 @@
 #include "Logfile.h"
 
 // these defines are for better readability only
-#define IS_FOLDER true
 #define UNKNOWN_SAVEGAME_FORMAT "Unbekanntes Savegame-Format! Abbruch."
 #define BROKEN_STREAM "Schreiben in Savegame-Datei fehlgeschlagen! Abbruch."
-#define CURRENT_VERSION 2
 
 
 
 SaveGames::SaveGames( IrrlichtDevice* device )
 : device_(device),
   fs_(0),
-  savegameName_("")
+  savegameName_(""),
+  CURRENT_VERSION(2)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit(
@@ -22,7 +21,7 @@ SaveGames::SaveGames( IrrlichtDevice* device )
     applicationDirectory_ = fs_->getWorkingDirectory();
     savegamesDirectory_ = applicationDirectory_ + "/SAVEGAMES";
     io::IFileList* dirTree = fs_->createFileList();
-    if ( dirTree->findFile( savegamesDirectory_, IS_FOLDER ) == -1 )
+    if ( dirTree->findFile( savegamesDirectory_, true ) == -1 )
         Logfile::getInstance().emergencyExit(
                 savegamesDirectory_ + " nicht gefunden! Abbruch." );
     dirTree->drop();
@@ -91,7 +90,7 @@ void SaveGames::save( const io::path& filename )
         Logfile::getInstance().emergencyExit( BROKEN_STREAM );
     }
     write<u8>( stream, CURRENT_VERSION );
-    write<u32>( stream, device_->getTimer()->getRealTime() ); // TODO fix bug!
+    write<u32>( stream, getTimestamp() );
     writeString( stream, "ONAMEder edle Testheld@OTYPEPUNK" );
     writeString( stream, "Level_X" );
     stream->drop();
@@ -172,4 +171,30 @@ void SaveGames::checkVersion( u8 version )
         errorMessage += " unbekannt! Abbruch.";
         Logfile::getInstance().emergencyExit( errorMessage );
     }
+}
+
+
+
+u32 SaveGames::getTimestamp()
+{
+    /* get seconds elapsed since 1970-01-01 */
+    ITimer::RealTimeDate datetime = device_->getTimer()->getRealTimeAndDate();
+    if ( datetime.Year < 1970 )
+        datetime.Year = 1970; // to avoid compatibility errors on systems with
+                              // wrong date settings
+    if ( datetime.IsDST )
+        datetime.Hour--; // to adjust daylight saving time
+
+    u32 m = ( datetime.Month + 9 ) % 12;
+    s32 y = datetime.Year - m / 10;
+    u32 days_since_1970 =
+            y * 365 + y / 4 - y / 100 + y / 400
+            + ( m * 306 + 5 ) / 10
+            + datetime.Day - 1 /* <-- days from 0000-01-01 until today */
+            - 719468 /* days from 0000-01-01 until 1970-01-01 */;
+
+    return datetime.Second
+        + datetime.Minute * 60
+        + datetime.Hour * 3600 // BUG: #21, we have offset from GTM here!
+        + days_since_1970 * 86400;
 }

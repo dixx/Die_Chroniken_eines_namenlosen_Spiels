@@ -61,6 +61,7 @@ private:
     io::path savegameName_;
     io::path applicationDirectory_;
     io::path savegamesDirectory_;
+    const u8 CURRENT_VERSION;
 
     SaveGames( const SaveGames& );
     SaveGames& operator=( const SaveGames& );
@@ -72,6 +73,7 @@ private:
     void writeString( io::IWriteFile* stream, const core::stringc& text );
     template <typename T> inline void skip( io::IReadFile* stream );
     inline void checkVersion( u8 version );
+    inline u32 getTimestamp();
 
 };
 // Ende class SaveGames

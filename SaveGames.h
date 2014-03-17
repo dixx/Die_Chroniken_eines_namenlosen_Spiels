@@ -73,7 +73,7 @@ private:
     void writeString( io::IWriteFile* stream, const core::stringc& text );
     template <typename T> inline void skip( io::IReadFile* stream );
     inline void checkVersion( u8 version );
-    inline u32 getTimestamp();
+    u32 getTimestamp();
 
 };
 // Ende class SaveGames

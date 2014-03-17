@@ -52,29 +52,35 @@ void SaveGames::load( const io::path& filename )
 
 const io::path& SaveGames::findNewest()
 {
+    fs_->changeWorkingDirectoryTo( savegamesDirectory_ );
+    io::IFileList* fileList = fs_->createFileList();
+    fs_->changeWorkingDirectoryTo( applicationDirectory_ );
     savegameName_ = "";
     io::IReadFile* stream = 0;
-    u32 lastTimestamp = 0;
-    u32 timestamp = 0;
-    fs_->changeWorkingDirectoryTo( savegamesDirectory_ );
-    io::IFileList* dirTree = fs_->createFileList();
-    fs_->changeWorkingDirectoryTo( applicationDirectory_ );
-    for ( register u32 i = 0; i < dirTree->getFileCount(); ++i )
+    u32 newestTimestamp = 0;
+    for ( register u32 i = 0; i < fileList->getFileCount(); ++i )
     {
-        if ( dirTree->getFileName( i ).find( ".sav" ) != -1 )
+        if ( fileList->getFileName( i ).find( ".sav" ) == -1 )
+            continue;
+        const io::path& filename = fileList->getFullFileName( i );
+        stream = fs_->createAndOpenFile( filename );
+        if ( !stream )
         {
-            stream = fs_->createAndOpenFile( dirTree->getFullFileName( i ) );
-            checkVersion( read<u8>( stream ) );
-            timestamp = read<u32>( stream );
-            if ( timestamp > lastTimestamp )
-            {
-                savegameName_ = dirTree->getFullFileName( i );
-                lastTimestamp = timestamp;
-            }
-            stream->drop();
+            Logfile::getInstance().writeLine( Logfile::INFO,
+                    "Lesen von Datei fehlgeschlagen: ", filename );
+            continue;
         }
+        checkVersion( read<u8>( stream ) );
+        u32 timestamp = read<u32>( stream );
+        if ( timestamp > newestTimestamp )
+        {
+            savegameName_ = filename;
+            newestTimestamp = timestamp;
+        }
+        stream->drop();
+        stream = 0;
     }
-    dirTree->drop();
+    fileList->drop();
     return savegameName_;
 }
 
@@ -91,7 +97,11 @@ void SaveGames::save( const io::path& filename )
     }
     write<u8>( stream, CURRENT_VERSION );
     write<u32>( stream, getTimestamp() );
-    writeString( stream, "ONAMEder edle Testheld@OTYPEPUNK" );
+    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK";
+    heroData += "@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0@MSCAL0.025x0.025x0.025";
+    heroData += "@POSXZ11.0x11.0";
+    heroData += "@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
+    writeString( stream, heroData );
     writeString( stream, "Level_X" );
     stream->drop();
 }
@@ -183,16 +193,14 @@ u32 SaveGames::getTimestamp()
         datetime.Year = 1970; // to avoid compatibility errors on systems with
                               // wrong date settings
     if ( datetime.IsDST )
-        datetime.Hour--; // to adjust daylight saving time
-
+        datetime.Hour--; // adjust hours of day with daylight saving time
     u32 m = ( datetime.Month + 9 ) % 12;
     s32 y = datetime.Year - m / 10;
     u32 days_since_1970 =
             y * 365 + y / 4 - y / 100 + y / 400
             + ( m * 306 + 5 ) / 10
-            + datetime.Day - 1 /* <-- days from 0000-01-01 until today */
-            - 719468 /* days from 0000-01-01 until 1970-01-01 */;
-
+            + datetime.Day - 1 // <-- days from 0000-01-01 until today
+            - 719468; // days from 0000-01-01 until 1970-01-01
     return datetime.Second
         + datetime.Minute * 60
         + datetime.Hour * 3600 // BUG: #21, we have offset from GTM here!

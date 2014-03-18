@@ -64,6 +64,13 @@ const core::vector3df& BasicStaticObject::getNextStep() const
 
 
 
+core::stringc BasicStaticObject::getObjectData()
+{
+    return "";
+}
+
+
+
 /* protected */
 
 

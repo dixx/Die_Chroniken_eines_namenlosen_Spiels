@@ -51,7 +51,7 @@ public:
       \param -
       \return \a core::stringc objectData des Objektes
     */
-    core::stringc getObjectData();
+    virtual core::stringc getObjectData() = 0;
 
     /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem
                Kollisionen abgefangen werden sollen.

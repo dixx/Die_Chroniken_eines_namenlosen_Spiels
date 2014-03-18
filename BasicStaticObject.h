@@ -71,6 +71,12 @@ public:
     */
     const core::vector3df& getNextStep() const;
 
+    /*! \brief Liefert den aktuellen objectData-String des Objekts.
+      \param -
+      \return \a core::stringc objectData des Objekts
+    */
+    core::stringc getObjectData();
+
 protected:
 
     BufferCullMeshSceneNode* node_;

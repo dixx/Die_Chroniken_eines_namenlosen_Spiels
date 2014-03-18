@@ -56,13 +56,6 @@ const core::stringc& Basic3DObject::getType() const
 
 
 
-core::stringc Basic3DObject::getObjectData()
-{
-    return "";
-}
-
-
-
 /* protected */
 
 

@@ -44,6 +44,13 @@ s32 MapTile::getZ() const
 
 
 
+core::stringc MapTile::getObjectData()
+{
+    return "";
+}
+
+
+
 /* private */
 
 

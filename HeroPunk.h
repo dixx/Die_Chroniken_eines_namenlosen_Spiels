@@ -39,6 +39,13 @@ public:
     */
 	~HeroPunk();
 
+    /*! \brief Liefert den aktuellen objectData-String des Punk.
+      \param -
+      \return \a core::stringc objectData des Punk
+    */
+    core::stringc getObjectData();
+
+
 private:
 
     HeroPunk( const HeroPunk& );

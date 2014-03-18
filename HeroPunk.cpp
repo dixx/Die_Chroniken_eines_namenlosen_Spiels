@@ -24,6 +24,13 @@ HeroPunk::~HeroPunk()
 
 
 
+core::stringc HeroPunk::getObjectData()
+{
+    return "";
+}
+
+
+
 /* private */
 
 

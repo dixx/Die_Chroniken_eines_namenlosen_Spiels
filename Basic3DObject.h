@@ -47,6 +47,12 @@ public:
     */
     const core::stringc& getType() const;
 
+    /*! \brief Liefert den aktuellen objectData-String des Objektes.
+      \param -
+      \return \a core::stringc objectData des Objektes
+    */
+    core::stringc getObjectData();
+
     /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem
                Kollisionen abgefangen werden sollen.
       \attention Methode ist pure virtual!

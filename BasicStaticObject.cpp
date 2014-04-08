@@ -105,10 +105,10 @@ scene::IMesh* BasicStaticObject::loadMesh()
                     video::SMaterial& mat= m->getMaterial();
                     for (register u32 j = 0; j < 4; ++j)
                     {
-                        if (mat.TextureLayer[j].Texture)
+                        if (mat.getTexture(j))
                         {
                             log.write(0, "      - Texture ", j);
-                            log.writeLine(0, ": ", mat.TextureLayer[j].Texture->getName());
+                            log.writeLine(0, ": ", mat.getTexture(j)->getName());
                         }
                     }
                     log.writeLine(0, "      - Lighting: ", mat.Lighting ? "ja" : "nein");

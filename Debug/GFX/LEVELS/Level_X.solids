@@ -28,51 +28,14 @@
   SKALIERUNG    = "0.5x0.5x0.5"
   TEXTUR        = "GFX/zaunfeld01.jpg"
 [ENDE_OBJECT]
-
 [START_OBJECT]
   TYP           = "interaktiv"
-  NAME          = "zaunfeld01_5_test"
-  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.3ds"
-  POSITION      = "40.0x12.0"
+  NAME          = "zaunfeld01_4"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01.3ds"
+  POSITION      = "338.88x152.0"
   SKALIERUNG    = "0.5x0.5x0.5"
   TEXTUR        = "GFX/zaunfeld01.jpg"
 [ENDE_OBJECT]
-[START_OBJECT]
-  TYP           = "interaktiv"
-  NAME          = "zaunfeld01_6_test"
-  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.x"
-  POSITION      = "42.0x12.0"
-  SKALIERUNG    = "0.5x0.5x0.5"
-  ROTATION      = "-90.0x0.0x0.0"
-  TEXTUR        = "GFX/zaunfeld01.jpg"
-[ENDE_OBJECT]
-[START_OBJECT]
-  TYP           = "interaktiv"
-  NAME          = "zaunfeld01_6_test"
-  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.b3d"
-  POSITION      = "44.0x12.0"
-  SKALIERUNG    = "0.5x0.5x0.5"
-  TEXTUR        = "GFX/zaunfeld01.jpg"
-[ENDE_OBJECT]
-[START_OBJECT]
-  TYP           = "interaktiv"
-  NAME          = "zaunfeld01_6_test"
-  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.dae"
-  POSITION      = "48.0x12.0"
-  SKALIERUNG    = "0.5x0.5x0.5"
-  #ROTATION      = "0.0x180.0x0.0"
-  TEXTUR        = "GFX/zaunfeld01.jpg"
-[ENDE_OBJECT]
-[START_OBJECT]
-  TYP           = "interaktiv"
-  NAME          = "zaunfeld01_6_test"
-  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.md2"
-  POSITION      = "50.0x12.0"
-  SKALIERUNG    = "0.5x0.5x0.5"
-  #ROTATION      = "0.0x180.0x0.0"
-  TEXTUR        = "GFX/zaunfeld01.jpg"
-[ENDE_OBJECT]
-
 [START_OBJECT]
   TYP           = "Hindernis"
   NAME          = "zaunfeld02"

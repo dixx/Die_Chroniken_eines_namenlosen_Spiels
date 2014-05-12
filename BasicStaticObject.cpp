@@ -90,49 +90,6 @@ scene::IMesh* BasicStaticObject::loadMesh()
             GenericHelperMethods::getInstance().validateFileExistence(
                     meshFileName );
             scene::IMesh* dummyMesh = smgr_->getMesh( meshFileName );
-#ifdef _DEBUG_MODE
-            if (meshFileName.find(core::stringc("zaunfeld01_material_test").c_str()) != -1)
-            {
-                Logfile& log= Logfile::getInstance();
-                log.writeLine(0, "");
-                log.writeLine(0, "Filename: ", meshFileName);
-                for(register u32 i = 0; i < dummyMesh->getMeshBufferCount(); ++i)
-                {
-                    log.writeLine(0, "  Meshbuffer ", i);
-                    scene::IMeshBuffer* m= dummyMesh->getMeshBuffer(i);
-                    log.writeLine(0, "    - name: ", m->getDebugName());
-                    log.writeLine(0, "    - Material:");
-                    video::SMaterial& mat= m->getMaterial();
-                    for (register u32 j = 0; j < 4; ++j)
-                    {
-                        if (mat.getTexture(j))
-                        {
-                            log.write(0, "      - Texture ", j);
-                            log.writeLine(0, ": ", mat.getTexture(j)->getName());
-                        }
-                    }
-                    log.writeLine(0, "      - Lighting: ", mat.Lighting ? "ja" : "nein");
-                    log.writeLine(0, "      - Type: ", mat.MaterialType);
-                    log.writeLine(0, "      - Shininess: ", mat.Shininess);
-                    log.writeLine(0, "      - AmbientColor.Red: ", mat.AmbientColor.getRed());
-                    log.writeLine(0, "      - AmbientColor.Green: ", mat.AmbientColor.getGreen());
-                    log.writeLine(0, "      - AmbientColor.Blue: ", mat.AmbientColor.getBlue());
-                    log.writeLine(0, "      - AmbientColor.Alpha: ", mat.AmbientColor.getAlpha());
-                    log.writeLine(0, "      - EmissiveColor.Red: ", mat.EmissiveColor.getRed());
-                    log.writeLine(0, "      - EmissiveColor.Green: ", mat.EmissiveColor.getGreen());
-                    log.writeLine(0, "      - EmissiveColor.Blue: ", mat.EmissiveColor.getBlue());
-                    log.writeLine(0, "      - EmissiveColor.Alpha: ", mat.EmissiveColor.getAlpha());
-                    log.writeLine(0, "      - DiffuseColor.Red: ", mat.DiffuseColor.getRed());
-                    log.writeLine(0, "      - DiffuseColor.Green: ", mat.DiffuseColor.getGreen());
-                    log.writeLine(0, "      - DiffuseColor.Blue: ", mat.DiffuseColor.getBlue());
-                    log.writeLine(0, "      - DiffuseColor.Alpha: ", mat.DiffuseColor.getAlpha());
-                    log.writeLine(0, "      - SpecularColor.Red: ", mat.SpecularColor.getRed());
-                    log.writeLine(0, "      - SpecularColor.Green: ", mat.SpecularColor.getGreen());
-                    log.writeLine(0, "      - SpecularColor.Blue: ", mat.SpecularColor.getBlue());
-                    log.writeLine(0, "      - SpecularColor.Alpha: ", mat.SpecularColor.getAlpha());
-                }
-            }
-#endif
             mesh = smgr_->getMeshManipulator()->createMeshCopy(
                     dummyMesh ); // TODO test if you can remove this part!
             smgr_->getMeshCache()->removeMesh( dummyMesh );

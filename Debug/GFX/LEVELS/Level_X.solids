@@ -57,10 +57,19 @@
 [START_OBJECT]
   TYP           = "interaktiv"
   NAME          = "zaunfeld01_6_test"
-  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.ms3d"
-  POSITION      = "46.0x12.0"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.dae"
+  POSITION      = "48.0x12.0"
   SKALIERUNG    = "0.5x0.5x0.5"
-  ROTATION      = "0.0x180.0x0.0"
+  #ROTATION      = "0.0x180.0x0.0"
+  TEXTUR        = "GFX/zaunfeld01.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "zaunfeld01_6_test"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01_material_test.md2"
+  POSITION      = "50.0x12.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  #ROTATION      = "0.0x180.0x0.0"
   TEXTUR        = "GFX/zaunfeld01.jpg"
 [ENDE_OBJECT]
 

@@ -84,11 +84,13 @@ void MapTile::init()
             tileZ_ = core::strtol10( extractor_->getExtractedValue().c_str() );
         matrix.setTranslation(
                 core::vector3df(
-                        static_cast<f32>( tileX_ ) * sectorDimension_.Width +
-                                sectorDimension_.Width / 2,
+                        ( static_cast<f32>( tileX_ ) + 0.5f )
+                                * sectorDimension_.Width
+                                - static_cast<f32>( tileX_ ),
                         0.0f,
-                        static_cast<f32>( tileZ_ ) * sectorDimension_.Height +
-                                sectorDimension_.Height / 2
+                        ( static_cast<f32>( tileZ_ ) + 0.5f )
+                                * sectorDimension_.Height
+                                - static_cast<f32>( tileZ_ )
                 )
         );
         meshManipulator->transform( dummyMesh, matrix );

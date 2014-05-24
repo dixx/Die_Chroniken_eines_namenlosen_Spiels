@@ -65,58 +65,58 @@ void StateStartup::update( f32 frameDeltaTime )
     {
         case 0:
 #ifdef _DEBUG_MODE
-            loadingText_->setText( L"Lade Kammerjäger..." );
+            //loadingText_->setText( L"Lade Kammerjäger..." );
             DebugShapesManager::getInstance( device_->getVideoDriver() );
 #endif
             break;
         case 1:
-            loadingText_->setText( L"Lade Zufälle..." );
+            //loadingText_->setText( L"Lade Zufälle..." );
             Zufall::getInstance().start( device_->getTimer()->getRealTime() );
             break;
         case 2:
-            loadingText_->setText( L"Lade Uhren..." );
+            //loadingText_->setText( L"Lade Uhren..." );
             TimerManager::getInstance();
             break;
         case 3:
-            loadingText_->setText( L"Lade Schreibmaschine..." );
+            //loadingText_->setText( L"Lade Schreibmaschine..." );
             Scripting::getInstance();
             break;
         case 4:
-            loadingText_->setText( L"Lade Klänge..." );
+            //loadingText_->setText( L"Lade Klänge..." );
             Ton::getInstance( device_->getFileSystem() );
             break;
         case 5:
-            loadingText_->setText( L"Lade Zeigefinger..." );
+            //loadingText_->setText( L"Lade Zeigefinger..." );
             Mauspfeil::getInstance( device_ ).setCurrentArrow(
                                 Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;
         case 6:
-            loadingText_->setText( L"Lade Zusammenstöße..." );
+            //loadingText_->setText( L"Lade Zusammenstöße..." );
             Collision::getInstance( device_->getSceneManager() );
             break;
         case 7:
-            loadingText_->setText( L"Lade Dinge..." );
+            //loadingText_->setText( L"Lade Dinge..." );
             ObjectManager::getInstance( device_ );
             break;
         case 8:
-            loadingText_->setText( L"Lade Wetter..." );
+            //loadingText_->setText( L"Lade Wetter..." );
             Weather::getInstance( device_->getSceneManager() );
             break;
         case 9:
-            loadingText_->setText( L"Lade Fußboden..." );
+            //loadingText_->setText( L"Lade Fußboden..." );
             Ground::getInstance( device_ );
             break;
         case 10:
-            loadingText_->setText( L"Lade Auge..." );
+            //loadingText_->setText( L"Lade Auge..." );
             Camera::getInstance( device_->getSceneManager() );
             break;
         case 11:
-            loadingText_->setText( L"Lade Ego..." );
+            //loadingText_->setText( L"Lade Ego..." );
             Hero::getInstance( device_->getSceneManager() );
             break;
         case 12:
         {
-            loadingText_->setText( L"Lade Vergangenheit..." );
+            //loadingText_->setText( L"Lade Vergangenheit..." );
             SaveGames* savegame = new SaveGames( device_ );
             savegame->findNewest();
             delete savegame;
@@ -171,9 +171,9 @@ bool StateStartup::handleGuiEvents( const irr::SEvent& event )
 void StateStartup::createLoadingScreenImage()
 {
     GenericHelperMethods::getInstance().validateFileExistence(
-            "GFX/Spiellogo.png" );
+            "GFX/Schnellladebildschirm.jpg" );
     video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
-            "GFX/Spiellogo.png" );
+            "GFX/Schnellladebildschirm.jpg" );
     loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage(
             core::recti(
                     core::dimension2di( 0, 0 ),

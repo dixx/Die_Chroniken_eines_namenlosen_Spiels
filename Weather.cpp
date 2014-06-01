@@ -216,11 +216,13 @@ void Weather::calculateLightValues()
 {
     video::SColorf lightColorSun;
     video::SColorf lightColorMoon;
-    if ( sunCircleY_[6] > 0.0f )
+    if ( sunCircleY_[6] > -0.05f )
     {
         lightColorSun.r = 1.0f * sunCircleY_[6];
         skyColor_.setBlue(
-                static_cast<u32>( core::min_( 300 * sunCircleY_[6], 255.0f ) )
+                static_cast<u32>(
+                        core::min_( 300 * ( sunCircleY_[6] + 0.05f ), 255.0f )
+                )
         );
         if ( sunCircleY_[6] > 0.1f )
         {
@@ -245,7 +247,7 @@ void Weather::calculateLightValues()
     }
     else
     {
-        lightColorSun = video::SColorf( 0.0f, 0.0f, 0.0f );
+        lightColorSun = video::SColorf();
         skyColor_ = COL_BLACK;
     }
     if ( moonCircleY_[6] > 0.1f )
@@ -287,7 +289,6 @@ void Weather::calculateLightValues()
                 lightData.DiffuseColor.g * 0.1f,
                 lightData.DiffuseColor.b * 0.1f
         );
-        dayLightSource_[i]->setLightData( lightData );
     }
 }
 

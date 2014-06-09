@@ -73,14 +73,6 @@
   TEXTUR        = "GFX/WoodRough0106_2_thumbhuge.jpg"
 [ENDE_OBJECT]
 [START_OBJECT]
-TYP = "deko"
-NAME= "blume1"
-MESH_DATEI= "GFX/OBJECTS/3ds__flow2.3ds"
-POSITION = "30.0x35.0"
-TEXTUR= "GFX/flow2.tga"
-  SKALIERUNG    = "0.01x0.01x0.01"
-[ENDE_OBJECT]
-[START_OBJECT]
   TYP           = "interaktiv"
   NAME          = "bank"
   MESH_DATEI    = "GFX/OBJECTS/Bank2.3ds"

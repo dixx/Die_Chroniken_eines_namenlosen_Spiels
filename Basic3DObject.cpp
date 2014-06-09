@@ -16,6 +16,12 @@ Basic3DObject::Basic3DObject(
   extractor_(0),
   smgr_(smgr)
 {
+    if ( smgr_ == 0 )
+    {
+        Logfile::getInstance().emergencyExit(
+                "SceneManager in [Basic3DObject] nicht mehr gefunden! Abbruch."
+        );
+    }
     if ( objectData_.size() != 0 )
     {
         extractor_ = new ObjectParamsExtractor( objectData_ );

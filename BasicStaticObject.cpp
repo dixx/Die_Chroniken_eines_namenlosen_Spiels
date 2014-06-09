@@ -16,6 +16,12 @@ BasicStaticObject::BasicStaticObject(
   node_(0),
   nextStep_(VEC_3DF_NULL)
 {
+    if ( smgr_ == 0 )
+    {
+        Logfile::getInstance().emergencyExit(
+                "SceneManager in [BasicStaticObject] nicht mehr gefunden! Abbruch."
+        );
+    }
     init();
     if ( !isParent )
         deleteExtractor();

@@ -55,7 +55,7 @@ public:
     f32 getHeight( const f32 x, const f32 z );
 
     /*! \brief Komplettiert die übergebene Position mit der Höhe des Fußbodens
-               an der gefragen Stelle.
+               an der gefragen Stelle und gibt die neue Position zurück.
       \param position (\a const \a core::vector3df&) Position
       \param heightOffset (\a f32) Y-Offset oberhalb von "Position"
       \return \a core::vector3df komplettierte Position
@@ -73,7 +73,7 @@ public:
     f32 getHeightRanged( const f32 x, const f32 z );
 
     /*! \brief Komplettiert die übergebene Position mit der Höhe des Fußbodens
-               an der gefragen Stelle.
+               an der gefragen Stelle und gibt die neue Position zurück.
       \attention Schneller als getHeightFromPosition(), aber funktioniert nur
                  innerhalb des Sichtradius des Helden!
       \param position (\a const \a core::vector3df&) Position

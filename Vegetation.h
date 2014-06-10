@@ -11,6 +11,7 @@
 //#endif
 
 #include <irrlicht.h>
+#include "BufferCullMeshSceneNode.h"
 
 using namespace irr;
 // Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
@@ -32,7 +33,7 @@ public:
       \param -
       \return Zeiger auf das instanzierte Klassenobjekt
     */
-    Vegetation();
+    Vegetation( scene::ISceneManager* smgr );
 
 	/*! \brief Destruktor
     */
@@ -53,7 +54,10 @@ public:
 
 private:
 
-    scene::SMesh* grass_;
+    scene::ISceneManager* smgr_;
+    scene::IMeshManipulator* meshManipulator_;
+    scene::SMesh* grassMesh_;
+    BufferCullMeshSceneNode* grassNode_;
 
     Vegetation( const Vegetation& );
     Vegetation& operator=( const Vegetation& );

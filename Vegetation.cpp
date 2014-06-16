@@ -17,6 +17,7 @@ Vegetation::Vegetation( scene::ISceneManager* smgr )
     }
     meshManipulator_ = smgr_->getMeshManipulator();
     grassMesh_ = new scene::SMesh(); // same as "create", ReferenceCounter = 1
+    grassMesh_->addMeshBuffer( new scene::SMeshBuffer() );
     grassNode_ = new BufferCullMeshSceneNode(
             grassMesh_,
             ObjectManager::getInstance().getBaseNodeByType( "gras" ),
@@ -61,10 +62,14 @@ void Vegetation::create()
     position = ground.getHeightFromPosition( position );
     matrix = core::matrix4();
     dummy = meshManipulator_->createMeshCopy( grass );
+    // (you'll need to cast SMesh->getMeshBuffer to an SMeshBuffer)
+    Logfile::getInstance().dbg( "c: ", dummy->getMeshBuffer(0)->getVertexCount() );
     matrix.setTranslation( position );
     meshManipulator_->transform( dummy, matrix );
     // add grass patch to the overall grass mesh, to the right buffer
-    grassMesh_->getMeshBuffer(0)->append( dummy->getMeshBuffer(0) );
+    grassMesh_->getMeshBuffer(0)->append(
+            dummy->getMeshBuffer(0)
+    );
     dummy->drop();
 
 
@@ -76,6 +81,7 @@ void Vegetation::create()
     video::ITexture* gras1 =
             smgr_->getVideoDriver()->getTexture( "GFX/flow2.png" );
     grassMesh_->getMeshBuffer(0)->getMaterial().setTexture( 0, gras1 );
+    grassNode_->setMesh( grassMesh_ );
 
     // cleanup
     smgr_->getMeshCache()->removeMesh( grass );

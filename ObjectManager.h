@@ -9,6 +9,7 @@
 #include "BasicLifeform.h"
 #include "BasicStaticObject.h"
 #include "Timer.h"
+#include "Vegetation.h"
 
 /*! \class ObjectManager ObjectManager.h "ObjectManager.h"
   \brief  Schnittstelle für 3D-Objekte (meist Szenenknoten).
@@ -62,7 +63,13 @@ public:
     */
     static ObjectManager& getInstance( IrrlichtDevice* device = 0 );
 
-    /*! \brief Lade alle Objekte.
+    /*! \brief Lade Vegetation und Bodenschmuck.
+      \param -
+      \return -
+    */
+    void loadBasicDecorations();
+
+    /*! \brief Lade alle unbewegten Objekte.
       \param solidsFilename (\a const \a char*) Dateiname der statischen
              Objekte
       \return -
@@ -126,6 +133,7 @@ private:
     scene::ISceneManager* smgr_;
     core::array<BasicStaticObject*> staticObjects_;
     core::array<BasicLifeform*> npcs_;
+    Vegetation* vegetation_;
     Timer* updateTimer_;
 #ifdef _DEBUG_MODE
     u32 visibleNodeCount_;

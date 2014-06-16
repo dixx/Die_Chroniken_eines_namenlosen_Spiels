@@ -61,24 +61,28 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             Ground::getInstance().load( ( levelName_ + ".map" ).c_str() );
             break;
         case 2:
-            loadingText_->setText( L"Lade Dinge..." );
+            loadingText_->setText( L"Lade hübsche Dinge..." );
+            ObjectManager::getInstance().loadBasicDecorations();
+            break;
+        case 3:
+            loadingText_->setText( L"Lade feste Dinge..." );
             ObjectManager::getInstance().loadSolids(
                     ( levelName_ + ".solids" ).c_str() );
             break;
-        case 3:
+        case 4:
             loadingText_->setText( L"Lade zappelnde Dinge..." );
             ObjectManager::getInstance().loadNPCs(
                     ( levelName_ + ".npcs" ).c_str() );
             break;
-        case 4:
+        case 5:
             loadingText_->setText( L"Lade Würfelmaschine..." );
             // ...initialisiere KI
             break;
-        case 5:
+        case 6:
             loadingText_->setText( L"Lade das Wichtigste von allem..." );
             Hero::getInstance().load(); //TODO später aus Savegame laden!
             break;
-        case 6:
+        case 7:
             loadingText_->setText( L"Lade Augen..." );
             Camera::getInstance().lockToNode(
                     Hero::getInstance().current()->nodeInterface() );

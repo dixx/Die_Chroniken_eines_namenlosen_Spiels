@@ -20,6 +20,25 @@ ObjectManager& ObjectManager::getInstance( IrrlichtDevice* device )
 
 
 
+void ObjectManager::loadBasicDecorations()
+{
+#ifdef _DEBUG_MODE
+u32 now = device_->getTimer()->getRealTime();
+#endif
+    vegetation_ = new Vegetation( smgr_ );
+    vegetation_->create();
+#ifdef _DEBUG_MODE
+Logfile::getInstance().write(
+    Logfile::DEBUG,
+    "Vegetation in ",
+    device_->getTimer()->getRealTime() - now
+);
+Logfile::getInstance().writeLine( Logfile::DEBUG, "ms erstellt." );
+#endif
+}
+
+
+
 void ObjectManager::loadSolids( const char* solidsFilename )
 {
     core::array<core::stringc> objectsDataList;
@@ -52,11 +71,11 @@ u32 now = device_->getTimer()->getRealTime();
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "", staticObjects_.size() );
 Logfile::getInstance().write(
-    Logfile::DETAIL,
+    Logfile::DEBUG,
     " statische Objekte in ",
     device_->getTimer()->getRealTime() - now
 );
-Logfile::getInstance().writeLine( Logfile::DETAIL, "ms erstellt." );
+Logfile::getInstance().writeLine( Logfile::DEBUG, "ms erstellt." );
 #endif
     objectsDataList.clear();
     updateTimer_->start();
@@ -95,11 +114,11 @@ u32 now = device_->getTimer()->getRealTime();
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "", npcs_.size() );
 Logfile::getInstance().write(
-    Logfile::DETAIL,
+    Logfile::DEBUG,
     " NPCs in ",
     device_->getTimer()->getRealTime() - now
 );
-Logfile::getInstance().writeLine( Logfile::DETAIL, "ms erstellt." );
+Logfile::getInstance().writeLine( Logfile::DEBUG, "ms erstellt." );
 #endif
     objectsDataList.clear();
     updateTimer_->start();
@@ -110,6 +129,7 @@ Logfile::getInstance().writeLine( Logfile::DETAIL, "ms erstellt." );
 void ObjectManager::unload()
 {
     clearArrays();
+    delete vegetation_;
     updateTimer_->stop();
 }
 
@@ -210,7 +230,7 @@ u32 ObjectManager::getBaseIdByType( const core::stringc& type )
 
 
 
-// ersetzen.
+// ersetzen. // warum?
 void ObjectManager::addObjectToAreaOfView(Basic3DObject* object)
 {
     object->nodeInterface()->setVisible( true );
@@ -219,7 +239,7 @@ void ObjectManager::addObjectToAreaOfView(Basic3DObject* object)
 
 
 
-// ersetzen.
+// ersetzen. // warum?
 void ObjectManager::removeObjectFromAreaOfView(Basic3DObject* object)
 {
     object->nodeInterface()->setVisible( false );
@@ -343,6 +363,7 @@ ObjectManager::ObjectManager( IrrlichtDevice* device )
   smgr_(0),
   staticObjects_(0),
   npcs_(0),
+  vegetation_(0),
   updateTimer_(0)
 #ifdef _DEBUG_MODE
   ,visibleNodeCount_(0)

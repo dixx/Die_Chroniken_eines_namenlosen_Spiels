@@ -176,6 +176,14 @@ public:
     {
         writeLine( DEBUG, logline, number );
     }
+    void dbg( const core::stringc& logline, const core::vector3df& vector )
+    {
+        write( DEBUG, logline );
+        write( DEBUG - 1, "(", vector.X );
+        write( DEBUG - 1, ", ", vector.Y );
+        write( DEBUG - 1, ", ", vector.Z );
+        writeLine( DEBUG - 1, ")" );
+    }
 
 private:
 

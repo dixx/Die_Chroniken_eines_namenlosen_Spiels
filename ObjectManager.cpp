@@ -33,7 +33,7 @@ Logfile::getInstance().write(
     "Vegetation in ",
     device_->getTimer()->getRealTime() - now
 );
-Logfile::getInstance().writeLine( Logfile::DEBUG, "ms erstellt." );
+Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #endif
 }
 
@@ -71,11 +71,11 @@ u32 now = device_->getTimer()->getRealTime();
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "", staticObjects_.size() );
 Logfile::getInstance().write(
-    Logfile::DEBUG,
+    Logfile::DEBUG - 1,
     " statische Objekte in ",
     device_->getTimer()->getRealTime() - now
 );
-Logfile::getInstance().writeLine( Logfile::DEBUG, "ms erstellt." );
+Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #endif
     objectsDataList.clear();
     updateTimer_->start();
@@ -114,11 +114,11 @@ u32 now = device_->getTimer()->getRealTime();
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "", npcs_.size() );
 Logfile::getInstance().write(
-    Logfile::DEBUG,
+    Logfile::DEBUG - 1,
     " NPCs in ",
     device_->getTimer()->getRealTime() - now
 );
-Logfile::getInstance().writeLine( Logfile::DEBUG, "ms erstellt." );
+Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #endif
     objectsDataList.clear();
     updateTimer_->start();

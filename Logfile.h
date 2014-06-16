@@ -155,13 +155,27 @@ public:
     */
     void setNewFilesystem( io::IFileSystem* fs = 0 );
 
-
     /*! \brief Schließt das Logfile und bricht die Programabarbeitung hart ab.
       \attention Belegter Speicher wird nicht freigegeben!
       \param logline (\a core::stringc&) Text
       \return -
     */
     void emergencyExit( const core::stringc& logline );
+
+    /*! \brief Schreibt Text mit abschließendem Zeilenumbruch in das Logfile
+      \note Schreibt im DEBUG-Modus eine Irrlicht-Zeichenkette mit
+            abschließendem Zeilenumbruch in das Logfile.
+      \param logline (\a core::stringc&) Text
+      \return -
+    */
+    // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein
+    // Template realisiert wird, muss der Body leider in der Headerdatei
+    // angelegt werden.
+    template <typename T>
+    void dbg( const core::stringc& logline, const T number )
+    {
+        writeLine( DEBUG, logline, number );
+    }
 
 private:
 

@@ -134,7 +134,7 @@ void BasicStaticObject::init()
                 smgr_,
                 ObjectManager::getInstance().getBaseIdByType( type_ )
         );
-        dummyMesh->drop();
+        dummyMesh->drop(); // mesh is still grabbed by node_
         node_->setName( name_ );
         node_->setRotation( loadRotation() );
         node_->setPosition( loadPosition() );

@@ -63,12 +63,6 @@ public:
     */
     static ObjectManager& getInstance( IrrlichtDevice* device = 0 );
 
-    /*! \brief Lade Vegetation und Bodenschmuck.
-      \param -
-      \return -
-    */
-    void loadBasicDecorations();
-
     /*! \brief Lade alle unbewegten Objekte.
       \param solidsFilename (\a const \a char*) Dateiname der statischen
              Objekte

@@ -20,25 +20,6 @@ ObjectManager& ObjectManager::getInstance( IrrlichtDevice* device )
 
 
 
-void ObjectManager::loadBasicDecorations()
-{
-#ifdef _DEBUG_MODE
-u32 now = device_->getTimer()->getRealTime();
-#endif
-    vegetation_ = new Vegetation( smgr_ );
-    vegetation_->create();
-#ifdef _DEBUG_MODE
-Logfile::getInstance().write(
-    Logfile::DEBUG,
-    "Vegetation in ",
-    device_->getTimer()->getRealTime() - now
-);
-Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
-#endif
-}
-
-
-
 void ObjectManager::loadSolids( const char* solidsFilename )
 {
     core::array<core::stringc> objectsDataList;
@@ -139,6 +120,8 @@ void ObjectManager::update( const f32 frameDeltaTime )
 {
     if ( updateTimer_->isFull() )
     {
+        vegetation_->update();
+
         scene::ISceneNode* node = 0;
         core::vector3df camPos = smgr_->getActiveCamera()->getAbsolutePosition();
         f32 farValueSQ = smgr_->getActiveCamera()->getFarValue();

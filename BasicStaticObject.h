@@ -85,8 +85,6 @@ protected:
 
 private:
 
-    core::vector3df nextStep_;
-
     BasicStaticObject( const BasicStaticObject& );
     void operator=( const BasicStaticObject& );
 

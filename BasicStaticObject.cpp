@@ -13,8 +13,7 @@ BasicStaticObject::BasicStaticObject(
         bool isParent
 )
 : Basic3DObject(objectData, smgr, true),
-  node_(0),
-  nextStep_(VEC_3DF_NULL)
+  node_(0)
 {
     if ( smgr_ == 0 )
     {
@@ -65,7 +64,7 @@ scene::ISceneNode* BasicStaticObject::nodeInterface() const
 
 const core::vector3df& BasicStaticObject::getNextStep() const
 {
-    return nextStep_;
+    return VEC_3DF_NULL;
 }
 
 

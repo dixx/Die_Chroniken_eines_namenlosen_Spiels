@@ -7,15 +7,15 @@
 #include "Scripting.h"
 #include "TimerManager.h"
 #ifdef _DEBUG_MODE
-    #include "Debugwindow.h"
+#include "Debugwindow.h"
 #endif
 
 
 
 ObjectManager& ObjectManager::getInstance( IrrlichtDevice* device )
 {
-    static ObjectManager _instance( device );
-    return _instance;
+    static ObjectManager instance( device );
+    return instance;
 }
 
 
@@ -25,23 +25,20 @@ void ObjectManager::loadSolids( const char* solidsFilename )
     core::array<core::stringc> objectsDataList;
 
     GenericHelperMethods::getInstance().validateFileExistence( solidsFilename );
-    Scripting::getInstance().getObjectDataFromScript(
-            solidsFilename ).split( objectsDataList, "\n" );
+    Scripting::getInstance().getObjectDataFromScript( solidsFilename ).split( objectsDataList, "\n" );
 
 #ifdef _DEBUG_MODE
 u32 now = device_->getTimer()->getRealTime();
 #endif
     for ( register u32 i = 0; i < objectsDataList.size(); ++i )
     {
-        BasicStaticObject* object = new BasicStaticObject(
-                objectsDataList[ i ], smgr_ );
+        BasicStaticObject* object = new BasicStaticObject( objectsDataList[ i ], smgr_ );
         if ( object->getNode() == 0 )
         {
             delete object;
             clearArrays();
             TimerManager::getInstance().removeTimer( updateTimer_ );
-            Logfile::getInstance().emergencyExit(
-                    "Statisches Objekt konnte nicht erzeugt werden! Abbruch." );
+            Logfile::getInstance().emergencyExit( "Statisches Objekt konnte nicht erzeugt werden! Abbruch." );
         }
         // Auf Boden positionieren
         core::vector3df pos = object->getNode()->getPosition();
@@ -51,11 +48,7 @@ u32 now = device_->getTimer()->getRealTime();
     }
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "", staticObjects_.size() );
-Logfile::getInstance().write(
-    Logfile::DEBUG - 1,
-    " statische Objekte in ",
-    device_->getTimer()->getRealTime() - now
-);
+Logfile::getInstance().write( Logfile::DEBUG - 1, " statische Objekte in ", device_->getTimer()->getRealTime() - now );
 Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #endif
     objectsDataList.clear();
@@ -69,8 +62,7 @@ void ObjectManager::loadNPCs( const char* npcsFilename )
     core::array<core::stringc> objectsDataList;
 
     GenericHelperMethods::getInstance().validateFileExistence( npcsFilename );
-    Scripting::getInstance().getObjectDataFromScript(
-            npcsFilename ).split( objectsDataList, "\n" );
+    Scripting::getInstance().getObjectDataFromScript( npcsFilename ).split( objectsDataList, "\n" );
 
 #ifdef _DEBUG_MODE
 u32 now = device_->getTimer()->getRealTime();
@@ -83,8 +75,7 @@ u32 now = device_->getTimer()->getRealTime();
             delete npc;
             clearArrays();
             TimerManager::getInstance().removeTimer( updateTimer_ );
-            Logfile::getInstance().emergencyExit(
-                    "NPC konnte nicht erzeugt werden! Abbruch." );
+            Logfile::getInstance().emergencyExit( "NPC konnte nicht erzeugt werden! Abbruch." );
         }
         // Auf Boden positionieren
         core::vector3df pos = npc->getNode()->getPosition();
@@ -94,11 +85,7 @@ u32 now = device_->getTimer()->getRealTime();
     }
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "", npcs_.size() );
-Logfile::getInstance().write(
-    Logfile::DEBUG - 1,
-    " NPCs in ",
-    device_->getTimer()->getRealTime() - now
-);
+Logfile::getInstance().write( Logfile::DEBUG - 1, " NPCs in ", device_->getTimer()->getRealTime() - now );
 Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #endif
     objectsDataList.clear();
@@ -134,8 +121,7 @@ void ObjectManager::update( const f32 frameDeltaTime )
             node = staticObjects_[ i ]->getNode();
             if ( ( node->getID() & ID_WELT ) == ID_BODEN )
                 continue;  // Boden wird in Ground::update() aktualisiert
-            if ( node->getAbsolutePosition().getDistanceFromSQ( camPos )
-                    < farValueSQ )
+            if ( node->getAbsolutePosition().getDistanceFromSQ( camPos ) < farValueSQ )
             {
                 if ( !node->isVisible() )
                     addObjectToAreaOfView( staticObjects_[ i ] );
@@ -152,8 +138,7 @@ void ObjectManager::update( const f32 frameDeltaTime )
         for( u32 i = 0; i < npcs_.size(); ++i )
         {
             node = npcs_[ i ]->getNode();
-            if ( node->getAbsolutePosition().getDistanceFromSQ( camPos )
-                    < farValueSQ )
+            if ( node->getAbsolutePosition().getDistanceFromSQ( camPos ) < farValueSQ )
             {
                 if ( !node->isVisible() )
                     addObjectToAreaOfView( npcs_[ i ] );
@@ -355,10 +340,7 @@ ObjectManager::ObjectManager( IrrlichtDevice* device )
 
 {
     if ( device_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [ObjectManager] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "Entchen in [ObjectManager] nicht mehr gefunden! Abbruch." );
     smgr_ = device_->getSceneManager();
 	worldNode = smgr_->addEmptySceneNode( 0, ID_WELT );
 	worldNode->setName( "worldNode" );
@@ -441,8 +423,7 @@ void ObjectManager::clearArrays()
         {
             if ( staticObjects_[ i ] )
             {
-                Collision::getInstance().removeObjectFromRangedDetection(
-                        staticObjects_[ i ] );
+                Collision::getInstance().removeObjectFromRangedDetection( staticObjects_[ i ] );
                 delete staticObjects_[ i ];
                 staticObjects_[ i ] = 0;
             }
@@ -455,8 +436,7 @@ void ObjectManager::clearArrays()
         {
             if ( npcs_[ i ] )
             {
-                Collision::getInstance().removeObjectFromRangedDetection(
-                        npcs_[ i ] );
+                Collision::getInstance().removeObjectFromRangedDetection( npcs_[ i ] );
                 delete npcs_[ i ];
                 npcs_[ i ] = 0;
             }

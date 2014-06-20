@@ -39,8 +39,11 @@ void ObjectParamsExtractor::clearMembers()
 
 
 
-bool ObjectParamsExtractor::tryToExtractValue( const core::stringc& key,
-        const core::stringc& separator, const u32 index )
+bool ObjectParamsExtractor::tryToExtractValue(
+        const core::stringc& key,
+        const core::stringc& separator,
+        const u32 index
+)
 {
     if ( key.size() == 0 || isUseless_ )
         return false;
@@ -51,8 +54,7 @@ bool ObjectParamsExtractor::tryToExtractValue( const core::stringc& key,
             continue;
         if ( objectParams_[ i ].size() > 5 )
         {
-            dummyValue_ = objectParams_[ i ].subString(
-                    5, objectParams_[ i ].size() - 1 );
+            dummyValue_ = objectParams_[ i ].subString( 5, objectParams_[ i ].size() - 1 );
             if ( separator.size() != 0 )
             {
                 dummyValue_.split( values_, separator.c_str() );

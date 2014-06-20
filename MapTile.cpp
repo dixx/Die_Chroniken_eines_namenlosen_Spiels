@@ -11,7 +11,7 @@ MapTile::MapTile(
         scene::ISceneManager* smgr,
         const core::dimension2df& sectorDimension
 )
-: BasicStaticObject(objectData, smgr, true),
+: BasicStaticObject( objectData, smgr, true ),
   tileX_(-1),
   tileZ_(-1),
   sectorDimension_(sectorDimension)
@@ -67,14 +67,11 @@ void MapTile::init()
     {
         core::vector3df tileScale = core::vector3df( 200.001f, 100.0f, 200.001f );
         if ( extractor_->tryToExtractValue( "MSCAL", "x", 0 ) )
-            tileScale.X = core::fast_atof(
-                    extractor_->getExtractedValue().c_str() );
+            tileScale.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
         if ( extractor_->tryToExtractValue( "MSCAL", "x", 1 ) )
-            tileScale.Y = core::fast_atof(
-                    extractor_->getExtractedValue().c_str() );
+            tileScale.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
         if ( extractor_->tryToExtractValue( "MSCAL", "x", 2 ) )
-            tileScale.Z = core::fast_atof(
-                    extractor_->getExtractedValue().c_str() );
+            tileScale.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
         matrix.setScale( tileScale );
         // Position im Grid (Koordinaten sind in Ground:: schon validiert
         // worden)
@@ -84,13 +81,9 @@ void MapTile::init()
             tileZ_ = core::strtol10( extractor_->getExtractedValue().c_str() );
         matrix.setTranslation(
                 core::vector3df(
-                        ( static_cast<f32>( tileX_ ) + 0.5f )
-                                * sectorDimension_.Width
-                                - static_cast<f32>( tileX_ ),
+                        ( static_cast<f32>( tileX_ ) + 0.5f ) * sectorDimension_.Width - static_cast<f32>( tileX_ ),
                         0.0f,
-                        ( static_cast<f32>( tileZ_ ) + 0.5f )
-                                * sectorDimension_.Height
-                                - static_cast<f32>( tileZ_ )
+                        ( static_cast<f32>( tileZ_ ) + 0.5f ) * sectorDimension_.Height - static_cast<f32>( tileZ_ )
                 )
         );
         meshManipulator->transform( dummyMesh, matrix );

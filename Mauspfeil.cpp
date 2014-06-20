@@ -3,15 +3,15 @@
 #include "GenericHelperMethods.h"
 #include "Logfile.h"
 #ifdef _DEBUG_MODE
-    #include "Debugwindow.h"
+#include "Debugwindow.h"
 #endif
 
 
 
 Mauspfeil& Mauspfeil::getInstance( IrrlichtDevice* device )
 {
-    static Mauspfeil _instance( device );
-    return _instance;
+    static Mauspfeil instance( device );
+    return instance;
 }
 
 
@@ -25,9 +25,7 @@ Mauspfeil::Pfeil Mauspfeil::getCurrentArrow() const
 
 void Mauspfeil::setCurrentArrow( const Pfeil mauspfeil)
 {
-    ( mauspfeil < 0 || mauspfeil >= MAUSPFEIL_COUNT )
-        ? currentArrow_ = MAUSPFEIL_UNSICHTBAR
-        : currentArrow_ = mauspfeil;
+    currentArrow_ = ( mauspfeil < 0 || mauspfeil >= MAUSPFEIL_COUNT ) ? MAUSPFEIL_UNSICHTBAR : mauspfeil;
     actualImageNumber_ = startImageNumber_[ currentArrow_ ];
     setCurrentArrowInterFrameTime();
 }
@@ -56,8 +54,7 @@ void Mauspfeil::draw()
             true // Alpha-Kanal
     );
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine( L"mousePos = ",
-            control_->getPosition().X, control_->getPosition().Y );
+    Debugwindow::getInstance().addLine( L"mousePos = ", control_->getPosition().X, control_->getPosition().Y );
 #endif
 
 
@@ -127,19 +124,13 @@ Mauspfeil::Mauspfeil( IrrlichtDevice* device )
   currentArrow_(MAUSPFEIL_MISCHMASCH)
 {
     if ( device_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [Mauspfeil] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "Entchen in [Mauspfeil] nicht mehr gefunden! Abbruch." );
     control_ = device_->getCursorControl();
     control_->setVisible( false );
-    GenericHelperMethods::getInstance().validateFileExistence(
-            "GFX/Mauszeiger.bmp" );
-    imageCatalog_ = device->getVideoDriver()->getTexture(
-            "GFX/Mauszeiger.bmp" );
+    GenericHelperMethods::getInstance().validateFileExistence( "GFX/Mauszeiger.bmp" );
+    imageCatalog_ = device->getVideoDriver()->getTexture( "GFX/Mauszeiger.bmp" );
     imageCatalog_->grab(); // to not accidently remove the texture elsewhere
-    device_->getVideoDriver()->makeColorKeyTexture(
-            imageCatalog_, COL_MAGICPINK );
+    device_->getVideoDriver()->makeColorKeyTexture( imageCatalog_, COL_MAGICPINK );
     hotSpot_ = imageSize_.getCenter();
     clearArrays();
     // Vorberechnen der Positionen aller Einzelbilder innerhalb des
@@ -148,14 +139,10 @@ Mauspfeil::Mauspfeil( IrrlichtDevice* device )
     {
         imageCatalogActualPosition_.push_back(
                 core::recti(
-                        ( i % imageCatalogRaster_.Width ) *
-                        imageSize_.getWidth(),
-                        ( i / imageCatalogRaster_.Height ) *
-                        imageSize_.getHeight(),
-                        ( i % imageCatalogRaster_.Width + 1 ) *
-                        imageSize_.getWidth(),
-                        ( i / imageCatalogRaster_.Height + 1 ) *
-                        imageSize_.getHeight()
+                        ( i % imageCatalogRaster_.Width ) * imageSize_.getWidth(),
+                        ( i / imageCatalogRaster_.Height ) * imageSize_.getHeight(),
+                        ( i % imageCatalogRaster_.Width + 1 ) * imageSize_.getWidth(),
+                        ( i / imageCatalogRaster_.Height + 1 ) * imageSize_.getHeight()
                 )
         );
     }
@@ -220,10 +207,8 @@ Mauspfeil::~Mauspfeil()
 
 void Mauspfeil::setCurrentArrowInterFrameTime()
 {
-    if ( sequenceSpeed_[ currentArrow_ ] == 0 )
-        interFrameTime_ = 2147483647;  // Max unsigned Int31 ;)
-    else
-        interFrameTime_ = 1000 / sequenceSpeed_[ currentArrow_ ];
+    interFrameTime_ = ( sequenceSpeed_[ currentArrow_ ] == 0 ) ? 2147483647 : 1000 / sequenceSpeed_[ currentArrow_ ] ;
+    // 2147483647 == Max unsigned Int31 ;)
 }
 
 

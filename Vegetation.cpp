@@ -144,9 +144,9 @@ void Vegetation::create()
 
 void Vegetation::update()
 {
-    grassNode_->setVisible( true );
+    //grassNode_->setVisible( true );
     //grassNode_->setMaterialFlag(video::EMF_WIREFRAME, true);
-    grassNode_->setDebugDataVisible( scene::EDS_FULL );
+    //grassNode_->setDebugDataVisible( scene::EDS_FULL );
 }
 
 

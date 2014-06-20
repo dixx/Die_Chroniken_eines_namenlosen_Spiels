@@ -6,8 +6,8 @@
 
 Ton& Ton::getInstance( io::IFileSystem* fs )
 {
-    static Ton _instance( fs );
-    return _instance;
+    static Ton instance( fs );
+    return instance;
 }
 
 
@@ -15,14 +15,11 @@ Ton& Ton::getInstance( io::IFileSystem* fs )
 void Ton::preload( const c8* filename )
 {
     GenericHelperMethods::getInstance().validateFileExistence( filename );
-    ISoundSource* snd = soundEngine_->addSoundSourceFromFile(
-            filename, ESM_NO_STREAMING, true );
+    ISoundSource* snd = soundEngine_->addSoundSourceFromFile( filename, ESM_NO_STREAMING, true );
     if ( snd == 0 )
     {
-        Logfile::getInstance().write( Logfile::DEBUG,
-                "Sound-Datei ", filename );
-        Logfile::getInstance().writeLine( Logfile::DEBUG,
-                " konnte nicht geladen werden!" );
+        Logfile::getInstance().write( Logfile::DEBUG, "Sound-Datei ", filename );
+        Logfile::getInstance().writeLine( Logfile::DEBUG, " konnte nicht geladen werden!" );
     }
     snd->getPlayLength(); // workaround for a may-be-bug in preloading
 }
@@ -53,21 +50,14 @@ Ton::Ton( io::IFileSystem* fs )
 {
     Logfile& log = Logfile::getInstance();
     if ( fileSystem_ == 0 )
-    {
-        log.emergencyExit(
-                "Dateisystem in [Ton] nicht mehr gefunden! Abbruch." );
-    }
+        log.emergencyExit( "Dateisystem in [Ton] nicht mehr gefunden! Abbruch." );
     soundEngine_ = createIrrKlangDevice();
     if ( soundEngine_ == 0 )
-    {
-        log.emergencyExit(
-                "Sound-Entchen konnte nicht erstellt werden! Abbruch." );
-    }
+        log.emergencyExit( "Sound-Entchen konnte nicht erstellt werden! Abbruch." );
     log.writeLine( Logfile::INFO, "Sound-Entchen erfolgreich erstellt." );
     log.writeLine( Logfile::INFO, "    Version: IrrKlang ", "1.4.0" );
     log.write( Logfile::INFO, "    Treiber: ", soundEngine_->getDriverName() );
-    log.writeLine( Logfile::INFO,
-            soundEngine_->isMultiThreaded() ? ", Multi-Fred" : "" );
+    log.writeLine( Logfile::INFO, soundEngine_->isMultiThreaded() ? ", Multi-Fred" : "" );
     sndGuiArray_.clear();
     initAllSounds();
 }
@@ -83,8 +73,7 @@ Ton::~Ton()
         soundEngine_->drop();
         soundEngine_ = 0;
     }
-    Logfile::getInstance().writeLine( Logfile::INFO,
-            "Sound-Entchen normal beendet." );
+    Logfile::getInstance().writeLine( Logfile::INFO, "Sound-Entchen normal beendet." );
 }
 
 

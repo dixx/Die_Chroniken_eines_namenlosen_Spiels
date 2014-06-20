@@ -12,8 +12,8 @@
 
 Weather& Weather::getInstance( scene::ISceneManager* smgr )
 {
-    static Weather _instance( smgr );
-    return _instance;
+    static Weather instance( smgr );
+    return instance;
 }
 
 
@@ -40,9 +40,7 @@ void Weather::unload()
 {
     updateTimer_->stop();
     for ( register u32 i = 0; i < 7; ++i )
-    {
         dayLightSource_[i]->remove();
-    }
 }
 
 
@@ -70,8 +68,7 @@ void Weather::update()
         updateTimer_->restart();
     }
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine(
-            L"SunMoonCircle.Y:  ", sunCircleY_[6], moonCircleY_[6] );
+    Debugwindow::getInstance().addLine( L"SunMoonCircle.Y:  ", sunCircleY_[6], moonCircleY_[6] );
 #endif
 }
 
@@ -107,10 +104,7 @@ Weather::Weather( scene::ISceneManager* smgr )
   skyColor_(COL_PURPLE)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "ScenenManager in [Weather] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "ScenenManager in [Weather] nicht mehr gefunden! Abbruch." );
     SUNMOVEMENTDELTA_ = ( core::PI * 2 ) / SUNCYCLEDURATION_;
     MOONMOVEMENTDELTA_ = ( core::PI * 2 ) / MOONCYCLEDURATION_;
     FACTOR_V2R_SEC_ = SUNCYCLEDURATION_ / 7200;
@@ -140,34 +134,20 @@ void Weather::calculateSunMoonCirclesY()
     // Sonnen-Kreis "anheben" fuer laengere Zeit Tageslicht
     f32 currentSunPosition = SUNMOVEMENTDELTA_ * currentDayTime_;
     f32 currentMoonPosition = MOONMOVEMENTDELTA_ * currentMoonPhase_;
-    sunCircleY_[0] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI * 1.4f ) );
-    sunCircleY_[1] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI * 1.2f ) );
-    sunCircleY_[5] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI * 1.2f ) );
-    sunCircleY_[6] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI ) );
-    sunCircleY_[2] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI * 0.8f ) );
-    sunCircleY_[4] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI * 0.8f ) );
-    sunCircleY_[3] = static_cast<f32>(
-            sin( currentSunPosition - core::HALF_PI * 0.6f ) );
-    moonCircleY_[0] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI * 1.4f ) );
-    moonCircleY_[1] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI * 1.2f ) );
-    moonCircleY_[5] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI * 1.2f ) );
-    moonCircleY_[6] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI ) );
-    moonCircleY_[2] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI * 0.8f ) );
-    moonCircleY_[4] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI * 0.8f ) );
-    moonCircleY_[3] = static_cast<f32>(
-            sin( currentMoonPosition - core::HALF_PI * 0.6f ) );
+    sunCircleY_[0] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI * 1.4f ) );
+    sunCircleY_[1] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI * 1.2f ) );
+    sunCircleY_[5] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI * 1.2f ) );
+    sunCircleY_[6] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI ) );
+    sunCircleY_[2] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI * 0.8f ) );
+    sunCircleY_[4] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI * 0.8f ) );
+    sunCircleY_[3] = static_cast<f32>( sin( currentSunPosition - core::HALF_PI * 0.6f ) );
+    moonCircleY_[0] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI * 1.4f ) );
+    moonCircleY_[1] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI * 1.2f ) );
+    moonCircleY_[5] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI * 1.2f ) );
+    moonCircleY_[6] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI ) );
+    moonCircleY_[2] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI * 0.8f ) );
+    moonCircleY_[4] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI * 0.8f ) );
+    moonCircleY_[3] = static_cast<f32>( sin( currentMoonPosition - core::HALF_PI * 0.6f ) );
 }
 
 
@@ -219,29 +199,15 @@ void Weather::calculateLightValues()
     if ( sunCircleY_[6] > -0.05f )
     {
         lightColorSun.r = 1.0f * sunCircleY_[6];
-        skyColor_.setBlue(
-                static_cast<u32>(
-                        core::min_( 300 * ( sunCircleY_[6] + 0.05f ), 255.0f )
-                )
-        );
+        skyColor_.setBlue( static_cast<u32>( core::min_( 300 * ( sunCircleY_[6] + 0.05f ), 255.0f ) ) );
         if ( sunCircleY_[6] > 0.1f )
         {
             lightColorSun.g = 0.8f * ( sunCircleY_[6] - 0.1f );
-            skyColor_.setRed(
-                    static_cast<u32>(
-                            core::min_( 60 * ( sunCircleY_[6] - 0.1f ), 50.0f )
-                    )
-            );
+            skyColor_.setRed( static_cast<u32>( core::min_( 60 * ( sunCircleY_[6] - 0.1f ), 50.0f ) ) );
             if ( sunCircleY_[6] > 0.2f )
             {
                 lightColorSun.b = 0.8f * ( sunCircleY_[6] - 0.2f );
-                skyColor_.setGreen(
-                        static_cast<u32>(
-                                core::min_(
-                                        244 * ( sunCircleY_[6] - 0.2f ), 170.0f
-                                )
-                        )
-                );
+                skyColor_.setGreen( static_cast<u32>( core::min_( 244 * ( sunCircleY_[6] - 0.2f ), 170.0f ) ) );
             }
         }
     }
@@ -252,12 +218,9 @@ void Weather::calculateLightValues()
     }
     if ( moonCircleY_[6] > 0.1f )
     {
-        lightColorMoon.r = 0.02f +
-                core::min_( 0.22f * ( moonCircleY_[6] - 0.1f ), 0.18f );
-        lightColorMoon.g = 0.02f +
-                core::min_( 0.22f * ( moonCircleY_[6] - 0.1f ), 0.18f );
-        lightColorMoon.b = 0.08f +
-                core::min_( 0.38f * ( moonCircleY_[6] - 0.1f ), 0.32f );
+        lightColorMoon.r = 0.02f + core::min_( 0.22f * ( moonCircleY_[6] - 0.1f ), 0.18f );
+        lightColorMoon.g = 0.02f + core::min_( 0.22f * ( moonCircleY_[6] - 0.1f ), 0.18f );
+        lightColorMoon.b = 0.08f + core::min_( 0.38f * ( moonCircleY_[6] - 0.1f ), 0.32f );
     }
     else
     {
@@ -267,21 +230,9 @@ void Weather::calculateLightValues()
     {
         video::SLight& lightData = dayLightSource_[i]->getLightData();
         lightData.DiffuseColor = video::SColorf(
-                core::max_(
-                        lightColorSun.r * sunCircleY_[i],
-                        lightColorMoon.r * moonCircleY_[i],
-                        0.02f
-                ),
-                core::max_(
-                        lightColorSun.g * sunCircleY_[i],
-                        lightColorMoon.g * moonCircleY_[i],
-                        0.02f
-                ),
-                core::max_(
-                        lightColorSun.b * sunCircleY_[i],
-                        lightColorMoon.b * moonCircleY_[i],
-                        0.08f
-                )
+                core::max_( lightColorSun.r * sunCircleY_[i], lightColorMoon.r * moonCircleY_[i], 0.02f ),
+                core::max_( lightColorSun.g * sunCircleY_[i], lightColorMoon.g * moonCircleY_[i], 0.02f ),
+                core::max_( lightColorSun.b * sunCircleY_[i], lightColorMoon.b * moonCircleY_[i], 0.08f )
         );
         //lightData.AmbientColor = video::SColorf( 0.1f, 0.0f, 0.2f, 1.0f );
         lightData.SpecularColor = video::SColorf(

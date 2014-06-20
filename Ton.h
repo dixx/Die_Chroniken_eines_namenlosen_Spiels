@@ -1,41 +1,33 @@
 /*! \file Ton.h
-  \brief Klasse (Singleton) stellt Schnittstelle für Musik und Sounds bereit.
-*/
+ *  \brief Klasse (Singleton) stellt Schnittstelle für Musik und Sounds bereit.
+ */
 
 #ifndef _TON_HEADER
 #define _TON_HEADER
-
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
 
 #include <irrlicht.h>
 #include <irrKlang.h>
 
 using namespace irr;
 using namespace irrklang;
-// Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Überblick zu behalten.
 // Statt der irrklang-Typedefs werden weiterhin die Irrlicht-Typedefs verwendet.
 
 /*! \class Ton Ton.h "Ton.h"
-  \brief  Schnittstelle zu Geräuschen und Musik sowie deren Effekten.
-  \attention Klasse ist `Singleton`.
-  \note Instanzierung: `Ton& myTon = Ton::getInstance();`
-        \n Oder: `Ton::getInstance();`
-        \n Benutzen: `myTon.playGUISound( SND_GUI_CLICKBUTTON );`
-        \n Oder: `Ton::getInstance().playGUISound( SND_GUI_HOVER );`
-*/
+ *  \brief  Schnittstelle zu Geräuschen und Musik sowie deren Effekten.
+ *  \attention Klasse ist `Singleton`.
+ *  \note Instanzierung: `Ton& myTon = Ton::getInstance();` \n Oder: `Ton::getInstance();`
+ *        \n Benutzen: `myTon.playGUISound( SND_GUI_CLICKBUTTON );`
+ *        \n Oder: `Ton::getInstance().playGUISound( SND_GUI_HOVER );`
+ */
 class Ton
 {
 
 public:
 
     /*! \brief Sounds
-
-      Jedes Geräusch erhält eine ID.
-    */
+     *
+     *  Jedes Geräusch erhält eine ID.
+     */
     enum Sound_ID
     {
         SND_GUI_HOVER = 0,  //!< Maus über Button
@@ -45,29 +37,29 @@ public:
     };
 
     /*! \brief Ersatz für den Konstruktor.
-
-      Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
-      \param fs (\a IFileSystem*) Zeiger auf das virtuelle Dateisystem
-      \return Referenz auf die einzige Instanz dieser Klasse
-    */
+     *
+     *  Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
+     *  \param fs (\a IFileSystem*) Zeiger auf das virtuelle Dateisystem
+     *  \return Referenz auf die einzige Instanz dieser Klasse
+     */
     static Ton& getInstance( io::IFileSystem* fs = 0 );
 
     /*! \brief Gibt Zeiger auf das erzeugte Sound-Entchen zurück.
-      \param -
-      \return Zeiger auf das Sound-Entchen
-    */
+     *  \param -
+     *  \return Zeiger auf das Sound-Entchen
+     */
     ISoundEngine* getSoundEngine() const;
 
     /*! \brief Lädt eine Sounddatei in den Speicher.
-      \param filename (\a c8*) zu ladende Datei
-      \return -
-    */
+     *  \param filename (\a c8*) zu ladende Datei
+     *  \return -
+     */
     void preload( const c8* filename );
 
     /*! \brief Spielt eine GUI-Sounddatei ab.
-      \param id (\a enum \a Sound_ID) ID des zu spielenden GUI-Sounds
-      \return -
-    */
+     *  \param id (\a enum \a Sound_ID) ID des zu spielenden GUI-Sounds
+     *  \return -
+     */
     void playGUISound( const Sound_ID id );
 
 private:
@@ -76,8 +68,7 @@ private:
     io::IFileSystem* fileSystem_;  // Zeiger auf das virtuelle FileSystem
     core::array<core::stringc> sndGuiArray_;  // Array aller GUI-Geräusche
 
-    Ton( io::IFileSystem* fs = 0 );  // ctor. Von außen keine Instanzen
-                                     // direkt erzeugbar
+    Ton( io::IFileSystem* fs = 0 );  // ctor. Von außen keine Instanzen direkt erzeugbar
     Ton( const Ton& );  // Instanz ist nicht kopierbar
     Ton& operator=( const Ton& );  // Instanz ist nicht zuweisbar
     ~Ton();  // dtor. Instanz zerstört sich bei Programmende
@@ -85,7 +76,5 @@ private:
     inline void initAllSounds();
 
 };
-// Ende class Ton
 
 #endif
-// Ende Header-Datei Ton

@@ -1,78 +1,68 @@
 /*! \file Weather.h
-  \brief Klasse (Singleton) stellt Schnittstelle für Wetter bereit.
-*/
+ *  \brief Klasse (Singleton) stellt Schnittstelle für Wetter bereit.
+ */
 
 #ifndef _WEATHER_HEADER
 #define _WEATHER_HEADER
-
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
 
 #include <irrlicht.h>
 #include "Timer.h"
 
 using namespace irr;
-// Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Überblick zu behalten.
 
 /*! \class Weather Weather.h "Weather.h"
-  \brief  Schnittstelle für Wetter und Weltlicht.
-  \attention Klasse ist `Singleton`.
-  \note Instanzierung: `Weather& myWeather = Weather::getInstance();`
-        \n Oder: `Weather::getInstance();`
-        \n Benutzen: `myWeather.getSkyColor();`
-        \n Oder: `Weather::getInstance().getDayTime();`
-*/
+ *  \brief  Schnittstelle für Wetter und Weltlicht.
+ *  \attention Klasse ist `Singleton`.
+ *  \note Instanzierung: `Weather& myWeather = Weather::getInstance();` \n Oder: `Weather::getInstance();`
+ *        \n Benutzen: `myWeather.getSkyColor();` \n Oder: `Weather::getInstance().getDayTime();`
+ */
 class Weather
 {
 
 public:
 
     /*! \brief Ersatz für den Konstruktor.
-
-      Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
-      \param smgr (\a scene::ISceneManager*) Zeiger auf den ScenenManager
-      \return Referenz auf die einzige Instanz dieser Klasse
-    */
+     *
+     *  Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
+     *  \param smgr (\a scene::ISceneManager*) Zeiger auf den ScenenManager
+     *  \return Referenz auf die einzige Instanz dieser Klasse
+     */
     static Weather& getInstance( scene::ISceneManager* smgr = 0 );
 
     /*! \brief Lädt Wetter.
-      \param -
-      \return -
-    */
+     *  \param -
+     *  \return -
+     */
     void load();
 
     /*! \brief Entlädt Wetter.
-      \param -
-      \return -
-    */
+     *  \param -
+     *  \return -
+     */
     void unload();
 
-    /*! \brief Gibt Farbe des Himmels zurück. Diese ist abhängig von Wetter,
-               Mond und Tageszeit.
-      \param -
-      \return \a const \a video::SColor& Himmelsfarbe
-    */
+    /*! \brief Gibt Farbe des Himmels zurück. Diese ist abhängig von Wetter, Mond und Tageszeit.
+     *  \param -
+     *  \return \a const \a video::SColor& Himmelsfarbe
+     */
     const video::SColor& getSkyColor() const;
 
     /*! \brief Aktualisiert Wetter.
-      \param -
-      \return -
-    */
+     *  \param -
+     *  \return -
+     */
     void update();
 
     /*! \brief Gibt die aktuelle Tageszeit in virtuellen Sekunden zurück.
-      \param -
-      \return \a f32 Uhrzeit ( Zeitformat 24h*100m*100.0s )
-    */
+     *  \param -
+     *  \return \a f32 Uhrzeit ( Zeitformat 24h*100m*100.0s )
+     */
     f32 getDayTime() const;
 
     /*! \brief Gibt die aktuelle Mondzeit in virtuellen Sekunden zurück.
-      \param -
-      \return \a f32 Mondzeit ( Zeitformat 24h*100m*100.0s )
-    */
+     *  \param -
+     *  \return \a f32 Mondzeit ( Zeitformat 24h*100m*100.0s )
+     */
     f32 getMoonPhase() const;
 
 private:
@@ -107,7 +97,5 @@ private:
     inline void clearArrays();
 
 };
-// Ende class Weather
 
 #endif
-// Ende Header-Datei Weather

@@ -5,8 +5,8 @@
 
 TimerManager& TimerManager::getInstance()
 {
-    static TimerManager _instance;
-    return _instance;
+    static TimerManager instance;
+    return instance;
 }
 
 

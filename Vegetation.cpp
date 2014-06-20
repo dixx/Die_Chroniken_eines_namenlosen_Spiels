@@ -10,11 +10,7 @@ Vegetation::Vegetation( scene::ISceneManager* smgr )
 : smgr_(smgr)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [Vegetation] nicht mehr gefunden! Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [Vegetation] nicht mehr gefunden! Abbruch." );
     meshManipulator_ = smgr_->getMeshManipulator();
     grassMesh_ = new scene::SMesh(); // same as "create", ReferenceCounter = 1
     grassNode_ = new BufferCullMeshSceneNode(
@@ -60,7 +56,8 @@ void Vegetation::create()
     smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, matrix );
     helper.validateFileExistence( "GFX/OBJECTS/3ds__flow2.3ds" );
     scene::IMesh* grass = smgr_->getMesh( "GFX/OBJECTS/3ds__flow2.3ds" );
-    if ( !grass ) return;
+    if ( !grass )
+        return;
     meshManipulator_->scale( grass, core::vector3df( 0.01f, 0.01f, 0.01f ) );
     matrix.setTranslation( core::vector3df() ); // TODO calculate correct 0-position here!
     meshManipulator_->transform( dummy, matrix );
@@ -127,8 +124,7 @@ void Vegetation::create()
     helper.pushMeshToVRAM( grassMesh_ );
 
     helper.validateFileExistence( "GFX/flow2.png" );
-    video::ITexture* gras1 =
-            smgr_->getVideoDriver()->getTexture( "GFX/flow2.png" );
+    video::ITexture* gras1 = smgr_->getVideoDriver()->getTexture( "GFX/flow2.png" );
     grassMesh_->getMeshBuffer(0)->getMaterial().setTexture( 0, gras1 );
     Logfile::getInstance().dbg( "node_pos: ", grassNode_->getAbsolutePosition() );
     Logfile::getInstance().dbg( "node_min_edge: ", grassNode_->getTransformedBoundingBox().MinEdge );

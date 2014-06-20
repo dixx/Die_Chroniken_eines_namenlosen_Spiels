@@ -1,73 +1,63 @@
 /*! \file StateMainMenu.h
-  \brief Klasse stellt Schnittstelle für dem Spiel vorgelagerte Menüs bereit.
-*/
+ *  \brief Klasse stellt Schnittstelle für dem Spiel vorgelagerte Menüs bereit.
+ */
 
 #ifndef _STATEMAINMENU_HEADER
 #define _STATEMAINMENU_HEADER
-
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
 
 #include <irrlicht.h>
 #include "GameState.h"
 
 using namespace irr;
-// Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Überblick zu behalten.
 
 /*! \class StateMainMenu StateMainMenu.h "StateMainMenu.h"
-  \brief Schnittstelle für dem Spiel vorgelagerte Menüs.
-  \note Instanzierung: `StateMainMenu* myStateMainMenu = new StateMainMenu();`
-		\n Benutzen: `myStateMainMenu->update();`
-*/
+ *  \brief Schnittstelle für dem Spiel vorgelagerte Menüs.
+ *  \note Instanzierung: `StateMainMenu* myStateMainMenu = new StateMainMenu();`
+ *        \n Benutzen: `myStateMainMenu->update();`
+ */
 class StateMainMenu : public GameState
 {
 
 public:
 
     /*! \brief Konstruktor.
-      \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
-      \return -
-    */
+     *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
+     *  \return -
+     */
     StateMainMenu( IrrlichtDevice* device );
 
     /*! \brief Destruktor.
-    */
+     */
     ~StateMainMenu();
 
     /*! \brief Aktualisiert die Startup-Phase des Status.
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     void start( const f32 frameDeltaTime );
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     void shutdown( const f32 frameDeltaTime );
 
     /*! \brief Aktualisiert den Status.
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     void update( const f32 frameDeltaTime );
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
-      \param -
-      \return -
-    */
+     *  \param -
+     *  \return -
+     */
     void draw();
 
     /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des Status.
-      \param event (\a irr::SEvent&) Event-Referenz
-      \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
-    */
+     *  \param event (\a irr::SEvent&) Event-Referenz
+     *  \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
+     */
     bool handleGuiEvents( const irr::SEvent& event );
 
 private:
@@ -141,7 +131,5 @@ private:
     void removeChildren( gui::IGUIElement* element );
 
 };
-// Ende class StateMainMenu
 
 #endif
-// Ende Header-Datei StateMainMenu

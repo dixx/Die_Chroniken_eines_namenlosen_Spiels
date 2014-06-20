@@ -27,8 +27,7 @@ StateStartup::StateStartup( IrrlichtDevice* device )
   classCounter_(0)
 {
     if ( device_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
     GenericHelperMethods::getInstance( device_ );
     createLoadingScreenImage();
@@ -87,8 +86,7 @@ void StateStartup::update( f32 frameDeltaTime )
             break;
         case 5:
             //loadingText_->setText( L"Lade Zeigefinger..." );
-            Mauspfeil::getInstance( device_ ).setCurrentArrow(
-                                Mauspfeil::MAUSPFEIL_UNSICHTBAR );
+            Mauspfeil::getInstance( device_ ).setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;
         case 6:
             //loadingText_->setText( L"Lade Zusammenstöße..." );
@@ -123,8 +121,7 @@ void StateStartup::update( f32 frameDeltaTime )
             break;
         }
         default:
-            GameStateManager::getInstance().requestNewState(
-                    GameStateManager::MAIN_MENU );
+            GameStateManager::getInstance().requestNewState( GameStateManager::MAIN_MENU );
             loadingText_->setText( L"" );
             transitTo( STOPPING );
             break;
@@ -170,16 +167,10 @@ bool StateStartup::handleGuiEvents( const irr::SEvent& event )
 
 void StateStartup::createLoadingScreenImage()
 {
-    GenericHelperMethods::getInstance().validateFileExistence(
-            "GFX/Schnellladebildschirm.jpg" );
-    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
-            "GFX/Schnellladebildschirm.jpg" );
+    GenericHelperMethods::getInstance().validateFileExistence( "GFX/Schnellladebildschirm.jpg" );
+    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture( "GFX/Schnellladebildschirm.jpg" );
     loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage(
-            core::recti(
-                    core::dimension2di( 0, 0 ),
-                    Configuration::getInstance().getScreenSize()
-            )
-    );
+            core::recti( core::dimension2di( 0, 0 ), Configuration::getInstance().getScreenSize() ) );
     loadingScreenImageFrame_->setImage( loadingScreenImage );
     loadingScreenImageFrame_->setScaleImage( true );
     loadingScreenImageFrame_->setEnabled( false );
@@ -193,17 +184,13 @@ void StateStartup::createLoadingScreenText()
     GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
     loadingText_ = device_->getGUIEnvironment()->addStaticText(
             L"",
-            core::recti(
-                    core::dimension2di( 9, screenSize.Height - 30 ),
-                    screenSize
-            )
+            core::recti( core::dimension2di( 9, screenSize.Height - 30 ), screenSize )
     );
     loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.xml" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.png" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font_readme.txt" );
-    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
-            "GFX/FONTS/Dooling_font.xml" );
+    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont( "GFX/FONTS/Dooling_font.xml" );
     loadingText_->setOverrideFont( font );
 }
 

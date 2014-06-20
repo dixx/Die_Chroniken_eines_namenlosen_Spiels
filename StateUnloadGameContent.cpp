@@ -20,8 +20,7 @@ StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
   moduleCounter_(0)
 {
     if ( device_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Entlade..." );
     createLoadingScreenImage();
     createLoadingScreenText();
@@ -87,8 +86,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
             break;
         default:
             loadingText_->setText( L"" );
-            GameStateManager::getInstance().requestNewState(
-                    GameStateManager::MAIN_MENU );
+            GameStateManager::getInstance().requestNewState( GameStateManager::MAIN_MENU );
             transitTo( STOPPING );
             break;
     }
@@ -132,16 +130,10 @@ bool StateUnloadGameContent::handleGuiEvents( const irr::SEvent& event )
 
 void StateUnloadGameContent::createLoadingScreenImage()
 {
-    GenericHelperMethods::getInstance().validateFileExistence(
-            "GFX/Spiellogo.png" );
-    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
-            "GFX/Spiellogo.png" );
+    GenericHelperMethods::getInstance().validateFileExistence( "GFX/Spiellogo.png" );
+    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture( "GFX/Spiellogo.png" );
     loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage(
-            core::recti(
-                    core::dimension2di( 0, 0 ),
-                    Configuration::getInstance().getScreenSize()
-            )
-    );
+            core::recti( core::dimension2di( 0, 0 ), Configuration::getInstance().getScreenSize() ) );
     loadingScreenImageFrame_->setImage( loadingScreenImage );
     loadingScreenImageFrame_->setScaleImage( true );
     loadingScreenImageFrame_->setEnabled( false );
@@ -155,17 +147,13 @@ void StateUnloadGameContent::createLoadingScreenText()
     GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
     loadingText_ = device_->getGUIEnvironment()->addStaticText(
             L"",
-            core::recti(
-                    core::dimension2di( 9, screenSize.Height - 30 ),
-                    screenSize
-            )
+            core::recti( core::dimension2di( 9, screenSize.Height - 30 ), screenSize )
     );
     loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.xml" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.png" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font_readme.txt" );
-    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
-            "GFX/FONTS/Dooling_font.xml" );
+    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont( "GFX/FONTS/Dooling_font.xml" );
     loadingText_->setOverrideFont( font );
 }
 
@@ -178,10 +166,8 @@ void StateUnloadGameContent::transitTo( internalState state )
         case STARTING:
             currentInternalState_ = STARTING;
             loadingScreenImageFrame_->setEnabled( true );
-            Eventreceiver::getInstance().setEventReactionActive(
-                    false, false, false );
-            Mauspfeil::getInstance().setCurrentArrow(
-                    Mauspfeil::MAUSPFEIL_UNSICHTBAR );
+            Eventreceiver::getInstance().setEventReactionActive( false, false, false );
+            Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;
         case RUNNING:
             currentInternalState_ = RUNNING;

@@ -31,8 +31,7 @@ StateMainMenu::StateMainMenu( IrrlichtDevice* device )
   currentMenu_(NONE)
 {
     if ( device == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [StateMainMenu] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "Entchen in [StateMainMenu] nicht mehr gefunden! Abbruch." );
     driver_ = device->getVideoDriver();
     guienv_ = device->getGUIEnvironment();
     menuRoot_ = guienv_->addModalScreen( guienv_->getRootGUIElement() );
@@ -83,8 +82,7 @@ void StateMainMenu::update( f32 frameDeltaTime )
 {
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
-        GameStateManager::getInstance().requestNewState(
-                            GameStateManager::SHUTDOWN );
+        GameStateManager::getInstance().requestNewState( GameStateManager::SHUTDOWN );
         transitTo( STOPPING );
     }
 #ifdef _DEBUG_MODE
@@ -92,10 +90,8 @@ void StateMainMenu::update( f32 frameDeltaTime )
         ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
         Debugwindow::getInstance().toggle();
-    Debugwindow::getInstance().addLine( L"loaded selectors: ",
-            Collision::getInstance().loadedSelectors() );
-    Debugwindow::getInstance().addLine( L"loaded nodes: ",
-            ObjectManager::getInstance().loadedNodes() );
+    Debugwindow::getInstance().addLine( L"loaded selectors: ", Collision::getInstance().loadedSelectors() );
+    Debugwindow::getInstance().addLine( L"loaded nodes: ", ObjectManager::getInstance().loadedNodes() );
 #endif
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
@@ -143,9 +139,7 @@ bool StateMainMenu::handleGuiEvents( const irr::SEvent& event )
             break;
         case gui::EGET_ELEMENT_LEFT:
             if ( callerType == gui::EGUIET_BUTTON )
-            {
                 normalizeButton( static_cast<gui::IGUIButton*>( caller ) );
-            }
             hover_ = false;
             break;
         case gui::EGET_BUTTON_CLICKED:
@@ -177,8 +171,7 @@ bool StateMainMenu::handleGuiEvents( const irr::SEvent& event )
             //printf("OutOfFocus, Caller: %i\n", this->callerID_);
             break;
         default:
-            Logfile::getInstance().writeLine( Logfile::DEBUG,
-                    "unbehandelter GUI-Event, Caller: %i\n", callerId );
+            Logfile::getInstance().writeLine( Logfile::DEBUG, "unbehandelter GUI-Event, Caller: %i\n", callerId );
             break;
     }
     return result;
@@ -198,10 +191,8 @@ void StateMainMenu::transitTo( internalState state )
             currentInternalState_ = STARTING;
             break;
         case RUNNING:
-            Eventreceiver::getInstance().setEventReactionActive(
-                    true, true, true );
-            Mauspfeil::getInstance().setCurrentArrow(
-                    Mauspfeil::MAUSPFEIL_SELECT );
+            Eventreceiver::getInstance().setEventReactionActive( true, true, true );
+            Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_SELECT );
             currentInternalState_ = RUNNING;
             break;
         case STOPPING:
@@ -230,22 +221,19 @@ void StateMainMenu::extractImagesFromCatalogue()
 {
     driver_->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, false );
     driver_->disableFeature( video::EVDF_BILINEAR_FILTER, true );
-    video::IImage* wholeImage = driver_->createImageFromFile(
-            menuScreenImageCatalogue_->getName() );
+    video::IImage* wholeImage = driver_->createImageFromFile( menuScreenImageCatalogue_->getName() );
     if ( !wholeImage )
         Logfile::getInstance().emergencyExit( "Bild nicht geladen!" );
     driver_->makeColorKeyTexture( menuScreenImageCatalogue_, COL_MAGICPINK );
     // Ausschneiden des mainMenue-Hintergrundbildes als eigene Textur
     core::dimension2du menueTextureSize = core::dimension2du( 436, 555 );
-    video::IImage* partialImage = driver_->createImage(
-            wholeImage->getColorFormat(), menueTextureSize );
+    video::IImage* partialImage = driver_->createImage( wholeImage->getColorFormat(), menueTextureSize );
     wholeImage->copyTo(
             partialImage,
             core::position2di( 0, 0 ),
             core::recti( core::position2di( 588, 212 ), menueTextureSize )
     );
-    mainMenuTexture_ = driver_->addTexture(
-            "GFX/mainMenueTexture.virtual", partialImage );
+    mainMenuTexture_ = driver_->addTexture( "GFX/mainMenueTexture.virtual", partialImage );
     partialImage->drop();
     driver_->makeColorKeyTexture( mainMenuTexture_, COL_MAGICPINK );
     wholeImage->drop();
@@ -317,8 +305,7 @@ bool StateMainMenu::mainMenuButtonHandler( s32 callerId )
             switchToMenu( NEW );
             break;
         case ID_MAIN_RESUMEBUTTON:
-            GameStateManager::getInstance().requestNewState(
-                                GameStateManager::LOAD );
+            GameStateManager::getInstance().requestNewState( GameStateManager::LOAD );
             transitTo( STOPPING );
             break;
         case ID_MAIN_LOADBUTTON:
@@ -331,8 +318,7 @@ bool StateMainMenu::mainMenuButtonHandler( s32 callerId )
             switchToMenu( ABOUT );
             break;
         case ID_MAIN_EXITBUTTON:
-            GameStateManager::getInstance().requestNewState(
-                                GameStateManager::SHUTDOWN );
+            GameStateManager::getInstance().requestNewState( GameStateManager::SHUTDOWN );
             transitTo( STOPPING );
             break;
         default:
@@ -526,8 +512,7 @@ bool StateMainMenu::aboutMenuButtonHandler( s32 callerId )
 void StateMainMenu::changeStyleOfButton( gui::IGUIButton* button)
 {
     normalizeButton( button );
-    button->setPressedImage(  menuScreenImageCatalogue_,
-            core::recti( 661, 115, 976, 204 ) );
+    button->setPressedImage(  menuScreenImageCatalogue_, core::recti( 661, 115, 976, 204 ) );
     button->setIsPushButton( false );
     button->setDrawBorder( false );
     button->setUseAlphaChannel( true );
@@ -537,24 +522,21 @@ void StateMainMenu::changeStyleOfButton( gui::IGUIButton* button)
 
 void StateMainMenu::normalizeButton( gui::IGUIButton* button )
 {
-    button->setImage( menuScreenImageCatalogue_,
-            core::recti( 654, 22, 966, 110 ) );
+    button->setImage( menuScreenImageCatalogue_, core::recti( 654, 22, 966, 110 ) );
 }
 
 
 
 void StateMainMenu::focusButton( gui::IGUIButton* button )
 {
-    button->setImage( menuScreenImageCatalogue_,
-            core::recti( 661, 115, 976, 204 ) );
+    button->setImage( menuScreenImageCatalogue_, core::recti( 661, 115, 976, 204 ) );
 }
 
 
 
 void StateMainMenu::unknownCaller( s32 callerId )
 {
-    Logfile::getInstance().writeLine( Logfile::DEBUG,
-                        "unbekannter Knopf geklickt, CallerID: ", callerId );
+    Logfile::getInstance().writeLine( Logfile::DEBUG, "unbekannter Knopf geklickt, CallerID: ", callerId );
 }
 
 
@@ -563,13 +545,11 @@ void StateMainMenu::switchToMenu( MENU menu )
 {
     if ( menu )
     {
-        Eventreceiver::getInstance().setEventReactionActive(
-                false, false, false );
+        Eventreceiver::getInstance().setEventReactionActive( false, false, false );
         hideMenu( currentMenu_ );
         currentMenu_ = menu;
         displayMenu( currentMenu_ );
-        Eventreceiver::getInstance().setEventReactionActive(
-                true, true, true );
+        Eventreceiver::getInstance().setEventReactionActive( true, true, true );
     }
 }
 

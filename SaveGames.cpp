@@ -15,15 +15,13 @@ SaveGames::SaveGames( IrrlichtDevice* device )
   CURRENT_VERSION(2)
 {
     if ( device_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [SaveGames] nicht mehr gefunden! Abbruch.");
+        Logfile::getInstance().emergencyExit( "Entchen in [SaveGames] nicht mehr gefunden! Abbruch.");
     fs_ = device_->getFileSystem();
     applicationDirectory_ = fs_->getWorkingDirectory();
     savegamesDirectory_ = applicationDirectory_ + "/SAVEGAMES";
     io::IFileList* dirTree = fs_->createFileList();
     if ( dirTree->findFile( savegamesDirectory_, true ) == -1 )
-        Logfile::getInstance().emergencyExit(
-                savegamesDirectory_ + " nicht gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( savegamesDirectory_ + " nicht gefunden! Abbruch." );
     dirTree->drop();
 }
 
@@ -66,8 +64,7 @@ const io::path& SaveGames::findNewest()
         stream = fs_->createAndOpenFile( filename );
         if ( !stream )
         {
-            Logfile::getInstance().writeLine( Logfile::INFO,
-                    "Lesen von Datei fehlgeschlagen: ", filename );
+            Logfile::getInstance().writeLine( Logfile::INFO, "Lesen von Datei fehlgeschlagen: ", filename );
             continue;
         }
         checkVersion( read<u8>( stream ) );
@@ -97,10 +94,8 @@ void SaveGames::save( const io::path& filename )
     }
     write<u8>( stream, CURRENT_VERSION );
     write<u32>( stream, getTimestamp() );
-    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK";
-    heroData += "@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0@MSCAL0.025x0.025x0.025";
-    heroData += "@POSXZ11.0x11.0";
-    heroData += "@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
+    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0";
+    heroData += "@MSCAL0.025x0.025x0.025@POSXZ11.0x11.0@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
     writeString( stream, heroData );
     writeString( stream, "Level_X" );
     stream->drop();
@@ -136,11 +131,9 @@ core::stringc SaveGames::readString( io::IReadFile* stream )
 
 
 
-template <typename T> void SaveGames::write( io::IWriteFile* stream,
-        const T& number )
+template <typename T> void SaveGames::write( io::IWriteFile* stream, const T& number )
 {
-    if ( stream->write( &number, sizeof( T ) )
-            < static_cast<s32>( sizeof( T ) ) )
+    if ( stream->write( &number, sizeof( T ) ) < static_cast<s32>( sizeof( T ) ) )
         Logfile::getInstance().emergencyExit( BROKEN_STREAM );
 }
 // explicit instantiations:
@@ -152,8 +145,7 @@ template void SaveGames::write<u32>( io::IWriteFile* stream, const u32& number )
 void SaveGames::writeString( io::IWriteFile* stream, const core::stringc& text )
 {
     u32 count = text.size() + 1; // + 1 == trailing \0
-    if ( stream->write( &count, sizeof( u32 ) )
-            < static_cast<s32>( sizeof( u32 ) ) )
+    if ( stream->write( &count, sizeof( u32 ) ) < static_cast<s32>( sizeof( u32 ) ) )
         Logfile::getInstance().emergencyExit( BROKEN_STREAM );
     if ( stream->write( text.c_str(), count ) < static_cast<s32>( count ) )
         Logfile::getInstance().emergencyExit( BROKEN_STREAM );
@@ -190,8 +182,7 @@ u32 SaveGames::getTimestamp()
     /* get seconds elapsed since 1970-01-01 */
     ITimer::RealTimeDate datetime = device_->getTimer()->getRealTimeAndDate();
     if ( datetime.Year < 1970 )
-        datetime.Year = 1970; // to avoid compatibility errors on systems with
-                              // wrong date settings
+        datetime.Year = 1970; // to avoid compatibility errors on systems with wrong date settings
     if ( datetime.IsDST )
         datetime.Hour--; // adjust hours of day with daylight saving time
     u32 m = ( datetime.Month + 9 ) % 12;

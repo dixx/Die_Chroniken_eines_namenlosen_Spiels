@@ -12,8 +12,8 @@
 
 Scripting& Scripting::getInstance()
 {
-    static Scripting _instance;
-    return _instance;
+    static Scripting instance;
+    return instance;
 }
 
 
@@ -23,10 +23,7 @@ void Scripting::runScriptFile( const c8* filename )
     // LUA-Scriptdatei wird geladen
     errorHandler( luaL_loadfile( luaVM_, filename ), filename );
     // geladene Scriptdatei wird ausgeführt
-    errorHandler(
-            lua_pcall( luaVM_, NO_ARGS, NO_RETURN_VALUE, NO_ERROR_CALLBACK ),
-            "runScriptFile()"
-    );
+    errorHandler( lua_pcall( luaVM_, NO_ARGS, NO_RETURN_VALUE, NO_ERROR_CALLBACK ), "runScriptFile()" );
 }
 
 
@@ -44,9 +41,7 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
         lua_close( luaVM_ );
         luaVM_ = 0;
         Logfile::getInstance().emergencyExit(
-                "[Script-VM]: LUA_LOADER::getObjectDataFromScript() hat kein" \
-                " Table geliefert! Abbruch."
-        );
+                "[Script-VM]: LUA_LOADER::getObjectDataFromScript() hat kein Table geliefert! Abbruch." );
     }
     core::stringc entry = "";
     core::stringc data = "";
@@ -117,14 +112,12 @@ Scripting::Scripting()
     //luaVM_ = lua_open();
     luaVM_ = luaL_newstate();
     if ( !luaVM_ )
-        Logfile::getInstance().emergencyExit(
-                "LUA Script-VM konnte nicht gestartet werden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "LUA Script-VM konnte nicht gestartet werden! Abbruch." );
     luaL_openlibs( luaVM_ );  // LUA-Libs werden geladen
     addLuaSearchPath( "/SCRIPTS/" );  // Suchpfad für Scriptdateien in LUA
     runScriptFile( "SCRIPTS/LUA_LOADER.LUA" );
     Logfile::getInstance().writeLine( Logfile::INFO, "Script-VM gestartet." );
-    Logfile::getInstance().writeLine( Logfile::DETAIL, "    Version: ",
-            LUA_VERSION );
+    Logfile::getInstance().writeLine( Logfile::DETAIL, "    Version: ", LUA_VERSION );
 }
 
 
@@ -137,8 +130,7 @@ Scripting::~Scripting()
         lua_close( luaVM_ );
         luaVM_ = 0;
     }
-    Logfile::getInstance().writeLine( Logfile::INFO,
-            "Script-VM normal beendet." );
+    Logfile::getInstance().writeLine( Logfile::INFO, "Script-VM normal beendet." );
 }
 
 
@@ -208,16 +200,10 @@ void Scripting::errorHandler( const s32 errorCode, const c8* errorMessage )
                 completeErrorMessage += '!';
                 break;
         }
-        Logfile::getInstance().writeLine(
-                Logfile::INFO, "[Script-VM]: ", completeErrorMessage.c_str() );
-        Logfile::getInstance().writeLine(
-                Logfile::INFO,
-                "[Script-VM]: ",
-                lua_tolstring( luaVM_, -1, 0 )
-        );
+        Logfile::getInstance().writeLine( Logfile::INFO, "[Script-VM]: ", completeErrorMessage.c_str() );
+        Logfile::getInstance().writeLine( Logfile::INFO, "[Script-VM]: ", lua_tolstring( luaVM_, -1, 0 ) );
         lua_pop( luaVM_, 1 );
-        Logfile::getInstance().writeLine(
-                Logfile::INFO, "[Script-VM]: ", stackDump() );
+        Logfile::getInstance().writeLine( Logfile::INFO, "[Script-VM]: ", stackDump() );
         lua_close( luaVM_ );
         luaVM_ = 0;
         Logfile::getInstance().emergencyExit( "[Script-VM]: Abbruch." );

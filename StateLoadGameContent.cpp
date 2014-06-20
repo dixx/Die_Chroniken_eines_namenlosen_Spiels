@@ -20,8 +20,7 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
   moduleCounter_(0)
 {
     if ( device_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
     createLoadingScreenImage();
     createLoadingScreenText();
@@ -66,13 +65,11 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             break;
         case 3:
             loadingText_->setText( L"Lade feste Dinge..." );
-            ObjectManager::getInstance().loadSolids(
-                    ( levelName_ + ".solids" ).c_str() );
+            ObjectManager::getInstance().loadSolids( ( levelName_ + ".solids" ).c_str() );
             break;
         case 4:
             loadingText_->setText( L"Lade zappelnde Dinge..." );
-            ObjectManager::getInstance().loadNPCs(
-                    ( levelName_ + ".npcs" ).c_str() );
+            ObjectManager::getInstance().loadNPCs( ( levelName_ + ".npcs" ).c_str() );
             break;
         case 5:
             loadingText_->setText( L"Lade Würfelmaschine..." );
@@ -84,13 +81,11 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             break;
         case 7:
             loadingText_->setText( L"Lade Augen..." );
-            Camera::getInstance().lockToNode(
-                    Hero::getInstance().current()->nodeInterface() );
+            Camera::getInstance().lockToNode( Hero::getInstance().current()->nodeInterface() );
             break;
         default:
             loadingText_->setText( L"" );
-            GameStateManager::getInstance().requestNewState(
-                    GameStateManager::GAME );
+            GameStateManager::getInstance().requestNewState( GameStateManager::GAME );
             transitTo( STOPPING );
             break;
     }
@@ -134,16 +129,10 @@ bool StateLoadGameContent::handleGuiEvents( const irr::SEvent& event )
 
 void StateLoadGameContent::createLoadingScreenImage()
 {
-    GenericHelperMethods::getInstance().validateFileExistence(
-            "GFX/Spiellogo.png" );
-    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture(
-            "GFX/Spiellogo.png" );
+    GenericHelperMethods::getInstance().validateFileExistence( "GFX/Spiellogo.png" );
+    video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture( "GFX/Spiellogo.png" );
     loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage(
-            core::recti(
-                    core::dimension2di( 0, 0 ),
-                    Configuration::getInstance().getScreenSize()
-            )
-    );
+            core::recti( core::dimension2di( 0, 0 ), Configuration::getInstance().getScreenSize() ) );
     loadingScreenImageFrame_->setImage( loadingScreenImage );
     loadingScreenImageFrame_->setScaleImage( true );
     loadingScreenImageFrame_->setEnabled( false );
@@ -157,17 +146,13 @@ void StateLoadGameContent::createLoadingScreenText()
     GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
     loadingText_ = device_->getGUIEnvironment()->addStaticText(
             L"",
-            core::recti(
-                    core::dimension2di( 9, screenSize.Height - 30 ),
-                    screenSize
-            )
+            core::recti( core::dimension2di( 9, screenSize.Height - 30 ), screenSize )
     );
     loadingText_->setOverrideColor( video::SColor( 255, 128, 64, 64) );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.xml" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.png" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font_readme.txt" );
-    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont(
-            "GFX/FONTS/Dooling_font.xml" );
+    gui::IGUIFont* font = device_->getGUIEnvironment()->getFont( "GFX/FONTS/Dooling_font.xml" );
     loadingText_->setOverrideFont( font );
 }
 
@@ -179,10 +164,8 @@ void StateLoadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            Eventreceiver::getInstance().setEventReactionActive(
-                    false, false, false );
-            Mauspfeil::getInstance().setCurrentArrow(
-                    Mauspfeil::MAUSPFEIL_UNSICHTBAR );
+            Eventreceiver::getInstance().setEventReactionActive( false, false, false );
+            Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             loadingScreenImageFrame_->setEnabled( true );
             break;
         case RUNNING:

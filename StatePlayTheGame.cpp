@@ -19,8 +19,7 @@ StatePlayTheGame::StatePlayTheGame( IrrlichtDevice* device )
   device_(device)
 {
     if ( device_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [StatePlayTheGame] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "Entchen in [StatePlayTheGame] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Die Chroniken eines namenlosen Spiels" );
     transitTo( STARTING );
 }
@@ -48,15 +47,13 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
     checkInputForGame( frameDeltaTime );
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
-        GameStateManager::getInstance().requestNewState(
-                GameStateManager::UNLOAD );
+        GameStateManager::getInstance().requestNewState( GameStateManager::UNLOAD );
         transitTo( STOPPING );
     }
 #ifdef _DEBUG_MODE
     if ( Eventreceiver::getInstance().hasKeyJustBeenPressedDown( KEY_F1 ) )
         Debugwindow::getInstance().toggle();
-    Debugwindow::getInstance().addLine( L"Dreiecke: ",
-            device_->getVideoDriver()->getPrimitiveCountDrawn() );
+    Debugwindow::getInstance().addLine( L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
 #endif
     Weather::getInstance().update();
     Ground::getInstance().update();
@@ -78,8 +75,7 @@ void StatePlayTheGame::shutdown( f32 frameDeltaTime )
 
 void StatePlayTheGame::draw()
 {
-    device_->getVideoDriver()->beginScene( true, true,
-            Weather::getInstance().getSkyColor() );
+    device_->getVideoDriver()->beginScene( true, true, Weather::getInstance().getSkyColor() );
     device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
 #ifdef _DEBUG_MODE
@@ -113,10 +109,8 @@ void StatePlayTheGame::transitTo( internalState state )
             break;
         case RUNNING:
             currentInternalState_ = RUNNING;
-            Eventreceiver::getInstance().setEventReactionActive(
-                    true, true, true );
-            Mauspfeil::getInstance().setCurrentArrow(
-                    Mauspfeil::MAUSPFEIL_SELECT );
+            Eventreceiver::getInstance().setEventReactionActive( true, true, true );
+            Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_SELECT );
             break;
         case STOPPING:
             currentInternalState_ = STOPPING;
@@ -135,10 +129,8 @@ void StatePlayTheGame::checkInputForGame( f32 frameDeltaTime )
 #ifdef _DEBUG_MODE
     Camera& camera = Camera::getInstance();
     Hero& hero = Hero::getInstance();
-    if ( ( receiver.isKeyDown( KEY_CAPITAL )
-            && !receiver.wasKeyDown( KEY_CAPITAL ) )
-            | ( !receiver.isKeyDown( KEY_CAPITAL )
-                    && ( receiver.isShiftDown() ^ receiver.wasShiftDown() ) ) )
+    if ( ( receiver.isKeyDown( KEY_CAPITAL ) && !receiver.wasKeyDown( KEY_CAPITAL ) )
+            || ( !receiver.isKeyDown( KEY_CAPITAL ) && ( receiver.isShiftDown() ^ receiver.wasShiftDown() ) ) )
     {
         hero.current()->toggleSpeed();
         camera.toggleSpeed();
@@ -190,10 +182,8 @@ void StatePlayTheGame::checkGameSpecificInput()
     if ( receiver.isRMBDown() )
         if ( collision.isMouseIntersectingWithWorld() )
         {
-            Debugwindow::getInstance().addLine( L"name: ",
-                    collision.collisionNode->getName() );
-            Debugwindow::getInstance().addLine( L"id: ",
-                    collision.collisionNode->getID() );
+            Debugwindow::getInstance().addLine( L"name: ", collision.collisionNode->getName() );
+            Debugwindow::getInstance().addLine( L"id: ", collision.collisionNode->getID() );
         }
 #endif
     if ( receiver.isLMBDown() )

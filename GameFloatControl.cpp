@@ -12,8 +12,8 @@
 
 GameFloatControl& GameFloatControl::getInstance()
 {
-    static GameFloatControl _instance;
-    return _instance;
+    static GameFloatControl instance;
+    return instance;
 }
 
 
@@ -62,8 +62,7 @@ void GameFloatControl::run()
 void GameFloatControl::stop()
 {
     Logfile::getInstance().writeLine( Logfile::INFO, "" );
-    Logfile::getInstance().writeLine( Logfile::INFO,
-            "'Die Chroniken eines namenlosen Spiels' wurde normal beendet." );
+    Logfile::getInstance().writeLine( Logfile::INFO, "'Die Chroniken eines namenlosen Spiels' wurde normal beendet." );
 }
 
 
@@ -112,8 +111,7 @@ void GameFloatControl::createLogfile()
 
 void GameFloatControl::readConfig()
 {
-    Configuration::getInstance( device_->getFileSystem() ).readConfigFile(
-            "CONFIG.CFG" );
+    Configuration::getInstance( device_->getFileSystem() ).readConfigFile( "CONFIG.CFG" );
 }
 
 
@@ -137,10 +135,8 @@ bool GameFloatControl::createDeviceFromConfig()
     logfile.setNewFilesystem( device_->getFileSystem() );
     config.setNewFilesystem( device_->getFileSystem() );
     logfile.writeLine( Logfile::DETAIL, "3D-Entchen erfolgreich erstellt." );
-    logfile.writeLine( Logfile::DETAIL, "    Version: IrrLicht ",
-            device_->getVersion() );
-    logfile.writeLine( Logfile::DETAIL, "    Treiber: ",
-            device_->getVideoDriver()->getName() );
+    logfile.writeLine( Logfile::DETAIL, "    Version: IrrLicht ", device_->getVersion() );
+    logfile.writeLine( Logfile::DETAIL, "    Treiber: ", device_->getVideoDriver()->getName() );
     device_->getCursorControl()->setVisible( false );
     device_->getVideoDriver()->beginScene( true, false, COL_BLACK );
     device_->getVideoDriver()->endScene();
@@ -159,9 +155,7 @@ void GameFloatControl::prepareFrameDeltaTime()
 void GameFloatControl::updateFrameDeltaTime()
 {
     now_ = device_->getTimer()->getTime();
-    frameDeltaTime_ = ( now_ != then_ )
-                    ? static_cast<f32>( now_ - then_ ) * 0.001f
-                    : core::ROUNDING_ERROR_f32;
+    frameDeltaTime_ = ( now_ != then_ ) ? static_cast<f32>( now_ - then_ ) * 0.001f : core::ROUNDING_ERROR_f32;
     then_ = now_;
 }
 
@@ -171,7 +165,6 @@ void GameFloatControl::updateFrameDeltaTime()
 void GameFloatControl::printFPS()
 {
     fps_ = device_->getVideoDriver()->getFPS();
-    //if ( lastFPS_ != fps_ )
     {
         core::stringw str = L"FPS:";
         str += fps_;

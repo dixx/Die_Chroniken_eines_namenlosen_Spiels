@@ -1,34 +1,27 @@
 /*! \file GameState.h
-  \brief Klasse stellt Interface für Spiel-Stati bereit.
-*/
+ *  \brief Klasse stellt Interface für Spiel-Stati bereit.
+ */
 
 #ifndef _GAMESTATE_HEADER
 #define _GAMESTATE_HEADER
-
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
 
 #include <irrlicht.h>
 #include "GameStateManager.h"
 
 using namespace irr;
-// Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Überblick zu behalten.
 
 /*! \class GameState GameState.h "GameState.h"
-  \brief Interface für Spiel-Stati.
-  \attention Klasse hat pure virtual Methoden!
-  \note Instanzierung: niemals. Nur zum Erben gedacht.
-*/
+ *  \brief Interface für Spiel-Stati.
+ *  \attention Klasse hat pure virtual Methoden!
+ *  \note Instanzierung: niemals. Nur zum Erben gedacht.
+ */
 class GameState
 {
 
 public:
 
     /*! \brief Werte, die der momentane Status des GameState annehmen kann.
-    */
+     */
     enum internalState {
         INITIAL = 0,  //!< unzulässiger Status
         STARTING,     //!< GameState startet gerade
@@ -38,56 +31,53 @@ public:
     };
 
     /*! \brief Konstruktor.
-      \param -
-      \return -
-    */
+     *  \param -
+     *  \return -
+     */
     GameState() : currentInternalState_(INITIAL) {};
 
     /*! \brief Destruktor.
-    */
+     */
 	virtual ~GameState() {};
 
     /*! \brief Aktualisiert die Startup-Phase des Status.
-      \attention Methode ist pure virtual!
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \attention Methode ist pure virtual!
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     virtual void start( const f32 frameDeltaTime ) = 0;
 
     /*! \brief Aktualisiert den Status.
-      \attention Methode ist pure virtual!
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \attention Methode ist pure virtual!
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     virtual void update( const f32 frameDeltaTime ) = 0;
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
-      \attention Methode ist pure virtual!
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \attention Methode ist pure virtual!
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     virtual void shutdown( const f32 frameDeltaTime ) = 0;
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
-      \attention Methode ist pure virtual!
-      \param -
-      \return -
-    */
+     *  \attention Methode ist pure virtual!
+     *  \param -
+     *  \return -
+     */
     virtual void draw() = 0;
 
     /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des Status.
-      \attention Methode ist pure virtual!
-      \param event (\a irr::SEvent&) Event-Referenz
-      \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
-    */
+     *  \attention Methode ist pure virtual!
+     *  \param event (\a irr::SEvent&) Event-Referenz
+     *  \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
+     */
 	virtual bool handleGuiEvents( const irr::SEvent& event ) = 0;
 
     /*! \brief Liefert den momentanen Status des GameState.
-      \param -
-      \return \a internalState momentaner Status
+     *  \param -
+     *  \return \a internalState momentaner Status
      */
     internalState currentInternalState() { return currentInternalState_; };
 
@@ -111,7 +101,5 @@ private:
     GameState& operator=( const GameState& );
 
 };
-// Ende class GameState
 
 #endif
-// Ende Header-Datei GameState

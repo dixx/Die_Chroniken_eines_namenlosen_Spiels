@@ -10,8 +10,8 @@
 
 GameStateManager& GameStateManager::getInstance( IrrlichtDevice* device )
 {
-    static GameStateManager _instance( device );
-    return _instance;
+    static GameStateManager instance( device );
+    return instance;
 }
 
 
@@ -96,8 +96,7 @@ GameStateManager::GameStateManager( IrrlichtDevice* device )
   runningState_(NOSTATE)
 {
     if ( device_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [GameStateManager] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "Entchen in [GameStateManager] nicht mehr gefunden! Abbruch." );
     requestNewState( STARTUP );
     switchState();
 }
@@ -137,7 +136,7 @@ void GameStateManager::switchState()
             currentState_ = new StateUnloadGameContent( device_ );
             break;
         default: // SHUTDOWN
-            device_->closeDevice(); // create GameState Shutdown later
+            device_->closeDevice(); // TODO create GameState Shutdown later
             currentState_ = 0;
             break;
     }
@@ -154,8 +153,7 @@ void GameStateManager::validateRequestForStartup()
             requestedState_ = STARTUP;
             break;
         default:
-            Logfile::getInstance().emergencyExit(
-                    "Unzulässige Anforderung von GameState STARTUP! Abbruch." );
+            Logfile::getInstance().emergencyExit( "Unzulässige Anforderung von GameState STARTUP! Abbruch." );
             break;
     }
 }
@@ -171,9 +169,7 @@ void GameStateManager::validateRequestForMainMenu()
             requestedState_ = MAIN_MENU;
             break;
         default:
-            Logfile::getInstance().emergencyExit(
-                    "Unzulässige Anforderung von GameState MAIN_MENU! Abbruch."
-            );
+            Logfile::getInstance().emergencyExit( "Unzulässige Anforderung von GameState MAIN_MENU! Abbruch." );
             break;
     }
 }
@@ -188,8 +184,7 @@ void GameStateManager::validateRequestForLoad()
             requestedState_ = LOAD;
             break;
         default:
-            Logfile::getInstance().emergencyExit(
-                    "Unzulässige Anforderung von GameState LOAD! Abbruch." );
+            Logfile::getInstance().emergencyExit( "Unzulässige Anforderung von GameState LOAD! Abbruch." );
             break;
     }
 }
@@ -204,8 +199,7 @@ void GameStateManager::validateRequestForGame()
             requestedState_ = GAME;
             break;
         default:
-            Logfile::getInstance().emergencyExit(
-                    "Unzulässige Anforderung von GameState GAME! Abbruch." );
+            Logfile::getInstance().emergencyExit( "Unzulässige Anforderung von GameState GAME! Abbruch." );
             break;
     }
 }
@@ -220,8 +214,7 @@ void GameStateManager::validateRequestForUnload()
             requestedState_ = UNLOAD;
             break;
         default:
-            Logfile::getInstance().emergencyExit(
-                    "Unzulässige Anforderung von GameState UNLOAD! Abbruch." );
+            Logfile::getInstance().emergencyExit( "Unzulässige Anforderung von GameState UNLOAD! Abbruch." );
             break;
     }
 }
@@ -230,6 +223,5 @@ void GameStateManager::validateRequestForUnload()
 
 void GameStateManager::unknownStateRequested()
 {
-    Logfile::getInstance().emergencyExit(
-            "Unbekannter GameState angefordert! Abbruch." );
+    Logfile::getInstance().emergencyExit( "Unbekannter GameState angefordert! Abbruch." );
 }

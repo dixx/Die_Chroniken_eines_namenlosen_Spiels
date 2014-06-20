@@ -5,8 +5,8 @@
 
 Eventreceiver& Eventreceiver::getInstance() 
 { 
-    static Eventreceiver _instance;
-    return _instance; 
+    static Eventreceiver instance;
+    return instance;
 }
 
 
@@ -16,9 +16,9 @@ bool Eventreceiver::OnEvent( const SEvent& event )
     if ( reactOnKeys_ && event.EventType == EET_KEY_INPUT_EVENT )
     {
         KeyIsDown_[ event.KeyInput.Key ] = event.KeyInput.PressedDown;
-        ShiftIsDown_                     = event.KeyInput.Shift;
-        CtrlIsDown_                      = event.KeyInput.Control;
-        thereWasKeyEvent_                = true;
+        ShiftIsDown_ = event.KeyInput.Shift;
+        CtrlIsDown_ = event.KeyInput.Control;
+        thereWasKeyEvent_ = true;
         return true;
     } //end Keyboard-Events
     if ( event.EventType == EET_MOUSE_INPUT_EVENT )
@@ -66,8 +66,8 @@ bool Eventreceiver::OnEvent( const SEvent& event )
     {
         return GameStateManager::getInstance().handleGuiEvents( event );
     } //end GUI-Events
-    // Event konnte oder sollte nicht behandelt werden, wird nun von OS
-    // behandelt.
+
+    // Event konnte oder sollte nicht behandelt werden, wird nun von OS behandelt.
     return false;
 }
 
@@ -79,11 +79,11 @@ void Eventreceiver::setKeysLastState()
     {
         for ( u32 i = 0; i < KEY_KEY_CODES_COUNT; ++i )
             KeyLastState_[ i ] = KeyIsDown_[ i ];
-        ShiftWasDown_     = ShiftIsDown_;
-        CtrlWasDown_      = CtrlIsDown_;
-        LMBWasDown_       = LMBIsDown_;
-        MMBWasDown_       = MMBIsDown_;
-        RMBWasDown_       = RMBIsDown_;
+        ShiftWasDown_ = ShiftIsDown_;
+        CtrlWasDown_ = CtrlIsDown_;
+        LMBWasDown_ = LMBIsDown_;
+        MMBWasDown_ = MMBIsDown_;
+        RMBWasDown_ = RMBIsDown_;
         thereWasKeyEvent_ = false;
     }
     mouseWheel_ = 0.0f;
@@ -93,8 +93,7 @@ void Eventreceiver::setKeysLastState()
 
 
 
-void Eventreceiver::setEventReactionActive( bool keysActive,
-        bool mausActive, bool guiActive )
+void Eventreceiver::setEventReactionActive( bool keysActive, bool mausActive, bool guiActive )
 {
     reactOnKeys_ = keysActive;
     reactOnMouse_ = mausActive;
@@ -259,10 +258,6 @@ Eventreceiver::Eventreceiver()
   mouseY_(0),
   mouseLastY_(0),
   mouseWheel_(0.0f),
-//  ShiftIsDown_(false),
-//  ShiftWasDown_(false),
-//  CtrlIsDown_(false),
-//  CtrlWasDown_(false),
   LMBIsDown_(false),
   LMBWasDown_(false),
   MMBIsDown_(false),
@@ -270,7 +265,6 @@ Eventreceiver::Eventreceiver()
   RMBIsDown_(false),
   RMBWasDown_(false),
   hover_(false)
-//  thereWasKeyEvent_(false)
 {
     resetKeyStates();
 }

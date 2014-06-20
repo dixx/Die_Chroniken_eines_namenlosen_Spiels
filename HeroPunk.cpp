@@ -4,13 +4,10 @@
 
 
 HeroPunk::HeroPunk( const core::stringc& punkData, scene::ISceneManager* smgr )
-: BasicHero(punkData, smgr, true)
+: BasicHero( punkData, smgr, true )
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [HeroPunk] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [HeroPunk] nicht mehr gefunden! Abbruch." );
     init();
     deleteExtractor();
 }

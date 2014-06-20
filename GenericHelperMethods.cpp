@@ -3,22 +3,19 @@
 
 
 
-GenericHelperMethods& GenericHelperMethods::getInstance(
-        IrrlichtDevice* device )
+GenericHelperMethods& GenericHelperMethods::getInstance( IrrlichtDevice* device )
 {
-    static GenericHelperMethods instance_( device );
-    return instance_;
+    static GenericHelperMethods instance( device );
+    return instance;
 }
 
 
 
-void GenericHelperMethods::validateFileExistence(
-        const core::string<fschar_t>& filename ) const
+void GenericHelperMethods::validateFileExistence( const core::string<fschar_t>& filename ) const
 {
     if ( fs_->existFile( filename ) == false )
     {
-        Logfile::getInstance().write(
-                Logfile::INFO, "Datei nicht gefunden: " );
+        Logfile::getInstance().write( Logfile::INFO, "Datei nicht gefunden: " );
         Logfile::getInstance().emergencyExit( filename );
     }
 }
@@ -44,15 +41,11 @@ void GenericHelperMethods::pushMeshToVRAM( scene::IMesh* mesh )
 
 
 GenericHelperMethods::GenericHelperMethods( IrrlichtDevice* device )
-: bufferCount_(0), buffer_(0)
+: bufferCount_(0),
+  buffer_(0)
 {
     if ( device == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [GenericHelperMethods] nicht mehr gefunden! " \
-                "Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "Entchen in [GenericHelperMethods] nicht mehr gefunden! Abbruch." );
 	fs_ = device->getFileSystem();
 }
 

@@ -6,18 +6,16 @@
 
 Hero& Hero::getInstance( scene::ISceneManager* sceneManager )
 {
-    static Hero _instance( sceneManager );
-    return _instance;
+    static Hero instance( sceneManager );
+    return instance;
 }
 
 
 
 void Hero::load()
 {
-    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK";
-    heroData += "@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0@MSCAL0.025x0.025x0.025";
-    heroData += "@POSXZ11.0x11.0";
-    heroData += "@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
+    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0";
+    heroData += "@MSCAL0.025x0.025x0.025@POSXZ11.0x11.0@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
     hero_ = new HeroPunk( heroData, smgr_ );
 }
 
@@ -47,8 +45,7 @@ Hero::Hero( scene::ISceneManager* sceneManager )
   hero_(0)
 {
     if ( smgr_ == 0 )
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [Hero] nicht mehr gefunden! Abbruch." );
+        Logfile::getInstance().emergencyExit( "SceneManager in [Hero] nicht mehr gefunden! Abbruch." );
 }
 
 

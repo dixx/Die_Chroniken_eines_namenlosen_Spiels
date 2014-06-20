@@ -1,15 +1,9 @@
 /*! \file GameStateManager.h
-  \brief Klasse (Singleton) stellt Schnittstelle für Zugriff auf die
-         verschiedenen Stati des Spiels bereit.
-*/
+ *  \brief Klasse (Singleton) stellt Schnittstelle für Zugriff auf die verschiedenen Stati des Spiels bereit.
+ */
 
 #ifndef _GAMESTATEMANAGER_HEADER
 #define _GAMESTATEMANAGER_HEADER
-
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
 
 #include <irrlicht.h>
 #include "GameState.h"
@@ -17,25 +11,22 @@
 class GameState; // forward declaration
 
 using namespace irr;
-// Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Überblick zu behalten.
 
 /*! \class GameStateManager GameStateManager.h "GameStateManager.h"
-  \brief  Schnittstelle für Zugriff auf die verschiedenen Stati des Spiels
-  \attention Klasse ist `Singleton`.
-  \note Instanzierung: `GameStateManager& myGameStateManager =
-        GameStateManager::getInstance();`
-        \n Oder: `GameStateManager::getInstance();`
-        \n Benutzen: `myGameStateManager.update();`
-        \n Oder: `GameStateManager::getInstance().draw();`
-*/
+ *  \brief  Schnittstelle für Zugriff auf die verschiedenen Stati des Spiels
+ *  \attention Klasse ist `Singleton`.
+ *  \note Instanzierung: `GameStateManager& myGameStateManager = GameStateManager::getInstance();`
+ *        \n Oder: `GameStateManager::getInstance();`
+ *        \n Benutzen: `myGameStateManager.update();`
+ *        \n Oder: `GameStateManager::getInstance().draw();`
+ */
 class GameStateManager
 {
 
 public:
 
     /*! \brief Die verschiedenen Stati, die das Spiel annehmen kann
-    */
+     */
 	enum State {
 	    NOSTATE = 0,  //!< Unzulässiger GameState
 	    STARTUP,      //!< Initialisieren des Spiels
@@ -49,37 +40,35 @@ public:
 	};
 
     /*! \brief Ersatz für den Konstruktor.
-
-      Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
-      \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
-      \return Referenz auf die einzige Instanz dieser Klasse
-	*/
+     *
+     *  Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung.
+     *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
+     *  \return Referenz auf die einzige Instanz dieser Klasse
+	 */
     static GameStateManager& getInstance( IrrlichtDevice* device = 0 );
 
     /*! \brief Aktualisiert den momentan aktiven Status.
-      \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in
-             Sekunden
-      \return -
-    */
+     *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
+     *  \return -
+     */
     void update( const f32 frameDeltaTime );
 
     /*! \brief Zeichnet den momentan aktiven Status auf den Bildschirm.
-      \param -
-      \return -
-    */
+     *  \param -
+     *  \return -
+     */
     void draw();
 
-    /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des momentan
-               aktiven Status.
-      \param event (\a irr::SEvent&) Event-Referenz
-      \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
-    */
+    /*! \brief Erweiterung für Eventreceiver, behandelt GUI-Events des momentan aktiven Status.
+     *  \param event (\a irr::SEvent&) Event-Referenz
+     *  \return `true` wenn GUI-Event behandelt wurde, ansonsten `false`
+     */
     bool handleGuiEvents( const irr::SEvent& event );
 
     /*! \brief Fragt Wechsel zu einem neuen Spiel-State an.
-      \param desiredState (\a State) zu aktivierender Spiel-State
-      \return -
-    */
+     *  \param desiredState (\a State) zu aktivierender Spiel-State
+     *  \return -
+     */
 	void requestNewState( State desiredState );
 
 private:
@@ -103,7 +92,5 @@ private:
     inline void unknownStateRequested();
 
 };
-// Ende class GameStateManager
 
 #endif
-// Ende Header-Datei GameStateManager

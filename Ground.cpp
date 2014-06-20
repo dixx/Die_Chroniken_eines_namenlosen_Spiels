@@ -8,21 +8,22 @@
 #include "Scripting.h"
 #include "TimerManager.h"
 #ifdef _DEBUG_MODE
-    #include "Debugwindow.h"
+#include "Debugwindow.h"
 #endif
 
 
 
 Ground& Ground::getInstance( IrrlichtDevice* device )
 {
-    static Ground _instance( device );
-    return _instance;
+    static Ground instance( device );
+    return instance;
 }
 
 
 
 void Ground::load( const char* mapfilename )
 {
+    Logfile& logfile = Logfile::getInstance();
     core::array<core::stringc> tileList;
     u32 position = 0;
     s32 tileX = 0;
@@ -30,14 +31,12 @@ void Ground::load( const char* mapfilename )
 
     // Kartenteile-Rohdaten laden
     GenericHelperMethods::getInstance().validateFileExistence( mapfilename );
-    Scripting::getInstance().getObjectDataFromScript(
-            mapfilename ).split( tileList, "\n" );
+    Scripting::getInstance().getObjectDataFromScript( mapfilename ).split( tileList, "\n" );
 
     // berechne Grid-Größe, prüfe Positionen auf Gültigkeit
     for ( register u32 i = 0; i < tileList.size(); ++i )
     {
-        ObjectParamsExtractor* extractor = new ObjectParamsExtractor(
-                tileList[ i ] );
+        ObjectParamsExtractor* extractor = new ObjectParamsExtractor( tileList[ i ] );
         if ( extractor->tryToExtractValue( "POSXZ", "x", 0 ) )
             tileX = core::strtol10( extractor->getExtractedValue().c_str() );
         else
@@ -73,18 +72,11 @@ u32 now = device_->getTimer()->getRealTime();
             delete tile;
             clearArrays();
             TimerManager::getInstance().removeTimer( updateTimer_ );
-            Logfile::getInstance().emergencyExit(
-                    "Kartenteil konnte nicht erzeugt werden! Abbruch." );
+            logfile.emergencyExit( "Kartenteil konnte nicht erzeugt werden! Abbruch." );
         }
         position = tile->getX() + tile->getZ() * gridWidth_;
-        maxHeight_ = core::max_(
-                maxHeight_,
-                tile->getNode()->getTransformedBoundingBox().MaxEdge.Y
-        );
-        minHeight_ = core::min_(
-                minHeight_,
-                tile->getNode()->getTransformedBoundingBox().MinEdge.Y
-        );
+        maxHeight_ = core::max_( maxHeight_, tile->getNode()->getTransformedBoundingBox().MaxEdge.Y );
+        minHeight_ = core::min_( minHeight_, tile->getNode()->getTransformedBoundingBox().MinEdge.Y );
         mapTiles_[ position ] = tile;
     }
 #ifdef _DEBUG_MODE
@@ -93,7 +85,7 @@ u32 now = device_->getTimer()->getRealTime();
     logText += " Kartenteile in ";
     logText += device_->getTimer()->getRealTime() - now;
     logText += "ms erstellt.";
-    Logfile::getInstance().writeLine( Logfile::DETAIL, logText.c_str() );
+    logfile.writeLine( Logfile::DETAIL, logText.c_str() );
 #endif
     tileList.clear();
     // einmal updaten, um Held setzen zu können
@@ -104,9 +96,9 @@ u32 now = device_->getTimer()->getRealTime();
     // aktualisiert wird (Workaround für "Held steht anfangs im Leeren")
     updateTimer_->tick( updateTimer_->getMaxValue() - 0.01f );
 #ifdef _DEBUG_MODE
-Logfile::getInstance().writeLine( Logfile::DEBUG, "TerrainMinY: ", minHeight_ );
-Logfile::getInstance().writeLine( Logfile::DEBUG, "TerrainMaxY: ", maxHeight_ );
-Logfile::getInstance().writeLine( Logfile::DEBUG, "Welt erstellt." );
+logfile.writeLine( Logfile::DEBUG, "TerrainMinY: ", minHeight_ );
+logfile.writeLine( Logfile::DEBUG, "TerrainMaxY: ", maxHeight_ );
+logfile.writeLine( Logfile::DEBUG, "Welt erstellt." );
 #endif
 }
 
@@ -131,8 +123,7 @@ void Ground::update()
         s32 sumX = 0;
         s32 sumZ = 0;
         s32 pos  = 0;
-        core::vector3df camPos =
-                smgr_->getActiveCamera()->getAbsolutePosition();
+        core::vector3df camPos = smgr_->getActiveCamera()->getAbsolutePosition();
         updateSectorX_ = core::floor32( camPos.X / SECTORDIMENSION.Width );
         updateSectorZ_ = core::floor32( camPos.Z / SECTORDIMENSION.Height );
         ObjectManager& objectManager = ObjectManager::getInstance();
@@ -163,16 +154,14 @@ void Ground::update()
                 else
                 {
                     if ( mapTiles_[ pos ]->getNode()->isVisible() )
-                        objectManager.removeObjectFromAreaOfView(
-                                mapTiles_[ pos ] );
+                        objectManager.removeObjectFromAreaOfView( mapTiles_[ pos ] );
                 }
             }
         }
         updateTimer_->restart();
     }
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine(
-            L"sector: ", updateSectorX_, updateSectorZ_ );
+    Debugwindow::getInstance().addLine( L"sector: ", updateSectorX_, updateSectorZ_ );
     Debugwindow::getInstance().addLine( L"visSectors: ", visibleNodeCount_ );
 #endif
 }
@@ -182,32 +171,23 @@ void Ground::update()
 f32 Ground::getHeight( const f32 x, const f32 z )
 {
     ray_ = core::line3df( x, maxHeight_ + 1.0f, z, x, minHeight_ - 1.0f, z );
-    if ( Collision::getInstance().isRayIntersectingWithWorld( ray_,
-            ObjectManager::getInstance().walkableNodes ) )
-    {
+    if ( Collision::getInstance().isRayIntersectingWithWorld( ray_, ObjectManager::getInstance().walkableNodes ) )
         return Collision::getInstance().collisionPoint.Y;
-    }
     else
-    {
         return maxHeight_;
-    }
 }
 
 
 
-core::vector3df& Ground::getHeightFromPosition(
-        const core::vector3df& position, f32 heightOffset )
+core::vector3df& Ground::getHeightFromPosition( const core::vector3df& position, f32 heightOffset )
 {
     ray_ = core::line3df(
             position.X, position.Y + heightOffset, position.Z,
             position.X,         minHeight_ - 1.0f, position.Z
     );
     endPosition_ = core::vector3df( position.X, maxHeight_, position.Z );
-    if ( Collision::getInstance().isRayIntersectingWithWorld( ray_,
-            ObjectManager::getInstance().walkableNodes ) )
-    {
+    if ( Collision::getInstance().isRayIntersectingWithWorld( ray_, ObjectManager::getInstance().walkableNodes ) )
         endPosition_ = Collision::getInstance().collisionPoint;
-    }
     return endPosition_;
 }
 
@@ -216,36 +196,27 @@ core::vector3df& Ground::getHeightFromPosition(
 f32 Ground::getHeightRanged( const f32 x, const f32 z )
 {
     ray_ = core::line3df( x, maxHeight_ + 1.0f, z, x, minHeight_ - 1.0f, z );
-    if ( Collision::getInstance().isRayIntersectingWithWalkableNodesAroundHero(
-            ray_ ) )
 //        if ( Collision::getInstance().isRayIntersectingWithWorld( this->ray,
 //                ObjectManager::getInstance().walkableNodesInRange ) )
-    {
+    if ( Collision::getInstance().isRayIntersectingWithWalkableNodesAroundHero( ray_ ) )
         return Collision::getInstance().collisionPoint.Y;
-    }
     else
-    {
         return maxHeight_;
-    }
 }
 
 
 
-core::vector3df& Ground::getHeightFromPositionRanged(
-        const core::vector3df& position, f32 heightOffset )
+core::vector3df& Ground::getHeightFromPositionRanged( const core::vector3df& position, f32 heightOffset )
 {
     ray_ = core::line3df(
             position.X, position.Y + heightOffset, position.Z,
             position.X,         minHeight_ - 1.0f, position.Z
     );
     endPosition_ = core::vector3df( position.X, maxHeight_, position.Z );
-    if ( Collision::getInstance().isRayIntersectingWithWalkableNodesAroundHero(
-            ray_ ) )
 //    if ( Collision::getInstance().isRayIntersectingWithWorld( this->ray,
 //            ObjectManager::getInstance().walkableNodesInRange ) )
-    {
+    if ( Collision::getInstance().isRayIntersectingWithWalkableNodesAroundHero( ray_ ) )
         endPosition_ = Collision::getInstance().collisionPoint;
-    }
     return endPosition_;
 }
 
@@ -316,10 +287,7 @@ Ground::Ground( IrrlichtDevice* device )
   endPosition_(VEC_3DF_NULL)
 {
     if ( device_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [Ground] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "Entchen in [Ground] nicht mehr gefunden! Abbruch." );
     smgr_ = device_->getSceneManager();
     mapTiles_.clear();
     updateTimer_ = TimerManager::getInstance().createTimer( 0.9f );
@@ -358,8 +326,7 @@ void Ground::clearArrays()
 
 
 
-void Ground::exitWithLogEntry( const core::stringc& message,
-        const char* affectedFile )
+void Ground::exitWithLogEntry( const core::stringc& message, const char* affectedFile )
 {
     clearArrays();
     TimerManager::getInstance().removeTimer( updateTimer_ );

@@ -7,20 +7,12 @@
 
 
 
-BasicStaticObject::BasicStaticObject(
-        const core::stringc& objectData,
-        scene::ISceneManager* smgr,
-        bool isParent
-)
-: Basic3DObject(objectData, smgr, true),
+BasicStaticObject::BasicStaticObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
+: Basic3DObject( objectData, smgr, true ),
   node_(0)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [BasicStaticObject] nicht mehr gefunden! Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [BasicStaticObject] nicht mehr gefunden! Abbruch." );
     init();
     if ( !isParent )
         deleteExtractor();
@@ -92,11 +84,9 @@ scene::IMesh* BasicStaticObject::loadMesh()
         }
         else
         {
-            GenericHelperMethods::getInstance().validateFileExistence(
-                    meshFileName );
+            GenericHelperMethods::getInstance().validateFileExistence( meshFileName );
             scene::IMesh* dummyMesh = smgr_->getMesh( meshFileName );
-            mesh = smgr_->getMeshManipulator()->createMeshCopy(
-                    dummyMesh ); // TODO test if you can remove this part!
+            mesh = smgr_->getMeshManipulator()->createMeshCopy( dummyMesh ); // TODO test if you can remove this part!
             smgr_->getMeshCache()->removeMesh( dummyMesh );
         }
     }

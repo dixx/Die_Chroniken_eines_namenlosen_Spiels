@@ -1,14 +1,9 @@
 /*! \file BufferCullMeshSceneNode.h
-  \brief Ableitung von IMeshSceneNode, mit Culling per MeshBuffer.
-*/
+ *  \brief Ableitung von IMeshSceneNode, mit Culling per MeshBuffer.
+ */
 
 #ifndef _BUFFERCULLMESHSCENENODE_HEADER
 #define _BUFFERCULLMESHSCENENODE_HEADER
-
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
 
 #include <irrlicht.h>
 #include <CShadowVolumeSceneNode.h>
@@ -16,10 +11,9 @@
 
 using namespace irr;
 
-/*! \class BufferCullMeshSceneNode BufferCullMeshSceneNode.h
-           "BufferCullMeshSceneNode.h"
-  \brief  Ableitung von IMeshSceneNode, mit Culling per MeshBuffer.
-*/
+/*! \class BufferCullMeshSceneNode BufferCullMeshSceneNode.h "BufferCullMeshSceneNode.h"
+ *  \brief  Ableitung von IMeshSceneNode, mit Culling per MeshBuffer.
+ */
 class BufferCullMeshSceneNode : public scene::IMeshSceneNode
 {
 
@@ -127,7 +121,5 @@ protected:
 //    s32 validatorEnd;
 
 };
-// Ende class BufferCullMeshSceneNode
 
 #endif
-// Ende header-Datei BufferCullMeshSceneNode

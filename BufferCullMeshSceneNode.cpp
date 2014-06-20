@@ -11,7 +11,7 @@ BufferCullMeshSceneNode::BufferCullMeshSceneNode(
         const core::vector3df& rotation,
 		const core::vector3df& scale
 )
-: IMeshSceneNode(parent, mgr, id, position, rotation, scale),
+: IMeshSceneNode( parent, mgr, id, position, rotation, scale ),
   Mesh(0),
   PassCount(0),
   ReadOnlyMaterials(false)
@@ -63,9 +63,7 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 			{
 				scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
 				video::IMaterialRenderer* renderer =
-				        mb ? driver->getMaterialRenderer(
-				                mb->getMaterial().MaterialType )
-				        : 0;
+				        mb ? driver->getMaterialRenderer( mb->getMaterial().MaterialType ) : 0;
 				if ( renderer && renderer->isTransparent() )
 					isTransparent = true;
 				else
@@ -92,8 +90,7 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 		if ( isSolid )
 			SceneManager->registerNodeForRendering( this, scene::ESNRP_SOLID );
 		if ( isTransparent )
-			SceneManager->registerNodeForRendering( this,
-			        scene::ESNRP_TRANSPARENT );
+			SceneManager->registerNodeForRendering( this, scene::ESNRP_TRANSPARENT );
 		scene::ISceneNode::OnRegisterSceneNode();
 	}
 }
@@ -105,8 +102,7 @@ void BufferCullMeshSceneNode::render()
 	video::IVideoDriver* driver = SceneManager->getVideoDriver();
 	if ( !Mesh || !driver )
 		return;
-	bool isTransparentPass =
-		SceneManager->getSceneNodeRenderPass() == scene::ESNRP_TRANSPARENT;
+	bool isTransparentPass = SceneManager->getSceneNodeRenderPass() == scene::ESNRP_TRANSPARENT;
 	++PassCount;
 	driver->setTransform( video::ETS_WORLD, AbsoluteTransformation );
 	Box = Mesh->getBoundingBox();
@@ -139,17 +135,13 @@ void BufferCullMeshSceneNode::render()
 			{
 			    R_bufbox = R_mb->getBoundingBox();
 			    AbsoluteTransformation.transformBoxEx( R_bufbox );
-                if ( !R_bufbox.intersectsWithBox( R_camBox )
-                        && !R_bufbox.isFullInside( R_camBox )
-                ) continue;
-                if ( cam->getPosition().getDistanceFrom(
-                        R_bufbox.getCenter() )
-                        > ( cam->getFarValue()
-                                + R_bufbox.getExtent().getLength() / 2
-                          )
-                ) continue;/* entfernung + halbe diagonale... sehr ungenau */
-				const video::SMaterial& material = 
-                        ReadOnlyMaterials ? R_mb->getMaterial() : Materials[i];
+                if ( !R_bufbox.intersectsWithBox( R_camBox ) && !R_bufbox.isFullInside( R_camBox ) )
+                    continue;
+                if ( cam->getPosition().getDistanceFrom( R_bufbox.getCenter() )
+                        > ( cam->getFarValue() + R_bufbox.getExtent().getLength() / 2 )
+                )
+                    continue;/* entfernung + halbe diagonale... sehr ungenau */
+				const video::SMaterial& material = ReadOnlyMaterials ? R_mb->getMaterial() : Materials[i];
 
 				R_rnd = driver->getMaterialRenderer( material.MaterialType );
 				bool transparent = ( R_rnd && R_rnd->isTransparent() );
@@ -173,31 +165,20 @@ void BufferCullMeshSceneNode::render()
 		if ( DebugDataVisible & scene::EDS_BBOX )
 			driver->draw3DBox( Box, COL_WHITE );
 		if ( DebugDataVisible & scene::EDS_BBOX_BUFFERS )
-		{
 			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
-			{
-				driver->draw3DBox(
-					Mesh->getMeshBuffer( g )->getBoundingBox(),
-					video::SColor( 255, 190, 128, 128 )
-				);
-			}
-		}
+				driver->draw3DBox( Mesh->getMeshBuffer( g )->getBoundingBox(), video::SColor( 255, 190, 128, 128 ) );
 		if ( DebugDataVisible & scene::EDS_NORMALS )
 		{
 			core::vector3df normalizedNormal;
 			const f32 DebugNormalLength =
-			        SceneManager->getParameters()->getAttributeAsFloat(
-			                scene::DEBUG_NORMAL_LENGTH );
+			        SceneManager->getParameters()->getAttributeAsFloat( scene::DEBUG_NORMAL_LENGTH );
 			const video::SColor DebugNormalColor =
-			        SceneManager->getParameters()->getAttributeAsColor(
-			                scene::DEBUG_NORMAL_COLOR );
+			        SceneManager->getParameters()->getAttributeAsColor( scene::DEBUG_NORMAL_COLOR );
 			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 			{
 				const scene::IMeshBuffer* mb = Mesh->getMeshBuffer( g );
-				const u32 vSize = video::getVertexPitchFromType(
-				        mb->getVertexType() );
-				const video::S3DVertex* v =
-				        (const video::S3DVertex*)mb->getVertices();
+				const u32 vSize = video::getVertexPitchFromType( mb->getVertexType() );
+				const video::S3DVertex* v = (const video::S3DVertex*)mb->getVertices();
 				const bool normalize = mb->getMaterial().NormalizeNormals;
 				for ( register u32 i = 0; i != mb->getVertexCount(); ++i )
 				{
@@ -219,9 +200,7 @@ void BufferCullMeshSceneNode::render()
 			m.Wireframe = true;
 			driver->setMaterial( m );
 			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
-			{
 				driver->drawMeshBuffer( Mesh->getMeshBuffer( g ) );
-			}
 		}
 	}
 }
@@ -348,8 +327,7 @@ scene::ISceneNode* BufferCullMeshSceneNode::clone( scene::ISceneNode* newParent,
 scene::IShadowVolumeSceneNode* BufferCullMeshSceneNode::addShadowVolumeSceneNode(
         const scene::IMesh* shadowMesh, s32 id, bool zfailmethod, f32 infinity )
 {
-    if ( !SceneManager->getVideoDriver()->queryFeature(
-            video::EVDF_STENCIL_BUFFER ) )
+    if ( !SceneManager->getVideoDriver()->queryFeature( video::EVDF_STENCIL_BUFFER ) )
         return 0;
     if ( !shadowMesh )
         shadowMesh = Mesh; // if null is given, use the mesh of node

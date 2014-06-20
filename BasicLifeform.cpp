@@ -9,12 +9,8 @@
 
 
 
-BasicLifeform::BasicLifeform(
-        const core::stringc& objectData,
-        scene::ISceneManager* smgr,
-        bool isParent
-)
-: Basic3DObject(objectData, smgr, true),
+BasicLifeform::BasicLifeform( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
+: Basic3DObject( objectData, smgr, true ),
   node_(0),
   isMoving_(false),
   wasMoving_(false),
@@ -28,11 +24,7 @@ BasicLifeform::BasicLifeform(
   maxJumpHeight_(0.0f)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [BasicLifeform] nicht mehr gefunden! Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [BasicLifeform] nicht mehr gefunden! Abbruch." );
     init();
     if ( !isParent )
         deleteExtractor();
@@ -74,12 +66,9 @@ void BasicLifeform::update( f32 frameDeltaTime )
             if ( collision.isObjectCollidingWithNodes( this ) )
             {
                 nextStep_ = collision.collisionDodgeVector;
-                node_->setPosition(
-                        currentPosition_ + positionOffset_ + nextStep_ );
+                node_->setPosition( currentPosition_ + positionOffset_ + nextStep_ );
                 node_->updateAbsolutePosition();
-                collision.isObjectCollidingWithNodes( this ) ?
-                        stopMovement()
-                        : updateMovement();
+                collision.isObjectCollidingWithNodes( this ) ? stopMovement() : updateMovement();
             }
             else
             {
@@ -88,8 +77,7 @@ void BasicLifeform::update( f32 frameDeltaTime )
         }
     }
     // get height every time, in case of using an elevator
-    currentPosition_ = Ground::getInstance().getHeightFromPositionRanged(
-            currentPosition_, maxJumpHeight_ );
+    currentPosition_ = Ground::getInstance().getHeightFromPositionRanged( currentPosition_, maxJumpHeight_ );
     node_->setPosition( currentPosition_ + positionOffset_ );
     node_->updateAbsolutePosition();
 }
@@ -98,8 +86,7 @@ void BasicLifeform::update( f32 frameDeltaTime )
 
 void BasicLifeform::moveTo( const core::vector3df target )
 {
-    targetPosition_ = Ground::getInstance().getHeightFromPositionRanged(
-            target, maxJumpHeight_ );
+    targetPosition_ = Ground::getInstance().getHeightFromPositionRanged( target, maxJumpHeight_ );
 }
 
 
@@ -155,8 +142,7 @@ scene::IAnimatedMesh* BasicLifeform::loadMesh()
         }
         else
         {
-            GenericHelperMethods::getInstance().validateFileExistence(
-                    meshFileName );
+            GenericHelperMethods::getInstance().validateFileExistence( meshFileName );
             mesh = smgr_->getMesh( meshFileName );
         }
     }

@@ -62,7 +62,7 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             break;
         case 2:
             loadingText_->setText( L"Lade hübsche Dinge..." );
-            ObjectManager::getInstance().loadBasicDecorations();
+            //ObjectManager::getInstance().loadBasicDecorations();
             break;
         case 3:
             loadingText_->setText( L"Lade feste Dinge..." );

@@ -5,11 +5,7 @@
 
 
 
-Basic3DObject::Basic3DObject(
-        const core::stringc& objectData,
-        scene::ISceneManager* smgr,
-        bool isParent
-)
+Basic3DObject::Basic3DObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
 : type_("<unknown>"),
   name_("<noname>"),
   objectData_(objectData),
@@ -17,11 +13,7 @@ Basic3DObject::Basic3DObject(
   smgr_(smgr)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [Basic3DObject] nicht mehr gefunden! Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [Basic3DObject] nicht mehr gefunden! Abbruch." );
     if ( objectData_.size() != 0 )
     {
         extractor_ = new ObjectParamsExtractor( objectData_ );
@@ -68,10 +60,10 @@ const core::stringc& Basic3DObject::getType() const
 
 void Basic3DObject::createLogEntry( const core::stringc& message )
 {
-    Logfile::getInstance().write( Logfile::INFO, message );
-    Logfile::getInstance().writeLine(
-            Logfile::INFO, " in Objektbeschreibung!" );
-    Logfile::getInstance().writeLine( Logfile::INFO, objectData_ );
+    Logfile& logfile = Logfile::getInstance();
+    logfile.write( Logfile::INFO, message );
+    logfile.writeLine( Logfile::INFO, " in Objektbeschreibung!" );
+    logfile.writeLine( Logfile::INFO, objectData_ );
 }
 
 
@@ -88,14 +80,11 @@ core::vector3df Basic3DObject::loadScale()
 {
     core::vector3df scale = core::vector3df( 1.0f );
     if ( extractor_->tryToExtractValue( "MSCAL", "x", 0 ) )
-        scale.X = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        scale.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MSCAL", "x", 1 ) )
-        scale.Y = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        scale.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MSCAL", "x", 2 ) )
-        scale.Z = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        scale.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
     return scale;
 }
 
@@ -105,14 +94,11 @@ core::vector3df Basic3DObject::loadOffset()
 {
     core::vector3df offset = VEC_3DF_NULL;
     if ( extractor_->tryToExtractValue( "MOFFS", "x", 0 ) )
-        offset.X = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        offset.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MOFFS", "x", 1 ) )
-        offset.Y = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        offset.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MOFFS", "x", 2 ) )
-        offset.Z = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        offset.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
     return offset;
 }
 
@@ -122,14 +108,11 @@ core::vector3df Basic3DObject::loadRotation()
 {
     core::vector3df rotation = VEC_3DF_NULL;
     if ( extractor_->tryToExtractValue( "MROTA", "x", 0 ) )
-        rotation.X = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        rotation.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MROTA", "x", 1 ) )
-        rotation.Y = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        rotation.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MROTA", "x", 2 ) )
-        rotation.Z = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        rotation.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
     return rotation;
 }
 
@@ -139,11 +122,9 @@ core::vector3df Basic3DObject::loadPosition()
 {
     core::vector3df position = VEC_3DF_NULL;
     if ( extractor_->tryToExtractValue( "POSXZ", "x", 0 ) )
-        position.X = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        position.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "POSXZ", "x", 1 ) )
-        position.Z = core::fast_atof(
-                extractor_->getExtractedValue().c_str() );
+        position.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
     return position;
 }
 
@@ -162,8 +143,7 @@ video::ITexture* Basic3DObject::loadMainTexture()
         createLogEntry( "Leerer Textur-Dateiname für Material 0" );
         return 0;
     }
-    GenericHelperMethods::getInstance().validateFileExistence(
-            textureFileName );
+    GenericHelperMethods::getInstance().validateFileExistence( textureFileName );
     return smgr_->getVideoDriver()->getTexture( textureFileName );
 }
 

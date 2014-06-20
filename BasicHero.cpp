@@ -5,19 +5,11 @@
 
 
 
-BasicHero::BasicHero(
-        const core::stringc& heroData,
-        scene::ISceneManager* smgr,
-        bool isParent
-)
-: BasicLifeform(heroData, smgr, true)
+BasicHero::BasicHero( const core::stringc& heroData, scene::ISceneManager* smgr, bool isParent )
+: BasicLifeform( heroData, smgr, true )
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [BasicHero] nicht mehr gefunden! Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [BasicHero] nicht mehr gefunden! Abbruch." );
     traceTimer_ = TimerManager::getInstance().createTimer( 0.8f );
     init();
     if ( !isParent )
@@ -36,10 +28,9 @@ BasicHero::~BasicHero()
 
 void BasicHero::moveTo( const core::vector3df target, bool isTriggered )
 {
-    if ( target.equals( currentPosition_, 0.5f ) ) // todo replace with some hero radius
+    if ( target.equals( currentPosition_, 0.5f ) ) // TODO replace with some hero radius
         return;
-    targetPosition_ = Ground::getInstance().getHeightFromPositionRanged(
-            target, maxJumpHeight_ );
+    targetPosition_ = Ground::getInstance().getHeightFromPositionRanged( target, maxJumpHeight_ );
     if ( isTriggered )
     {
         if ( !traceTimer_->isRunning() )

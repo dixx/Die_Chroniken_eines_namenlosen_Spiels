@@ -3,7 +3,8 @@
 
 
 
-DebugStatistics::DebugStatistics( IrrlichtDevice* device ) : device_(device)
+DebugStatistics::DebugStatistics( IrrlichtDevice* device )
+: device_(device)
 {
 }
 

@@ -24,8 +24,7 @@ class DebugCircle : public DebugShape
 {
 
 public:
-    DebugCircle( video::IVideoDriver* driver, core::vector3df position,
-            f32 radius );
+    DebugCircle( video::IVideoDriver* driver, core::vector3df position, f32 radius );
     ~DebugCircle();
     void draw();
     void drop();

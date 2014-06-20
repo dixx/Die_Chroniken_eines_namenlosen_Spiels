@@ -5,8 +5,8 @@
 
 Configuration& Configuration::getInstance( io::IFileSystem* fs )
 {
-    static Configuration instance_( fs );
-    return instance_;
+    static Configuration instance( fs );
+    return instance;
 }
 
 
@@ -14,12 +14,7 @@ Configuration& Configuration::getInstance( io::IFileSystem* fs )
 void Configuration::setNewFilesystem( io::IFileSystem* fs )
 {
     if ( fs == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Dateisystem in [setNewFilesystem] nicht mehr gefunden!" \
-                " Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "Dateisystem in [setNewFilesystem] nicht mehr gefunden! Abbruch." );
     fs_ = fs;
 }
 
@@ -31,8 +26,7 @@ void Configuration::readConfigFile( const c8* filename )
     if ( fs_->existFile( filename ) == false )
     {
         logfile.write( Logfile::INFO, "Konfigdatei ", filename );
-        logfile.writeLine( Logfile::INFO,
-                " existiert nicht, wird jetzt mit Standardwerten erstellt." );
+        logfile.writeLine( Logfile::INFO, " existiert nicht, wird jetzt mit Standardwerten erstellt." );
         writeConfigFile( filename );
     }
     io::IReadFile* configfile = fs_->createAndOpenFile( filename );
@@ -47,27 +41,17 @@ void Configuration::readConfigFile( const c8* filename )
     if ( configfile->read( &buffer, size ) != static_cast<s32>( size ) )
     {
         configfile->drop();
-        logfile.write(
-                Logfile::INFO,
-                "Fehler beim Lesen von Konfigdatei ",
-                filename
-        );
+        logfile.write( Logfile::INFO, "Fehler beim Lesen von Konfigdatei ", filename );
         logfile.emergencyExit( "! Buffer überschritten!" );
     }
     configfile->drop();
     configfile = 0;
     core::stringc inhalt = buffer;
-    colorDepht_ = (u16)core::strtol10(
-            getItem( inhalt, "video", "farbtiefe", "16" ).c_str() );
-    screenSizeX_ = (u16)core::strtol10(
-            getItem( inhalt, "video", "screen_x", "640" ).c_str() );
-    screenSizeY_ = (u16)core::strtol10(
-            getItem( inhalt, "video", "screen_y", "480" ).c_str() );
-    fullscreen_ = getItem(
-            inhalt, "video", "fullscreen", "false"
-    ).equals_ignore_case( "true" );
-    core::stringc rendermode = getItem(
-            inhalt, "video", "rendermode", "SOFTWARE" );
+    colorDepht_ = (u16)core::strtol10( getItem( inhalt, "video", "farbtiefe", "16" ).c_str() );
+    screenSizeX_ = (u16)core::strtol10( getItem( inhalt, "video", "screen_x", "640" ).c_str() );
+    screenSizeY_ = (u16)core::strtol10( getItem( inhalt, "video", "screen_y", "480" ).c_str() );
+    fullscreen_ = getItem( inhalt, "video", "fullscreen", "false" ).equals_ignore_case( "true" );
+    core::stringc rendermode = getItem( inhalt, "video", "rendermode", "SOFTWARE" );
     if ( rendermode.equals_ignore_case( "DIRECT3D9" ) )
         rendermode_ = video::EDT_DIRECT3D9;
     else if ( rendermode.equals_ignore_case( "DIRECT3D8" ) )
@@ -81,14 +65,10 @@ void Configuration::readConfigFile( const c8* filename )
     else if ( rendermode.equals_ignore_case( "NULL" ) )
         rendermode_ = video::EDT_NULL;
     else
-    {
         logfile.emergencyExit( "\nKein passender Treiber gewählt! Abbruch." );
-    }
-    farValue_ = core::strtof10(
-            getItem( inhalt, "video", "sichtweite", "300.0" ).c_str() );
+    farValue_ = core::strtof10( getItem( inhalt, "video", "sichtweite", "300.0" ).c_str() );
 //    printf("\nms:%f\n", core::fast_atof(
-//            this->getItem( inhalt, "input", "mouse_sensitivity", "1.0f" ).c_str() )
-//            );
+//            this->getItem( inhalt, "input", "mouse_sensitivity", "1.0f" ).c_str() ) );
 }
 
 
@@ -96,18 +76,13 @@ void Configuration::readConfigFile( const c8* filename )
 void Configuration::writeConfigFile( const c8* filename )
 {
     core::stringc inhalt = "";
-    inhalt += "##############################################################";
-    inhalt += "########\r\n#\r\n";
-    inhalt += "#  Konfig-Datei. Werte nach Belieben ändern (ausser die Bezei";
-    inhalt += "chner\r\n";
+    inhalt += "######################################################################\r\n#\r\n";
+    inhalt += "#  Konfig-Datei. Werte nach Belieben ändern (ausser die Bezeichner\r\n";
     inhalt += "#  in eckigen Klammern und jene vor dem '='),\r\n";
-    inhalt += "#  aber dann auch die Konsequenzen tragen.     ---Spass haben!";
-    inhalt += "---\r\n#\r\n";
-    inhalt += "##############################################################";
-    inhalt += "########\r\n#\r\n";
+    inhalt += "#  aber dann auch die Konsequenzen tragen.     ---Spass haben!---\r\n#\r\n";
+    inhalt += "######################################################################\r\n#\r\n";
     inhalt += "#  - Kommentare müssen in einer eigenen Zeile stehen.\r\n";
-    inhalt += "#  - ACHTUNG: '=' darf in einer Zeichenkette nicht verwendet ";
-    inhalt += "werden.\r\n";
+    inhalt += "#  - ACHTUNG: '=' darf in einer Zeichenkette nicht verwendet werden.\r\n";
     inhalt += "#    (außer natürlich in Kommentaren ;-)\r\n";
     inhalt += "#  - Bei FLOAT und INT auf Komma (den Punkt) achten.\r\n";
     inhalt += "#  - Auf Groß- und Kleinschreibung achten.\r\n";
@@ -124,8 +99,7 @@ void Configuration::writeConfigFile( const c8* filename )
     inhalt += colorDepht_;
     inhalt += "\r\nvideo.fullscreen = ";
     inhalt += ( fullscreen_ == true ) ? "true" : "false";
-    inhalt += "\r\n# modi: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), ";
-    inhalt += "BURNINGSVIDEO, NULL\r\n";
+    inhalt += "\r\n# modi: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), BURNINGSVIDEO, NULL\r\n";
     inhalt += "video.rendermode = ";
     switch ( rendermode_ )
     {
@@ -144,10 +118,8 @@ void Configuration::writeConfigFile( const c8* filename )
     io::IWriteFile* configfile = fs_->createAndWriteFile( filename );
     if ( configfile == 0 )
     {
-        Logfile::getInstance().write(
-                Logfile::INFO, "Konfigdatei ", filename );
-        Logfile::getInstance().emergencyExit(
-                " konnte nicht geöffnet werden!" );
+        Logfile::getInstance().write( Logfile::INFO, "Konfigdatei ", filename );
+        Logfile::getInstance().emergencyExit( " konnte nicht geöffnet werden!" );
     }
     configfile->write( inhalt.c_str(), inhalt.size() );
     configfile->drop();
@@ -205,11 +177,7 @@ Configuration::Configuration( io::IFileSystem* fs )
   rendermode_(video::EDT_SOFTWARE)
 {
     if ( fs_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Dateisystem in [Configuration] nicht mehr gefunden! Abbruch."
-        );
-    }
+        Logfile::getInstance().emergencyExit( "Dateisystem in [Configuration] nicht mehr gefunden! Abbruch." );
 }
 
 
@@ -221,8 +189,12 @@ Configuration::~Configuration()
 
 
 
-const core::stringc Configuration::getItem( const core::stringc& content,
-        const c8* topic, const c8* varname, const c8* origin )
+const core::stringc Configuration::getItem(
+        const core::stringc& content,
+        const c8* topic,
+        const c8* varname,
+        const c8* origin
+)
 {
     core::stringc line;
     s32 startindex = 0;
@@ -232,8 +204,7 @@ const core::stringc Configuration::getItem( const core::stringc& content,
     searchset += topic;
     searchset += '.';
     searchset += varname;
-    // startindex wird jetzt immer weiter geschoben, bis das Ende von "inhalt"
-    // erreicht ist
+    // startindex wird jetzt immer weiter geschoben, bis das Ende von "inhalt" erreicht ist
     while ( startindex < static_cast<s32>( content.size() ) )
     {
         lastindex = content.findNext( '\n', startindex + 1 );

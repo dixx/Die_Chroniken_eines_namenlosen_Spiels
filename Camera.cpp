@@ -11,8 +11,8 @@
 
 Camera& Camera::getInstance( scene::ISceneManager* sceneManager )
 {
-    static Camera _instance( sceneManager );
-    return _instance;
+    static Camera instance( sceneManager );
+    return instance;
 }
 
 
@@ -102,18 +102,14 @@ Camera::Camera( scene::ISceneManager* sceneManager )
   dummySum_(0.0f)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [Camera] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [Camera] nicht mehr gefunden! Abbruch." );
     desiredPositionOffsetHeight_ = zoomMax_;
-    // dran denken, auch Ablaufsteuerung::checkInputForGame() zu ändern
+    // dran denken, auch Ablaufsteuerung::checkInputForGame() zu ändern // TODO update comment!
     // wenn sich der speed ändert
     positionOffset_ = core::vector3df( -3.0f, zoomMax_, -3.0f );
     //this->currentPosition = map->GetStartPos() + Pos_offset;
     currentTarget_ = currentPosition_ + targetOffset_;
-    firstCameraNode_ = smgr_->addCameraSceneNode(
-            0, currentPosition_ + positionOffset_, currentTarget_, ID_KAMERA );
+    firstCameraNode_ = smgr_->addCameraSceneNode( 0, currentPosition_ + positionOffset_, currentTarget_, ID_KAMERA );
     // beim Anlegen schon geschehen:
     //this->smgr->setActiveCamera( this->firstCameraNode );
     firstCameraNode_->updateAbsolutePosition();
@@ -167,9 +163,8 @@ void Camera::liftCameraToKeepTargetVisible()
 //            this->currentPosition.X + this->positionOffset.X,
 //            this->currentPosition.Z + this->positionOffset.Z
 //    ) + 1.0f; // +1.0f damit Kamera nicht im Boden steckt
-    groundHeight_ = Ground::getInstance().getHeightFromPositionRanged(
-            currentPosition_ + positionOffset_
-    ).Y + 1.0f; // +1.0f damit Kamera nicht im Boden steckt
+    groundHeight_ = Ground::getInstance().getHeightFromPositionRanged( currentPosition_ + positionOffset_ ).Y + 1.0f;
+            // +1.0f damit Kamera nicht im Boden steckt
     if ( isZooming_ )
         dummySum_ = currentPosition_.Y + positionOffset_.Y;
     else

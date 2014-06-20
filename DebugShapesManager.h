@@ -11,8 +11,7 @@ class DebugShapesManager
 
 public:
 
-    static DebugShapesManager& getInstance(
-            video::IVideoDriver* driver = 0 );
+    static DebugShapesManager& getInstance( video::IVideoDriver* driver = 0 );
     void createCircle( core::vector3df position, f32 radius );
     void drawAll();
 

@@ -1,16 +1,21 @@
 #include "DebugShapesManager.h"
 
-DebugShapesManager& DebugShapesManager::getInstance(
-        video::IVideoDriver* driver )
+
+
+DebugShapesManager& DebugShapesManager::getInstance( video::IVideoDriver* driver )
 {
-    static DebugShapesManager instance_( driver );
-    return instance_;
+    static DebugShapesManager instance( driver );
+    return instance;
 }
+
+
 
 void DebugShapesManager::createCircle( core::vector3df position, f32 radius )
 {
     shapes_.push_back( new DebugCircle( driver_, position, radius ) );
 }
+
+
 
 void DebugShapesManager::drawAll()
 {
@@ -24,6 +29,8 @@ void DebugShapesManager::drawAll()
     shapes_.clear();
 }
 
+
+
 DebugShapesManager::DebugShapesManager( video::IVideoDriver* driver )
 : driver_(driver)
 {
@@ -35,6 +42,8 @@ DebugShapesManager::DebugShapesManager( video::IVideoDriver* driver )
     material_.Thickness = 2.0f;
     material_.Lighting = false;
 }
+
+
 
 DebugShapesManager::~DebugShapesManager()
 {

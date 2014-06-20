@@ -6,8 +6,8 @@
 
 Debugwindow& Debugwindow::getInstance( IrrlichtDevice* device ) 
 { 
-    static Debugwindow instance_( device );
-    return instance_;
+    static Debugwindow instance( device );
+    return instance;
 }
 
 
@@ -63,10 +63,7 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
   newLine_(L"\r\n")
 {
     if ( device_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "Entchen in [Debugwindow] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "Entchen in [Debugwindow] nicht mehr gefunden! Abbruch." );
     dwin_ = device_->getGUIEnvironment()->addStaticText(
         L"",
         core::recti( VEC_2DI_NULL, core::vector2di( 300, 300 ) ),

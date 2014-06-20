@@ -1,23 +1,16 @@
-/*! \file    Constants.h
-  \brief   Konstanten und Defines
-
-  Hier werden einige Konstanten und Defines definiert, die von verschiedenen
-  Stellen aus genutzt werden, vor allem für Variablen-Instanzierungen.
-*/
+/*! \file Constants.h
+ *  \brief Konstanten und Defines
+ *
+ *  Hier werden einige Konstanten und Defines definiert, die von verschiedenen Stellen aus genutzt werden, vor allem
+ *  für Variablen-Instanzierungen.
+ */
 
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
-// Linken der IRRLICHT-DLL, nur in VisualStudio nötig
-//#ifdef _IRR_WINDOWS_
-//    #pragma comment(lib, "Irrlicht.lib")
-//#endif
-
 #include <irrlicht.h>
 
 using namespace irr;
-// Die innenliegenden Namespaces "core", "video" usw. werden im Folgenden
-// immer explizit angegeben, um den Überblick zu behalten.
 
 //! @name Einige vorgewählte geometrische Größen, vorwiegend zum Instanzieren
 //! \attention Multiplikation mit Vektoren dauert länger als neu Erstellen!

@@ -10,8 +10,8 @@
 
 Collision& Collision::getInstance( scene::ISceneManager* sceneManager )
 {
-    static Collision _instance( sceneManager );
-    return _instance;
+    static Collision instance( sceneManager );
+    return instance;
 }
 
 
@@ -21,19 +21,14 @@ void Collision::addStaticMeshNodeToWorld( scene::IMeshSceneNode* node )
     // todo minimalPolysPerNode anpassen
     // DEPRECATED since 1.7.2
     //this->selector = smgr->createOctTreeTriangleSelector(
-    selector_ = smgr_->createOctreeTriangleSelector(
-            node->getMesh(),
-            node,
-            900
-    );
+    selector_ = smgr_->createOctreeTriangleSelector( node->getMesh(), node, 900 );
     node->setTriangleSelector( selector_ );
     selector_ = 0;
 }
 
 
 
-void Collision::addAnimatedMeshNodeToWorld(
-        scene::IAnimatedMeshSceneNode* node )
+void Collision::addAnimatedMeshNodeToWorld( scene::IAnimatedMeshSceneNode* node )
 {
     selector_ = smgr_->createTriangleSelector( node );
     node->setTriangleSelector( selector_ );
@@ -57,14 +52,9 @@ void Collision::removeNodeFromWorld( scene::ISceneNode* node )
 void Collision::addObjectToRangedDetection( Basic3DObject* object )
 {
     if ( object->nodeInterface()->getID() & ID_FLAG_BEGEHBAR )
-    {
-        walkableSelector_->addTriangleSelector(
-                object->nodeInterface()->getTriangleSelector() );
-    }
+        walkableSelector_->addTriangleSelector( object->nodeInterface()->getTriangleSelector() );
     if ( object->nodeInterface()->getID() & ID_FLAG_KOLLIDIERBAR )
-    {
         collidableObjects_.push_back( object );
-    }
 }
 
 
@@ -72,14 +62,10 @@ void Collision::addObjectToRangedDetection( Basic3DObject* object )
 void Collision::removeObjectFromRangedDetection( Basic3DObject* object )
 {
     if ( object->nodeInterface()->getID() & ID_FLAG_BEGEHBAR )
-    {
-        walkableSelector_->removeTriangleSelector(
-                object->nodeInterface()->getTriangleSelector() );
-    }
+        walkableSelector_->removeTriangleSelector( object->nodeInterface()->getTriangleSelector() );
     if ( object->nodeInterface()->getID() & ID_FLAG_KOLLIDIERBAR )
     {
-        for( iter_ = collidableObjects_.begin();
-                iter_ != collidableObjects_.end(); ++iter_ )
+        for( iter_ = collidableObjects_.begin(); iter_ != collidableObjects_.end(); ++iter_ )
         {
             if( *iter_ == object )
             {
@@ -92,8 +78,7 @@ void Collision::removeObjectFromRangedDetection( Basic3DObject* object )
 
 
 
-bool Collision::isRayIntersectingWithWorld( const core::line3df& ray,
-        scene::ISceneNode* rootNode )
+bool Collision::isRayIntersectingWithWorld( const core::line3df& ray, scene::ISceneNode* rootNode )
 {
     // collides smart
     collisionNode = colliman_->getSceneNodeAndCollisionPointFromRay(
@@ -109,8 +94,7 @@ bool Collision::isRayIntersectingWithWorld( const core::line3df& ray,
 
 
 
-bool Collision::isRayIntersectingWithWalkableNodesAroundHero(
-        const core::line3df& ray )
+bool Collision::isRayIntersectingWithWalkableNodesAroundHero( const core::line3df& ray )
 {
     // collides directly with the triangles
     return colliman_->getCollisionPoint(
@@ -130,8 +114,7 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
     scene::ISceneNode* objectNode = object->nodeInterface();
     f32 objectRadius = object->getCollisionRadius();
     const core::vector3df& objectCenter = objectNode->getAbsolutePosition();
-    core::aabbox3df objectBB = core::aabbox3df(
-            objectCenter - objectRadius, objectCenter + objectRadius );
+    core::aabbox3df objectBB = core::aabbox3df( objectCenter - objectRadius, objectCenter + objectRadius );
 #ifdef _DEBUG_MODE
     objectNode->setMaterialFlag( video::EMF_POINTCLOUD, false );
 #endif
@@ -140,8 +123,7 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
     f32 obstacleRadius = 0.0f;
     f32 minDistance = 0.0f;
     core::vector3df distance;
-    for( iter_ = collidableObjects_.begin(); iter_ != collidableObjects_.end();
-            ++iter_ )
+    for( iter_ = collidableObjects_.begin(); iter_ != collidableObjects_.end(); ++iter_ )
     {
         obstacle = *iter_;
         obstacleNode = obstacle->nodeInterface();
@@ -157,15 +139,13 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
             {
                 isCollision = true;
                 collisionDodgeVector = distance
-                        - core::vector3df( distance ).setLength(
-                                minDistance + 0.01f )
+                        - core::vector3df( distance ).setLength( minDistance + 0.01f )
                         + object->getNextStep();
             }
         }
         else
         {
-            if( obstacleNode->getTransformedBoundingBox().intersectsWithBox(
-                    objectBB ) )
+            if( obstacleNode->getTransformedBoundingBox().intersectsWithBox( objectBB ) )
             {
 #ifdef _DEBUG_MODE
                 objectNode->setMaterialFlag( video::EMF_POINTCLOUD, true );
@@ -180,8 +160,7 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
             Debugwindow& dw = Debugwindow::getInstance();
             dw.addLine( L"collision with: ", obstacle->getName() );
             dw.addLine( L"ObjectCollisionRadius: ", objectRadius );
-            dw.addLine( L"ObstacleCollisionRadius: ",
-                    obstacle->getCollisionRadius() );
+            dw.addLine( L"ObstacleCollisionRadius: ", obstacle->getCollisionRadius() );
 #endif
             return true;
         }
@@ -235,10 +214,7 @@ Collision::Collision( scene::ISceneManager* sceneManager )
   selector_(0)
 {
     if ( smgr_ == 0 )
-    {
-        Logfile::getInstance().emergencyExit(
-                "SceneManager in [Collision] nicht mehr gefunden! Abbruch." );
-    }
+        Logfile::getInstance().emergencyExit( "SceneManager in [Collision] nicht mehr gefunden! Abbruch." );
     colliman_ = smgr_->getSceneCollisionManager();
     walkableSelector_ = smgr_->createMetaTriangleSelector();
     collidableObjects_.clear();

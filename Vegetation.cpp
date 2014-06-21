@@ -3,24 +3,21 @@
 #include "GenericHelperMethods.h"
 #include "Logfile.h"
 #include "ObjectManager.h"
+#include "Zufall.h"
 
 
 
 Vegetation::Vegetation( scene::ISceneManager* smgr )
-: smgr_(smgr)
+: smgr_(smgr),
+  grassNode_(0)
 {
     if ( smgr_ == 0 )
         Logfile::getInstance().emergencyExit( "SceneManager in [Vegetation] nicht mehr gefunden! Abbruch." );
     meshManipulator_ = smgr_->getMeshManipulator();
     grassMesh_ = new scene::SMesh(); // same as "create", ReferenceCounter = 1
-    grassNode_ = new BufferCullMeshSceneNode(
-            grassMesh_,
-            ObjectManager::getInstance().getBaseNodeByType( "gras" ),
-            smgr_,
-            ObjectManager::getInstance().getBaseIdByType( "gras" )
-    );
-    grassNode_->setVisible( true );
-    grassNode_->setMaterialFlag(video::EMF_WIREFRAME, true);
+    scene::SMeshBuffer* buffer = new scene::SMeshBuffer();
+    grassMesh_->addMeshBuffer( buffer );
+    buffer->drop(); // is already grabbed by grassMesh_ :)
 }
 
 
@@ -43,94 +40,106 @@ Vegetation::~Vegetation()
 void Vegetation::create()
 {
     core::matrix4 matrix = core::matrix4();
-    scene::SMesh* dummy = 0;
     core::vector3df position;
     GenericHelperMethods& helper = GenericHelperMethods::getInstance();
     Ground& ground = Ground::getInstance();
+    Zufall& zufall = Zufall::getInstance();
 
-    scene::SMeshBuffer* buffer = new scene::SMeshBuffer();
-    grassMesh_->addMeshBuffer( buffer );
-    buffer->drop(); // is already grabbed by grassMesh_ :)
-
-
+    // create the master grass patch
     smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, matrix );
     helper.validateFileExistence( "GFX/OBJECTS/3ds__flow2.3ds" );
     scene::IMesh* grass = smgr_->getMesh( "GFX/OBJECTS/3ds__flow2.3ds" );
     if ( !grass )
+    {
+        Logfile::getInstance().writeLine( Logfile::INFO, "Gras konnte nicht geladen werden!" );
         return;
-    meshManipulator_->scale( grass, core::vector3df( 0.01f, 0.01f, 0.01f ) );
-    matrix.setTranslation( core::vector3df() ); // TODO calculate correct 0-position here!
-    meshManipulator_->transform( dummy, matrix );
+    }
+    meshManipulator_->scale( grass, core::vector3df( 0.0015f, 0.0015f, 0.0015f ) ); // TODO calculate correct size!
+    //matrix.setTranslation( core::vector3df() ); // TODO calculate correct 0-position here!
+    //meshManipulator_->transform( grass, matrix );
     helper.pushMeshToVRAM( grass );
-    Logfile::getInstance().dbg( "scale: ", grass->getBoundingBox().getExtent() );
-    Logfile::getInstance().dbg( "min_edge: ", grass->getBoundingBox().MinEdge );
-    Logfile::getInstance().dbg( "max_edge: ", grass->getBoundingBox().MaxEdge );
-
-    // create a lot of grass patches
-    position = core::vector3df( 10.0f, 0.0f, 10.0f ); // randomize intelligent!
-    position = ground.getHeightFromPosition( position );
-    matrix = core::matrix4();
-    dummy = meshManipulator_->createMeshCopy( grass );
-    Logfile::getInstance().dbg( "copied_buffer_count: ", dummy->getMeshBuffer(0)->getVertexCount() );
-    matrix.setTranslation( position );
-    meshManipulator_->transform( dummy, matrix );
-    Logfile::getInstance().dbg( "copied_min_edge: ", dummy->getBoundingBox().MinEdge );
-    // add grass patch to the overall grass mesh, to the right buffer
-//    // Best Fit
-//    bool addbuffer = true;
-//    scene::SMeshBuffer *hbuf;
-//    for ( u32 b_id = 0; b_id < grasmesh->getMeshBufferCount(); ++b_id )
-//    {
-//        // search all available buffers
-//        hbuf = (scene::SMeshBuffer*)grasmesh->getMeshBuffer( b_id );
-//        if ( hbuf->Material != buffer->Material )
-//            continue;  // material different
-//        if ( hbuf->getBoundingBox().getCenter().getDistanceFrom(
-//                buffer->getBoundingBox().getCenter() ) > 2000.f )
-//            continue;  // too far away for grouping
-//        if ( hbuf->getVertexCount() >= (
-//                //65535 - buffer->getVertexCount() ) )
-//                32765 - buffer->getVertexCount() ) )
-//            continue;  // too many vertices
-//        if ( hbuf->getVertexType() != buffer->getVertexType() )
-//            continue;  // different vertex type
-//        // this buffer fits our needs, add new buffer to this one
-//        hbuf->append(
-//                buffer->getVertices(),
-//                buffer->getVertexCount(),
-//                buffer->getIndices(),
-//                buffer->getIndexCount()
-//        );
-//        //statistik
-//        if ( hbuf->getVertexCount() > max_vert )
-//            max_vert = hbuf->getVertexCount();
-//        addbuffer = false;
-//        break;
-//    }
-//    // if no fitting buffer is found, create new one
-//    if ( addbuffer ) grasmesh->addMeshBuffer( buffer );
-    grassMesh_->getMeshBuffer(0)->append(
-            dummy->getMeshBuffer(0)->getVertices(),
-            dummy->getMeshBuffer(0)->getVertexCount(),
-            dummy->getMeshBuffer(0)->getIndices(),
-            dummy->getMeshBuffer(0)->getIndexCount()
-    );
-    dummy->drop();
-    smgr_->getMeshCache()->removeMesh( dummy );
-
-
-    meshManipulator_->recalculateNormals( grassMesh_, true ); // think it over,
-    // should we recalculate all normals to point upwards?
-    helper.pushMeshToVRAM( grassMesh_ );
 
     helper.validateFileExistence( "GFX/flow2.png" );
     video::ITexture* gras1 = smgr_->getVideoDriver()->getTexture( "GFX/flow2.png" );
-    grassMesh_->getMeshBuffer(0)->getMaterial().setTexture( 0, gras1 );
-    Logfile::getInstance().dbg( "node_pos: ", grassNode_->getAbsolutePosition() );
-    Logfile::getInstance().dbg( "node_min_edge: ", grassNode_->getTransformedBoundingBox().MinEdge );
-    Logfile::getInstance().dbg( "node_max_edge: ", grassNode_->getTransformedBoundingBox().MaxEdge );
-    Logfile::getInstance().dbg( "node_mesh_min_edge: ", grassNode_->getMesh()->getMeshBuffer(0)->getBoundingBox().MinEdge );
-    Logfile::getInstance().dbg( "node_mesh_max_edge: ", grassNode_->getMesh()->getMeshBuffer(0)->getBoundingBox().MaxEdge );
+    smgr_->getVideoDriver()->makeColorKeyTexture( gras1, VEC_2DI_NULL );
+
+    // create a lot of grass patches
+    scene::SMesh* patch = 0;
+    for( register u32 i = 0; i < 7000; ++i )
+    {
+        f32 x = zufall.getFloatBetween( 0.0f, 100.0f );
+        f32 z = zufall.getFloatBetween( 0.0f, 100.0f );
+        f32 rotation = zufall.getFloatBetween( 0.0f, 360.0f );
+        f32 size = zufall.getFloatBetween( 1.0f, 2.0f );
+        position = core::vector3df( x, ground.getHeight( x, z ), z ); // randomize intelligent!
+        matrix = core::matrix4();
+        patch = meshManipulator_->createMeshCopy( grass );
+        meshManipulator_->scale( patch, core::vector3df( size, size, size ) );
+        matrix.setRotationDegrees( core::vector3df( 0.0f, rotation, 0.0f ) );
+        meshManipulator_->transform( patch, matrix );
+        matrix.setTranslation( position );
+        meshManipulator_->transform( patch, matrix );
+        // add grass patch to the overall grass mesh, to the right buffer, 'Best Fit'
+        bool addbuffer = true;
+        scene::SMeshBuffer* patchBuffer;
+        scene::SMeshBuffer* grasMeshBuffer;
+        // search all available grasMeshBuffers
+        for ( u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
+        {
+            grasMeshBuffer = (scene::SMeshBuffer*)grassMesh_->getMeshBuffer( bufferIndex );
+            patchBuffer = (scene::SMeshBuffer*)patch->getMeshBuffer(0);
+            if ( grasMeshBuffer->Material != patchBuffer->Material )
+                continue;  // material different
+            if ( grasMeshBuffer->BoundingBox.getCenter().getDistanceFrom( patchBuffer->BoundingBox.getCenter() )
+                    > 400.0f )
+                continue;  // too far away for grouping
+            if ( grasMeshBuffer->getVertexCount() >= ( 32765 - patchBuffer->getVertexCount() ) )
+                continue;  // too many vertices
+            if ( grasMeshBuffer->getVertexType() != patchBuffer->getVertexType() )
+                continue;  // different vertex type
+            // this buffer fits our needs, add new buffer to this one
+            grasMeshBuffer->append(
+                    patchBuffer->getVertices(),
+                    patchBuffer->getVertexCount(),
+                    patchBuffer->getIndices(),
+                    patchBuffer->getIndexCount()
+            );
+            addbuffer = false;
+            break;
+        }
+        // if no fitting buffer is found, create new one
+        if ( addbuffer )
+            grassMesh_->addMeshBuffer( patchBuffer );
+        patch->drop();
+        smgr_->getMeshCache()->removeMesh( patch );
+    }
+
+    meshManipulator_->recalculateNormals( grassMesh_, true ); // should we recalculate all normals to point upwards?
+    helper.pushMeshToVRAM( grassMesh_ );
+    grassMesh_->recalculateBoundingBox();
+
+    for ( u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
+        grassMesh_->getMeshBuffer(bufferIndex)->getMaterial().setTexture( 0, gras1 );
+
+    grassNode_ = new BufferCullMeshSceneNode(
+            grassMesh_,
+            ObjectManager::getInstance().getBaseNodeByType( "gras" ),
+            smgr_,
+            ObjectManager::getInstance().getBaseIdByType( "gras" )
+    );
+    grassMesh_->drop();
+    grassNode_->setMaterialType( video::EMT_TRANSPARENT_ALPHA_CHANNEL );
+    grassNode_->setMaterialFlag( video::EMF_BACK_FACE_CULLING, false );
+    grassNode_->setMaterialFlag( video::EMF_LIGHTING, true );
+    grassNode_->setMaterialFlag( video::EMF_FOG_ENABLE, true );
+    // einige Filter und Shader, verbessern Textur wenn TRUE
+    grassNode_->setMaterialFlag( video::EMF_BILINEAR_FILTER, true );
+    //grassNode_->setMaterialFlag( video::EMF_ANISOTROPIC_FILTER, true );
+    grassNode_->setMaterialFlag( video::EMF_ANTI_ALIASING, true );
+    grassNode_->setMaterialFlag( video::EMF_ZBUFFER, true );
+    grassNode_->setMaterialFlag( video::EMF_ZWRITE_ENABLE, true );
+    grassNode_->setVisible( true );
+    grassNode_->setDebugDataVisible( scene::EDS_BBOX_BUFFERS );
 
     // cleanup
     smgr_->getMeshCache()->removeMesh( grass );

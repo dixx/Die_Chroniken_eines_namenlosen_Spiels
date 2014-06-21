@@ -23,12 +23,21 @@ ObjectManager& ObjectManager::getInstance( IrrlichtDevice* device )
 void ObjectManager::loadSolids( const char* solidsFilename )
 {
     core::array<core::stringc> objectsDataList;
+#ifdef _DEBUG_MODE
+u32 now = device_->getTimer()->getRealTime();
+#endif
+    /* replace later: */ vegetation_ = new Vegetation( smgr_ );
+    /* replace later: */ vegetation_->create();
+#ifdef _DEBUG_MODE
+Logfile::getInstance().write( Logfile::DEBUG, "Gras in ", device_->getTimer()->getRealTime() - now );
+Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
+#endif
 
     GenericHelperMethods::getInstance().validateFileExistence( solidsFilename );
     Scripting::getInstance().getObjectDataFromScript( solidsFilename ).split( objectsDataList, "\n" );
 
 #ifdef _DEBUG_MODE
-u32 now = device_->getTimer()->getRealTime();
+now = device_->getTimer()->getRealTime();
 #endif
     for ( register u32 i = 0; i < objectsDataList.size(); ++i )
     {
@@ -97,7 +106,7 @@ Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 void ObjectManager::unload()
 {
     clearArrays();
-    delete vegetation_;
+    /* replace later: */ delete vegetation_;
     updateTimer_->stop();
 }
 
@@ -107,7 +116,7 @@ void ObjectManager::update( const f32 frameDeltaTime )
 {
     if ( updateTimer_->isFull() )
     {
-        vegetation_->update();
+        /* replace later: */ vegetation_->update();
 
         scene::ISceneNode* node = 0;
         core::vector3df camPos = smgr_->getActiveCamera()->getAbsolutePosition();

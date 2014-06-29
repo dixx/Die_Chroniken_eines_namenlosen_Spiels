@@ -14,6 +14,8 @@ Ton& Ton::getInstance( io::IFileSystem* fs )
 
 void Ton::preload( const c8* filename )
 {
+    if ( !soundEngine_ )
+        return;
     GenericHelperMethods::getInstance().validateFileExistence( filename );
     ISoundSource* snd = soundEngine_->addSoundSourceFromFile( filename, ESM_NO_STREAMING, true );
     if ( snd == 0 )
@@ -26,16 +28,10 @@ void Ton::preload( const c8* filename )
 
 
 
-ISoundEngine* Ton::getSoundEngine() const
-{
-    return soundEngine_;
-}
-
-
-
 void Ton::playGUISound( const Sound_ID id )
 {
-    soundEngine_->play2D( sndGuiArray_[ id ].c_str() );
+    if ( soundEngine_ )
+        soundEngine_->play2D( sndGuiArray_[ id ].c_str() );
 }
 
 
@@ -53,7 +49,10 @@ Ton::Ton( io::IFileSystem* fs )
         log.emergencyExit( "Dateisystem in [Ton] nicht mehr gefunden! Abbruch." );
     soundEngine_ = createIrrKlangDevice();
     if ( soundEngine_ == 0 )
-        log.emergencyExit( "Sound-Entchen konnte nicht erstellt werden! Abbruch." );
+    {
+        log.writeLine( Logfile::INFO, "Sound-Entchen konnte leider nicht erstellt werden!" );
+        return;
+    }
     log.writeLine( Logfile::INFO, "Sound-Entchen erfolgreich erstellt." );
     log.writeLine( Logfile::INFO, "    Version: IrrKlang ", "1.4.0" );
     log.write( Logfile::INFO, "    Treiber: ", soundEngine_->getDriverName() );
@@ -72,8 +71,8 @@ Ton::~Ton()
     {
         soundEngine_->drop();
         soundEngine_ = 0;
+        Logfile::getInstance().writeLine( Logfile::INFO, "Sound-Entchen normal beendet." );
     }
-    Logfile::getInstance().writeLine( Logfile::INFO, "Sound-Entchen normal beendet." );
 }
 
 

@@ -44,12 +44,6 @@ public:
      */
     static Ton& getInstance( io::IFileSystem* fs = 0 );
 
-    /*! \brief Gibt Zeiger auf das erzeugte Sound-Entchen zurück.
-     *  \param -
-     *  \return Zeiger auf das Sound-Entchen
-     */
-    ISoundEngine* getSoundEngine() const;
-
     /*! \brief Lädt eine Sounddatei in den Speicher.
      *  \param filename (\a c8*) zu ladende Datei
      *  \return -

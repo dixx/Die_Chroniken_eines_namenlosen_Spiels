@@ -83,6 +83,8 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
                 data += "MOFFS";
             else if ( entry == "ROTATION" )
                 data += "MROTA";
+            else if ( entry == "TRANSPARENZ" )
+                data += "MTRAN";
             else
                 valueFound = false;
 

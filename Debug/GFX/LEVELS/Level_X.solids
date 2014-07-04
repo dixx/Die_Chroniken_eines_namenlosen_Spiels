@@ -11,7 +11,7 @@
   POSITION      = "60.0x10.0"
   SKALIERUNG    = "0.07x0.07x0.07"
   TEXTUR        = "GFX/OBJECTS/tree6.tga"
-  TRANSPARENT   = "ja"
+  TRANSPARENZ   = "ja"
 [ENDE_OBJECT]
 [START_OBJECT]
   TYP           = "Deko"

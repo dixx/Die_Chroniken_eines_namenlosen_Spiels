@@ -144,7 +144,19 @@ video::ITexture* Basic3DObject::loadMainTexture()
         return 0;
     }
     GenericHelperMethods::getInstance().validateFileExistence( textureFileName );
-    return smgr_->getVideoDriver()->getTexture( textureFileName );
+    video::ITexture* texture = smgr_->getVideoDriver()->getTexture( textureFileName );
+    if ( extractor_->tryToExtractValue( "MTRAN" ) )
+    {
+        if ( extractor_->getExtractedValue().find( "ja" ) != -1 )
+        {
+            smgr_->getVideoDriver()->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, false );
+            smgr_->getVideoDriver()->disableFeature( video::EVDF_BILINEAR_FILTER, true );
+            smgr_->getVideoDriver()->makeColorKeyTexture( texture, VEC_2DI_NULL );
+            smgr_->getVideoDriver()->disableFeature( video::EVDF_BILINEAR_FILTER, false );
+            smgr_->getVideoDriver()->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, true );
+        }
+    }
+    return texture;
 }
 
 
@@ -152,8 +164,15 @@ video::ITexture* Basic3DObject::loadMainTexture()
 void Basic3DObject::loadFilterAndEffects( video::SMaterial& material )
 {
     material.MaterialType = video::EMT_SOLID;
-    material.setFlag( video::EMF_LIGHTING, true );
     material.setFlag( video::EMF_BACK_FACE_CULLING, true );
+    if ( extractor_->tryToExtractValue( "MTRAN" ) )
+    {
+        if ( extractor_->getExtractedValue().find( "ja" ) != -1 )
+        {
+            material.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL;
+        }
+    }
+    material.setFlag( video::EMF_LIGHTING, true );
     material.setFlag( video::EMF_ANISOTROPIC_FILTER, true );
     material.setFlag( video::EMF_ANTI_ALIASING, true );
     material.setFlag( video::EMF_BILINEAR_FILTER, true );

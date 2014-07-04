@@ -47,44 +47,44 @@ void Vegetation::create()
 
     // create the master grass patch
     smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, matrix );
-    helper.validateFileExistence( "GFX/OBJECTS/3ds__flow2.3ds" );
-    scene::IMesh* grass = smgr_->getMesh( "GFX/OBJECTS/3ds__flow2.3ds" );
+    helper.validateFileExistence( "GFX/OBJECTS/3ds__grass.3ds" );
+    scene::IMesh* grass = smgr_->getMesh( "GFX/OBJECTS/3ds__grass.3ds" );
     if ( !grass )
     {
         Logfile::getInstance().writeLine( Logfile::INFO, "Gras konnte nicht geladen werden!" );
         return;
     }
-    meshManipulator_->scale( grass, core::vector3df( 0.0015f, 0.0015f, 0.0015f ) ); // TODO calculate correct size!
+    meshManipulator_->scale( grass, core::vector3df( 0.006f ) ); // TODO calculate correct size!
     //matrix.setTranslation( core::vector3df() ); // TODO calculate correct 0-position here!
     //meshManipulator_->transform( grass, matrix );
     helper.pushMeshToVRAM( grass );
 
-    helper.validateFileExistence( "GFX/flow2.png" );
-    video::ITexture* gras1 = smgr_->getVideoDriver()->getTexture( "GFX/flow2.png" );
+    helper.validateFileExistence( "GFX/grass.tga" );
+    video::ITexture* gras1 = smgr_->getVideoDriver()->getTexture( "GFX/grass.tga" );
     smgr_->getVideoDriver()->makeColorKeyTexture( gras1, VEC_2DI_NULL );
 
     // create a lot of grass patches
     scene::SMesh* patch = 0;
-    for( register u32 i = 0; i < 7000; ++i )
+    f32 x, z;
+    bool addbuffer = true;
+    scene::SMeshBuffer* patchBuffer;
+    scene::SMeshBuffer* grasMeshBuffer;
+    for( register u32 i = 0; i < 4000; ++i )
     {
-        f32 x = zufall.getFloatBetween( 0.0f, 100.0f );
-        f32 z = zufall.getFloatBetween( 0.0f, 100.0f );
-        f32 rotation = zufall.getFloatBetween( 0.0f, 360.0f );
-        f32 size = zufall.getFloatBetween( 1.0f, 2.0f );
+        x = zufall.getFloatBetween( 0.0f, 50.0f );
+        z = zufall.getFloatBetween( 0.0f, 50.0f );
         position = core::vector3df( x, ground.getHeight( x, z ), z ); // randomize intelligent!
-        matrix = core::matrix4();
         patch = meshManipulator_->createMeshCopy( grass );
-        meshManipulator_->scale( patch, core::vector3df( size, size, size ) );
-        matrix.setRotationDegrees( core::vector3df( 0.0f, rotation, 0.0f ) );
+        meshManipulator_->scale( patch, core::vector3df( zufall.getFloatBetween( 1.0f, 3.0f ) ) );
+        matrix = core::matrix4();
+        matrix.setRotationDegrees( core::vector3df( 0.0f, zufall.getFloatBetween( 0.0f, 360.0f ), 0.0f ) );
         meshManipulator_->transform( patch, matrix );
         matrix.setTranslation( position );
         meshManipulator_->transform( patch, matrix );
         // add grass patch to the overall grass mesh, to the right buffer, 'Best Fit'
-        bool addbuffer = true;
-        scene::SMeshBuffer* patchBuffer;
-        scene::SMeshBuffer* grasMeshBuffer;
+        addbuffer = true;
         // search all available grasMeshBuffers
-        for ( u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
+        for ( register u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
         {
             grasMeshBuffer = (scene::SMeshBuffer*)grassMesh_->getMeshBuffer( bufferIndex );
             patchBuffer = (scene::SMeshBuffer*)patch->getMeshBuffer(0);
@@ -111,7 +111,6 @@ void Vegetation::create()
         if ( addbuffer )
             grassMesh_->addMeshBuffer( patchBuffer );
         patch->drop();
-        smgr_->getMeshCache()->removeMesh( patch );
     }
 
     meshManipulator_->recalculateNormals( grassMesh_, true ); // should we recalculate all normals to point upwards?
@@ -142,6 +141,7 @@ void Vegetation::create()
     grassNode_->setDebugDataVisible( scene::EDS_BBOX_BUFFERS );
 
     // cleanup
+    smgr_->getMeshCache()->removeMesh( patch );
     smgr_->getMeshCache()->removeMesh( grass );
 }
 

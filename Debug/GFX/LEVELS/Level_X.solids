@@ -6,6 +6,15 @@
 
 [START_OBJECT]
   TYP           = "Deko"
+  NAME          = "baum 1"
+  MESH_DATEI    = "GFX/OBJECTS/3ds__tree6.3ds"
+  POSITION      = "60.0x10.0"
+  SKALIERUNG    = "0.07x0.07x0.07"
+  TEXTUR        = "GFX/OBJECTS/tree6.tga"
+  TRANSPARENT   = "ja"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Deko"
   NAME          = "zaunfeld01_1"
   MESH_DATEI    = "GFX/OBJECTS/zaunfeld01.3ds"
   POSITION      = "333.0x152.0"

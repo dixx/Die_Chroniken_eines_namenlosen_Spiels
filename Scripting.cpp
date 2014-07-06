@@ -57,7 +57,7 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
             readTuples = true;
             continue;
         }
-        else if ( entry == "ENDE_OBJECT" )
+        if ( entry == "ENDE_OBJECT" )
         {
             readTuples = false;
             data += '\n';

@@ -23,7 +23,7 @@ require "LUA_SUBS"
 ---------------------------------------------------------
 function getObjectDataFromScript( filename )
     local alles       = {} -- NOTE: use {n = 0} in Lua-5.0
-    local objectFound = 0
+    local objectFound = false
     local object      = ""
     local value       = ""
 
@@ -36,12 +36,12 @@ function getObjectDataFromScript( filename )
             --io.write( "[parser]: kommentar gefunden: <"..zeile..">\n" )
         else
             if string.find( zeile, "^%s*%[ENDE_OBJECT%]" ) then
-                objectFound = 0
+                objectFound = false
                 table.insert( alles, "ENDE_OBJECT" )
             elseif string.find( zeile, "^%s*%[START_OBJECT%]" ) then
-                objectFound = 1
+                objectFound = true
                 table.insert( alles, "START_OBJECT" )
-            elseif objectFound == 1 and string.find( zeile, "=" ) and countSubstring( zeile, '"' ) > 1 then
+            elseif objectFound and string.find( zeile, "=" ) and countSubstring( zeile, '"' ) > 1 then
                 local valueConcat = ""
                 for k,v in ipairs( split( zeile, "=" ) ) do
                     if k == 1 then 

@@ -106,7 +106,7 @@ void SaveGames::save( const io::path& filename )
 /* private */
 
 
-
+// TODO File-Methoden auslagern nach eigener Klasse!
 template <typename T> T SaveGames::read( io::IReadFile* stream )
 {
     T buffer;

@@ -19,7 +19,7 @@ class ObjectConfigurationContextForObject
 public:
 
     enum ObjectType {
-        DEKORATION,
+        DEKORATION = 0,
         GESCHOSS,
         WETTER,
         HINDERNIS,
@@ -60,9 +60,14 @@ class ObjectConfigurationContextForMesh
 public:
 
     core::vector3df position, offset, scale, rotation;
+    u32 materialCount;
 
     ObjectConfigurationContextForMesh()
-    : position(VEC_3DF_NULL), offset(VEC_3DF_NULL), scale(core::vector3df( 1.0f )), rotation(VEC_3DF_NULL)
+    : position(VEC_3DF_NULL),
+      offset(VEC_3DF_NULL),
+      scale(core::vector3df( 1.0f )),
+      rotation(VEC_3DF_NULL),
+      materialCount(0)
     {}
 
 };
@@ -77,7 +82,8 @@ public:
 
     core::array<bool> isTransparent, isBackFaceCulled;
 
-    ObjectConfigurationContextForMaterials() {
+    ObjectConfigurationContextForMaterials()
+    {
         isTransparent.clear();
         isBackFaceCulled.clear();
     }
@@ -93,8 +99,13 @@ class ObjectConfigurationContextForFiles
 public:
 
     io::path mesh;
+    core::array<io::path> mainTexture, secondTexture;
 
-    ObjectConfigurationContextForFiles() : mesh("") {}
+    ObjectConfigurationContextForFiles() : mesh("")
+    {
+        mainTexture.clear();
+        secondTexture.clear();
+    }
 
 };
 

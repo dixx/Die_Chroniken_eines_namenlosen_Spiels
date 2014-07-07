@@ -20,6 +20,8 @@ class ObjectConfiguration
 
 public:
 
+    const u8 CURRENT_VERSION;
+
     ObjectConfigurationContextForObject* object;
     ObjectConfigurationContextForNode* node;
     ObjectConfigurationContextForMesh* mesh;
@@ -32,15 +34,33 @@ public:
      */
     ObjectConfiguration();
 
-	/*! \brief Destruktor
+    /*! \brief Destruktor
      */
-	~ObjectConfiguration();
+    ~ObjectConfiguration();
+
+    /*! \brief Erstellt ein Konfigurationsobjekt mittels eines (versionsabhängigen) Datei-Streams.
+     *  \param stream (\a io::IReadFile*) Zeiger auf den offenen Datei-Stream
+     *  \param version (\a u32) Version der Datei
+     *  \return -
+     */
+    void readFrom( io::IReadFile* stream, u32 version );
+
+    /*! \brief Schreibt ein Konfigurationsobjekt neuester Version auf einen Datei-Stream.
+     *  \param stream (\a io::IWriteFile*) Zeiger auf den offenen Datei-Stream
+     *  \return -
+     */
+    void writeTo( io::IWriteFile* stream );
 
 private:
 
     ObjectConfiguration( const ObjectConfiguration& );
     ObjectConfiguration& operator=( const ObjectConfiguration& );
 
+    template <typename T> inline T read( io::IReadFile* stream );
+    core::stringc readString( io::IReadFile* stream );
+    template <typename T> inline void write( io::IWriteFile* stream, const T& number );
+    void writeString( io::IWriteFile* stream, const core::stringc& text );
+    template <typename T> inline void skip( io::IReadFile* stream );
 };
 
 #endif

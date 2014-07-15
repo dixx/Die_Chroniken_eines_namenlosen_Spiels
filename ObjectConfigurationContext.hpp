@@ -80,7 +80,7 @@ class ObjectConfigurationContextForMaterials
 
 public:
 
-    core::array<bool> isTransparent, isBackFaceCulled;
+    core::array<bool> isTransparent, isBackFaceCulled, isLighted;
 
     ObjectConfigurationContextForMaterials()
     {

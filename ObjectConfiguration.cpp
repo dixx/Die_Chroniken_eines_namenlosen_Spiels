@@ -35,6 +35,7 @@ void ObjectConfiguration::readFrom( io::IReadFile* stream, u32 version )
         {
             materials->isTransparent.push_back( read<bool>( stream ) );
             materials->isBackFaceCulled.push_back( read<bool>( stream ) );
+            materials->isLighted.push_back( read<bool>( stream ) );
             files->mainTexture.push_back( readString( stream ) );
             files->secondTexture.push_back( readString( stream ) );
         }
@@ -68,6 +69,7 @@ void ObjectConfiguration::writeTo( io::IWriteFile* stream )
     {
         write<bool>( stream, materials->isTransparent[ i ] );
         write<bool>( stream, materials->isBackFaceCulled[ i ] );
+        write<bool>( stream, materials->isLighted[ i ] );
         writeString( stream, files->mainTexture[ i ] );
         writeString( stream, files->secondTexture[ i ] );
     }

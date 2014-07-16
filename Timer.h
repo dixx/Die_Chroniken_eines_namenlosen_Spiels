@@ -10,7 +10,7 @@
 using namespace irr;
 
 /*! \class Timer Timer.h "Timer.h"
- *  \brief  Schnittstelle für millisekundengenaue Timer.
+ *  \brief Schnittstelle für millisekundengenaue Timer.
  *  \note Instanzierung: `Timer* myTimer = new Timer( maxValue );` \n Benutzen: `myTimer->update( frameDeltaTime );`
  */
 class Timer
@@ -99,10 +99,10 @@ private:
 };
 
 /*! \class AlwaysRunningTimer
- *  \brief  Schnittstelle für millisekundengenaue Timer, welcher nicht zu stoppen ist.
+ *  \brief Schnittstelle für millisekundengenaue Timer, welche nicht zu stoppen sind.
  *  \note Instanzierung: `AlwaysRunningTimer* myTimer = new AlwaysRunningTimer( maxValue );`
  *        \n Benutzen: `myTimer->update( frameDeltaTime );`
- *  \attention Once started, nothing can stop this timer. Not even the manager.
+ *  \attention Einmal gestartet, sind diese Timer durch nichts zu stoppen oder zu pausieren.
  */
 class AlwaysRunningTimer : public Timer
 {

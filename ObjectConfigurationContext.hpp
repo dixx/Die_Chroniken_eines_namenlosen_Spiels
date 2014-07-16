@@ -18,6 +18,9 @@ class ObjectConfigurationContextForObject
 
 public:
 
+    /*! \enum ObjectType
+     *  \brief Mögliche Typen eines Objektes, welche dessen internes Kollisions-Verhalten bestimmen.
+     */
     enum ObjectType {
         DEKORATION = 0,
         GESCHOSS,
@@ -31,7 +34,7 @@ public:
         MAUSPFEILREAKTIV
     }; // TODO auslagern nach Constants.h und ersetzen aller Vorkommen von `core::stringc type`
 
-    ObjectType type;
+    ObjectType type; //!< Der Kollisions-Typ des Objektes
 
     ObjectConfigurationContextForObject() : type(DEKORATION) {}
 
@@ -45,7 +48,7 @@ class ObjectConfigurationContextForNode
 
 public:
 
-    core::stringc name;
+    core::stringc name; //!< Der Name des Objektes
 
     ObjectConfigurationContextForNode() : name("<noname>") {}
 
@@ -59,8 +62,11 @@ class ObjectConfigurationContextForMesh
 
 public:
 
-    core::vector3df position, offset, scale, rotation;
-    u32 materialCount;
+    core::vector3df position; //!< Absolute Position in der Welt
+    core::vector3df offset; //!< Objekt-interne Nullpunktverschiebung
+    core::vector3df scale; //!< Vergrößerungsfaktor des Objektes
+    core::vector3df rotation; //!< Ausrichtung des Objektes in der Welt
+    u32 materialCount; //!< Anzahl der Materialien eines Objektes
 
     ObjectConfigurationContextForMesh()
     : position(VEC_3DF_NULL),
@@ -80,7 +86,9 @@ class ObjectConfigurationContextForMaterials
 
 public:
 
-    core::array<bool> isTransparent, isBackFaceCulled, isLighted;
+    core::array<bool> isTransparent; //!< Ist das MATERIAL transparent?
+    core::array<bool> isBackFaceCulled; //!< Sollen die Rückseiten aller Flächen des MATERIALS ausgeblendet werden?
+    core::array<bool> isLighted; //!< Reagiert das MATERIAL auf Licht?
 
     ObjectConfigurationContextForMaterials()
     {
@@ -98,8 +106,9 @@ class ObjectConfigurationContextForFiles
 
 public:
 
-    io::path mesh;
-    core::array<io::path> mainTexture, secondTexture;
+    io::path mesh; //!< Pfad zur Mesh-Datei
+    core::array<io::path> mainTexture; //!< Pfade zu den Haupttexturen der MATERIALIEN
+    core::array<io::path> secondTexture; //!< Pfade zu den Nebentexturen der MATERIALIEN
 
     ObjectConfigurationContextForFiles() : mesh("")
     {

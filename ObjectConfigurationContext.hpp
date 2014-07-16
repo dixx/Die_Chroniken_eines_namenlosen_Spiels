@@ -18,20 +18,19 @@ class ObjectConfigurationContextForObject
 
 public:
 
-    /*! \enum ObjectType
-     *  \brief Mögliche Typen eines Objektes, welche dessen internes Kollisions-Verhalten bestimmen.
+    /*! \brief Mögliche Typen eines Objektes, welche dessen internes Kollisions-Verhalten bestimmen.
      */
     enum ObjectType {
-        DEKORATION = 0,
-        GESCHOSS,
-        WETTER,
-        HINDERNIS,
-        INTERAKTIV,
-        INVENTAR,
-        LEBEWESEN,
-        LEICHE,
-        BEGEHBAR,
-        MAUSPFEILREAKTIV
+        DEKORATION = 0, //!< Objekt ist durchlässig für alles und reagiert auf nichts
+        WETTER, //!< Ähnlich wie DEKORATION, wird aber anders aktualisiert
+        INTERAKTIV, //!< Objekt ist nicht begehbar, aber klickbar und kollidierbar
+        INVENTAR, //!< Wie INTERAKTIV, wird aber anders aktualisiert
+        LEBEWESEN, //!< Wie INTERAKTIV, hat aber spezielle Kollisionserkennung für Lebewesen
+        HINDERNIS, //!< Objekt ist nicht begehbar und nicht klickbar, aber kollidierbar
+        MAUSPFEILREAKTIV, //!< Objekt ist nicht begehbar und nicht kollidierbar, aber klickbar
+        LEICHE, //!< Wie MAUSPFEILREAKTIV, wird aber gesondert aktualisiert
+        BEGEHBAR, //!< Objekt ist nicht kollidierbar, aber begehbar und klickbar
+        GESCHOSS //!< Objekt hat spezielle Kollisionserkennung für Geschosse und ist weder klickbar noch begehbar
     }; // TODO auslagern nach Constants.h und ersetzen aller Vorkommen von `core::stringc type`
 
     ObjectType type; //!< Der Kollisions-Typ des Objektes

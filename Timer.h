@@ -98,4 +98,30 @@ private:
 
 };
 
+/*! \class AlwaysRunningTimer AlwaysRunningTimer.h "AlwaysRunningTimer.h"
+ *  \brief  Schnittstelle für millisekundengenaue Timer, welcher nicht zu stoppen ist.
+ *  \note Instanzierung: `AlwaysRunningTimer* myTimer = new AlwaysRunningTimer( maxValue );`
+ *        \n Benutzen: `myTimer->update( frameDeltaTime );`
+ *  \attention Once started, nothing can stop this timer. Not even the manager.
+ */
+class AlwaysRunningTimer : public Timer
+{
+
+public:
+
+    AlwaysRunningTimer( const f32 maxValue ) : Timer(maxValue) {}
+
+    ~AlwaysRunningTimer() {}
+
+    void stop() {}
+    void pause() {}
+    void resume() {}
+
+private:
+
+    AlwaysRunningTimer( const AlwaysRunningTimer& );  // Objekt ist kopiergeschützt
+    AlwaysRunningTimer& operator=( const AlwaysRunningTimer& );  // Objekt ist vor Zuweisung geschützt
+
+};
+
 #endif

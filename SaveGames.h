@@ -19,7 +19,7 @@ class SaveGames
 public:
 
     /*! \brief Konstruktor.
-     *  \param fs (\a IrrlichtDevice*) Zeiger auf das Irrlicht-Entchen
+     *  \param device (\a IrrlichtDevice*) Zeiger auf das Irrlicht-Entchen
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
     SaveGames( IrrlichtDevice* device );

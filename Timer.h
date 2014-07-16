@@ -98,7 +98,7 @@ private:
 
 };
 
-/*! \class AlwaysRunningTimer AlwaysRunningTimer.h "AlwaysRunningTimer.h"
+/*! \class AlwaysRunningTimer
  *  \brief  Schnittstelle für millisekundengenaue Timer, welcher nicht zu stoppen ist.
  *  \note Instanzierung: `AlwaysRunningTimer* myTimer = new AlwaysRunningTimer( maxValue );`
  *        \n Benutzen: `myTimer->update( frameDeltaTime );`

@@ -1,4 +1,4 @@
-/*! \file ObjectConfigurationContext.h
+/*! \file ObjectConfigurationContext.hpp
  *  \brief Untergruppen für ein Konfigurationsobjekt.
  */
 
@@ -10,7 +10,7 @@
 
 using namespace irr;
 
-/*! \class ObjectConfigurationContextForObject ObjectConfigurationContextForObject.h "ObjectConfigurationContextForObject.h"
+/*! \class ObjectConfigurationContextForObject
  *  \brief High-Level-Informationen über das zu erstellende 3D-Object.
  */
 class ObjectConfigurationContextForObject
@@ -37,7 +37,7 @@ public:
 
 };
 
-/*! \class ObjectConfigurationContextForNode ObjectConfigurationContextForNode.h "ObjectConfigurationContextForNode.h"
+/*! \class ObjectConfigurationContextForNode
  *  \brief Informationen über den zu erstellenden Szenenknoten.
  */
 class ObjectConfigurationContextForNode
@@ -51,7 +51,7 @@ public:
 
 };
 
-/*! \class ObjectConfigurationContextForMesh ObjectConfigurationContextForMesh.h "ObjectConfigurationContextForMesh.h"
+/*! \class ObjectConfigurationContextForMesh
  *  \brief Informationen über das zu erstellende Mesh.
  */
 class ObjectConfigurationContextForMesh
@@ -72,7 +72,7 @@ public:
 
 };
 
-/*! \class ObjectConfigurationContextForMaterials ObjectConfigurationContextForMaterials.h "ObjectConfigurationContextForMaterials.h"
+/*! \class ObjectConfigurationContextForMaterials
  *  \brief Informationen über die Materialien des zu erstellenden 3D-Objects.
  */
 class ObjectConfigurationContextForMaterials
@@ -90,7 +90,7 @@ public:
 
 };
 
-/*! \class ObjectConfigurationContextForFiles ObjectConfigurationContextForFiles.h "ObjectConfigurationContextForFiles.h"
+/*! \class ObjectConfigurationContextForFiles
  *  \brief Dateipfade des 3D-Objects.
  */
 class ObjectConfigurationContextForFiles

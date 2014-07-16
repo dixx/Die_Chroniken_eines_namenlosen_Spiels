@@ -138,6 +138,7 @@ public:
     /*! \brief Schreibt Text mit abschließendem Zeilenumbruch in das Logfile
      *  \note Schreibt im DEBUG-Modus eine Irrlicht-Zeichenkette mit abschließendem Zeilenumbruch in das Logfile.
      *  \param logline (\a core::stringc&) Text
+     *  \param number (\a beliebiger \a Zahlentyp) Zahl
      *  \return -
      */
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,

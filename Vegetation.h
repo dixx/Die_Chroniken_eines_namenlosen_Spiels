@@ -20,7 +20,7 @@ class Vegetation
 public:
 
     /*! \brief Konstruktor.
-     *  \param -
+     *  \param smgr (\a ISceneManager*) Zeiger auf en aktuellen Szenenmanager
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
     Vegetation( scene::ISceneManager* smgr );

@@ -44,12 +44,6 @@ public:
      */
     s32 getZ() const;
 
-    /*! \brief Liefert den aktuellen objectData-String des Kartenteils.
-     *  \param -
-     *  \return \a core::stringc objectData des Kartenteils
-     */
-    core::stringc getObjectData();
-
 private:
 
     s32 tileX_;

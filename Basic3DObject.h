@@ -7,6 +7,7 @@
 
 #include <irrlicht.h>
 #include "ObjectParamsExtractor.h"
+#include "ObjectConfiguration.h"
 
 using namespace irr;
 
@@ -42,11 +43,11 @@ public:
      */
     const core::stringc& getType() const;
 
-    /*! \brief Liefert den aktuellen objectData-String des Objektes.
+    /*! \brief Liefert die aktuelle Konfiguration des Objektes.
      *  \param -
-     *  \return \a core::stringc objectData des Objektes
+     *  \return \a const \a ObjectConfiguration& Konfiguration des Objektes
      */
-    virtual core::stringc getObjectData() = 0;
+    const ObjectConfiguration& getObjectData() const;
 
     /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem Kollisionen abgefangen werden sollen.
      *  \attention Methode ist pure virtual!
@@ -74,6 +75,7 @@ protected:
     core::stringc type_;
     core::stringc name_;
     core::stringc objectData_;
+    ObjectConfiguration* objectData_2;
     ObjectParamsExtractor* extractor_;
     scene::ISceneManager* smgr_;
 

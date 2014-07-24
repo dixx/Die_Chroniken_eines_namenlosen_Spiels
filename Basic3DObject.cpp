@@ -9,6 +9,7 @@ Basic3DObject::Basic3DObject( const core::stringc& objectData, scene::ISceneMana
 : type_("<unknown>"),
   name_("<noname>"),
   objectData_(objectData),
+  objectData_2(0),
   extractor_(0),
   smgr_(smgr)
 {
@@ -50,6 +51,15 @@ const core::stringc& Basic3DObject::getName() const
 const core::stringc& Basic3DObject::getType() const
 {
     return type_;
+}
+
+
+
+const ObjectConfiguration& Basic3DObject::getObjectData() const
+{
+    objectData_2->object->type = ObjectConfigurationContextForObject::DEKORATION;
+    objectData_2->node->name = name_;
+    return *objectData_2;
 }
 
 

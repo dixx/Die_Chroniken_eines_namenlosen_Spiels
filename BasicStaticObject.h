@@ -57,11 +57,11 @@ public:
      */
     const core::vector3df& getNextStep() const;
 
-    /*! \brief Liefert den aktuellen objectData-String des Objekts.
+    /*! \brief Liefert die aktuelle Konfiguration des Objektes.
      *  \param -
-     *  \return \a core::stringc objectData des Objekts
+     *  \return \a const \a ObjectConfiguration& Konfiguration des Objektes
      */
-    core::stringc getObjectData();
+    const ObjectConfiguration& getObjectData() const;
 
 protected:
 

@@ -119,13 +119,6 @@ const core::vector3df& BasicLifeform::getNextStep() const
 
 
 
-core::stringc BasicLifeform::getObjectData()
-{
-    return "";
-}
-
-
-
 /* protected */
 
 

@@ -53,6 +53,10 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
 #ifdef _DEBUG_MODE
     if ( Eventreceiver::getInstance().hasKeyJustBeenPressedDown( KEY_F1 ) )
         Debugwindow::getInstance().toggle();
+    if ( Eventreceiver::getInstance().isKeyDown( KEY_TAB ) )
+        Camera::getInstance().startZooming( 1.0f );
+    if ( Eventreceiver::getInstance().isKeyDown( KEY_KEY_R ) )
+        Camera::getInstance().startZooming( -1.0f );
     Debugwindow::getInstance().addLine( L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
 #endif
     Weather::getInstance().update();

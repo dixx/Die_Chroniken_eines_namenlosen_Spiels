@@ -61,7 +61,7 @@ public:
      *  \param -
      *  \return \a const \a ObjectConfiguration& Konfiguration des Objektes
      */
-    const ObjectConfiguration& getObjectData() const;
+    //const ObjectConfiguration& getObjectData() const;
 
 protected:
 

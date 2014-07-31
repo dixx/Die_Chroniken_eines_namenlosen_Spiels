@@ -61,22 +61,22 @@ const core::vector3df& BasicStaticObject::getNextStep() const
 
 
 
-const ObjectConfiguration& BasicStaticObject::getObjectData() const
-{
-    objectData_2->mesh->materialCount = node_->getMaterialCount();
-    // objectData_2->mesh->offset ... DON'T TOUCH THIS!
-    objectData_2->mesh->position = node_->getAbsolutePosition();
-    objectData_2->mesh->rotation = node_->getRotation();
-    objectData_2->mesh->scale = node_->getScale();
-    for ( register u32 cnt = 0; cnt < objectData_2->mesh->materialCount; ++cnt )
-    {
-        objectData_2->materials->isBackFaceCulled[ cnt ] = node_->getMaterial( cnt ).BackfaceCulling;
-        objectData_2->materials->isLighted[ cnt ] = node_->getMaterial( cnt ).Lighting;
-        objectData_2->materials->isTransparent[ cnt ] = node_->getMaterial( cnt ).isTransparent();
-    }
-    // objectData_2->files ... DON'T TOUCH THIS!
-    return Basic3DObject::getObjectData();
-}
+//const ObjectConfiguration& BasicStaticObject::getObjectData() const
+//{
+//    objectData_2->mesh->materialCount = node_->getMaterialCount();
+//    // objectData_2->mesh->offset ... DON'T TOUCH THIS!
+//    objectData_2->mesh->position = node_->getAbsolutePosition();
+//    objectData_2->mesh->rotation = node_->getRotation();
+//    objectData_2->mesh->scale = node_->getScale();
+//    for ( register u32 cnt = 0; cnt < objectData_2->mesh->materialCount; ++cnt )
+//    {
+//        objectData_2->materials->isBackFaceCulled[ cnt ] = node_->getMaterial( cnt ).BackfaceCulling;
+//        objectData_2->materials->isLighted[ cnt ] = node_->getMaterial( cnt ).Lighting;
+//        objectData_2->materials->isTransparent[ cnt ] = node_->getMaterial( cnt ).isTransparent();
+//    }
+//    // objectData_2->files ... DON'T TOUCH THIS!
+//    return Basic3DObject::getObjectData();
+//}
 
 
 

@@ -47,7 +47,7 @@ public:
      *  \param -
      *  \return \a const \a ObjectConfiguration& Konfiguration des Objektes
      */
-    const ObjectConfiguration& getObjectData() const;
+    //const ObjectConfiguration& getObjectData() const;
 
     /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem Kollisionen abgefangen werden sollen.
      *  \attention Methode ist pure virtual!

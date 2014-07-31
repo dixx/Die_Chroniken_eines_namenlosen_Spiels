@@ -55,12 +55,12 @@ const core::stringc& Basic3DObject::getType() const
 
 
 
-const ObjectConfiguration& Basic3DObject::getObjectData() const
-{
-    objectData_2->object->type = ObjectConfigurationContextForObject::DEKORATION;
-    objectData_2->node->name = name_;
-    return *objectData_2;
-}
+//const ObjectConfiguration& Basic3DObject::getObjectData() const
+//{
+//    objectData_2->object->type = ObjectConfigurationContextForObject::DEKORATION;
+//    objectData_2->node->name = name_;
+//    return *objectData_2;
+//}
 
 
 

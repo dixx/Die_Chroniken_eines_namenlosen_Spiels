@@ -22,6 +22,7 @@ Vegetation::Vegetation( scene::ISceneManager* smgr )
 
 
 
+// BUG irgendwo hier!
 Vegetation::~Vegetation()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!

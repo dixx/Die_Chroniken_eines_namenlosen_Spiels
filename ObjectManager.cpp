@@ -26,8 +26,8 @@ void ObjectManager::loadSolids( const char* solidsFilename )
 #ifdef _DEBUG_MODE
 u32 now = device_->getTimer()->getRealTime();
 #endif
-    /* replace later: */ vegetation_ = new Vegetation( smgr_ );
-    /* replace later: */ vegetation_->create();
+    /* replace later: */ //vegetation_ = new Vegetation( smgr_ );
+    /* replace later: */ //vegetation_->create();
 #ifdef _DEBUG_MODE
 Logfile::getInstance().write( Logfile::DEBUG, "Gras in ", device_->getTimer()->getRealTime() - now );
 Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
@@ -106,7 +106,7 @@ Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 void ObjectManager::unload()
 {
     clearArrays();
-    /* replace later: */ delete vegetation_;
+    /* replace later: */ //delete vegetation_;
     updateTimer_->stop();
 }
 

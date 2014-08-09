@@ -42,18 +42,35 @@ void GameFloatControl::run()
     GameStateManager& game = GameStateManager::getInstance();
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
     prepareFrameDeltaTime();
+
+    const f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
+    const u32 FRAME_DELTA_TIME_IN_MS = static_cast<u32>( FRAME_DELTA_TIME / 1000.f );
+
+    u32 loops;
+    bool we_must_draw;
+    u32 next = device_->getTimer()->getTime();
     while ( device_->run() )
     {
         if ( !device_->isWindowActive() )
             device_->yield();
-        updateFrameDeltaTime();
-        TimerManager::getInstance().tick( frameDeltaTime_ );
-        game.update( frameDeltaTime_ );
-        eventreceiver.setKeysLastState();
+        loops = 0;
+        we_must_draw = false;
+        while ( device_->getTimer()->getTime() > next && loops < 10 ) // Time will slow down if FPS<12.5 (125FPS / 10)
+        {
+            TimerManager::getInstance().tick( FRAME_DELTA_TIME );
+            game.update( FRAME_DELTA_TIME );
+            eventreceiver.setKeysLastState();
+            next += FRAME_DELTA_TIME_IN_MS;
+            loops++;
+            we_must_draw = true;
+        }
 #ifdef _DEBUG_MODE
         printFPS();
 #endif
-        game.draw();
+        if ( we_must_draw )
+            game.draw();
+        else
+            device_->sleep( next - device_->getTimer()->getTime() );
     }
 }
 
@@ -148,15 +165,6 @@ bool GameFloatControl::createDeviceFromConfig()
 void GameFloatControl::prepareFrameDeltaTime()
 {
     then_ = device_->getTimer()->getTime();
-}
-
-
-
-void GameFloatControl::updateFrameDeltaTime()
-{
-    now_ = device_->getTimer()->getTime();
-    frameDeltaTime_ = ( now_ != then_ ) ? static_cast<f32>( now_ - then_ ) * 0.001f : core::ROUNDING_ERROR_f32;
-    then_ = now_;
 }
 
 

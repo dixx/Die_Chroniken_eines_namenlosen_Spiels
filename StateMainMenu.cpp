@@ -87,9 +87,9 @@ void StateMainMenu::update( f32 frameDeltaTime )
     }
 #ifdef _DEBUG_MODE
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F1 ) )
-        ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
-    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
         Debugwindow::getInstance().toggle();
+    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
+        ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
     Debugwindow::getInstance().addLine( L"loaded selectors: ", Collision::getInstance().loadedSelectors() );
     Debugwindow::getInstance().addLine( L"loaded nodes: ", ObjectManager::getInstance().loadedNodes() );
 #endif

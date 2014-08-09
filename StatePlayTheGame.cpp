@@ -44,6 +44,7 @@ void StatePlayTheGame::start( f32 frameDeltaTime )
 
 void StatePlayTheGame::update( f32 frameDeltaTime )
 {
+    //u32 x = device_->getTimer()->getRealTime();
     checkInputForGame( frameDeltaTime );
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
@@ -64,6 +65,7 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
     ObjectManager::getInstance().update( frameDeltaTime );
     Hero::getInstance().current()->update( frameDeltaTime );
     Camera::getInstance().update( frameDeltaTime );
+    //Logfile::getInstance().dbg( "logic(ms): ", device_->getTimer()->getRealTime() - x);
 }
 
 
@@ -79,6 +81,7 @@ void StatePlayTheGame::shutdown( f32 frameDeltaTime )
 
 void StatePlayTheGame::draw()
 {
+    //u32 x = device_->getTimer()->getRealTime();
     device_->getVideoDriver()->beginScene( true, true, Weather::getInstance().getSkyColor() );
     device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
@@ -87,6 +90,7 @@ void StatePlayTheGame::draw()
 #endif
     Mauspfeil::getInstance().draw();
     device_->getVideoDriver()->endScene();
+    //Logfile::getInstance().dbg( "draw(ms): ", device_->getTimer()->getRealTime() - x);
 }
 
 

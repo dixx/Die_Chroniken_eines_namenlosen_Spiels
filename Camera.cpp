@@ -44,13 +44,14 @@ void Camera::update( const f32 frameDeltaTime )
     firstCameraNode_->setTarget( currentTarget_ );
 #ifdef _DEBUG_MODE
     Debugwindow::getInstance().addLine(
+            "Camera::update1",
             L"CamPos: ",
             firstCameraNode_->getAbsolutePosition().X,
             firstCameraNode_->getAbsolutePosition().Y,
             firstCameraNode_->getAbsolutePosition().Z
     );
-    Debugwindow::getInstance().addLine( L"CamOffs.Y: ", positionOffset_.Y );
-    Debugwindow::getInstance().addLine( L"CamZoom: ", isZooming_ ? 1 : 0 );
+    Debugwindow::getInstance().addLine( "Camera::update2", L"CamOffs.Y: ", positionOffset_.Y );
+    Debugwindow::getInstance().addLine( "Camera::update3", L"CamZoom: ", isZooming_ ? 1 : 0 );
 #endif
 }
 

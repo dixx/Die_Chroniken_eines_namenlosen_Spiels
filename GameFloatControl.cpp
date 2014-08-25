@@ -61,7 +61,7 @@ void GameFloatControl::run()
             game.update( FRAME_DELTA_TIME );
             eventreceiver.setKeysLastState();
             next += FRAME_DELTA_TIME_IN_MS;
-            loops++;
+            ++loops;
             we_must_draw = true;
         }
 #ifdef _DEBUG_MODE
@@ -176,7 +176,7 @@ void GameFloatControl::printFPS()
     {
         core::stringw str = L"FPS:";
         str += fps_;
-        Debugwindow::getInstance().addLine( str.c_str() );
+        Debugwindow::getInstance().addLine( "GameFloatControl::printFPS()", str );
         lastFPS_ = fps_;
     }
 }

@@ -12,13 +12,10 @@ Debugwindow& Debugwindow::getInstance( IrrlichtDevice* device )
 
 
 
-void Debugwindow::addLine( const core::stringw& text )
+void Debugwindow::addLine( const c8* callerName, const core::stringw& text )
 {
     if ( dwin_->isVisible() )
-    {
-        content_ += text;
-        content_ += newLine_;
-    }
+        fragments_.set(callerName, text);
 }
 
 
@@ -30,10 +27,17 @@ void Debugwindow::show()
         if ( displayTimer_ < device_->getTimer()->getRealTime() )
         {
             displayTimer_ = device_->getTimer()->getRealTime() + 500;
+            fragment_ = fragments_.getParentFirstIterator();
+            content_ = L"";
+            while ( !fragment_.atEnd() )
+            {
+                content_ += fragment_.getNode()->getValue();
+                content_ += newLine_;
+                fragment_++;
+            }
             dwin_->setText( content_.c_str() );
         }
     }
-    content_ = L"";
 }
 
 
@@ -41,7 +45,7 @@ void Debugwindow::show()
 void Debugwindow::toggle()
 {
     dwin_->setVisible( !dwin_->isVisible() );
-    content_ = L"";
+    fragments_.clear();  // to be able to "reset" the collected lines of text in the window
 }
 
 
@@ -77,6 +81,7 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
     dwin_->setEnabled( false );
     dwin_->setOverrideColor( COL_GREEN );
     dwin_->setBackgroundColor( video::SColor( 160,  0,  0,  0 ) );
+    fragments_.clear();
     displayTimer_ = device_->getTimer()->getRealTime();
 }
 
@@ -84,6 +89,5 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
 
 Debugwindow::~Debugwindow()
 {
-    // nothing to do here
     dwin_->remove();
 }

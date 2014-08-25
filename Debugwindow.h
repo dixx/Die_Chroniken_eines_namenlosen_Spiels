@@ -39,12 +39,13 @@ public:
      *  \param text (\a core::stringw&) Text
      *  \return -
      */
-    void addLine( const core::stringw& text );
+    void addLine( const c8* callerName, const core::stringw& text );
 
     /*! \brief Fügt Text und Daten in das Debugfenster ein.
      *
      *  Schreibt eine Irrlicht-Zeichenkette und eine Zahl beliebigen Typs in das Debugfenster.
      *  \attention Es wird automatisch ein Zeilenumbruch angehängt.
+     *  \param callerName (\a const \a c8*) Name der aufrufenden Methode
      *  \param text (\a core::stringw&) Text
      *  \param number (\a beliebiger \a Zahlentyp) Zahl
      *  \return -
@@ -52,13 +53,13 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void addLine( const core::stringw& text, const T number )
+    void addLine( const c8* callerName, const core::stringw& text, const T number )
     {
         if ( dwin_->isVisible() )
         {
-            content_ += text;
+            content_ = text;
             content_ += core::stringw( number );
-            content_ += newLine_;
+            fragments_.set(callerName, content_);
         }
     }
 
@@ -66,6 +67,7 @@ public:
      *
      *  Schreibt eine Irrlicht-Zeichenkette und zwei Zahlen beliebigen (aber gleichen) Typs in das Debugfenster.
      *  \attention Es wird automatisch ein Zeilenumbruch angehängt.
+     *  \param callerName (\a const \a c8*) Name der aufrufenden Methode
      *  \param text (\a core::stringw&) Text
      *  \param number1 (\a beliebiger \a Zahlentyp) Zahl 1
      *  \param number2 (\a beliebiger \a Zahlentyp) Zahl 2
@@ -74,17 +76,17 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void addLine( const core::stringw& text, const T number1, const T number2 )
+    void addLine( const c8* callerName, const core::stringw& text, const T number1, const T number2 )
     {
         if ( dwin_->isVisible() )
         {
-            content_ += text;
+            content_ = text;
             content_ += L"( ";
             content_ += core::stringw( number1 );
             content_ += L", ";
             content_ += core::stringw( number2 );
             content_ += L" )";
-            content_ += newLine_;
+            fragments_.set(callerName, content_);
         }
     }
 
@@ -92,6 +94,7 @@ public:
      *
      *  Schreibt eine Irrlicht-Zeichenkette und drei Zahlen beliebigen (aber gleichen) Typs in das Debugfenster.
      *  \attention Es wird automatisch ein Zeilenumbruch angehängt.
+     *  \param callerName (\a const \a c8*) Name der aufrufenden Methode
      *  \param text (\a core::stringw&) Text
      *  \param number1 (\a beliebiger \a Zahlentyp) Zahl 1
      *  \param number2 (\a beliebiger \a Zahlentyp) Zahl 2
@@ -101,11 +104,11 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void addLine( const core::stringw& text, const T number1, const T number2, const T number3 )
+    void addLine( const c8* callerName, const core::stringw& text, const T number1, const T number2, const T number3 )
     {
         if ( dwin_->isVisible() )
         {
-            content_ += text;
+            content_ = text;
             content_ += L"( ";
             content_ += core::stringw( number1 );
             content_ += L", ";
@@ -113,7 +116,7 @@ public:
             content_ += L", ";
             content_ += core::stringw( number3 );
             content_ += L" )";
-            content_ += newLine_;
+            fragments_.set(callerName, content_);
         }
     }
 
@@ -139,6 +142,8 @@ private:
 
     IrrlichtDevice* device_;  // das Entchen
     gui::IGUIStaticText* dwin_;  // das GUI-Element "Fenster"
+    core::map<core::stringc, core::stringw> fragments_;
+    core::map<core::stringc, core::stringw>::ParentFirstIterator fragment_;
     core::stringw content_;  // Inhalt des Fensters
     core::stringw newLine_;  // Maske für einen Zeilenumbruch
     u32 displayTimer_;  // Aktualisierung des Debugwindow aller ?ms

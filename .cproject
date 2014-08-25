@@ -63,7 +63,7 @@
 									<listOptionValue builtIn="false" value="&quot;C:\Users\dixx\Projekte\Ressourcen\Lua\5.2.1\lib&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.flags.2065284462" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-m32" valueType="string"/>
-								<option id="gnu.cpp.link.option.debugging.gprof.1255742840" name="Generate gprof information (-pg)" superClass="gnu.cpp.link.option.debugging.gprof" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.link.option.debugging.gprof.1255742840" name="Generate gprof information (-pg)" superClass="gnu.cpp.link.option.debugging.gprof" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.783778667" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

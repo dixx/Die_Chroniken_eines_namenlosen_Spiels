@@ -90,8 +90,8 @@ void StateMainMenu::update( f32 frameDeltaTime )
         Debugwindow::getInstance().toggle();
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
         ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
-    Debugwindow::getInstance().addLine( L"loaded selectors: ", Collision::getInstance().loadedSelectors() );
-    Debugwindow::getInstance().addLine( L"loaded nodes: ", ObjectManager::getInstance().loadedNodes() );
+    Debugwindow::getInstance().addLine( "StateMainMenu::update1", L"loaded selectors: ", Collision::getInstance().loadedSelectors() );
+    Debugwindow::getInstance().addLine( "StateMainMenu::update2", L"loaded nodes: ", ObjectManager::getInstance().loadedNodes() );
 #endif
 #pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }

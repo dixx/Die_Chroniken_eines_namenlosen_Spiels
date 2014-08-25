@@ -161,8 +161,8 @@ void Ground::update()
         updateTimer_->restart();
     }
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine( L"sector: ", updateSectorX_, updateSectorZ_ );
-    Debugwindow::getInstance().addLine( L"visSectors: ", visibleNodeCount_ );
+    Debugwindow::getInstance().addLine( "Ground::update1", L"sector: ", updateSectorX_, updateSectorZ_ );
+    Debugwindow::getInstance().addLine( "Ground::update2", L"visSectors: ", visibleNodeCount_ );
 #endif
 }
 

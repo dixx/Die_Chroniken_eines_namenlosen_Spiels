@@ -58,7 +58,7 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
         Camera::getInstance().startZooming( 1.0f );
     if ( Eventreceiver::getInstance().isKeyDown( KEY_KEY_R ) )
         Camera::getInstance().startZooming( -1.0f );
-    Debugwindow::getInstance().addLine( L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
+    Debugwindow::getInstance().addLine( "StatePlayTheGame::update", L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
 #endif
     Weather::getInstance().update();
     Ground::getInstance().update();
@@ -190,8 +190,8 @@ void StatePlayTheGame::checkGameSpecificInput()
     if ( receiver.isRMBDown() )
         if ( collision.isMouseIntersectingWithWorld() )
         {
-            Debugwindow::getInstance().addLine( L"name: ", collision.collisionNode->getName() );
-            Debugwindow::getInstance().addLine( L"id: ", collision.collisionNode->getID() );
+            Debugwindow::getInstance().addLine( "StatePlayTheGame::checkGameSpecificInput1", L"name: ", collision.collisionNode->getName() );
+            Debugwindow::getInstance().addLine( "StatePlayTheGame::checkGameSpecificInput2", L"id: ", collision.collisionNode->getID() );
         }
 #endif
     if ( receiver.isLMBDown() )

@@ -43,7 +43,7 @@ void GameFloatControl::run()
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
 
     const f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
-    const u32 FRAME_DELTA_TIME_IN_MS = 8;  // for performance.
+    const u32 FRAME_DELTA_TIME_IN_MS = static_cast<u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
 
     u32 loops;
     bool we_must_draw;
@@ -58,16 +58,23 @@ void GameFloatControl::run()
         {
             TimerManager::getInstance().tick( FRAME_DELTA_TIME );
             game.update( FRAME_DELTA_TIME );
+            if ( !device_->run() )
+            {
+                we_must_draw = false;
+                break;
+            }
             eventreceiver.setKeysLastState();
             next += FRAME_DELTA_TIME_IN_MS;
             ++loops;
             we_must_draw = true;
         }
-#ifdef _DEBUG_MODE
-        printFPS();
-#endif
         if ( we_must_draw )
+        {
+#ifdef _DEBUG_MODE
+            printFPS();
+#endif
             game.draw();
+        }
     }
 }
 

@@ -51,9 +51,6 @@ public:
 private:
 
     IrrlichtDevice* device_;  // Zeiger auf das Entchen
-    u32 now_;  // aktueller Zeitwert
-    u32 then_;  // Hilfsvariable für Zeitwertberechnung
-    f32 frameDeltaTime_;  // wichtig für Frameunabhängige Zeit- und Streckenberechnungen
 #ifdef _DEBUG_MODE
     s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
 #endif
@@ -66,8 +63,6 @@ private:
     inline void createLogfile();
     inline void readConfig();
     bool createDeviceFromConfig();
-    inline void prepareFrameDeltaTime();
-    inline void updateFrameDeltaTime();
 #ifdef _DEBUG_MODE
     inline void printFPS();
 #endif

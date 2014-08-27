@@ -164,7 +164,7 @@ void ObjectManager::update( const f32 frameDeltaTime )
         updateTimer_->restart();
     }
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine( L"visibleNodes: ", visibleNodeCount_ );
+    Debugwindow::getInstance().addLine( "ObjectManager::update", L"visibleNodes: ", visibleNodeCount_ );
 #endif
     for( u32 i = 0; i < npcs_.size(); ++i )
         npcs_[ i ]->update( frameDeltaTime );

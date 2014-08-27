@@ -54,7 +54,7 @@ void Mauspfeil::draw()
             true // Alpha-Kanal
     );
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine( L"mousePos = ", control_->getPosition().X, control_->getPosition().Y );
+    Debugwindow::getInstance().addLine( "Mauspfeil::draw", L"mousePos = ", control_->getPosition().X, control_->getPosition().Y );
 #endif
 
 

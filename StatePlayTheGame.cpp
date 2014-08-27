@@ -44,6 +44,7 @@ void StatePlayTheGame::start( f32 frameDeltaTime )
 
 void StatePlayTheGame::update( f32 frameDeltaTime )
 {
+    //u32 x = device_->getTimer()->getRealTime();
     checkInputForGame( frameDeltaTime );
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
@@ -57,13 +58,14 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
         Camera::getInstance().startZooming( 1.0f );
     if ( Eventreceiver::getInstance().isKeyDown( KEY_KEY_R ) )
         Camera::getInstance().startZooming( -1.0f );
-    Debugwindow::getInstance().addLine( L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
+    Debugwindow::getInstance().addLine( "StatePlayTheGame::update", L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
 #endif
     Weather::getInstance().update();
     Ground::getInstance().update();
     ObjectManager::getInstance().update( frameDeltaTime );
     Hero::getInstance().current()->update( frameDeltaTime );
     Camera::getInstance().update( frameDeltaTime );
+    //Logfile::getInstance().dbg( "logic(ms): ", device_->getTimer()->getRealTime() - x);
 }
 
 
@@ -79,6 +81,7 @@ void StatePlayTheGame::shutdown( f32 frameDeltaTime )
 
 void StatePlayTheGame::draw()
 {
+    //u32 x = device_->getTimer()->getRealTime();
     device_->getVideoDriver()->beginScene( true, true, Weather::getInstance().getSkyColor() );
     device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
@@ -87,6 +90,7 @@ void StatePlayTheGame::draw()
 #endif
     Mauspfeil::getInstance().draw();
     device_->getVideoDriver()->endScene();
+    //Logfile::getInstance().dbg( "draw(ms): ", device_->getTimer()->getRealTime() - x);
 }
 
 
@@ -186,8 +190,8 @@ void StatePlayTheGame::checkGameSpecificInput()
     if ( receiver.isRMBDown() )
         if ( collision.isMouseIntersectingWithWorld() )
         {
-            Debugwindow::getInstance().addLine( L"name: ", collision.collisionNode->getName() );
-            Debugwindow::getInstance().addLine( L"id: ", collision.collisionNode->getID() );
+            Debugwindow::getInstance().addLine( "StatePlayTheGame::checkGameSpecificInput1", L"name: ", collision.collisionNode->getName() );
+            Debugwindow::getInstance().addLine( "StatePlayTheGame::checkGameSpecificInput2", L"id: ", collision.collisionNode->getID() );
         }
 #endif
     if ( receiver.isLMBDown() )

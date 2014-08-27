@@ -158,9 +158,9 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
         {
 #ifdef _DEBUG_MODE
             Debugwindow& dw = Debugwindow::getInstance();
-            dw.addLine( L"collision with: ", obstacle->getName() );
-            dw.addLine( L"ObjectCollisionRadius: ", objectRadius );
-            dw.addLine( L"ObstacleCollisionRadius: ", obstacle->getCollisionRadius() );
+            dw.addLine( "Collision::isObjectCollidingWithNodes1", L"collision with: ", obstacle->getName() );
+            dw.addLine( "Collision::isObjectCollidingWithNodes2", L"ObjectCollisionRadius: ", objectRadius );
+            dw.addLine( "Collision::isObjectCollidingWithNodes3", L"ObstacleCollisionRadius: ", obstacle->getCollisionRadius() );
 #endif
             return true;
         }

@@ -68,7 +68,7 @@ void Weather::update()
         updateTimer_->restart();
     }
 #ifdef _DEBUG_MODE
-    Debugwindow::getInstance().addLine( L"SunMoonCircle.Y:  ", sunCircleY_[6], moonCircleY_[6] );
+    Debugwindow::getInstance().addLine( "Weather::update", L"SunMoonCircle.Y:  ", sunCircleY_[6], moonCircleY_[6] );
 #endif
 }
 

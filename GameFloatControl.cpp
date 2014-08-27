@@ -41,19 +41,40 @@ void GameFloatControl::run()
 {
     GameStateManager& game = GameStateManager::getInstance();
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
-    prepareFrameDeltaTime();
+
+    const f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
+    const u32 FRAME_DELTA_TIME_IN_MS = static_cast<u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
+
+    u32 loops;
+    bool we_must_draw;
+    u32 next = device_->getTimer()->getTime();
     while ( device_->run() )
     {
         if ( !device_->isWindowActive() )
             device_->yield();
-        updateFrameDeltaTime();
-        TimerManager::getInstance().tick( frameDeltaTime_ );
-        game.update( frameDeltaTime_ );
-        eventreceiver.setKeysLastState();
+        loops = 0;
+        we_must_draw = false;
+        while ( device_->getTimer()->getTime() > next && loops < 10 ) // Time will slow down if FPS<12.5 (125FPS / 10)
+        {
+            TimerManager::getInstance().tick( FRAME_DELTA_TIME );
+            game.update( FRAME_DELTA_TIME );
+            if ( !device_->run() )
+            {
+                we_must_draw = false;
+                break;
+            }
+            eventreceiver.setKeysLastState();
+            next += FRAME_DELTA_TIME_IN_MS;
+            ++loops;
+            we_must_draw = true;
+        }
+        if ( we_must_draw )
+        {
 #ifdef _DEBUG_MODE
-        printFPS();
+            printFPS();
 #endif
-        game.draw();
+            game.draw();
+        }
     }
 }
 
@@ -72,10 +93,7 @@ void GameFloatControl::stop()
 
 
 GameFloatControl::GameFloatControl()
-: device_(0),
-  now_(0),
-  then_(0),
-  frameDeltaTime_(0.0f)
+: device_(0)
 #ifdef _DEBUG_MODE
   ,fps_(0)
   ,lastFPS_(0)
@@ -145,22 +163,6 @@ bool GameFloatControl::createDeviceFromConfig()
 
 
 
-void GameFloatControl::prepareFrameDeltaTime()
-{
-    then_ = device_->getTimer()->getTime();
-}
-
-
-
-void GameFloatControl::updateFrameDeltaTime()
-{
-    now_ = device_->getTimer()->getTime();
-    frameDeltaTime_ = ( now_ != then_ ) ? static_cast<f32>( now_ - then_ ) * 0.001f : core::ROUNDING_ERROR_f32;
-    then_ = now_;
-}
-
-
-
 #ifdef _DEBUG_MODE
 void GameFloatControl::printFPS()
 {
@@ -168,7 +170,7 @@ void GameFloatControl::printFPS()
     {
         core::stringw str = L"FPS:";
         str += fps_;
-        Debugwindow::getInstance().addLine( str.c_str() );
+        Debugwindow::getInstance().addLine( "GameFloatControl::printFPS()", str );
         lastFPS_ = fps_;
     }
 }

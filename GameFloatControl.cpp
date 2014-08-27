@@ -41,10 +41,9 @@ void GameFloatControl::run()
 {
     GameStateManager& game = GameStateManager::getInstance();
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
-    prepareFrameDeltaTime();
 
     const f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
-    const u32 FRAME_DELTA_TIME_IN_MS = static_cast<u32>( FRAME_DELTA_TIME / 1000.f );
+    const u32 FRAME_DELTA_TIME_IN_MS = 8;  // for performance.
 
     u32 loops;
     bool we_must_draw;
@@ -69,8 +68,6 @@ void GameFloatControl::run()
 #endif
         if ( we_must_draw )
             game.draw();
-        else
-            device_->sleep( next - device_->getTimer()->getTime() );
     }
 }
 
@@ -89,10 +86,7 @@ void GameFloatControl::stop()
 
 
 GameFloatControl::GameFloatControl()
-: device_(0),
-  now_(0),
-  then_(0),
-  frameDeltaTime_(0.0f)
+: device_(0)
 #ifdef _DEBUG_MODE
   ,fps_(0)
   ,lastFPS_(0)
@@ -159,13 +153,6 @@ bool GameFloatControl::createDeviceFromConfig()
     device_->getVideoDriver()->endScene();
     return SUCCEEDED;
  }
-
-
-
-void GameFloatControl::prepareFrameDeltaTime()
-{
-    then_ = device_->getTimer()->getTime();
-}
 
 
 

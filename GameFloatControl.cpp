@@ -139,15 +139,18 @@ bool GameFloatControl::createDeviceFromConfig()
     Logfile& logfile = Logfile::getInstance();
     Configuration& config = Configuration::getInstance();
     Eventreceiver::getInstance().setEventReactionActive( false, false, false );
-    device_ = createDevice(
-            config.getRenderMode(),
-            config.getScreenSize(),
-            config.getColorDepht(),
-            config.isFullScreen(),
-            true,
-            config.isFullScreen(),
-            &Eventreceiver::getInstance()
-    );
+
+    SIrrlichtCreationParameters params = SIrrlichtCreationParameters();
+    params.AntiAlias = 1; // TODO konfigurierbar machen
+    params.Stencilbuffer = true; // TODO konfigurierbar machen
+    params.Bits = static_cast<u8>( config.getColorDepht() ); // TODO refactor to u8!
+    params.DriverType = config.getRenderMode();
+    params.Fullscreen = config.isFullScreen();
+    params.Vsync = params.Fullscreen; // TODO konfigurierbar machen
+    params.EventReceiver = &Eventreceiver::getInstance();
+    params.WindowSize = config.getScreenSize();
+
+    device_ = createDeviceEx( params );
     if ( device_ == 0 )
         return FAILED;
     logfile.setNewFilesystem( device_->getFileSystem() );
@@ -155,6 +158,8 @@ bool GameFloatControl::createDeviceFromConfig()
     logfile.writeLine( Logfile::DETAIL, "3D-Entchen erfolgreich erstellt." );
     logfile.writeLine( Logfile::DETAIL, "    Version: IrrLicht ", device_->getVersion() );
     logfile.writeLine( Logfile::DETAIL, "    Treiber: ", device_->getVideoDriver()->getName() );
+    device_->getVideoDriver()->disableFeature(video::EVDF_BILINEAR_FILTER, false);
+    device_->getVideoDriver()->disableFeature(video::EVDF_STENCIL_BUFFER, false);
     device_->getCursorControl()->setVisible( false );
     device_->getVideoDriver()->beginScene( true, false, COL_BLACK );
     device_->getVideoDriver()->endScene();

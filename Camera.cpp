@@ -104,6 +104,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
 {
     if ( smgr_ == 0 )
         Logfile::getInstance().emergencyExit( "SceneManager in [Camera] nicht mehr gefunden! Abbruch." );
+    Configuration& config = Configuration::getInstance();
     desiredPositionOffsetHeight_ = zoomMax_;
     // dran denken, auch Ablaufsteuerung::checkInputForGame() zu ändern // TODO update comment!
     // wenn sich der speed ändert
@@ -115,11 +116,12 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     //this->smgr->setActiveCamera( this->firstCameraNode );
     firstCameraNode_->updateAbsolutePosition();
     firstCameraNode_->setName( "Kamera 1" );
-    farValue_ = Configuration::getInstance().getFarValue();
+    farValue_ = config.getFarValue();
     firstCameraNode_->setFarValue( farValue_ );
     firstCameraNode_->setNearValue( 0.1f );
-    firstCameraNode_->setFOV( 1.25f );
-    firstCameraNode_->setAspectRatio( 4.0f / 3.0f );
+    firstCameraNode_->setFOV( 1.0f );
+    firstCameraNode_->setAspectRatio(
+            static_cast<f32>( config.getScreenSize().Width ) / static_cast<f32>( config.getScreenSize().Height ) );
     firstCameraNode_->setInputReceiverEnabled( false );
     positionOffset_.rotateXZBy( -180.0f );
 }

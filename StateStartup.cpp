@@ -170,8 +170,10 @@ void StateStartup::createLoadingScreenImage()
     GenericHelperMethods::getInstance().validateFileExistence( "GFX/Schnellladebildschirm.jpg" );
     video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture( "GFX/Schnellladebildschirm.jpg" );
     loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage(
+            // set to screen center
             core::recti( core::dimension2di( 0, 0 ), Configuration::getInstance().getScreenSize() ) );
     loadingScreenImageFrame_->setImage( loadingScreenImage );
+    // if image > screensize:
     loadingScreenImageFrame_->setScaleImage( true );
     loadingScreenImageFrame_->setEnabled( false );
 }

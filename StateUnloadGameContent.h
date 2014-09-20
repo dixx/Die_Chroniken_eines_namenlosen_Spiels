@@ -7,6 +7,7 @@
 
 #include <irrlicht.h>
 #include "GameState.h"
+#include "LoadingScreen.h"
 
 using namespace irr;
 
@@ -63,16 +64,13 @@ public:
 private:
 
     IrrlichtDevice* device_;
+    LoadingScreen* loadingScreen_;
     u32 moduleCounter_;
-    gui::IGUIImage* loadingScreenImageFrame_;
-    gui::IGUIStaticText* loadingText_;
 
     StateUnloadGameContent( const StateUnloadGameContent& );
     StateUnloadGameContent& operator=( const StateUnloadGameContent& );
 
     void transitTo( internalState state );
-    void createLoadingScreenImage();
-    void createLoadingScreenText();
 
 };
 

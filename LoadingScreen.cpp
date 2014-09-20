@@ -13,6 +13,7 @@ LoadingScreen::LoadingScreen( IrrlichtDevice* device, io::path imageFileName )
         Logfile::getInstance().emergencyExit( "Entchen in [LoadingScreen] nicht mehr gefunden! Abbruch." );
     createLoadingScreenImage();
     createLoadingScreenText();
+    loadingScreenImageFrame_->getImage()->grab();  // don't let anyone delete your precious image!
 }
 
 
@@ -20,6 +21,7 @@ LoadingScreen::LoadingScreen( IrrlichtDevice* device, io::path imageFileName )
 LoadingScreen::~LoadingScreen()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
+    loadingScreenImageFrame_->getImage()->drop();
     loadingScreenImageFrame_->remove();
     loadingText_->remove();
 }

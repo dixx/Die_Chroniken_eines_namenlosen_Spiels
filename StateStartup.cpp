@@ -1,8 +1,6 @@
 #include "StateStartup.h"
 #include "Camera.h"
 #include "Collision.h"
-//#include "Configuration.h"
-//#include "Constants.h"
 #include "GenericHelperMethods.h"
 #include "Ground.h"
 #include "Hero.h"

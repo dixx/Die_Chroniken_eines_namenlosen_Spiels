@@ -14,7 +14,7 @@
 
 
 StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
-: TransitionGameState(),
+: GameState(),
   device_(device),
   levelName_("GFX/LEVELS/Level_X"),
   moduleCounter_(0)

@@ -6,7 +6,7 @@
 #define _STATEUNLOADGAMECONTENT_HEADER
 
 #include <irrlicht.h>
-#include "TransitionGameState.h"
+#include "GameState.h"
 
 using namespace irr;
 
@@ -15,7 +15,7 @@ using namespace irr;
  *  \note Instanzierung: `StateUnloadGameContent* myStateUnloadGameContent = new StateUnloadGameContent();`
  *        \n Benutzen: `myStateUnloadGameContent->update(...);`
  */
-class StateUnloadGameContent : public TransitionGameState
+class StateUnloadGameContent : public GameState
 {
 
 public:

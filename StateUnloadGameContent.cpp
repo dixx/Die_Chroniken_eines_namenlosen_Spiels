@@ -15,7 +15,7 @@
 
 
 StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
-: TransitionGameState(),
+: GameState(),
   device_(device),
   moduleCounter_(0)
 {

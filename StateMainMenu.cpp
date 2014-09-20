@@ -71,15 +71,15 @@ StateMainMenu::~StateMainMenu()
 
 void StateMainMenu::start( f32 frameDeltaTime )
 {
+    (void)frameDeltaTime; // game state does no real-time graphics on startup
     transitTo( RUNNING );
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
 void StateMainMenu::update( f32 frameDeltaTime )
 {
+    (void)frameDeltaTime; // game state does no real-time graphics
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
     {
         GameStateManager::getInstance().requestNewState( GameStateManager::SHUTDOWN );
@@ -93,18 +93,15 @@ void StateMainMenu::update( f32 frameDeltaTime )
     Debugwindow::getInstance().addLine( "StateMainMenu::update1", L"loaded selectors: ", Collision::getInstance().loadedSelectors() );
     Debugwindow::getInstance().addLine( "StateMainMenu::update2", L"loaded nodes: ", ObjectManager::getInstance().loadedNodes() );
 #endif
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
 void StateMainMenu::shutdown( f32 frameDeltaTime )
 {
+    (void)frameDeltaTime; // game state does no real-time graphics on shutdown
     transitTo( STOPPED );
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 

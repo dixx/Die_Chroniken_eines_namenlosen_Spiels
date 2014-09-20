@@ -22,7 +22,7 @@
 
 
 StateStartup::StateStartup( IrrlichtDevice* device )
-: GameState(),
+: TransitionGameState(),
   device_(device),
   classCounter_(0)
 {

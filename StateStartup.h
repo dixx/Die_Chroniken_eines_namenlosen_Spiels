@@ -8,7 +8,7 @@
 #define _STATESTARTUP_HEADER
 
 #include <irrlicht.h>
-#include "GameState.h"
+#include "TransitionGameState.h"
 
 using namespace irr;
 
@@ -18,7 +18,7 @@ using namespace irr;
  *  Fast alle Singletons werden hier initialisiert (in der richtigen Reihenfolge).
  *  \note Instanzierung: `StateStartup* myStateStartup = new StateStartup();` \n Benutzen: `myStateStartup->update();`
  */
-class StateStartup : public GameState
+class StateStartup : public TransitionGameState
 {
 
 public:

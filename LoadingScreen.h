@@ -24,17 +24,23 @@ public:
      *  \param imageFileName (\a io::path&) relativer oder absoluter Pfad zum Hintergrundbild
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    LoadingScreen( IrrlichtDevice* device, io::path& imageFileName );
+    LoadingScreen( IrrlichtDevice* device, io::path imageFileName );
 
     /*! \brief Destruktor.
      */
     ~LoadingScreen();
 
-    /*! \brief Aktualisiert das Textfeld des Ladebildschirms.
-     *  \param text (\a core::stringw&) neuer Text
+    /*! \brief Aktiviert den Ladebildschirm.
+     *  \param -
      *  \return -
      */
-    void setText( core::stringw& text );
+    void enable();
+
+    /*! \brief Aktualisiert das Textfeld des Ladebildschirms.
+     *  \param text (\a const \a wchar_t*) neuer Text
+     *  \return -
+     */
+    void setText( const wchar_t* text );
 
 private:
 

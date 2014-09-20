@@ -5,7 +5,7 @@
 
 
 
-LoadingScreen::LoadingScreen( IrrlichtDevice* device, io::path& imageFileName )
+LoadingScreen::LoadingScreen( IrrlichtDevice* device, io::path imageFileName )
 :  device_(device),
   imageFileName_(imageFileName)
 {
@@ -26,9 +26,16 @@ LoadingScreen::~LoadingScreen()
 
 
 
-void LoadingScreen::setText( core::stringw& text )
+void LoadingScreen::enable()
 {
-    loadingText_->setText( text.c_str() );
+    loadingScreenImageFrame_->setEnabled( true );
+}
+
+
+
+void LoadingScreen::setText( const wchar_t* text )
+{
+    loadingText_->setText( text );
 }
 
 

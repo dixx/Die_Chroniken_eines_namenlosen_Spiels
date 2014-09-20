@@ -127,9 +127,9 @@ void StateLoadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
+            loadingScreen_->enable();
             Eventreceiver::getInstance().setEventReactionActive( false, false, false );
             Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
-            loadingScreen_->enable();
             break;
         case RUNNING:
             currentInternalState_ = RUNNING;

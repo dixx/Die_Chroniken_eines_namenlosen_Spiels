@@ -54,6 +54,7 @@ private:
 
     void createLoadingScreenImage();
     void createLoadingScreenText();
+    core::recti resizeToFitIntoScreen( video::ITexture& image );
 
 };
 

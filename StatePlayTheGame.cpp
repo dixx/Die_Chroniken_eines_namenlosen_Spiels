@@ -35,10 +35,9 @@ StatePlayTheGame::~StatePlayTheGame()
 
 void StatePlayTheGame::start( f32 frameDeltaTime )
 {
+    (void)frameDeltaTime; // game state does no real-time graphics on startup
     transitTo( RUNNING );
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
@@ -72,10 +71,9 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
 
 void StatePlayTheGame::shutdown( f32 frameDeltaTime )
 {
+    (void)frameDeltaTime; // game state does no real-time graphics on shutdown
     transitTo( STOPPED );
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> frameDeltaTime
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 
@@ -97,10 +95,9 @@ void StatePlayTheGame::draw()
 
 bool StatePlayTheGame::handleGuiEvents( const irr::SEvent& event )
 {
-#pragma GCC diagnostic ignored "-Wunused-parameter" // ==> event
+    (void)event; // no event handling necessary here
     return false;
 }
-#pragma GCC diagnostic error "-Wunused-parameter"
 
 
 

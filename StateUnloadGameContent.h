@@ -6,7 +6,8 @@
 #define _STATEUNLOADGAMECONTENT_HEADER
 
 #include <irrlicht.h>
-#include "TransitionGameState.h"
+#include "GameState.h"
+#include "LoadingScreen.h"
 
 using namespace irr;
 
@@ -15,7 +16,7 @@ using namespace irr;
  *  \note Instanzierung: `StateUnloadGameContent* myStateUnloadGameContent = new StateUnloadGameContent();`
  *        \n Benutzen: `myStateUnloadGameContent->update(...);`
  */
-class StateUnloadGameContent : public TransitionGameState
+class StateUnloadGameContent : public GameState
 {
 
 public:
@@ -63,16 +64,13 @@ public:
 private:
 
     IrrlichtDevice* device_;
+    LoadingScreen* loadingScreen_;
     u32 moduleCounter_;
-    gui::IGUIImage* loadingScreenImageFrame_;
-    gui::IGUIStaticText* loadingText_;
 
     StateUnloadGameContent( const StateUnloadGameContent& );
     StateUnloadGameContent& operator=( const StateUnloadGameContent& );
 
     void transitTo( internalState state );
-    void createLoadingScreenImage();
-    void createLoadingScreenText();
 
 };
 

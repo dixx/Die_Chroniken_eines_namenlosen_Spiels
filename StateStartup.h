@@ -8,7 +8,8 @@
 #define _STATESTARTUP_HEADER
 
 #include <irrlicht.h>
-#include "TransitionGameState.h"
+#include "GameState.h"
+#include "LoadingScreen.h"
 
 using namespace irr;
 
@@ -18,7 +19,7 @@ using namespace irr;
  *  Fast alle Singletons werden hier initialisiert (in der richtigen Reihenfolge).
  *  \note Instanzierung: `StateStartup* myStateStartup = new StateStartup();` \n Benutzen: `myStateStartup->update();`
  */
-class StateStartup : public TransitionGameState
+class StateStartup : public GameState
 {
 
 public:
@@ -67,15 +68,12 @@ private:
 
     IrrlichtDevice* device_;
     u32 classCounter_;
-    gui::IGUIImage* loadingScreenImageFrame_;
-    gui::IGUIStaticText* loadingText_;
+    LoadingScreen* loadingScreen_;
     gui::IGUIInOutFader* fader_;
 
     StateStartup( const StateStartup& );
     StateStartup& operator=( const StateStartup& );
 
-    void createLoadingScreenImage();
-    void createLoadingScreenText();
     void transitTo( internalState state );
 
 };

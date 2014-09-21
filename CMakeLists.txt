@@ -58,9 +58,12 @@ set(SOURCES
   main.cpp
 )
 
-add_executable(spiel ${SOURCES})
+add_executable(spiel MACOSX_BUNDLE ${SOURCES})
 set_target_properties(spiel PROPERTIES
   COMPILE_FLAGS "-D_DEBUG_MODE=1"
   LINK_FLAGS "-framework cocoa -framework opengl -framework IOKit"
 )
 target_link_libraries(spiel lua Irrlicht irrklang)
+if (APPLE)
+  set_target_properties(spiel PROPERTIES OUTPUT_NAME "Spiel")
+endif (APPLE)

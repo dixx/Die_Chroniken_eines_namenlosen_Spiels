@@ -36,6 +36,7 @@ set(SOURCES
   Ground.cpp
   Hero.cpp
   HeroPunk.cpp
+  LoadingScreen.cpp
   Logfile.cpp
   MapTile.cpp
   Mauspfeil.cpp

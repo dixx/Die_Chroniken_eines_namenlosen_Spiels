@@ -45,10 +45,16 @@ pushd Debug
 
   cmake ../..
 
+  ln -s "$PWD/../CONFIG.CFG"
+  ln -s "$PWD/../GFX"
+  ln -s "$PWD/../SAVEGAMES"
+  ln -s "$PWD/../SCRIPTS"
+  ln -s "$PWD/../SFX"
+
   popd
 popd
 
 echo go to build directory: cd Debug/BD
 echo build with: make
 echo run with:
-echo "  DYLD_LIBRARY_PATH=$IRRLICHT_BUILD_DIR:$IRRKLANG_PATH/bin/macosx-gcc/ ./spiel"
+echo "  DYLD_LIBRARY_PATH=$IRRLICHT_BUILD_DIR:$IRRKLANG_PATH/bin/macosx-gcc/ open Spiel.app"

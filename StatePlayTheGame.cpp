@@ -10,6 +10,7 @@
 #include "ObjectManager.h"
 #include "Weather.h"
 #ifdef _DEBUG_MODE
+#include "DebugShapesManager.h"
 #include "Debugwindow.h"
 #endif
 
@@ -84,6 +85,7 @@ void StatePlayTheGame::draw()
     device_->getSceneManager()->drawAll();
     device_->getGUIEnvironment()->drawAll();
 #ifdef _DEBUG_MODE
+    DebugShapesManager::getInstance().drawAll();
     Debugwindow::getInstance().show();
 #endif
     Mauspfeil::getInstance().draw();

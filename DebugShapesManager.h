@@ -13,6 +13,7 @@ public:
 
     static DebugShapesManager& getInstance( video::IVideoDriver* driver = 0 );
     void createCircle( core::vector3df position, f32 radius );
+    void createEllipsoid( core::vector3df position, core::vector3df radien );
     void drawAll();
 
 private:

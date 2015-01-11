@@ -17,6 +17,13 @@ void DebugShapesManager::createCircle( core::vector3df position, f32 radius )
 
 
 
+void DebugShapesManager::createEllipsoid( core::vector3df position, core::vector3df radien )
+{
+    shapes_.push_back( new DebugEllipsoid( driver_, position, radien ) );
+}
+
+
+
 void DebugShapesManager::drawAll()
 {
     driver_->setMaterial( material_ );

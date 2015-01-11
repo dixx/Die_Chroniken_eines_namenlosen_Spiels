@@ -40,4 +40,24 @@ private:
 
 };
 
+class DebugEllipsoid : public DebugShape
+{
+
+public:
+    DebugEllipsoid( video::IVideoDriver* driver, core::vector3df position, core::vector3df radien );
+    ~DebugEllipsoid();
+    void draw();
+    void drop();
+
+private:
+    video::IVideoDriver* driver_;
+    core::vector3df position_;
+    core::vector3df radien_;
+    scene::SMeshBuffer* ellipsoidMeshBuffer_;
+    DebugEllipsoid( const DebugEllipsoid& );
+    DebugEllipsoid& operator=( const DebugEllipsoid& );
+    void createEllipsoid();
+
+};
+
 #endif

@@ -1,6 +1,9 @@
 #include "Collision.h"
 #include "Constants.h"
+#ifdef _DEBUG_MODE
+#include "DebugShapesManager.h"
 #include "Debugwindow.h"
+#endif
 #include "Eventreceiver.h"
 #include "Logfile.h"
 #include "ObjectManager.h"
@@ -110,14 +113,12 @@ bool Collision::isRayIntersectingWithWalkableNodesAroundHero( const core::line3d
 
 bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
 {
+    // TODO refactor!
     bool isCollision = false;
     scene::ISceneNode* objectNode = object->nodeInterface();
     f32 objectRadius = object->getCollisionRadius();
     const core::vector3df& objectCenter = objectNode->getAbsolutePosition();
     core::aabbox3df objectBB = core::aabbox3df( objectCenter - objectRadius, objectCenter + objectRadius );
-#ifdef _DEBUG_MODE
-    objectNode->setMaterialFlag( video::EMF_POINTCLOUD, false );
-#endif
     Basic3DObject* obstacle = 0;
     scene::ISceneNode* obstacleNode = 0;
     f32 obstacleRadius = 0.0f;
@@ -127,7 +128,7 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
     {
         obstacle = *iter_;
         obstacleNode = obstacle->nodeInterface();
-        if ( obstacleNode == objectNode ) // see "intuitive pointer equality"
+        if ( obstacleNode == objectNode ) // this works because of "intuitive pointer equality"
             continue;
         obstacleRadius = obstacle->getCollisionRadius();
         if ( obstacleRadius > core::ROUNDING_ERROR_f32 ) // Lebewesen?
@@ -145,13 +146,26 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
         }
         else
         {
-            if( obstacleNode->getTransformedBoundingBox().intersectsWithBox( objectBB ) )
+            if ( obstacleNode->getTransformedBoundingBox().intersectsWithBox( objectBB ) )
             {
-#ifdef _DEBUG_MODE
-                objectNode->setMaterialFlag( video::EMF_POINTCLOUD, true );
-#endif
-                isCollision = true;
-                collisionDodgeVector = object->getNextStep();
+                DebugShapesManager::getInstance().createEllipsoid( objectCenter, objectBB.MaxEdge - objectCenter );
+                bool _;
+                collisionNode = 0;
+                colliman_->getCollisionResultPosition(
+                        obstacleNode->getTriangleSelector(),
+                        objectCenter, // ellipsoidPosition
+                        objectBB.MaxEdge - objectCenter, // ellipsoidRadius
+                        object->getNextStep(), // ellipsoidDirectionAndSpeed
+                        collisionTriangle,
+                        collisionPoint,
+                        _, // isFalling
+                        collisionNode
+                );
+                if ( collisionNode )
+                {
+                    isCollision = true;
+                    collisionDodgeVector = -object->getNextStep();
+                }
             }
         }
         if ( isCollision )

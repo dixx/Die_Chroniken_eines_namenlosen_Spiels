@@ -21,6 +21,7 @@ BasicLifeform::BasicLifeform( const core::stringc& objectData, scene::ISceneMana
   positionOffset_(VEC_3DF_NULL),
   rotation_(VEC_3DF_NULL),
   nextStep_(VEC_3DF_NULL),
+  maxBB_(core::aabbox3df( VEC_3DF_NULL, VEC_3DF_NULL )),
   maxJumpHeight_(0.0f)
 {
     if ( smgr_ == 0 )
@@ -115,6 +116,17 @@ scene::ISceneNode* BasicLifeform::nodeInterface() const
 const core::vector3df& BasicLifeform::getNextStep() const
 {
     return nextStep_;
+}
+
+
+
+const core::aabbox3df& BasicLifeform::getMaxBoundingBox()
+{
+    maxBB_ = core::aabbox3df( // TODO calculate real maxBB
+            currentPosition_ + positionOffset_ - core::vector3df( collisionRadius_, node_->getTransformedBoundingBox().getExtent().Y / 2.f, collisionRadius_ ),
+            currentPosition_ + positionOffset_ + core::vector3df( collisionRadius_, node_->getTransformedBoundingBox().getExtent().Y / 2.f, collisionRadius_ )
+    );
+    return maxBB_;
 }
 
 

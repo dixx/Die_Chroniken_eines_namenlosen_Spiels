@@ -57,6 +57,12 @@ public:
      */
     const core::vector3df& getNextStep() const;
 
+    /*! \brief Liefert die größte gemeinsame BoundingBox des Objekts.
+     *  \param -
+     *  \return \a const \a core::aabbox3df& größte gemeinsame BoundingBox des Objekts
+     */
+    const core::aabbox3df& getMaxBoundingBox();
+
     /*! \brief Liefert die aktuelle Konfiguration des Objektes.
      *  \param -
      *  \return \a const \a ObjectConfiguration& Konfiguration des Objektes
@@ -66,6 +72,7 @@ public:
 protected:
 
     BufferCullMeshSceneNode* node_;
+    core::aabbox3df maxBB_;
 
     scene::IMesh* loadMesh();
 

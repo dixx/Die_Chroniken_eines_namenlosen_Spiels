@@ -22,7 +22,7 @@ public:
      *         Wurde er von einem Child der Klasse aufgerufen, muss sich dieses um die Erstellung kümmern.
      *  \attention Ist die Beschreibung leer oder fehlerhaft, wird ein leeres Objekt generiert, dessen
      *             3D-Knoten-Zeiger 0 ist.
-     *  \param objectData (\a const \a core::stringc&) textuelle Beschreibung des Objekts
+     *  \param objectData (\a const \a core::stringc&) textuelle Beschreibung des Lebewesens
      *  \param smgr (\a scene::ISceneManager*) Zeiger auf den SceneManager
      *  \param isParent (\a bool) Bei Vererbung auf `true` setzen, ansonsten automatisch `false`
      */
@@ -44,29 +44,35 @@ public:
      */
     virtual void moveTo( const core::vector3df target );
 
-    /*! \brief Liefert einen Zeiger auf den 3D-Knoten des Objekts, oder 0 wenn kein Knoten existiert.
+    /*! \brief Liefert einen Zeiger auf den 3D-Knoten des Lebewesens, oder 0 wenn kein Knoten existiert.
      *  \param -
      *  \return \a scene::IAnimatedMeshSceneNode* Knoten
      */
     scene::IAnimatedMeshSceneNode* getNode() const;
 
-    /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem Kollisionen abgefangen werden sollen.
+    /*! \brief Liefert den Abstand zum Mittelpunkt des Lebewesens zurück, ab dem Kollisionen abgefangen werden sollen.
      *  \param -
      *  \return \a const \a f32 Kollisionsradius
      */
     f32 getCollisionRadius() const;
 
-    /*! \brief Liefert ein Interface für den Basis-Szenenknoten des Objekts zurück.
+    /*! \brief Liefert ein Interface für den Basis-Szenenknoten des Lebewesens zurück.
      *  \param -
      *  \return \a scene::ISceneNode* Interface auf den Basis-Szenenknoten
      */
     scene::ISceneNode* nodeInterface() const;
 
-    /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Objekts zurück.
+    /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Lebewesens zurück.
      *  \param -
      *  \return \a core::vector3df Länge und Richtung des nächsten Schrittes
      */
     const core::vector3df& getNextStep() const;
+
+    /*! \brief Liefert die größte gemeinsame BoundingBox des Lebewesens.
+     *  \param -
+     *  \return \a const \a core::aabbox3df& größte gemeinsame BoundingBox des Lebewesens
+     */
+    const core::aabbox3df& getMaxBoundingBox();
 
 protected:
 
@@ -81,6 +87,7 @@ protected:
     core::vector3df positionOffset_;
     core::vector3df rotation_;
     core::vector3df nextStep_;
+    core::aabbox3df maxBB_;
     f32 maxJumpHeight_;
 
     scene::IAnimatedMesh* loadMesh();

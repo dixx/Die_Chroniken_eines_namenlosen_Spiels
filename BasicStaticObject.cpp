@@ -9,7 +9,8 @@
 
 BasicStaticObject::BasicStaticObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
 : Basic3DObject( objectData, smgr, true ),
-  node_(0)
+  node_(0),
+  maxBB_(core::aabbox3df( VEC_3DF_NULL, VEC_3DF_NULL ))
 {
     if ( smgr_ == 0 )
         Logfile::getInstance().emergencyExit( "SceneManager in [BasicStaticObject] nicht mehr gefunden! Abbruch." );
@@ -57,6 +58,13 @@ scene::ISceneNode* BasicStaticObject::nodeInterface() const
 const core::vector3df& BasicStaticObject::getNextStep() const
 {
     return VEC_3DF_NULL;
+}
+
+
+
+const core::aabbox3df& BasicStaticObject::getMaxBoundingBox()
+{
+    return maxBB_;
 }
 
 
@@ -145,5 +153,6 @@ void BasicStaticObject::init()
             loadFilterAndEffects( node_->getMaterial( i ) );
         Collision::getInstance().addStaticMeshNodeToWorld( node_ );
         node_->setVisible( false );
+        maxBB_ = node_->getTransformedBoundingBox();
     }
 }

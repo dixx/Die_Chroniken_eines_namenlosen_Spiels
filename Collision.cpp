@@ -118,7 +118,13 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
     scene::ISceneNode* objectNode = object->nodeInterface();
     f32 objectRadius = object->getCollisionRadius();
     const core::vector3df& objectCenter = objectNode->getAbsolutePosition();
-    core::aabbox3df objectBB = core::aabbox3df( objectCenter - objectRadius, objectCenter + objectRadius );
+    core::aabbox3df objectBB = core::aabbox3df( // TODO add maxBB to objects
+            objectCenter - core::vector3df( objectRadius, objectNode->getTransformedBoundingBox().getExtent().Y / 2.f, objectRadius ),
+            objectCenter + core::vector3df( objectRadius, objectNode->getTransformedBoundingBox().getExtent().Y / 2.f, objectRadius )
+    );
+#ifdef _DEBUG_MODE
+    DebugShapesManager::getInstance().createEllipsoid( objectCenter, objectBB.MaxEdge - objectCenter );
+#endif
     Basic3DObject* obstacle = 0;
     scene::ISceneNode* obstacleNode = 0;
     f32 obstacleRadius = 0.0f;
@@ -148,7 +154,6 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
         {
             if ( obstacleNode->getTransformedBoundingBox().intersectsWithBox( objectBB ) )
             {
-                DebugShapesManager::getInstance().createEllipsoid( objectCenter, objectBB.MaxEdge - objectCenter );
                 bool _;
                 collisionNode = 0;
                 colliman_->getCollisionResultPosition(
@@ -164,7 +169,8 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
                 if ( collisionNode )
                 {
                     isCollision = true;
-                    collisionDodgeVector = -object->getNextStep();
+                    collisionDodgeVector = -object->getNextStep(); // reset movement
+                    // TODO make object either halt or slide along
                 }
             }
         }
@@ -175,6 +181,12 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
             dw.addLine( "Collision::isObjectCollidingWithNodes1", L"collision with: ", obstacle->getName() );
             dw.addLine( "Collision::isObjectCollidingWithNodes2", L"ObjectCollisionRadius: ", objectRadius );
             dw.addLine( "Collision::isObjectCollidingWithNodes3", L"ObstacleCollisionRadius: ", obstacle->getCollisionRadius() );
+            dw.addLine(
+                    "Collision::isObjectCollidingWithNodes4", L"ellipsoidRadien: ",
+                    objectBB.MaxEdge.X - objectCenter.X,
+                    objectBB.MaxEdge.Y - objectCenter.Y,
+                    objectBB.MaxEdge.Z - objectCenter.Z
+            );
 #endif
             return true;
         }

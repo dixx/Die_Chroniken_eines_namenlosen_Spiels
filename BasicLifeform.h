@@ -68,11 +68,11 @@ public:
      */
     const core::vector3df& getNextStep() const;
 
-    /*! \brief Liefert die größte gemeinsame BoundingBox des Lebewesens.
+    /*! \brief Liefert die Abmessungen der größten gemeinsamen BoundingBox des Lebewesens.
      *  \param -
-     *  \return \a const \a core::aabbox3df& größte gemeinsame BoundingBox des Lebewesens
+     *  \return \a const \a core::vector3df& Abmessungen der größten gemeinsamen BoundingBox des Lebewesens
      */
-    const core::aabbox3df& getMaxBoundingBox();
+    const core::vector3df& getMaxBoundingBoxExtent() const;
 
 protected:
 
@@ -87,7 +87,7 @@ protected:
     core::vector3df positionOffset_;
     core::vector3df rotation_;
     core::vector3df nextStep_;
-    core::aabbox3df maxBB_;
+    core::vector3df maxBBExtent_;
     f32 maxJumpHeight_;
 
     scene::IAnimatedMesh* loadMesh();

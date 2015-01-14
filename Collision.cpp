@@ -118,7 +118,10 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
     scene::ISceneNode* objectNode = object->nodeInterface();
     f32 objectRadius = object->getCollisionRadius();
     const core::vector3df& objectCenter = objectNode->getAbsolutePosition();
-    core::aabbox3df objectBB = object->getMaxBoundingBox();
+    core::aabbox3df objectBB = core::aabbox3df(
+            objectCenter - object->getMaxBoundingBoxExtent() / 2.0f,
+            objectCenter + object->getMaxBoundingBoxExtent() / 2.0f
+    );
 #ifdef _DEBUG_MODE
     DebugShapesManager::getInstance().createEllipsoid( objectCenter, objectBB.MaxEdge - objectCenter );
 #endif

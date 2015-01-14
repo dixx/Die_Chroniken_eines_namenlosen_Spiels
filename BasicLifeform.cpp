@@ -21,7 +21,7 @@ BasicLifeform::BasicLifeform( const core::stringc& objectData, scene::ISceneMana
   positionOffset_(VEC_3DF_NULL),
   rotation_(VEC_3DF_NULL),
   nextStep_(VEC_3DF_NULL),
-  maxBB_(core::aabbox3df( VEC_3DF_NULL, VEC_3DF_NULL )),
+  maxBBExtent_(VEC_3DF_NULL),
   maxJumpHeight_(0.0f)
 {
     if ( smgr_ == 0 )
@@ -120,13 +120,9 @@ const core::vector3df& BasicLifeform::getNextStep() const
 
 
 
-const core::aabbox3df& BasicLifeform::getMaxBoundingBox()
+const core::vector3df& BasicLifeform::getMaxBoundingBoxExtent() const
 {
-    maxBB_ = core::aabbox3df( // TODO calculate real maxBB
-            currentPosition_ + positionOffset_ - core::vector3df( collisionRadius_, node_->getTransformedBoundingBox().getExtent().Y / 2.f, collisionRadius_ ),
-            currentPosition_ + positionOffset_ + core::vector3df( collisionRadius_, node_->getTransformedBoundingBox().getExtent().Y / 2.f, collisionRadius_ )
-    );
-    return maxBB_;
+    return maxBBExtent_;
 }
 
 
@@ -227,5 +223,10 @@ void BasicLifeform::init()
     Collision::getInstance().addAnimatedMeshNodeToWorld( node_ );
     node_->setVisible( false );
     calculateCollisionRadius();
+    maxBBExtent_ = core::vector3df(
+            collisionRadius_ * 2,
+            node_->getTransformedBoundingBox().getExtent().Y,
+            collisionRadius_ * 2
+    );
     //node_->addShadowVolumeSceneNode(); todo Durch Blob-Schatten ersetzen
 }

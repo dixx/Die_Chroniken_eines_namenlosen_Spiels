@@ -49,12 +49,12 @@ public:
      */
     //const ObjectConfiguration& getObjectData() const;
 
-    /*! \brief Liefert die größte gemeinsame BoundingBox des Objekts.
+    /*! \brief Liefert die Abmessungen der größten gemeinsamen BoundingBox des Objekts.
      *  \attention Methode ist pure virtual!
      *  \param -
-     *  \return \a const \a core::aabbox3df& größte gemeinsame BoundingBox des Objekts
+     *  \return \a const \a core::vector3df& Abmessungen größten gemeinsamen BoundingBox des Objekts
      */
-    virtual const core::aabbox3df& getMaxBoundingBox() = 0;
+    virtual const core::vector3df& getMaxBoundingBoxExtent() const = 0;
 
     /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem Kollisionen abgefangen werden sollen.
      *  \attention Methode ist pure virtual!

@@ -22,6 +22,7 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
     loadingScreen_ = new LoadingScreen( device_, io::path( "GFX/Spiellogo.png" ) );
+    forceDraw_ = true;
     transitTo( STARTING );
 }
 

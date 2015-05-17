@@ -65,6 +65,13 @@ public:
      */
     bool handleGuiEvents( const irr::SEvent& event );
 
+    /*! \brief Legt fest, ob das Zeichnen für jeden Frame erzwungen werden soll.
+     *  \attention Nur für zeitunkritische States!
+     *  \param -
+     *  \return `true` wenn Zeichnen erzwungen werden soll, ansonsten `false`
+     */
+    bool allFramesMustBeShown();
+
     /*! \brief Fragt Wechsel zu einem neuen Spiel-State an.
      *  \param desiredState (\a State) zu aktivierender Spiel-State
      *  \return -

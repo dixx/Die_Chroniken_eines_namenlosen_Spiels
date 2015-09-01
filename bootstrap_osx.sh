@@ -45,11 +45,11 @@ pushd Debug
 
   cmake ../..
 
-  ln -s "$PWD/../CONFIG.CFG"
-  ln -s "$PWD/../GFX"
-  ln -s "$PWD/../SAVEGAMES"
-  ln -s "$PWD/../SCRIPTS"
-  ln -s "$PWD/../SFX"
+  ln -fs "$PWD/../CONFIG.CFG"
+  ln -fs "$PWD/../GFX"
+  ln -fs "$PWD/../SAVEGAMES"
+  ln -fs "$PWD/../SCRIPTS"
+  ln -fs "$PWD/../SFX"
 
   popd
 popd

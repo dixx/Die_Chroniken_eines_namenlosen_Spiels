@@ -54,7 +54,17 @@ pushd Debug
   popd
 popd
 
-echo go to build directory: cd Debug/BD
-echo build with: make
-echo run with:
-echo "  DYLD_LIBRARY_PATH=$IRRLICHT_BUILD_DIR:$IRRKLANG_PATH/bin/macosx-gcc/ open Spiel.app"
+
+cat << EOF
+================================================================================
+
+Whats next?
+
+go to build directory:
+  $ cd Debug/BD
+build with:
+  $ make
+run game with:
+  $ DYLD_LIBRARY_PATH=$IRRLICHT_BUILD_DIR:$IRRKLANG_PATH/bin/macosx-gcc/ \
+open Spiel.app"
+EOF

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -ex
+set -e
 
 which xcodebuild || { echo Install Xcode via AppStore. ; exit 1; }
 which cmake || { echo Install CMake via Homebrew. ; exit 1; }

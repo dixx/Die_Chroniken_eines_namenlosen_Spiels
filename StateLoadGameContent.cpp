@@ -21,7 +21,12 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
-    loadingScreen_ = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
+    LoadingScreen* pic = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
+    pictures_.push_back( pic );
+    pic = new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
+    pictures_.push_back( pic );
+    pic = new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_.push_back( pic );
     forceDraw_ = true;
     transitTo( STARTING );
 }
@@ -31,8 +36,19 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
 StateLoadGameContent::~StateLoadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    if ( loadingScreen_ )
-        delete loadingScreen_;
+    if ( pictures_.size() > 0 )
+    {
+        for ( register u32 i = 0; i < pictures_.size(); ++i )
+        {
+            if ( pictures_[ i ] )
+            {
+                delete pictures_[ i ];
+                pictures_[ i ] = 0;
+            }
+        }
+    }
+
+    pictures_.clear();
 }
 
 
@@ -51,39 +67,41 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
     switch( moduleCounter_ )
     {
         case 0:
-            loadingScreen_->setText( L"Lade Sonnenschein..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Sonnenschein..." );
             Weather::getInstance().load();
+            pictures_[ICON_WORLD]->enable();
             break;
         case 1:
-            loadingScreen_->setText( L"Lade Fußboden..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Fußboden..." );
             Ground::getInstance().load( ( levelName_ + ".map" ).c_str() );
+            pictures_[ICON_QUESTS]->enable();
             break;
         case 2:
-            loadingScreen_->setText( L"Lade hübsche Dinge..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade hübsche Dinge..." );
             //ObjectManager::getInstance().loadBasicDecorations();
             break;
         case 3:
-            loadingScreen_->setText( L"Lade feste Dinge..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade feste Dinge..." );
             ObjectManager::getInstance().loadSolids( ( levelName_ + ".solids" ).c_str() );
             break;
         case 4:
-            loadingScreen_->setText( L"Lade zappelnde Dinge..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade zappelnde Dinge..." );
             ObjectManager::getInstance().loadNPCs( ( levelName_ + ".npcs" ).c_str() );
             break;
         case 5:
-            loadingScreen_->setText( L"Lade Würfelmaschine..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Würfelmaschine..." );
             // ...initialisiere KI
             break;
         case 6:
-            loadingScreen_->setText( L"Lade das Wichtigste von allem..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade das Wichtigste von allem..." );
             Hero::getInstance().load(); //TODO später aus Savegame laden!
             break;
         case 7:
-            loadingScreen_->setText( L"Lade Augen..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Augen..." );
             Camera::getInstance().lockToNode( Hero::getInstance().current()->nodeInterface() );
             break;
         default:
-            loadingScreen_->setText( L"" );
+            pictures_[LOADING_SCREEN]->setText( L"" );
             GameStateManager::getInstance().requestNewState( GameStateManager::GAME );
             transitTo( STOPPING );
             break;
@@ -128,7 +146,7 @@ void StateLoadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            loadingScreen_->enable();
+            pictures_[LOADING_SCREEN]->enable();
             Eventreceiver::getInstance().setEventReactionActive( false, false, false );
             Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;

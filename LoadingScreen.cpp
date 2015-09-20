@@ -31,6 +31,7 @@ LoadingScreen::~LoadingScreen()
 void LoadingScreen::enable()
 {
     loadingScreenImageFrame_->setEnabled( true );
+    loadingScreenImageFrame_->setVisible( true );
 }
 
 
@@ -55,6 +56,7 @@ void LoadingScreen::createLoadingScreenImage()
     loadingScreenImageFrame_->setImage( loadingScreenImage );
     loadingScreenImageFrame_->setScaleImage( true );
     loadingScreenImageFrame_->setEnabled( false );
+    loadingScreenImageFrame_->setVisible( false );
 }
 
 

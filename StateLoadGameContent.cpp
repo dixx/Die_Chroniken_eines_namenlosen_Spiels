@@ -21,12 +21,9 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
-    LoadingScreen* pic = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
-    pictures_.push_back( pic );
-    pic = new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
-    pictures_.push_back( pic );
-    pic = new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
-    pictures_.push_back( pic );
+    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
+    pictures_[ICON_WORLD] = new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
+    pictures_[ICON_QUESTS] = new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
     forceDraw_ = true;
     transitTo( STARTING );
 }
@@ -36,19 +33,14 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
 StateLoadGameContent::~StateLoadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    if ( pictures_.size() > 0 )
+    for ( register u32 i = 0; i < COUNT; ++i )
     {
-        for ( register u32 i = 0; i < pictures_.size(); ++i )
+        if ( pictures_[ i ] )
         {
-            if ( pictures_[ i ] )
-            {
-                delete pictures_[ i ];
-                pictures_[ i ] = 0;
-            }
+            delete pictures_[ i ];
+            pictures_[ i ] = 0;
         }
     }
-
-    pictures_.clear();
 }
 
 

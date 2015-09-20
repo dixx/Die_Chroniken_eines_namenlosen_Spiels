@@ -66,11 +66,11 @@ private:
     IrrlichtDevice* device_;
     enum Picture_ {
         LOADING_SCREEN = 0,
-        ICON_WORLD = 1,
-        ICON_QUESTS = 2,
-        COUNT = 3
+        ICON_WORLD,
+        ICON_QUESTS,
+        COUNT
     };
-    core::array<LoadingScreen*> pictures_;
+    LoadingScreen* pictures_[COUNT];
     core::stringc levelName_;
     u32 moduleCounter_;
 

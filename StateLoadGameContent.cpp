@@ -22,8 +22,23 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
     pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
-    pictures_[ICON_WORLD] = new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
-    pictures_[ICON_QUESTS] = new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_[ICON_WORLD] =     new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
+    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, io::path( "GFX/Bevoelkerung_icon.png" ) );
+    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, io::path( "GFX/Gebaeude_icon.png" ) );
+    pictures_[ICON_THINGS] =    new LoadingScreen( device_, io::path( "GFX/Gegenstaende_icon.png" ) );
+    pictures_[ICON_HERO] =      new LoadingScreen( device_, io::path( "GFX/Held_icon.png" ) );
+    pictures_[ICON_FLORA] =     new LoadingScreen( device_, io::path( "GFX/Pflanzen_icon.png" ) );
+    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, io::path( "GFX/Tiere_icon.png" ) );
+    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, io::path( "GFX/Wetter_icon.png" ) );
+    pictures_[CONCEPT_1] =      new LoadingScreen( device_, io::path( "GFX/Konzept1.png" ) );
+    pictures_[CONCEPT_2] =      new LoadingScreen( device_, io::path( "GFX/Konzept2.png" ) );
+    pictures_[CONCEPT_3] =      new LoadingScreen( device_, io::path( "GFX/Konzept3.png" ) );
+    pictures_[CONCEPT_4] =      new LoadingScreen( device_, io::path( "GFX/Konzept4.png" ) );
+    pictures_[CONCEPT_5] =      new LoadingScreen( device_, io::path( "GFX/Konzept5.png" ) );
+    pictures_[CONCEPT_6] =      new LoadingScreen( device_, io::path( "GFX/Konzept6.png" ) );
+    pictures_[CONCEPT_7] =      new LoadingScreen( device_, io::path( "GFX/Konzept7.png" ) );
+    pictures_[CONCEPT_8] =      new LoadingScreen( device_, io::path( "GFX/Konzept8.png" ) );
     forceDraw_ = true;
     transitTo( STARTING );
 }
@@ -61,36 +76,42 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
         case 0:
             pictures_[LOADING_SCREEN]->setText( L"Lade Sonnenschein..." );
             Weather::getInstance().load();
-            pictures_[ICON_WORLD]->enable();
+            pictures_[ICON_WEATHER]->enable();
             break;
         case 1:
             pictures_[LOADING_SCREEN]->setText( L"Lade Fußboden..." );
             Ground::getInstance().load( ( levelName_ + ".map" ).c_str() );
-            pictures_[ICON_QUESTS]->enable();
+            pictures_[ICON_WORLD]->enable();
             break;
         case 2:
             pictures_[LOADING_SCREEN]->setText( L"Lade hübsche Dinge..." );
             //ObjectManager::getInstance().loadBasicDecorations();
+            pictures_[ICON_FLORA]->enable();
             break;
         case 3:
             pictures_[LOADING_SCREEN]->setText( L"Lade feste Dinge..." );
             ObjectManager::getInstance().loadSolids( ( levelName_ + ".solids" ).c_str() );
+            pictures_[ICON_BUILDINGS]->enable();
             break;
         case 4:
             pictures_[LOADING_SCREEN]->setText( L"Lade zappelnde Dinge..." );
             ObjectManager::getInstance().loadNPCs( ( levelName_ + ".npcs" ).c_str() );
+            pictures_[ICON_PEOPLE]->enable();
             break;
         case 5:
             pictures_[LOADING_SCREEN]->setText( L"Lade Würfelmaschine..." );
             // ...initialisiere KI
+            pictures_[ICON_QUESTS]->enable();
             break;
         case 6:
             pictures_[LOADING_SCREEN]->setText( L"Lade das Wichtigste von allem..." );
             Hero::getInstance().load(); //TODO später aus Savegame laden!
+            pictures_[ICON_HERO]->enable();
             break;
         case 7:
             pictures_[LOADING_SCREEN]->setText( L"Lade Augen..." );
             Camera::getInstance().lockToNode( Hero::getInstance().current()->nodeInterface() );
+            pictures_[ICON_FAUNA]->enable();
             break;
         default:
             pictures_[LOADING_SCREEN]->setText( L"" );

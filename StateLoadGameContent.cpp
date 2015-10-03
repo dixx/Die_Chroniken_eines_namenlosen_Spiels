@@ -21,6 +21,7 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
+    pictures_ = core::array<LoadingScreen*>( COUNT );
     pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
     pictures_[ICON_WORLD] =     new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
     pictures_[ICON_QUESTS] =    new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
@@ -56,6 +57,7 @@ StateLoadGameContent::~StateLoadGameContent()
             pictures_[ i ] = 0;
         }
     }
+    pictures_.clear();
 }
 
 

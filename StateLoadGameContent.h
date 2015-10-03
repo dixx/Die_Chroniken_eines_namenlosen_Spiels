@@ -87,7 +87,7 @@ private:
 
         COUNT
     };
-    LoadingScreen* pictures_[COUNT];
+    core::array<LoadingScreen*> pictures_;
     core::stringc levelName_;
     u32 moduleCounter_;
 

@@ -20,8 +20,7 @@ LoadingScreen::LoadingScreen( IrrlichtDevice* device, io::path imageFileName )
 
 LoadingScreen::~LoadingScreen()
 {
-    // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    loadingScreenImageFrame_->getImage()->drop();
+    loadingScreenImageFrame_->getImage()->drop();  // you grab it, you drop it.
     loadingScreenImageFrame_->remove();
     loadingText_->remove();
 }
@@ -77,7 +76,7 @@ void LoadingScreen::createLoadingScreenText()
 
 
 
-core::recti LoadingScreen::resizeToFitIntoScreen( video::ITexture& image )
+core::recti LoadingScreen::resizeToFitIntoScreen( video::ITexture& image ) // TODO rename, refactor!
 {
     core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     f32 screenWidth = static_cast<f32>( screenSize.Width );

@@ -9,6 +9,7 @@
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
 #include "Weather.h"
+#include "Zufall.h"
 
 
 
@@ -65,6 +66,14 @@ StateLoadGameContent::~StateLoadGameContent()
 void StateLoadGameContent::start( f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
+    Zufall& zufall = Zufall::getInstance();
+    for ( register u32 i = 0; i < 8; ++i )
+    {
+        if ( zufall.doesOccur( 20.f ) )
+        {
+            pictures_[zufall.getIntBetween( CONCEPT_1, CONCEPT_8 )]->enable();
+        }
+    }
     transitTo( RUNNING );
 }
 

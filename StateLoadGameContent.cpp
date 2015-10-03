@@ -94,11 +94,13 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             pictures_[LOADING_SCREEN]->setText( L"Lade feste Dinge..." );
             ObjectManager::getInstance().loadSolids( ( levelName_ + ".solids" ).c_str() );
             pictures_[ICON_BUILDINGS]->enable();
+            pictures_[ICON_THINGS]->enable();
             break;
         case 4:
             pictures_[LOADING_SCREEN]->setText( L"Lade zappelnde Dinge..." );
             ObjectManager::getInstance().loadNPCs( ( levelName_ + ".npcs" ).c_str() );
             pictures_[ICON_PEOPLE]->enable();
+            pictures_[ICON_FAUNA]->enable();
             break;
         case 5:
             pictures_[LOADING_SCREEN]->setText( L"Lade Würfelmaschine..." );
@@ -113,7 +115,6 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
         case 7:
             pictures_[LOADING_SCREEN]->setText( L"Lade Augen..." );
             Camera::getInstance().lockToNode( Hero::getInstance().current()->nodeInterface() );
-            pictures_[ICON_FAUNA]->enable();
             break;
         default:
             pictures_[LOADING_SCREEN]->setText( L"" );

@@ -1,8 +1,10 @@
-/Debug
-!/Debug/*.dll
-!/Debug/*.CFG
-!/Debug/GFX
-!/Debug/SFX
-!/Debug/SCRIPTS
+/Debug/*.o
+/Debug/*.d
+/Debug/*.exe
+/Debug/*.log
+/Debug/*.out
+/Debug/*.mk
+/Debug/makefile
+/Debug/SAVEGAMES
 /Doc/html
 *Thumbs.db

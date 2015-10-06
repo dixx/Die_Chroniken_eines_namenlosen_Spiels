@@ -1,5 +1,6 @@
 #include "LoadingScreen.h"
 #include "Configuration.h"
+#include "Constants.h"
 #include "GenericHelperMethods.h"
 #include "Logfile.h"
 
@@ -50,7 +51,7 @@ void LoadingScreen::createLoadingScreenImage()
 {
     GenericHelperMethods::getInstance().validateFileExistence( imageFileName_ );
     video::ITexture* loadingScreenImage = device_->getVideoDriver()->getTexture( imageFileName_ );
-    core::recti frame = resizeToFitIntoScreen( *loadingScreenImage );
+    core::recti frame = screenDependentSizeOf( *loadingScreenImage );
     loadingScreenImageFrame_ = device_->getGUIEnvironment()->addImage( frame );
     loadingScreenImageFrame_->setImage( loadingScreenImage );
     loadingScreenImageFrame_->setScaleImage( true );
@@ -76,7 +77,7 @@ void LoadingScreen::createLoadingScreenText()
 
 
 
-core::recti LoadingScreen::resizeToFitIntoScreen( video::ITexture& image ) // TODO rename, refactor!
+core::recti LoadingScreen::screenDependentSizeOf( video::ITexture& image )
 {
     core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     f32 screenWidth = static_cast<f32>( screenSize.Width );
@@ -85,28 +86,32 @@ core::recti LoadingScreen::resizeToFitIntoScreen( video::ITexture& image ) // TO
     f32 imageWidth = static_cast<f32>( image.getSize().Width );
     f32 imageHeight = static_cast<f32>( image.getSize().Height );
     f32 imageRatio = imageWidth / imageHeight;
-    core::recti frame = core::recti( core::dimension2di( 0, 0 ), screenSize );
+    core::recti frame;
     if ( imageRatio > screenRatio )
     {
-        f32 newHeight = ( screenWidth / imageWidth ) * imageHeight;
-        f32 centeringHightOffset = ( screenHeight - newHeight ) / 2.0f;
+        f32 resizedImageHeight = ( screenWidth / imageWidth ) * imageHeight;
+        f32 minHightOffset = ( screenHeight - resizedImageHeight ) / 2.0f;
         frame = core::recti(
                 0,
-                static_cast<u32>( centeringHightOffset ),
+                static_cast<u32>( minHightOffset ),
                 screenSize.Width,
-                static_cast<u32>( newHeight + centeringHightOffset )
+                static_cast<u32>( minHightOffset + resizedImageHeight )
         );
     }
     else if ( imageRatio < screenRatio )
     {
-        f32 newWidth = ( screenHeight / imageHeight ) * imageWidth;
-        f32 centeringWidthOffset = ( screenWidth - newWidth ) / 2.0f;
+        f32 resizedImageWidth = ( screenHeight / imageHeight ) * imageWidth;
+        f32 minWidthOffset = ( screenWidth - resizedImageWidth ) / 2.0f;
         frame = core::recti(
-                static_cast<u32>( centeringWidthOffset ),
+                static_cast<u32>( minWidthOffset ),
                 0,
-                static_cast<u32>( newWidth + centeringWidthOffset ),
+                static_cast<u32>( minWidthOffset + resizedImageWidth ),
                 screenSize.Height
         );
+    }
+    else
+    {
+        frame = core::recti( VEC_2DI_NULL, screenSize );
     }
     return frame;
 }

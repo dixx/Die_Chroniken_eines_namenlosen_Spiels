@@ -36,6 +36,14 @@ void LoadingScreen::enable()
 
 
 
+void LoadingScreen::disable()
+{
+    loadingScreenImageFrame_->setVisible( false );
+    loadingScreenImageFrame_->setEnabled( false );
+}
+
+
+
 void LoadingScreen::setText( const wchar_t* text )
 {
     loadingText_->setText( text );

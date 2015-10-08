@@ -36,6 +36,12 @@ public:
      */
     void enable();
 
+    /*! \brief Deaktiviert den Ladebildschirm.
+     *  \param -
+     *  \return -
+     */
+    void disable();
+
     /*! \brief Aktualisiert das Textfeld des Ladebildschirms.
      *  \param text (\a const \a wchar_t*) neuer Text
      *  \return -

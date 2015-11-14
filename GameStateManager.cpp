@@ -55,6 +55,13 @@ bool GameStateManager::handleGuiEvents( const irr::SEvent& event )
 
 
 
+bool GameStateManager::allFramesMustBeShown()
+{
+    return currentState_->allFramesMustBeShown();
+}
+
+
+
 void GameStateManager::requestNewState( State desiredState )
 {
     switch ( desiredState )

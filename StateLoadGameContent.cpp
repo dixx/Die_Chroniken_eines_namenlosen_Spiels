@@ -9,6 +9,7 @@
 #include "Mauspfeil.h"
 #include "ObjectManager.h"
 #include "Weather.h"
+#include "Zufall.h"
 
 
 
@@ -21,7 +22,26 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
-    loadingScreen_ = new LoadingScreen( device_, io::path( "GFX/Spiellogo.png" ) );
+    pictures_ = core::array<LoadingScreen*>( COUNT );
+    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
+    pictures_[ICON_WORLD] =     new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
+    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, io::path( "GFX/Bevoelkerung_icon.png" ) );
+    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, io::path( "GFX/Gebaeude_icon.png" ) );
+    pictures_[ICON_THINGS] =    new LoadingScreen( device_, io::path( "GFX/Gegenstaende_icon.png" ) );
+    pictures_[ICON_HERO] =      new LoadingScreen( device_, io::path( "GFX/Held_icon.png" ) );
+    pictures_[ICON_FLORA] =     new LoadingScreen( device_, io::path( "GFX/Pflanzen_icon.png" ) );
+    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, io::path( "GFX/Tiere_icon.png" ) );
+    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, io::path( "GFX/Wetter_icon.png" ) );
+    pictures_[CONCEPT_1] =      new LoadingScreen( device_, io::path( "GFX/Konzept1.png" ) );
+    pictures_[CONCEPT_2] =      new LoadingScreen( device_, io::path( "GFX/Konzept2.png" ) );
+    pictures_[CONCEPT_3] =      new LoadingScreen( device_, io::path( "GFX/Konzept3.png" ) );
+    pictures_[CONCEPT_4] =      new LoadingScreen( device_, io::path( "GFX/Konzept4.png" ) );
+    pictures_[CONCEPT_5] =      new LoadingScreen( device_, io::path( "GFX/Konzept5.png" ) );
+    pictures_[CONCEPT_6] =      new LoadingScreen( device_, io::path( "GFX/Konzept6.png" ) );
+    pictures_[CONCEPT_7] =      new LoadingScreen( device_, io::path( "GFX/Konzept7.png" ) );
+    pictures_[CONCEPT_8] =      new LoadingScreen( device_, io::path( "GFX/Konzept8.png" ) );
+    forceDraw_ = true;
     transitTo( STARTING );
 }
 
@@ -30,8 +50,15 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
 StateLoadGameContent::~StateLoadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    if ( loadingScreen_ )
-        delete loadingScreen_;
+    for ( register u32 i = 0; i < COUNT; ++i )
+    {
+        if ( pictures_[ i ] )
+        {
+            delete pictures_[ i ];
+            pictures_[ i ] = 0;
+        }
+    }
+    pictures_.clear();
 }
 
 
@@ -39,6 +66,14 @@ StateLoadGameContent::~StateLoadGameContent()
 void StateLoadGameContent::start( f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
+    Zufall& zufall = Zufall::getInstance();
+    for ( register u32 i = 0; i < 8; ++i )
+    {
+        if ( zufall.doesOccur( 20.f ) )
+        {
+            pictures_[zufall.getIntBetween( CONCEPT_1, CONCEPT_8 )]->enable();
+        }
+    }
     transitTo( RUNNING );
 }
 
@@ -50,39 +85,48 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
     switch( moduleCounter_ )
     {
         case 0:
-            loadingScreen_->setText( L"Lade Sonnenschein..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Sonnenschein..." );
             Weather::getInstance().load();
+            pictures_[ICON_WEATHER]->enable();
             break;
         case 1:
-            loadingScreen_->setText( L"Lade Fußboden..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Fußboden..." );
             Ground::getInstance().load( ( levelName_ + ".map" ).c_str() );
+            pictures_[ICON_WORLD]->enable();
             break;
         case 2:
-            loadingScreen_->setText( L"Lade hübsche Dinge..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade hübsche Dinge..." );
             //ObjectManager::getInstance().loadBasicDecorations();
+            pictures_[ICON_FLORA]->enable();
             break;
         case 3:
-            loadingScreen_->setText( L"Lade feste Dinge..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade feste Dinge..." );
             ObjectManager::getInstance().loadSolids( ( levelName_ + ".solids" ).c_str() );
+            pictures_[ICON_BUILDINGS]->enable();
+            pictures_[ICON_THINGS]->enable();
             break;
         case 4:
-            loadingScreen_->setText( L"Lade zappelnde Dinge..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade zappelnde Dinge..." );
             ObjectManager::getInstance().loadNPCs( ( levelName_ + ".npcs" ).c_str() );
+            pictures_[ICON_PEOPLE]->enable();
+            pictures_[ICON_FAUNA]->enable();
             break;
         case 5:
-            loadingScreen_->setText( L"Lade Würfelmaschine..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Würfelmaschine..." );
             // ...initialisiere KI
+            pictures_[ICON_QUESTS]->enable();
             break;
         case 6:
-            loadingScreen_->setText( L"Lade das Wichtigste von allem..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade das Wichtigste von allem..." );
             Hero::getInstance().load(); //TODO später aus Savegame laden!
+            pictures_[ICON_HERO]->enable();
             break;
         case 7:
-            loadingScreen_->setText( L"Lade Augen..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lade Augen..." );
             Camera::getInstance().lockToNode( Hero::getInstance().current()->nodeInterface() );
             break;
         default:
-            loadingScreen_->setText( L"" );
+            pictures_[LOADING_SCREEN]->setText( L"" );
             GameStateManager::getInstance().requestNewState( GameStateManager::GAME );
             transitTo( STOPPING );
             break;
@@ -127,7 +171,7 @@ void StateLoadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            loadingScreen_->enable();
+            pictures_[LOADING_SCREEN]->enable();
             Eventreceiver::getInstance().setEventReactionActive( false, false, false );
             Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;

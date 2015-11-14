@@ -64,7 +64,30 @@ public:
 private:
 
     IrrlichtDevice* device_;
-    LoadingScreen* loadingScreen_;
+    enum Picture_ {
+        LOADING_SCREEN = 0,
+        ICON_WORLD,
+        ICON_QUESTS,
+        ICON_PEOPLE,
+        ICON_BUILDINGS,
+        ICON_THINGS,
+        ICON_HERO,
+        ICON_FLORA,
+        ICON_FAUNA,
+        ICON_WEATHER,
+        CONCEPT_1,
+        CONCEPT_2,
+        CONCEPT_3,
+        CONCEPT_4,
+        CONCEPT_5,
+        CONCEPT_6,
+        CONCEPT_7,
+        CONCEPT_8,
+
+
+        COUNT
+    };
+    core::array<LoadingScreen*> pictures_;
     u32 moduleCounter_;
 
     StateUnloadGameContent( const StateUnloadGameContent& );

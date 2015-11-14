@@ -11,7 +11,7 @@ GenericHelperMethods& GenericHelperMethods::getInstance( IrrlichtDevice* device 
 
 
 
-void GenericHelperMethods::validateFileExistence( const core::string<fschar_t>& filename ) const
+void GenericHelperMethods::validateFileExistence( const io::path& filename ) const
 {
     if ( fs_->existFile( filename ) == false )
     {

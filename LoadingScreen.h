@@ -36,6 +36,12 @@ public:
      */
     void enable();
 
+    /*! \brief Deaktiviert den Ladebildschirm.
+     *  \param -
+     *  \return -
+     */
+    void disable();
+
     /*! \brief Aktualisiert das Textfeld des Ladebildschirms.
      *  \param text (\a const \a wchar_t*) neuer Text
      *  \return -
@@ -54,7 +60,7 @@ private:
 
     void createLoadingScreenImage();
     void createLoadingScreenText();
-    core::recti resizeToFitIntoScreen( video::ITexture& image );
+    core::recti screenDependentSizeOf( video::ITexture& image );
 
 };
 

@@ -30,6 +30,7 @@ StateStartup::StateStartup( IrrlichtDevice* device )
     GenericHelperMethods::getInstance( device_ );
     loadingScreen_ = new LoadingScreen( device_, io::path( "GFX/Schnellladebildschirm.jpg" ) );
     fader_ = device_->getGUIEnvironment()->addInOutFader();
+    forceDraw_ = true;
     transitTo( STARTING );
 }
 

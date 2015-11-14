@@ -34,7 +34,7 @@ public:
      *  \param -
      *  \return -
      */
-    GameState() : currentInternalState_(INITIAL) {};
+    GameState() : currentInternalState_(INITIAL), forceDraw_(false) {};
 
     /*! \brief Destruktor.
      */
@@ -81,6 +81,13 @@ public:
      */
     internalState currentInternalState() { return currentInternalState_; };
 
+    /*! \brief Legt fest, ob das Zeichnen für jeden Frame erzwungen werden soll.
+     *  \attention Nur für zeitunkritische States!
+     *  \param -
+     *  \return `true` wenn Zeichnen erzwungen werden soll, ansonsten `false`
+     */
+    bool allFramesMustBeShown() { return forceDraw_; };
+
     /*!
      *
      */
@@ -94,6 +101,7 @@ public:
 protected:
 
     internalState currentInternalState_;
+    bool forceDraw_;
 
 private:
 

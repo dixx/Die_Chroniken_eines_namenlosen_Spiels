@@ -21,7 +21,20 @@ StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Entlade..." );
-    loadingScreen_ = new LoadingScreen( device_, io::path( "GFX/Spiellogo.png" ) );
+    pictures_ = core::array<LoadingScreen*>( COUNT );
+    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
+    pictures_[ICON_WORLD] =     new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
+    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, io::path( "GFX/Bevoelkerung_icon.png" ) );
+    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, io::path( "GFX/Gebaeude_icon.png" ) );
+    pictures_[ICON_THINGS] =    new LoadingScreen( device_, io::path( "GFX/Gegenstaende_icon.png" ) );
+    pictures_[ICON_HERO] =      new LoadingScreen( device_, io::path( "GFX/Held_icon.png" ) );
+    pictures_[ICON_FLORA] =     new LoadingScreen( device_, io::path( "GFX/Pflanzen_icon.png" ) );
+    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, io::path( "GFX/Tiere_icon.png" ) );
+    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, io::path( "GFX/Wetter_icon.png" ) );
+    for ( register u32 i = CONCEPT_1; i <= CONCEPT_8; ++i )
+        pictures_[i] = 0;
+    forceDraw_ = true;
     transitTo( STARTING );
 }
 
@@ -30,8 +43,15 @@ StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
 StateUnloadGameContent::~StateUnloadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    if ( loadingScreen_ )
-        delete loadingScreen_;
+    for ( register u32 i = 0; i < COUNT; ++i )
+    {
+        if ( pictures_[ i ] )
+        {
+            delete pictures_[ i ];
+            pictures_[ i ] = 0;
+        }
+    }
+    pictures_.clear();
 }
 
 
@@ -50,38 +70,47 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
     switch( moduleCounter_ )
     {
         case 0:
-            loadingScreen_->setText( L"Schließe Augen..." );
+            pictures_[LOADING_SCREEN]->setText( L"Schließe Augen..." );
             Camera::getInstance().lockToNode( 0 );
             break;
         case 1:
-            loadingScreen_->setText( L"Verliere Bewußtsein..." );
+            pictures_[LOADING_SCREEN]->setText( L"Verliere Bewußtsein..." );
             Hero::getInstance().unload();
+            pictures_[ICON_HERO]->disable();
             break;
         case 2:
-            loadingScreen_->setText( L"Werde dumm..." );
+            pictures_[LOADING_SCREEN]->setText( L"Werde dumm..." );
             //...fahre KI runter
+            pictures_[ICON_QUESTS]->disable();
             break;
         case 3:
-            loadingScreen_->setText( L"Lasse alles los..." );
+            pictures_[LOADING_SCREEN]->setText( L"Lasse alles los..." );
             ObjectManager::getInstance().unload();
+            pictures_[ICON_PEOPLE]->disable();
+            pictures_[ICON_FAUNA]->disable();
+            pictures_[ICON_BUILDINGS]->disable();
+            pictures_[ICON_THINGS]->disable();
+            pictures_[ICON_FLORA]->disable();
             break;
         case 4:
-            loadingScreen_->setText( L"Verliere Bodenständigkeit..." );
+            pictures_[LOADING_SCREEN]->setText( L"Verliere Bodenständigkeit..." );
             Ground::getInstance().unload();
+            pictures_[ICON_WORLD]->disable();
             break;
         case 5:
-            loadingScreen_->setText( L"Gehe nach drinnen..." );
+            pictures_[LOADING_SCREEN]->setText( L"Gehe nach drinnen..." );
             Weather::getInstance().unload();
+            pictures_[ICON_WEATHER]->disable();
             break;
         case 6:
-            loadingScreen_->setText( L"Vergiss das Gesehene..." );
+            pictures_[LOADING_SCREEN]->setText( L"Vergiss das Gesehene..." );
             device_->getSceneManager()->getMeshCache()->clearUnusedMeshes();
             Collision::getInstance().clearRemainingSelectors();
             device_->getVideoDriver()->removeAllHardwareBuffers();
             device_->getVideoDriver()->removeAllTextures();
             break;
         default:
-            loadingScreen_->setText( L"" );
+            pictures_[LOADING_SCREEN]->setText( L"" );
             GameStateManager::getInstance().requestNewState( GameStateManager::MAIN_MENU );
             transitTo( STOPPING );
             break;
@@ -126,7 +155,8 @@ void StateUnloadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            loadingScreen_->enable();
+            for ( register u32 i = LOADING_SCREEN; i <= ICON_WEATHER; ++i )
+                pictures_[i]->enable();
             Eventreceiver::getInstance().setEventReactionActive( false, false, false );
             Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );
             break;

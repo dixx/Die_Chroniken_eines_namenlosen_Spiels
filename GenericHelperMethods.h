@@ -31,10 +31,10 @@ public:
     static GenericHelperMethods& getInstance( IrrlichtDevice* device = 0 );
 
     /*! \brief Prüft ob die angegebene Datei vorhanden ist und beendet das Programm wenn nicht.
-     *  \param filename (\a core::string<fschar_t>&) Dateiname
+     *  \param filename (\a io::path&) Dateiname
      *  \return -
      */
-    void validateFileExistence( const core::string<fschar_t>& filename ) const;
+    void validateFileExistence( const io::path& filename ) const;
 
     /*! \brief Schreibt alle Vertices direkt in den Grafikkartenspeicher.
      *  \param mesh (\a scene::IMesh*) Mesh

@@ -65,8 +65,10 @@ void GameFloatControl::run()
             }
             eventreceiver.setKeysLastState();
             next += FRAME_DELTA_TIME_IN_MS;
-            ++loops;
             we_must_draw = true;
+            if ( game.allFramesMustBeShown() )
+                break;
+            ++loops;
         }
         if ( we_must_draw )
         {

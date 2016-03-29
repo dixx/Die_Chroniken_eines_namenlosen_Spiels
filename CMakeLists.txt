@@ -1,15 +1,23 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 project (Spiel)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # switch for additional debug stuff deep in the code
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by LUA
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
 
 set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.1)
-include_directories(${IRRLICHT_DIR}/include/)
-include_directories(${IRRLICHT_DIR}/source/Irrlicht/)
+include_directories(${IRRLICHT_DIR}/include/ ${IRRLICHT_DIR}/source/Irrlicht/)
 link_directories(${IRRLICHT_DIR}/source/Irrlicht/MacOSX/BD/)
 
 set(IRRKLANG_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrKlang-1.5.0)
@@ -58,13 +66,21 @@ set(SOURCES
   Zufall.cpp
   main.cpp
 )
+#set(SOURCES_FOR_TESTS tests.cpp)
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})
+#add_executable(unit_tests ${SOURCES_FOR_TESTS})
 set_target_properties(spiel PROPERTIES
   COMPILE_FLAGS "-D_DEBUG_MODE=1"
   LINK_FLAGS "-framework cocoa -framework opengl -framework IOKit"
 )
 target_link_libraries(spiel lua Irrlicht irrklang)
+#target_link_libraries(unit_tests ${IRRLICHT_LIBRARY})
 if (APPLE)
   set_target_properties(spiel PROPERTIES OUTPUT_NAME "Spiel")
 endif (APPLE)
+
+# on installation, put everything where it belongs
+#install(TARGETS cmake_test_executable DESTINATION .)
+#install(TARGETS unit_tests DESTINATION ../_test)
+#install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)

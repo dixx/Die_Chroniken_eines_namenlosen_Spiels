@@ -6,5 +6,7 @@
 /Debug/*.mk
 /Debug/makefile
 /Debug/SAVEGAMES
+/Debug/dependencies
 /Doc/html
 *Thumbs.db
+/_build

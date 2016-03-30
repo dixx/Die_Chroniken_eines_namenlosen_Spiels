@@ -85,10 +85,10 @@ set(SOURCES
   Zufall.cpp
   main.cpp
 )
-#set(SOURCES_FOR_TESTS tests.cpp)
+set(SOURCES_FOR_TESTS unit_tests.cpp)
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})
-#add_executable(unit_tests ${SOURCES_FOR_TESTS})
+add_executable(unit_tests ${SOURCES_FOR_TESTS})
 #set_target_properties(spiel PROPERTIES)
 target_link_libraries(spiel ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
 #target_link_libraries(unit_tests ${IRRLICHT_LIBRARY})
@@ -102,5 +102,5 @@ endif(APPLE)
 # on installation, put everything where it belongs
 set(CMAKE_INSTALL_PREFIX ../Debug) # change later
 install(TARGETS spiel DESTINATION .)
-#install(TARGETS unit_tests DESTINATION ../_test)
+install(TARGETS unit_tests DESTINATION .)
 #install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)

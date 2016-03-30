@@ -3,7 +3,7 @@ project (Spiel)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
    set(CMAKE_BUILD_TYPE Debug)
-endif()
+endif(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
 set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.1)
 include_directories(${IRRLICHT_DIR}/include/ ${IRRLICHT_DIR}/source/Irrlicht/)
@@ -15,6 +15,21 @@ link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 
 set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/Lua/5.2.1)
 include_directories(${LUA_DIR}/include/)
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+  set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)
+  set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
+  set(LUA_LIBRARY ${LUA_DIR}/lib/liblua52.a)
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+  set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)
+  set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
+  set(LUA_LIBRARY ${LUA_DIR}/lib/liblua52.a)
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
+#if(APPLE)
+#endif(APPLE)
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
@@ -75,16 +90,17 @@ set(SOURCES
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})
 #add_executable(unit_tests ${SOURCES_FOR_TESTS})
 #set_target_properties(spiel PROPERTIES)
-target_link_libraries(spiel lua Irrlicht irrklang)
+target_link_libraries(spiel ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
 #target_link_libraries(unit_tests ${IRRLICHT_LIBRARY})
-if (APPLE)
+if(APPLE)
   set_target_properties(spiel PROPERTIES
     LINK_FLAGS "-framework cocoa -framework opengl -framework IOKit"
     OUTPUT_NAME "Spiel"
   )
-endif (APPLE)
+endif(APPLE)
 
 # on installation, put everything where it belongs
-#install(TARGETS cmake_test_executable DESTINATION .)
+set(CMAKE_INSTALL_PREFIX ../Debug) # change later
+install(TARGETS spiel DESTINATION .)
 #install(TARGETS unit_tests DESTINATION ../_test)
 #install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)

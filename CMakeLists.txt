@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
-project (Spiel)
+project(Spiel)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
-   set(CMAKE_BUILD_TYPE Debug)
+  set(CMAKE_BUILD_TYPE Debug)
 endif(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
-set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.1)
+set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.3)
 include_directories(${IRRLICHT_DIR}/include/ ${IRRLICHT_DIR}/source/Irrlicht/)
 link_directories(${IRRLICHT_DIR}/source/Irrlicht/MacOSX/BD/)
 
@@ -13,7 +13,7 @@ set(IRRKLANG_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrKlang-1.5.0)
 include_directories(${IRRKLANG_DIR}/include/)
 link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 
-set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/Lua/5.2.1)
+set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
 include_directories(${LUA_DIR}/include/)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -23,9 +23,9 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)
+  set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Linux/libIrrlicht.a GL Xxf86vm X11)
   set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
-  set(LUA_LIBRARY ${LUA_DIR}/lib/liblua52.a)
+  set(LUA_LIBRARY lua dl)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 #if(APPLE)
@@ -39,7 +39,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by L
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32") # let's enable this only if we really need it
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_DIR}/include/\" -isystem\"${IRRLICHT_DIR}/source/Irrlicht/\"")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_DIR}/include/\" -isystem\"${IRRLICHT_DIR}/source/Irrlicht/\" -isystem\"${IRRKLANG_DIR}/include/\"")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
 

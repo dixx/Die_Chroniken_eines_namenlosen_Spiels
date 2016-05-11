@@ -37,7 +37,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # switch f
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by LUA
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32") # irrKlang is 32Bit only :(
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32") # irrKlang is 32Bit only :(
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_DIR}/include/\" -isystem\"${IRRLICHT_DIR}/source/Irrlicht/\" -isystem\"${IRRKLANG_DIR}/include/\"")
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything")

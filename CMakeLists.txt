@@ -24,7 +24,7 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Linux/libIrrlicht.a GL Xxf86vm X11)
-  set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
+  set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/bin/linux-gcc-64/libIrrKlang.so)
   set(LUA_LIBRARY lua dl)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 

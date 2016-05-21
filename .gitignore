@@ -1,6 +1,7 @@
 /Debug/*.o
 /Debug/*.d
 /Debug/*.exe
+/Debug/spiel
 /Debug/*.log
 /Debug/*.out
 /Debug/*.mk

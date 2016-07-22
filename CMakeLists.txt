@@ -19,7 +19,7 @@ include_directories(${LUA_DIR}/include/)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)
   set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
-  set(LUA_LIBRARY ${LUA_DIR}/lib/liblua52.a)
+  set(LUA_LIBRARY ${LUA_DIR}/liblua.a) # the one >200kB! If not exist, build it.
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")

@@ -74,7 +74,7 @@ public:
 
     /*! \brief Hat der Timer den Endwert erreicht/überschritten?
      *  \attention Timer wird bei Erreichen des Endwertes nicht automatisch zurückgesetzt oder angehalten!
-     *             Dies ist z.B. nützlich um herauszufinden, wie lange der Endwert schon überschritten ist.
+     *             Dies könnte z.B. nützlich sein um herauszufinden, wie lange der Endwert schon überschritten ist.
      *  \param -
      *  \return `true` wenn Timer fertig ist, ansonsten `false`
      */

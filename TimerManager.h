@@ -10,7 +10,7 @@
 /*! \class TimerManager TimerManager.h "TimerManager.h"
  *  \brief  Schnittstelle für Timer.
  *
- *  Dieser Manager kann beliebig viel Timer erzeugen und steuern.
+ *  Dieser Manager kann beliebig viele Timer erzeugen und steuern.
  *  \attention Klasse ist `Singleton`.
  *  \note Instanzierung: `TimerManager& myTimerManager = TimerManager::getInstance();`
  *        \n Oder: `TimerManager::getInstance();`

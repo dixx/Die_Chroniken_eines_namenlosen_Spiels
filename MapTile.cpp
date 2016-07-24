@@ -24,7 +24,6 @@ MapTile::MapTile(
 
 MapTile::~MapTile()
 {
-    // nothing to do here
     Collision::getInstance().removeObjectFromRangedDetection( this );
 }
 

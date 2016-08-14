@@ -35,7 +35,7 @@ void Configuration::readConfigFile( const c8* filename )
         logfile.write( Logfile::INFO, "Konfigdatei ", filename );
         logfile.emergencyExit( " konnte nicht geöffnet werden!" );
     }
-    u32 size = configfile->getSize();
+    u32 size = (u32)configfile->getSize();
     // 8bit Integer-Array nehmen, da read() nur in Byte-Schritten einliest!
     u8 buffer[ size + 4 ];
     if ( configfile->read( &buffer, size ) != static_cast<s32>( size ) )

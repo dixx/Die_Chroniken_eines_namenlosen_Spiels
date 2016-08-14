@@ -123,12 +123,15 @@ TEST_CASE( "let one out of two events occur, using ratio of both" ) {
     REQUIRE( subject.doesAoccur(0.001f, 0.0f) );
     REQUIRE( subject.doesAoccur(100.0f, 0.0f) );
     REQUIRE( subject.doesAoccur(1000.0f, 0.0f) );
-    REQUIRE( subject.doesAoccur(100.0f, -100.0f) );
     REQUIRE_FALSE( subject.doesAoccur(0.0f, 0.001f) );
     REQUIRE_FALSE( subject.doesAoccur(0.0f, 100.0f) );
     REQUIRE_FALSE( subject.doesAoccur(0.0f, 1000.0f) );
     REQUIRE_FALSE( subject.doesAoccur(0.0f, 0.0f) );
-    REQUIRE_FALSE( subject.doesAoccur(-100.0f, 0.0f) );
+
+    SECTION( "negative values" ) {
+        REQUIRE( subject.doesAoccur(100.0f, -100.0f) );
+        REQUIRE_FALSE( subject.doesAoccur(-100.0f, 0.0f) );
+    }
 }
 
 TEST_CASE( "let one out of two events occur, using limited probabilities for both" ) {

@@ -9,6 +9,8 @@
 /Debug/SAVEGAMES
 /Debug/dependencies
 /Doc/html
-*Thumbs.db
-.cproject
 /_build
+.cproject
+.project
+
+*Thumbs.db # move this to a system-wide .gitignore file: `git config --global core.excludesfile '~/.gitignore'`

@@ -88,6 +88,7 @@ set(SOURCES
 set(SOURCES_FOR_TESTS
   test/unit_tests.cpp
   test/ZufallTest.cpp
+  Zufall.cpp
 )
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})

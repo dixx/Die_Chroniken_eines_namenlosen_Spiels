@@ -1,10 +1,13 @@
 /Debug/*.o
 /Debug/*.d
 /Debug/*.exe
+/Debug/spiel
 /Debug/*.log
 /Debug/*.out
 /Debug/*.mk
 /Debug/makefile
 /Debug/SAVEGAMES
+/Debug/dependencies
 /Doc/html
 *Thumbs.db
+/_build

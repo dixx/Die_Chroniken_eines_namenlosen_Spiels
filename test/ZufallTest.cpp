@@ -85,6 +85,33 @@ TEST_CASE( "get random int within range" ) {
         REQUIRE( subject.getIntBetween(5, 3) >= 3 );
         REQUIRE( subject.getIntBetween(5, 3) <= 5 );
     }
+
+    SECTION( "probability" ) {
+        bool first, second, third, invalid = false;
+        u32 value = 0;
+        for( int i = 0; i < 100; ++i ) {
+            value = subject.getIntBetween(123456, 123458);
+            switch (value) {
+            case 123456:
+                first = true;
+                break;
+            case 123457:
+                second = true;
+                break;
+            case 123458:
+                third = true;
+                break;
+            default:
+                invalid = true;
+                break;
+            }
+        }
+
+        REQUIRE( first );
+        REQUIRE( second );
+        REQUIRE( third );
+        REQUIRE_FALSE( invalid );
+    }
 }
 
 TEST_CASE( "get random float within range" ) {
@@ -113,6 +140,26 @@ TEST_CASE( "let an event occur or not, using one probability" ) {
     SECTION( "values are auto-corrected" ) {
         REQUIRE( subject.doesOccur(1000.0f) );
         REQUIRE_FALSE( subject.doesOccur(-1000.0f) );
+    }
+
+    SECTION( "probability" ) {
+        bool occured = false;
+        for( int i = 0; i < 1000; ++i ) {
+            if ( subject.doesOccur( 1.0f ) ) {
+                occured = true;
+            }
+        }
+
+        REQUIRE( occured );
+
+        occured = true;
+        for( int i = 0; i < 1000; ++i ) {
+            if ( !subject.doesOccur( 99.0f ) ) {
+                occured = false;
+            }
+        }
+
+        REQUIRE_FALSE( occured );
     }
 }
 

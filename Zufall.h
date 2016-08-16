@@ -13,7 +13,7 @@ using namespace irr;
  *  \brief Enthält Funktionen zum Erzeugen von Zufallszahlen.
  *  \attention Klasse ist `Singleton`.
  *  \note Instanzierung: `Zufall& myZufall = Zufall::getInstance();` \n Oder: `Zufall::getInstance();`
- *        \n Benutzen: `myZufall.Start( (u32)time( NULL ) );` \n Oder: `Zufall::getInstance().rnd_int();`
+ *        \n Benutzen: `myZufall.start( (u32)time( NULL ) );` \n Oder: `Zufall::getInstance().getInt();`
  */
 class Zufall
 {

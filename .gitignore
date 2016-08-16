@@ -12,5 +12,3 @@
 /_build
 .cproject
 .project
-
-*Thumbs.db # move this to a system-wide .gitignore file: `git config --global core.excludesfile '~/.gitignore'`

@@ -44,8 +44,9 @@ GenericHelperMethods::GenericHelperMethods( IrrlichtDevice* device )
 : bufferCount_(0),
   buffer_(0)
 {
-    if ( device == 0 )
+    if ( device == 0 ) {
         Logfile::getInstance().emergencyExit( "Entchen in [GenericHelperMethods] nicht mehr gefunden! Abbruch." );
+    }
 	fs_ = device->getFileSystem();
 }
 

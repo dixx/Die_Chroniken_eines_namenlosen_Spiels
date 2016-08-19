@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "../Zufall.h"
+#include <time.h>
 #include <irrlicht.h>
 
 TEST_CASE( "architecture" ) {
@@ -44,7 +45,7 @@ TEST_CASE( "get random Int" ) {
     subject.start( (u32)time( NULL ) );
 
     //REQUIRE( subject.getInt() >= 0 ); // comparison of unsigned expression >= 0 is always true
-    REQUIRE( subject.getInt() <= (u32)( 4294967295 ) );
+    REQUIRE( subject.getInt() <= (u32)( 4294967295UL ) );
 
     SECTION( "different seed, different result" ) {
         subject.start( 42 );

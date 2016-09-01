@@ -25,11 +25,14 @@ Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 
 ##### Irrlicht
 `sudo make linux install`
-- fatal error: GL/gl.h: No such file or directory --> ```
+- fatal error: GL/gl.h: No such file or directory -->
+
+```
 sudo apt-get install apt-file
 apt-file update
 apt-file search "GL/gl.h"
 ```
+
 Nun suche das am besten passende Package raus und installiere es.
 - fatal error: X11/extensions/xf86vmode.h: No such file or directory --> `sudo apt-get install libxxf86vm-dev`
 #### CREDITS

@@ -9,5 +9,6 @@
 /Debug/SAVEGAMES
 /Debug/dependencies
 /Doc/html
-*Thumbs.db
 /_build
+.cproject
+.project

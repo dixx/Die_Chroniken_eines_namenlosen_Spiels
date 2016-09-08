@@ -85,7 +85,11 @@ set(SOURCES
   Zufall.cpp
   main.cpp
 )
-set(SOURCES_FOR_TESTS unit_tests.cpp)
+set(SOURCES_FOR_TESTS
+  test/unit_tests.cpp
+  test/ZufallTest.cpp
+  Zufall.cpp
+)
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})
 add_executable(unit_tests ${SOURCES_FOR_TESTS})

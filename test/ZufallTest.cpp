@@ -14,20 +14,20 @@ TEST_CASE( "architecture" ) {
 TEST_CASE( "seeding" ) {
     Zufall& subject = Zufall::getInstance();
 
-    SECTION( "seed evolves internally") {
+    SECTION( "seed evolves internally" ) {
         subject.start( 42 );
 
         REQUIRE( subject.getInt() == 1331530 );
         REQUIRE( subject.getInt() != 1331530 );
     }
 
-    SECTION( "different seed produces different result") {
+    SECTION( "different seed produces different result" ) {
         subject.start( 43 );
 
         REQUIRE( subject.getInt() != 1331530 );
     }
 
-    SECTION( "same seed produces same result every time") {
+    SECTION( "same seed produces same result every time" ) {
         subject.start( 42 );
 
         REQUIRE( subject.getInt() == 1331530 );

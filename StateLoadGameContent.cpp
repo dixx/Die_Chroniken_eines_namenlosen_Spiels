@@ -123,7 +123,7 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
             break;
         case 7:
             pictures_[LOADING_SCREEN]->setText( L"Lade Augen..." );
-            Camera::getInstance().lockToNode( Hero::getInstance().current()->nodeInterface() );
+            Camera::getInstance().followNode( Hero::getInstance().current()->nodeInterface() );
             break;
         default:
             pictures_[LOADING_SCREEN]->setText( L"" );

@@ -13,7 +13,7 @@ using namespace irr;
  *  \brief  Schnittstelle zu Kameras.
  *  \attention Klasse ist `Singleton`.
  *  \note Instanzierung: `Camera& myCamera = Camera::getInstance();`\n Oder: `Camera::getInstance();`
- *        \n Benutzen: `myCamera.startZooming(-2.0f);`\n Oder: `Camera::getInstance().startZooming(0.01f);`
+ *        \n Benutzen: `myCamera.startZoomingIn();`\n Oder: `Camera::getInstance().startZoomingOut();`
  */
 class Camera
 {
@@ -51,10 +51,10 @@ public:
     void update( const f32 frameDeltaTime );
 
     /*! \brief Bindet die Kamera an einen anderen Szenenknoten.
-     *  \param node (\a scene::ISceneNode*) Knoten an den die Kamera gebunden werden soll
+     *  \param node (\a scene::ISceneNode*) Knoten dem die Kamera folgen soll
      *  \return -
      */
-    void lockToNode( scene::ISceneNode* node );
+    void followNode( scene::ISceneNode* node );
 
 #ifdef _DEBUG_MODE
     void toggleSpeed();

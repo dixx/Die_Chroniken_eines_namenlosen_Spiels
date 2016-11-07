@@ -8,7 +8,7 @@
 #endif
 
 
-
+// TODO rework to not be singleton
 Camera& Camera::getInstance( scene::ISceneManager* sceneManager )
 {
     static Camera instance( sceneManager );
@@ -78,7 +78,7 @@ core::vector3df& Camera::getCurrentPosition()
 
 
 
-void Camera::lockToNode( scene::ISceneNode* node )
+void Camera::followNode( scene::ISceneNode* node )
 {
     lockNode_ = node;
 }
@@ -115,7 +115,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     firstCameraNode_ = smgr_->addCameraSceneNode( 0, currentPosition_ + positionOffset_, currentTarget_, ID_KAMERA );
     // beim Anlegen schon geschehen:
     //this->smgr->setActiveCamera( this->firstCameraNode );
-    firstCameraNode_->updateAbsolutePosition();
+    firstCameraNode_->updateAbsolutePosition(); // ???
     firstCameraNode_->setName( "Kamera 1" );
     firstCameraNode_->setFarValue( config.getFarValue() );
     firstCameraNode_->setNearValue( 0.1f );
@@ -123,7 +123,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     firstCameraNode_->setAspectRatio(
             static_cast<f32>( config.getScreenSize().Width ) / static_cast<f32>( config.getScreenSize().Height ) );
     firstCameraNode_->setInputReceiverEnabled( false );
-    positionOffset_.rotateXZBy( -180.0f );
+    positionOffset_.rotateXZBy( -180.0f ); // ???
 }
 
 

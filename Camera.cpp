@@ -70,13 +70,6 @@ core::vector3df& Camera::getCurrentPosition()
 
 
 
-scene::ICameraSceneNode* Camera::getCurrentActive()
-{
-    return smgr_->getActiveCamera();
-}
-
-
-
 void Camera::lockToNode( scene::ISceneNode* node )
 {
     lockNode_ = node;
@@ -116,8 +109,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     //this->smgr->setActiveCamera( this->firstCameraNode );
     firstCameraNode_->updateAbsolutePosition();
     firstCameraNode_->setName( "Kamera 1" );
-    farValue_ = config.getFarValue();
-    firstCameraNode_->setFarValue( farValue_ );
+    firstCameraNode_->setFarValue( config.getFarValue() );
     firstCameraNode_->setNearValue( 0.1f );
     firstCameraNode_->setFOV( 1.0f );
     firstCameraNode_->setAspectRatio(

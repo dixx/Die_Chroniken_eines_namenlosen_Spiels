@@ -46,12 +46,6 @@ public:
      */
     void update( const f32 frameDeltaTime );
 
-    /*! \brief Gibt einen Zeiger auf den Knoten der aktuellen Kamera zurück.
-     *  \param -
-     *  \return scene::ICameraSceneNode* Kamera-Szenenknoten
-     */
-    scene::ICameraSceneNode* getCurrentActive();
-
     /*! \brief Bindet die Kamera an einen anderen Szenenknoten.
      *  \param node (\a scene::ISceneNode*) Knoten an den die Kamera gebunden werden soll
      *  \return -
@@ -75,7 +69,6 @@ private:
     core::vector3df positionOffset_;
     f32 speed_;
     f32 zoomingSpeed_;
-    f32 farValue_;
     f32 desiredPositionOffsetHeight_;
     f32 zoomMin_;
     f32 zoomMax_;

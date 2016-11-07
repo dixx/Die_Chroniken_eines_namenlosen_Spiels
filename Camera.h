@@ -28,11 +28,15 @@ public:
      */
     static Camera& getInstance( scene::ISceneManager* sceneManager = 0 );
 
-    /*! \brief Kamera beginnt AutoZoom in die angegebene Richtung.
-     *  \param direction (\a f32) Zoomrichtung, von 0.0f verschieden
+    /*! \brief Kamera beginnt AutoZoom nach unten.
      *  \return -
      */
-    void startZooming( const f32 direction );
+    void startZoomingIn();
+
+    /*! \brief Kamera beginnt AutoZoom nach oben.
+     *  \return -
+     */
+    void startZoomingOut();
 
     /*! \brief Dreht das Kamera-Offset um die Kamera-Position.
      *  \param value (\a f32) FrameDeltaTime benutzen, Vorzeichen beachten!
@@ -73,7 +77,8 @@ private:
     f32 zoomMin_;
     f32 zoomMax_;
     bool isZooming_;
-    f32 zoomDir_;
+    enum zoom { ZOOM_IN, ZOOM_OUT };
+    zoom zoomDirection_;
     f32 groundHeight_;  // wegen Performance
     f32 dummySum_;  // wegen Performance
 

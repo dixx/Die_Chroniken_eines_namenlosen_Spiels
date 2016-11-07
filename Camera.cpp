@@ -17,10 +17,18 @@ Camera& Camera::getInstance( scene::ISceneManager* sceneManager )
 
 
 
-void Camera::startZooming( const f32 direction )
+void Camera::startZoomingIn()
 {
     isZooming_ = true;
-    zoomDir_ = direction;
+    zoomDirection_ = ZOOM_IN;
+}
+
+
+
+void Camera::startZoomingOut()
+{
+    isZooming_ = true;
+    zoomDirection_ = ZOOM_OUT;
 }
 
 
@@ -91,7 +99,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
   zoomMin_(1.0f),
   zoomMax_(15.0f),
   isZooming_(false),
-  zoomDir_(0),
+  zoomDirection_(ZOOM_OUT),
   groundHeight_(0.0f),
   dummySum_(0.0f)
 {
@@ -130,7 +138,7 @@ Camera::~Camera()
 void Camera::changeZoom( const f32 frameDeltaTime )
 {
     dummySum_ = zoomingSpeed_ * frameDeltaTime;
-    if ( zoomDir_ <= 0 )
+    if ( zoomDirection_ == ZOOM_OUT )
     {
         // Rauszoomen == Draufsicht
         desiredPositionOffsetHeight_ = zoomMax_;

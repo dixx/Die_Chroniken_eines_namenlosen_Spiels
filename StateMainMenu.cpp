@@ -89,7 +89,9 @@ void StateMainMenu::update( f32 frameDeltaTime )
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F1 ) )
         Debugwindow::getInstance().toggle();
     if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_F2 ) )
-        ( new DebugStatistics( device_ ) )->writeStatisticsToLogfile()->drop();
+    {
+        DebugStatistics( device_ ).writeStatisticsToLogfile();
+    }
     Debugwindow::getInstance().addLine( "StateMainMenu::update1", L"loaded selectors: ", Collision::getInstance().loadedSelectors() );
     Debugwindow::getInstance().addLine( "StateMainMenu::update2", L"loaded nodes: ", ObjectManager::getInstance().loadedNodes() );
 #endif
@@ -264,10 +266,8 @@ void StateMainMenu::createMainMenu()
             menueBgImage, ID_MAIN_RESUMEBUTTON, L"Fortsetzen"
     );
     changeStyleOfButton( resumeButton );
-    SaveGames* savegame = new SaveGames( device_ );
-    if ( savegame->findNewest().empty() )
+    if ( SaveGames( device_ ).findNewest().empty() )
         menueBgImage->removeChild( resumeButton );
-    delete savegame;
     gui::IGUIButton* loadButton = guienv_->addButton(
             core::recti( core::position2di( 85, 207 ), buttonSize ),
             menueBgImage, ID_MAIN_LOADBUTTON, L"Laden"
@@ -360,9 +360,7 @@ bool StateMainMenu::newPlayerMenuButtonHandler( s32 callerId )
     {
         case ID_NEW_EXITBUTTON:
         {
-            SaveGames* savegame = new SaveGames( device_ );
-            savegame->save( "SAVEGAMES/test.sav" );
-            delete savegame;
+            SaveGames( device_ ).save( "SAVEGAMES/test.sav" );
             switchToMenu( MAIN );
             break;
         }

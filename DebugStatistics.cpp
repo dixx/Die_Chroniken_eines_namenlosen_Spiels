@@ -10,7 +10,7 @@ DebugStatistics::DebugStatistics( IrrlichtDevice* device )
 
 
 
-DebugStatistics* DebugStatistics::writeStatisticsToLogfile()
+void DebugStatistics::writeStatisticsToLogfile()
 {
     core::stringw text = L"\n=== Statistiken ===";
 
@@ -54,23 +54,4 @@ DebugStatistics* DebugStatistics::writeStatisticsToLogfile()
 
     text += "\n°°°";
     Logfile::getInstance().writeLine( Logfile::DEBUG, text );
-    return this;
-}
-
-
-
-void DebugStatistics::drop()
-{
-    delete this;
-}
-
-
-
-/* private */
-
-
-
-DebugStatistics::~DebugStatistics()
-{
-    // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
 }

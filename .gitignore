@@ -5,6 +5,7 @@
 /Debug/*.log
 /Debug/*.out
 /Debug/*.mk
+/Debug/*.dll
 /Debug/makefile
 /Debug/SAVEGAMES
 /Debug/dependencies

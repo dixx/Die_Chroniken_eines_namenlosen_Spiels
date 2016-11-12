@@ -13,7 +13,7 @@ using namespace irr;
  *  \brief  Schnittstelle zu Kameras.
  *  \attention Klasse ist `Singleton`.
  *  \note Instanzierung: `Camera& myCamera = Camera::getInstance();`\n Oder: `Camera::getInstance();`
- *        \n Benutzen: `myCamera.startZooming(-2.0f);`\n Oder: `Camera::getInstance().startZooming(0.01f);`
+ *        \n Benutzen: `myCamera.startZoomingIn();`\n Oder: `Camera::getInstance().startZoomingOut();`
  */
 class Camera
 {
@@ -28,11 +28,15 @@ public:
      */
     static Camera& getInstance( scene::ISceneManager* sceneManager = 0 );
 
-    /*! \brief Kamera beginnt AutoZoom in die angegebene Richtung.
-     *  \param direction (\a f32) Zoomrichtung, von 0.0f verschieden
+    /*! \brief Kamera beginnt AutoZoom nach unten.
      *  \return -
      */
-    void startZooming( const f32 direction );
+    void startZoomingIn();
+
+    /*! \brief Kamera beginnt AutoZoom nach oben.
+     *  \return -
+     */
+    void startZoomingOut();
 
     /*! \brief Dreht das Kamera-Offset um die Kamera-Position.
      *  \param value (\a f32) FrameDeltaTime benutzen, Vorzeichen beachten!
@@ -46,17 +50,11 @@ public:
      */
     void update( const f32 frameDeltaTime );
 
-    /*! \brief Gibt einen Zeiger auf den Knoten der aktuellen Kamera zurück.
-     *  \param -
-     *  \return scene::ICameraSceneNode* Kamera-Szenenknoten
-     */
-    scene::ICameraSceneNode* getCurrentActive();
-
     /*! \brief Bindet die Kamera an einen anderen Szenenknoten.
-     *  \param node (\a scene::ISceneNode*) Knoten an den die Kamera gebunden werden soll
+     *  \param node (\a scene::ISceneNode*) Knoten dem die Kamera folgen soll
      *  \return -
      */
-    void lockToNode( scene::ISceneNode* node );
+    void followNode( scene::ISceneNode* node );
 
 #ifdef _DEBUG_MODE
     void toggleSpeed();
@@ -75,12 +73,12 @@ private:
     core::vector3df positionOffset_;
     f32 speed_;
     f32 zoomingSpeed_;
-    f32 farValue_;
     f32 desiredPositionOffsetHeight_;
     f32 zoomMin_;
     f32 zoomMax_;
     bool isZooming_;
-    f32 zoomDir_;
+    enum zoom { ZOOM_IN, ZOOM_OUT };
+    zoom zoomDirection_;
     f32 groundHeight_;  // wegen Performance
     f32 dummySum_;  // wegen Performance
 

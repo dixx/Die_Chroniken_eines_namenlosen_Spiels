@@ -32,10 +32,11 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Debugwindow& getInstance( IrrlichtDevice* device = 0 ); 
+    static Debugwindow& getInstance( IrrlichtDevice* device = 0 );
 
     /*! \brief Fügt Text in das Debugfenster ein.
      *  \attention Es wird automatisch ein Zeilenumbruch angehängt.
+     *  \param callerName (\a const \a c8*) Name der aufrufenden Methode
      *  \param text (\a core::stringw&) Text
      *  \return -
      */
@@ -125,13 +126,13 @@ public:
      *  \return -
      */
     void show();
-    
+
     /*! \brief Schaltet die Sichtbarkeit des Debugfenster um.
      *  \param -
      *  \return -
      */
     void toggle();
-    
+
     /*! \brief Gibt an, ob das Debugfenster sichtbar ist.
      *  \param -
      *  \return `true` wenn das Debugfenster sichtbar ist, ansonsten `false`
@@ -152,7 +153,7 @@ private:
     Debugwindow( const Debugwindow& );  // Instanz ist nicht kopierbar
     Debugwindow& operator=( const Debugwindow& );  // Instanz ist nicht zuweisbar
     ~Debugwindow();  // dtor. Instanz zerstört sich bei Programmende
-    
+
 };
 
 #endif

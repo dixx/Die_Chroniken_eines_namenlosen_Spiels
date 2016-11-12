@@ -20,7 +20,6 @@ public:
 
     /*! \brief Konstruktor.
      *  \param maxValue (\a const \a f32) Maximalwert in Sekunden
-     *  \return -
      */
     Timer( const f32 maxValue );
 
@@ -36,38 +35,28 @@ public:
     Timer* tick( const f32 frameDeltaTime );
 
     /*! \brief Startet den Timer bei null.
-     *  \param -
-     *  \return -
      */
     void start();
     void restart();
 
     /*! \brief Stoppt und resettet den Timer.
-     *  \param -
-     *  \return -
      */
     void stop();
 
     /*! \brief Pausiert den Timer.
-     *  \param -
-     *  \return -
      */
     void pause();
 
     /*! \brief Lässt den Timer weiterlaufen.
-     *  \param -
-     *  \return -
      */
     void resume();
 
     /*! \brief Läuft der Timer gerade?
-     *  \param -
      *  \return `true` wenn Timer läuft, ansonsten `false`
      */
     bool isRunning() const;
 
     /*! \brief Ist der Timer gerade pausiert?
-     *  \param -
      *  \return `true` wenn Timer pausiert ist, ansonsten `false`
      */
     bool isPaused() const;
@@ -75,13 +64,11 @@ public:
     /*! \brief Hat der Timer den Endwert erreicht/überschritten?
      *  \attention Timer wird bei Erreichen des Endwertes nicht automatisch zurückgesetzt oder angehalten!
      *             Dies könnte z.B. nützlich sein um herauszufinden, wie lange der Endwert schon überschritten ist.
-     *  \param -
      *  \return `true` wenn Timer fertig ist, ansonsten `false`
      */
     bool isFull() const;
 
-    /*! \brief gibt den eingestellten Endwert zurück.
-     *  \param -
+    /*! \brief Gibt den eingestellten Endwert zurück.
      *  \return \a f32 Endwert in Sekunden
      */
     f32 getMaxValue() const;

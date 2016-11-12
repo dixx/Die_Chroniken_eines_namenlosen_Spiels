@@ -55,9 +55,9 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
     if ( Eventreceiver::getInstance().hasKeyJustBeenPressedDown( KEY_F1 ) )
         Debugwindow::getInstance().toggle();
     if ( Eventreceiver::getInstance().isKeyDown( KEY_TAB ) )
-        Camera::getInstance().startZooming( 1.0f );
+        Camera::getInstance().startZoomingIn();
     if ( Eventreceiver::getInstance().isKeyDown( KEY_KEY_R ) )
-        Camera::getInstance().startZooming( -1.0f );
+        Camera::getInstance().startZoomingOut();
     Debugwindow::getInstance().addLine( "StatePlayTheGame::update", L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
 #endif
     Weather::getInstance().update();
@@ -160,7 +160,7 @@ void StatePlayTheGame::checkCameraSpecificInput( f32 frameDeltaTime )
     Eventreceiver& receiver = Eventreceiver::getInstance();
     Camera& camera = Camera::getInstance();
     if ( !core::equals( receiver.getMouseWheel(), 0.0f ) )
-        camera.startZooming( receiver.getMouseWheel() );
+        receiver.getMouseWheel() > 0.0f ? camera.startZoomingIn() : camera.startZoomingOut();
     if ( receiver.isMMBDown() )
     {
         register s32 delta = receiver.getMouseLastX() - receiver.getMouseX();

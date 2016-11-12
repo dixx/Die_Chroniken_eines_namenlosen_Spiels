@@ -8,7 +8,7 @@
 #endif
 
 
-
+// TODO rework to not be singleton
 Camera& Camera::getInstance( scene::ISceneManager* sceneManager )
 {
     static Camera instance( sceneManager );
@@ -17,10 +17,18 @@ Camera& Camera::getInstance( scene::ISceneManager* sceneManager )
 
 
 
-void Camera::startZooming( const f32 direction )
+void Camera::startZoomingIn()
 {
     isZooming_ = true;
-    zoomDir_ = direction;
+    zoomDirection_ = ZOOM_IN;
+}
+
+
+
+void Camera::startZoomingOut()
+{
+    isZooming_ = true;
+    zoomDirection_ = ZOOM_OUT;
 }
 
 
@@ -70,14 +78,7 @@ core::vector3df& Camera::getCurrentPosition()
 
 
 
-scene::ICameraSceneNode* Camera::getCurrentActive()
-{
-    return smgr_->getActiveCamera();
-}
-
-
-
-void Camera::lockToNode( scene::ISceneNode* node )
+void Camera::followNode( scene::ISceneNode* node )
 {
     lockNode_ = node;
 }
@@ -98,7 +99,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
   zoomMin_(1.0f),
   zoomMax_(15.0f),
   isZooming_(false),
-  zoomDir_(0),
+  zoomDirection_(ZOOM_OUT),
   groundHeight_(0.0f),
   dummySum_(0.0f)
 {
@@ -114,16 +115,15 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     firstCameraNode_ = smgr_->addCameraSceneNode( 0, currentPosition_ + positionOffset_, currentTarget_, ID_KAMERA );
     // beim Anlegen schon geschehen:
     //this->smgr->setActiveCamera( this->firstCameraNode );
-    firstCameraNode_->updateAbsolutePosition();
+    firstCameraNode_->updateAbsolutePosition(); // ???
     firstCameraNode_->setName( "Kamera 1" );
-    farValue_ = config.getFarValue();
-    firstCameraNode_->setFarValue( farValue_ );
+    firstCameraNode_->setFarValue( config.getFarValue() );
     firstCameraNode_->setNearValue( 0.1f );
     firstCameraNode_->setFOV( 1.0f );
     firstCameraNode_->setAspectRatio(
             static_cast<f32>( config.getScreenSize().Width ) / static_cast<f32>( config.getScreenSize().Height ) );
     firstCameraNode_->setInputReceiverEnabled( false );
-    positionOffset_.rotateXZBy( -180.0f );
+    positionOffset_.rotateXZBy( -180.0f ); // ???
 }
 
 
@@ -138,7 +138,7 @@ Camera::~Camera()
 void Camera::changeZoom( const f32 frameDeltaTime )
 {
     dummySum_ = zoomingSpeed_ * frameDeltaTime;
-    if ( zoomDir_ <= 0 )
+    if ( zoomDirection_ == ZOOM_OUT )
     {
         // Rauszoomen == Draufsicht
         desiredPositionOffsetHeight_ = zoomMax_;

@@ -27,25 +27,12 @@ public:
     DebugStatistics( IrrlichtDevice* device );
 
     /*! \brief Schreibt Informationen über alle möglichen Objekte, Zustände, Listen usw. in das aktuelle Logfile.
-     *  \note Objekt gibt sich selbst zurück, damit drop() direkt danach aufgerufen werden kann.
-     *  \param -
-     *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    DebugStatistics* writeStatisticsToLogfile();
-
-    /*! \brief Löscht die Instanz.
-     *  \param -
-     *  \return -
-     */
-    void drop();
+    void writeStatisticsToLogfile();
 
 private:
 
     IrrlichtDevice* device_;
-
-    ~DebugStatistics();
-    DebugStatistics( const DebugStatistics& );
-    DebugStatistics& operator=( const DebugStatistics& );
 
 };
 

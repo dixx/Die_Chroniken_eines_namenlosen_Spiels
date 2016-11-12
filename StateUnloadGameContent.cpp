@@ -71,7 +71,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
     {
         case 0:
             pictures_[LOADING_SCREEN]->setText( L"Schließe Augen..." );
-            Camera::getInstance().lockToNode( 0 );
+            Camera::getInstance().followNode( 0 );
             break;
         case 1:
             pictures_[LOADING_SCREEN]->setText( L"Verliere Bewußtsein..." );

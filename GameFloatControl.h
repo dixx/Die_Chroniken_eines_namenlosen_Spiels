@@ -30,17 +30,17 @@ public:
      */
     static GameFloatControl& getInstance();
 
-    /*! \brief Rückgabewert des Spiels.
-     *  \param -
-     *  \return `0` wenn das Spiel ohne Fehler lief, ansonsten `1`
-     */
-    u32 status();
-
     /*! \brief Stellt alles auf dem Bildschirm dar. Alles. Das ganze Spiel.
      *  \param -
      *  \return -
      */
     void run();
+
+    /*! \brief Rückgabewert des Spiels.
+     *  \param -
+     *  \return `0` wenn das Spiel ohne Fehler lief, ansonsten `1`
+     */
+    u32 status();
 
 private:
 

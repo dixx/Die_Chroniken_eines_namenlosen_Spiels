@@ -30,11 +30,11 @@ public:
      */
     static GameFloatControl& getInstance();
 
-    /*! \brief Startet Logfile, liest Konfiguration, erstellt 3D-Entchen, initialisiert alle benötigten Klassen.
+    /*! \brief Rückgabewert des Spiels.
      *  \param -
-     *  \return `true` wenn die Initialisierung erfolgreich war, ansonsten `false`
+     *  \return `0` wenn das Spiel ohne Fehler lief, ansonsten `1`
      */
-    bool start();
+    u32 status();
 
     /*! \brief Stellt alles auf dem Bildschirm dar. Alles. Das ganze Spiel.
      *  \param -
@@ -42,15 +42,10 @@ public:
      */
     void run();
 
-    /*! \brief Gibt Speicher frei, beendet laufende Funktionen usw.
-     *  \param -
-     *  \return -
-     */
-    void stop();
-
 private:
 
     IrrlichtDevice* device_;  // Zeiger auf das Entchen
+    u32 status_;
 #ifdef _DEBUG_MODE
     s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
 #endif
@@ -60,6 +55,8 @@ private:
     GameFloatControl& operator=( const GameFloatControl& );
     ~GameFloatControl();
 
+    bool start();
+    void stop();
     inline void createLogfile();
     inline void readConfig();
     bool createDeviceFromConfig();

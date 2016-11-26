@@ -88,8 +88,8 @@ const video::SColor COL_PURPLE    = video::SColor( 255,  80,  30,  90 );
 
 //! @name State indicators for better readability of code
 //! @{
-#define FAILED false
-#define SUCCEEDED true
+//#define FAILED false
+//#define SUCCEEDED true
 //! @}
 
 

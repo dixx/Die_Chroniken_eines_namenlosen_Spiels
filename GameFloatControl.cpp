@@ -10,6 +10,7 @@
 #endif
 
 
+// TODO as soon as there are no singletons using anything from device or device itself, refactor this class!
 GameFloatControl& GameFloatControl::getInstance()
 {
     static GameFloatControl instance;
@@ -18,29 +19,12 @@ GameFloatControl& GameFloatControl::getInstance()
 
 
 
-bool GameFloatControl::start()
-{
-    device_ = createDevice( video::EDT_NULL );
-    if ( device_ == 0 )
-        return FAILED;
-    createLogfile();
-    readConfig();
-    device_->drop();
-    if ( createDeviceFromConfig() == FAILED )
-        return FAILED;
-    GameStateManager::getInstance( device_ );
-#ifdef _DEBUG_MODE
-    Debugwindow::getInstance( device_ );
-#endif
-    return SUCCEEDED;
-}
-
-
-
 void GameFloatControl::run()
 {
-    GameStateManager& game = GameStateManager::getInstance();
+    if ( !start() )
+        return;
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
+    GameStateManager& game = GameStateManager::getInstance();
 
     const f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
     const u32 FRAME_DELTA_TIME_IN_MS = static_cast<u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
@@ -78,14 +62,14 @@ void GameFloatControl::run()
             game.draw();
         }
     }
+    stop();
 }
 
 
 
-void GameFloatControl::stop()
+u32 GameFloatControl::status()
 {
-    Logfile::getInstance().writeLine( Logfile::INFO, "" );
-    Logfile::getInstance().writeLine( Logfile::INFO, "'Die Chroniken eines namenlosen Spiels' wurde normal beendet." );
+    return status_;
 }
 
 
@@ -96,6 +80,7 @@ void GameFloatControl::stop()
 
 GameFloatControl::GameFloatControl()
 : device_(0)
+  ,status_(1)
 #ifdef _DEBUG_MODE
   ,fps_(0)
   ,lastFPS_(0)
@@ -113,6 +98,34 @@ GameFloatControl::~GameFloatControl()
         device_->drop();
         device_ = 0;
     }
+}
+
+
+
+bool GameFloatControl::start()
+{
+    device_ = createDevice( video::EDT_NULL );
+    if ( device_ == 0 )
+        return false;
+    createLogfile();
+    readConfig();
+    device_->drop();
+    if ( !createDeviceFromConfig() )
+        return false;
+    GameStateManager::getInstance( device_ );
+#ifdef _DEBUG_MODE
+    Debugwindow::getInstance( device_ );
+#endif
+    status_ = 0;
+    return true;
+}
+
+
+
+void GameFloatControl::stop()
+{
+    Logfile::getInstance().writeLine( Logfile::INFO, "" );
+    Logfile::getInstance().writeLine( Logfile::INFO, "'Die Chroniken eines namenlosen Spiels' wurde normal beendet." );
 }
 
 
@@ -154,7 +167,7 @@ bool GameFloatControl::createDeviceFromConfig()
 
     device_ = createDeviceEx( params );
     if ( device_ == 0 )
-        return FAILED;
+        return false;
     logfile.setNewFilesystem( device_->getFileSystem() );
     config.setNewFilesystem( device_->getFileSystem() );
     logfile.writeLine( Logfile::DETAIL, "3D-Entchen erfolgreich erstellt." );
@@ -165,7 +178,7 @@ bool GameFloatControl::createDeviceFromConfig()
     device_->getCursorControl()->setVisible( false );
     device_->getVideoDriver()->beginScene( true, false, COL_BLACK );
     device_->getVideoDriver()->endScene();
-    return SUCCEEDED;
+    return true;
  }
 
 

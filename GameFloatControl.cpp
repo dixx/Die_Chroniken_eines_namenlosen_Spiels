@@ -9,6 +9,8 @@
 #include "Debugwindow.h"
 #endif
 
+using namespace irr;
+
 
 // TODO as soon as there are no singletons using anything from device or device itself, refactor this class!
 GameFloatControl& GameFloatControl::getInstance()

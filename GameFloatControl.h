@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class GameFloatControl GameFloatControl.h "GameFloatControl.h"
  *  \brief Steuert den Programmablauf.
  *  \attention Klasse ist `Singleton`.
@@ -40,14 +38,14 @@ public:
      *  \param -
      *  \return `0` wenn das Spiel ohne Fehler lief, ansonsten `1`
      */
-    u32 status();
+    irr::u32 status();
 
 private:
 
-    IrrlichtDevice* device_;  // Zeiger auf das Entchen
-    u32 status_;
+    irr::IrrlichtDevice* device_;  // Zeiger auf das Entchen
+    irr::u32 status_;
 #ifdef _DEBUG_MODE
-    s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
+    irr::s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
 #endif
 
     GameFloatControl();

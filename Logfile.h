@@ -41,24 +41,24 @@ public:
     /*! \brief Ersatz für den Konstruktor.
      *
      *  Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung. Logdatei wird geöffnet und globales
-     *  LogLevel wird festgelegt. Der Stream zur Datei bleibt ständig offen. Das globale LogLevel legt hierbei fest,
+     *  LogLevel wird festgelegt. Das globale LogLevel legt hierbei fest,
      *  bis zu welcher Detailtiefe Informationen in das Log geschrieben werden (siehe enum LogLevels).
      *  \param fs (\a io::IFileSystem*) Zeiger auf das Irrlicht-Dateisystem
-     *  \param filename (\a c8*) Name und Pfad der Logdatei
-     *  \param logginglevel (\a u16) globales Logging-Level
+     *  \param filename (\a const \a path&) Name und Pfad der Logdatei
+     *  \param logginglevel (\a const \a u16) globales Logging-Level
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
     static Logfile& getInstance(
             io::IFileSystem* fs = 0,
-            const c8* filename = "DuHastDenLogdateinamenVergessen.txt",
+            const io::path& filename = "DuHastDenLogdateinamenVergessen.txt",
             const u16 logginglevel = INFO
     );
 
     /*! \brief Schreibt Text in das Logfile
      *  \note Schreibt eine Irrlicht-Zeichenkette in das Logfile, wenn das Logginglevel kleiner oder gleich dem
      *        globalLogLevel ist.
-     *  \param logginglevel (\a u16) Logginglevel
-     *  \param logline (\a core::stringc&) Text
+     *  \param logginglevel (\a const \a u16) Logginglevel
+     *  \param logline (\a const \a core::stringc&) Text
      *  \return -
      */
     void write( const u16 logginglevel, const core::stringc& logline );
@@ -66,9 +66,9 @@ public:
     /*! \brief Schreibt Text und Daten in das Logfile
      *  \note Schreibt eine Irrlicht-Zeichenkette und eine Zahl beliebigen Typs in das Logfile, wenn das Logginglevel
      *        kleiner oder gleich dem globalLogLevel ist.
-     *  \param logginglevel (\a u16) Logginglevel
-     *  \param logline (\a core::stringc&) Text
-     *  \param number (\a beliebiger \a Zahlentyp) Zahl
+     *  \param logginglevel (\a const \a u16) Logginglevel
+     *  \param logline (\a const \a core::stringc&) Text
+     *  \param number (\a const \a beliebiger \a Zahlentyp) Zahl
      *  \return -
      */
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
@@ -90,8 +90,8 @@ public:
     /*! \brief Schreibt Text mit abschließendem Zeilenumbruch in das Logfile
      *  \note Schreibt eine Irrlicht-Zeichenkette mit abschließendem Zeilenumbruch in das Logfile, wenn das
      *        Logginglevel kleiner oder gleich dem globalLogLevel ist.
-     *  \param logginglevel (\a u16) Logginglevel
-     *  \param logline (\a core::stringc&) Text
+     *  \param logginglevel (\a const \a u16) Logginglevel
+     *  \param logline (\a const \a core::stringc&) Text
      *  \return -
      */
     void writeLine( const u16 logginglevel, const core::stringc& logline );
@@ -99,9 +99,9 @@ public:
     /*! \brief Schreibt Text und Daten mit abschließendem Zeilenumbruch in das Logfile
      *  \note Schreibt eine Irrlicht-Zeichenkette und eine Zahl beliebigen Typs mit abschließendem Zeilenumbruch in das
      *        Logfile, wenn das Logginglevel kleiner oder gleich dem globalLogLevel ist.
-     *  \param logginglevel (\a u16) Logginglevel
-     *  \param logline (\a core::stringc&) Text
-     *  \param number (\a beliebiger \a Zahlentyp) Zahl
+     *  \param logginglevel (\a const \a u16) Logginglevel
+     *  \param logline (\a const \a core::stringc&) Text
+     *  \param number (\a const \a beliebiger \a Zahlentyp) Zahl
      *  \return -
      */
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
@@ -130,15 +130,15 @@ public:
 
     /*! \brief Schließt das Logfile und bricht die Programabarbeitung hart ab.
      *  \attention Belegter Speicher wird nicht freigegeben!
-     *  \param logline (\a core::stringc&) Text
+     *  \param logline (\a const \a core::stringc&) Text
      *  \return -
      */
     void emergencyExit( const core::stringc& logline );
 
     /*! \brief Schreibt Text mit abschließendem Zeilenumbruch in das Logfile
      *  \note Schreibt im DEBUG-Modus eine Irrlicht-Zeichenkette mit abschließendem Zeilenumbruch in das Logfile.
-     *  \param logline (\a core::stringc&) Text
-     *  \param number (\a beliebiger \a Zahlentyp) Zahl
+     *  \param logline (\a const \a core::stringc&) Text
+     *  \param number (\a const \a beliebiger \a Zahlentyp) Zahl
      *  \return -
      */
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
@@ -159,7 +159,7 @@ public:
 
 private:
 
-    core::stringc filename_;  // Logdateiname
+    io::path filename_;  // Logdateiname
     io::IFileSystem* fs_;  // Irrlicht-Dateisystem
     io::IWriteFile* logfile_;  // Logdatei
     u32 globalLogLevel_;  // Globales LogLevel
@@ -168,7 +168,7 @@ private:
     core::stringc debugPrefix_;  // Maske fuer Prefix [debug]
     u32 debugPrefixSize_;  // Bytegroesse von Prefix [debug]
 
-    Logfile( io::IFileSystem* fs, const c8* filename,
+    Logfile( io::IFileSystem* fs, const io::path& filename,
             const u16 logginglevel );  // ctor. Von aussen keine Instanzen direkt erzeugbar
     Logfile( const Logfile& );  // Instanz ist nicht kopierbar
     Logfile& operator=( const Logfile& );  // Instanz ist nicht zuweisbar

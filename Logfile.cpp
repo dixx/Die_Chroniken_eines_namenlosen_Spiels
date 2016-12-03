@@ -2,8 +2,8 @@
 
 
 
-Logfile& Logfile::getInstance( io::IFileSystem* fs, const c8* filename, const u16 logginglevel )
-{ 
+Logfile& Logfile::getInstance( io::IFileSystem* fs, const io::path& filename, const u16 logginglevel )
+{
     static Logfile instance( fs, filename, logginglevel );
     return instance;
 }
@@ -66,7 +66,7 @@ void Logfile::emergencyExit( const core::stringc& logline )
 
 
 
-Logfile::Logfile( io::IFileSystem* fs, const c8* filename, const u16 logginglevel )
+Logfile::Logfile( io::IFileSystem* fs, const io::path& filename, const u16 logginglevel )
 : filename_(filename),
   fs_(fs),
   logfile_(0),

@@ -63,8 +63,9 @@
 
 /*! \page tools Verwendete Werkzeuge
  *
- *  - <a href="http://www.eclipse.org/">Eclipse</a>
  *  - <a href="http://git-scm.com/">Git</a>
- *  - <a href="www.doxygen.org/‎">DoxyGen</a>
- *  - <a href="www.blender.org/‎">Blender</a>
+ *  - <a href="http://www.doxygen.org/‎">DoxyGen</a>
+ *  - <a href="http://www.blender.org/‎">Blender</a>
+ *  - <a href="https://cmake.org/">CMake</a> build tools
+ *  - <a href="https://github.com/philsquared/Catch">Catch</a> unit test framework
  */

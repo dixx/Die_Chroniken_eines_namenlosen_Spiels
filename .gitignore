@@ -2,6 +2,7 @@
 /Debug/*.d
 /Debug/*.exe
 /Debug/spiel
+/Debug/unit_tests
 /Debug/*.log
 /Debug/*.out
 /Debug/*.mk

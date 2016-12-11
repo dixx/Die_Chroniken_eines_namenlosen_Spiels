@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class Logfile Logfile.h "Logfile.h"
  *  \brief Enthält grundlegende Logging-Funktionen.
  *  \details Das globale LogLevel legt fest, wie exakt (und welche) Informationen ins Logfile geschrieben werden.
@@ -42,16 +40,16 @@ public:
      *
      *  Instanziert die Klasse einmalig und verhindert Mehrfachinstanzierung. Logdatei wird geöffnet und globales
      *  LogLevel wird festgelegt. Das globale LogLevel legt hierbei fest,
-     *  bis zu welcher Detailtiefe Informationen in das Log geschrieben werden (siehe enum LogLevels).
+     *  bis zu welcher Detailtiefe Informationen in das Log geschrieben werden (siehe enum LogLevel).
      *  \param fs (\a io::IFileSystem*) Zeiger auf das Irrlicht-Dateisystem
      *  \param filename (\a const \a path&) Name und Pfad der Logdatei
      *  \param logginglevel (\a const \a u16) globales Logging-Level
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
     static Logfile& getInstance(
-            io::IFileSystem* fs = 0,
-            const io::path& filename = "DuHastDenLogdateinamenVergessen.txt",
-            const u16 logginglevel = INFO
+            irr::io::IFileSystem* fs = 0,
+            const irr::io::path& filename = "DuHastDenLogdateinamenVergessen.txt",
+            const irr::u16 logginglevel = INFO
     );
 
     /*! \brief Schreibt Text in das Logfile
@@ -61,7 +59,7 @@ public:
      *  \param logline (\a const \a core::stringc&) Text
      *  \return -
      */
-    void write( const u16 logginglevel, const core::stringc& logline );
+    void write( const irr::u16 logginglevel, const irr::core::stringc& logline );
 
     /*! \brief Schreibt Text und Daten in das Logfile
      *  \note Schreibt eine Irrlicht-Zeichenkette und eine Zahl beliebigen Typs in das Logfile, wenn das Logginglevel
@@ -74,7 +72,7 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void write( const u16 logginglevel, const core::stringc& logline, const T number )
+    void write( const irr::u16 logginglevel, const irr::core::stringc& logline, const T number )
     {
         if ( logginglevel <= globalLogLevel_ )
         {
@@ -82,7 +80,7 @@ public:
             if ( logginglevel == DEBUG )
                 logfile_->write( debugPrefix_.c_str(), debugPrefixSize_ );
             logfile_->write( logline.c_str(), logline.size() );
-            logfile_->write( core::stringc( number ).c_str(), core::stringc( number ).size() );
+            logfile_->write( irr::core::stringc( number ).c_str(), irr::core::stringc( number ).size() );
             closeLogfile();
         }
     }
@@ -94,7 +92,7 @@ public:
      *  \param logline (\a const \a core::stringc&) Text
      *  \return -
      */
-    void writeLine( const u16 logginglevel, const core::stringc& logline );
+    void writeLine( const irr::u16 logginglevel, const irr::core::stringc& logline );
 
     /*! \brief Schreibt Text und Daten mit abschließendem Zeilenumbruch in das Logfile
      *  \note Schreibt eine Irrlicht-Zeichenkette und eine Zahl beliebigen Typs mit abschließendem Zeilenumbruch in das
@@ -107,7 +105,7 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void writeLine( const u16 logginglevel, const core::stringc& logline, const T number )
+    void writeLine( const irr::u16 logginglevel, const irr::core::stringc& logline, const T number )
     {
         if ( logginglevel <= globalLogLevel_ )
         {
@@ -115,7 +113,7 @@ public:
             if ( logginglevel == DEBUG )
                 logfile_->write( debugPrefix_.c_str(), debugPrefixSize_ );
             logfile_->write( logline.c_str(), logline.size() );
-            logfile_->write( core::stringc( number ).c_str(), core::stringc( number ).size() );
+            logfile_->write( irr::core::stringc( number ).c_str(), irr::core::stringc( number ).size() );
             logfile_->write( newLine_.c_str(), newLineSize_ );
             closeLogfile();
         }
@@ -126,14 +124,14 @@ public:
      *  \param fs (\a io::IFileSystem*) Zeiger auf das virtuelle Dateisystem
      *  \return -
      */
-    void setNewFilesystem( io::IFileSystem* fs = 0 );
+    void setNewFilesystem( irr::io::IFileSystem* fs = 0 );
 
     /*! \brief Schließt das Logfile und bricht die Programabarbeitung hart ab.
      *  \attention Belegter Speicher wird nicht freigegeben!
      *  \param logline (\a const \a core::stringc&) Text
      *  \return -
      */
-    void emergencyExit( const core::stringc& logline );
+    void emergencyExit( const irr::core::stringc& logline );
 
     /*! \brief Schreibt Text mit abschließendem Zeilenumbruch in das Logfile
      *  \note Schreibt im DEBUG-Modus eine Irrlicht-Zeichenkette mit abschließendem Zeilenumbruch in das Logfile.
@@ -144,11 +142,11 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void dbg( const core::stringc& logline, const T number )
+    void dbg( const irr::core::stringc& logline, const T number )
     {
         writeLine( DEBUG, logline, number );
     }
-    void dbg( const core::stringc& logline, const core::vector3df& vector )
+    void dbg( const irr::core::stringc& logline, const irr::core::vector3df& vector )
     {
         write( DEBUG, logline );
         write( DEBUG - 1, "(", vector.X );
@@ -159,17 +157,17 @@ public:
 
 private:
 
-    io::path filename_;  // Logdateiname
-    io::IFileSystem* fs_;  // Irrlicht-Dateisystem
-    io::IWriteFile* logfile_;  // Logdatei
-    u32 globalLogLevel_;  // Globales LogLevel
-    core::stringc newLine_;  // Maske fuer einen Zeilenumbruch
-    u32 newLineSize_;  // Bytegroesse von Zeilenumbruch
-    core::stringc debugPrefix_;  // Maske fuer Prefix [debug]
-    u32 debugPrefixSize_;  // Bytegroesse von Prefix [debug]
+    irr::io::path filename_;  // Logdateiname
+    irr::io::IFileSystem* fs_;  // Irrlicht-Dateisystem
+    irr::io::IWriteFile* logfile_;  // Logdatei
+    irr::u32 globalLogLevel_;  // Globales LogLevel
+    irr::core::stringc newLine_;  // Maske fuer einen Zeilenumbruch
+    irr::u32 newLineSize_;  // Bytegroesse von Zeilenumbruch
+    irr::core::stringc debugPrefix_;  // Maske fuer Prefix [debug]
+    irr::u32 debugPrefixSize_;  // Bytegroesse von Prefix [debug]
 
-    Logfile( io::IFileSystem* fs, const io::path& filename,
-            const u16 logginglevel );  // ctor. Von aussen keine Instanzen direkt erzeugbar
+    Logfile( irr::io::IFileSystem* fs, const irr::io::path& filename,
+            const irr::u16 logginglevel );  // ctor. Von aussen keine Instanzen direkt erzeugbar
     Logfile( const Logfile& );  // Instanz ist nicht kopierbar
     Logfile& operator=( const Logfile& );  // Instanz ist nicht zuweisbar
     ~Logfile();  // dtor. Instanz zerstoert sich bei Programmende

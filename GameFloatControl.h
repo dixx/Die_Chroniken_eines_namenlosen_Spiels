@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class GameFloatControl GameFloatControl.h "GameFloatControl.h"
  *  \brief Steuert den Programmablauf.
  *  \attention Klasse ist `Singleton`.
@@ -30,29 +28,24 @@ public:
      */
     static GameFloatControl& getInstance();
 
-    /*! \brief Startet Logfile, liest Konfiguration, erstellt 3D-Entchen, initialisiert alle benötigten Klassen.
-     *  \param -
-     *  \return `true` wenn die Initialisierung erfolgreich war, ansonsten `false`
-     */
-    bool start();
-
     /*! \brief Stellt alles auf dem Bildschirm dar. Alles. Das ganze Spiel.
      *  \param -
      *  \return -
      */
     void run();
 
-    /*! \brief Gibt Speicher frei, beendet laufende Funktionen usw.
+    /*! \brief Rückgabewert des Spiels.
      *  \param -
-     *  \return -
+     *  \return `0` wenn das Spiel ohne Fehler lief, ansonsten `1`
      */
-    void stop();
+    irr::u32 status();
 
 private:
 
-    IrrlichtDevice* device_;  // Zeiger auf das Entchen
+    irr::IrrlichtDevice* device_;  // Zeiger auf das Entchen
+    irr::u32 status_;
 #ifdef _DEBUG_MODE
-    s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
+    irr::s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
 #endif
 
     GameFloatControl();
@@ -60,6 +53,8 @@ private:
     GameFloatControl& operator=( const GameFloatControl& );
     ~GameFloatControl();
 
+    bool start();
+    void stop();
     inline void createLogfile();
     inline void readConfig();
     bool createDeviceFromConfig();

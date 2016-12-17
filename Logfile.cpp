@@ -2,15 +2,15 @@
 
 
 
-Logfile& Logfile::getInstance( io::IFileSystem* fs, const c8* filename, const u16 logginglevel )
-{ 
+Logfile& Logfile::getInstance( irr::io::IFileSystem* fs, const irr::io::path& filename, const irr::u16 logginglevel )
+{
     static Logfile instance( fs, filename, logginglevel );
     return instance;
 }
 
 
 
-void Logfile::setNewFilesystem( io::IFileSystem* fs )
+void Logfile::setNewFilesystem( irr::io::IFileSystem* fs )
 {
     if ( fs == 0 )
         exit( 1 );
@@ -22,7 +22,7 @@ void Logfile::setNewFilesystem( io::IFileSystem* fs )
 
 
 
-void Logfile::write( const u16 logginglevel, const core::stringc& logline )
+void Logfile::write( const irr::u16 logginglevel, const irr::core::stringc& logline )
 {
     if ( logginglevel <= globalLogLevel_ )
     {
@@ -36,7 +36,7 @@ void Logfile::write( const u16 logginglevel, const core::stringc& logline )
 
 
 
-void Logfile::writeLine( const u16 logginglevel, const core::stringc& logline )
+void Logfile::writeLine( const irr::u16 logginglevel, const irr::core::stringc& logline )
 {
     if ( logginglevel <= globalLogLevel_ )
     {
@@ -51,7 +51,7 @@ void Logfile::writeLine( const u16 logginglevel, const core::stringc& logline )
 
 
 
-void Logfile::emergencyExit( const core::stringc& logline )
+void Logfile::emergencyExit( const irr::core::stringc& logline )
 {
     openLogfile();
     logfile_->write( logline.c_str(), logline.size() );
@@ -66,7 +66,7 @@ void Logfile::emergencyExit( const core::stringc& logline )
 
 
 
-Logfile::Logfile( io::IFileSystem* fs, const c8* filename, const u16 logginglevel )
+Logfile::Logfile( irr::io::IFileSystem* fs, const irr::io::path& filename, const irr::u16 logginglevel )
 : filename_(filename),
   fs_(fs),
   logfile_(0),

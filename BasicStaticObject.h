@@ -9,8 +9,6 @@
 #include "Basic3DObject.h"
 #include "BufferCullMeshSceneNode.h"
 
-using namespace irr;
-
 /*! \class BasicStaticObject BasicStaticObject.h "BasicStaticObject.h"
  *  \brief  Ein statisches Objekt, basierend auf BufferCullMeshSceneNode.
  */
@@ -27,7 +25,7 @@ public:
      *  \param smgr (\a scene::ISceneManager*) Zeiger auf den SceneManager
      *  \param isParent (\a bool) Bei Vererbung auf `true` setzen, ansonsten automatisch `false`
      */
-    BasicStaticObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent = false );
+    BasicStaticObject( const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, bool isParent = false );
 
     /*! \brief Destruktor.
      */
@@ -43,25 +41,25 @@ public:
      *  \param -
      *  \return \a const \a f32 Kollisionsradius
      */
-    f32 getCollisionRadius() const;
+    irr::f32 getCollisionRadius() const;
 
     /*! \brief Liefert ein Interface für den Basis-Szenenknoten des Objekts zurück.
      *  \param -
      *  \return \a scene::ISceneNode* Interface auf den Basis-Szenenknoten
      */
-    scene::ISceneNode* nodeInterface() const;
+    irr::scene::ISceneNode* nodeInterface() const;
 
     /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Objekts zurück.
      *  \param -
      *  \return \a core::vector3df Länge und Richtung des nächsten Schrittes
      */
-    const core::vector3df& getNextStep() const;
+    const irr::core::vector3df& getNextStep() const;
 
     /*! \brief Liefert die Abmessungen der größten gemeinsamen BoundingBox des Objekts.
      *  \param -
      *  \return \a const \a core::vector3df& Abmessungen größten gemeinsamen BoundingBox des Objekts
      */
-    const core::vector3df& getMaxBoundingBoxExtent() const;
+    const irr::core::vector3df& getMaxBoundingBoxExtent() const;
 
     /*! \brief Liefert die aktuelle Konfiguration des Objektes.
      *  \param -
@@ -72,9 +70,9 @@ public:
 protected:
 
     BufferCullMeshSceneNode* node_;
-    core::vector3df maxBBExtent_;
+    irr::core::vector3df maxBBExtent_;
 
-    scene::IMesh* loadMesh();
+    irr::scene::IMesh* loadMesh();
 
 private:
 

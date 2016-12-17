@@ -7,7 +7,8 @@
 
 
 
-BasicStaticObject::BasicStaticObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
+BasicStaticObject::BasicStaticObject(
+        const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, bool isParent )
 : Basic3DObject( objectData, smgr, true ),
   node_(0),
   maxBBExtent_(VEC_3DF_NULL)
@@ -41,28 +42,28 @@ BufferCullMeshSceneNode* BasicStaticObject::getNode() const
 
 
 
-f32 BasicStaticObject::getCollisionRadius() const
+irr::f32 BasicStaticObject::getCollisionRadius() const
 {
     return 0.0f;
 }
 
 
 
-scene::ISceneNode* BasicStaticObject::nodeInterface() const
+irr::scene::ISceneNode* BasicStaticObject::nodeInterface() const
 {
-    return static_cast<scene::ISceneNode*>(node_);
+    return static_cast<irr::scene::ISceneNode*>(node_);
 }
 
 
 
-const core::vector3df& BasicStaticObject::getNextStep() const
+const irr::core::vector3df& BasicStaticObject::getNextStep() const
 {
     return VEC_3DF_NULL;
 }
 
 
 
-const core::vector3df& BasicStaticObject::getMaxBoundingBoxExtent() const
+const irr::core::vector3df& BasicStaticObject::getMaxBoundingBoxExtent() const
 {
     return maxBBExtent_;
 }
@@ -92,12 +93,12 @@ const core::vector3df& BasicStaticObject::getMaxBoundingBoxExtent() const
 
 
 
-scene::IMesh* BasicStaticObject::loadMesh()
+irr::scene::IMesh* BasicStaticObject::loadMesh()
 {
-    scene::IMesh* mesh = 0;
+    irr::scene::IMesh* mesh = 0;
     if ( extractor_->tryToExtractValue( "MFILE" ) )
     {
-        core::stringc meshFileName = extractor_->getExtractedValue();
+        irr::core::stringc meshFileName = extractor_->getExtractedValue();
         if ( meshFileName.size() == 0 )
         {
             createLogEntry( "Leerer Mesh-Dateiname" );
@@ -105,7 +106,7 @@ scene::IMesh* BasicStaticObject::loadMesh()
         else
         {
             GenericHelperMethods::getInstance().validateFileExistence( meshFileName );
-            scene::IMesh* dummyMesh = smgr_->getMesh( meshFileName );
+            irr::scene::IMesh* dummyMesh = smgr_->getMesh( meshFileName );
             mesh = smgr_->getMeshManipulator()->createMeshCopy( dummyMesh ); // TODO test if you can remove this part!
             smgr_->getMeshCache()->removeMesh( dummyMesh );
         }
@@ -125,11 +126,11 @@ scene::IMesh* BasicStaticObject::loadMesh()
 
 void BasicStaticObject::init()
 {
-    scene::IMeshManipulator* meshManipulator = smgr_->getMeshManipulator();
-    core::matrix4 matrix = core::matrix4();
+    irr::scene::IMeshManipulator* meshManipulator = smgr_->getMeshManipulator();
+    irr::core::matrix4 matrix = irr::core::matrix4();
 
-    smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, matrix );
-    scene::IMesh* dummyMesh = loadMesh();
+    smgr_->getVideoDriver()->setTransform( irr::video::ETS_WORLD, matrix );
+    irr::scene::IMesh* dummyMesh = loadMesh();
     if ( dummyMesh )
     {
         matrix.setScale( loadScale() );
@@ -149,7 +150,7 @@ void BasicStaticObject::init()
         node_->setPosition( loadPosition() );
         node_->updateAbsolutePosition();
         node_->setMaterialTexture( 0, loadMainTexture() );
-        for ( u32 i = 0; i < node_->getMaterialCount(); ++i )
+        for ( irr::u32 i = 0; i < node_->getMaterialCount(); ++i )
             loadFilterAndEffects( node_->getMaterial( i ) );
         Collision::getInstance().addStaticMeshNodeToWorld( node_ );
         node_->setVisible( false );

@@ -216,7 +216,7 @@ void BasicLifeform::init()
     node_->setName( name_ );
     node_->setRotation( rotation_ );
     node_->setPosition( currentPosition_ + positionOffset_ );
-    node_->updateAbsolutePosition();d
+    node_->updateAbsolutePosition();
     node_->setMaterialTexture( 0, loadMainTexture() );
     for ( irr::u32 i = 0; i < node_->getMaterialCount(); ++i )
         loadFilterAndEffects( node_->getMaterial( i ) );

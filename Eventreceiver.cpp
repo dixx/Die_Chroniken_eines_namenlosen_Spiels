@@ -3,17 +3,17 @@
 
 
 
-Eventreceiver& Eventreceiver::getInstance() 
-{ 
+Eventreceiver& Eventreceiver::getInstance()
+{
     static Eventreceiver instance;
     return instance;
 }
 
 
 
-bool Eventreceiver::OnEvent( const SEvent& event )
+bool Eventreceiver::OnEvent( const irr::SEvent& event )
 {
-    if ( reactOnKeys_ && event.EventType == EET_KEY_INPUT_EVENT )
+    if ( reactOnKeys_ && event.EventType == irr::EET_KEY_INPUT_EVENT )
     {
         KeyIsDown_[ event.KeyInput.Key ] = event.KeyInput.PressedDown;
         ShiftIsDown_ = event.KeyInput.Shift;
@@ -21,39 +21,39 @@ bool Eventreceiver::OnEvent( const SEvent& event )
         thereWasKeyEvent_ = true;
         return true;
     } //end Keyboard-Events
-    if ( event.EventType == EET_MOUSE_INPUT_EVENT )
+    if ( event.EventType == irr::EET_MOUSE_INPUT_EVENT )
     {
         switch ( event.MouseInput.Event )
         {
-            case EMIE_MOUSE_MOVED:
+            case irr::EMIE_MOUSE_MOVED:
                 mouseY_ = event.MouseInput.Y;
                 mouseX_ = event.MouseInput.X;
                 break;
-            case EMIE_LMOUSE_PRESSED_DOWN:
+            case irr::EMIE_LMOUSE_PRESSED_DOWN:
                 LMBIsDown_ = reactOnMouse_;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_LMOUSE_LEFT_UP:
+            case irr::EMIE_LMOUSE_LEFT_UP:
                 LMBIsDown_ = false;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_RMOUSE_PRESSED_DOWN:
+            case irr::EMIE_RMOUSE_PRESSED_DOWN:
                 RMBIsDown_ = reactOnMouse_;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_RMOUSE_LEFT_UP:
+            case irr::EMIE_RMOUSE_LEFT_UP:
                 RMBIsDown_ = false;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_MMOUSE_PRESSED_DOWN:
+            case irr::EMIE_MMOUSE_PRESSED_DOWN:
                 MMBIsDown_ = reactOnMouse_;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_MMOUSE_LEFT_UP:
+            case irr::EMIE_MMOUSE_LEFT_UP:
                 MMBIsDown_ = false;
                 thereWasKeyEvent_ = true;
                 break;
-            case EMIE_MOUSE_WHEEL:
+            case irr::EMIE_MOUSE_WHEEL:
                 if ( reactOnMouse_ )
                     mouseWheel_ += event.MouseInput.Wheel;
                 break;
@@ -62,7 +62,7 @@ bool Eventreceiver::OnEvent( const SEvent& event )
                 break;
         }
     } //end Mouse-Events
-    if ( reactOnGUI_ && event.EventType == EET_GUI_EVENT )
+    if ( reactOnGUI_ && event.EventType == irr::EET_GUI_EVENT )
     {
         return GameStateManager::getInstance().handleGuiEvents( event );
     } //end GUI-Events
@@ -77,7 +77,7 @@ void Eventreceiver::setKeysLastState()
 {
     if ( thereWasKeyEvent_ )
     {
-        for ( u32 i = 0; i < KEY_KEY_CODES_COUNT; ++i )
+        for ( irr::u32 i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i )
             KeyLastState_[ i ] = KeyIsDown_[ i ];
         ShiftWasDown_ = ShiftIsDown_;
         CtrlWasDown_ = CtrlIsDown_;
@@ -105,28 +105,28 @@ void Eventreceiver::setEventReactionActive( bool keysActive, bool mausActive, bo
 
 
 
-bool Eventreceiver::isKeyDown( const EKEY_CODE keyCode ) const
+bool Eventreceiver::isKeyDown( const irr::EKEY_CODE keyCode ) const
 {
     return KeyIsDown_[ keyCode ];
 }
 
 
 
-bool Eventreceiver::wasKeyDown( const EKEY_CODE keyCode ) const
+bool Eventreceiver::wasKeyDown( const irr::EKEY_CODE keyCode ) const
 {
     return KeyLastState_[ keyCode ];
 }
 
 
 
-bool Eventreceiver::hasKeyJustBeenPressedDown( const EKEY_CODE keyCode ) const
+bool Eventreceiver::hasKeyJustBeenPressedDown( const irr::EKEY_CODE keyCode ) const
 {
     return ( isKeyDown( keyCode ) && !wasKeyDown( keyCode ) );
 }
 
 
 
-bool Eventreceiver::hasKeyJustBeenReleased( const EKEY_CODE keyCode ) const
+bool Eventreceiver::hasKeyJustBeenReleased( const irr::EKEY_CODE keyCode ) const
 {
     return ( !isKeyDown( keyCode ) && wasKeyDown( keyCode ) );
 }
@@ -210,35 +210,35 @@ bool Eventreceiver::isHover() const
 
 
 
-s32 Eventreceiver::getMouseX() const
+irr::s32 Eventreceiver::getMouseX() const
 {
     return mouseX_;
 }
 
 
 
-s32 Eventreceiver::getMouseY() const
+irr::s32 Eventreceiver::getMouseY() const
 {
     return mouseY_;
 }
 
 
 
-s32 Eventreceiver::getMouseLastX() const
+irr::s32 Eventreceiver::getMouseLastX() const
 {
     return mouseLastX_;
 }
 
 
 
-s32 Eventreceiver::getMouseLastY() const
+irr::s32 Eventreceiver::getMouseLastY() const
 {
     return mouseLastY_;
 }
 
 
 
-f32 Eventreceiver::getMouseWheel() const
+irr::f32 Eventreceiver::getMouseWheel() const
 {
     return mouseWheel_;
 }
@@ -280,7 +280,7 @@ Eventreceiver::~Eventreceiver()
 
 void Eventreceiver::resetKeyStates()
 {
-    for ( register u32 i = 0; i < KEY_KEY_CODES_COUNT; ++i )
+    for ( register irr::u32 i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i )
     {
         KeyIsDown_[ i ] = false;
         KeyLastState_[ i ] = false;

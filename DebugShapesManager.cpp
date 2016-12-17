@@ -2,7 +2,7 @@
 
 
 
-DebugShapesManager& DebugShapesManager::getInstance( video::IVideoDriver* driver )
+DebugShapesManager& DebugShapesManager::getInstance( irr::video::IVideoDriver* driver )
 {
     static DebugShapesManager instance( driver );
     return instance;
@@ -10,14 +10,14 @@ DebugShapesManager& DebugShapesManager::getInstance( video::IVideoDriver* driver
 
 
 
-void DebugShapesManager::createCircle( core::vector3df position, f32 radius )
+void DebugShapesManager::createCircle( irr::core::vector3df position, irr::f32 radius )
 {
     shapes_.push_back( new DebugCircle( driver_, position, radius ) );
 }
 
 
 
-void DebugShapesManager::createEllipsoid( core::vector3df position, core::vector3df radien )
+void DebugShapesManager::createEllipsoid( irr::core::vector3df position, irr::core::vector3df radien )
 {
     shapes_.push_back( new DebugEllipsoid( driver_, position, radien ) );
 }
@@ -38,14 +38,14 @@ void DebugShapesManager::drawAll()
 
 
 
-DebugShapesManager::DebugShapesManager( video::IVideoDriver* driver )
+DebugShapesManager::DebugShapesManager( irr::video::IVideoDriver* driver )
 : driver_(driver)
 {
     if ( driver_ == 0 )
         exit(1);
     shapes_.clear();
     iter_ = shapes_.end();
-    material_ = video::SMaterial();
+    material_ = irr::video::SMaterial();
     material_.Thickness = 2.0f;
     material_.Lighting = false;
 }

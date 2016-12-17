@@ -9,8 +9,6 @@
 #include "ObjectParamsExtractor.h"
 #include "ObjectConfiguration.h"
 
-using namespace irr;
-
 /*! \class Basic3DObject Basic3DObject.h "Basic3DObject.h"
  *  \brief  Der Grundbaustein für ein Objekt.
  */
@@ -25,7 +23,7 @@ public:
      *  \param smgr (\a scene::ISceneManager*) Zeiger auf den SceneManager
      *  \param isParent (\a bool) Bei Vererbung auf `true` setzen, ansonsten automatisch `false`
      */
-    Basic3DObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent = false );
+    Basic3DObject( const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, bool isParent = false );
 
     /*! \brief Destruktor.
      */
@@ -35,13 +33,13 @@ public:
      *  \param -
      *  \return \a const \a core::stringc& Name des Objektes
      */
-    const core::stringc& getName() const;
+    const irr::core::stringc& getName() const;
 
     /*! \brief Liefert den Typ des Objektes.
      *  \param -
      *  \return \a const \a core::stringc& Typ des Objektes
      */
-    const core::stringc& getType() const;
+    const irr::core::stringc& getType() const;
 
     /*! \brief Liefert die aktuelle Konfiguration des Objektes.
      *  \param -
@@ -54,46 +52,46 @@ public:
      *  \param -
      *  \return \a const \a core::vector3df& Abmessungen größten gemeinsamen BoundingBox des Objekts
      */
-    virtual const core::vector3df& getMaxBoundingBoxExtent() const = 0;
+    virtual const irr::core::vector3df& getMaxBoundingBoxExtent() const = 0;
 
     /*! \brief Liefert den Abstand zum Mittelpunkt des Objekts zurück, ab dem Kollisionen abgefangen werden sollen.
      *  \attention Methode ist pure virtual!
      *  \param -
      *  \return \a f32 Kollisionsradius
      */
-    virtual f32 getCollisionRadius() const = 0;
+    virtual irr::f32 getCollisionRadius() const = 0;
 
     /*! \brief Liefert ein Interface für den Basis-Szenenknoten des Objekts zurück.
      *  \attention Methode ist pure virtual!
      *  \param -
      *  \return \a scene::ISceneNode* Interface auf den Basis-Szenenknoten
      */
-    virtual scene::ISceneNode* nodeInterface() const = 0;
+    virtual irr::scene::ISceneNode* nodeInterface() const = 0;
 
     /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Objekts zurück.
      *  \attention Methode ist pure virtual!
      *  \param -
      *  \return \a core::vector3df Länge und Richtung des nächsten Schrittes
      */
-    virtual const core::vector3df& getNextStep() const = 0;
+    virtual const irr::core::vector3df& getNextStep() const = 0;
 
 protected:
 
-    core::stringc type_;
-    core::stringc name_;
-    core::stringc objectData_;
+    irr::core::stringc type_;
+    irr::core::stringc name_;
+    irr::core::stringc objectData_;
     ObjectConfiguration* objectData_2;
     ObjectParamsExtractor* extractor_;
-    scene::ISceneManager* smgr_;
+    irr::scene::ISceneManager* smgr_;
 
-    void createLogEntry( const core::stringc& message );
+    void createLogEntry( const irr::core::stringc& message );
     void deleteExtractor();
-    core::vector3df loadScale();
-    core::vector3df loadOffset();
-    core::vector3df loadRotation();
-    core::vector3df loadPosition();
-    void loadFilterAndEffects( video::SMaterial& material );
-    video::ITexture* loadMainTexture();
+    irr::core::vector3df loadScale();
+    irr::core::vector3df loadOffset();
+    irr::core::vector3df loadRotation();
+    irr::core::vector3df loadPosition();
+    void loadFilterAndEffects( irr::video::SMaterial& material );
+    irr::video::ITexture* loadMainTexture();
 
 private:
 

@@ -5,7 +5,7 @@
 
 
 
-Basic3DObject::Basic3DObject( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
+Basic3DObject::Basic3DObject( const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, bool isParent )
 : type_("<unknown>"),
   name_("<noname>"),
   objectData_(objectData),
@@ -41,14 +41,14 @@ Basic3DObject::~Basic3DObject()
 
 
 
-const core::stringc& Basic3DObject::getName() const
+const irr::core::stringc& Basic3DObject::getName() const
 {
     return name_;
 }
 
 
 
-const core::stringc& Basic3DObject::getType() const
+const irr::core::stringc& Basic3DObject::getType() const
 {
     return type_;
 }
@@ -68,7 +68,7 @@ const core::stringc& Basic3DObject::getType() const
 
 
 
-void Basic3DObject::createLogEntry( const core::stringc& message )
+void Basic3DObject::createLogEntry( const irr::core::stringc& message )
 {
     Logfile& logfile = Logfile::getInstance();
     logfile.write( Logfile::INFO, message );
@@ -86,84 +86,84 @@ void Basic3DObject::deleteExtractor()
 
 
 
-core::vector3df Basic3DObject::loadScale()
+irr::core::vector3df Basic3DObject::loadScale()
 {
-    core::vector3df scale = core::vector3df( 1.0f );
+    irr::core::vector3df scale = irr::core::vector3df( 1.0f );
     if ( extractor_->tryToExtractValue( "MSCAL", "x", 0 ) )
-        scale.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        scale.X = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MSCAL", "x", 1 ) )
-        scale.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        scale.Y = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MSCAL", "x", 2 ) )
-        scale.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        scale.Z = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     return scale;
 }
 
 
 
-core::vector3df Basic3DObject::loadOffset()
+irr::core::vector3df Basic3DObject::loadOffset()
 {
-    core::vector3df offset = VEC_3DF_NULL;
+    irr::core::vector3df offset = VEC_3DF_NULL;
     if ( extractor_->tryToExtractValue( "MOFFS", "x", 0 ) )
-        offset.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        offset.X = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MOFFS", "x", 1 ) )
-        offset.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        offset.Y = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MOFFS", "x", 2 ) )
-        offset.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        offset.Z = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     return offset;
 }
 
 
 
-core::vector3df Basic3DObject::loadRotation()
+irr::core::vector3df Basic3DObject::loadRotation()
 {
-    core::vector3df rotation = VEC_3DF_NULL;
+    irr::core::vector3df rotation = VEC_3DF_NULL;
     if ( extractor_->tryToExtractValue( "MROTA", "x", 0 ) )
-        rotation.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        rotation.X = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MROTA", "x", 1 ) )
-        rotation.Y = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        rotation.Y = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "MROTA", "x", 2 ) )
-        rotation.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        rotation.Z = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     return rotation;
 }
 
 
 
-core::vector3df Basic3DObject::loadPosition()
+irr::core::vector3df Basic3DObject::loadPosition()
 {
-    core::vector3df position = VEC_3DF_NULL;
+    irr::core::vector3df position = VEC_3DF_NULL;
     if ( extractor_->tryToExtractValue( "POSXZ", "x", 0 ) )
-        position.X = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        position.X = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     if ( extractor_->tryToExtractValue( "POSXZ", "x", 1 ) )
-        position.Z = core::fast_atof( extractor_->getExtractedValue().c_str() );
+        position.Z = irr::core::fast_atof( extractor_->getExtractedValue().c_str() );
     return position;
 }
 
 
 
-video::ITexture* Basic3DObject::loadMainTexture()
+irr::video::ITexture* Basic3DObject::loadMainTexture()
 {
     if ( extractor_->tryToExtractValue( "MTEX0" ) == false )
     {
         createLogEntry( "Kein Textur-Dateiname für Material 0" );
         return 0;
     }
-    core::stringc textureFileName = extractor_->getExtractedValue();
+    irr::core::stringc textureFileName = extractor_->getExtractedValue();
     if ( textureFileName.size() == 0 )
     {
         createLogEntry( "Leerer Textur-Dateiname für Material 0" );
         return 0;
     }
     GenericHelperMethods::getInstance().validateFileExistence( textureFileName );
-    video::ITexture* texture = smgr_->getVideoDriver()->getTexture( textureFileName );
+    irr::video::ITexture* texture = smgr_->getVideoDriver()->getTexture( textureFileName );
     if ( extractor_->tryToExtractValue( "MTRAN" ) )
     {
         if ( extractor_->getExtractedValue().find( "ja" ) != -1 )
         {
-            smgr_->getVideoDriver()->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, false );
-            smgr_->getVideoDriver()->disableFeature( video::EVDF_BILINEAR_FILTER, true );
+            smgr_->getVideoDriver()->setTextureCreationFlag( irr::video::ETCF_CREATE_MIP_MAPS, false );
+            smgr_->getVideoDriver()->disableFeature( irr::video::EVDF_BILINEAR_FILTER, true );
             smgr_->getVideoDriver()->makeColorKeyTexture( texture, VEC_2DI_NULL );
-            smgr_->getVideoDriver()->disableFeature( video::EVDF_BILINEAR_FILTER, false );
-            smgr_->getVideoDriver()->setTextureCreationFlag( video::ETCF_CREATE_MIP_MAPS, true );
+            smgr_->getVideoDriver()->disableFeature( irr::video::EVDF_BILINEAR_FILTER, false );
+            smgr_->getVideoDriver()->setTextureCreationFlag( irr::video::ETCF_CREATE_MIP_MAPS, true );
         }
     }
     return texture;
@@ -171,24 +171,24 @@ video::ITexture* Basic3DObject::loadMainTexture()
 
 
 
-void Basic3DObject::loadFilterAndEffects( video::SMaterial& material )
+void Basic3DObject::loadFilterAndEffects( irr::video::SMaterial& material )
 {
-    material.MaterialType = video::EMT_SOLID;
-    material.setFlag( video::EMF_BACK_FACE_CULLING, true );
+    material.MaterialType = irr::video::EMT_SOLID;
+    material.setFlag( irr::video::EMF_BACK_FACE_CULLING, true );
     if ( extractor_->tryToExtractValue( "MTRAN" ) )
     {
         if ( extractor_->getExtractedValue().find( "ja" ) != -1 )
         {
-            material.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL;
+            material.MaterialType = irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL;
         }
     }
-    material.setFlag( video::EMF_LIGHTING, true );
-    material.setFlag( video::EMF_ANISOTROPIC_FILTER, true );
-    material.setFlag( video::EMF_ANTI_ALIASING, true );
-    material.setFlag( video::EMF_BILINEAR_FILTER, true );
-    material.setFlag( video::EMF_FOG_ENABLE, true );
-    material.setFlag( video::EMF_GOURAUD_SHADING, true );
-    material.setFlag( video::EMF_ZBUFFER, true );
+    material.setFlag( irr::video::EMF_LIGHTING, true );
+    material.setFlag( irr::video::EMF_ANISOTROPIC_FILTER, true );
+    material.setFlag( irr::video::EMF_ANTI_ALIASING, true );
+    material.setFlag( irr::video::EMF_BILINEAR_FILTER, true );
+    material.setFlag( irr::video::EMF_FOG_ENABLE, true );
+    material.setFlag( irr::video::EMF_GOURAUD_SHADING, true );
+    material.setFlag( irr::video::EMF_ZBUFFER, true );
 }
 
 

@@ -11,7 +11,7 @@
 
 
 
-Collision& Collision::getInstance( scene::ISceneManager* sceneManager )
+Collision& Collision::getInstance( irr::scene::ISceneManager* sceneManager )
 {
     static Collision instance( sceneManager );
     return instance;
@@ -19,7 +19,7 @@ Collision& Collision::getInstance( scene::ISceneManager* sceneManager )
 
 
 
-void Collision::addStaticMeshNodeToWorld( scene::IMeshSceneNode* node )
+void Collision::addStaticMeshNodeToWorld( irr::scene::IMeshSceneNode* node )
 {
     // todo minimalPolysPerNode anpassen
     // DEPRECATED since 1.7.2
@@ -31,7 +31,7 @@ void Collision::addStaticMeshNodeToWorld( scene::IMeshSceneNode* node )
 
 
 
-void Collision::addAnimatedMeshNodeToWorld( scene::IAnimatedMeshSceneNode* node )
+void Collision::addAnimatedMeshNodeToWorld( irr::scene::IAnimatedMeshSceneNode* node )
 {
     selector_ = smgr_->createTriangleSelector( node );
     node->setTriangleSelector( selector_ );
@@ -40,7 +40,7 @@ void Collision::addAnimatedMeshNodeToWorld( scene::IAnimatedMeshSceneNode* node 
 
 
 
-void Collision::removeNodeFromWorld( scene::ISceneNode* node )
+void Collision::removeNodeFromWorld( irr::scene::ISceneNode* node )
 {
     selector_ = node->getTriangleSelector();
     if ( selector_ )
@@ -81,7 +81,7 @@ void Collision::removeObjectFromRangedDetection( Basic3DObject* object )
 
 
 
-bool Collision::isRayIntersectingWithWorld( const core::line3df& ray, scene::ISceneNode* rootNode )
+bool Collision::isRayIntersectingWithWorld( const irr::core::line3df& ray, irr::scene::ISceneNode* rootNode )
 {
     // collides smart
     collisionNode = colliman_->getSceneNodeAndCollisionPointFromRay(
@@ -97,7 +97,7 @@ bool Collision::isRayIntersectingWithWorld( const core::line3df& ray, scene::ISc
 
 
 
-bool Collision::isRayIntersectingWithWalkableNodesAroundHero( const core::line3df& ray )
+bool Collision::isRayIntersectingWithWalkableNodesAroundHero( const irr::core::line3df& ray )
 {
     // collides directly with the triangles
     return colliman_->getCollisionPoint(
@@ -115,10 +115,10 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
 {
     // TODO refactor!
     bool isCollision = false;
-    scene::ISceneNode* objectNode = object->nodeInterface();
-    f32 objectRadius = object->getCollisionRadius();
-    const core::vector3df& objectCenter = objectNode->getAbsolutePosition();
-    core::aabbox3df objectBB = core::aabbox3df(
+    irr::scene::ISceneNode* objectNode = object->nodeInterface();
+    irr::f32 objectRadius = object->getCollisionRadius();
+    const irr::core::vector3df& objectCenter = objectNode->getAbsolutePosition();
+    irr::core::aabbox3df objectBB = irr::core::aabbox3df(
             objectCenter - object->getMaxBoundingBoxExtent() / 2.0f,
             objectCenter + object->getMaxBoundingBoxExtent() / 2.0f
     );
@@ -126,10 +126,10 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
     DebugShapesManager::getInstance().createEllipsoid( objectCenter, objectBB.MaxEdge - objectCenter );
 #endif
     Basic3DObject* obstacle = 0;
-    scene::ISceneNode* obstacleNode = 0;
-    f32 obstacleRadius = 0.0f;
-    f32 minDistance = 0.0f;
-    core::vector3df distance;
+    irr::scene::ISceneNode* obstacleNode = 0;
+    irr::f32 obstacleRadius = 0.0f;
+    irr::f32 minDistance = 0.0f;
+    irr::core::vector3df distance;
     for( iter_ = collidableObjects_.begin(); iter_ != collidableObjects_.end(); ++iter_ )
     {
         obstacle = *iter_;
@@ -137,7 +137,7 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
         if ( obstacleNode == objectNode ) // this works because of "intuitive pointer equality"
             continue;
         obstacleRadius = obstacle->getCollisionRadius();
-        if ( obstacleRadius > core::ROUNDING_ERROR_f32 ) // Lebewesen?
+        if ( obstacleRadius > irr::core::ROUNDING_ERROR_f32 ) // Lebewesen?
         {
             minDistance = objectRadius + obstacleRadius;
             distance = obstacleNode->getAbsolutePosition() - objectCenter;
@@ -220,7 +220,7 @@ void Collision::clearRemainingSelectors()
 
 
 #ifdef _DEBUG_MODE
-u32 Collision::loadedSelectors()
+irr::u32 Collision::loadedSelectors()
 {
     return walkableSelector_->getSelectorCount() + collidableObjects_.size();
 }
@@ -231,9 +231,9 @@ u32 Collision::loadedSelectors()
 
 
 
-Collision::Collision( scene::ISceneManager* sceneManager )
+Collision::Collision( irr::scene::ISceneManager* sceneManager )
 : collisionPoint(VEC_3DF_NULL),
-  collisionTriangle(core::triangle3df()),
+  collisionTriangle(irr::core::triangle3df()),
   collisionNode(0),
   collisionDodgeVector(VEC_3DF_NULL),
   smgr_(sceneManager),

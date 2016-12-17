@@ -9,7 +9,6 @@
 #include "Debugwindow.h"
 #endif
 
-using namespace irr;
 
 
 // TODO as soon as there are no singletons using anything from device or device itself, refactor this class!
@@ -28,12 +27,12 @@ void GameFloatControl::run()
     Eventreceiver& eventreceiver = Eventreceiver::getInstance();
     GameStateManager& game = GameStateManager::getInstance();
 
-    const f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
-    const u32 FRAME_DELTA_TIME_IN_MS = static_cast<u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
+    const irr::f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
+    const irr::u32 FRAME_DELTA_TIME_IN_MS = static_cast<irr::u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
 
-    u32 loops;
+    irr::u32 loops;
     bool we_must_draw;
-    u32 next = device_->getTimer()->getTime();
+    irr::u32 next = device_->getTimer()->getTime();
     while ( device_->run() )
     {
         if ( !device_->isWindowActive() )
@@ -69,7 +68,7 @@ void GameFloatControl::run()
 
 
 
-u32 GameFloatControl::status()
+irr::u32 GameFloatControl::status()
 {
     return status_;
 }
@@ -106,7 +105,7 @@ GameFloatControl::~GameFloatControl()
 
 bool GameFloatControl::start()
 {
-    device_ = createDevice( video::EDT_NULL );
+    device_ = createDevice( irr::video::EDT_NULL );
     if ( device_ == 0 )
         return false;
     createLogfile();
@@ -175,8 +174,8 @@ bool GameFloatControl::createDeviceFromConfig()
     logfile.writeLine( Logfile::DETAIL, "3D-Entchen erfolgreich erstellt." );
     logfile.writeLine( Logfile::DETAIL, "    Version: IrrLicht ", device_->getVersion() );
     logfile.writeLine( Logfile::DETAIL, "    Treiber: ", device_->getVideoDriver()->getName() );
-    device_->getVideoDriver()->disableFeature(video::EVDF_BILINEAR_FILTER, false);
-    device_->getVideoDriver()->disableFeature(video::EVDF_STENCIL_BUFFER, false);
+    device_->getVideoDriver()->disableFeature(irr::video::EVDF_BILINEAR_FILTER, false);
+    device_->getVideoDriver()->disableFeature(irr::video::EVDF_STENCIL_BUFFER, false);
     device_->getCursorControl()->setVisible( false );
     device_->getVideoDriver()->beginScene( true, false, COL_BLACK );
     device_->getVideoDriver()->endScene();
@@ -190,7 +189,7 @@ void GameFloatControl::printFPS()
 {
     fps_ = device_->getVideoDriver()->getFPS();
     {
-        core::stringw str = L"FPS:";
+        irr::core::stringw str = L"FPS:";
         str += fps_;
         Debugwindow::getInstance().addLine( "GameFloatControl::printFPS()", str );
         lastFPS_ = fps_;

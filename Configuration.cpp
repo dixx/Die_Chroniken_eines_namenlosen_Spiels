@@ -3,7 +3,7 @@
 
 
 
-Configuration& Configuration::getInstance( io::IFileSystem* fs )
+Configuration& Configuration::getInstance( irr::io::IFileSystem* fs )
 {
     static Configuration instance( fs );
     return instance;
@@ -11,7 +11,7 @@ Configuration& Configuration::getInstance( io::IFileSystem* fs )
 
 
 
-void Configuration::setNewFilesystem( io::IFileSystem* fs )
+void Configuration::setNewFilesystem( irr::io::IFileSystem* fs )
 {
     if ( fs == 0 )
         Logfile::getInstance().emergencyExit( "Dateisystem in [setNewFilesystem] nicht mehr gefunden! Abbruch." );
@@ -20,7 +20,7 @@ void Configuration::setNewFilesystem( io::IFileSystem* fs )
 
 
 
-void Configuration::readConfigFile( const c8* filename )
+void Configuration::readConfigFile( const irr::c8* filename )
 {
     Logfile& logfile = Logfile::getInstance();
     if ( fs_->existFile( filename ) == false )
@@ -29,16 +29,16 @@ void Configuration::readConfigFile( const c8* filename )
         logfile.writeLine( Logfile::INFO, " existiert nicht, wird jetzt mit Standardwerten erstellt." );
         writeConfigFile( filename );
     }
-    io::IReadFile* configfile = fs_->createAndOpenFile( filename );
+    irr::io::IReadFile* configfile = fs_->createAndOpenFile( filename );
     if ( configfile == 0 )
     {
         logfile.write( Logfile::INFO, "Konfigdatei ", filename );
         logfile.emergencyExit( " konnte nicht geöffnet werden!" );
     }
-    u32 size = (u32)configfile->getSize();
+    irr::u32 size = (irr::u32)configfile->getSize();
     // 8bit Integer-Array nehmen, da read() nur in Byte-Schritten einliest!
-    u8 buffer[ size + 4 ];
-    if ( configfile->read( &buffer, size ) != static_cast<s32>( size ) )
+    irr::u8 buffer[ size + 4 ];
+    if ( configfile->read( &buffer, size ) != static_cast<irr::s32>( size ) )
     {
         configfile->drop();
         logfile.write( Logfile::INFO, "Fehler beim Lesen von Konfigdatei ", filename );
@@ -46,36 +46,36 @@ void Configuration::readConfigFile( const c8* filename )
     }
     configfile->drop();
     configfile = 0;
-    core::stringc inhalt = buffer;
-    colorDepht_ = (u16)core::strtol10( getItem( inhalt, "video", "farbtiefe", "16" ).c_str() );
-    screenSizeX_ = (u16)core::strtol10( getItem( inhalt, "video", "screen_x", "640" ).c_str() );
-    screenSizeY_ = (u16)core::strtol10( getItem( inhalt, "video", "screen_y", "480" ).c_str() );
+    irr::core::stringc inhalt = buffer;
+    colorDepht_ = (irr::u16)irr::core::strtol10( getItem( inhalt, "video", "farbtiefe", "16" ).c_str() );
+    screenSizeX_ = (irr::u16)irr::core::strtol10( getItem( inhalt, "video", "screen_x", "640" ).c_str() );
+    screenSizeY_ = (irr::u16)irr::core::strtol10( getItem( inhalt, "video", "screen_y", "480" ).c_str() );
     fullscreen_ = getItem( inhalt, "video", "fullscreen", "false" ).equals_ignore_case( "true" );
-    core::stringc rendermode = getItem( inhalt, "video", "rendermode", "SOFTWARE" );
+    irr::core::stringc rendermode = getItem( inhalt, "video", "rendermode", "SOFTWARE" );
     if ( rendermode.equals_ignore_case( "DIRECT3D9" ) )
-        rendermode_ = video::EDT_DIRECT3D9;
+        rendermode_ = irr::video::EDT_DIRECT3D9;
     else if ( rendermode.equals_ignore_case( "DIRECT3D8" ) )
-        rendermode_ = video::EDT_DIRECT3D8;
+        rendermode_ = irr::video::EDT_DIRECT3D8;
     else if ( rendermode.equals_ignore_case( "OPENGL" ) )
-        rendermode_ = video::EDT_OPENGL;
+        rendermode_ = irr::video::EDT_OPENGL;
     else if ( rendermode.equals_ignore_case( "SOFTWARE" ) )
-        rendermode_ = video::EDT_SOFTWARE;
+        rendermode_ = irr::video::EDT_SOFTWARE;
     else if ( rendermode.equals_ignore_case( "BURNINGSVIDEO" ) )
-        rendermode_ = video::EDT_BURNINGSVIDEO;
+        rendermode_ = irr::video::EDT_BURNINGSVIDEO;
     else if ( rendermode.equals_ignore_case( "NULL" ) )
-        rendermode_ = video::EDT_NULL;
+        rendermode_ = irr::video::EDT_NULL;
     else
         logfile.emergencyExit( "\nKein passender Treiber gewählt! Abbruch." );
-    farValue_ = core::strtof10( getItem( inhalt, "video", "sichtweite", "300.0" ).c_str() );
+    farValue_ = irr::core::strtof10( getItem( inhalt, "video", "sichtweite", "300.0" ).c_str() );
 //    printf("\nms:%f\n", core::fast_atof(
 //            this->getItem( inhalt, "input", "mouse_sensitivity", "1.0f" ).c_str() ) );
 }
 
 
 
-void Configuration::writeConfigFile( const c8* filename )
+void Configuration::writeConfigFile( const irr::c8* filename )
 {
-    core::stringc inhalt = "";
+    irr::core::stringc inhalt = "";
     inhalt += "######################################################################\r\n#\r\n";
     inhalt += "#  Konfig-Datei. Werte nach Belieben ändern (ausser die Bezeichner\r\n";
     inhalt += "#  in eckigen Klammern und jene vor dem '='),\r\n";
@@ -103,19 +103,19 @@ void Configuration::writeConfigFile( const c8* filename )
     inhalt += "video.rendermode = ";
     switch ( rendermode_ )
     {
-        case video::EDT_DIRECT3D9:      inhalt += "DIRECT3D9"; break;
-        case video::EDT_DIRECT3D8:      inhalt += "DIRECT3D8"; break;
-        case video::EDT_OPENGL:         inhalt += "OPENGL"; break;
-        case video::EDT_SOFTWARE:       inhalt += "SOFTWARE"; break;
-        case video::EDT_BURNINGSVIDEO:  inhalt += "BURNINGSVIDEO"; break;
-        case video::EDT_NULL:           inhalt += "NULL"; break;
+        case irr::video::EDT_DIRECT3D9:      inhalt += "DIRECT3D9"; break;
+        case irr::video::EDT_DIRECT3D8:      inhalt += "DIRECT3D8"; break;
+        case irr::video::EDT_OPENGL:         inhalt += "OPENGL"; break;
+        case irr::video::EDT_SOFTWARE:       inhalt += "SOFTWARE"; break;
+        case irr::video::EDT_BURNINGSVIDEO:  inhalt += "BURNINGSVIDEO"; break;
+        case irr::video::EDT_NULL:           inhalt += "NULL"; break;
         default:                        inhalt += "SOFTWARE"; break;
     }
     inhalt += "\r\nvideo.sichtweite = ";
     inhalt += farValue_;
     inhalt += "\r\n\r\n\r\n# Maus.Sensibilität\r\n";
     inhalt += "# input.mouse_sensitivity = 1.442\r\n";
-    io::IWriteFile* configfile = fs_->createAndWriteFile( filename );
+    irr::io::IWriteFile* configfile = fs_->createAndWriteFile( filename );
     if ( configfile == 0 )
     {
         Logfile::getInstance().write( Logfile::INFO, "Konfigdatei ", filename );
@@ -128,14 +128,14 @@ void Configuration::writeConfigFile( const c8* filename )
 
 
 
-core::dimension2du Configuration::getScreenSize() const
+irr::core::dimension2du Configuration::getScreenSize() const
 {
-    return core::dimension2du( screenSizeX_, screenSizeY_ );
+    return irr::core::dimension2du( screenSizeX_, screenSizeY_ );
 }
 
 
 
-u16 Configuration::getColorDepht() const
+irr::u16 Configuration::getColorDepht() const
 {
     return colorDepht_;
 }
@@ -149,14 +149,14 @@ bool Configuration::isFullScreen() const
 
 
 
-video::E_DRIVER_TYPE Configuration::getRenderMode() const
+irr::video::E_DRIVER_TYPE Configuration::getRenderMode() const
 {
     return rendermode_;
 }
 
 
 
-f32 Configuration::getFarValue() const
+irr::f32 Configuration::getFarValue() const
 {
     return farValue_;
 }
@@ -167,14 +167,14 @@ f32 Configuration::getFarValue() const
 
 
 
-Configuration::Configuration( io::IFileSystem* fs )
+Configuration::Configuration( irr::io::IFileSystem* fs )
 : fs_(fs),
   screenSizeX_(640),
   screenSizeY_(480),
   colorDepht_(16),
   fullscreen_(false),
   farValue_(300.0f),
-  rendermode_(video::EDT_SOFTWARE)
+  rendermode_(irr::video::EDT_SOFTWARE)
 {
     if ( fs_ == 0 )
         Logfile::getInstance().emergencyExit( "Dateisystem in [Configuration] nicht mehr gefunden! Abbruch." );
@@ -189,23 +189,23 @@ Configuration::~Configuration()
 
 
 
-const core::stringc Configuration::getItem(
-        const core::stringc& content,
-        const c8* topic,
-        const c8* varname,
-        const c8* origin
+const irr::core::stringc Configuration::getItem(
+        const irr::core::stringc& content,
+        const irr::c8* topic,
+        const irr::c8* varname,
+        const irr::c8* origin
 )
 {
-    core::stringc line;
-    s32 startindex = 0;
-    s32 eqindex = 0;
-    s32 lastindex = content.size() - 1;
-    core::stringc searchset = "";
+    irr::core::stringc line;
+    irr::s32 startindex = 0;
+    irr::s32 eqindex = 0;
+    irr::s32 lastindex = content.size() - 1;
+    irr::core::stringc searchset = "";
     searchset += topic;
     searchset += '.';
     searchset += varname;
     // startindex wird jetzt immer weiter geschoben, bis das Ende von "inhalt" erreicht ist
-    while ( startindex < static_cast<s32>( content.size() ) )
+    while ( startindex < static_cast<irr::s32>( content.size() ) )
     {
         lastindex = content.findNext( '\n', startindex + 1 );
         if ( lastindex == -1 )

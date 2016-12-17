@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class Configuration Configuration.h "Configuration.h"
  *  \brief Enthält Funktionen zum Lesen und Schreiben von Konfig-Dateien sowie zum Verändern von Konfig-Variablen.
  *  \attention Klasse ist `Singleton`.\n Ein Zeiger auf eine Instanz des Irrlicht-Dateisystems wird benötigt, dieser
@@ -29,38 +27,38 @@ public:
      *  \param fs (\a IFileSystem*) Zeiger auf das Irrlicht-Dateisystem
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Configuration& getInstance( io::IFileSystem* fs = 0 );
+    static Configuration& getInstance( irr::io::IFileSystem* fs = 0 );
 
     /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
      *  \param filename (\a c8*) Name und Pfad der Logdatei
      *  \return -
      */
-    void readConfigFile( const c8* filename );
+    void readConfigFile( const irr::c8* filename );
 
     /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
      *  \param filename (\a c8*) Name und Pfad der Logdatei
      *  \return -
      */
-    void writeConfigFile( const c8* filename);
+    void writeConfigFile( const irr::c8* filename);
 
     /*! \brief Ändert den Zeiger auf ein Irrlicht-Dateisystem.
      *  \attention Dies ist notwendig, wenn das Entchen zerstört und neu erstellt wurde!
      *  \param fs (\a IFileSystem*) Zeiger auf das Irrlicht-Dateisystem
      *  \return -
      */
-    void setNewFilesystem( io::IFileSystem* fs = 0 );
+    void setNewFilesystem( irr::io::IFileSystem* fs = 0 );
 
     /*! \brief Gibt die Bildschirm- oder Fensterdimensionen zurück.
      *  \param -
      *  \return \a core::dimension2du Höhe und Breite in Pixel
      */
-    core::dimension2du getScreenSize() const;
+    irr::core::dimension2du getScreenSize() const;
 
     /*! \brief Gibt die Farbtiefe zurück.
      *  \param -
      *  \return \a u16 Farbtiefe
      */
-    u16 getColorDepht() const;
+    irr::u16 getColorDepht() const;
 
     /*! \brief Gibt an, ob die Anwendung Fullscreen oder im Fenstermodus läuft.
      *  \param -
@@ -72,35 +70,35 @@ public:
      *  \param -
      *  \return \a video::E_DRIVER_TYPE Render-Modus
      */
-    video::E_DRIVER_TYPE getRenderMode() const;
+    irr::video::E_DRIVER_TYPE getRenderMode() const;
 
     /*! \brief Gibt die Sichtweite der Kamera zurück.
      *  \param -
      *  \return \a f32 Sichtweite (in Meter)
      */
-    f32 getFarValue() const;
+    irr::f32 getFarValue() const;
 
 private:
 
-    io::IFileSystem* fs_;  // Zeiger auf das Irrlicht-Dateisystem
-    u16 screenSizeX_;  // Bild-Breite in Pixel
-    u16 screenSizeY_;  // Bild-Höhe in Pixel
-    u16 colorDepht_;  // Farbtiefe in Bit
+    irr::io::IFileSystem* fs_;  // Zeiger auf das Irrlicht-Dateisystem
+    irr::u16 screenSizeX_;  // Bild-Breite in Pixel
+    irr::u16 screenSizeY_;  // Bild-Höhe in Pixel
+    irr::u16 colorDepht_;  // Farbtiefe in Bit
     bool fullscreen_;  // Vollbild oder Fenstermodus
-    f32 farValue_;  // Sichtweite der Kamera
-    video::E_DRIVER_TYPE rendermode_;  // Render-Treiber
+    irr::f32 farValue_;  // Sichtweite der Kamera
+    irr::video::E_DRIVER_TYPE rendermode_;  // Render-Treiber
 
-    Configuration( io::IFileSystem* fs );  // ctor. Von aussen keine Instanzen direkt erzeugbar
+    Configuration( irr::io::IFileSystem* fs );  // ctor. Von aussen keine Instanzen direkt erzeugbar
     Configuration( const Configuration& );  // Instanz ist nicht kopierbar
     Configuration& operator=( const Configuration& );  // Instanz ist nicht zuweisbar
     ~Configuration();  // dtor. Instanz zerstört sich bei Programmende
 
     // holt einen bestimmten Wert aus dem eingelesenen Inhalt der Konfigdatei.
-    const core::stringc getItem(
-            const core::stringc& content,
-            const c8* topic,
-            const c8* varname,
-            const c8* origin = ""
+    const irr::core::stringc getItem(
+            const irr::core::stringc& content,
+            const irr::c8* topic,
+            const irr::c8* varname,
+            const irr::c8* origin = ""
     );
 
 };

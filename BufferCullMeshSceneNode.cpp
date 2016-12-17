@@ -3,13 +3,13 @@
 
 
 BufferCullMeshSceneNode::BufferCullMeshSceneNode(
-        scene::IMesh* mesh,
-        scene::ISceneNode* parent,
-        scene::ISceneManager* mgr,
-        s32 id,
-        const core::vector3df& position,
-        const core::vector3df& rotation,
-		const core::vector3df& scale
+        irr::scene::IMesh* mesh,
+        irr::scene::ISceneNode* parent,
+        irr::scene::ISceneManager* mgr,
+        irr::s32 id,
+        const irr::core::vector3df& position,
+        const irr::core::vector3df& rotation,
+		const irr::core::vector3df& scale
 )
 : IMeshSceneNode( parent, mgr, id, position, rotation, scale ),
   Mesh(0),
@@ -52,17 +52,17 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 	    // of transparent and solid material at the same time, we need to go
 	    // through all materials, check of what type they are and register this
 	    // node for the right render pass according to that.
-		video::IVideoDriver* driver = SceneManager->getVideoDriver();
+		irr::video::IVideoDriver* driver = SceneManager->getVideoDriver();
 		PassCount = 0;
 		bool isTransparent = false;
 		bool isSolid = false;
 		// count transparent and solid materials in this scene node
 		if ( ReadOnlyMaterials && Mesh )
 		{
-			for ( register u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
+			for ( register irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
 			{
-				scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
-				video::IMaterialRenderer* renderer =
+				irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
+				irr::video::IMaterialRenderer* renderer =
 				        mb ? driver->getMaterialRenderer( mb->getMaterial().MaterialType ) : 0;
 				if ( renderer && renderer->isTransparent() )
 					isTransparent = true;
@@ -74,9 +74,9 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 		}
 		else
 		{
-			for ( register u32 i = 0; i < Materials.size(); ++i )
+			for ( register irr::u32 i = 0; i < Materials.size(); ++i )
 			{
-				video::IMaterialRenderer* renderer =
+				irr::video::IMaterialRenderer* renderer =
 					driver->getMaterialRenderer( Materials[ i ].MaterialType );
 				if ( renderer && renderer->isTransparent() )
 				    isTransparent = true;
@@ -88,10 +88,10 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 		}
 		// register according to material types counted
 		if ( isSolid )
-			SceneManager->registerNodeForRendering( this, scene::ESNRP_SOLID );
+			SceneManager->registerNodeForRendering( this, irr::scene::ESNRP_SOLID );
 		if ( isTransparent )
-			SceneManager->registerNodeForRendering( this, scene::ESNRP_TRANSPARENT );
-		scene::ISceneNode::OnRegisterSceneNode();
+			SceneManager->registerNodeForRendering( this, irr::scene::ESNRP_TRANSPARENT );
+		irr::scene::ISceneNode::OnRegisterSceneNode();
 	}
 }
 
@@ -99,24 +99,24 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 
 void BufferCullMeshSceneNode::render()
 {
-	video::IVideoDriver* driver = SceneManager->getVideoDriver();
+	irr::video::IVideoDriver* driver = SceneManager->getVideoDriver();
 	if ( !Mesh || !driver )
 		return;
-	bool isTransparentPass = SceneManager->getSceneNodeRenderPass() == scene::ESNRP_TRANSPARENT;
+	bool isTransparentPass = SceneManager->getSceneNodeRenderPass() == irr::scene::ESNRP_TRANSPARENT;
 	++PassCount;
-	driver->setTransform( video::ETS_WORLD, AbsoluteTransformation );
+	driver->setTransform( irr::video::ETS_WORLD, AbsoluteTransformation );
 	Box = Mesh->getBoundingBox();
 	bool renderMeshes = true;
 	if ( DebugDataVisible && PassCount == 1 )
 	{
-    	video::SMaterial mat;
+    	irr::video::SMaterial mat;
 		// overwrite half transparency
-		if ( DebugDataVisible & scene::EDS_HALF_TRANSPARENCY )
+		if ( DebugDataVisible & irr::scene::EDS_HALF_TRANSPARENCY )
 		{
-			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 			{
 				mat = Materials[ g ];
-				mat.MaterialType = video::EMT_TRANSPARENT_ADD_COLOR;
+				mat.MaterialType = irr::video::EMT_TRANSPARENT_ADD_COLOR;
 				driver->setMaterial( mat );
                 driver->drawMeshBuffer( Mesh->getMeshBuffer( g ) );
 			}
@@ -128,7 +128,7 @@ void BufferCullMeshSceneNode::render()
 	{
         cam = SceneManager->getActiveCamera();
         R_camBox = cam->getBoundingBox();
-		for ( register u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
+		for ( register irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
 		{
             R_mb = Mesh->getMeshBuffer( i );
 			if ( R_mb )
@@ -141,7 +141,7 @@ void BufferCullMeshSceneNode::render()
                         > ( cam->getFarValue() + R_bufbox.getExtent().getLength() / 2 )
                 )
                     continue;/* entfernung + halbe diagonale... sehr ungenau */
-				const video::SMaterial& material = ReadOnlyMaterials ? R_mb->getMaterial() : Materials[i];
+				const irr::video::SMaterial& material = ReadOnlyMaterials ? R_mb->getMaterial() : Materials[i];
 
 				R_rnd = driver->getMaterialRenderer( material.MaterialType );
 				bool transparent = ( R_rnd && R_rnd->isTransparent() );
@@ -156,31 +156,31 @@ void BufferCullMeshSceneNode::render()
 			}
 		}
 	}
-	driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
+	driver->setTransform(irr::video::ETS_WORLD, AbsoluteTransformation);
 	if ( DebugDataVisible && PassCount == 1 )
 	{
-		video::SMaterial m;
+		irr::video::SMaterial m;
 		m.Lighting = false;
 		driver->setMaterial( m );
-		if ( DebugDataVisible & scene::EDS_BBOX )
+		if ( DebugDataVisible & irr::scene::EDS_BBOX )
 			driver->draw3DBox( Box, COL_WHITE );
-		if ( DebugDataVisible & scene::EDS_BBOX_BUFFERS )
-			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
-				driver->draw3DBox( Mesh->getMeshBuffer( g )->getBoundingBox(), video::SColor( 255, 190, 128, 128 ) );
-		if ( DebugDataVisible & scene::EDS_NORMALS )
+		if ( DebugDataVisible & irr::scene::EDS_BBOX_BUFFERS )
+			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+				driver->draw3DBox( Mesh->getMeshBuffer( g )->getBoundingBox(), irr::video::SColor( 255, 190, 128, 128 ) );
+		if ( DebugDataVisible & irr::scene::EDS_NORMALS )
 		{
-			core::vector3df normalizedNormal;
-			const f32 DebugNormalLength =
-			        SceneManager->getParameters()->getAttributeAsFloat( scene::DEBUG_NORMAL_LENGTH );
-			const video::SColor DebugNormalColor =
-			        SceneManager->getParameters()->getAttributeAsColor( scene::DEBUG_NORMAL_COLOR );
-			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			irr::core::vector3df normalizedNormal;
+			const irr::f32 DebugNormalLength =
+			        SceneManager->getParameters()->getAttributeAsFloat( irr::scene::DEBUG_NORMAL_LENGTH );
+			const irr::video::SColor DebugNormalColor =
+			        SceneManager->getParameters()->getAttributeAsColor( irr::scene::DEBUG_NORMAL_COLOR );
+			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 			{
-				const scene::IMeshBuffer* mb = Mesh->getMeshBuffer( g );
-				const u32 vSize = video::getVertexPitchFromType( mb->getVertexType() );
-				const video::S3DVertex* v = (const video::S3DVertex*)mb->getVertices();
+				const irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( g );
+				const irr::u32 vSize = irr::video::getVertexPitchFromType( mb->getVertexType() );
+				const irr::video::S3DVertex* v = (const irr::video::S3DVertex*)mb->getVertices();
 				const bool normalize = mb->getMaterial().NormalizeNormals;
-				for ( register u32 i = 0; i != mb->getVertexCount(); ++i )
+				for ( register irr::u32 i = 0; i != mb->getVertexCount(); ++i )
 				{
 					normalizedNormal = v->Normal;
 					if ( normalize )
@@ -190,16 +190,16 @@ void BufferCullMeshSceneNode::render()
 					        v->Pos + ( normalizedNormal * DebugNormalLength ),
 					        DebugNormalColor
 					);
-					v = (const video::S3DVertex*)( (u8*)v + vSize );
+					v = (const irr::video::S3DVertex*)( (irr::u8*)v + vSize );
 				}
 			}
-			driver->setTransform( video::ETS_WORLD, AbsoluteTransformation );
+			driver->setTransform( irr::video::ETS_WORLD, AbsoluteTransformation );
 		}
-		if ( DebugDataVisible & scene::EDS_MESH_WIRE_OVERLAY )
+		if ( DebugDataVisible & irr::scene::EDS_MESH_WIRE_OVERLAY )
 		{
 			m.Wireframe = true;
 			driver->setMaterial( m );
-			for ( register u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 				driver->drawMeshBuffer( Mesh->getMeshBuffer( g ) );
 		}
 	}
@@ -207,14 +207,14 @@ void BufferCullMeshSceneNode::render()
 
 
 
-const core::aabbox3df& BufferCullMeshSceneNode::getBoundingBox() const
+const irr::core::aabbox3df& BufferCullMeshSceneNode::getBoundingBox() const
 {
 	return Mesh ? Mesh->getBoundingBox() : Box;
 }
 
 
 
-video::SMaterial& BufferCullMeshSceneNode::getMaterial( u32 i )
+irr::video::SMaterial& BufferCullMeshSceneNode::getMaterial( irr::u32 i )
 {
 	if ( Mesh && ReadOnlyMaterials && i < Mesh->getMeshBufferCount() )
 	{
@@ -222,13 +222,13 @@ video::SMaterial& BufferCullMeshSceneNode::getMaterial( u32 i )
 		return tmpReadOnlyMaterial;
 	}
 	if ( i >= Materials.size() )
-		return scene::ISceneNode::getMaterial( i );
+		return irr::scene::ISceneNode::getMaterial( i );
 	return Materials[ i ];
 }
 
 
 
-u32 BufferCullMeshSceneNode::getMaterialCount() const
+irr::u32 BufferCullMeshSceneNode::getMaterialCount() const
 {
 	if ( Mesh && ReadOnlyMaterials )
 		return Mesh->getMeshBufferCount();
@@ -237,14 +237,14 @@ u32 BufferCullMeshSceneNode::getMaterialCount() const
 
 
 
-scene::ESCENE_NODE_TYPE BufferCullMeshSceneNode::getType() const
+irr::scene::ESCENE_NODE_TYPE BufferCullMeshSceneNode::getType() const
 {
-    return scene::ESNT_MESH;
+    return irr::scene::ESNT_MESH;
 }
 
 
 
-void BufferCullMeshSceneNode::setMesh( scene::IMesh* mesh )
+void BufferCullMeshSceneNode::setMesh( irr::scene::IMesh* mesh )
 {
 	if ( !mesh )
 		return; // won't set null mesh
@@ -257,7 +257,7 @@ void BufferCullMeshSceneNode::setMesh( scene::IMesh* mesh )
 
 
 
-scene::IMesh* BufferCullMeshSceneNode::getMesh()
+irr::scene::IMesh* BufferCullMeshSceneNode::getMesh()
 {
     return Mesh;
 }
@@ -269,10 +269,10 @@ void BufferCullMeshSceneNode::copyMaterials()
 	Materials.clear();
 	if ( Mesh )
 	{
-		video::SMaterial mat;
-		for ( register u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
+		irr::video::SMaterial mat;
+		for ( register irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
 		{
-		    scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
+		    irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
 			if ( mb )
 				mat = mb->getMaterial();
 			Materials.push_back( mat );
@@ -297,8 +297,8 @@ bool BufferCullMeshSceneNode::isReadOnlyMaterials() const
 
 
 //! Creates a clone of this scene node and its children.
-scene::ISceneNode* BufferCullMeshSceneNode::clone( scene::ISceneNode* newParent,
-        scene::ISceneManager* newManager )
+irr::scene::ISceneNode* BufferCullMeshSceneNode::clone( irr::scene::ISceneNode* newParent,
+        irr::scene::ISceneManager* newManager )
 {
 	if ( !newParent )
 	    newParent = Parent;
@@ -324,10 +324,10 @@ scene::ISceneNode* BufferCullMeshSceneNode::clone( scene::ISceneNode* newParent,
 
 //! Creates shadow volume scene node as child of this node
 //! and returns a pointer to it.
-scene::IShadowVolumeSceneNode* BufferCullMeshSceneNode::addShadowVolumeSceneNode(
-        const scene::IMesh* shadowMesh, s32 id, bool zfailmethod, f32 infinity )
+irr::scene::IShadowVolumeSceneNode* BufferCullMeshSceneNode::addShadowVolumeSceneNode(
+        const irr::scene::IMesh* shadowMesh, irr::s32 id, bool zfailmethod, irr::f32 infinity )
 {
-    if ( !SceneManager->getVideoDriver()->queryFeature( video::EVDF_STENCIL_BUFFER ) )
+    if ( !SceneManager->getVideoDriver()->queryFeature( irr::video::EVDF_STENCIL_BUFFER ) )
         return 0;
     if ( !shadowMesh )
         shadowMesh = Mesh; // if null is given, use the mesh of node

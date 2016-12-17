@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "Basic3DObject.h"
 
-using namespace irr;
-
 /*! \class BasicLifeform BasicLifeform.h "BasicLifeform.h"
  *  \brief Ein Lebewesen.
  */
@@ -26,7 +24,7 @@ public:
      *  \param smgr (\a scene::ISceneManager*) Zeiger auf den SceneManager
      *  \param isParent (\a bool) Bei Vererbung auf `true` setzen, ansonsten automatisch `false`
      */
-    BasicLifeform( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent = false );
+    BasicLifeform( const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, bool isParent = false );
 
     /*! \brief Destruktor.
      */
@@ -36,61 +34,61 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    virtual void update( const f32 frameDeltaTime );
+    virtual void update( const irr::f32 frameDeltaTime );
 
     /*! \brief Setzt die neue Zielposition des Lebewesens.
      *  \param target (\a const \a core::vector3df) neues Ziel
      *  \return -
      */
-    virtual void moveTo( const core::vector3df target );
+    virtual void moveTo( const irr::core::vector3df target );
 
     /*! \brief Liefert einen Zeiger auf den 3D-Knoten des Lebewesens, oder 0 wenn kein Knoten existiert.
      *  \param -
      *  \return \a scene::IAnimatedMeshSceneNode* Knoten
      */
-    scene::IAnimatedMeshSceneNode* getNode() const;
+    irr::scene::IAnimatedMeshSceneNode* getNode() const;
 
     /*! \brief Liefert den Abstand zum Mittelpunkt des Lebewesens zurück, ab dem Kollisionen abgefangen werden sollen.
      *  \param -
      *  \return \a const \a f32 Kollisionsradius
      */
-    f32 getCollisionRadius() const;
+    irr::f32 getCollisionRadius() const;
 
     /*! \brief Liefert ein Interface für den Basis-Szenenknoten des Lebewesens zurück.
      *  \param -
      *  \return \a scene::ISceneNode* Interface auf den Basis-Szenenknoten
      */
-    scene::ISceneNode* nodeInterface() const;
+    irr::scene::ISceneNode* nodeInterface() const;
 
     /*! \brief Liefert Länge und Richtung des nächsten Schrittes des Lebewesens zurück.
      *  \param -
      *  \return \a core::vector3df Länge und Richtung des nächsten Schrittes
      */
-    const core::vector3df& getNextStep() const;
+    const irr::core::vector3df& getNextStep() const;
 
     /*! \brief Liefert die Abmessungen der größten gemeinsamen BoundingBox des Lebewesens.
      *  \param -
      *  \return \a const \a core::vector3df& Abmessungen der größten gemeinsamen BoundingBox des Lebewesens
      */
-    const core::vector3df& getMaxBoundingBoxExtent() const;
+    const irr::core::vector3df& getMaxBoundingBoxExtent() const;
 
 protected:
 
-    scene::IAnimatedMeshSceneNode* node_;
+    irr::scene::IAnimatedMeshSceneNode* node_;
     bool isMoving_;
     bool wasMoving_;
-    f32 speed_;
-    f32 movementDelta_;
-    f32 collisionRadius_;
-    core::vector3df currentPosition_;
-    core::vector3df targetPosition_;
-    core::vector3df positionOffset_;
-    core::vector3df rotation_;
-    core::vector3df nextStep_;
-    core::vector3df maxBBExtent_;
-    f32 maxJumpHeight_;
+    irr::f32 speed_;
+    irr::f32 movementDelta_;
+    irr::f32 collisionRadius_;
+    irr::core::vector3df currentPosition_;
+    irr::core::vector3df targetPosition_;
+    irr::core::vector3df positionOffset_;
+    irr::core::vector3df rotation_;
+    irr::core::vector3df nextStep_;
+    irr::core::vector3df maxBBExtent_;
+    irr::f32 maxJumpHeight_;
 
-    scene::IAnimatedMesh* loadMesh();
+    irr::scene::IAnimatedMesh* loadMesh();
     void calculateNextStep();
     inline void calculateCollisionRadius();
     void updateMovement();

@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class Debugwindow Debugwindow.h "Debugwindow.h"
  *  \brief Ein IRRLICHT-Debugfenster.
  *
@@ -32,7 +30,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Debugwindow& getInstance( IrrlichtDevice* device = 0 );
+    static Debugwindow& getInstance( irr::IrrlichtDevice* device = 0 );
 
     /*! \brief Fügt Text in das Debugfenster ein.
      *  \attention Es wird automatisch ein Zeilenumbruch angehängt.
@@ -40,7 +38,7 @@ public:
      *  \param text (\a core::stringw&) Text
      *  \return -
      */
-    void addLine( const c8* callerName, const core::stringw& text );
+    void addLine( const irr::c8* callerName, const irr::core::stringw& text );
 
     /*! \brief Fügt Text und Daten in das Debugfenster ein.
      *
@@ -54,12 +52,12 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void addLine( const c8* callerName, const core::stringw& text, const T number )
+    void addLine( const irr::c8* callerName, const irr::core::stringw& text, const T number )
     {
         if ( dwin_->isVisible() )
         {
             content_ = text;
-            content_ += core::stringw( number );
+            content_ += irr::core::stringw( number );
             fragments_.set(callerName, content_);
         }
     }
@@ -77,15 +75,15 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void addLine( const c8* callerName, const core::stringw& text, const T number1, const T number2 )
+    void addLine( const irr::c8* callerName, const irr::core::stringw& text, const T number1, const T number2 )
     {
         if ( dwin_->isVisible() )
         {
             content_ = text;
             content_ += L"( ";
-            content_ += core::stringw( number1 );
+            content_ += irr::core::stringw( number1 );
             content_ += L", ";
-            content_ += core::stringw( number2 );
+            content_ += irr::core::stringw( number2 );
             content_ += L" )";
             fragments_.set(callerName, content_);
         }
@@ -105,17 +103,17 @@ public:
     // Da diese Funktion für verschiedene Zahlentypen gilt, und das durch ein Template realisiert wird,
     // muss der Body leider in der Headerdatei angelegt werden.
     template <typename T>
-    void addLine( const c8* callerName, const core::stringw& text, const T number1, const T number2, const T number3 )
+    void addLine( const irr::c8* callerName, const irr::core::stringw& text, const T number1, const T number2, const T number3 )
     {
         if ( dwin_->isVisible() )
         {
             content_ = text;
             content_ += L"( ";
-            content_ += core::stringw( number1 );
+            content_ += irr::core::stringw( number1 );
             content_ += L", ";
-            content_ += core::stringw( number2 );
+            content_ += irr::core::stringw( number2 );
             content_ += L", ";
-            content_ += core::stringw( number3 );
+            content_ += irr::core::stringw( number3 );
             content_ += L" )";
             fragments_.set(callerName, content_);
         }
@@ -141,15 +139,15 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;  // das Entchen
-    gui::IGUIStaticText* dwin_;  // das GUI-Element "Fenster"
-    core::map<core::stringc, core::stringw> fragments_;
-    core::map<core::stringc, core::stringw>::ParentFirstIterator fragment_;
-    core::stringw content_;  // Inhalt des Fensters
-    core::stringw newLine_;  // Maske für einen Zeilenumbruch
-    u32 displayTimer_;  // Aktualisierung des Debugwindow aller ?ms
+    irr::IrrlichtDevice* device_;  // das Entchen
+    irr::gui::IGUIStaticText* dwin_;  // das GUI-Element "Fenster"
+    irr::core::map<irr::core::stringc, irr::core::stringw> fragments_;
+    irr::core::map<irr::core::stringc, irr::core::stringw>::ParentFirstIterator fragment_;
+    irr::core::stringw content_;  // Inhalt des Fensters
+    irr::core::stringw newLine_;  // Maske für einen Zeilenumbruch
+    irr::u32 displayTimer_;  // Aktualisierung des Debugwindow aller ?ms
 
-    Debugwindow( IrrlichtDevice* device );  // ctor. Von aussen keine Instanzen direkt erzeugbar
+    Debugwindow( irr::IrrlichtDevice* device );  // ctor. Von aussen keine Instanzen direkt erzeugbar
     Debugwindow( const Debugwindow& );  // Instanz ist nicht kopierbar
     Debugwindow& operator=( const Debugwindow& );  // Instanz ist nicht zuweisbar
     ~Debugwindow();  // dtor. Instanz zerstört sich bei Programmende

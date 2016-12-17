@@ -9,7 +9,7 @@
 
 
 // TODO rework to not be singleton
-Camera& Camera::getInstance( scene::ISceneManager* sceneManager )
+Camera& Camera::getInstance( irr::scene::ISceneManager* sceneManager )
 {
     static Camera instance( sceneManager );
     return instance;
@@ -33,14 +33,14 @@ void Camera::startZoomingOut()
 
 
 
-void Camera::rotate( const f32 value )
+void Camera::rotate( const irr::f32 value )
 {
     positionOffset_.rotateXZBy( speed_ * value );
 }
 
 
 
-void Camera::update( const f32 frameDeltaTime )
+void Camera::update( const irr::f32 frameDeltaTime )
 {
     if ( isZooming_ )
         changeZoom( frameDeltaTime );
@@ -68,9 +68,9 @@ void Camera::update( const f32 frameDeltaTime )
 #ifdef _DEBUG_MODE
 void Camera::toggleSpeed()
 {
-    speed_ = ( core::equals( speed_, 150.0f ) ) ? 300.0f : 150.0f;
+    speed_ = ( irr::core::equals( speed_, 150.0f ) ) ? 300.0f : 150.0f;
 }
-core::vector3df& Camera::getCurrentPosition()
+irr::core::vector3df& Camera::getCurrentPosition()
 {
     return currentPosition_;
 }
@@ -78,7 +78,7 @@ core::vector3df& Camera::getCurrentPosition()
 
 
 
-void Camera::followNode( scene::ISceneNode* node )
+void Camera::followNode( irr::scene::ISceneNode* node )
 {
     lockNode_ = node;
 }
@@ -89,7 +89,7 @@ void Camera::followNode( scene::ISceneNode* node )
 
 
 
-Camera::Camera( scene::ISceneManager* sceneManager )
+Camera::Camera( irr::scene::ISceneManager* sceneManager )
 : smgr_(sceneManager),
   lockNode_(0),
   targetOffset_(VEC_3DF_NULL),
@@ -109,7 +109,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     desiredPositionOffsetHeight_ = zoomMax_;
     // dran denken, auch Ablaufsteuerung::checkInputForGame() zu ändern // TODO update comment!
     // wenn sich der speed ändert
-    positionOffset_ = core::vector3df( -3.0f, zoomMax_, -3.0f );
+    positionOffset_ = irr::core::vector3df( -3.0f, zoomMax_, -3.0f );
     //this->currentPosition = map->GetStartPos() + Pos_offset;
     currentTarget_ = currentPosition_ + targetOffset_;
     firstCameraNode_ = smgr_->addCameraSceneNode( 0, currentPosition_ + positionOffset_, currentTarget_, ID_KAMERA );
@@ -121,7 +121,7 @@ Camera::Camera( scene::ISceneManager* sceneManager )
     firstCameraNode_->setNearValue( 0.1f );
     firstCameraNode_->setFOV( 1.0f );
     firstCameraNode_->setAspectRatio(
-            static_cast<f32>( config.getScreenSize().Width ) / static_cast<f32>( config.getScreenSize().Height ) );
+            static_cast<irr::f32>( config.getScreenSize().Width ) / static_cast<irr::f32>( config.getScreenSize().Height ) );
     firstCameraNode_->setInputReceiverEnabled( false );
     positionOffset_.rotateXZBy( -180.0f ); // ???
 }
@@ -135,7 +135,7 @@ Camera::~Camera()
 
 
 
-void Camera::changeZoom( const f32 frameDeltaTime )
+void Camera::changeZoom( const irr::f32 frameDeltaTime )
 {
     dummySum_ = zoomingSpeed_ * frameDeltaTime;
     if ( zoomDirection_ == ZOOM_OUT )

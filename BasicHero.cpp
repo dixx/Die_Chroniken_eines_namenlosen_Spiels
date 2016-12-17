@@ -5,7 +5,7 @@
 
 
 
-BasicHero::BasicHero( const core::stringc& heroData, scene::ISceneManager* smgr, bool isParent )
+BasicHero::BasicHero( const irr::core::stringc& heroData, irr::scene::ISceneManager* smgr, bool isParent )
 : BasicLifeform( heroData, smgr, true )
 {
     if ( smgr_ == 0 )
@@ -26,7 +26,7 @@ BasicHero::~BasicHero()
 
 
 
-void BasicHero::moveTo( const core::vector3df target, bool isTriggered )
+void BasicHero::moveTo( const irr::core::vector3df target, bool isTriggered )
 {
     if ( target.equals( currentPosition_, 0.5f ) ) // TODO replace with some hero radius
         return;
@@ -64,9 +64,9 @@ void BasicHero::init()
 {
     speed_ = 4.0f;
     maxJumpHeight_ = 1.8f;
-    node_->setMaterialFlag( video::EMF_LIGHTING, true );
-    node_->setMaterialFlag( video::EMF_NORMALIZE_NORMALS, true);
-    node_->setMD2Animation( scene::EMAT_STAND );
+    node_->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+    node_->setMaterialFlag( irr::video::EMF_NORMALIZE_NORMALS, true);
+    node_->setMD2Animation( irr::scene::EMAT_STAND );
     //node->setFrameLoop( 1, 40 );
     //node->setLoopMode( true );
     node_->setVisible( true );

@@ -9,8 +9,6 @@
 #include "BasicLifeform.h"
 #include "Timer.h"
 
-using namespace irr;
-
 /*! \class BasicHero BasicHero.h "BasicHero.h"
  *  \brief Das braucht jeder Held.
  *  \note Instanzierung: `BasicHero* myBasicHero = new BasicHero();`\n Benutzen: `myBasicHero->moveTo(...);`
@@ -27,7 +25,7 @@ public:
      *  \param isParent (\a bool) Bei Vererbung auf `true` setzen, ansonsten automatisch `false`
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    BasicHero( const core::stringc& heroData, scene::ISceneManager* smgr, bool isParent = false );
+    BasicHero( const irr::core::stringc& heroData, irr::scene::ISceneManager* smgr, bool isParent = false );
 
 	/*! \brief Destruktor
      */
@@ -38,7 +36,7 @@ public:
      *  \param isTriggered (\a const \a bool) Bewegung wird noch aktiv befohlen
      *  \return -
      */
-    void moveTo( const core::vector3df target, const bool isTriggered );
+    void moveTo( const irr::core::vector3df target, const bool isTriggered );
 
 #ifdef _DEBUG_MODE
     void toggleSpeed();

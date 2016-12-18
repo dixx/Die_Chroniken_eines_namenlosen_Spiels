@@ -172,7 +172,7 @@ void StatePlayTheGame::checkCameraSpecificInput( irr::f32 frameDeltaTime )
                 camera.rotate( static_cast<irr::f32>( delta ) * frameDeltaTime );
         }
     }
-    if ( receiver.isKeyDown( KEY_KEY_Q ) )
+    if ( receiver.isKeyDown( irr::KEY_KEY_Q ) )
         camera.rotate( frameDeltaTime );
     if ( receiver.isKeyDown( irr::KEY_KEY_E ) )
         camera.rotate( -frameDeltaTime );

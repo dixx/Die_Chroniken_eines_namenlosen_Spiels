@@ -2,7 +2,7 @@
 
 
 
-ObjectParamsExtractor::ObjectParamsExtractor( const core::stringc& objectData )
+ObjectParamsExtractor::ObjectParamsExtractor( const irr::core::stringc& objectData )
 : extractedValue_(""),
   dummyValue_(""),
   result_(false),
@@ -40,15 +40,15 @@ void ObjectParamsExtractor::clearMembers()
 
 
 bool ObjectParamsExtractor::tryToExtractValue(
-        const core::stringc& key,
-        const core::stringc& separator,
-        const u32 index
+        const irr::core::stringc& key,
+        const irr::core::stringc& separator,
+        const irr::u32 index
 )
 {
     if ( key.size() == 0 || isUseless_ )
         return false;
     clearMembers();
-    for ( register u32 i = 0; i < objectParams_.size(); ++i )
+    for ( register irr::u32 i = 0; i < objectParams_.size(); ++i )
     {
         if ( objectParams_[ i ].equalsn( key, 5 ) == false )
             continue;
@@ -82,7 +82,7 @@ bool ObjectParamsExtractor::tryToExtractValue(
 
 
 
-const core::stringc& ObjectParamsExtractor::getExtractedValue() const
+const irr::core::stringc& ObjectParamsExtractor::getExtractedValue() const
 {
     return extractedValue_;
 }

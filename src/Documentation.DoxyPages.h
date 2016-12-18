@@ -1,4 +1,4 @@
-/*! \file "DoxyDocumentation.h"
+/*! \file "Documentation.DoxyPages.h"
  *  \brief Dokumentation für das Spiel
  */
 

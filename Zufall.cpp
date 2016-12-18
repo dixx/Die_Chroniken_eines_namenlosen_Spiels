@@ -2,15 +2,15 @@
 
 
 
-Zufall& Zufall::getInstance() 
-{ 
+Zufall& Zufall::getInstance()
+{
     static Zufall instance;
     return instance;
 }
 
 
 
-void Zufall::start( const u32 seed ) 
+void Zufall::start( const irr::u32 seed )
 {
     seed_ = seed;
     if ( seed_ > 100 )
@@ -29,14 +29,14 @@ void Zufall::start( const u32 seed )
 
 
 
-f32 Zufall::getFloat()
+irr::f32 Zufall::getFloat()
 {
-    return ( static_cast<f32>( getInt() ) / 4294967295.0f );
+    return ( static_cast<irr::f32>( getInt() ) / 4294967295.0f );
 }
 
 
 
-u32 Zufall::getInt()
+irr::u32 Zufall::getInt()
 {
     tmp_   = ( seed_ ^ ( seed_ << 15 ) );
     seed_  = seed2_;
@@ -48,7 +48,7 @@ u32 Zufall::getInt()
 
 
 
-u32 Zufall::getIntBetween( const u32 min, const u32 max )
+irr::u32 Zufall::getIntBetween( const irr::u32 min, const irr::u32 max )
 {
     if ( min == max )
     {
@@ -60,16 +60,16 @@ u32 Zufall::getIntBetween( const u32 min, const u32 max )
         // max + rand() % ( min - max + 1 ) :
         // min + rand() % ( max - min + 1 );
         return ( min > max )
-                ? max + static_cast<u32>( getFloat() * static_cast<f32>( min - max + 1 ) )
-                : min + static_cast<u32>( getFloat() * static_cast<f32>( max - min + 1 ) );
+                ? max + static_cast<irr::u32>( getFloat() * static_cast<irr::f32>( min - max + 1 ) )
+                : min + static_cast<irr::u32>( getFloat() * static_cast<irr::f32>( max - min + 1 ) );
     }
 }
 
 
 
-f32 Zufall::getFloatBetween( const f32 min, const f32 max )
+irr::f32 Zufall::getFloatBetween( const irr::f32 min, const irr::f32 max )
 {
-    if ( core::equals( min, max ) )
+    if ( irr::core::equals( min, max ) )
     {
         return min;
     }
@@ -81,7 +81,7 @@ f32 Zufall::getFloatBetween( const f32 min, const f32 max )
 
 
 
-bool Zufall::doesOccur( const f32 p )
+bool Zufall::doesOccur( const irr::f32 p )
 {
     if ( p <= 0.0f )
         return false;
@@ -93,9 +93,9 @@ bool Zufall::doesOccur( const f32 p )
 
 
 
-bool Zufall::doesAoccur( const f32 A, const f32 B )
+bool Zufall::doesAoccur( const irr::f32 A, const irr::f32 B )
 {
-    if ( core::equals( A + B, 0.0f ) )
+    if ( irr::core::equals( A + B, 0.0f ) )
         return false;
     else
         return doesOccur( ( A / ( A + B ) ) * 100.0f );
@@ -103,16 +103,16 @@ bool Zufall::doesAoccur( const f32 A, const f32 B )
 
 
 
-bool Zufall::doesAoccur100( const u32 A, const u32 B )
+bool Zufall::doesAoccur100( const irr::u32 A, const irr::u32 B )
 {
-    u32 Ax = core::clamp( A, static_cast<u32>( 1 ), static_cast<u32>( 99 ) );
-    u32 Bx = core::clamp( B, static_cast<u32>( 1 ), static_cast<u32>( 99 ) );
+    irr::u32 Ax = irr::core::clamp( A, static_cast<irr::u32>( 1 ), static_cast<irr::u32>( 99 ) );
+    irr::u32 Bx = irr::core::clamp( B, static_cast<irr::u32>( 1 ), static_cast<irr::u32>( 99 ) );
     return ( getInt() % ( Ax + Bx ) + 1 <= Ax );
 }
 
 
 
-u8 Zufall::getRandomNumber() const
+irr::u8 Zufall::getRandomNumber() const
 {
     return 4;
 }

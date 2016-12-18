@@ -12,7 +12,7 @@
 
 
 
-ObjectManager& ObjectManager::getInstance( IrrlichtDevice* device )
+ObjectManager& ObjectManager::getInstance( irr::IrrlichtDevice* device )
 {
     static ObjectManager instance( device );
     return instance;
@@ -22,9 +22,9 @@ ObjectManager& ObjectManager::getInstance( IrrlichtDevice* device )
 
 void ObjectManager::loadSolids( const char* solidsFilename )
 {
-    core::array<core::stringc> objectsDataList;
+    irr::core::array<irr::core::stringc> objectsDataList;
 #ifdef _DEBUG_MODE
-u32 now = device_->getTimer()->getRealTime();
+irr::u32 now = device_->getTimer()->getRealTime();
 #endif
     /* replace later: */ //vegetation_ = new Vegetation( smgr_ );
     /* replace later: */ //vegetation_->create();
@@ -39,7 +39,7 @@ Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #ifdef _DEBUG_MODE
 now = device_->getTimer()->getRealTime();
 #endif
-    for ( register u32 i = 0; i < objectsDataList.size(); ++i )
+    for ( register irr::u32 i = 0; i < objectsDataList.size(); ++i )
     {
         BasicStaticObject* object = new BasicStaticObject( objectsDataList[ i ], smgr_ );
         if ( object->getNode() == 0 )
@@ -50,7 +50,7 @@ now = device_->getTimer()->getRealTime();
             Logfile::getInstance().emergencyExit( "Statisches Objekt konnte nicht erzeugt werden! Abbruch." );
         }
         // Auf Boden positionieren
-        core::vector3df pos = object->getNode()->getPosition();
+        irr::core::vector3df pos = object->getNode()->getPosition();
         pos.Y = Ground::getInstance().getHeight( pos.X, pos.Z );
         object->getNode()->setPosition( pos );
         staticObjects_.push_back( object );
@@ -68,15 +68,15 @@ Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 
 void ObjectManager::loadNPCs( const char* npcsFilename )
 {
-    core::array<core::stringc> objectsDataList;
+    irr::core::array<irr::core::stringc> objectsDataList;
 
     GenericHelperMethods::getInstance().validateFileExistence( npcsFilename );
     Scripting::getInstance().getObjectDataFromScript( npcsFilename ).split( objectsDataList, "\n" );
 
 #ifdef _DEBUG_MODE
-u32 now = device_->getTimer()->getRealTime();
+irr::u32 now = device_->getTimer()->getRealTime();
 #endif
-    for ( register u32 i = 0; i < objectsDataList.size(); ++i )
+    for ( register irr::u32 i = 0; i < objectsDataList.size(); ++i )
     {
         BasicLifeform* npc = new BasicLifeform( objectsDataList[ i ], smgr_ );
         if ( npc->getNode() == 0 )
@@ -87,7 +87,7 @@ u32 now = device_->getTimer()->getRealTime();
             Logfile::getInstance().emergencyExit( "NPC konnte nicht erzeugt werden! Abbruch." );
         }
         // Auf Boden positionieren
-        core::vector3df pos = npc->getNode()->getPosition();
+        irr::core::vector3df pos = npc->getNode()->getPosition();
         pos.Y = Ground::getInstance().getHeight( pos.X, pos.Z );
         npc->getNode()->setPosition( pos );
         npcs_.push_back( npc );
@@ -112,20 +112,20 @@ void ObjectManager::unload()
 
 
 
-void ObjectManager::update( const f32 frameDeltaTime )
+void ObjectManager::update( const irr::f32 frameDeltaTime )
 {
     if ( updateTimer_->isFull() )
     {
         /* replace later: */ vegetation_->update();
 
-        scene::ISceneNode* node = 0;
-        core::vector3df camPos = smgr_->getActiveCamera()->getAbsolutePosition();
-        f32 farValueSQ = smgr_->getActiveCamera()->getFarValue();
+        irr::scene::ISceneNode* node = 0;
+        irr::core::vector3df camPos = smgr_->getActiveCamera()->getAbsolutePosition();
+        irr::f32 farValueSQ = smgr_->getActiveCamera()->getFarValue();
         farValueSQ *= farValueSQ;
 #ifdef _DEBUG_MODE
         visibleNodeCount_ = 0;
 #endif
-        for( u32 i = 0; i < staticObjects_.size(); ++i )
+        for( irr::u32 i = 0; i < staticObjects_.size(); ++i )
         {
             node = staticObjects_[ i ]->getNode();
             if ( ( node->getID() & ID_WELT ) == ID_BODEN )
@@ -144,7 +144,7 @@ void ObjectManager::update( const f32 frameDeltaTime )
                     removeObjectFromAreaOfView( staticObjects_[ i ] );
             }
         }
-        for( u32 i = 0; i < npcs_.size(); ++i )
+        for( irr::u32 i = 0; i < npcs_.size(); ++i )
         {
             node = npcs_[ i ]->getNode();
             if ( node->getAbsolutePosition().getDistanceFromSQ( camPos ) < farValueSQ )
@@ -166,15 +166,15 @@ void ObjectManager::update( const f32 frameDeltaTime )
 #ifdef _DEBUG_MODE
     Debugwindow::getInstance().addLine( "ObjectManager::update", L"visibleNodes: ", visibleNodeCount_ );
 #endif
-    for( u32 i = 0; i < npcs_.size(); ++i )
+    for( irr::u32 i = 0; i < npcs_.size(); ++i )
         npcs_[ i ]->update( frameDeltaTime );
 }
 
 
 
-scene::ISceneNode* ObjectManager::getBaseNodeByType( const core::stringc& type )
+irr::scene::ISceneNode* ObjectManager::getBaseNodeByType( const irr::core::stringc& type )
 {
-    scene::ISceneNode* node = 0;
+    irr::scene::ISceneNode* node = 0;
     if ( type.equals_ignore_case( "mauspfeilreaktiv" ) )
         node = nodesRespondingToMouse;
     else if ( type.equals_ignore_case( "begehbar" ) )
@@ -200,7 +200,7 @@ scene::ISceneNode* ObjectManager::getBaseNodeByType( const core::stringc& type )
 
 
 
-u32 ObjectManager::getBaseIdByType( const core::stringc& type )
+irr::u32 ObjectManager::getBaseIdByType( const irr::core::stringc& type )
 {
     return getBaseNodeByType( type )->getID();
 }
@@ -231,7 +231,7 @@ void ObjectManager::switchStaticsDebugMode()
     ( debugCounter_ == 4 ) ? debugCounter_ = 0 : debugCounter_++;
     BufferCullMeshSceneNode* helperNode = 0;
     BasicStaticObject* helperObject = 0;
-    for ( register u32 i = 0; i < staticObjects_.size(); ++i )
+    for ( register irr::u32 i = 0; i < staticObjects_.size(); ++i )
     {
         helperObject = staticObjects_[ i ];
         if ( !helperObject )
@@ -245,26 +245,26 @@ void ObjectManager::switchStaticsDebugMode()
         {
             case 0:
                 helperNode->setDebugDataVisible( 0 );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
             case 1:
-                helperNode->setDebugDataVisible( scene::EDS_NORMALS );
+                helperNode->setDebugDataVisible( irr::scene::EDS_NORMALS );
                 break;
             case 2:
                 helperNode->setDebugDataVisible( 0 );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, true );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, true );
                 break;
             case 3:
-                helperNode->setDebugDataVisible( scene::EDS_BBOX );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setDebugDataVisible( irr::scene::EDS_BBOX );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
             case 4:
-                helperNode->setDebugDataVisible( scene::EDS_BBOX_BUFFERS );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setDebugDataVisible( irr::scene::EDS_BBOX_BUFFERS );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
             default:
                 helperNode->setDebugDataVisible( 0 );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
         }
     }
@@ -272,9 +272,9 @@ void ObjectManager::switchStaticsDebugMode()
 void ObjectManager::switchNPCsDebugMode()
 {
     ( debugCounter_ == 4 ) ? debugCounter_ = 0 : debugCounter_++;
-    scene::IAnimatedMeshSceneNode* helperNode = 0;
+    irr::scene::IAnimatedMeshSceneNode* helperNode = 0;
     BasicLifeform* helperObject = 0;
-    for ( register u32 i = 0; i < npcs_.size(); ++i )
+    for ( register irr::u32 i = 0; i < npcs_.size(); ++i )
     {
         helperObject = npcs_[ i ];
         if ( !helperObject )
@@ -288,33 +288,33 @@ void ObjectManager::switchNPCsDebugMode()
         {
             case 0:
                 helperNode->setDebugDataVisible( 0 );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
             case 1:
-                helperNode->setDebugDataVisible( scene::EDS_NORMALS );
+                helperNode->setDebugDataVisible( irr::scene::EDS_NORMALS );
                 break;
             case 2:
                 helperNode->setDebugDataVisible( 0 );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, true );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, true );
                 break;
             case 3:
-                helperNode->setDebugDataVisible( scene::EDS_BBOX );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setDebugDataVisible( irr::scene::EDS_BBOX );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
             case 4:
-                helperNode->setDebugDataVisible( scene::EDS_BBOX_BUFFERS );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setDebugDataVisible( irr::scene::EDS_BBOX_BUFFERS );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
             default:
                 helperNode->setDebugDataVisible( 0 );
-                helperNode->setMaterialFlag( video::EMF_WIREFRAME, false );
+                helperNode->setMaterialFlag( irr::video::EMF_WIREFRAME, false );
                 break;
         }
     }
 }
-u32 ObjectManager::loadedNodes()
+irr::u32 ObjectManager::loadedNodes()
 {
-    return worldNode->getChildren().size() - 11 +
+    return worldNode->getChildren().size() - 11 + // TODO refactor hard coded number!
             nodesRespondingToMouse->getChildren().size() +
             walkableNodes->getChildren().size() +
             walkableNodesInRange->getChildren().size() +
@@ -335,7 +335,7 @@ u32 ObjectManager::loadedNodes()
 
 
 
-ObjectManager::ObjectManager( IrrlichtDevice* device )
+ObjectManager::ObjectManager( irr::IrrlichtDevice* device )
 : device_(device),
   smgr_(0),
   staticObjects_(0),
@@ -428,7 +428,7 @@ void ObjectManager::clearArrays()
 {
     if ( staticObjects_.size() > 0 )
     {
-        for ( register u32 i = 0; i < staticObjects_.size(); ++i )
+        for ( register irr::u32 i = 0; i < staticObjects_.size(); ++i )
         {
             if ( staticObjects_[ i ] )
             {
@@ -441,7 +441,7 @@ void ObjectManager::clearArrays()
     staticObjects_.clear();
     if ( npcs_.size() > 0 )
     {
-        for ( register u32 i = 0; i < npcs_.size(); ++i )
+        for ( register irr::u32 i = 0; i < npcs_.size(); ++i )
         {
             if ( npcs_[ i ] )
             {

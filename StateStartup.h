@@ -11,8 +11,6 @@
 #include "GameState.h"
 #include "LoadingScreen.h"
 
-using namespace irr;
-
 /*! \class StateStartup StateStartup.h "StateStartup.h"
  *  \brief Startup-Routinen für das Spiel.
  *
@@ -28,7 +26,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return -
      */
-    StateStartup( IrrlichtDevice* device );
+    StateStartup( irr::IrrlichtDevice* device );
 
     /*! \brief Destruktor.
      */
@@ -38,19 +36,19 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void start( const f32 frameDeltaTime );
+    void start( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void shutdown( const f32 frameDeltaTime );
+    void shutdown( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert den Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void update( const f32 frameDeltaTime );
+    void update( const irr::f32 frameDeltaTime );
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
      *  \param -
@@ -66,10 +64,10 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
-    u32 classCounter_;
+    irr::IrrlichtDevice* device_;
+    irr::u32 classCounter_;
     LoadingScreen* loadingScreen_;
-    gui::IGUIInOutFader* fader_;
+    irr::gui::IGUIInOutFader* fader_;
 
     StateStartup( const StateStartup& );
     StateStartup& operator=( const StateStartup& );

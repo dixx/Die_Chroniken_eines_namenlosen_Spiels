@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class LoadingScreen LoadingScreen.h "LoadingScreen.h"
  *  \brief Schnittstelle für Ladebildschirm.
  *  \note Instanzierung: `LoadingScreen* myLoadingScreen = new LoadingScreen();`
@@ -24,7 +22,7 @@ public:
      *  \param imageFileName (\a io::path&) relativer oder absoluter Pfad zum Hintergrundbild
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    LoadingScreen( IrrlichtDevice* device, io::path imageFileName );
+    LoadingScreen( irr::IrrlichtDevice* device, irr::io::path imageFileName );
 
     /*! \brief Destruktor.
      */
@@ -50,17 +48,17 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
-    io::path imageFileName_;
-    gui::IGUIImage* loadingScreenImageFrame_;
-    gui::IGUIStaticText* loadingText_;
+    irr::IrrlichtDevice* device_;
+    irr::io::path imageFileName_;
+    irr::gui::IGUIImage* loadingScreenImageFrame_;
+    irr::gui::IGUIStaticText* loadingText_;
 
     LoadingScreen( const LoadingScreen& );
     LoadingScreen& operator=( const LoadingScreen& );
 
     void createLoadingScreenImage();
     void createLoadingScreenText();
-    core::recti screenDependentSizeOf( video::ITexture& image );
+    irr::core::recti screenDependentSizeOf( irr::video::ITexture& image );
 
 };
 

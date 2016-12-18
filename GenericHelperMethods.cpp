@@ -3,7 +3,7 @@
 
 
 
-GenericHelperMethods& GenericHelperMethods::getInstance( IrrlichtDevice* device )
+GenericHelperMethods& GenericHelperMethods::getInstance( irr::IrrlichtDevice* device )
 {
     static GenericHelperMethods instance( device );
     return instance;
@@ -11,7 +11,7 @@ GenericHelperMethods& GenericHelperMethods::getInstance( IrrlichtDevice* device 
 
 
 
-void GenericHelperMethods::validateFileExistence( const io::path& filename ) const
+void GenericHelperMethods::validateFileExistence( const irr::io::path& filename ) const
 {
     if ( fs_->existFile( filename ) == false )
     {
@@ -22,13 +22,13 @@ void GenericHelperMethods::validateFileExistence( const io::path& filename ) con
 
 
 
-void GenericHelperMethods::pushMeshToVRAM( scene::IMesh* mesh )
+void GenericHelperMethods::pushMeshToVRAM( irr::scene::IMesh* mesh )
 {
     bufferCount_ = mesh->getMeshBufferCount();
-    for ( register u32 i = 0; i < bufferCount_; ++i )
+    for ( register irr::u32 i = 0; i < bufferCount_; ++i )
     {
         buffer_ = mesh->getMeshBuffer( i );
-        buffer_->setHardwareMappingHint( scene::EHM_STATIC );
+        buffer_->setHardwareMappingHint( irr::scene::EHM_STATIC );
         buffer_->setDirty();
         buffer_->recalculateBoundingBox();
     }
@@ -40,7 +40,7 @@ void GenericHelperMethods::pushMeshToVRAM( scene::IMesh* mesh )
 
 
 
-GenericHelperMethods::GenericHelperMethods( IrrlichtDevice* device )
+GenericHelperMethods::GenericHelperMethods( irr::IrrlichtDevice* device )
 : bufferCount_(0),
   buffer_(0)
 {

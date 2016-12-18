@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class GenericHelperMethods GenericHelperMethods.h "GenericHelperMethods.h"
  *  \brief  Schnittstelle für allgemeine Hilfsmethoden.
  *  \attention Klasse ist `Singleton`.
@@ -28,27 +26,27 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static GenericHelperMethods& getInstance( IrrlichtDevice* device = 0 );
+    static GenericHelperMethods& getInstance( irr::IrrlichtDevice* device = 0 );
 
     /*! \brief Prüft ob die angegebene Datei vorhanden ist und beendet das Programm wenn nicht.
      *  \param filename (\a io::path&) Dateiname
      *  \return -
      */
-    void validateFileExistence( const io::path& filename ) const;
+    void validateFileExistence( const irr::io::path& filename ) const;
 
     /*! \brief Schreibt alle Vertices direkt in den Grafikkartenspeicher.
      *  \param mesh (\a scene::IMesh*) Mesh
      *  \return -
      */
-    void pushMeshToVRAM( scene::IMesh* mesh );
+    void pushMeshToVRAM( irr::scene::IMesh* mesh );
 
 private:
 
-    io::IFileSystem* fs_;
-    u32 bufferCount_;
-    scene::IMeshBuffer* buffer_;
+    irr::io::IFileSystem* fs_;
+    irr::u32 bufferCount_;
+    irr::scene::IMeshBuffer* buffer_;
 
-    GenericHelperMethods( IrrlichtDevice* device );
+    GenericHelperMethods( irr::IrrlichtDevice* device );
     GenericHelperMethods( const GenericHelperMethods& );
     GenericHelperMethods& operator=( const GenericHelperMethods& );
     ~GenericHelperMethods();

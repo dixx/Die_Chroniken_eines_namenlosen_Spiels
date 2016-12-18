@@ -8,7 +8,7 @@
 
 
 
-Mauspfeil& Mauspfeil::getInstance( IrrlichtDevice* device )
+Mauspfeil& Mauspfeil::getInstance( irr::IrrlichtDevice* device )
 {
     static Mauspfeil instance( device );
     return instance;
@@ -34,6 +34,7 @@ void Mauspfeil::setCurrentArrow( const Pfeil mauspfeil)
 
 void Mauspfeil::draw()
 {
+    // TODO refactor by using own Timer!
     if ( device_->getTimer()->getRealTime() > sequenceTimer_ )
     {
         // Zeitgeber neu starten
@@ -112,14 +113,14 @@ void Mauspfeil::draw()
 
 
 
-Mauspfeil::Mauspfeil( IrrlichtDevice* device )
+Mauspfeil::Mauspfeil( irr::IrrlichtDevice* device )
 : device_(device),
   control_(0),
   imageCatalog_(0),
-  imageCatalogRaster_(core::dimension2di( 3, 3 )),
+  imageCatalogRaster_(irr::core::dimension2di( 3, 3 )),
   actualImageNumber_(0),
   interFrameTime_(0),
-  imageSize_(core::recti( 0, 0, 60, 60 )),
+  imageSize_(irr::core::recti( 0, 0, 60, 60 )),
   sequenceTimer_(0),
   currentArrow_(MAUSPFEIL_MISCHMASCH)
 {
@@ -135,10 +136,10 @@ Mauspfeil::Mauspfeil( IrrlichtDevice* device )
     clearArrays();
     // Vorberechnen der Positionen aller Einzelbilder innerhalb des
     // Imagekataloges, für schnelleren Zugriff
-    for ( register s32 i = 0; i < imageCatalogRaster_.getArea(); ++i )
+    for ( register irr::s32 i = 0; i < imageCatalogRaster_.getArea(); ++i )
     {
         imageCatalogActualPosition_.push_back(
-                core::recti(
+                irr::core::recti(
                         ( i % imageCatalogRaster_.Width ) * imageSize_.getWidth(),
                         ( i / imageCatalogRaster_.Height ) * imageSize_.getHeight(),
                         ( i % imageCatalogRaster_.Width + 1 ) * imageSize_.getWidth(),
@@ -154,7 +155,7 @@ Mauspfeil::Mauspfeil( IrrlichtDevice* device )
     );
 #endif
     // initialisieren der anderen Arrays
-    for ( s32 i = 0; i < MAUSPFEIL_COUNT; ++i )
+    for ( irr::s32 i = 0; i < MAUSPFEIL_COUNT; ++i )
     {
         startImageNumber_.push_back( 0 );
         endImageNumber_.push_back( 0 );

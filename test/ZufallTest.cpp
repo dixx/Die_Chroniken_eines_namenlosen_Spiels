@@ -42,14 +42,14 @@ TEST_CASE( "seeding" ) {
 
 TEST_CASE( "get random Int" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     //REQUIRE( subject.getInt() >= 0 ); // comparison of unsigned expression >= 0 is always true
-    REQUIRE( subject.getInt() <= (u32)( 4294967295UL ) );
+    REQUIRE( subject.getInt() <= (irr::u32)( 4294967295UL ) );
 
     SECTION( "different seed, different result" ) {
         subject.start( 42 );
-        u32 sample = subject.getInt();
+        irr::u32 sample = subject.getInt();
         subject.start( 43 );
 
         REQUIRE( subject.getInt() != sample );
@@ -58,14 +58,14 @@ TEST_CASE( "get random Int" ) {
 
 TEST_CASE( "get random Float" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     REQUIRE( subject.getFloat() >= 0.0f );
     REQUIRE( subject.getFloat() < 1.0f );
 
     SECTION( "different seed, different result" ) {
         subject.start( 42 );
-        f32 sample = subject.getFloat();
+        irr::f32 sample = subject.getFloat();
         subject.start( 43 );
 
         REQUIRE( subject.getFloat() != Approx( sample ).epsilon( 0.00000001 ) );
@@ -74,7 +74,7 @@ TEST_CASE( "get random Float" ) {
 
 TEST_CASE( "get random int within range" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     REQUIRE( subject.getIntBetween(3, 5) >= 3 );
     REQUIRE( subject.getIntBetween(3, 5) <= 5 );
@@ -89,7 +89,7 @@ TEST_CASE( "get random int within range" ) {
 
     SECTION( "probability" ) {
         bool first, second, third, invalid = false;
-        u32 value = 0;
+        irr::u32 value = 0;
         for( int i = 0; i < 100; ++i ) {
             value = subject.getIntBetween(123456, 123458);
             switch (value) {
@@ -117,7 +117,7 @@ TEST_CASE( "get random int within range" ) {
 
 TEST_CASE( "get random float within range" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     REQUIRE( subject.getFloatBetween(3.0f, 5.0f) >= 3.0f );
     REQUIRE( subject.getFloatBetween(3.0f, 5.0f) <= 5.0f );
@@ -133,7 +133,7 @@ TEST_CASE( "get random float within range" ) {
 
 TEST_CASE( "let an event occur or not, using one probability" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     REQUIRE( subject.doesOccur(100.0f) );
     REQUIRE_FALSE( subject.doesOccur(0.0f) );
@@ -166,7 +166,7 @@ TEST_CASE( "let an event occur or not, using one probability" ) {
 
 TEST_CASE( "let one out of two events occur, using ratio of both" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     REQUIRE( subject.doesAoccur(0.001f, 0.0f) );
     REQUIRE( subject.doesAoccur(100.0f, 0.0f) );
@@ -184,7 +184,7 @@ TEST_CASE( "let one out of two events occur, using ratio of both" ) {
 
 TEST_CASE( "let one out of two events occur, using limited probabilities for both" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( (u32)time( NULL ) );
+    subject.start( (irr::u32)time( NULL ) );
 
     REQUIRE( subject.doesAoccur100(100, 0) );
     REQUIRE_FALSE( subject.doesAoccur100(0, 100) );

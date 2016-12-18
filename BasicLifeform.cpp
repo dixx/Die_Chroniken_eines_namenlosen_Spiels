@@ -202,7 +202,7 @@ void BasicLifeform::stopMovement()
 
 void BasicLifeform::init()
 {
-    smgr_->getVideoDriver()->setTransform( irr::video::ETS_WORLD, core::matrix4() );
+    smgr_->getVideoDriver()->setTransform( irr::video::ETS_WORLD, irr::core::matrix4() );
     node_ = smgr_->addAnimatedMeshSceneNode(
             loadMesh(),
             ObjectManager::getInstance().getBaseNodeByType( type_ ),
@@ -223,7 +223,7 @@ void BasicLifeform::init()
     Collision::getInstance().addAnimatedMeshNodeToWorld( node_ );
     node_->setVisible( false );
     calculateCollisionRadius();
-    maxBBExtent_ = core::vector3df(
+    maxBBExtent_ = irr::core::vector3df(
             collisionRadius_ * 2,
             node_->getTransformedBoundingBox().getExtent().Y,
             collisionRadius_ * 2

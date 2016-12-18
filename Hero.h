@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "BasicHero.h"
 
-using namespace irr;
-
 /*! \class Hero Hero.h "Hero.h"
  *  \brief Schnittstelle für den Helden.
  *  \attention Klasse ist `Singleton`.\n Ein Zeiger auf eine Instanz des Irrlicht-SceneManagers wird benötigt.
@@ -27,7 +25,7 @@ public:
      *  \param sceneManager (\a ISceneManager*) Zeiger auf den SceneManager
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Hero& getInstance( scene::ISceneManager* sceneManager = 0 );
+    static Hero& getInstance( irr::scene::ISceneManager* sceneManager = 0 );
 
     /*! \brief Lädt einen Helden.
      *  \param -
@@ -49,10 +47,10 @@ public:
 
 private:
 
-    scene::ISceneManager* smgr_;
+    irr::scene::ISceneManager* smgr_;
     BasicHero* hero_;
 
-    Hero( scene::ISceneManager* smgr );
+    Hero( irr::scene::ISceneManager* smgr );
     Hero( const Hero& );
     Hero& operator=( const Hero& );
     ~Hero();

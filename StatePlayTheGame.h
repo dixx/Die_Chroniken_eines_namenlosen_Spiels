@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "GameState.h"
 
-using namespace irr;
-
 /*! \class StatePlayTheGame StatePlayTheGame.h "StatePlayTheGame.h"
  *  \brief Schnittstelle für das Spiel.
  *  \note Instanzierung: `StatePlayTheGame* myStatePLayTheGame = new StatePlayTheGame();`
@@ -24,7 +22,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    StatePlayTheGame( IrrlichtDevice* device );
+    StatePlayTheGame( irr::IrrlichtDevice* device );
 
 	/*! \brief Destruktor
      */
@@ -34,19 +32,19 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void start( const f32 frameDeltaTime );
+    void start( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void shutdown( const f32 frameDeltaTime );
+    void shutdown( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert den Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void update( const f32 frameDeltaTime );
+    void update( const irr::f32 frameDeltaTime );
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
      *  \param -
@@ -62,14 +60,14 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
+    irr::IrrlichtDevice* device_;
 
     StatePlayTheGame( const StatePlayTheGame& );
     StatePlayTheGame& operator=( const StatePlayTheGame& );
 
     void transitTo( internalState state );
-    void checkInputForGame( f32 frameDeltaTime );
-    void checkCameraSpecificInput( f32 frameDeltaTime );
+    void checkInputForGame( irr::f32 frameDeltaTime );
+    void checkCameraSpecificInput( irr::f32 frameDeltaTime );
     void checkGameSpecificInput();
 
 };

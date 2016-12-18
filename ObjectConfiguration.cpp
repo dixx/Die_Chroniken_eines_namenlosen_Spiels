@@ -64,7 +64,7 @@ void ObjectConfiguration::writeTo( irr::io::IWriteFile* stream )
     write<irr::core::vector3df>( stream, mesh->offset );
     write<irr::core::vector3df>( stream, mesh->scale );
     write<irr::core::vector3df>( stream, mesh->rotation );
-    write<u32>( stream, mesh->materialCount );
+    write<irr::u32>( stream, mesh->materialCount );
     for ( register irr::u32 i = 0; i < mesh->materialCount; ++i )
     {
         write<bool>( stream, materials->isTransparent[ i ] );

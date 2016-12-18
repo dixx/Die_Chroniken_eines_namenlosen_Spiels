@@ -8,7 +8,7 @@
 
 
 
-GameStateManager& GameStateManager::getInstance( IrrlichtDevice* device )
+GameStateManager& GameStateManager::getInstance( irr::IrrlichtDevice* device )
 {
     static GameStateManager instance( device );
     return instance;
@@ -16,7 +16,7 @@ GameStateManager& GameStateManager::getInstance( IrrlichtDevice* device )
 
 
 
-void GameStateManager::update( f32 frameDeltaTime )
+void GameStateManager::update( irr::f32 frameDeltaTime )
 {
     switch ( currentState_->currentInternalState() ) // ordered by propability
     {
@@ -96,7 +96,7 @@ void GameStateManager::requestNewState( State desiredState )
 
 
 
-GameStateManager::GameStateManager( IrrlichtDevice* device )
+GameStateManager::GameStateManager( irr::IrrlichtDevice* device )
 : device_(device),
   currentState_(0),
   requestedState_(NOSTATE),

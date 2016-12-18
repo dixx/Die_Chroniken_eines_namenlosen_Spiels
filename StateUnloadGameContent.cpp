@@ -13,7 +13,7 @@
 
 
 
-StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
+StateUnloadGameContent::StateUnloadGameContent( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device),
   moduleCounter_(0)
@@ -21,18 +21,18 @@ StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Entlade..." );
-    pictures_ = core::array<LoadingScreen*>( COUNT );
-    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
-    pictures_[ICON_WORLD] =     new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
-    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
-    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, io::path( "GFX/Bevoelkerung_icon.png" ) );
-    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, io::path( "GFX/Gebaeude_icon.png" ) );
-    pictures_[ICON_THINGS] =    new LoadingScreen( device_, io::path( "GFX/Gegenstaende_icon.png" ) );
-    pictures_[ICON_HERO] =      new LoadingScreen( device_, io::path( "GFX/Held_icon.png" ) );
-    pictures_[ICON_FLORA] =     new LoadingScreen( device_, io::path( "GFX/Pflanzen_icon.png" ) );
-    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, io::path( "GFX/Tiere_icon.png" ) );
-    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, io::path( "GFX/Wetter_icon.png" ) );
-    for ( register u32 i = CONCEPT_1; i <= CONCEPT_8; ++i )
+    pictures_ = irr::core::array<LoadingScreen*>( COUNT );
+    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, irr::io::path( "GFX/Ladebildschirm_v3.png" ) );
+    pictures_[ICON_WORLD] =     new LoadingScreen( device_, irr::io::path( "GFX/Welt_icon.png" ) );
+    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, irr::io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, irr::io::path( "GFX/Bevoelkerung_icon.png" ) );
+    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, irr::io::path( "GFX/Gebaeude_icon.png" ) );
+    pictures_[ICON_THINGS] =    new LoadingScreen( device_, irr::io::path( "GFX/Gegenstaende_icon.png" ) );
+    pictures_[ICON_HERO] =      new LoadingScreen( device_, irr::io::path( "GFX/Held_icon.png" ) );
+    pictures_[ICON_FLORA] =     new LoadingScreen( device_, irr::io::path( "GFX/Pflanzen_icon.png" ) );
+    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, irr::io::path( "GFX/Tiere_icon.png" ) );
+    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, irr::io::path( "GFX/Wetter_icon.png" ) );
+    for ( register irr::u32 i = CONCEPT_1; i <= CONCEPT_8; ++i )
         pictures_[i] = 0;
     forceDraw_ = true;
     transitTo( STARTING );
@@ -43,7 +43,7 @@ StateUnloadGameContent::StateUnloadGameContent( IrrlichtDevice* device )
 StateUnloadGameContent::~StateUnloadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    for ( register u32 i = 0; i < COUNT; ++i )
+    for ( register irr::u32 i = 0; i < COUNT; ++i )
     {
         if ( pictures_[ i ] )
         {
@@ -56,7 +56,7 @@ StateUnloadGameContent::~StateUnloadGameContent()
 
 
 
-void StateUnloadGameContent::start( f32 frameDeltaTime )
+void StateUnloadGameContent::start( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
     transitTo( RUNNING );
@@ -64,7 +64,7 @@ void StateUnloadGameContent::start( f32 frameDeltaTime )
 
 
 
-void StateUnloadGameContent::update( f32 frameDeltaTime )
+void StateUnloadGameContent::update( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics
     switch( moduleCounter_ )
@@ -120,7 +120,7 @@ void StateUnloadGameContent::update( f32 frameDeltaTime )
 
 
 
-void StateUnloadGameContent::shutdown( f32 frameDeltaTime )
+void StateUnloadGameContent::shutdown( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on shutdown
     transitTo( STOPPED );
@@ -155,7 +155,7 @@ void StateUnloadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            for ( register u32 i = LOADING_SCREEN; i <= ICON_WEATHER; ++i )
+            for ( register irr::u32 i = LOADING_SCREEN; i <= ICON_WEATHER; ++i )
                 pictures_[i]->enable();
             Eventreceiver::getInstance().setEventReactionActive( false, false, false );
             Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );

@@ -4,25 +4,23 @@
 #include <irrlicht.h>
 #include "DebugShape.h"
 
-using namespace irr;
-
 class DebugShapesManager
 {
 
 public:
 
-    static DebugShapesManager& getInstance( video::IVideoDriver* driver = 0 );
-    void createCircle( core::vector3df position, f32 radius );
-    void createEllipsoid( core::vector3df position, core::vector3df radien );
+    static DebugShapesManager& getInstance( irr::video::IVideoDriver* driver = 0 );
+    void createCircle( irr::core::vector3df position, irr::f32 radius );
+    void createEllipsoid( irr::core::vector3df position, irr::core::vector3df radien );
     void drawAll();
 
 private:
 
-    video::IVideoDriver* driver_;
-    core::list<DebugShape*> shapes_;
-    core::list<DebugShape*>::Iterator iter_;
-    video::SMaterial material_;
-    DebugShapesManager( video::IVideoDriver* driver );
+    irr::video::IVideoDriver* driver_;
+    irr::core::list<DebugShape*> shapes_;
+    irr::core::list<DebugShape*>::Iterator iter_;
+    irr::video::SMaterial material_;
+    DebugShapesManager( irr::video::IVideoDriver* driver );
     DebugShapesManager( const DebugShapesManager& );
     DebugShapesManager& operator=( const DebugShapesManager& );
     ~DebugShapesManager();

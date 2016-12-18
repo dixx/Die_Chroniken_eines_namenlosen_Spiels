@@ -3,7 +3,7 @@
 
 
 
-HeroPunk::HeroPunk( const core::stringc& punkData, scene::ISceneManager* smgr )
+HeroPunk::HeroPunk( const irr::core::stringc& punkData, irr::scene::ISceneManager* smgr )
 : BasicHero( punkData, smgr, true )
 {
     if ( smgr_ == 0 )
@@ -21,7 +21,7 @@ HeroPunk::~HeroPunk()
 
 
 
-core::stringc HeroPunk::getObjectData()
+irr::core::stringc HeroPunk::getObjectData()
 {
     return "";
 }

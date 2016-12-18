@@ -11,7 +11,7 @@ TimerManager& TimerManager::getInstance()
 
 
 
-Timer* TimerManager::createTimer( const f32 maxValue )
+Timer* TimerManager::createTimer( const irr::f32 maxValue )
 {
     timerList_.push_back( new Timer( maxValue ) );
     timerCount_++;
@@ -51,7 +51,7 @@ void TimerManager::resume()
 
 
 
-void TimerManager::tick( const f32 frameDeltaTime )
+void TimerManager::tick( const irr::f32 frameDeltaTime )
 {
     for( itr_ = timerList_.begin(); itr_ != timerList_.end(); ++itr_ )
         (*itr_)->tick( frameDeltaTime );

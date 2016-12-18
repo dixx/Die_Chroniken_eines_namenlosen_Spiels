@@ -4,7 +4,7 @@
 
 
 
-Hero& Hero::getInstance( scene::ISceneManager* sceneManager )
+Hero& Hero::getInstance( irr::scene::ISceneManager* sceneManager )
 {
     static Hero instance( sceneManager );
     return instance;
@@ -14,7 +14,7 @@ Hero& Hero::getInstance( scene::ISceneManager* sceneManager )
 
 void Hero::load()
 {
-    core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0";
+    irr::core::stringc heroData = "ONAMEder edle Testheld@OTYPEPUNK@MOFFS0.0x0.6x0.0@MROTA0.0x-90.0x0.0";
     heroData += "@MSCAL0.025x0.025x0.025@POSXZ11.0x11.0@MTEX0GFX/sydney.bmp@MFILEGFX/OBJECTS/sydney.md2";
     hero_ = new HeroPunk( heroData, smgr_ );
 }
@@ -40,7 +40,7 @@ BasicHero* Hero::current()
 
 
 
-Hero::Hero( scene::ISceneManager* sceneManager )
+Hero::Hero( irr::scene::ISceneManager* sceneManager )
 : smgr_(sceneManager),
   hero_(0)
 {

@@ -34,7 +34,7 @@ public:
      *  \param maxValue (\a const \a f32) maximaler Zeitwert in Sekunden
      *  \return \a Timer* Zeiger auf den erzeugten Timer
      */
-    Timer* createTimer( const f32 maxValue );
+    Timer* createTimer( const irr::f32 maxValue );
 
     /*! \brief Entfernt einen Timer aus der Verwaltung und löscht ihn.
      *  \note Timer wird nicht gelöscht, wenn er nicht von TimeManager erstellt wurde!
@@ -59,13 +59,13 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Zeitwert in Sekunden
      *  \return -
      */
-    void tick( const f32 frameDeltaTime );
+    void tick( const irr::f32 frameDeltaTime );
 
 private:
 
-	core::list<Timer*> timerList_;
-	core::list<Timer*>::Iterator itr_;
-	u32 timerCount_;
+	irr::core::list<Timer*> timerList_;
+	irr::core::list<Timer*>::Iterator itr_;
+	irr::u32 timerCount_;
 	bool isPaused_;
 
     TimerManager();

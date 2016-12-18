@@ -18,7 +18,7 @@ Scripting& Scripting::getInstance()
 
 
 
-void Scripting::runScriptFile( const c8* filename )
+void Scripting::runScriptFile( const irr::c8* filename )
 {
     // LUA-Scriptdatei wird geladen
     errorHandler( luaL_loadfile( luaVM_, filename ), filename );
@@ -28,7 +28,7 @@ void Scripting::runScriptFile( const c8* filename )
 
 
 
-core::stringc Scripting::getObjectDataFromScript( const c8* filename )
+irr::core::stringc Scripting::getObjectDataFromScript( const irr::c8* filename )
 {
     lua_getglobal( luaVM_, "getObjectDataFromScript" );
     lua_pushstring( luaVM_, filename );
@@ -43,8 +43,8 @@ core::stringc Scripting::getObjectDataFromScript( const c8* filename )
         Logfile::getInstance().emergencyExit(
                 "[Script-VM]: LUA_LOADER::getObjectDataFromScript() hat kein Table geliefert! Abbruch." );
     }
-    core::stringc entry = "";
-    core::stringc data = "";
+    irr::core::stringc entry = "";
+    irr::core::stringc data = "";
     bool readTuples = false;
     bool valueFound = false;
     lua_pushnil( luaVM_ );
@@ -158,7 +158,7 @@ void Scripting::readNextFloatValue()
     if ( lua_next( luaVM_, -2 ) != 0 )
     {
         if ( lua_isnumber( luaVM_, -1 ) )
-            nextFloatValue_ = static_cast<f32>( lua_tonumber( luaVM_, -1 ) );
+            nextFloatValue_ = static_cast<irr::f32>( lua_tonumber( luaVM_, -1 ) );
         lua_pop( luaVM_, 1 );
     }
     else
@@ -169,11 +169,11 @@ void Scripting::readNextFloatValue()
 
 
 
-void Scripting::errorHandler( const s32 errorCode, const c8* errorMessage )
+void Scripting::errorHandler( const irr::s32 errorCode, const irr::c8* errorMessage )
 {
     if ( errorCode != 0 )
     {
-        core::stringc completeErrorMessage = errorMessage;
+        irr::core::stringc completeErrorMessage = errorMessage;
         completeErrorMessage += ": ";
         switch ( errorCode )
         {
@@ -214,11 +214,11 @@ void Scripting::errorHandler( const s32 errorCode, const c8* errorMessage )
 
 
 
-void Scripting::addLuaSearchPath( const c8* path )
+void Scripting::addLuaSearchPath( const irr::c8* path )
 {
     lua_getglobal( luaVM_, "package" );
     lua_getfield( luaVM_, -1, "path" );
-    core::stringc newPath = lua_tolstring( luaVM_, -1, 0 );
+    irr::core::stringc newPath = lua_tolstring( luaVM_, -1, 0 );
     newPath += ";.";
     newPath += path;
     newPath += "?.LUA;";
@@ -230,16 +230,16 @@ void Scripting::addLuaSearchPath( const c8* path )
 
 
 
-core::stringc Scripting::stackDump()
+irr::core::stringc Scripting::stackDump()
 {
-    s32 items = lua_gettop( luaVM_ );
+    irr::s32 items = lua_gettop( luaVM_ );
     if ( items == 0 )
         return "--- Stack is empty ---";
-    core::stringc message = "--- Stack Dump ---\n";
+    irr::core::stringc message = "--- Stack Dump ---\n";
     message += "total in stack: ";
     message += items;
     message += "\n";
-    for ( register s32 i = 1; i <= lua_gettop( luaVM_ ); ++i )
+    for ( register irr::s32 i = 1; i <= lua_gettop( luaVM_ ); ++i )
     {
         switch ( lua_type( luaVM_, i ) )
         {

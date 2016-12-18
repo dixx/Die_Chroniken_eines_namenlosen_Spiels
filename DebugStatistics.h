@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class DebugStatistics DebugStatistics.h "DebugStatistics.h"
  *  \brief Schnittstelle für Statistiken.
  *  \note Instanzierung: `DebugStatistics* myDebugStatistics = new DebugStatistics();`
@@ -24,7 +22,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    DebugStatistics( IrrlichtDevice* device );
+    DebugStatistics( irr::IrrlichtDevice* device );
 
     /*! \brief Schreibt Informationen über alle möglichen Objekte, Zustände, Listen usw. in das aktuelle Logfile.
      */
@@ -32,7 +30,7 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
+    irr::IrrlichtDevice* device_;
 
 };
 

@@ -15,7 +15,7 @@
 #endif
 
 
-StatePlayTheGame::StatePlayTheGame( IrrlichtDevice* device )
+StatePlayTheGame::StatePlayTheGame( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device)
 {
@@ -34,7 +34,7 @@ StatePlayTheGame::~StatePlayTheGame()
 
 
 
-void StatePlayTheGame::start( f32 frameDeltaTime )
+void StatePlayTheGame::start( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
     transitTo( RUNNING );
@@ -42,21 +42,21 @@ void StatePlayTheGame::start( f32 frameDeltaTime )
 
 
 
-void StatePlayTheGame::update( f32 frameDeltaTime )
+void StatePlayTheGame::update( irr::f32 frameDeltaTime )
 {
     //u32 x = device_->getTimer()->getRealTime();
     checkInputForGame( frameDeltaTime );
-    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( KEY_ESCAPE ) )
+    if ( Eventreceiver::getInstance().hasKeyJustBeenReleased( irr::KEY_ESCAPE ) )
     {
         GameStateManager::getInstance().requestNewState( GameStateManager::UNLOAD );
         transitTo( STOPPING );
     }
 #ifdef _DEBUG_MODE
-    if ( Eventreceiver::getInstance().hasKeyJustBeenPressedDown( KEY_F1 ) )
+    if ( Eventreceiver::getInstance().hasKeyJustBeenPressedDown( irr::KEY_F1 ) )
         Debugwindow::getInstance().toggle();
-    if ( Eventreceiver::getInstance().isKeyDown( KEY_TAB ) )
+    if ( Eventreceiver::getInstance().isKeyDown( irr::KEY_TAB ) )
         Camera::getInstance().startZoomingIn();
-    if ( Eventreceiver::getInstance().isKeyDown( KEY_KEY_R ) )
+    if ( Eventreceiver::getInstance().isKeyDown( irr::KEY_KEY_R ) )
         Camera::getInstance().startZoomingOut();
     Debugwindow::getInstance().addLine( "StatePlayTheGame::update", L"Dreiecke: ", device_->getVideoDriver()->getPrimitiveCountDrawn() );
 #endif
@@ -70,7 +70,7 @@ void StatePlayTheGame::update( f32 frameDeltaTime )
 
 
 
-void StatePlayTheGame::shutdown( f32 frameDeltaTime )
+void StatePlayTheGame::shutdown( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on shutdown
     transitTo( STOPPED );
@@ -130,23 +130,23 @@ void StatePlayTheGame::transitTo( internalState state )
 
 
 
-void StatePlayTheGame::checkInputForGame( f32 frameDeltaTime )
+void StatePlayTheGame::checkInputForGame( irr::f32 frameDeltaTime )
 {
     Eventreceiver& receiver = Eventreceiver::getInstance();
 #ifdef _DEBUG_MODE
     Camera& camera = Camera::getInstance();
     Hero& hero = Hero::getInstance();
-    if ( ( receiver.isKeyDown( KEY_CAPITAL ) && !receiver.wasKeyDown( KEY_CAPITAL ) )
-            || ( !receiver.isKeyDown( KEY_CAPITAL ) && ( receiver.isShiftDown() ^ receiver.wasShiftDown() ) ) )
+    if ( ( receiver.isKeyDown( irr::KEY_CAPITAL ) && !receiver.wasKeyDown( irr::KEY_CAPITAL ) )
+            || ( !receiver.isKeyDown( irr::KEY_CAPITAL ) && ( receiver.isShiftDown() ^ receiver.wasShiftDown() ) ) )
     {
         hero.current()->toggleSpeed();
         camera.toggleSpeed();
     }
-    if ( receiver.hasKeyJustBeenReleased( KEY_F2 ) )
+    if ( receiver.hasKeyJustBeenReleased( irr::KEY_F2 ) )
         Ground::getInstance().switchDebugMode();
-    if ( receiver.hasKeyJustBeenReleased( KEY_F3 ) )
+    if ( receiver.hasKeyJustBeenReleased( irr::KEY_F3 ) )
         ObjectManager::getInstance().switchStaticsDebugMode();
-    if ( receiver.hasKeyJustBeenReleased( KEY_F4 ) )
+    if ( receiver.hasKeyJustBeenReleased( irr::KEY_F4 ) )
         ObjectManager::getInstance().switchNPCsDebugMode();
 #endif
     checkCameraSpecificInput( frameDeltaTime );
@@ -155,26 +155,26 @@ void StatePlayTheGame::checkInputForGame( f32 frameDeltaTime )
 
 
 
-void StatePlayTheGame::checkCameraSpecificInput( f32 frameDeltaTime )
+void StatePlayTheGame::checkCameraSpecificInput( irr::f32 frameDeltaTime )
 {
     Eventreceiver& receiver = Eventreceiver::getInstance();
     Camera& camera = Camera::getInstance();
-    if ( !core::equals( receiver.getMouseWheel(), 0.0f ) )
+    if ( !irr::core::equals( receiver.getMouseWheel(), 0.0f ) )
         receiver.getMouseWheel() > 0.0f ? camera.startZoomingIn() : camera.startZoomingOut();
     if ( receiver.isMMBDown() )
     {
-        register s32 delta = receiver.getMouseLastX() - receiver.getMouseX();
+        register irr::s32 delta = receiver.getMouseLastX() - receiver.getMouseX();
         if ( delta != 0 )
         {
             if ( frameDeltaTime < 0.003f )
-                camera.rotate( static_cast<f32>( delta ) * 0.003f );
+                camera.rotate( static_cast<irr::f32>( delta ) * 0.003f );
             else
-                camera.rotate( static_cast<f32>( delta ) * frameDeltaTime );
+                camera.rotate( static_cast<irr::f32>( delta ) * frameDeltaTime );
         }
     }
-    if ( receiver.isKeyDown( KEY_KEY_Q ) )
+    if ( receiver.isKeyDown( irr::KEY_KEY_Q ) )
         camera.rotate( frameDeltaTime );
-    if ( receiver.isKeyDown( KEY_KEY_E ) )
+    if ( receiver.isKeyDown( irr::KEY_KEY_E ) )
         camera.rotate( -frameDeltaTime );
 }
 

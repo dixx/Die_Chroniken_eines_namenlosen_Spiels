@@ -9,7 +9,7 @@
 
 
 
-BasicLifeform::BasicLifeform( const core::stringc& objectData, scene::ISceneManager* smgr, bool isParent )
+BasicLifeform::BasicLifeform( const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, bool isParent )
 : Basic3DObject( objectData, smgr, true ),
   node_(0),
   isMoving_(false),
@@ -44,7 +44,7 @@ BasicLifeform::~BasicLifeform()
 
 
 
-void BasicLifeform::update( f32 frameDeltaTime )
+void BasicLifeform::update( irr::f32 frameDeltaTime )
 {
     movementDelta_ = speed_ * frameDeltaTime;
     if ( isMoving_ )
@@ -57,7 +57,7 @@ void BasicLifeform::update( f32 frameDeltaTime )
         {
             if ( !wasMoving_ )
             {
-                node_->setMD2Animation( scene::EMAT_RUN );
+                node_->setMD2Animation( irr::scene::EMAT_RUN );
                 wasMoving_ = true;
             }
             calculateNextStep();
@@ -85,42 +85,42 @@ void BasicLifeform::update( f32 frameDeltaTime )
 
 
 
-void BasicLifeform::moveTo( const core::vector3df target )
+void BasicLifeform::moveTo( const irr::core::vector3df target )
 {
     targetPosition_ = Ground::getInstance().getHeightFromPositionRanged( target, maxJumpHeight_ );
 }
 
 
 
-scene::IAnimatedMeshSceneNode* BasicLifeform::getNode() const
+irr::scene::IAnimatedMeshSceneNode* BasicLifeform::getNode() const
 {
     return node_;
 }
 
 
 
-f32 BasicLifeform::getCollisionRadius() const
+irr::f32 BasicLifeform::getCollisionRadius() const
 {
     return collisionRadius_;
 }
 
 
 
-scene::ISceneNode* BasicLifeform::nodeInterface() const
+irr::scene::ISceneNode* BasicLifeform::nodeInterface() const
 {
-    return static_cast<scene::ISceneNode*>(node_);
+    return static_cast<irr::scene::ISceneNode*>(node_);
 }
 
 
 
-const core::vector3df& BasicLifeform::getNextStep() const
+const irr::core::vector3df& BasicLifeform::getNextStep() const
 {
     return nextStep_;
 }
 
 
 
-const core::vector3df& BasicLifeform::getMaxBoundingBoxExtent() const
+const irr::core::vector3df& BasicLifeform::getMaxBoundingBoxExtent() const
 {
     return maxBBExtent_;
 }
@@ -131,12 +131,12 @@ const core::vector3df& BasicLifeform::getMaxBoundingBoxExtent() const
 
 
 
-scene::IAnimatedMesh* BasicLifeform::loadMesh()
+irr::scene::IAnimatedMesh* BasicLifeform::loadMesh()
 {
-    scene::IAnimatedMesh* mesh = 0;
+    irr::scene::IAnimatedMesh* mesh = 0;
     if ( extractor_->tryToExtractValue( "MFILE" ) )
     {
-        core::stringc meshFileName = extractor_->getExtractedValue();
+        irr::core::stringc meshFileName = extractor_->getExtractedValue();
         if ( meshFileName.size() == 0 )
         {
             createLogEntry( "Leerer Mesh-Dateiname" );
@@ -166,7 +166,7 @@ void BasicLifeform::calculateNextStep()
 
 void BasicLifeform::calculateCollisionRadius()
 {
-    core::vector3df dummy = node_->getTransformedBoundingBox().getExtent();
+    irr::core::vector3df dummy = node_->getTransformedBoundingBox().getExtent();
     dummy.Y = 0.0f;
     collisionRadius_ = dummy.getLength() * 0.3f;
 }
@@ -176,7 +176,7 @@ void BasicLifeform::calculateCollisionRadius()
 void BasicLifeform::updateMovement()
 {
     currentPosition_ += nextStep_;
-    core::vector3df direction( targetPosition_ - currentPosition_ );
+    irr::core::vector3df direction( targetPosition_ - currentPosition_ );
     direction.Y = 0.0f;
     node_->setRotation( direction.getHorizontalAngle() + rotation_ );
 }
@@ -188,7 +188,7 @@ void BasicLifeform::stopMovement()
     isMoving_ = false;
     if ( wasMoving_ )
     {
-        node_->setMD2Animation( scene::EMAT_STAND );
+        node_->setMD2Animation( irr::scene::EMAT_STAND );
         wasMoving_ = false;
         nextStep_ = VEC_3DF_NULL;
     }
@@ -202,7 +202,7 @@ void BasicLifeform::stopMovement()
 
 void BasicLifeform::init()
 {
-    smgr_->getVideoDriver()->setTransform( video::ETS_WORLD, core::matrix4() );
+    smgr_->getVideoDriver()->setTransform( irr::video::ETS_WORLD, irr::core::matrix4() );
     node_ = smgr_->addAnimatedMeshSceneNode(
             loadMesh(),
             ObjectManager::getInstance().getBaseNodeByType( type_ ),
@@ -218,12 +218,12 @@ void BasicLifeform::init()
     node_->setPosition( currentPosition_ + positionOffset_ );
     node_->updateAbsolutePosition();
     node_->setMaterialTexture( 0, loadMainTexture() );
-    for ( u32 i = 0; i < node_->getMaterialCount(); ++i )
+    for ( irr::u32 i = 0; i < node_->getMaterialCount(); ++i )
         loadFilterAndEffects( node_->getMaterial( i ) );
     Collision::getInstance().addAnimatedMeshNodeToWorld( node_ );
     node_->setVisible( false );
     calculateCollisionRadius();
-    maxBBExtent_ = core::vector3df(
+    maxBBExtent_ = irr::core::vector3df(
             collisionRadius_ * 2,
             node_->getTransformedBoundingBox().getExtent().Y,
             collisionRadius_ * 2

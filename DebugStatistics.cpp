@@ -3,7 +3,7 @@
 
 
 
-DebugStatistics::DebugStatistics( IrrlichtDevice* device )
+DebugStatistics::DebugStatistics( irr::IrrlichtDevice* device )
 : device_(device)
 {
 }
@@ -12,9 +12,9 @@ DebugStatistics::DebugStatistics( IrrlichtDevice* device )
 
 void DebugStatistics::writeStatisticsToLogfile()
 {
-    core::stringw text = L"\n=== Statistiken ===";
+    irr::core::stringw text = L"\n=== Statistiken ===";
 
-    video::IVideoDriver* driver = device_->getVideoDriver();
+    irr::video::IVideoDriver* driver = device_->getVideoDriver();
     text += "\n-- video driver --";
     text += "\n  dynamic lights: ";
     text += driver->getDynamicLightCount();
@@ -29,25 +29,25 @@ void DebugStatistics::writeStatisticsToLogfile()
     text += "\n  material renderers: ";
     text += driver->getMaterialRendererCount();
 
-    scene::ISceneManager* smgr = device_->getSceneManager();
+    irr::scene::ISceneManager* smgr = device_->getSceneManager();
     text += "\n-- scene manager --";
     text += "\n  mesh loaders: ";
     text += smgr->getMeshLoaderCount();
     text += "\n  scene loaders: ";
     text += smgr->getSceneLoaderCount();
-    scene::IMeshCache* mcache = smgr->getMeshCache();
+    irr::scene::IMeshCache* mcache = smgr->getMeshCache();
     text += "\n  -- mesh cache --";
     text += "\n    meshes: ";
     text += mcache->getMeshCount();
 
-    io::IFileSystem* fs = device_->getFileSystem();
+    irr::io::IFileSystem* fs = device_->getFileSystem();
     text += "\n-- file system --";
     text += "\n  archive loaders: ";
     text += fs->getArchiveLoaderCount();
     text += "\n  archives: ";
     text += fs->getFileArchiveCount();
 
-    gui::IGUIEnvironment* gui = device_->getGUIEnvironment();
+    irr::gui::IGUIEnvironment* gui = device_->getGUIEnvironment();
     text += "\n-- gui --";
     text += "\n  registered factories: ";
     text += gui->getRegisteredGUIElementFactoryCount();

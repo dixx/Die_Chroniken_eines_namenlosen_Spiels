@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "BasicHero.h"
 
-using namespace irr;
-
 /*! \class HeroPunk HeroPunk.h "HeroPunk.h"
  *  \brief Der Punk.
  *  \note Instanzierung: `HeroPunk* myHeroPunk = new HeroPunk();` \n Benutzen: `myHeroPunk->xxxx();`
@@ -24,7 +22,7 @@ public:
      *  \param smgr (\a scene::ISceneManager*) Zeiger auf den SceneManager
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    HeroPunk( const core::stringc& punkData, scene::ISceneManager* smgr );
+    HeroPunk( const irr::core::stringc& punkData, irr::scene::ISceneManager* smgr );
 
 	/*! \brief Destruktor
      */
@@ -34,7 +32,7 @@ public:
      *  \param -
      *  \return \a core::stringc objectData des Punk
      */
-    core::stringc getObjectData();
+    irr::core::stringc getObjectData();
 
 
 private:

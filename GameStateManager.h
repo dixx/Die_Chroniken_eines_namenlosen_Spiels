@@ -10,8 +10,6 @@
 
 class GameState; // forward declaration
 
-using namespace irr;
-
 /*! \class GameStateManager GameStateManager.h "GameStateManager.h"
  *  \brief  Schnittstelle für Zugriff auf die verschiedenen Stati des Spiels
  *  \attention Klasse ist `Singleton`.
@@ -45,13 +43,13 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Referenz auf die einzige Instanz dieser Klasse
 	 */
-    static GameStateManager& getInstance( IrrlichtDevice* device = 0 );
+    static GameStateManager& getInstance( irr::IrrlichtDevice* device = 0 );
 
     /*! \brief Aktualisiert den momentan aktiven Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void update( const f32 frameDeltaTime );
+    void update( const irr::f32 frameDeltaTime );
 
     /*! \brief Zeichnet den momentan aktiven Status auf den Bildschirm.
      *  \param -
@@ -80,12 +78,12 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
+    irr::IrrlichtDevice* device_;
 	GameState* currentState_;
     State requestedState_;
     State runningState_;
 
-    GameStateManager( IrrlichtDevice* device );
+    GameStateManager( irr::IrrlichtDevice* device );
     GameStateManager( const GameStateManager& );
     GameStateManager& operator=( const GameStateManager& );
     ~GameStateManager();

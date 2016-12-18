@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class ObjectParamsExtractor ObjectParamsExtractor.h "ObjectParamsExtractor.h"
  *  \brief Schnittstelle für Extraktion von Parameter-Werten aus textuellen Objektbeschreibungen
  */
@@ -20,7 +18,7 @@ public:
     /*! \brief Konstruktor.
      *  \param objectData (\a const \a core::stringc&) textuelle Beschreibung des Objects
      */
-    ObjectParamsExtractor( const core::stringc& objectData );
+    ObjectParamsExtractor( const irr::core::stringc& objectData );
 
     /*! \brief Destruktor.
      */
@@ -33,20 +31,20 @@ public:
      *  \return `true` wenn ein oder mehrere Werte extrahiert wurden und der gewünschte Index vorhanden ist,
      *          ansonsten `false`
      */
-    bool tryToExtractValue( const core::stringc& key, const core::stringc& separator = "", const u32 index = 0 );
+    bool tryToExtractValue( const irr::core::stringc& key, const irr::core::stringc& separator = "", const irr::u32 index = 0 );
 
     /*! \brief Liefert den zuletzt extrahierten Wert zurück.
      *  \param -
      *  \return \a const \a core::stringc& zuletzt extrahierter Wert
      */
-    const core::stringc& getExtractedValue() const;
+    const irr::core::stringc& getExtractedValue() const;
 
 private:
 
-    core::array<core::stringc> objectParams_;
-    core::array<core::stringc> values_;
-    core::stringc extractedValue_;
-    core::stringc dummyValue_;
+    irr::core::array<irr::core::stringc> objectParams_;
+    irr::core::array<irr::core::stringc> values_;
+    irr::core::stringc extractedValue_;
+    irr::core::stringc dummyValue_;
     bool result_;
     bool isUseless_;
 

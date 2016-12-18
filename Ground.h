@@ -9,8 +9,6 @@
 #include "MapTile.h"
 #include "Timer.h"
 
-using namespace irr;
-
 /*! \class Ground Ground.h "Ground.h"
  *  \brief  Schnittstelle zum Fußboden der Spielewelt.
  *  \attention Klasse ist `Singleton`.
@@ -28,7 +26,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Ground& getInstance( IrrlichtDevice* device = 0 );
+    static Ground& getInstance( irr::IrrlichtDevice* device = 0 );
 
     /*! \brief Lädt einen Spielewelt-Fußboden.
      *  \param mapfilename (\a const \a char*) Dateiname der Spielewelt-Karte
@@ -53,7 +51,7 @@ public:
      *  \param z (\a const\a f32) Z-Koordinate, Tiefe
      *  \return \a f32 Y-Koordinate, vertikal
      */
-    f32 getHeight( const f32 x, const f32 z );
+    irr::f32 getHeight( const irr::f32 x, const irr::f32 z );
 
     /*! \brief Komplettiert die übergebene Position mit der Höhe des Fußbodens an der gefragen Stelle und gibt die
      *         neue Position zurück.
@@ -61,7 +59,7 @@ public:
      *  \param heightOffset (\a f32) Y-Offset oberhalb von "Position"
      *  \return \a core::vector3df komplettierte Position
      */
-    core::vector3df& getHeightFromPosition( const core::vector3df& position, f32 heightOffset = 0.0f );
+    irr::core::vector3df& getHeightFromPosition( const irr::core::vector3df& position, irr::f32 heightOffset = 0.0f );
 
     /*! \brief Gibt die Höhe des Fußbodens an der gefragen Stelle zurück.
      *  \attention Schneller als getHeight(), aber funktioniert nur innerhalb des Sichtradius des Helden!
@@ -69,7 +67,7 @@ public:
      *  \param z (\a const \a f32) Z-Koordinate, Tiefe
      *  \return \a f32 Y-Koordinate, vertikal
      */
-    f32 getHeightRanged( const f32 x, const f32 z );
+    irr::f32 getHeightRanged( const irr::f32 x, const irr::f32 z );
 
     /*! \brief Komplettiert die übergebene Position mit der Höhe des Fußbodens an der gefragen Stelle und gibt die
      *         neue Position zurück.
@@ -78,7 +76,7 @@ public:
      *  \param heightOffset (\a f32) Y-Offset oberhalb von "Position"
      *  \return \a core::vector3df komplettierte Position
      */
-    core::vector3df& getHeightFromPositionRanged( const core::vector3df& position, f32 heightOffset = 0.0f );
+    irr::core::vector3df& getHeightFromPositionRanged( const irr::core::vector3df& position, irr::f32 heightOffset = 0.0f );
 
 #ifdef _DEBUG_MODE
     /*! \brief Schaltet verschiedene Debugmodi durch.
@@ -90,31 +88,31 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
-    scene::ISceneManager* smgr_;
-    core::array<MapTile*> mapTiles_;
-    core::dimension2df SECTORDIMENSION;
-    u32 gridWidth_;
-    u32 gridDepth_;
-    core::line3df ray_;
-    f32 minHeight_;
-    f32 maxHeight_;
+    irr::IrrlichtDevice* device_;
+    irr::scene::ISceneManager* smgr_;
+    irr::core::array<MapTile*> mapTiles_;
+    irr::core::dimension2df SECTORDIMENSION;
+    irr::u32 gridWidth_;
+    irr::u32 gridDepth_;
+    irr::core::line3df ray_;
+    irr::f32 minHeight_;
+    irr::f32 maxHeight_;
     Timer* updateTimer_;
-    s32 updateSectorX_;
-    s32 updateSectorZ_;
-    core::vector3df endPosition_;
+    irr::s32 updateSectorX_;
+    irr::s32 updateSectorZ_;
+    irr::core::vector3df endPosition_;
 #ifdef _DEBUG_MODE
-    u32 visibleNodeCount_;
-    u32 debugCounter_;
+    irr::u32 visibleNodeCount_;
+    irr::u32 debugCounter_;
 #endif
 
-    Ground( IrrlichtDevice* device );
+    Ground( irr::IrrlichtDevice* device );
     Ground( const Ground& );
     Ground& operator=( const Ground& );
     ~Ground();
 
     inline void clearArrays();
-    void exitWithLogEntry( const core::stringc& message, const char* affectedFile );
+    void exitWithLogEntry( const irr::core::stringc& message, const char* affectedFile );
 
 };
 

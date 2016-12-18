@@ -19,7 +19,7 @@
 
 
 
-StateStartup::StateStartup( IrrlichtDevice* device )
+StateStartup::StateStartup( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device),
   classCounter_(0)
@@ -28,7 +28,7 @@ StateStartup::StateStartup( IrrlichtDevice* device )
         Logfile::getInstance().emergencyExit( "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
     GenericHelperMethods::getInstance( device_ );
-    loadingScreen_ = new LoadingScreen( device_, io::path( "GFX/Schnellladebildschirm.jpg" ) );
+    loadingScreen_ = new LoadingScreen( device_, irr::io::path( "GFX/Schnellladebildschirm.jpg" ) );
     fader_ = device_->getGUIEnvironment()->addInOutFader();
     forceDraw_ = true;
     transitTo( STARTING );
@@ -46,7 +46,7 @@ StateStartup::~StateStartup()
 
 
 
-void StateStartup::start( f32 frameDeltaTime )
+void StateStartup::start( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
     if ( fader_->isReady() )
@@ -55,7 +55,7 @@ void StateStartup::start( f32 frameDeltaTime )
 
 
 
-void StateStartup::update( f32 frameDeltaTime )
+void StateStartup::update( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics
     switch( classCounter_ )
@@ -127,7 +127,7 @@ void StateStartup::update( f32 frameDeltaTime )
 
 
 
-void StateStartup::shutdown( f32 frameDeltaTime )
+void StateStartup::shutdown( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on shutdown
     if ( fader_->isReady() )

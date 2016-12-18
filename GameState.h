@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "GameStateManager.h"
 
-using namespace irr;
-
 /*! \class GameState GameState.h "GameState.h"
  *  \brief Interface für Spiel-Stati.
  *  \attention Klasse hat pure virtual Methoden!
@@ -45,21 +43,21 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    virtual void start( const f32 frameDeltaTime ) = 0;
+    virtual void start( const irr::f32 frameDeltaTime ) = 0;
 
     /*! \brief Aktualisiert den Status.
      *  \attention Methode ist pure virtual!
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    virtual void update( const f32 frameDeltaTime ) = 0;
+    virtual void update( const irr::f32 frameDeltaTime ) = 0;
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
      *  \attention Methode ist pure virtual!
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    virtual void shutdown( const f32 frameDeltaTime ) = 0;
+    virtual void shutdown( const irr::f32 frameDeltaTime ) = 0;
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
      *  \attention Methode ist pure virtual!

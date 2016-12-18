@@ -13,7 +13,7 @@
 
 
 
-StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
+StateLoadGameContent::StateLoadGameContent( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device),
   levelName_("GFX/LEVELS/Level_X"),
@@ -22,25 +22,25 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateLoadGameContent] nicht mehr gefunden! Abbruch." );
     device_->setWindowCaption( L"Lade..." );
-    pictures_ = core::array<LoadingScreen*>( COUNT );
-    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, io::path( "GFX/Ladebildschirm_v3.png" ) );
-    pictures_[ICON_WORLD] =     new LoadingScreen( device_, io::path( "GFX/Welt_icon.png" ) );
-    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, io::path( "GFX/Questfortschritt_icon.png" ) );
-    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, io::path( "GFX/Bevoelkerung_icon.png" ) );
-    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, io::path( "GFX/Gebaeude_icon.png" ) );
-    pictures_[ICON_THINGS] =    new LoadingScreen( device_, io::path( "GFX/Gegenstaende_icon.png" ) );
-    pictures_[ICON_HERO] =      new LoadingScreen( device_, io::path( "GFX/Held_icon.png" ) );
-    pictures_[ICON_FLORA] =     new LoadingScreen( device_, io::path( "GFX/Pflanzen_icon.png" ) );
-    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, io::path( "GFX/Tiere_icon.png" ) );
-    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, io::path( "GFX/Wetter_icon.png" ) );
-    pictures_[CONCEPT_1] =      new LoadingScreen( device_, io::path( "GFX/Konzept1.png" ) );
-    pictures_[CONCEPT_2] =      new LoadingScreen( device_, io::path( "GFX/Konzept2.png" ) );
-    pictures_[CONCEPT_3] =      new LoadingScreen( device_, io::path( "GFX/Konzept3.png" ) );
-    pictures_[CONCEPT_4] =      new LoadingScreen( device_, io::path( "GFX/Konzept4.png" ) );
-    pictures_[CONCEPT_5] =      new LoadingScreen( device_, io::path( "GFX/Konzept5.png" ) );
-    pictures_[CONCEPT_6] =      new LoadingScreen( device_, io::path( "GFX/Konzept6.png" ) );
-    pictures_[CONCEPT_7] =      new LoadingScreen( device_, io::path( "GFX/Konzept7.png" ) );
-    pictures_[CONCEPT_8] =      new LoadingScreen( device_, io::path( "GFX/Konzept8.png" ) );
+    pictures_ = irr::core::array<LoadingScreen*>( COUNT );
+    pictures_[LOADING_SCREEN] = new LoadingScreen( device_, irr::io::path( "GFX/Ladebildschirm_v3.png" ) );
+    pictures_[ICON_WORLD] =     new LoadingScreen( device_, irr::io::path( "GFX/Welt_icon.png" ) );
+    pictures_[ICON_QUESTS] =    new LoadingScreen( device_, irr::io::path( "GFX/Questfortschritt_icon.png" ) );
+    pictures_[ICON_PEOPLE] =    new LoadingScreen( device_, irr::io::path( "GFX/Bevoelkerung_icon.png" ) );
+    pictures_[ICON_BUILDINGS] = new LoadingScreen( device_, irr::io::path( "GFX/Gebaeude_icon.png" ) );
+    pictures_[ICON_THINGS] =    new LoadingScreen( device_, irr::io::path( "GFX/Gegenstaende_icon.png" ) );
+    pictures_[ICON_HERO] =      new LoadingScreen( device_, irr::io::path( "GFX/Held_icon.png" ) );
+    pictures_[ICON_FLORA] =     new LoadingScreen( device_, irr::io::path( "GFX/Pflanzen_icon.png" ) );
+    pictures_[ICON_FAUNA] =     new LoadingScreen( device_, irr::io::path( "GFX/Tiere_icon.png" ) );
+    pictures_[ICON_WEATHER] =   new LoadingScreen( device_, irr::io::path( "GFX/Wetter_icon.png" ) );
+    pictures_[CONCEPT_1] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept1.png" ) );
+    pictures_[CONCEPT_2] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept2.png" ) );
+    pictures_[CONCEPT_3] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept3.png" ) );
+    pictures_[CONCEPT_4] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept4.png" ) );
+    pictures_[CONCEPT_5] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept5.png" ) );
+    pictures_[CONCEPT_6] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept6.png" ) );
+    pictures_[CONCEPT_7] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept7.png" ) );
+    pictures_[CONCEPT_8] =      new LoadingScreen( device_, irr::io::path( "GFX/Konzept8.png" ) );
     forceDraw_ = true;
     transitTo( STARTING );
 }
@@ -50,7 +50,7 @@ StateLoadGameContent::StateLoadGameContent( IrrlichtDevice* device )
 StateLoadGameContent::~StateLoadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    for ( register u32 i = 0; i < COUNT; ++i )
+    for ( register irr::u32 i = 0; i < COUNT; ++i )
     {
         if ( pictures_[ i ] )
         {
@@ -63,11 +63,11 @@ StateLoadGameContent::~StateLoadGameContent()
 
 
 
-void StateLoadGameContent::start( f32 frameDeltaTime )
+void StateLoadGameContent::start( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
     Zufall& zufall = Zufall::getInstance();
-    for ( register u32 i = 0; i < 8; ++i )
+    for ( register irr::u32 i = 0; i < 8; ++i )
     {
         if ( zufall.doesOccur( 20.f ) )
         {
@@ -79,7 +79,7 @@ void StateLoadGameContent::start( f32 frameDeltaTime )
 
 
 
-void StateLoadGameContent::update( f32 frameDeltaTime )
+void StateLoadGameContent::update( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics
     switch( moduleCounter_ )
@@ -136,7 +136,7 @@ void StateLoadGameContent::update( f32 frameDeltaTime )
 
 
 
-void StateLoadGameContent::shutdown( f32 frameDeltaTime )
+void StateLoadGameContent::shutdown( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on shutdown
     transitTo( STOPPED );

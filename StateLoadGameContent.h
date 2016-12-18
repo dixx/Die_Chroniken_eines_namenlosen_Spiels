@@ -9,8 +9,6 @@
 #include "GameState.h"
 #include "LoadingScreen.h"
 
-using namespace irr;
-
 /*! \class StateLoadGameContent StateLoadGameContent.h "StateLoadGameContent.h"
  *  \brief Schnittstelle für das Laden von spielrelevanten Daten.
  *  \note Instanzierung: `StateLoadGameContent* myStateLoadGameContent = new StateLoadGameContent();`
@@ -25,7 +23,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    StateLoadGameContent( IrrlichtDevice* device );
+    StateLoadGameContent( irr::IrrlichtDevice* device );
 
 	/*! \brief Destruktor
      */
@@ -35,19 +33,19 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void start( const f32 frameDeltaTime );
+    void start( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void shutdown( const f32 frameDeltaTime );
+    void shutdown( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert den Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void update( const f32 frameDeltaTime );
+    void update( const irr::f32 frameDeltaTime );
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
      *  \param -
@@ -63,7 +61,7 @@ public:
 
 private:
 
-    IrrlichtDevice* device_;
+    irr::IrrlichtDevice* device_;
     enum Picture_ {
         LOADING_SCREEN = 0,
         ICON_WORLD,
@@ -87,9 +85,9 @@ private:
 
         COUNT
     };
-    core::array<LoadingScreen*> pictures_;
-    core::stringc levelName_;
-    u32 moduleCounter_;
+    irr::core::array<LoadingScreen*> pictures_;
+    irr::core::stringc levelName_;
+    irr::u32 moduleCounter_;
 
     StateLoadGameContent( const StateLoadGameContent& );
     StateLoadGameContent& operator=( const StateLoadGameContent& );

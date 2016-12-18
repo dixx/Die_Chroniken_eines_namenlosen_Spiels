@@ -4,7 +4,7 @@
 
 
 
-Ton& Ton::getInstance( io::IFileSystem* fs )
+Ton& Ton::getInstance( irr::io::IFileSystem* fs )
 {
     static Ton instance( fs );
     return instance;
@@ -12,12 +12,12 @@ Ton& Ton::getInstance( io::IFileSystem* fs )
 
 
 
-void Ton::preload( const c8* filename )
+void Ton::preload( const irr::c8* filename )
 {
     if ( !soundEngine_ )
         return;
     GenericHelperMethods::getInstance().validateFileExistence( filename );
-    ISoundSource* snd = soundEngine_->addSoundSourceFromFile( filename, ESM_NO_STREAMING, true );
+    irrklang::ISoundSource* snd = soundEngine_->addSoundSourceFromFile( filename, irrklang::ESM_NO_STREAMING, true );
     if ( snd == 0 )
     {
         Logfile::getInstance().write( Logfile::DEBUG, "Sound-Datei ", filename );
@@ -40,14 +40,14 @@ void Ton::playGUISound( const Sound_ID id )
 
 
 
-Ton::Ton( io::IFileSystem* fs )
+Ton::Ton( irr::io::IFileSystem* fs )
 : soundEngine_(0),
   fileSystem_(fs)
 {
     Logfile& log = Logfile::getInstance();
     if ( fileSystem_ == 0 )
         log.emergencyExit( "Dateisystem in [Ton] nicht mehr gefunden! Abbruch." );
-    soundEngine_ = createIrrKlangDevice();
+    soundEngine_ = irrklang::createIrrKlangDevice();
     if ( soundEngine_ == 0 )
     {
         log.writeLine( Logfile::INFO, "Sound-Entchen konnte leider nicht erstellt werden!" );
@@ -80,10 +80,10 @@ Ton::~Ton()
 void Ton::initAllSounds()
 {
     // Sound <150ms werden nicht korrekt wiedergegeben!
-    for ( u32 i = 0; i < SND_COUNT; ++i )
+    for ( irr::u32 i = 0; i < SND_COUNT; ++i )
         sndGuiArray_.push_back( "" );
     sndGuiArray_[ SND_GUI_HOVER ] = "SFX/Mund7.wav";
     sndGuiArray_[ SND_GUI_CLICKBUTTON ] = "SFX/Mund6.wav";
-    for ( u32 i = 0; i < SND_COUNT; ++i )
+    for ( irr::u32 i = 0; i < SND_COUNT; ++i )
         preload( sndGuiArray_[i].c_str() );
 }

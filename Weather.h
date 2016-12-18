@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "Timer.h"
 
-using namespace irr;
-
 /*! \class Weather Weather.h "Weather.h"
  *  \brief  Schnittstelle für Wetter und Weltlicht.
  *  \attention Klasse ist `Singleton`.
@@ -27,7 +25,7 @@ public:
      *  \param smgr (\a scene::ISceneManager*) Zeiger auf den ScenenManager
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Weather& getInstance( scene::ISceneManager* smgr = 0 );
+    static Weather& getInstance( irr::scene::ISceneManager* smgr = 0 );
 
     /*! \brief Lädt Wetter.
      *  \param -
@@ -45,7 +43,7 @@ public:
      *  \param -
      *  \return \a const \a video::SColor& Himmelsfarbe
      */
-    const video::SColor& getSkyColor() const;
+    const irr::video::SColor& getSkyColor() const;
 
     /*! \brief Aktualisiert Wetter.
      *  \param -
@@ -57,35 +55,35 @@ public:
      *  \param -
      *  \return \a f32 Uhrzeit ( Zeitformat 24h*100m*100.0s )
      */
-    f32 getDayTime() const;
+    irr::f32 getDayTime() const;
 
     /*! \brief Gibt die aktuelle Mondzeit in virtuellen Sekunden zurück.
      *  \param -
      *  \return \a f32 Mondzeit ( Zeitformat 24h*100m*100.0s )
      */
-    f32 getMoonPhase() const;
+    irr::f32 getMoonPhase() const;
 
 private:
 
-    f32 SUNCYCLEDURATION_;  // Anzahl Spiel-Sekunden pro Sonnen-Umlauf
-    f32 MOONCYCLEDURATION_;  // Anzahl Spiel-Sekunden pro Mond-Umlauf
-    f32 SUNMOVEMENTDELTA_;  // "Konstante" zur schnellen Sonnenstand-Berechnung
-    f32 MOONMOVEMENTDELTA_;  // "Konstante" zur schnellen Mondstand-Berechnung
-    f32 FACTOR_V2R_SEC_;  // Faktor virtuelle Zeit zu reale Zeit
+    irr::f32 SUNCYCLEDURATION_;  // Anzahl Spiel-Sekunden pro Sonnen-Umlauf
+    irr::f32 MOONCYCLEDURATION_;  // Anzahl Spiel-Sekunden pro Mond-Umlauf
+    irr::f32 SUNMOVEMENTDELTA_;  // "Konstante" zur schnellen Sonnenstand-Berechnung
+    irr::f32 MOONMOVEMENTDELTA_;  // "Konstante" zur schnellen Mondstand-Berechnung
+    irr::f32 FACTOR_V2R_SEC_;  // Faktor virtuelle Zeit zu reale Zeit
     // 24vh pro Tag, 100min pro vh, 100s pro min, 24vh entsprechen 2 Realstunden
-    scene::ISceneManager* smgr_;
-    core::array<scene::ILightSceneNode*> dayLightSource_;
-    core::array<f32> sunCircleY_;  // Sonnenstand, von -1 bis +1
-    core::array<f32> moonCircleY_;  // Mondstand, von -1 bis +1
-    f32 fogDensity_;
-    f32 lightRadius_;
-    f32 currentDayTime_;  // Spiel-"Uhrzeit" in "virtuelle Sekunden"
-    f32 currentMoonPhase_;  // Mondumlauf-"Uhrzeit" in "virtuelle Sekunden"
-    f32 seasonOffsetY_;  // längere/kürzere Tage, von -0.2f bis 0.2f
-    video::SColor skyColor_;
+    irr::scene::ISceneManager* smgr_;
+    irr::core::array<irr::scene::ILightSceneNode*> dayLightSource_;
+    irr::core::array<irr::f32> sunCircleY_;  // Sonnenstand, von -1 bis +1
+    irr::core::array<irr::f32> moonCircleY_;  // Mondstand, von -1 bis +1
+    irr::f32 fogDensity_;
+    irr::f32 lightRadius_;
+    irr::f32 currentDayTime_;  // Spiel-"Uhrzeit" in "virtuelle Sekunden"
+    irr::f32 currentMoonPhase_;  // Mondumlauf-"Uhrzeit" in "virtuelle Sekunden"
+    irr::f32 seasonOffsetY_;  // längere/kürzere Tage, von -0.2f bis 0.2f
+    irr::video::SColor skyColor_;
     Timer* updateTimer_;
 
-    Weather( scene::ISceneManager* smgr );
+    Weather( irr::scene::ISceneManager* smgr );
     Weather( const Weather& );
     Weather& operator=( const Weather& );
     ~Weather();

@@ -4,15 +4,15 @@
 
 
 
-Debugwindow& Debugwindow::getInstance( IrrlichtDevice* device ) 
-{ 
+Debugwindow& Debugwindow::getInstance( irr::IrrlichtDevice* device )
+{
     static Debugwindow instance( device );
     return instance;
 }
 
 
 
-void Debugwindow::addLine( const c8* callerName, const core::stringw& text )
+void Debugwindow::addLine( const irr::c8* callerName, const irr::core::stringw& text )
 {
     if ( dwin_->isVisible() )
         fragments_.set(callerName, text);
@@ -61,7 +61,7 @@ bool Debugwindow::isVisible() const
 
 
 
-Debugwindow::Debugwindow( IrrlichtDevice* device )
+Debugwindow::Debugwindow( irr::IrrlichtDevice* device )
 : device_(device),
   content_(L""),
   newLine_(L"\r\n")
@@ -70,7 +70,7 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
         Logfile::getInstance().emergencyExit( "Entchen in [Debugwindow] nicht mehr gefunden! Abbruch." );
     dwin_ = device_->getGUIEnvironment()->addStaticText(
         L"",
-        core::recti( VEC_2DI_NULL, core::vector2di( 300, 300 ) ),
+        irr::core::recti( VEC_2DI_NULL, irr::core::vector2di( 300, 300 ) ),
         false,
         true,
         0,
@@ -80,7 +80,7 @@ Debugwindow::Debugwindow( IrrlichtDevice* device )
     dwin_->setVisible( false );
     dwin_->setEnabled( false );
     dwin_->setOverrideColor( COL_GREEN );
-    dwin_->setBackgroundColor( video::SColor( 160,  0,  0,  0 ) );
+    dwin_->setBackgroundColor( irr::video::SColor( 160,  0,  0,  0 ) );
     fragments_.clear();
     displayTimer_ = device_->getTimer()->getRealTime();
 }

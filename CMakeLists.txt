@@ -43,7 +43,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by L
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wshadow -Wnon-virtual-dtor -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wunused -Werror -Wshadow -Wnon-virtual-dtor -Wlong-long -Winline -Wunused-parameter -Wunused-variable -Wuninitialized -Wpointer-arith -Wfloat-equal -Wconversion -Wcast-align")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-aggregate-return")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -isystem\"${IRRLICHT_SOURCES_DIR}/\" -isystem\"${IRRKLANG_INCLUDE_DIR}/\"") # to suppress warnings from libs
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything") # TODO try it once in a while
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic") # TODO try it once in a while
@@ -51,6 +52,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Woverloaded-virtual") # uncovers a bug in Hero, TODO investigate!
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsign-conversion") # TODO fix occurences!
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast") # TODO fix occurences!
+# TODO check also -Weffc++! If it runs smoothly, remove -Wnon-virtual-dtor above.
 
 set(SOURCES
   ${SOURCES_DIR}/Basic3DObject.cpp

@@ -105,7 +105,7 @@ GameFloatControl::~GameFloatControl()
 
 bool GameFloatControl::start()
 {
-    device_ = createDevice( irr::video::EDT_NULL );
+    device_ = irr::createDevice( irr::video::EDT_NULL );
     if ( device_ == 0 )
         return false;
     createLogfile();
@@ -156,17 +156,17 @@ bool GameFloatControl::createDeviceFromConfig()
     Configuration& config = Configuration::getInstance();
     Eventreceiver::getInstance().setEventReactionActive( false, false, false );
 
-    SIrrlichtCreationParameters params = SIrrlichtCreationParameters();
+    irr::SIrrlichtCreationParameters params = irr::SIrrlichtCreationParameters();
     params.AntiAlias = 1; // TODO konfigurierbar machen
     params.Stencilbuffer = true; // TODO konfigurierbar machen
-    params.Bits = static_cast<u8>( config.getColorDepht() ); // TODO refactor to u8!
+    params.Bits = static_cast<irr::u8>( config.getColorDepht() ); // TODO refactor to u8!
     params.DriverType = config.getRenderMode();
     params.Fullscreen = config.isFullScreen();
     params.Vsync = params.Fullscreen; // TODO konfigurierbar machen
     params.EventReceiver = &Eventreceiver::getInstance();
     params.WindowSize = config.getScreenSize();
 
-    device_ = createDeviceEx( params );
+    device_ = irr::createDeviceEx( params );
     if ( device_ == 0 )
         return false;
     logfile.setNewFilesystem( device_->getFileSystem() );

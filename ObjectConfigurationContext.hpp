@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "Constants.h"
 
-using namespace irr;
-
 /*! \class ObjectConfigurationContextForObject
  *  \brief High-Level-Informationen über das zu erstellende 3D-Object.
  */
@@ -47,7 +45,7 @@ class ObjectConfigurationContextForNode
 
 public:
 
-    core::stringc name; //!< Der Name des Objektes
+    irr::core::stringc name; //!< Der Name des Objektes
 
     ObjectConfigurationContextForNode() : name("<noname>") {}
 
@@ -61,16 +59,16 @@ class ObjectConfigurationContextForMesh
 
 public:
 
-    core::vector3df position; //!< Absolute Position in der Welt
-    core::vector3df offset; //!< Objekt-interne Nullpunktverschiebung
-    core::vector3df scale; //!< Vergrößerungsfaktor des Objektes
-    core::vector3df rotation; //!< Ausrichtung des Objektes in der Welt
-    u32 materialCount; //!< Anzahl der Materialien eines Objektes
+    irr::core::vector3df position; //!< Absolute Position in der Welt
+    irr::core::vector3df offset; //!< Objekt-interne Nullpunktverschiebung
+    irr::core::vector3df scale; //!< Vergrößerungsfaktor des Objektes
+    irr::core::vector3df rotation; //!< Ausrichtung des Objektes in der Welt
+    irr::u32 materialCount; //!< Anzahl der Materialien eines Objektes
 
     ObjectConfigurationContextForMesh()
     : position(VEC_3DF_NULL),
       offset(VEC_3DF_NULL),
-      scale(core::vector3df( 1.0f )),
+      scale(irr::core::vector3df( 1.0f )),
       rotation(VEC_3DF_NULL),
       materialCount(0)
     {}
@@ -85,9 +83,9 @@ class ObjectConfigurationContextForMaterials
 
 public:
 
-    core::array<bool> isTransparent; //!< Ist das MATERIAL transparent?
-    core::array<bool> isBackFaceCulled; //!< Sollen die Rückseiten aller Flächen des MATERIALS ausgeblendet werden?
-    core::array<bool> isLighted; //!< Reagiert das MATERIAL auf Licht?
+    irr::core::array<bool> isTransparent; //!< Ist das MATERIAL transparent?
+    irr::core::array<bool> isBackFaceCulled; //!< Sollen die Rückseiten aller Flächen des MATERIALS ausgeblendet werden?
+    irr::core::array<bool> isLighted; //!< Reagiert das MATERIAL auf Licht?
 
     ObjectConfigurationContextForMaterials()
     {
@@ -105,9 +103,9 @@ class ObjectConfigurationContextForFiles
 
 public:
 
-    io::path mesh; //!< Pfad zur Mesh-Datei
-    core::array<io::path> mainTexture; //!< Pfade zu den Haupttexturen der MATERIALIEN
-    core::array<io::path> secondTexture; //!< Pfade zu den Nebentexturen der MATERIALIEN
+    irr::io::path mesh; //!< Pfad zur Mesh-Datei
+    irr::core::array<irr::io::path> mainTexture; //!< Pfade zu den Haupttexturen der MATERIALIEN
+    irr::core::array<irr::io::path> secondTexture; //!< Pfade zu den Nebentexturen der MATERIALIEN
 
     ObjectConfigurationContextForFiles() : mesh("")
     {

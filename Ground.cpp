@@ -62,7 +62,7 @@ void Ground::load( const char* mapfilename )
 
     // erstelle Grid mit Kartenteilen
 #ifdef _DEBUG_MODE
-u32 now = device_->getTimer()->getRealTime();
+irr::u32 now = device_->getTimer()->getRealTime();
 #endif
     for ( register irr::u32 i = 0; i < tileList.size(); ++i )
     {

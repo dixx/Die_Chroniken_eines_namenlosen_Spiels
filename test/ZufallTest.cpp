@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../Zufall.h"
+#include "../source/Zufall.h"
 #include <time.h>
 #include <irrlicht.h>
 

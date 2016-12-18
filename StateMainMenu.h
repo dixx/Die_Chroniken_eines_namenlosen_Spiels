@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "GameState.h"
 
-using namespace irr;
-
 /*! \class StateMainMenu StateMainMenu.h "StateMainMenu.h"
  *  \brief Schnittstelle für dem Spiel vorgelagerte Menüs.
  *  \note Instanzierung: `StateMainMenu* myStateMainMenu = new StateMainMenu();`
@@ -24,7 +22,7 @@ public:
      *  \param device (\a IrrlichtDevice*) Zeiger auf das Entchen
      *  \return -
      */
-    StateMainMenu( IrrlichtDevice* device );
+    StateMainMenu( irr::IrrlichtDevice* device );
 
     /*! \brief Destruktor.
      */
@@ -34,19 +32,19 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void start( const f32 frameDeltaTime );
+    void start( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert die Shutdown-Phase Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void shutdown( const f32 frameDeltaTime );
+    void shutdown( const irr::f32 frameDeltaTime );
 
     /*! \brief Aktualisiert den Status.
      *  \param frameDeltaTime (\a const \a f32) Dauer des letzten Frames in Sekunden
      *  \return -
      */
-    void update( const f32 frameDeltaTime );
+    void update( const irr::f32 frameDeltaTime );
 
     /*! \brief Zeichnet den Status auf den Bildschirm.
      *  \param -
@@ -93,16 +91,16 @@ private:
     };
 
 #ifdef _DEBUG_MODE
-    IrrlichtDevice* device_;
+    irr::IrrlichtDevice* device_;
 #endif
-    video::IVideoDriver* driver_;
-    gui::IGUIEnvironment* guienv_;
-    video::ITexture* menuScreenImageCatalogue_;
-    video::ITexture* mainMenuTexture_;
-    video::SColor mainMenuBgColor_;
+    irr::video::IVideoDriver* driver_;
+    irr::gui::IGUIEnvironment* guienv_;
+    irr::video::ITexture* menuScreenImageCatalogue_;
+    irr::video::ITexture* mainMenuTexture_;
+    irr::video::SColor mainMenuBgColor_;
     bool hover_;
     MENU currentMenu_;
-    gui::IGUIElement* menuRoot_;
+    irr::gui::IGUIElement* menuRoot_;
 
     StateMainMenu( const StateMainMenu& );
     StateMainMenu& operator=( const StateMainMenu& );
@@ -111,24 +109,24 @@ private:
     void loadTextures();
     void extractImagesFromCatalogue();
     void createMainMenu();
-    bool mainMenuButtonHandler( s32 callerId );
+    bool mainMenuButtonHandler( irr::s32 callerId );
     void createNewPlayerMenu();
-    bool newPlayerMenuButtonHandler( s32 callerId );
+    bool newPlayerMenuButtonHandler( irr::s32 callerId );
     void createLoadGameMenu();
-    bool loadGameMenuButtonHandler( s32 callerId );
+    bool loadGameMenuButtonHandler( irr::s32 callerId );
     void createPreferencesMenu();
-    bool preferencesMenuButtonHandler( s32 callerId );
+    bool preferencesMenuButtonHandler( irr::s32 callerId );
     void createAboutMenu();
-    bool aboutMenuButtonHandler( s32 callerId );
-    inline void changeStyleOfButton( gui::IGUIButton* button );
-    inline void normalizeButton( gui::IGUIButton* button );
-    inline void focusButton( gui::IGUIButton* button );
-    void unknownCaller( s32 callerId );
+    bool aboutMenuButtonHandler( irr::s32 callerId );
+    inline void changeStyleOfButton( irr::gui::IGUIButton* button );
+    inline void normalizeButton( irr::gui::IGUIButton* button );
+    inline void focusButton( irr::gui::IGUIButton* button );
+    void unknownCaller( irr::s32 callerId );
     void switchToMenu( MENU menu );
     inline void displayMenu( MENU menu );
     inline void hideMenu( MENU menu );
-    void updateWithChildren( gui::IGUIElement* element, bool enable );
-    void removeChildren( gui::IGUIElement* element );
+    void updateWithChildren( irr::gui::IGUIElement* element, bool enable );
+    void removeChildren( irr::gui::IGUIElement* element );
 
 };
 

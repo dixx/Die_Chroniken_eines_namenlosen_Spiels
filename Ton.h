@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include <irrKlang.h>
 
-using namespace irr;
-using namespace irrklang;
 // Statt der irrklang-Typedefs werden weiterhin die Irrlicht-Typedefs verwendet.
 
 /*! \class Ton Ton.h "Ton.h"
@@ -42,13 +40,13 @@ public:
      *  \param fs (\a IFileSystem*) Zeiger auf das virtuelle Dateisystem
      *  \return Referenz auf die einzige Instanz dieser Klasse
      */
-    static Ton& getInstance( io::IFileSystem* fs = 0 );
+    static Ton& getInstance( irr::io::IFileSystem* fs = 0 );
 
     /*! \brief Lädt eine Sounddatei in den Speicher.
      *  \param filename (\a c8*) zu ladende Datei
      *  \return -
      */
-    void preload( const c8* filename );
+    void preload( const irr::c8* filename );
 
     /*! \brief Spielt eine GUI-Sounddatei ab.
      *  \param id (\a enum \a Sound_ID) ID des zu spielenden GUI-Sounds
@@ -58,11 +56,11 @@ public:
 
 private:
 
-    ISoundEngine* soundEngine_;  // Zeiger auf IrrKlang Sound Engine
-    io::IFileSystem* fileSystem_;  // Zeiger auf das virtuelle FileSystem
-    core::array<core::stringc> sndGuiArray_;  // Array aller GUI-Geräusche
+    irrklang::ISoundEngine* soundEngine_;  // Zeiger auf IrrKlang Sound Engine
+    irr::io::IFileSystem* fileSystem_;  // Zeiger auf das virtuelle FileSystem
+    irr::core::array<irr::core::stringc> sndGuiArray_;  // Array aller GUI-Geräusche
 
-    Ton( io::IFileSystem* fs = 0 );  // ctor. Von außen keine Instanzen direkt erzeugbar
+    Ton( irr::io::IFileSystem* fs = 0 );  // ctor. Von außen keine Instanzen direkt erzeugbar
     Ton( const Ton& );  // Instanz ist nicht kopierbar
     Ton& operator=( const Ton& );  // Instanz ist nicht zuweisbar
     ~Ton();  // dtor. Instanz zerstört sich bei Programmende

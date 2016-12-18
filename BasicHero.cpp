@@ -50,7 +50,7 @@ void BasicHero::moveTo( const irr::core::vector3df target, bool isTriggered )
 #ifdef _DEBUG_MODE
 void BasicHero::toggleSpeed()
 {
-    speed_ = ( core::equals( speed_, 4.0f ) ) ? 200.0f : 4.0f;
+    speed_ = ( irr::core::equals( speed_, 4.0f ) ) ? 200.0f : 4.0f;
 }
 #endif
 

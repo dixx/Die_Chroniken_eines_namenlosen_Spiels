@@ -146,7 +146,7 @@ bool Collision::isObjectCollidingWithNodes( Basic3DObject* object )
             {
                 isCollision = true;
                 collisionDodgeVector = distance
-                        - core::vector3df( distance ).setLength( minDistance + 0.01f )
+                        - irr::core::vector3df( distance ).setLength( minDistance + 0.01f )
                         + object->getNextStep();
             }
         }
@@ -200,7 +200,7 @@ bool Collision::isMouseIntersectingWithWorld()
 {
     return isRayIntersectingWithWorld(
             colliman_->getRayFromScreenCoordinates(
-                    core::position2di(
+                    irr::core::position2di(
                             Eventreceiver::getInstance().getMouseX(),
                             Eventreceiver::getInstance().getMouseY()
                     ),

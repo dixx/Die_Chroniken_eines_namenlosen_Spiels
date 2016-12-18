@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "BufferCullMeshSceneNode.h"
 
-using namespace irr;
-
 /*! \class Vegetation Vegetation.h "Vegetation.h"
  *  \brief Schnittstelle für Vegetation.
  *  \note Instanzierung: `Vegetation* myVegetation = new Vegetation();` \n Benutzen: `myVegetation->xxxx();`
@@ -23,7 +21,7 @@ public:
      *  \param smgr (\a ISceneManager*) Zeiger auf en aktuellen Szenenmanager
      *  \return Zeiger auf das instanzierte Klassenobjekt
      */
-    Vegetation( scene::ISceneManager* smgr );
+    Vegetation( irr::scene::ISceneManager* smgr );
 
 	/*! \brief Destruktor
      */
@@ -43,9 +41,9 @@ public:
 
 private:
 
-    scene::ISceneManager* smgr_;
-    scene::IMeshManipulator* meshManipulator_;
-    scene::SMesh* grassMesh_;
+    irr::scene::ISceneManager* smgr_;
+    irr::scene::IMeshManipulator* meshManipulator_;
+    irr::scene::SMesh* grassMesh_;
     BufferCullMeshSceneNode* grassNode_;
 
     Vegetation( const Vegetation& );

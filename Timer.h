@@ -7,8 +7,6 @@
 
 #include <irrlicht.h>
 
-using namespace irr;
-
 /*! \class Timer Timer.h "Timer.h"
  *  \brief Schnittstelle für millisekundengenaue Timer.
  *  \note Instanzierung: `Timer* myTimer = new Timer( maxValue );` \n Benutzen: `myTimer->update( frameDeltaTime );`
@@ -21,7 +19,7 @@ public:
     /*! \brief Konstruktor.
      *  \param maxValue (\a const \a f32) Maximalwert in Sekunden
      */
-    Timer( const f32 maxValue );
+    Timer( const irr::f32 maxValue );
 
     /*! \brief Destruktor.
      */
@@ -32,7 +30,7 @@ public:
      *  \param frameDeltaTime (\a const \a f32) Wert in Sekunden
      *  \return \a Timer* Zeiger auf sich selbst
      */
-    Timer* tick( const f32 frameDeltaTime );
+    Timer* tick( const irr::f32 frameDeltaTime );
 
     /*! \brief Startet den Timer bei null.
      */
@@ -71,12 +69,12 @@ public:
     /*! \brief Gibt den eingestellten Endwert zurück.
      *  \return \a f32 Endwert in Sekunden
      */
-    f32 getMaxValue() const;
+    irr::f32 getMaxValue() const;
 
 private:
 
-    f32 maxValue_;
-    f32 currentValue_;
+    irr::f32 maxValue_;
+    irr::f32 currentValue_;
     bool timerIsRunning_;
     bool timerIsPaused_;
 
@@ -96,7 +94,7 @@ class AlwaysRunningTimer : public Timer
 
 public:
 
-    AlwaysRunningTimer( const f32 maxValue ) : Timer(maxValue) {}
+    AlwaysRunningTimer( const irr::f32 maxValue ) : Timer(maxValue) {}
 
     ~AlwaysRunningTimer() {}
 

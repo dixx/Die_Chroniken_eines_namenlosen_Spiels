@@ -2,7 +2,7 @@
 
 
 
-Timer::Timer( const f32 maxValue )
+Timer::Timer( const irr::f32 maxValue )
 : maxValue_(maxValue),
   currentValue_(0.0f),
   timerIsRunning_(false),
@@ -20,7 +20,7 @@ Timer::~Timer()
 
 
 
-Timer* Timer::tick( const f32 frameDeltaTime )
+Timer* Timer::tick( const irr::f32 frameDeltaTime )
 {
     currentValue_ += frameDeltaTime;
     return this;
@@ -96,7 +96,7 @@ bool Timer::isFull() const
 
 
 
-f32 Timer::getMaxValue() const
+irr::f32 Timer::getMaxValue() const
 {
     return maxValue_;
 }

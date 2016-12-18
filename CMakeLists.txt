@@ -1,16 +1,21 @@
 cmake_minimum_required(VERSION 2.8)
 project(Spiel)
+set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
+set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
 set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.3)
-include_directories(${IRRLICHT_DIR}/include/ ${IRRLICHT_DIR}/source/Irrlicht/)
-link_directories(${IRRLICHT_DIR}/source/Irrlicht/MacOSX/BD/)
+set(IRRLICHT_INCLUDE_DIR ${IRRLICHT_DIR}/include)
+set(IRRLICHT_SOURCES_DIR ${IRRLICHT_DIR}/source/Irrlicht) # this is a workaround for an Irrlicht issue with ShadowVolumeSceneNodes
+include_directories(${IRRLICHT_INCLUDE_DIR} ${IRRLICHT_SOURCES_DIR})
+link_directories(${IRRLICHT_SOURCES_DIR}/MacOSX/BD/)
 
 set(IRRKLANG_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrKlang-1.5.0)
-include_directories(${IRRKLANG_DIR}/include/)
+set(IRRKLANG_INCLUDE_DIR ${IRRKLANG_DIR}/include)
+include_directories(${IRRKLANG_INCLUDE_DIR})
 link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 
 set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
@@ -33,13 +38,13 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # switch for additional debug stuff deep in the code
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # a switch for additional debug stuff deep in the code
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by LUA
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wshadow -Wnon-virtual-dtor -Wno-aggregate-return -Wlong-long -Winline -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wuninitialized -Wreturn-type -Wparentheses -Wpointer-arith -Wmissing-braces -Wfloat-equal -Wconversion -Wcast-align")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_DIR}/include/\" -isystem\"${IRRLICHT_DIR}/source/Irrlicht/\" -isystem\"${IRRKLANG_DIR}/include/\"") # to suppress warnings from libs
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -isystem\"${IRRLICHT_SOURCES_DIR}/\" -isystem\"${IRRKLANG_INCLUDE_DIR}/\"") # to suppress warnings from libs
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything") # TODO try it once in a while
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic") # TODO try it once in a while
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wmisleading-indentation") # not supported in old gcc
@@ -48,51 +53,51 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_DIR}/include/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast") # TODO fix occurences!
 
 set(SOURCES
-  source/Basic3DObject.cpp
-  source/BasicHero.cpp
-  source/BasicLifeform.cpp
-  source/BasicStaticObject.cpp
-  source/BufferCullMeshSceneNode.cpp
-  source/Camera.cpp
-  source/Collision.cpp
-  source/Configuration.cpp
-  source/DebugShape.cpp
-  source/DebugShapesManager.cpp
-  source/DebugStatistics.cpp
-  source/Debugwindow.cpp
-  source/Eventreceiver.cpp
-  source/GameFloatControl.cpp
-  source/GameStateManager.cpp
-  source/GenericHelperMethods.cpp
-  source/Ground.cpp
-  source/Hero.cpp
-  source/HeroPunk.cpp
-  source/LoadingScreen.cpp
-  source/Logfile.cpp
-  source/MapTile.cpp
-  source/Mauspfeil.cpp
-  source/ObjectConfiguration.cpp
-  source/ObjectManager.cpp
-  source/ObjectParamsExtractor.cpp
-  source/SaveGames.cpp
-  source/Scripting.cpp
-  source/StateLoadGameContent.cpp
-  source/StateMainMenu.cpp
-  source/StatePlayTheGame.cpp
-  source/StateStartup.cpp
-  source/StateUnloadGameContent.cpp
-  source/Timer.cpp
-  source/TimerManager.cpp
-  source/Ton.cpp
-  source/Vegetation.cpp
-  source/Weather.cpp
-  source/Zufall.cpp
-  source/main.cpp
+  ${SOURCES_DIR}/Basic3DObject.cpp
+  ${SOURCES_DIR}/BasicHero.cpp
+  ${SOURCES_DIR}/BasicLifeform.cpp
+  ${SOURCES_DIR}/BasicStaticObject.cpp
+  ${SOURCES_DIR}/BufferCullMeshSceneNode.cpp
+  ${SOURCES_DIR}/Camera.cpp
+  ${SOURCES_DIR}/Collision.cpp
+  ${SOURCES_DIR}/Configuration.cpp
+  ${SOURCES_DIR}/DebugShape.cpp
+  ${SOURCES_DIR}/DebugShapesManager.cpp
+  ${SOURCES_DIR}/DebugStatistics.cpp
+  ${SOURCES_DIR}/Debugwindow.cpp
+  ${SOURCES_DIR}/Eventreceiver.cpp
+  ${SOURCES_DIR}/GameFloatControl.cpp
+  ${SOURCES_DIR}/GameStateManager.cpp
+  ${SOURCES_DIR}/GenericHelperMethods.cpp
+  ${SOURCES_DIR}/Ground.cpp
+  ${SOURCES_DIR}/Hero.cpp
+  ${SOURCES_DIR}/HeroPunk.cpp
+  ${SOURCES_DIR}/LoadingScreen.cpp
+  ${SOURCES_DIR}/Logfile.cpp
+  ${SOURCES_DIR}/MapTile.cpp
+  ${SOURCES_DIR}/Mauspfeil.cpp
+  ${SOURCES_DIR}/ObjectConfiguration.cpp
+  ${SOURCES_DIR}/ObjectManager.cpp
+  ${SOURCES_DIR}/ObjectParamsExtractor.cpp
+  ${SOURCES_DIR}/SaveGames.cpp
+  ${SOURCES_DIR}/Scripting.cpp
+  ${SOURCES_DIR}/StateLoadGameContent.cpp
+  ${SOURCES_DIR}/StateMainMenu.cpp
+  ${SOURCES_DIR}/StatePlayTheGame.cpp
+  ${SOURCES_DIR}/StateStartup.cpp
+  ${SOURCES_DIR}/StateUnloadGameContent.cpp
+  ${SOURCES_DIR}/Timer.cpp
+  ${SOURCES_DIR}/TimerManager.cpp
+  ${SOURCES_DIR}/Ton.cpp
+  ${SOURCES_DIR}/Vegetation.cpp
+  ${SOURCES_DIR}/Weather.cpp
+  ${SOURCES_DIR}/Zufall.cpp
+  ${SOURCES_DIR}/main.cpp
 )
 set(SOURCES_FOR_TESTS
-  test/unit_tests.cpp
-  test/ZufallTest.cpp
-  source/Zufall.cpp
+  ${TEST_DIR}/unit_tests.cpp
+  ${TEST_DIR}/ZufallTest.cpp
+  ${SOURCES_DIR}/Zufall.cpp
 )
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})

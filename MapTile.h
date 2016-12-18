@@ -8,8 +8,6 @@
 #include <irrlicht.h>
 #include "BasicStaticObject.h"
 
-using namespace irr;
-
 /*! \class MapTile MapTile.h "MapTile.h"
  *  \brief Ein Kartenteil.
  */
@@ -26,7 +24,7 @@ public:
      *  \param sectorDimension (\a const \a core::dimension2df&) Ausdehnung eines Sektors (eines Kartenteils)
      *         in virtuellen Einheiten
      */
-    MapTile( const core::stringc& objectData, scene::ISceneManager* smgr, const core::dimension2df& sectorDimension );
+    MapTile( const irr::core::stringc& objectData, irr::scene::ISceneManager* smgr, const irr::core::dimension2df& sectorDimension );
 
     /*! \brief Destruktor.
      */
@@ -36,19 +34,19 @@ public:
      *  \param -
      *  \return \a s32 X-Position
      */
-    s32 getX() const;
+    irr::s32 getX() const;
 
     /*! \brief Liefert die Z-Position des Kartenteils im Karten-Grid.
      *  \param -
      *  \return \a s32 Z-Position
      */
-    s32 getZ() const;
+    irr::s32 getZ() const;
 
 private:
 
-    s32 tileX_;
-    s32 tileZ_;
-    core::dimension2df sectorDimension_;
+    irr::s32 tileX_;
+    irr::s32 tileZ_;
+    irr::core::dimension2df sectorDimension_;
 
     MapTile( const MapTile& );
     void operator=( const MapTile& );

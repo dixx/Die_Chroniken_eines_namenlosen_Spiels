@@ -180,7 +180,7 @@ void SaveGames::checkVersion( irr::u8 version )
 irr::u32 SaveGames::getTimestamp()
 {
     /* get seconds elapsed since 1970-01-01 */
-    ITimer::RealTimeDate datetime = device_->getTimer()->getRealTimeAndDate();
+    irr::ITimer::RealTimeDate datetime = device_->getTimer()->getRealTimeAndDate();
     if ( datetime.Year < 1970 )
         datetime.Year = 1970; // to avoid compatibility errors on systems with wrong date settings
     if ( datetime.IsDST )

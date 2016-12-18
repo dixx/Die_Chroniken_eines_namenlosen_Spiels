@@ -48,51 +48,51 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_DIR}/include/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast") # TODO fix occurences!
 
 set(SOURCES
-  Basic3DObject.cpp
-  BasicHero.cpp
-  BasicLifeform.cpp
-  BasicStaticObject.cpp
-  BufferCullMeshSceneNode.cpp
-  Camera.cpp
-  Collision.cpp
-  Configuration.cpp
-  DebugShape.cpp
-  DebugShapesManager.cpp
-  DebugStatistics.cpp
-  Debugwindow.cpp
-  Eventreceiver.cpp
-  GameFloatControl.cpp
-  GameStateManager.cpp
-  GenericHelperMethods.cpp
-  Ground.cpp
-  Hero.cpp
-  HeroPunk.cpp
-  LoadingScreen.cpp
-  Logfile.cpp
-  MapTile.cpp
-  Mauspfeil.cpp
-  ObjectConfiguration.cpp
-  ObjectManager.cpp
-  ObjectParamsExtractor.cpp
-  SaveGames.cpp
-  Scripting.cpp
-  StateLoadGameContent.cpp
-  StateMainMenu.cpp
-  StatePlayTheGame.cpp
-  StateStartup.cpp
-  StateUnloadGameContent.cpp
-  Timer.cpp
-  TimerManager.cpp
-  Ton.cpp
-  Vegetation.cpp
-  Weather.cpp
-  Zufall.cpp
-  main.cpp
+  source/Basic3DObject.cpp
+  source/BasicHero.cpp
+  source/BasicLifeform.cpp
+  source/BasicStaticObject.cpp
+  source/BufferCullMeshSceneNode.cpp
+  source/Camera.cpp
+  source/Collision.cpp
+  source/Configuration.cpp
+  source/DebugShape.cpp
+  source/DebugShapesManager.cpp
+  source/DebugStatistics.cpp
+  source/Debugwindow.cpp
+  source/Eventreceiver.cpp
+  source/GameFloatControl.cpp
+  source/GameStateManager.cpp
+  source/GenericHelperMethods.cpp
+  source/Ground.cpp
+  source/Hero.cpp
+  source/HeroPunk.cpp
+  source/LoadingScreen.cpp
+  source/Logfile.cpp
+  source/MapTile.cpp
+  source/Mauspfeil.cpp
+  source/ObjectConfiguration.cpp
+  source/ObjectManager.cpp
+  source/ObjectParamsExtractor.cpp
+  source/SaveGames.cpp
+  source/Scripting.cpp
+  source/StateLoadGameContent.cpp
+  source/StateMainMenu.cpp
+  source/StatePlayTheGame.cpp
+  source/StateStartup.cpp
+  source/StateUnloadGameContent.cpp
+  source/Timer.cpp
+  source/TimerManager.cpp
+  source/Ton.cpp
+  source/Vegetation.cpp
+  source/Weather.cpp
+  source/Zufall.cpp
+  source/main.cpp
 )
 set(SOURCES_FOR_TESTS
   test/unit_tests.cpp
   test/ZufallTest.cpp
-  Zufall.cpp
+  source/Zufall.cpp
 )
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})

@@ -88,6 +88,9 @@ public:
     irr::core::array<bool> isLighted; //!< Reagiert das MATERIAL auf Licht?
 
     ObjectConfigurationContextForMaterials()
+    : isTransparent(irr::core::array<bool>()),
+      isBackFaceCulled(irr::core::array<bool>()),
+      isLighted(irr::core::array<bool>())
     {
         isTransparent.clear();
         isBackFaceCulled.clear();
@@ -107,7 +110,10 @@ public:
     irr::core::array<irr::io::path> mainTexture; //!< Pfade zu den Haupttexturen der MATERIALIEN
     irr::core::array<irr::io::path> secondTexture; //!< Pfade zu den Nebentexturen der MATERIALIEN
 
-    ObjectConfigurationContextForFiles() : mesh("")
+    ObjectConfigurationContextForFiles()
+    : mesh(""),
+      mainTexture(irr::core::array<irr::io::path>()),
+      secondTexture(irr::core::array<irr::io::path>())
     {
         mainTexture.clear();
         secondTexture.clear();

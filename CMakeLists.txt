@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(Spiel)
 set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
+set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -55,6 +56,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++") # TODO fix occurences! If it runs smoothly, remove -Wnon-virtual-dtor above.
 
 set(SOURCES
+  ${ENGINE_SOURCES_DIR}/Timer.cpp
   ${SOURCES_DIR}/Basic3DObject.cpp
   ${SOURCES_DIR}/BasicHero.cpp
   ${SOURCES_DIR}/BasicLifeform.cpp
@@ -97,7 +99,9 @@ set(SOURCES
   ${SOURCES_DIR}/main.cpp
 )
 set(SOURCES_FOR_TESTS
+  ${ENGINE_SOURCES_DIR}/Timer.cpp
   ${TEST_DIR}/unit_tests.cpp
+  ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp
   ${SOURCES_DIR}/Zufall.cpp
 )

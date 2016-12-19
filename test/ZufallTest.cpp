@@ -3,7 +3,7 @@
 #include <time.h>
 #include <irrlicht.h>
 
-TEST_CASE( "architecture" ) {
+TEST_CASE( "Zufall: architecture" ) {
     SECTION( "it exists only one instance" ) {
         Zufall& subject = Zufall::getInstance();
 
@@ -11,7 +11,7 @@ TEST_CASE( "architecture" ) {
     }
 }
 
-TEST_CASE( "seeding" ) {
+TEST_CASE( "Zufall: seeding" ) {
     Zufall& subject = Zufall::getInstance();
 
     SECTION( "seed evolves internally" ) {
@@ -40,7 +40,7 @@ TEST_CASE( "seeding" ) {
     }
 }
 
-TEST_CASE( "get random Int" ) {
+TEST_CASE( "Zufall: get random Int" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -56,7 +56,7 @@ TEST_CASE( "get random Int" ) {
     }
 }
 
-TEST_CASE( "get random Float" ) {
+TEST_CASE( "Zufall: get random Float" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -72,7 +72,7 @@ TEST_CASE( "get random Float" ) {
     }
 }
 
-TEST_CASE( "get random int within range" ) {
+TEST_CASE( "Zufall: get random int within range" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -115,7 +115,7 @@ TEST_CASE( "get random int within range" ) {
     }
 }
 
-TEST_CASE( "get random float within range" ) {
+TEST_CASE( "Zufall: get random float within range" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -131,7 +131,7 @@ TEST_CASE( "get random float within range" ) {
     }
 }
 
-TEST_CASE( "let an event occur or not, using one probability" ) {
+TEST_CASE( "Zufall: let an event occur or not, using one probability" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -164,7 +164,7 @@ TEST_CASE( "let an event occur or not, using one probability" ) {
     }
 }
 
-TEST_CASE( "let one out of two events occur, using ratio of both" ) {
+TEST_CASE( "Zufall: let one out of two events occur, using ratio of both" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -182,7 +182,7 @@ TEST_CASE( "let one out of two events occur, using ratio of both" ) {
     }
 }
 
-TEST_CASE( "let one out of two events occur, using limited probabilities for both" ) {
+TEST_CASE( "Zufall: let one out of two events occur, using limited probabilities for both" ) {
     Zufall& subject = Zufall::getInstance();
     subject.start( (irr::u32)time( NULL ) );
 
@@ -196,7 +196,7 @@ TEST_CASE( "let one out of two events occur, using limited probabilities for bot
     }
 }
 
-TEST_CASE( "...okay. If you insist. It is 4. Always 4. There. All the fun is gone." ) {
+TEST_CASE( "Zufall: ...okay. If you insist. It is 4. Always 4. There. All the fun is gone." ) {
     Zufall& subject = Zufall::getInstance();
 
     REQUIRE( subject.getRandomNumber() == 4 );

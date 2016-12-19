@@ -7,6 +7,7 @@
 #define _LEVIATHAN_HEADER
 
 #include <irrlicht.h>
+#include "Timer.h"
 
 //! Alle bedienbaren Teile der Leviathan Game Engine findest du hier.
 namespace leviathan

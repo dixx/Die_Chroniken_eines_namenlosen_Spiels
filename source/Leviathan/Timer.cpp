@@ -16,7 +16,8 @@ namespace leviathan
 
         Timer& Timer::tick( const irr::f32 frameDeltaTime )
         {
-            currentValue_ += frameDeltaTime;
+            if ( timerIsRunning_ && !timerIsPaused_ )
+                currentValue_ += frameDeltaTime;
             return *this;
         }
 

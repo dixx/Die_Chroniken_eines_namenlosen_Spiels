@@ -7,7 +7,7 @@
 
 #include <irrlicht.h>
 #include "BasicLifeform.h"
-#include "Timer.h"
+#include "leviathan.h"
 
 /*! \class BasicHero BasicHero.h "BasicHero.h"
  *  \brief Das braucht jeder Held.
@@ -44,7 +44,7 @@ public:
 
 private:
 
-    Timer* traceTimer_;
+    leviathan::core::Timer* traceTimer_;
 
     BasicHero( const BasicHero& );
     BasicHero& operator=( const BasicHero& );

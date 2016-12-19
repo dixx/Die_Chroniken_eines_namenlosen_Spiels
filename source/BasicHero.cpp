@@ -34,7 +34,7 @@ void BasicHero::moveTo( const irr::core::vector3df target, bool isTriggered )
     if ( isTriggered )
     {
         if ( !traceTimer_->isRunning() )
-            traceTimer_->start();
+            traceTimer_->restart();
         isMoving_ = true;
     }
     else

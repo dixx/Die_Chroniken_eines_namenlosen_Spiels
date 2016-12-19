@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 project(Spiel)
+
 set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
-set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
+
+set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
+include_directories(${ENGINE_SOURCES_DIR})
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -90,7 +93,6 @@ set(SOURCES
   ${SOURCES_DIR}/StatePlayTheGame.cpp
   ${SOURCES_DIR}/StateStartup.cpp
   ${SOURCES_DIR}/StateUnloadGameContent.cpp
-  ${SOURCES_DIR}/Timer.cpp
   ${SOURCES_DIR}/TimerManager.cpp
   ${SOURCES_DIR}/Ton.cpp
   ${SOURCES_DIR}/Vegetation.cpp
@@ -100,10 +102,10 @@ set(SOURCES
 )
 set(SOURCES_FOR_TESTS
   ${ENGINE_SOURCES_DIR}/Timer.cpp
+  ${SOURCES_DIR}/Zufall.cpp
   ${TEST_DIR}/unit_tests.cpp
   ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp
-  ${SOURCES_DIR}/Zufall.cpp
 )
 
 add_executable(spiel MACOSX_BUNDLE ${SOURCES})

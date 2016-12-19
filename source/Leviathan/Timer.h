@@ -27,7 +27,7 @@ namespace leviathan
             Timer( const irr::f32 maxValue );
 
             /*! \brief Erhöht den Timer um bestimmten Wert (in Sekunden).
-             *  \attention Muss nicht aufgerufen werden, wenn der Timer von TimerManager verwaltet wird!
+             *  \attention Muss nicht aufgerufen werden, wenn der Timer von TimerManager verwaltet wird.
              *  \param frameDeltaTime: Zeit (in Sekunden)
              *  \return Referenz auf sich selbst
              */
@@ -41,7 +41,7 @@ namespace leviathan
              */
             void restart();
 
-            /*! \brief Stoppt und resettet den Timer.
+            /*! \brief Stoppt und setzt den Timer zurück.
              */
             void stop();
 
@@ -65,11 +65,9 @@ namespace leviathan
 
             /*! \brief Hat der Timer den Endwert erreicht/überschritten?
              *  \attention Timer wird bei Erreichen des Endwertes nicht automatisch zurückgesetzt oder angehalten!
-             *             Dies könnte z.B. nützlich sein um herauszufinden, wie lange der Endwert schon überschritten
-             *             ist.
              *  \return `true` wenn Timer fertig ist, ansonsten `false`
              */
-            bool isFull() const;
+            bool isFull();
 
             /*! \brief Gibt den eingestellten Endwert zurück.
              *  \return Endwert in Sekunden
@@ -82,6 +80,7 @@ namespace leviathan
             irr::f32 currentValue_;
             bool timerIsRunning_;
             bool timerIsPaused_;
+            bool timerIsFull_;
 
             Timer( const Timer& );  // Objekt ist kopiergeschützt
             Timer& operator=( const Timer& );  // Objekt ist vor Zuweisung geschützt
@@ -90,6 +89,7 @@ namespace leviathan
         /*! \class AlwaysRunningTimer
          *  \brief Schnittstelle für millisekundengenaue Timer, welche nicht zu stoppen sind.
          *  \attention Einmal gestartet, sind diese Timer durch nichts zu stoppen oder zu pausieren.
+         *             Hilfreich wenn der Timer von TimerManager verwaltet wird.
          */
         class AlwaysRunningTimer : public Timer
         {

@@ -9,7 +9,8 @@ namespace leviathan
         : maxValue_(maxValue),
           currentValue_(0.0f),
           timerIsRunning_(false),
-          timerIsPaused_(false)
+          timerIsPaused_(false),
+          timerIsFull_(false)
         {
             // nop
         }
@@ -30,6 +31,7 @@ namespace leviathan
 
         void Timer::restart()
         {
+            timerIsFull_ = false;
             start();
         }
 
@@ -65,9 +67,11 @@ namespace leviathan
             return timerIsPaused_;
         }
 
-        bool Timer::isFull() const
+        bool Timer::isFull()
         {
-            return ( currentValue_ >= maxValue_ );
+            if ( currentValue_ >= maxValue_ )
+                timerIsFull_ = true;
+            return timerIsFull_;
         }
 
         irr::f32 Timer::getMaxValue() const

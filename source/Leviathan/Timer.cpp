@@ -43,10 +43,7 @@ namespace leviathan
         void Timer::pause()
         {
             if ( timerIsRunning_ )
-            {
-                timerIsRunning_ = false;
                 timerIsPaused_ = true;
-            }
         }
 
         void Timer::resume()

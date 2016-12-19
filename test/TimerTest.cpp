@@ -6,13 +6,11 @@ TEST_CASE( "Timer: architecture" ) {
 
     SECTION( "it is not a static instance" ) {
         leviathan::core::Timer timer2( 2.0f );
-
         REQUIRE( &timer != &timer2 );
     }
 
     SECTION( "tick() starts chains" ) {
         timer.start();
-
         REQUIRE( timer.tick( 1.1f ).tick( 1.1f ).isFull() );
     }
 }
@@ -21,14 +19,12 @@ TEST_CASE( "Timer: max value" ) {
 
     SECTION( "zero is not forbidden" ) {
         leviathan::core::Timer timer( 0.0f );
-
         REQUIRE( irr::core::equals( timer.getMaxValue(), 0.0f ) );
         REQUIRE( timer.isFull() );
     }
 
     SECTION( "negative values are not forbidden" ) {
         leviathan::core::Timer timer( -10.0f );
-
         REQUIRE( irr::core::equals( timer.getMaxValue(), -10.0f ) );
         REQUIRE( timer.isFull() );
     }
@@ -36,7 +32,6 @@ TEST_CASE( "Timer: max value" ) {
     SECTION( "values are exactly met" ) {
         leviathan::core::Timer timer( 1.0f );
         timer.start();
-
         REQUIRE( irr::core::equals( timer.getMaxValue(), 1.0f ) );
         REQUIRE_FALSE( timer.isFull() );
 
@@ -55,7 +50,6 @@ TEST_CASE( "Timer: ticking" ) {
 
         SECTION( "when it is not started" ) {
             timer.tick( 2.2f );
-
             REQUIRE_FALSE( timer.isFull() );
         }
 
@@ -63,7 +57,6 @@ TEST_CASE( "Timer: ticking" ) {
             timer.start();
             timer.pause();
             timer.tick( 2.2f );
-
             REQUIRE_FALSE( timer.isFull() );
         }
 
@@ -71,7 +64,6 @@ TEST_CASE( "Timer: ticking" ) {
             timer.start();
             timer.stop();
             timer.tick( 2.2f );
-
             REQUIRE_FALSE( timer.isFull() );
         }
     }
@@ -81,7 +73,6 @@ TEST_CASE( "Timer: ticking" ) {
         SECTION( "when it is started" ) {
             timer.start();
             timer.tick( 2.2f );
-
             REQUIRE( timer.isFull() );
         }
 
@@ -90,7 +81,6 @@ TEST_CASE( "Timer: ticking" ) {
             timer.pause();
             timer.resume();
             timer.tick( 2.2f );
-
             REQUIRE( timer.isFull() );
         }
 
@@ -98,14 +88,12 @@ TEST_CASE( "Timer: ticking" ) {
             timer.start();
             timer.restart();
             timer.tick( 2.2f );
-
             REQUIRE( timer.isFull() );
         }
     }
 
     SECTION( "it can tick more than once" ) {
         timer.start();
-
         timer.tick( 0.6f );
         timer.tick( 0.6f );
         REQUIRE_FALSE( timer.isFull() );
@@ -117,7 +105,6 @@ TEST_CASE( "Timer: ticking" ) {
 
     SECTION( "it can tick backwards" ) {
         timer.start();
-
         timer.tick( -10.0f );
         REQUIRE_FALSE( timer.isFull() );
 
@@ -129,7 +116,6 @@ TEST_CASE( "Timer: ticking" ) {
 
         SECTION( "but it stays full if once reached" ) {
             timer.tick( -10.0f );
-
             REQUIRE( timer.isFull() );
         }
     }
@@ -146,7 +132,6 @@ TEST_CASE( "Timer: states" ) {
         SECTION( "when it is stopped" ) {
             timer.start();
             timer.stop();
-
             REQUIRE_FALSE( timer.isRunning() );
         }
     }
@@ -154,24 +139,20 @@ TEST_CASE( "Timer: states" ) {
     SECTION( "it is running" ) {
         SECTION( "when it is started" ) {
             timer.start();
-
             REQUIRE( timer.isRunning() );
 
             SECTION( "and when it is paused" ) {
                 timer.pause();
-
                 REQUIRE( timer.isRunning() );
 
                 SECTION( "and when it is resumed" ) {
                     timer.resume();
-
                     REQUIRE( timer.isRunning() );
                 }
             }
 
             SECTION( "and when it is restarted" ) {
                 timer.restart();
-
                 REQUIRE( timer.isRunning() );
             }
         }
@@ -181,7 +162,6 @@ TEST_CASE( "Timer: states" ) {
         SECTION( "when it is paused after being started" ) {
             timer.start();
             timer.pause();
-
             REQUIRE( timer.isPaused() );
         }
     }
@@ -193,14 +173,12 @@ TEST_CASE( "Timer: states" ) {
 
         SECTION( "when it is started" ) {
             timer.start();
-
             REQUIRE_FALSE( timer.isPaused() );
         }
 
         SECTION( "when it is restarted" ) {
             timer.start();
             timer.restart();
-
             REQUIRE_FALSE( timer.isPaused() );
         }
 
@@ -208,14 +186,12 @@ TEST_CASE( "Timer: states" ) {
             timer.start();
             timer.pause();
             timer.resume();
-
             REQUIRE_FALSE( timer.isPaused() );
         }
 
         SECTION( "when it is stopped" ) {
             timer.start();
             timer.stop();
-
             REQUIRE_FALSE( timer.isPaused() );
         }
     }

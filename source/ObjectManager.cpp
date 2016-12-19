@@ -200,7 +200,7 @@ irr::scene::ISceneNode* ObjectManager::getBaseNodeByType( const irr::core::strin
 
 
 
-irr::u32 ObjectManager::getBaseIdByType( const irr::core::stringc& type )
+irr::s32 ObjectManager::getBaseIdByType( const irr::core::stringc& type )
 {
     return getBaseNodeByType( type )->getID();
 }

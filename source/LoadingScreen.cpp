@@ -71,10 +71,15 @@ void LoadingScreen::createLoadingScreenImage()
 
 void LoadingScreen::createLoadingScreenText()
 {
-    irr::core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
+    irr::core::dimension2di screenSize = irr::core::dimension2di( Configuration::getInstance().getScreenSize() );
     GenericHelperMethods& helpers = GenericHelperMethods::getInstance( device_ );
     loadingText_ = device_->getGUIEnvironment()->addStaticText(
-            L"", irr::core::recti( irr::core::dimension2di( 9, screenSize.Height - 30 ), screenSize ) );
+            L"",
+            irr::core::recti(
+                irr::core::position2di( 9, screenSize.Height - 30 ),
+                irr::core::position2di( screenSize )
+            )
+    );
     loadingText_->setOverrideColor( irr::video::SColor( 255, 128, 64, 64) );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.xml" );
     helpers.validateFileExistence( "GFX/FONTS/Dooling_font.png" );
@@ -101,9 +106,9 @@ irr::core::recti LoadingScreen::screenDependentSizeOf( irr::video::ITexture& ima
         irr::f32 minHightOffset = ( screenHeight - resizedImageHeight ) / 2.0f;
         frame = irr::core::recti(
                 0,
-                static_cast<irr::u32>( minHightOffset ),
-                screenSize.Width,
-                static_cast<irr::u32>( minHightOffset + resizedImageHeight )
+                static_cast<irr::s32>( minHightOffset ),
+                static_cast<irr::s32>( screenSize.Width ),
+                static_cast<irr::s32>( minHightOffset + resizedImageHeight )
         );
     }
     else if ( imageRatio < screenRatio )
@@ -111,10 +116,10 @@ irr::core::recti LoadingScreen::screenDependentSizeOf( irr::video::ITexture& ima
         irr::f32 resizedImageWidth = ( screenHeight / imageHeight ) * imageWidth;
         irr::f32 minWidthOffset = ( screenWidth - resizedImageWidth ) / 2.0f;
         frame = irr::core::recti(
-                static_cast<irr::u32>( minWidthOffset ),
+                static_cast<irr::s32>( minWidthOffset ),
                 0,
-                static_cast<irr::u32>( minWidthOffset + resizedImageWidth ),
-                screenSize.Height
+                static_cast<irr::s32>( minWidthOffset + resizedImageWidth ),
+                static_cast<irr::s32>( screenSize.Height )
         );
     }
     else

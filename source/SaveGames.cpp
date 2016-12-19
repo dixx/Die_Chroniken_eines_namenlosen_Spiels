@@ -186,7 +186,7 @@ irr::u32 SaveGames::getTimestamp()
     if ( datetime.IsDST )
         datetime.Hour--; // adjust hours of day with daylight saving time
     irr::u32 m = ( datetime.Month + 9 ) % 12;
-    irr::s32 y = datetime.Year - m / 10;
+    irr::u32 y = static_cast<irr::u32>( datetime.Year ) - m / 10;
     irr::u32 days_since_1970 =
             y * 365 + y / 4 - y / 100 + y / 400
             + ( m * 306 + 5 ) / 10

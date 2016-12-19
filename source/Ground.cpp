@@ -20,7 +20,7 @@ Ground& Ground::getInstance( irr::IrrlichtDevice* device )
 }
 
 
-
+// TODO refactor!
 void Ground::load( const char* mapfilename )
 {
     Logfile& logfile = Logfile::getInstance();
@@ -49,8 +49,8 @@ void Ground::load( const char* mapfilename )
             exitWithLogEntry( "Negativer Positionswert", mapfilename );
         if ( tileX > 100 || tileZ > 100 )
             exitWithLogEntry( "Positionswert größer als 100", mapfilename );
-        gridWidth_ = irr::core::max_( static_cast<irr::s32>( gridWidth_ ), tileX );
-        gridDepth_ = irr::core::max_( static_cast<irr::s32>( gridDepth_ ), tileZ );
+        gridWidth_ = irr::core::max_( gridWidth_, static_cast<irr::u32>( tileX ) );
+        gridDepth_ = irr::core::max_( gridDepth_, static_cast<irr::u32>( tileZ ) );
         delete extractor;
     }
     gridWidth_ += 1;
@@ -74,7 +74,7 @@ irr::u32 now = device_->getTimer()->getRealTime();
             TimerManager::getInstance().removeTimer( updateTimer_ );
             logfile.emergencyExit( "Kartenteil konnte nicht erzeugt werden! Abbruch." );
         }
-        position = tile->getX() + tile->getZ() * gridWidth_;
+        position = static_cast<irr::u32>( tile->getX() + tile->getZ() * static_cast<irr::s32>( gridWidth_ ) );
         maxHeight_ = irr::core::max_( maxHeight_, tile->getNode()->getTransformedBoundingBox().MaxEdge.Y );
         minHeight_ = irr::core::min_( minHeight_, tile->getNode()->getTransformedBoundingBox().MinEdge.Y );
         mapTiles_[ position ] = tile;
@@ -122,7 +122,7 @@ void Ground::update()
     {
         irr::s32 sumX = 0;
         irr::s32 sumZ = 0;
-        irr::s32 pos  = 0;
+        irr::u32 pos  = 0;
         irr::core::vector3df camPos = smgr_->getActiveCamera()->getAbsolutePosition();
         updateSectorX_ = irr::core::floor32( camPos.X / SECTORDIMENSION.Width );
         updateSectorZ_ = irr::core::floor32( camPos.Z / SECTORDIMENSION.Height );
@@ -140,7 +140,7 @@ void Ground::update()
                 sumX = updateSectorX_ + x;
                 if ( sumX < 0 || sumX >= static_cast<irr::s32>( gridWidth_ ) )
                     continue;
-                pos = sumX + sumZ * gridWidth_;
+                pos = static_cast<irr::u32>( sumX + sumZ * static_cast<irr::s32>( gridWidth_ ) );
                 if ( mapTiles_[ pos ] == 0 )
                     continue;
                 if ( x > -2 && x < 2 && z > -2 && z < 2 )

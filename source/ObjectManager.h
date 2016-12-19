@@ -94,9 +94,9 @@ public:
 
     /*! \brief Gibt die Basis-ID inklusive Flags für den entsprechenden Typ zurück.
      *  \param type (\a const\a core::stringc&) Objekttyp
-     *  \return \a u32 Basis-ID mit Flags
+     *  \return \a s32 Basis-ID mit Flags
      */
-    irr::u32 getBaseIdByType( const irr::core::stringc& type );
+    irr::s32 getBaseIdByType( const irr::core::stringc& type );
 
     /*! \brief Macht Objekt sichtbar und fügt es zur Kollisionserkennung hinzu.
      *  \param object (\a Basic3DObject*) Zeiger auf das Objekt

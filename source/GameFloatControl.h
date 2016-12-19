@@ -38,12 +38,12 @@ public:
      *  \param -
      *  \return `0` wenn das Spiel ohne Fehler lief, ansonsten `1`
      */
-    irr::u32 status();
+    irr::s32 status();
 
 private:
 
     irr::IrrlichtDevice* device_;  // Zeiger auf das Entchen
-    irr::u32 status_;
+    irr::s32 status_;
 #ifdef _DEBUG_MODE
     irr::s32 fps_, lastFPS_;  // Hilfsvariable für FPS-Anzeige im Titel
 #endif

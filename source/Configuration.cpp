@@ -188,7 +188,7 @@ Configuration::~Configuration()
 }
 
 
-
+// TODO refactor!
 const irr::core::stringc Configuration::getItem(
         const irr::core::stringc& content,
         const irr::c8* topic,
@@ -196,10 +196,12 @@ const irr::core::stringc Configuration::getItem(
         const irr::c8* origin
 )
 {
+    if ( content.size() == 0 )
+        return origin;
     irr::core::stringc line;
     irr::s32 startindex = 0;
     irr::s32 eqindex = 0;
-    irr::s32 lastindex = content.size() - 1;
+    irr::s32 lastindex = static_cast<irr::s32>( content.size() ) - 1;
     irr::core::stringc searchset = "";
     searchset += topic;
     searchset += '.';
@@ -207,10 +209,10 @@ const irr::core::stringc Configuration::getItem(
     // startindex wird jetzt immer weiter geschoben, bis das Ende von "inhalt" erreicht ist
     while ( startindex < static_cast<irr::s32>( content.size() ) )
     {
-        lastindex = content.findNext( '\n', startindex + 1 );
+        lastindex = content.findNext( '\n', static_cast<irr::u32>( startindex + 1 ) );
         if ( lastindex == -1 )
-            lastindex = content.size() - 1;
-        line = content.subString( startindex, lastindex - startindex );
+            lastindex = static_cast<irr::s32>( content.size() ) - 1;
+        line = content.subString( static_cast<irr::u32>( startindex ), lastindex - startindex );
         startindex = lastindex;
         if ( line.find( searchset.c_str() ) == -1 )
             continue;
@@ -219,7 +221,7 @@ const irr::core::stringc Configuration::getItem(
             continue;
         if ( line.findFirst( '#' ) != -1 && line.findFirst( '#' ) < eqindex )
             continue;
-        return line.subString( eqindex + 1, lastindex - eqindex  ).trim();
+        return line.subString( static_cast<irr::u32>( eqindex + 1 ), lastindex - eqindex  ).trim();
     }
     return origin;
 }

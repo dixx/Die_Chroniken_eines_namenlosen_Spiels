@@ -54,7 +54,7 @@ bool ObjectParamsExtractor::tryToExtractValue(
             continue;
         if ( objectParams_[ i ].size() > 5 )
         {
-            dummyValue_ = objectParams_[ i ].subString( 5, objectParams_[ i ].size() - 1 );
+            dummyValue_ = objectParams_[ i ].subString( 5, static_cast<irr::s32>( objectParams_[ i ].size() - 1 ) );
             if ( separator.size() != 0 )
             {
                 dummyValue_.split( values_, separator.c_str() );

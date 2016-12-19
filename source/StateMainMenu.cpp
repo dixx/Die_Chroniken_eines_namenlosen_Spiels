@@ -247,8 +247,8 @@ void StateMainMenu::createMainMenu()
     irr::core::dimension2du textureSize = mainMenuTexture_->getSize();
     irr::core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     irr::core::position2di imagePosition = irr::core::position2di(
-            screenSize.Width - 20 - textureSize.Width,
-            screenSize.Height - 20 - textureSize.Height
+            static_cast<irr::s32>( screenSize.Width - 20 - textureSize.Width ),
+            static_cast<irr::s32>( screenSize.Height - 20 - textureSize.Height )
     );
     irr::core::dimension2du buttonSize = irr::core::dimension2du( 313, 88 );
     irr::gui::IGUIImage* menueBgImage = guienv_->addImage(
@@ -334,8 +334,8 @@ void StateMainMenu::createNewPlayerMenu()
     irr::core::dimension2du textureSize = mainMenuTexture_->getSize();
     irr::core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     irr::core::position2di imagePosition = irr::core::position2di(
-            screenSize.Width - 20 - textureSize.Width,
-            screenSize.Height - 20 - textureSize.Height
+            static_cast<irr::s32>( screenSize.Width - 20 - textureSize.Width ),
+            static_cast<irr::s32>( screenSize.Height - 20 - textureSize.Height )
     );
     irr::core::dimension2du buttonSize = irr::core::dimension2du( 313, 88 );
     irr::gui::IGUIImage* menueBgImage = guienv_->addImage(
@@ -380,8 +380,8 @@ void StateMainMenu::createLoadGameMenu()
     irr::core::dimension2du textureSize = mainMenuTexture_->getSize();
     irr::core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     irr::core::position2di imagePosition = irr::core::position2di(
-            screenSize.Width - 20 - textureSize.Width,
-            screenSize.Height - 20 - textureSize.Height
+            static_cast<irr::s32>( screenSize.Width - 20 - textureSize.Width ),
+            static_cast<irr::s32>( screenSize.Height - 20 - textureSize.Height )
     );
     irr::core::dimension2du buttonSize = irr::core::dimension2du( 313, 88 );
     irr::gui::IGUIImage* menueBgImage = guienv_->addImage(
@@ -423,8 +423,8 @@ void StateMainMenu::createPreferencesMenu()
     irr::core::dimension2du textureSize = mainMenuTexture_->getSize();
     irr::core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     irr::core::position2di imagePosition = irr::core::position2di(
-            screenSize.Width - 20 - textureSize.Width,
-            screenSize.Height - 20 - textureSize.Height
+            static_cast<irr::s32>( screenSize.Width - 20 - textureSize.Width ),
+            static_cast<irr::s32>( screenSize.Height - 20 - textureSize.Height )
     );
     irr::core::dimension2du buttonSize = irr::core::dimension2du( 313, 88 );
     irr::gui::IGUIImage* menueBgImage = guienv_->addImage(
@@ -466,8 +466,8 @@ void StateMainMenu::createAboutMenu()
     irr::core::dimension2du textureSize = mainMenuTexture_->getSize();
     irr::core::dimension2du screenSize = Configuration::getInstance().getScreenSize();
     irr::core::position2di imagePosition = irr::core::position2di(
-            screenSize.Width - 20 - textureSize.Width,
-            screenSize.Height - 20 - textureSize.Height
+            static_cast<irr::s32>( screenSize.Width - 20 - textureSize.Width ),
+            static_cast<irr::s32>( screenSize.Height - 20 - textureSize.Height )
     );
     irr::core::dimension2du buttonSize = irr::core::dimension2du( 313, 88 );
     irr::gui::IGUIImage* menueBgImage = guienv_->addImage(

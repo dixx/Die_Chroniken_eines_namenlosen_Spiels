@@ -68,7 +68,7 @@ void GameFloatControl::run()
 
 
 
-irr::u32 GameFloatControl::status()
+irr::s32 GameFloatControl::status()
 {
     return status_;
 }

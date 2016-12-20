@@ -59,6 +59,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++") # TODO fix occurences! If it runs smoothly, remove -Wnon-virtual-dtor above.
 
 set(SOURCES
+  ${ENGINE_SOURCES_DIR}/LeviathanDevice.cpp
   ${ENGINE_SOURCES_DIR}/Timer.cpp
   ${SOURCES_DIR}/Basic3DObject.cpp
   ${SOURCES_DIR}/BasicHero.cpp

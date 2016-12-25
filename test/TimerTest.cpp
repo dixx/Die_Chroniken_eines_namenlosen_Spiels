@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../source/Leviathan/leviathan.h"
+#include "leviathan.h"
 
 TEST_CASE( "Timer: architecture" ) {
     leviathan::core::Timer timer( 2.0f );

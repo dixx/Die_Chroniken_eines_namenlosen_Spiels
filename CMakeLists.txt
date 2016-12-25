@@ -3,6 +3,7 @@ project(Spiel)
 
 set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
+set(3RDPARTY_DIR ${CMAKE_SOURCE_DIR}/3rdparty)
 
 set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 include_directories(${ENGINE_SOURCES_DIR})
@@ -24,6 +25,9 @@ link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 
 set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
 include_directories(${LUA_DIR}/include/)
+
+set(CATCH_DIR ${3RDPARTY_DIR}/catch)
+include_directories(${CATCH_DIR})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)

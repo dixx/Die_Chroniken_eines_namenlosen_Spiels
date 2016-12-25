@@ -1,5 +1,5 @@
 /*! \file Timer.h
- *  \brief Klasse stellt millisekundengenaue Timer bereit.
+ *  \brief millisekundengenauer Timer
  *  \note Bestandteil der Leviathan Engine
  */
 
@@ -14,7 +14,7 @@ namespace leviathan
     {
 
         /*! \class Timer Timer.h "Timer.h"
-         *  \brief Schnittstelle für millisekundengenaue Timer.
+         *  \brief millisekundengenauer Timer
          */
         class Timer
         {

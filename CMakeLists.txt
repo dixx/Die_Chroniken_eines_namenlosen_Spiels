@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(Spiel)
+project(spiel)
 
 set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
@@ -62,9 +62,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast") # TODO fix occurences!
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++") # TODO fix occurences! If it runs smoothly, remove -Wnon-virtual-dtor above.
 
-set(SOURCES
+set(ENGINE_SOURCES
   ${ENGINE_SOURCES_DIR}/LeviathanDevice.cpp
+  ${ENGINE_SOURCES_DIR}/TimeControl.cpp
   ${ENGINE_SOURCES_DIR}/Timer.cpp
+)
+
+set(SOURCES
+  ${ENGINE_SOURCES}
   ${SOURCES_DIR}/Basic3DObject.cpp
   ${SOURCES_DIR}/BasicHero.cpp
   ${SOURCES_DIR}/BasicLifeform.cpp
@@ -105,21 +110,23 @@ set(SOURCES
   ${SOURCES_DIR}/Zufall.cpp
   ${SOURCES_DIR}/main.cpp
 )
+
 set(SOURCES_FOR_TESTS
-  ${ENGINE_SOURCES_DIR}/Timer.cpp
+  ${ENGINE_SOURCES}
   ${SOURCES_DIR}/Zufall.cpp
-  ${TEST_DIR}/unit_tests.cpp
+  ${TEST_DIR}/TimeControlTest.cpp
   ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp
+  ${TEST_DIR}/unit_tests.cpp
 )
 
-add_executable(spiel MACOSX_BUNDLE ${SOURCES})
+add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES})
 add_executable(unit_tests ${SOURCES_FOR_TESTS})
-#set_target_properties(spiel PROPERTIES)
-target_link_libraries(spiel ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
+#set_target_properties(${PROJECT_NAME} PROPERTIES)
+target_link_libraries(${PROJECT_NAME} ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
 target_link_libraries(unit_tests ${IRRLICHT_LIBRARY})
 if(APPLE)
-  set_target_properties(spiel PROPERTIES
+  set_target_properties(${PROJECT_NAME} PROPERTIES
     LINK_FLAGS "-framework cocoa -framework opengl -framework IOKit"
     OUTPUT_NAME "Spiel"
   )
@@ -127,6 +134,6 @@ endif(APPLE)
 
 # on installation, put everything where it belongs
 set(CMAKE_INSTALL_PREFIX ../Debug) # change later
-install(TARGETS spiel DESTINATION .)
+install(TARGETS ${PROJECT_NAME} DESTINATION .)
 install(TARGETS unit_tests DESTINATION .)
 #install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)

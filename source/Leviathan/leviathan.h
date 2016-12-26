@@ -8,6 +8,7 @@
 
 #include <irrlicht.h>
 #include "LeviathanDevice.h"
+#include "TimeControl.h"
 #include "Timer.h"
 
 //! Alle bedienbaren Teile der Leviathan Game Engine findest du hier.

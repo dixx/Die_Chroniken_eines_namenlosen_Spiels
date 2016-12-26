@@ -27,7 +27,6 @@ namespace leviathan
             Timer( const irr::f32 maxValue );
 
             /*! \brief Erhöht den Timer um bestimmten Wert (in Sekunden).
-             *  \attention Muss nicht aufgerufen werden, wenn der Timer von TimerManager verwaltet wird.
              *  \param frameDeltaTime: Zeit (in Sekunden)
              *  \return Referenz auf sich selbst
              */
@@ -89,7 +88,6 @@ namespace leviathan
         /*! \class AlwaysRunningTimer
          *  \brief Schnittstelle für millisekundengenaue Timer, welche nicht zu stoppen sind.
          *  \attention Einmal gestartet, sind diese Timer durch nichts zu stoppen oder zu pausieren.
-         *             Hilfreich wenn der Timer von TimerManager verwaltet wird.
          */
         class AlwaysRunningTimer : public Timer
         {

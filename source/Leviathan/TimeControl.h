@@ -23,7 +23,7 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              */
-            TimeControl();
+            TimeControl() {};
 
             /*! \brief Destruktor.
              */
@@ -32,13 +32,13 @@ namespace leviathan
             /*! \brief Fügt einen vorhandenen Timer zur zentralen Steuerung hinzu.
              *  \param timer: Referenz auf den Timer
              */
-            void add( const Timer& timer );
+            void add( Timer& timer );
 
             /*! \brief Entfernt einen Timer aus zentralen Steuerung.
              *  \note Timer wird nicht gelöscht.
              *  \param timer: Referenz auf den Timer
              */
-            void remove( const Timer& timer );
+            void remove( Timer& timer );
 
             /*! \brief Pausiert alle verwalteten Timer.
              */
@@ -55,10 +55,8 @@ namespace leviathan
 
         private:
 
-        	irr::core::list<Timer> timerList_;
-        	irr::core::list<Timer>::Iterator itr_;
-        	irr::u32 timerCount_;
-        	bool isPaused_;
+        	irr::core::list<Timer*> timerList_;
+        	irr::core::list<Timer*>::Iterator itr_;
 
             TimeControl( const TimeControl& );  // Objekt ist kopiergeschützt
             TimeControl& operator=( const TimeControl& );  // Objekt ist vor Zuweisung geschützt

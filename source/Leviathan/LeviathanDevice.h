@@ -10,12 +10,16 @@
 
 namespace leviathan
 {
+
+    /*! \class LeviathanDevice LeviathanDevice.h "LeviathanDevice.h"
+     *  \brief Die eigentliche Engine.
+     */
     class LeviathanDevice
     {
 
     public:
 
-        /*! \brief Konstruktor. Inintialisiert alle Bestandteile der Engine.
+        /*! \brief Konstruktor. Initialisiert alle Bestandteile der Engine.
          */
         LeviathanDevice();
 

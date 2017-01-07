@@ -26,7 +26,7 @@ link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
 include_directories(${LUA_DIR}/include/)
 
-set(CATCH_DIR ${3RDPARTY_DIR}/catch)
+set(CATCH_DIR ${3RDPARTY_DIR}/catch) # TODO use https://github.com/philsquared/Catch/blob/master/docs/build-systems.md
 include_directories(${CATCH_DIR})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")

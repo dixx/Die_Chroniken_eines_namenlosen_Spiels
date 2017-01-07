@@ -1,15 +1,6 @@
 #include "catch.hpp"
 #include "leviathan.h"
 
-TEST_CASE( "TimeControl: architecture" ) {
-    leviathan::core::TimeControl subject;
-
-    SECTION( "it is not a static instance" ) {
-        leviathan::core::TimeControl sample;
-        REQUIRE( &subject != &sample );
-    }
-}
-
 TEST_CASE( "TimeControl: ticking" ) {
     leviathan::core::TimeControl subject;
     leviathan::core::Timer timer( 2.0f );

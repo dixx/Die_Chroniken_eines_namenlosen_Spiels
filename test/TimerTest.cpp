@@ -4,11 +4,6 @@
 TEST_CASE( "Timer: architecture" ) {
     leviathan::core::Timer timer( 2.0f );
 
-    SECTION( "it is not a static instance" ) {
-        leviathan::core::Timer timer2( 2.0f );
-        REQUIRE( &timer != &timer2 );
-    }
-
     SECTION( "tick() starts chains" ) {
         timer.start();
         REQUIRE( timer.tick( 1.1f ).tick( 1.1f ).isFull() );

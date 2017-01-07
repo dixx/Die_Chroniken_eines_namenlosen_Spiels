@@ -7,6 +7,7 @@
 #define _LEVIATHAN_DEVICE_HEADER
 
 #include <irrlicht.h>
+#include "TimeControl.h"
 
 namespace leviathan
 {
@@ -26,6 +27,11 @@ namespace leviathan
         /*! \brief Destruktor.
          */
         ~LeviathanDevice();
+
+    private:
+
+        irr::IrrlichtDevice* graphicEngine_;
+        core::TimeControl timeControl_;
     };
 }
 

@@ -3,13 +3,19 @@
 namespace leviathan
 {
     LeviathanDevice::LeviathanDevice()
+    : graphicEngine_(0),
+      timeControl_()
     {
-        // nop
+        graphicEngine_ = irr::createDevice( irr::video::EDT_NULL );
     }
 
 
     LeviathanDevice::~LeviathanDevice()
     {
-        // nop
+        if ( graphicEngine_ )
+        {
+            graphicEngine_->drop();
+            graphicEngine_ = 0;
+        }
     }
 }

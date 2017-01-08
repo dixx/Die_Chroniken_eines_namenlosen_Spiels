@@ -8,6 +8,7 @@
 
 #include <irrlicht.h>
 #include "LeviathanDevice.h"
+#include "Logger.h"
 #include "TimeControl.h"
 #include "Timer.h"
 

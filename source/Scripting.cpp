@@ -1,6 +1,5 @@
 #include "Scripting.h"
 #include "Logfile.h"
-#include "GenericHelperMethods.h"
 
 #define NO_ARGS 0
 #define TAKES_ARGS 1

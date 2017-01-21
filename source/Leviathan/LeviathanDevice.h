@@ -7,6 +7,7 @@
 #define _LEVIATHAN_DEVICE_HEADER
 
 #include <irrlicht.h>
+#include "Logger.h"
 #include "TimeControl.h"
 
 namespace leviathan
@@ -32,10 +33,15 @@ namespace leviathan
          */
         core::TimeControl& getTimeControl();
 
+        /*! \brief
+         */
+        core::Logger& getLogger();
+
     private:
 
         irr::IrrlichtDevice* graphicEngine_;
         core::TimeControl timeControl_;
+        core::Logger* logger_;
     };
 }
 

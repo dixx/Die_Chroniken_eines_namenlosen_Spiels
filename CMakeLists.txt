@@ -115,6 +115,7 @@ set(SOURCES
 set(SOURCES_FOR_TESTS
   ${ENGINE_SOURCES}
   ${SOURCES_DIR}/Zufall.cpp
+  ${TEST_DIR}/LeviathanDeviceTest.cpp
   ${TEST_DIR}/LoggerTest.cpp
   ${TEST_DIR}/TimeControlTest.cpp
   ${TEST_DIR}/TimerTest.cpp

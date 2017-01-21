@@ -28,6 +28,10 @@ namespace leviathan
          */
         ~LeviathanDevice();
 
+        /*! \brief
+         */
+        core::TimeControl& getTimeControl();
+
     private:
 
         irr::IrrlichtDevice* graphicEngine_;

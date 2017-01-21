@@ -18,4 +18,9 @@ namespace leviathan
             graphicEngine_ = 0;
         }
     }
+    core::TimeControl& LeviathanDevice::getTimeControl()
+    {
+        return timeControl_;
+    }
+
 }

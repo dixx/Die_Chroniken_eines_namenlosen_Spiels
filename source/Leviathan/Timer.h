@@ -3,8 +3,8 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef _TIMER_HEADER
-#define _TIMER_HEADER
+#ifndef _LEVIATHAN_TIMER_HEADER
+#define _LEVIATHAN_TIMER_HEADER
 
 #include <irrlicht.h>
 

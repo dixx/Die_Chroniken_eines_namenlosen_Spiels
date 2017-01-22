@@ -1,9 +1,10 @@
 /*! \file Logger.h
  *  \brief Methoden für das Loggen von Text in eine Datei.
- */
+ *  \note Bestandteil der Leviathan Engine
+*/
 
-#ifndef _LOGGER_HEADER
-#define _LOGGER_HEADER
+#ifndef _LEVIATHAN_LOGGER_HEADER
+#define _LEVIATHAN_LOGGER_HEADER
 
 #include <irrlicht.h>
 

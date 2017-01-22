@@ -3,8 +3,8 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef _TIMECONTROL_HEADER
-#define _TIMECONTROL_HEADER
+#ifndef _LEVIATHAN_TIMECONTROL_HEADER
+#define _LEVIATHAN_TIMECONTROL_HEADER
 
 #include <irrlicht.h>
 #include "Timer.h"

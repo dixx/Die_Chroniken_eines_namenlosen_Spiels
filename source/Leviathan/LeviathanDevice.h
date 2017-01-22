@@ -1,7 +1,8 @@
 /*! \file LeviathanDevice.h
  *  \brief Die eigentliche 'Leviathan Engine'.
  *         Bietet Zugriff auf alle Funktionalitäten, kümmert sich um Instanzierung ihrer Teile usw.
- */
+ *  \note Bestandteil der Leviathan Engine
+*/
 
 #ifndef _LEVIATHAN_DEVICE_HEADER
 #define _LEVIATHAN_DEVICE_HEADER

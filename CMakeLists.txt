@@ -63,6 +63,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++") # TODO fix occurences! If it runs smoothly, remove -Wnon-virtual-dtor above.
 
 set(ENGINE_SOURCES
+  ${ENGINE_SOURCES_DIR}/Configuration.cpp
   ${ENGINE_SOURCES_DIR}/LeviathanDevice.cpp
   ${ENGINE_SOURCES_DIR}/Logger.cpp
   ${ENGINE_SOURCES_DIR}/TimeControl.cpp
@@ -115,8 +116,10 @@ set(SOURCES
 set(SOURCES_FOR_TESTS
   ${ENGINE_SOURCES}
   ${SOURCES_DIR}/Zufall.cpp
+  ${TEST_DIR}/ConfigurationTest.cpp
   ${TEST_DIR}/LeviathanDeviceTest.cpp
   ${TEST_DIR}/LoggerTest.cpp
+  ${TEST_DIR}/Testhelper.cpp
   ${TEST_DIR}/TimeControlTest.cpp
   ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp

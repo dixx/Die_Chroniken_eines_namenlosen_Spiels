@@ -7,7 +7,10 @@ namespace leviathan
       timeControl_(),
       logger_( 0 )
     {
-        graphicEngine_ = irr::createDevice( irr::video::EDT_NULL );
+        irr::SIrrlichtCreationParameters params;
+        params.DriverType = irr::video::EDT_NULL;
+        params.LoggingLevel = irr::ELL_WARNING;
+        graphicEngine_ = irr::createDeviceEx( params );
         // get config
         logger_ = new leviathan::core::Logger(
             graphicEngine_->getFileSystem(),

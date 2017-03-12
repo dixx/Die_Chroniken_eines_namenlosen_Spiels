@@ -11,16 +11,16 @@ TimerManager& TimerManager::getInstance()
 
 
 
-Timer* TimerManager::createTimer( const irr::f32 maxValue )
+leviathan::core::Timer* TimerManager::createTimer( const irr::f32 maxValue )
 {
-    timerList_.push_back( new Timer( maxValue ) );
+    timerList_.push_back( new leviathan::core::Timer( maxValue ) );
     timerCount_++;
     return *(timerList_.getLast());
 }
 
 
 
-void TimerManager::removeTimer( Timer* timerToRemove )
+void TimerManager::removeTimer( leviathan::core::Timer* timerToRemove )
 {
     for( itr_ = timerList_.begin(); itr_ != timerList_.end(); ++itr_ )
     {

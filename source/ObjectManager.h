@@ -8,7 +8,7 @@
 #include "Basic3DObject.h"
 #include "BasicLifeform.h"
 #include "BasicStaticObject.h"
-#include "Timer.h"
+#include "leviathan.h"
 #include "Vegetation.h"
 
 /*! \class ObjectManager ObjectManager.h "ObjectManager.h"
@@ -124,7 +124,7 @@ private:
     irr::core::array<BasicStaticObject*> staticObjects_;
     irr::core::array<BasicLifeform*> npcs_;
     Vegetation* vegetation_;
-    Timer* updateTimer_;
+    leviathan::core::Timer* updateTimer_;
 #ifdef _DEBUG_MODE
     irr::u32 visibleNodeCount_;
     irr::u32 debugCounter_;

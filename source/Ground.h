@@ -7,7 +7,7 @@
 
 #include <irrlicht.h>
 #include "MapTile.h"
-#include "Timer.h"
+#include "leviathan.h"
 
 /*! \class Ground Ground.h "Ground.h"
  *  \brief  Schnittstelle zum Fußboden der Spielewelt.
@@ -97,7 +97,7 @@ private:
     irr::core::line3df ray_;
     irr::f32 minHeight_;
     irr::f32 maxHeight_;
-    Timer* updateTimer_;
+    leviathan::core::Timer* updateTimer_;
     irr::s32 updateSectorX_;
     irr::s32 updateSectorZ_;
     irr::core::vector3df endPosition_;

@@ -5,8 +5,7 @@
 #ifndef _WEATHER_HEADER
 #define _WEATHER_HEADER
 
-#include <irrlicht.h>
-#include "Timer.h"
+#include "leviathan.h"
 
 /*! \class Weather Weather.h "Weather.h"
  *  \brief  Schnittstelle für Wetter und Weltlicht.
@@ -81,7 +80,7 @@ private:
     irr::f32 currentMoonPhase_;  // Mondumlauf-"Uhrzeit" in "virtuelle Sekunden"
     irr::f32 seasonOffsetY_;  // längere/kürzere Tage, von -0.2f bis 0.2f
     irr::video::SColor skyColor_;
-    Timer* updateTimer_;
+    leviathan::core::Timer* updateTimer_;
 
     Weather( irr::scene::ISceneManager* smgr );
     Weather( const Weather& );

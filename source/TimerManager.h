@@ -5,7 +5,7 @@
 #ifndef _TIMERMANAGER_HEADER
 #define _TIMERMANAGER_HEADER
 
-#include "Timer.h"
+#include "leviathan.h"
 
 /*! \class TimerManager TimerManager.h "TimerManager.h"
  *  \brief  Schnittstelle für Timer.
@@ -30,32 +30,32 @@ public:
      */
     static TimerManager& getInstance();
 
-    /*! \brief Erstellt einen neuen von TimeManager verwalteten Timer.
+    /*! \brief Erstellt einen neuen von TimerManager verwalteten Timer.
      *  \param maxValue (\a const \a f32) maximaler Zeitwert in Sekunden
      *  \return \a Timer* Zeiger auf den erzeugten Timer
      */
-    Timer* createTimer( const irr::f32 maxValue );
+    leviathan::core::Timer* createTimer( const irr::f32 maxValue );
 
     /*! \brief Entfernt einen Timer aus der Verwaltung und löscht ihn.
-     *  \note Timer wird nicht gelöscht, wenn er nicht von TimeManager erstellt wurde!
+     *  \note Timer wird nicht gelöscht, wenn er nicht von TimerManager erstellt wurde!
      *  \param timer (\a Timer*) Zeiger auf den zu entfernenden Timer
      *  \return -
      */
-    void removeTimer( Timer* timer );
+    void removeTimer( leviathan::core::Timer* timer );
 
-    /*! \brief Pausiert alle von TimeManager verwalteten Timer.
+    /*! \brief Pausiert alle von TimerManager verwalteten Timer.
      *  \param -
      *  \return -
      */
     void pause();
 
-    /*! \brief Lässt alle von TimeManager verwalteten Timer weiterlaufen.
+    /*! \brief Lässt alle von TimerManager verwalteten Timer weiterlaufen.
      *  \param -
      *  \return -
      */
     void resume();
 
-    /*! \brief Erhöht alle von TimeManager verwalteten Timer um die seit dem letzten Tick vergangene Zeit.
+    /*! \brief Erhöht alle von TimerManager verwalteten Timer um die seit dem letzten Tick vergangene Zeit.
      *  \param frameDeltaTime (\a const \a f32) Zeitwert in Sekunden
      *  \return -
      */
@@ -63,8 +63,8 @@ public:
 
 private:
 
-	irr::core::list<Timer*> timerList_;
-	irr::core::list<Timer*>::Iterator itr_;
+	irr::core::list<leviathan::core::Timer*> timerList_;
+	irr::core::list<leviathan::core::Timer*>::Iterator itr_;
 	irr::u32 timerCount_;
 	bool isPaused_;
 

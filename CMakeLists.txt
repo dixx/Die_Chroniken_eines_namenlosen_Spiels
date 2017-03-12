@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
-project(Spiel)
+project(spiel)
+
 set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
+set(3RDPARTY_DIR ${CMAKE_SOURCE_DIR}/3rdparty)
+
+set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
+include_directories(${ENGINE_SOURCES_DIR})
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -21,6 +26,9 @@ link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
 include_directories(${LUA_DIR}/include/)
 
+set(CATCH_DIR ${3RDPARTY_DIR}/catch) # TODO use https://github.com/philsquared/Catch/blob/master/docs/build-systems.md
+include_directories(${CATCH_DIR})
+
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)
   set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
@@ -38,10 +46,12 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
+
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # a switch for additional debug stuff deep in the code
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by LUA
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wunused -Werror -Wshadow -Wnon-virtual-dtor -Wlong-long -Winline -Wunused-parameter -Wunused-variable -Wuninitialized -Wpointer-arith -Wfloat-equal -Wconversion -Wsign-conversion -Wcast-align")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-aggregate-return")
@@ -52,7 +62,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -is
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast") # TODO fix occurences!
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++") # TODO fix occurences! If it runs smoothly, remove -Wnon-virtual-dtor above.
 
+set(ENGINE_SOURCES
+  ${ENGINE_SOURCES_DIR}/Configuration.cpp
+  ${ENGINE_SOURCES_DIR}/LeviathanDevice.cpp
+  ${ENGINE_SOURCES_DIR}/Logger.cpp
+  ${ENGINE_SOURCES_DIR}/TimeControl.cpp
+  ${ENGINE_SOURCES_DIR}/Timer.cpp
+)
+
 set(SOURCES
+  ${ENGINE_SOURCES}
   ${SOURCES_DIR}/Basic3DObject.cpp
   ${SOURCES_DIR}/BasicHero.cpp
   ${SOURCES_DIR}/BasicLifeform.cpp
@@ -86,7 +105,6 @@ set(SOURCES
   ${SOURCES_DIR}/StatePlayTheGame.cpp
   ${SOURCES_DIR}/StateStartup.cpp
   ${SOURCES_DIR}/StateUnloadGameContent.cpp
-  ${SOURCES_DIR}/Timer.cpp
   ${SOURCES_DIR}/TimerManager.cpp
   ${SOURCES_DIR}/Ton.cpp
   ${SOURCES_DIR}/Vegetation.cpp
@@ -94,19 +112,27 @@ set(SOURCES
   ${SOURCES_DIR}/Zufall.cpp
   ${SOURCES_DIR}/main.cpp
 )
+
 set(SOURCES_FOR_TESTS
-  ${TEST_DIR}/unit_tests.cpp
-  ${TEST_DIR}/ZufallTest.cpp
+  ${ENGINE_SOURCES}
   ${SOURCES_DIR}/Zufall.cpp
+  ${TEST_DIR}/ConfigurationTest.cpp
+  ${TEST_DIR}/LeviathanDeviceTest.cpp
+  ${TEST_DIR}/LoggerTest.cpp
+  ${TEST_DIR}/Testhelper.cpp
+  ${TEST_DIR}/TimeControlTest.cpp
+  ${TEST_DIR}/TimerTest.cpp
+  ${TEST_DIR}/ZufallTest.cpp
+  ${TEST_DIR}/unit_tests.cpp
 )
 
-add_executable(spiel MACOSX_BUNDLE ${SOURCES})
+add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SOURCES})
 add_executable(unit_tests ${SOURCES_FOR_TESTS})
-#set_target_properties(spiel PROPERTIES)
-target_link_libraries(spiel ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
+#set_target_properties(${PROJECT_NAME} PROPERTIES)
+target_link_libraries(${PROJECT_NAME} ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
 target_link_libraries(unit_tests ${IRRLICHT_LIBRARY})
 if(APPLE)
-  set_target_properties(spiel PROPERTIES
+  set_target_properties(${PROJECT_NAME} PROPERTIES
     LINK_FLAGS "-framework cocoa -framework opengl -framework IOKit"
     OUTPUT_NAME "Spiel"
   )
@@ -114,6 +140,6 @@ endif(APPLE)
 
 # on installation, put everything where it belongs
 set(CMAKE_INSTALL_PREFIX ../Debug) # change later
-install(TARGETS spiel DESTINATION .)
+install(TARGETS ${PROJECT_NAME} DESTINATION .)
 install(TARGETS unit_tests DESTINATION .)
 #install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)

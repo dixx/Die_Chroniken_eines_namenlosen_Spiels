@@ -38,6 +38,10 @@ namespace leviathan
          */
         core::Logger& getLogger();
 
+        /*! \brief
+         */
+         void readConfigFromFile( const irr::io::path& filename );
+
     private:
 
         irr::IrrlichtDevice* graphicEngine_;

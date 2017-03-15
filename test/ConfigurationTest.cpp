@@ -2,35 +2,55 @@
 #include "leviathan.h"
 #include "Testhelper.h"
 
-// - INI format with # and ; as allowed comment chars
-// - inline comments are forbidden
-// - blank lines, leading and trailing spaces allowed
-// - string values must have ""
-// - enum values are allowed (only /[\w_]/)
-// - boolean values are `true` and `false`
-// - float values may not have leading zeroes, and must have a `.` in them
-// - class should get and parse content only once, store pairs temporarily in a map/dict
-// - test many erroneous config files, class should log and exit
-
-TEST_CASE( "Configuration: read from file" ) {
+TEST_CASE( "Configuration: INI file rules") {
+    Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
+    leviathan::core::Configuration subject( testhelper.getFileSystem() );
 
-    // preconditions: create contents and write to file
-
-    SECTION( "comments are ignored" ) {}
-    SECTION( "unneccessary white spaces are ignored" ) {}
-
-    SECTION( "all relevant values can be read" ) {}
-    SECTION( "it has default values" ) {}
-    SECTION( "it uses some of the values in the graphic engine" ) {}
-
-    // SECTION( "it can read user defined sections" ) {}
+    SECTION( "# and ; are valid comment indicators" ) {}
+    SECTION( "comments and blank lines are written back" ) {}
+    SECTION( "inline comments and white spaces are removed during write" ) {}
+    // - string values must have ""
+    // - enum values are allowed (only /[\w_]/)
+    // - boolean values are `true` and `false`
+    // - float values may not have leading zeroes, and must have a `.` in them
+    SECTION( "erroneous section will be logged and ignored" ) {
+        SECTION( "too many [" ) {}
+        SECTION( "too many ]" ) {}
+        SECTION( "too few [" ) {}
+        SECTION( "too few ]" ) {}
+        SECTION( "section name has invalid chars" ) {}
+    }
+    SECTION( "erroneous key-value-pair will be logged and ignored" ) {
+        SECTION( "= missing" ) {}
+        SECTION( "more than one =" ) {}
+        SECTION( "key missing" ) {}
+        SECTION( "value missing" ) {}
+        SECTION( "key has invalid chars" ) {}
+    }
 }
 
-TEST_CASE( "Configuration: write to file" ) {
+TEST_CASE( "Configuration: read values" ) {
+    Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
+    leviathan::core::Configuration subject( testhelper.getFileSystem() );
+
+    SECTION( "all relevant values can be read" ) {}
+    SECTION( "it uses some of the values in the graphic engine" ) {}
+    SECTION( "it can read user defined sections" ) {}
+    SECTION( "it uses default values" ) {
+        SECTION( "if file is missing" ) {}
+        SECTION( "if keys are missing" ) {}
+    }
+    SECTION( "reading same file again overwrites changes" ) {}
+}
+
+TEST_CASE( "Configuration: write values" ) {
+    Testhelper testhelper;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    leviathan::core::Configuration subject( testhelper.getFileSystem() );
 
     SECTION( "it writes back all sections and values" ) {}
-
-    // SECTION( "it writes back the user defined sections that were read before" ) {}
+    SECTION( "it writes back the user defined sections that were read before" ) {}
+    SECTION( "it creates the file if missing" ) {}
 }

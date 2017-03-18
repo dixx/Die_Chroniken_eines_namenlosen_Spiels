@@ -7,13 +7,18 @@ TEST_CASE( "Configuration: INI file rules") {
     const irr::io::path configFileName = "testconfigfile.ini";
     leviathan::core::Configuration subject( testhelper.getFileSystem() );
 
-    SECTION( "# and ; are valid comment indicators" ) {}
+    SECTION( "# and ; are valid comment indicators" ) {
+        testhelper.writeFile( configFileName, "[test_section]\n;test_value=1\n#test_value=2\ntest_value=3\n" );
+        subject.readFromFile( configFileName );
+        REQUIRE( subject.getInt( "test_section", "test_value" ) == 3 );
+    }
     SECTION( "comments and blank lines are written back" ) {}
     SECTION( "inline comments and white spaces are removed during write" ) {}
     // - string values must have ""
     // - enum values are allowed (only /[\w_]/)
     // - boolean values are `true` and `false`
-    // - float values may not have leading zeroes, and must have a `.` in them
+    // - integer values can be positive or negative
+    // - float values may not have leading zeroes, can be positive or negative, and must have a `.` in them
     SECTION( "erroneous section will be logged and ignored" ) {
         SECTION( "too many [" ) {}
         SECTION( "too many ]" ) {}

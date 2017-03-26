@@ -15,8 +15,6 @@ TEST_CASE( "LeviathanDevice" ) {
         subject.getTimeControl().pause();
         REQUIRE( timer.isPaused() );
     }
-    SECTION( "it can read a config file" ) {
-        // SECTION( "it uses some of the values in the graphic engine" ) {} // TODO own tests
-        // SECTION( "it can read user defined sections" ) {} // TODO own tests
-    }
+    SECTION( "it can read a config file" ) {}
+    SECTION( "it can write a config file" ) {}
 }

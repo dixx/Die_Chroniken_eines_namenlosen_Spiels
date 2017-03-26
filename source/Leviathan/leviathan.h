@@ -7,6 +7,7 @@
 #define _LEVIATHAN_HEADER
 
 #include <irrlicht.h>
+#include "Configuration.h"
 #include "LeviathanDevice.h"
 #include "Logger.h"
 #include "TimeControl.h"

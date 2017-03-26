@@ -26,43 +26,27 @@ namespace leviathan
         {
             content_.clear();
             if ( fileSystem_->existFile( fileName ) )
-            {
-                irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-                irr::u32 size = (irr::u32)file->getSize();
-                irr::u8 buffer[ size + 4 ];
-                file->read( &buffer, size );
-                file->drop();
-                irr::core::stringc rawContent = buffer;
-                rawContent.split( content_, "\n", 1, /* ignoreEmptyTokens = */ false );
-            }
+                generateContent( fileName );
             else
-            {
                 content_.push_back( "" );
-            }
-            irr::core::stringc item;
-            item = getItem( "video", "screen_x" );
-            params_.WindowSize.Width = ( item.empty() ? 800 : irr::core::strtoul10( item.c_str() ) );
-            item = getItem( "video", "screen_y" );
-            params_.WindowSize.Height = ( item.empty() ? 600 : irr::core::strtoul10( item.c_str() ) );
-            item = getItem( "video", "color_depth" );
-            params_.Bits = ( item.empty() ? 16 : static_cast<irr::u8>( irr::core::strtoul10( item.c_str() ) ) );
-            item = getItem( "video", "fullscreen" );
-            params_.Fullscreen = ( item.empty() ? false : ( item.equals_ignore_case( "true" ) ) );
-            item = getItem( "video", "driver" );
-            if ( item.equals_ignore_case( "DIRECT3D9" ) )
+            params_.WindowSize.Width = irr::core::strtoul10( getItem( "video", "screen_x", "800" ).c_str() );
+            params_.WindowSize.Height = irr::core::strtoul10( getItem( "video", "screen_y", "600" ).c_str() );
+            params_.Bits = static_cast<irr::u8>(
+                    irr::core::strtoul10( getItem( "video", "color_depth", "16" ).c_str() ) );
+            params_.Fullscreen = getItem( "video", "fullscreen", "false" ).equals_ignore_case( "true" );
+            if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D9" ) )
                 params_.DriverType = irr::video::EDT_DIRECT3D9;
-            else if ( item.equals_ignore_case( "DIRECT3D8" ) )
+            else if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D8" ) )
                 params_.DriverType = irr::video::EDT_DIRECT3D8;
-            else if ( item.equals_ignore_case( "OPENGL" ) )
+            else if ( getItem( "video", "driver" ).equals_ignore_case( "OPENGL" ) )
                 params_.DriverType = irr::video::EDT_OPENGL;
-            else if ( item.equals_ignore_case( "BURNINGSVIDEO" ) )
+            else if ( getItem( "video", "driver" ).equals_ignore_case( "BURNINGSVIDEO" ) )
                 params_.DriverType = irr::video::EDT_BURNINGSVIDEO;
-            else if ( item.equals_ignore_case( "NULL" ) )
+            else if ( getItem( "video", "driver" ).equals_ignore_case( "NULL" ) )
                 params_.DriverType = irr::video::EDT_NULL;
             else
                 params_.DriverType = irr::video::EDT_SOFTWARE;
-            item = getItem( "camera", "far_value" );
-            farValue_ = ( item.empty() ? 300.0f : ( irr::core::strtof10( item.c_str() ) ) );
+            farValue_ = irr::core::strtof10( getItem( "camera", "far_value", "300.0" ).c_str() );
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const
@@ -83,9 +67,21 @@ namespace leviathan
 
         /* private */
 
+        void Configuration::generateContent( const irr::io::path& fileName )
+        {
+            irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
+            irr::u32 size = (irr::u32)file->getSize();
+            irr::u8 buffer[ size + 4 ];
+            file->read( &buffer, size );
+            file->drop();
+            irr::core::stringc rawContent = buffer;
+            rawContent.split( content_, "\n", 1, /* ignoreEmptyTokens = */ false );
+        }
+
         const irr::core::stringc Configuration::getItem(
             const irr::core::stringc& section,
-            const irr::core::stringc& key
+            const irr::core::stringc& key,
+            const irr::core::stringc& defaultValue
         )
         {
             bool sectionFound = false;
@@ -113,7 +109,7 @@ namespace leviathan
                     break;
                 }
             }
-            return result;
+            return result.empty() ? defaultValue : result;
         }
     }
 }

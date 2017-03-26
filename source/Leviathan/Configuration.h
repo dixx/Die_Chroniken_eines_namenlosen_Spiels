@@ -88,7 +88,12 @@ namespace leviathan
             Configuration( const Configuration& ); // Instanz ist nicht kopierbar
             Configuration& operator=( const Configuration& ); // Instanz ist nicht zuweisbar
 
-            const irr::core::stringc getItem( const irr::core::stringc& section, const irr::core::stringc& key );
+            void generateContent( const irr::io::path& fileName );
+            const irr::core::stringc getItem(
+                const irr::core::stringc& section,
+                const irr::core::stringc& key,
+                const irr::core::stringc& defaultValue = ""
+            );
         };
     }
 }

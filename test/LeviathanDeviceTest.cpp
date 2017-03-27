@@ -1,7 +1,9 @@
 #include "catch.hpp"
 #include "leviathan.h"
+#include "Testhelper.h"
 
 TEST_CASE( "LeviathanDevice" ) {
+    Testhelper testhelper;
     leviathan::LeviathanDevice subject;
 
     SECTION( "it provides a ready-to-use Logger" ) {
@@ -15,6 +17,6 @@ TEST_CASE( "LeviathanDevice" ) {
         subject.getTimeControl().pause();
         REQUIRE( timer.isPaused() );
     }
-    SECTION( "it can read a config file" ) {}
+    SECTION( "it provides a ready-to-use Configuration" ) {}
     SECTION( "it can write a config file" ) {}
 }

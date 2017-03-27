@@ -43,10 +43,4 @@ namespace leviathan
     {
         return timeControl_;
     }
-
-    void LeviathanDevice::readConfigFromFile( const irr::io::path& filename )
-    {
-        (void)filename;
-        // TODO
-    }
 }

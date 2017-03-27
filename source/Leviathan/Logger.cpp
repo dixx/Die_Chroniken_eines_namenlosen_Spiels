@@ -19,6 +19,7 @@ namespace leviathan
         {
             if ( fileSystem_ == 0 || timer_ == 0 )
                 exit( 1 );
+            fileSystem_->grab();
             openLogFile( append );
             text = "LogLevel: ";
             addLogLevelName( text, globalLogLevel_ );
@@ -28,6 +29,7 @@ namespace leviathan
         Logger::~Logger()
         {
             closeLogFile();
+            fileSystem_->drop();
         }
 
         void Logger::write( const Level logLevel )

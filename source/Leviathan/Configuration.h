@@ -38,12 +38,12 @@ namespace leviathan
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Logdateiname
              */
-            void writeToFile( const irr::io::path& fileName );
+            // void writeToFile( const irr::io::path& fileName );
 
             /*! \brief Gibt eine Sammlung von Parametern zur Erstellung eines Irrlicht-Device zurück.
              *  \return Parametersammlung
              */
-            const irr::SIrrlichtCreationParameters& getCreationParams() const;
+            const irr::SIrrlichtCreationParameters& getGraphicEngineParams() const;
 
             /*! \brief Gibt die Bildschirm- oder Fensterdimensionen zurück.
              *  \return Höhe und Breite des Fensters/Bildschirms (in Pixel)
@@ -70,21 +70,29 @@ namespace leviathan
              */
             irr::f32 getFarValue() const;
 
+            /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
+             *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.
+             *  \param section: Name der Sektion
+             *  \param key: Name des Schlüssels
+             *  \return Integer-Wert
+             */
+            int getInt( const irr::core::stringc& section, const irr::core::stringc& key );
+
         private:
 
             irr::io::IFileSystem* fileSystem_; // Zeiger auf das Irrlicht-Dateisystem
+            irr::core::list<irr::core::stringc> content_;
             irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
             irr::f32 farValue_; // Sichtweite der Kamera
 
             Configuration( const Configuration& ); // Instanz ist nicht kopierbar
             Configuration& operator=( const Configuration& ); // Instanz ist nicht zuweisbar
 
-            // holt einen bestimmten Wert aus dem eingelesenen Inhalt der Konfigdatei.
+            void generateContent( const irr::io::path& fileName );
             const irr::core::stringc getItem(
-                    const irr::core::stringc& content,
-                    const irr::c8* topic,
-                    const irr::c8* itemName,
-                    const irr::c8* origin = ""
+                const irr::core::stringc& section,
+                const irr::core::stringc& key,
+                const irr::core::stringc& defaultValue = ""
             );
         };
     }

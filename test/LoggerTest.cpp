@@ -42,7 +42,7 @@ TEST_CASE( "Logger: init" ) {
             REQUIRE( newSize == size * 2 );
         }
         SECTION( "and writes the global logging level into it" ) {
-            irr::core::stringc content =testhelper. readFile( logFileName );
+            irr::core::stringc content = testhelper.readFile( logFileName );
             REQUIRE( content.find("] LogLevel: Info") > -1 );
         }
     }

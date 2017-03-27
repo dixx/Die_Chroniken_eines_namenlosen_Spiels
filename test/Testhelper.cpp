@@ -39,6 +39,13 @@ irr::core::stringc Testhelper::readFile( irr::io::path fileName )
     return (irr::core::stringc)buffer;
 }
 
+void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& content )
+{
+    irr::io::IWriteFile* file = fileSystem_->createAndWriteFile( fileName, /* append = */ false );
+    file->write( content.c_str(), content.size() );
+    file->drop();
+}
+
 irr::u32 Testhelper::getFileSize( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );

@@ -5,6 +5,7 @@ set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
 set(NEW_GAME_SOURCES_DIR ${SOURCES_DIR}/new_game_code)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(3RDPARTY_DIR ${CMAKE_SOURCE_DIR}/3rdparty)
+set(RESOURCES_DIR ${CMAKE_SOURCE_DIR}/dev_media)
 
 set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 include_directories(${ENGINE_SOURCES_DIR})
@@ -13,18 +14,18 @@ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
-set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.3)
+set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/dependencies/irrlicht-1.8.3)
 set(IRRLICHT_INCLUDE_DIR ${IRRLICHT_DIR}/include)
 set(IRRLICHT_SOURCES_DIR ${IRRLICHT_DIR}/source/Irrlicht) # this is a workaround for an Irrlicht issue with ShadowVolumeSceneNodes
 include_directories(${IRRLICHT_INCLUDE_DIR} ${IRRLICHT_SOURCES_DIR})
 link_directories(${IRRLICHT_SOURCES_DIR}/MacOSX/BD/)
 
-set(IRRKLANG_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrKlang-1.5.0)
+set(IRRKLANG_DIR ${CMAKE_SOURCE_DIR}/dependencies/irrKlang-1.5.0)
 set(IRRKLANG_INCLUDE_DIR ${IRRKLANG_DIR}/include)
 include_directories(${IRRKLANG_INCLUDE_DIR})
 link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
 
-set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
+set(LUA_DIR ${CMAKE_SOURCE_DIR}/dependencies/lua-5.2.4)
 include_directories(${LUA_DIR}/include/)
 
 set(CATCH_DIR ${3RDPARTY_DIR}/catch) # TODO use https://github.com/philsquared/Catch/blob/master/docs/build-systems.md
@@ -145,7 +146,17 @@ endif(APPLE)
 
 # on installation, put everything where it belongs
 set(CMAKE_INSTALL_PREFIX ../Debug) # change later
-install(TARGETS ${PROJECT_NAME} DESTINATION .)
-install(TARGETS neues_spiel DESTINATION .)
-install(TARGETS unit_tests DESTINATION .)
-#install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)
+install(TARGETS ${PROJECT_NAME} neues_spiel unit_tests DESTINATION .)
+install(DIRECTORY ${RESOURCES_DIR}/GFX ${RESOURCES_DIR}/SFX ${RESOURCES_DIR}/SCRIPTS DESTINATION .)
+install(FILES ${RESOURCES_DIR}/chroniken.ico DESTINATION .)
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+  install(FILES
+    ${IRRLICHT_DIR}/bin/Win32-gcc/Irrlicht.dll
+    ${IRRKLANG_DIR}/bin/Win32-gcc/irrKlang.dll
+    ${LUA_DIR}/bin/lua52.dll
+    DESTINATION .
+  )
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+
+install(DIRECTORY DESTINATION ./SAVEGAMES)

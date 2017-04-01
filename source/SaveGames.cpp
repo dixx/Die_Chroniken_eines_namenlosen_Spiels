@@ -110,7 +110,7 @@ void SaveGames::save( const irr::io::path& filename )
 template <typename T> T SaveGames::read( irr::io::IReadFile* stream )
 {
     T buffer;
-    irr::u32 bytes = sizeof( typeof( buffer ) );
+    irr::u32 bytes = sizeof( T );//typeof( buffer ) );
     if ( stream->read( &buffer, bytes ) < static_cast<irr::s32>( bytes ) )
         Logfile::getInstance().emergencyExit( UNKNOWN_SAVEGAME_FORMAT );
     return buffer;

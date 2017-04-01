@@ -1,6 +1,6 @@
 # TODO find existing LUA
 
-set(LUA_DIR ${CMAKE_SOURCE_DIR}/dependencies/lua-5.2.4)
+set(LUA_DIR ${CMAKE_SOURCE_DIR}/dependencies/lua-5.3.2)
 set(LUA_INCLUDE_DIRS ${LUA_DIR}/include)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -9,6 +9,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+  set(LUA_INCLUDE_DIRS /usr/local/include)
   set(LUA_LIBRARY lua dl)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 

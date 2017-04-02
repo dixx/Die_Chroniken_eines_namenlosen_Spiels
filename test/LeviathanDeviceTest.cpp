@@ -4,6 +4,8 @@
 
 TEST_CASE( "LeviathanDevice" ) {
     Testhelper testhelper;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\nscreen_x=320\nscreen_y=200\n" );
     leviathan::LeviathanDevice subject;
 
     SECTION( "it provides a ready-to-use Logger" ) {
@@ -17,6 +19,10 @@ TEST_CASE( "LeviathanDevice" ) {
         subject.getTimeControl().pause();
         REQUIRE( timer.isPaused() );
     }
-    SECTION( "it provides a ready-to-use Configuration" ) {}
+    SECTION( "it provides a ready-to-use Configuration" ) {
+        REQUIRE( subject.getConfiguration().getGraphicEngineParams().Bits == 16 );
+        subject.getConfiguration().readFromFile( configFileName, testhelper.getFileSystem() );
+        REQUIRE( subject.getConfiguration().getGraphicEngineParams().Bits == 42 );
+    }
     SECTION( "it can write a config file" ) {}
 }

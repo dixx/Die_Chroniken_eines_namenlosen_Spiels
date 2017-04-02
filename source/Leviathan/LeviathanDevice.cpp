@@ -3,19 +3,22 @@
 namespace leviathan
 {
     LeviathanDevice::LeviathanDevice()
-    : graphicEngine_( 0 ),
+    : configuration_(),
+      graphicEngine_( irr::createDeviceEx( configuration_.getGraphicEngineParams() ) ),
       timeControl_(),
       logger_( 0 )
     {
-        irr::SIrrlichtCreationParameters params;
-        params.DriverType = irr::video::EDT_NULL;
-        params.LoggingLevel = irr::ELL_WARNING;
-        graphicEngine_ = irr::createDeviceEx( params );
-        // get config
+        configuration_.readFromFile( "config.ini", graphicEngine_->getFileSystem() );
+        graphicEngine_->drop();
+        graphicEngine_ = irr::createDeviceEx( configuration_.getGraphicEngineParams() );
         logger_ = new leviathan::core::Logger(
             graphicEngine_->getFileSystem(),
             graphicEngine_->getTimer(),
+#ifdef _DEBUG_MODE
+            "debug.log",
+#else
             "game.log",
+#endif
             leviathan::core::Logger::INFO // TODO get from config
         );
     }
@@ -42,5 +45,10 @@ namespace leviathan
     core::TimeControl& LeviathanDevice::getTimeControl()
     {
         return timeControl_;
+    }
+
+    core::Configuration& LeviathanDevice::getConfiguration()
+    {
+        return configuration_;
     }
 }

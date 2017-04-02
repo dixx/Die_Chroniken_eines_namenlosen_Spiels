@@ -31,17 +31,22 @@ namespace leviathan
          */
         ~LeviathanDevice();
 
-        /*! \brief
+        /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Engine-Bestandteile damit.
+         *  \param filename: Konfigdateiname
          */
-        core::TimeControl& getTimeControl();
+        void init( const irr::io::path& fileName );
 
-        /*! \brief
+        /*! \brief Zugriff auf die TimeControl Instanz.
          */
-        core::Logger& getLogger();
+        core::TimeControl& TimeControl();
 
-        /*! \brief
+        /*! \brief Zugriff auf den Logger.
          */
-        core::Configuration& getConfiguration();
+        core::Logger& Logger();
+
+        /*! \brief Zugriff auf die aktuelle Konfiguration.
+         */
+        core::Configuration& Configuration();
 
     private:
 

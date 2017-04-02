@@ -6,21 +6,19 @@ namespace leviathan
     : configuration_(),
       graphicEngine_( irr::createDeviceEx( configuration_.getGraphicEngineParams() ) ),
       timeControl_(),
-      logger_( 0 )
+      logger_(
+          new leviathan::core::Logger(
+              graphicEngine_->getFileSystem(),
+              graphicEngine_->getTimer(),
+    #ifdef _DEBUG_MODE
+              "debug.log",
+    #else
+              "game.log",
+    #endif
+              leviathan::core::Logger::INFO // TODO get from config
+          )
+      )
     {
-        configuration_.readFromFile( "config.ini", graphicEngine_->getFileSystem() );
-        graphicEngine_->drop();
-        graphicEngine_ = irr::createDeviceEx( configuration_.getGraphicEngineParams() );
-        logger_ = new leviathan::core::Logger(
-            graphicEngine_->getFileSystem(),
-            graphicEngine_->getTimer(),
-#ifdef _DEBUG_MODE
-            "debug.log",
-#else
-            "game.log",
-#endif
-            leviathan::core::Logger::INFO // TODO get from config
-        );
     }
 
     LeviathanDevice::~LeviathanDevice()
@@ -37,17 +35,37 @@ namespace leviathan
         }
     }
 
-    core::Logger& LeviathanDevice::getLogger()
+    void LeviathanDevice::init( const irr::io::path& fileName )
+    {
+        configuration_.readFromFile( fileName, graphicEngine_->getFileSystem() );
+        delete logger_;
+        graphicEngine_->closeDevice();
+        graphicEngine_->drop();
+        graphicEngine_ = irr::createDeviceEx( configuration_.getGraphicEngineParams() );
+        logger_ = new leviathan::core::Logger(
+            graphicEngine_->getFileSystem(),
+            graphicEngine_->getTimer(),
+#ifdef _DEBUG_MODE
+            "debug.log",
+#else
+            "game.log",
+#endif
+            leviathan::core::Logger::INFO, // TODO get from config
+            /*append = */ true
+        );
+    }
+
+    core::Logger& LeviathanDevice::Logger()
     {
         return *logger_;
     }
 
-    core::TimeControl& LeviathanDevice::getTimeControl()
+    core::TimeControl& LeviathanDevice::TimeControl()
     {
         return timeControl_;
     }
 
-    core::Configuration& LeviathanDevice::getConfiguration()
+    core::Configuration& LeviathanDevice::Configuration()
     {
         return configuration_;
     }

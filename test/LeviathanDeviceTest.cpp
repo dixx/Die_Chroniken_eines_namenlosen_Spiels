@@ -9,20 +9,23 @@ TEST_CASE( "LeviathanDevice" ) {
     leviathan::LeviathanDevice subject;
 
     SECTION( "it provides a ready-to-use Logger" ) {
-        subject.getLogger().text = L"it works!";
-        REQUIRE( subject.getLogger().text == L"it works!" );
+        subject.Logger().text = L"it works!";
+        REQUIRE( subject.Logger().text == L"it works!" );
+        subject.init( configFileName );
+        subject.Logger().text = L"it still works!";
+        REQUIRE( subject.Logger().text == L"it still works!" );
     }
     SECTION( "it provides a ready-to-use TimeControl" ) {
         leviathan::core::Timer timer( 123 );
-        subject.getTimeControl().add( timer );
+        subject.TimeControl().add( timer );
         timer.start();
-        subject.getTimeControl().pause();
+        subject.TimeControl().pause();
         REQUIRE( timer.isPaused() );
     }
     SECTION( "it provides a ready-to-use Configuration" ) {
-        REQUIRE( subject.getConfiguration().getGraphicEngineParams().Bits == 16 );
-        subject.getConfiguration().readFromFile( configFileName, testhelper.getFileSystem() );
-        REQUIRE( subject.getConfiguration().getGraphicEngineParams().Bits == 42 );
+        REQUIRE( subject.Configuration().getGraphicEngineParams().Bits == 16 );
+        subject.init( configFileName );
+        REQUIRE( subject.Configuration().getGraphicEngineParams().Bits == 42 );
     }
     SECTION( "it can write a config file" ) {}
 }

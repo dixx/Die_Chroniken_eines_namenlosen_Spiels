@@ -5,30 +5,33 @@ namespace leviathan
 {
     namespace core
     {
-        Configuration::Configuration( irr::io::IFileSystem* fileSystem )
-        : fileSystem_(fileSystem),
-          content_(),
+        Configuration::Configuration()
+        : content_(),
           params_(),
           farValue_(300.0f)
         {
-            if ( fileSystem_ == 0 )
-                exit( 1 );
-            fileSystem_->grab();
-            params_.DriverType = irr::video::EDT_SOFTWARE;
+            params_.DriverType = irr::video::EDT_NULL;
+            params_.LoggingLevel = irr::ELL_WARNING;
         }
 
         Configuration::~Configuration()
         {
-            fileSystem_->drop();
+            // nothing to do here
         }
 
-        void Configuration::readFromFile( const irr::io::path& fileName )
+        void Configuration::readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem )
         {
             content_.clear();
-            if ( fileSystem_->existFile( fileName ) )
-                generateContent( fileName );
+            if ( fileSystem && fileSystem->existFile( fileName ) )
+            {
+                fileSystem->grab();
+                generateContent( fileName, fileSystem );
+                fileSystem->drop();
+            }
             else
+            {
                 content_.push_back( "" );
+            }
             params_.WindowSize.Width = irr::core::strtoul10( getItem( "video", "screen_x", "800" ).c_str() );
             params_.WindowSize.Height = irr::core::strtoul10( getItem( "video", "screen_y", "600" ).c_str() );
             params_.Bits = static_cast<irr::u8>(
@@ -67,9 +70,9 @@ namespace leviathan
 
         /* private */
 
-        void Configuration::generateContent( const irr::io::path& fileName )
+        void Configuration::generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem )
         {
-            irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
+            irr::io::IReadFile* file = fileSystem->createAndOpenFile( fileName );
             irr::u32 size = (irr::u32)file->getSize();
             irr::u8 buffer[ size + 4 ];
             file->read( &buffer, size );

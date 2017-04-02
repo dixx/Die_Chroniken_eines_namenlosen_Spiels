@@ -22,9 +22,9 @@ namespace leviathan
         public:
 
             /*! \brief Konstruktor.
-             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
+             *  \note ein Default-Objekt wird erstellt
              */
-            Configuration( irr::io::IFileSystem* fileSystem = 0 );
+            Configuration();
 
             /*! \brief Destruktor.
              */
@@ -32,13 +32,15 @@ namespace leviathan
 
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Logdateiname
+             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            void readFromFile( const irr::io::path& fileName );
+            void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Logdateiname
+             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            // void writeToFile( const irr::io::path& fileName );
+            // void writeToFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );
 
             /*! \brief Gibt eine Sammlung von Parametern zur Erstellung eines Irrlicht-Device zurück.
              *  \return Parametersammlung
@@ -80,7 +82,6 @@ namespace leviathan
 
         private:
 
-            irr::io::IFileSystem* fileSystem_; // Zeiger auf das Irrlicht-Dateisystem
             irr::core::list<irr::core::stringc> content_;
             irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
             irr::f32 farValue_; // Sichtweite der Kamera
@@ -88,7 +89,7 @@ namespace leviathan
             Configuration( const Configuration& ); // Instanz ist nicht kopierbar
             Configuration& operator=( const Configuration& ); // Instanz ist nicht zuweisbar
 
-            void generateContent( const irr::io::path& fileName );
+            void generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem );
             const irr::core::stringc getItem(
                 const irr::core::stringc& section,
                 const irr::core::stringc& key,

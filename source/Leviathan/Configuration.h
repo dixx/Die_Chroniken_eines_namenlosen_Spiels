@@ -31,13 +31,13 @@ namespace leviathan
             ~Configuration();
 
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
-             *  \param filename: Logdateiname
+             *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
             void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
-             *  \param filename: Logdateiname
+             *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
             // void writeToFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );

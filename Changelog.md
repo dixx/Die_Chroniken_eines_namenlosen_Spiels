@@ -1,5 +1,9 @@
 ### comming soon...
-- tbd
+- divided game and game engine "leviathan"
+- game engine now supports
+  - Logging
+  - Timers
+  - Configuration
 
 ### Version 0.4.0
 - added collision with objects

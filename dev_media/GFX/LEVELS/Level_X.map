@@ -1,0 +1,95 @@
+################################################################################
+#                                                                              #
+#  Alle Schluesselworte muessen aus [A-Z0-9_] bestehen!                        #
+#  Alle Parameter muessen zwischen "" stehen!                                  #
+#  Pfadangaben muessen / als Trenner enthalten!                                #
+#  Positionsangaben duerfen nicht negativ sein!                                #
+#  TEXTUR betrifft nur Material 0!                                             #
+#                                                                              #
+#  make this obsolete: Doku erstellen                                          #
+#                                                                              #
+################################################################################
+
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/linksUnten.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane.3ds"
+  POSITION      = "0x0"
+  NAME          = "grid_0,0"
+  TEXTUR        = "GFX/landtest.png"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/Kartenteil_offener_ring.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane.3ds"
+  POSITION      = "0x1"
+  NAME          = "grid_0,1"
+  TEXTUR        = "GFX/Kartenteil_UV.png"
+  #SKALIERUNG    = "200.001x200.0x200.001"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/Kartenteil offener_ring_besser.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane.3ds"
+  POSITION      = "0x2"
+  NAME          = "grid_0,2"
+  TEXTUR        = "GFX/Kartenteil_UV.png"
+  #SKALIERUNG    = "200.001x200.0x200.001"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/linksUnten.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane.3ds"
+  POSITION      = "1x0"
+  NAME          = "grid_1,0"
+  TEXTUR        = "GFX/landtest.png"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/terrain_brush_tut.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane.3ds"
+  POSITION      = "1x1"
+  NAME          = "grid_1,1"
+  TEXTUR        = "GFX/brushed_terrain.png"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/Kartenteil_generated.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane_tiled.3ds"
+  POSITION      = "1x2"
+  NAME          = "grid_1,2"
+  TEXTUR        = "GFX/Kartenteil_generated_UV.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/linksUnten.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane_tiled.3ds"
+  POSITION      = "2x0"
+  NAME          = "grid_2,0"
+  TEXTUR        = "GFX/landtest.png"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/linksUnten.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane_tiled.3ds"
+  POSITION      = "2x1"
+  NAME          = "grid_2,1"
+  TEXTUR        = "GFX/landtest.png"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/linksUnten.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane_tiled.3ds"
+  POSITION      = "2x2"
+  NAME          = "grid_2,2"
+  TEXTUR        = "GFX/eis.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "begehbar"
+  #MESH_DATEI    = "GFX/MAP/linksUnten.3ds"
+  MESH_DATEI    = "GFX/MAP/simple_plane_tiled.3ds"
+  POSITION      = "3x2"
+  NAME          = "grid_3,2"
+  TEXTUR        = "GFX/eis.jpg"
+  #SKALIERUNG    = "200.001x20.0x200.001"
+[ENDE_OBJECT]

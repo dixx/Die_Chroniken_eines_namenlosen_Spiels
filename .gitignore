@@ -1,15 +1,4 @@
-Debug/*.o
-Debug/*.d
-Debug/*.exe
-Debug/spiel
-Debug/unit_tests
-Debug/*.log
-Debug/*.out
-Debug/*.mk
-Debug/*.dll
-Debug/*.ini
-Debug/makefile
-Debug/SAVEGAMES/
-Debug/dependencies/
+Debug/
 Doc/html/
 _build/
+dependencies/

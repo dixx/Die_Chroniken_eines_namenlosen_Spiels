@@ -6,7 +6,7 @@
 #define _SCRIPTING_HEADER
 
 #include <irrlicht.h>
-#include "lua.hpp"
+#include <lua.hpp>
 
 /*! \class Scripting Scripting.h "Scripting.h"
  *  \brief  Schnittstelle für die LUA ScriptEngine.

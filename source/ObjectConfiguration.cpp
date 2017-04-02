@@ -97,7 +97,7 @@ ObjectConfiguration::~ObjectConfiguration()
 template <typename T> T ObjectConfiguration::read( irr::io::IReadFile* stream )
 {
     T buffer;
-    irr::u32 bytes = sizeof( typeof( buffer ) );
+    irr::u32 bytes = sizeof( T );//typeof( buffer ) );
     if ( stream->read( &buffer, bytes ) < static_cast<irr::s32>( bytes ) )
         Logfile::getInstance().emergencyExit( UNKNOWN_FILE_FORMAT );
     return buffer;

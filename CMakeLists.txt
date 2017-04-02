@@ -1,67 +1,33 @@
 cmake_minimum_required(VERSION 2.8)
 project(spiel)
 
-set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
-set(NEW_GAME_SOURCES_DIR ${SOURCES_DIR}/new_game_code)
-set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
-set(3RDPARTY_DIR ${CMAKE_SOURCE_DIR}/3rdparty)
-
-set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
-include_directories(${ENGINE_SOURCES_DIR})
-
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
-set(IRRLICHT_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrlicht-1.8.3)
-set(IRRLICHT_INCLUDE_DIR ${IRRLICHT_DIR}/include)
-set(IRRLICHT_SOURCES_DIR ${IRRLICHT_DIR}/source/Irrlicht) # this is a workaround for an Irrlicht issue with ShadowVolumeSceneNodes
-include_directories(${IRRLICHT_INCLUDE_DIR} ${IRRLICHT_SOURCES_DIR})
-link_directories(${IRRLICHT_SOURCES_DIR}/MacOSX/BD/)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(3RDPARTY_DIR ${CMAKE_SOURCE_DIR}/3rdparty)
+set(RESOURCES_DIR ${CMAKE_SOURCE_DIR}/dev_media)
+set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
+set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/source)
+set(NEW_GAME_SOURCES_DIR ${SOURCES_DIR}/new_game_code)
+set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 
-set(IRRKLANG_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/irrKlang-1.5.0)
-set(IRRKLANG_INCLUDE_DIR ${IRRKLANG_DIR}/include)
-include_directories(${IRRKLANG_INCLUDE_DIR})
-link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/)
+include(compilerFlags)
 
-set(LUA_DIR ${CMAKE_SOURCE_DIR}/Debug/dependencies/lua-5.2.4)
-include_directories(${LUA_DIR}/include/)
-
-set(CATCH_DIR ${3RDPARTY_DIR}/catch) # TODO use https://github.com/philsquared/Catch/blob/master/docs/build-systems.md
-include_directories(${CATCH_DIR})
-
-if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-  set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a)
-  set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/lib/Win32-gcc/libirrKlang.a)
-  set(LUA_LIBRARY ${LUA_DIR}/liblua.a) # the one >200kB! If not exist, build it.
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-
-if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  set(IRRLICHT_LIBRARY ${IRRLICHT_DIR}/lib/Linux/libIrrlicht.a GL Xxf86vm X11)
-  set(IRRKLANG_LIBRARY ${IRRKLANG_DIR}/bin/linux-gcc-64/libIrrKlang.so)
-  set(LUA_LIBRARY lua dl)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-#if(APPLE)
-#endif(APPLE)
-
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
-
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # a switch for additional debug stuff deep in the code
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNULL=0") # sadly this is required by LUA
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0")
-
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wunused -Werror -Wshadow -Wnon-virtual-dtor -Wlong-long -Winline -Wunused-parameter -Wunused-variable -Wuninitialized -Wpointer-arith -Wfloat-equal -Wconversion -Wsign-conversion -Wcast-align")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-aggregate-return")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem\"${IRRLICHT_INCLUDE_DIR}/\" -isystem\"${IRRLICHT_SOURCES_DIR}/\" -isystem\"${IRRKLANG_INCLUDE_DIR}/\"") # to suppress warnings from libs
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything") # TODO try it once in a while
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic") # TODO try it once in a while
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Woverloaded-virtual") # uncovers a bug in Hero, TODO investigate!
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wold-style-cast") # TODO fix occurences!
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weffc++") # TODO fix occurences! If it runs smoothly, remove -Wnon-virtual-dtor above.
+find_package(Catch REQUIRED)
+find_package(IrrKlang REQUIRED)
+find_package(Irrlicht REQUIRED)
+find_package(Lua REQUIRED)
+include_directories(
+  ${CATCH_INCLUDE_DIRS}
+  ${ENGINE_SOURCES_DIR}
+  ${IRRKLANG_INCLUDE_DIRS}
+  ${IRRLICHT_INCLUDE_DIRS}
+  ${LUA_INCLUDE_DIRS}
+)
+link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/) # TODO only if MacOSX?
+link_directories(${IRRLICHT_SOURCES_DIR}/MacOSX/BD/) # TODO only if MacOSX?
 
 set(ENGINE_SOURCES
   ${ENGINE_SOURCES_DIR}/Configuration.cpp
@@ -145,7 +111,16 @@ endif(APPLE)
 
 # on installation, put everything where it belongs
 set(CMAKE_INSTALL_PREFIX ../Debug) # change later
-install(TARGETS ${PROJECT_NAME} DESTINATION .)
-install(TARGETS neues_spiel DESTINATION .)
-install(TARGETS unit_tests DESTINATION .)
-#install(DIRECTORY ${RESOURCES_DIR} DESTINATION .)
+install(TARGETS ${PROJECT_NAME} neues_spiel unit_tests DESTINATION .)
+install(DIRECTORY ${RESOURCES_DIR}/GFX ${RESOURCES_DIR}/SFX ${RESOURCES_DIR}/SCRIPTS DESTINATION .)
+install(DIRECTORY DESTINATION ./SAVEGAMES)
+install(FILES ${RESOURCES_DIR}/chroniken.ico DESTINATION .)
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows") # TODO remove?
+  install(FILES
+    ${IRRLICHT_BINARY_LIBRARY}
+    ${IRRKLANG_BINARY_LIBRARY}
+    ${LUA_BINARY_LIBRARY}
+    DESTINATION .
+  )
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")

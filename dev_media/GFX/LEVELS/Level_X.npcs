@@ -1,0 +1,30 @@
+################################################################################
+#                                                                              #
+#  Dokumentation zu dieser Datei: <Installationspfad>/Doc/OBJEKTE.DOC          #
+#                                                                              #
+################################################################################
+
+[START_OBJECT]
+  TYP           = "Lebewesen"
+  NAME          = "Hans Wurst"
+  MESH_DATEI    = "GFX/OBJECTS/dwarf.x"
+  POSITION      = "28.0x30.0"
+  SKALIERUNG    = "0.018x0.025x0.018"
+  TEXTUR        = "GFX/dwarf.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Lebewesen"
+  NAME          = "Franz Wurst"
+  MESH_DATEI    = "GFX/OBJECTS/dwarf.x"
+  POSITION      = "24.0x30.0"
+  SKALIERUNG    = "0.048x0.065x0.048"
+  TEXTUR        = "GFX/dwarf.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Lebewesen"
+  NAME          = "Hans Dampf"
+  MESH_DATEI    = "GFX/OBJECTS/dwarf.x"
+  POSITION      = "31.0x29.0"
+  SKALIERUNG    = "0.017x0.017x0.017"
+  TEXTUR        = "GFX/dwarf.jpg"
+[ENDE_OBJECT]

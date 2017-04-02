@@ -6,7 +6,7 @@ Wir wollen all die falschen Entscheidungen selber treffen, all den schlechten Co
 #### Installation
 Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 
-**Irrlicht**, **IrrKlang** und **Lua** in den entsprechenden Versionen **und passend zum Betriebssystem (32Bit/64Bit)** holen (siehe `CMakeLists.txt`) und nach `./Debug/dependencies` entpacken. Dann einen Ordner `./_build` anlegen, in diesen wechseln, dort eine Konsole öffnen...
+[**Irrlicht**](https://sourceforge.net/projects/irrlicht/files/), [**IrrKlang**](http://www.ambiera.com/irrklang/downloads.html) und [**Lua**](https://sourceforge.net/projects/luabinaries/files/)  in den entsprechenden Versionen **und passend zum Betriebssystem (32Bit/64Bit)** holen (siehe `CMakeLists.txt`) und nach `./dependencies` entpacken. Dann einen Ordner `./_build` anlegen, in diesen wechseln, dort eine Konsole öffnen...
 
 ###### Windows:
 ...und `cmake -G "MinGW Makefiles" ..` eingeben. Das erstellt ein Makefile für genau dein System. Damit kannst du dann machen was du willst, z.B. ein Eclipse-Projekt erstellen oder einfach `make` ausführen.
@@ -20,7 +20,8 @@ Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 #### Troubleshooting
 
 ##### Lua
-`sudo make linux install`
+Windows: `make generic`
+Linux: `sudo make linux install`
 - fatal error: readline/readline.h: No such file or directory --> `sudo apt-get install libreadline-dev`
 
 ##### Irrlicht
@@ -38,6 +39,7 @@ Nun suche das am besten passende Package raus und installiere es.
 A thousand thanks to:
 - the *Irrlicht 3D Engine* creators and maintainers, as well as to the great community!
 - the *irrKlang Sound Library* creators and maintainers
+- the *LUA* people
 - Dimitri van Heesch for *Doxygen*
 - Mastiff Odit for his *MastEventReceiver*, giving me a great start with EventReceivers
 - the wonderful community around *stackoverflow.com* for many many many hints

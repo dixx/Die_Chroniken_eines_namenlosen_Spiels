@@ -7,6 +7,7 @@
 #define _LEVIATHAN_CONFIGURATION_HEADER
 
 #include <irrlicht.h>
+#include "Logger.h"
 
 namespace leviathan
 {
@@ -47,30 +48,15 @@ namespace leviathan
              */
             const irr::SIrrlichtCreationParameters& getGraphicEngineParams() const;
 
-            /*! \brief Gibt die Bildschirm- oder Fensterdimensionen zurück.
-             *  \return Höhe und Breite des Fensters/Bildschirms (in Pixel)
-             */
-            // irr::core::dimension2du getScreenSize() const;
-
-            /*! \brief Gibt die Farbtiefe zurück.
-             *  \return Farbtiefe in bit
-             */
-            // irr::u16 getColorDepht() const;
-
-            /*! \brief Gibt an, ob die Anwendung Vollbild oder im Fenstermodus läuft.
-             *  \return `true` wenn Vollbild, ansonsten `false`
-             */
-            // bool isFullScreen() const;
-
-            /*! \brief Gibt den Render-Modus (Video-Treiber) zurück.
-             *  \return Render-Modus
-             */
-            // irr::video::E_DRIVER_TYPE getRenderMode() const; // TODO check naming!
-
             /*! \brief Gibt die Sichtweite der Kamera zurück.
              *  \return maximale Sichtweite (in Meter)
              */
             irr::f32 getFarValue() const;
+
+            /*! \brief Gibt den Loglevel zurück.
+             *  \return Loglevel
+             */
+            Logger::Level getLoggingLevel() const;
 
             /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
              *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.
@@ -85,6 +71,7 @@ namespace leviathan
             irr::core::list<irr::core::stringc> content_;
             irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
             irr::f32 farValue_; // Sichtweite der Kamera
+            Logger::Level loggingLevel_;
 
             Configuration( const Configuration& ); // Instanz ist nicht kopierbar
             Configuration& operator=( const Configuration& ); // Instanz ist nicht zuweisbar

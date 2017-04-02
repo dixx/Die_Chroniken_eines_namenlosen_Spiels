@@ -15,7 +15,7 @@ namespace leviathan
     #else
               "game.log",
     #endif
-              leviathan::core::Logger::INFO // TODO get from config
+              configuration_.getLoggingLevel()
           )
       )
     {
@@ -50,7 +50,7 @@ namespace leviathan
 #else
             "game.log",
 #endif
-            leviathan::core::Logger::INFO, // TODO get from config
+            configuration_.getLoggingLevel(),
             /*append = */ true
         );
     }

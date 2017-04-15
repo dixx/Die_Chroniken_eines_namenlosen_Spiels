@@ -8,6 +8,7 @@
 
 #include <irrlicht.h>
 #include "Configuration.h"
+#include "GameState.h"
 #include "LeviathanDevice.h"
 #include "Logger.h"
 #include "TimeControl.h"

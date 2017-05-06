@@ -58,8 +58,7 @@ namespace leviathan
 
         private:
 
-        	irr::core::list<Timer*> timerList_;
-        	irr::core::list<Timer*>::Iterator itr_;
+            irr::core::list<Timer*> timerList_;
         };
     }
 }

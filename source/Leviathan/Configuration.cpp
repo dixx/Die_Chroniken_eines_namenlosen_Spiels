@@ -87,9 +87,9 @@ namespace leviathan
         void Configuration::generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem )
         {
             irr::io::IReadFile* file = fileSystem->createAndOpenFile( fileName );
-            irr::u32 size = (irr::u32)file->getSize();
+            auto size = file->getSize();
             irr::u8 buffer[ size + 4 ];
-            file->read( &buffer, size );
+            file->read( &buffer, (irr::u32)size );
             file->drop();
             irr::core::stringc rawContent = buffer;
             rawContent.split( content_, "\n", 1, /* ignoreEmptyTokens = */ false );
@@ -105,9 +105,8 @@ namespace leviathan
             irr::core::stringc result;
             irr::core::stringc sectionIdent = "[";
             sectionIdent.append( section ).append( "]" );
-            for ( irr::core::list<irr::core::stringc>::Iterator it = content_.begin(); it != content_.end(); ++it )
+            for ( auto& line : content_ )
             {
-                irr::core::stringc line = *it;
                 if ( !sectionFound )
                 {
                     if ( line.find( sectionIdent.c_str() ) == 0 )

@@ -47,7 +47,7 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
-             *  \param timer: Zeiger auf einen Irrlicht-Timer
+             *  \param clock: Zeiger auf das Irrlicht-Zeitsystem
              *  \param fileName: Logdateiname
              *  \param globalLogLevel: Informationen bis zu diesem Level landen in der Logdatei, alles darüber nicht.
              *  \param append: Wenn `false`, dann wird immer eine neue Logdatei erzeugt. Wenn `true` wird angehängt,
@@ -55,7 +55,7 @@ namespace leviathan
              */
             Logger(
                     irr::io::IFileSystem* fileSystem,
-                    irr::ITimer* timer,
+                    irr::ITimer* clock,
                     const irr::io::path& fileName,
                     const Level globalLogLevel,
                     const bool append = false
@@ -89,7 +89,7 @@ namespace leviathan
 
             irr::io::path fileName_; // Logdateiname
             irr::io::IFileSystem* fileSystem_; // Irrlicht-Dateisystem
-            irr::ITimer* timer_; // Irrlicht-Timer
+            irr::ITimer* clock_; // Irrlicht-Zeitsystem
             irr::io::IWriteFile* logFile_; // Logdatei
             Level globalLogLevel_; // Globales LogLevel
 

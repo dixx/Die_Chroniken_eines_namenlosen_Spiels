@@ -6,18 +6,18 @@ namespace leviathan
     {
         Logger::Logger(
                 irr::io::IFileSystem* fileSystem,
-                irr::ITimer* timer,
+                irr::ITimer* clock,
                 const irr::io::path& fileName,
                 const Level globalLogLevel,
                 const bool append
         )
         : fileName_(fileName),
           fileSystem_(fileSystem),
-          timer_(timer),
+          clock_(clock),
           logFile_(0),
           globalLogLevel_(globalLogLevel)
         {
-            if ( fileSystem_ == 0 || timer_ == 0 )
+            if ( fileSystem_ == 0 || clock_ == 0 )
                 exit( 1 );
             fileSystem_->grab();
             openLogFile( append );
@@ -75,16 +75,16 @@ namespace leviathan
         {
             switch( logLevel )
             {
-                case INFO:
+                case Level::INFO:
                     txt += "Info";
                     break;
-                case DETAIL:
+                case Level::DETAIL:
                     txt += "Detail";
                     break;
-                case DEBUG:
+                case Level::DEBUG:
                     txt += "Debug";
                     break;
-                case ALL:
+                case Level::ALL:
                     txt += "All";
                     break;
                 default:
@@ -94,18 +94,18 @@ namespace leviathan
 
         void Logger::addTimeStamp( irr::core::stringc& txt )
         {
-            irr::ITimer::RealTimeDate datetime = timer_->getRealTimeAndDate();
-            addNumberWithLeadingZero( txt, datetime.Day );
+            auto now = clock_->getRealTimeAndDate();
+            addNumberWithLeadingZero( txt, now.Day );
             txt += ".";
-            addNumberWithLeadingZero( txt, datetime.Month );
+            addNumberWithLeadingZero( txt, now.Month );
             txt += ".";
-            txt += datetime.Year;
+            txt += now.Year;
             txt += " ";
-            addNumberWithLeadingZero( txt, datetime.Hour );
+            addNumberWithLeadingZero( txt, now.Hour );
             txt += ":";
-            addNumberWithLeadingZero( txt, datetime.Minute );
+            addNumberWithLeadingZero( txt, now.Minute );
             txt += ":";
-            addNumberWithLeadingZero( txt, datetime.Second );
+            addNumberWithLeadingZero( txt, now.Second );
         }
 
         void Logger::addNumberWithLeadingZero( irr::core::stringc& txt, const irr::u32 number )

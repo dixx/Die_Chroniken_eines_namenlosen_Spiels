@@ -9,7 +9,7 @@ TEST_CASE( "Logger: init" ) {
         testhelper.getFileSystem(),
         testhelper.getGraphicEngine()->getTimer(),
         logFileName,
-        leviathan::core::Logger::INFO
+        leviathan::core::Logger::Level::INFO
     );
     sample.flush();
 
@@ -23,7 +23,7 @@ TEST_CASE( "Logger: init" ) {
                     testhelper.getFileSystem(),
                     testhelper.getGraphicEngine()->getTimer(),
                     logFileName,
-                    leviathan::core::Logger::INFO
+                    leviathan::core::Logger::Level::INFO
             );
             subject.flush();
             irr::u32 newSize = testhelper.getFileSize( logFileName );
@@ -34,7 +34,7 @@ TEST_CASE( "Logger: init" ) {
                     testhelper.getFileSystem(),
                     testhelper.getGraphicEngine()->getTimer(),
                     logFileName,
-                    leviathan::core::Logger::INFO,
+                    leviathan::core::Logger::Level::INFO,
                     true
             );
             subject.flush();
@@ -52,7 +52,7 @@ TEST_CASE( "Logger: init" ) {
                 testhelper.getFileSystem(),
                 testhelper.getGraphicEngine()->getTimer(),
                 anotherLogFileName,
-                leviathan::core::Logger::INFO
+                leviathan::core::Logger::Level::INFO
         );
         REQUIRE( testhelper.existFile( logFileName ) );
         REQUIRE( testhelper.existFile( anotherLogFileName ) );
@@ -68,7 +68,7 @@ TEST_CASE( "Logger: logging" ) {
                 testhelper.getFileSystem(),
                 testhelper.getGraphicEngine()->getTimer(),
                 logFileName,
-                leviathan::core::Logger::INFO
+                leviathan::core::Logger::Level::INFO
         );
         subject.text = "Kilroy wuz here";
         subject.write();
@@ -101,16 +101,16 @@ TEST_CASE( "Logger: logging" ) {
             testhelper.getFileSystem(),
             testhelper.getGraphicEngine()->getTimer(),
             logFileName,
-            leviathan::core::Logger::DETAIL
+            leviathan::core::Logger::Level::DETAIL
         );
         subject.text = "a line just for information";
-        subject.write( leviathan::core::Logger::INFO );
+        subject.write( leviathan::core::Logger::Level::INFO );
         subject.text = "a line full of details";
-        subject.write( leviathan::core::Logger::DETAIL );
+        subject.write( leviathan::core::Logger::Level::DETAIL );
         subject.text = "a line for debugging";
-        subject.write( leviathan::core::Logger::DEBUG );
+        subject.write( leviathan::core::Logger::Level::DEBUG );
         subject.text = "a line hopefully never ever written";
-        subject.write( leviathan::core::Logger::ALL );
+        subject.write( leviathan::core::Logger::Level::ALL );
         subject.flush();
         irr::core::stringc content = testhelper.readFile( logFileName );
         REQUIRE( content.find( "information" ) > -1 );

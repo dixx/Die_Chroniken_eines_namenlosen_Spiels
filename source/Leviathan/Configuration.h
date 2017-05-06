@@ -31,6 +31,9 @@ namespace leviathan
              */
             ~Configuration();
 
+            Configuration( const Configuration& ) = delete;
+            Configuration& operator=( const Configuration& ) = delete;
+
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
@@ -72,9 +75,6 @@ namespace leviathan
             irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
             irr::f32 farValue_; // Sichtweite der Kamera
             Logger::Level loggingLevel_;
-
-            Configuration( const Configuration& ); // Instanz ist nicht kopierbar
-            Configuration& operator=( const Configuration& ); // Instanz ist nicht zuweisbar
 
             void generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem );
             const irr::core::stringc getItem(

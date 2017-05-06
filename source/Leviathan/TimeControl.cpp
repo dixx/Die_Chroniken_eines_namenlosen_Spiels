@@ -16,11 +16,11 @@ namespace leviathan
 
         void TimeControl::remove( Timer& timer )
         {
-            for( itr_ = timerList_.begin(); itr_ != timerList_.end(); ++itr_ )
+            for( auto itr = timerList_.begin(); itr != timerList_.end(); ++itr )
             {
-                if( *itr_ == &timer )
+                if( *itr == &timer )
                 {
-                    timerList_.erase( itr_ );
+                    timerList_.erase( itr );
                     break;
                 }
             }
@@ -28,20 +28,20 @@ namespace leviathan
 
         void TimeControl::pause()
         {
-            for( itr_ = timerList_.begin(); itr_ != timerList_.end(); ++itr_ )
-                (*itr_)->pause();
+            for( auto& timer : timerList_ )
+                timer->pause();
         }
 
         void TimeControl::resume()
         {
-            for( itr_ = timerList_.begin(); itr_ != timerList_.end(); ++itr_ )
-                (*itr_)->resume();
+            for( auto& timer : timerList_ )
+                timer->resume();
         }
 
         void TimeControl::tick( const irr::f32 frameDeltaTime )
         {
-            for( itr_ = timerList_.begin(); itr_ != timerList_.end(); ++itr_ )
-                (*itr_)->tick( frameDeltaTime );
+            for( auto& timer : timerList_ )
+                timer->tick( frameDeltaTime );
         }
     }
 }

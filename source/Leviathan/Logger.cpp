@@ -75,16 +75,16 @@ namespace leviathan
         {
             switch( logLevel )
             {
-                case INFO:
+                case Level::INFO:
                     txt += "Info";
                     break;
-                case DETAIL:
+                case Level::DETAIL:
                     txt += "Detail";
                     break;
-                case DEBUG:
+                case Level::DEBUG:
                     txt += "Debug";
                     break;
-                case ALL:
+                case Level::ALL:
                     txt += "All";
                     break;
                 default:

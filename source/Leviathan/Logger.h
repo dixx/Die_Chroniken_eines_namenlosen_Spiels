@@ -28,7 +28,7 @@ namespace leviathan
              *  \details Es können auch alle Zwischenwerte mit benutzerdefinierten Detailtiefen ergänzt und im Code
              *           verwendet werden, dies hier sind lediglich Richtwerte.
              */
-            enum Level
+            enum class Level
             {
                 INFO   = 1,   //!< Informative Sachen für die Logdatei, Warnungen und Fehlermeldungen
                 DETAIL = 10,  //!< Details zu Warnungen und Fehlermeldungen
@@ -74,7 +74,7 @@ namespace leviathan
              *        LogLevel ist.
              *  \param logLevel: logLevel ab welchem der Text tatsächlich in die Logdatei geschrieben wird
              */
-            void write( const Level logLevel = INFO );
+            void write( const Level logLevel = Level::INFO );
 
             /*! \brief Schreibt den Logdatei-Buffer auf die Platte.
              *  \attention Dies schließt die Logdatei und öffnet sie erneut! (Keine Irrlicht-Implementation dafür

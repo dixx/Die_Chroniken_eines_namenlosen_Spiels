@@ -65,6 +65,9 @@ namespace leviathan
              */
             ~Logger();
 
+            Logger( const Logger& ) = delete;
+            Logger& operator=( const Logger& ) = delete;
+
             /*! \brief Schreibt eine Zeile Text in die Logdatei
              *  \note Schreibt eine Irrlicht-Zeichenkette inklusive "Zeitstempel [LogLevel] " und abschließendem
              *        Zeilenumbruch in die Logdatei, sofern das globalLogLevel größer oder gleich dem angegebenen
@@ -89,9 +92,6 @@ namespace leviathan
             irr::ITimer* timer_; // Irrlicht-Timer
             irr::io::IWriteFile* logFile_; // Logdatei
             Level globalLogLevel_; // Globales LogLevel
-
-            Logger( const Logger& ); // Instanz ist nicht kopierbar
-            Logger& operator=( const Logger& ); // Instanz ist nicht zuweisbar
 
             inline void openLogFile( const bool append = true );
             inline void closeLogFile();

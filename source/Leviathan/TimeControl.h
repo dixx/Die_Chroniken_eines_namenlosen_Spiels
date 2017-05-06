@@ -29,6 +29,9 @@ namespace leviathan
              */
             ~TimeControl();
 
+            TimeControl( const TimeControl& ) = delete;
+            TimeControl& operator=( const TimeControl& ) = delete;
+
             /*! \brief Fügt einen vorhandenen Timer zur zentralen Steuerung hinzu.
              *  \param timer: Referenz auf den Timer
              */
@@ -57,9 +60,6 @@ namespace leviathan
 
         	irr::core::list<Timer*> timerList_;
         	irr::core::list<Timer*>::Iterator itr_;
-
-            TimeControl( const TimeControl& );  // Objekt ist kopiergeschützt
-            TimeControl& operator=( const TimeControl& );  // Objekt ist vor Zuweisung geschützt
         };
     }
 }

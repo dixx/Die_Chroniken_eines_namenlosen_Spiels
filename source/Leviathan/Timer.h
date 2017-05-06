@@ -24,7 +24,10 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            Timer( const irr::f32 maxValue );
+            explicit Timer( const irr::f32 maxValue );
+
+            Timer( const Timer& ) = delete;
+            Timer& operator=( const Timer& ) = delete;
 
             /*! \brief Erhöht den Timer um bestimmten Wert (in Sekunden).
              *  \param frameDeltaTime: Zeit (in Sekunden)
@@ -80,9 +83,6 @@ namespace leviathan
             bool timerIsRunning_;
             bool timerIsPaused_;
             bool timerIsFull_;
-
-            Timer( const Timer& );  // Objekt ist kopiergeschützt
-            Timer& operator=( const Timer& );  // Objekt ist vor Zuweisung geschützt
         };
 
         /*! \class AlwaysRunningTimer
@@ -99,6 +99,9 @@ namespace leviathan
              */
             AlwaysRunningTimer( const irr::f32 maxValue ) : Timer(maxValue) {}
 
+            AlwaysRunningTimer( const AlwaysRunningTimer& ) = delete;
+            AlwaysRunningTimer& operator=( const AlwaysRunningTimer& ) = delete;
+
             /*! \brief Timer reagiert nicht auf stop.
              */
             void stop() {}
@@ -110,11 +113,6 @@ namespace leviathan
             /*! \brief Timer reagiert nicht auf resume.
              */
             void resume() {}
-
-        private:
-
-            AlwaysRunningTimer( const AlwaysRunningTimer& );  // Objekt ist kopiergeschützt
-            AlwaysRunningTimer& operator=( const AlwaysRunningTimer& );  // Objekt ist vor Zuweisung geschützt
         };
     }
 }

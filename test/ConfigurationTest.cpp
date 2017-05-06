@@ -43,7 +43,7 @@ TEST_CASE( "Configuration: read values" ) {
         REQUIRE( subject.getGraphicEngineParams().Fullscreen == true );
         REQUIRE( subject.getGraphicEngineParams().DriverType == irr::video::EDT_OPENGL );
         REQUIRE( subject.getFarValue() == Approx( 300.0f ) );
-        REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::ALL );
+        REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::ALL );
 
         SECTION( "reading again overwrites changes" ) {
             testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\n" );
@@ -61,7 +61,7 @@ TEST_CASE( "Configuration: read values" ) {
             REQUIRE( subject.getGraphicEngineParams().Fullscreen == false );
             REQUIRE( subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE );
             REQUIRE( subject.getFarValue() == Approx( 300.0f ) ); // TODO: find good default!
-            REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::INFO );
+            REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO );
         }
         SECTION( "if file is missing" ) {
             subject.readFromFile( "totally_nonexisting_file", testhelper.getFileSystem() );

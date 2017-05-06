@@ -28,7 +28,7 @@ namespace leviathan
              *  \details Es können auch alle Zwischenwerte mit benutzerdefinierten Detailtiefen ergänzt und im Code
              *           verwendet werden, dies hier sind lediglich Richtwerte.
              */
-            enum Level
+            enum class Level
             {
                 INFO   = 1,   //!< Informative Sachen für die Logdatei, Warnungen und Fehlermeldungen
                 DETAIL = 10,  //!< Details zu Warnungen und Fehlermeldungen
@@ -47,7 +47,7 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
-             *  \param timer: Zeiger auf einen Irrlicht-Timer
+             *  \param clock: Zeiger auf das Irrlicht-Zeitsystem
              *  \param fileName: Logdateiname
              *  \param globalLogLevel: Informationen bis zu diesem Level landen in der Logdatei, alles darüber nicht.
              *  \param append: Wenn `false`, dann wird immer eine neue Logdatei erzeugt. Wenn `true` wird angehängt,
@@ -55,7 +55,7 @@ namespace leviathan
              */
             Logger(
                     irr::io::IFileSystem* fileSystem,
-                    irr::ITimer* timer,
+                    irr::ITimer* clock,
                     const irr::io::path& fileName,
                     const Level globalLogLevel,
                     const bool append = false
@@ -65,13 +65,16 @@ namespace leviathan
              */
             ~Logger();
 
+            Logger( const Logger& ) = delete;
+            Logger& operator=( const Logger& ) = delete;
+
             /*! \brief Schreibt eine Zeile Text in die Logdatei
              *  \note Schreibt eine Irrlicht-Zeichenkette inklusive "Zeitstempel [LogLevel] " und abschließendem
              *        Zeilenumbruch in die Logdatei, sofern das globalLogLevel größer oder gleich dem angegebenen
              *        LogLevel ist.
              *  \param logLevel: logLevel ab welchem der Text tatsächlich in die Logdatei geschrieben wird
              */
-            void write( const Level logLevel = INFO );
+            void write( const Level logLevel = Level::INFO );
 
             /*! \brief Schreibt den Logdatei-Buffer auf die Platte.
              *  \attention Dies schließt die Logdatei und öffnet sie erneut! (Keine Irrlicht-Implementation dafür
@@ -86,12 +89,9 @@ namespace leviathan
 
             irr::io::path fileName_; // Logdateiname
             irr::io::IFileSystem* fileSystem_; // Irrlicht-Dateisystem
-            irr::ITimer* timer_; // Irrlicht-Timer
+            irr::ITimer* clock_; // Irrlicht-Zeitsystem
             irr::io::IWriteFile* logFile_; // Logdatei
             Level globalLogLevel_; // Globales LogLevel
-
-            Logger( const Logger& ); // Instanz ist nicht kopierbar
-            Logger& operator=( const Logger& ); // Instanz ist nicht zuweisbar
 
             inline void openLogFile( const bool append = true );
             inline void closeLogFile();

@@ -24,7 +24,7 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            Timer( const irr::f32 maxValue );
+            explicit Timer( const irr::f32 maxValue );
 
             Timer( const Timer& ) = delete;
             Timer& operator=( const Timer& ) = delete;

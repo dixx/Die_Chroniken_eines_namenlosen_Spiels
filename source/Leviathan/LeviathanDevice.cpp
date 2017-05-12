@@ -10,11 +10,11 @@ namespace leviathan
           new leviathan::core::Logger(
               graphicEngine_->getFileSystem(),
               graphicEngine_->getTimer(),
-    #ifdef _DEBUG_MODE
+#ifdef _DEBUG_MODE
               "debug.log",
-    #else
+#else
               "game.log",
-    #endif
+#endif
               configuration_.getLoggingLevel()
           )
       )

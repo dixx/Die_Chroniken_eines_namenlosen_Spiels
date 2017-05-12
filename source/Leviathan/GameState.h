@@ -29,6 +29,9 @@ namespace leviathan
              */
         	virtual ~GameState() {};
 
+            GameState( const GameState& ) = delete;
+            GameState& operator=( const GameState& ) = delete;
+
             /*! \brief Aktualisiert den Zustand.
              *  \param frameDeltaTime: Dauer des letzten Frames in Sekunden
              */
@@ -37,26 +40,6 @@ namespace leviathan
             /*! \brief Zeichnet den Zustand auf den Bildschirm.
              */
             virtual void draw() = 0;
-
-            /*!
-             *
-             */
-            //virtual void pause() = 0;
-
-            /*!
-             *
-             */
-            //virtual void resume() = 0;
-
-        protected:
-
-            // internalState currentInternalState_;
-            // bool forceDraw_;
-
-        private:
-
-            GameState( const GameState& );
-            GameState& operator=( const GameState& );
         };
     }
 }

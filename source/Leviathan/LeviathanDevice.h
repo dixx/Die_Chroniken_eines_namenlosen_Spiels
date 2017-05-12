@@ -9,6 +9,7 @@
 
 #include <irrlicht.h>
 #include "Configuration.h"
+#include "GameStateManager.h"
 #include "Logger.h"
 #include "TimeControl.h"
 
@@ -51,11 +52,16 @@ namespace leviathan
          */
         core::Configuration& Configuration();
 
+        /*! \brief Zugriff auf die Verwaltung der Spielzustände.
+         */
+        core::GameStateManager& GameStateManager();
+
     private:
 
         core::Configuration configuration_;
         irr::IrrlichtDevice* graphicEngine_;
         core::TimeControl timeControl_;
+        core::GameStateManager gameStateManager_;
         core::Logger* logger_;
     };
 }

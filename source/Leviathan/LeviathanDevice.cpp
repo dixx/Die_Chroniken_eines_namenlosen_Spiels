@@ -6,6 +6,7 @@ namespace leviathan
     : configuration_(),
       graphicEngine_( irr::createDeviceEx( configuration_.getGraphicEngineParams() ) ),
       timeControl_(),
+      gameStateManager_(),
       logger_(
           new leviathan::core::Logger(
               graphicEngine_->getFileSystem(),
@@ -68,5 +69,10 @@ namespace leviathan
     core::Configuration& LeviathanDevice::Configuration()
     {
         return configuration_;
+    }
+
+    core::GameStateManager& LeviathanDevice::GameStateManager()
+    {
+        return gameStateManager_;
     }
 }

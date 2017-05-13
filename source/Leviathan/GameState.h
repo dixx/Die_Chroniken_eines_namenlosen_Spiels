@@ -2,8 +2,8 @@
  *  \brief Klasse stellt Interfacemethoden für Spielzustände bereit.
  */
 
-#ifndef _GAMESTATE_HEADER
-#define _GAMESTATE_HEADER
+#ifndef _LEVIATHAN_GAMESTATE_HEADER
+#define _LEVIATHAN_GAMESTATE_HEADER
 
 #include <irrlicht.h>
 

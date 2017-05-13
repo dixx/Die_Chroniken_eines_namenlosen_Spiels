@@ -25,8 +25,9 @@ TEST_CASE( "GameState: interface methods" ) {
     GameStateSub sample;
     leviathan::core::GameState* subject = &sample;
     subject->draw();
+    REQUIRE( sample.isDrawn );
+    REQUIRE_FALSE( sample.isUpdated );
     subject->update( 42.21f );
-
     REQUIRE( sample.isDrawn );
     REQUIRE( sample.isUpdated );
     REQUIRE( sample.delta == Approx( 42.21 ) );

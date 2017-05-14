@@ -19,6 +19,11 @@ namespace leviathan
             states_.insert( id, &gameState );
         }
 
+        void GameStateManager::transitTo( irr::u32 id )
+        {
+            (void)id;
+        }
+
         void GameStateManager::update( const irr::f32 frameDeltaTime )
         {
             (void)frameDeltaTime;
@@ -32,6 +37,11 @@ namespace leviathan
         unsigned int GameStateManager::getGameStateCount()
         {
             return states_.size();
+        }
+
+        irr::u32 GameStateManager::getActiveStateID()
+        {
+            return 0;
         }
     }
 }

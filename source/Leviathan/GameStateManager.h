@@ -32,12 +32,22 @@ namespace leviathan
             GameStateManager& operator=( const GameStateManager& ) = delete;
 
             /*! \brief Fügt einen Spielzustand zur Verwaltung hinzu.
+             *  \note Existiert die ID wird der existierende Zustand nicht mit dem neuen ersetzt.
+             *        Ein bereits vorhandener Zustand kann unter neuer ID erneut hinzugefügt werden.
              *  \param gameState: zu verwaltender Spielzustand
-             *  \param id: Identifikator für späteren Zugriff auf den State
+             *  \param id: Identifikator für späteren Zugriff auf den Zustand
              */
             void add( GameState& gameState, irr::u32 id );
-            //void requestState( GameState& gameState );
-            // how to add rules?
+
+            /*! \brief Wechselt zum Spielzustand welcher unter dieser ID abgelegt wurde.
+             *  \note Zustände werden übereinander auf einen Stack gelegt.
+             *        Ist der Zustand bisher noch nicht im Stack, wird er oben auf den Stack gelegt und aktiviert.
+             *        Ist der gewünschte Zustand direkt unter dem aktiven Zustand, wird der aktive Zustand vom Stack
+             *        entfernt und der gewünschte Zustand wird wieder aktiviert.
+             *        Ist der Zustand bereits aktiv, oder weiter unten im Stack, findet kein Transit statt.
+             *  \param id: Identifikator des gewünschten Zustands
+             */
+            void transitTo( irr::u32 id );
 
             /*! \brief Aktualisiert den momentan aktiven Zustand.
              *  \param frameDeltaTime: Dauer des letzten Frames in Sekunden
@@ -52,6 +62,11 @@ namespace leviathan
              *  \attention Nur für Testzwecke gedacht!
              */
             unsigned int getGameStateCount();
+
+            /*! \brief Gibt den Identifikator des aktiven Spielzustands zurück.
+             *  \attention Nur für Testzwecke gedacht!
+             */
+            irr::u32 getActiveStateID();
 
         private:
 

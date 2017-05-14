@@ -2,13 +2,11 @@
  *  \brief Klasse stellt Schnittstelle für Zugriff auf die verschiedenen Zustände des Spiels bereit.
  */
 
-#ifndef _GAMESTATEMANAGER_HEADER
-#define _GAMESTATEMANAGER_HEADER
+#ifndef _LEVIATHAN_GAMESTATEMANAGER_HEADER
+#define _LEVIATHAN_GAMESTATEMANAGER_HEADER
 
-#include "leviathan.h"
+#include <irrlicht.h>
 #include "GameState.h"
-
-class GameState; // forward declaration
 
 namespace leviathan
 {
@@ -30,11 +28,15 @@ namespace leviathan
              */
             ~GameStateManager();
 
+            GameStateManager( const GameStateManager& ) = delete;
+            GameStateManager& operator=( const GameStateManager& ) = delete;
+
             /*! \brief Fügt einen Spielzustand zur Verwaltung hinzu.
              *  \param gameState: zu verwaltender Spielzustand
+             *  \param id: Identifikator für späteren Zugriff auf den State
              */
-            void add( Gamestate& gameState );
-            //void requestState( Gamestate& gameState );
+            void add( GameState& gameState, irr::u32 id );
+            //void requestState( GameState& gameState );
             // how to add rules?
 
             /*! \brief Aktualisiert den momentan aktiven Zustand.
@@ -46,10 +48,15 @@ namespace leviathan
              */
             void draw();
 
+            /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
+             *  \attention Nur für Testzwecke gedacht!
+             */
+            unsigned int getGameStateCount();
+
         private:
 
-            GameStateManager( const GameStateManager& );
-            GameStateManager& operator=( const GameStateManager& );
+            irr::core::map<irr::u32, GameState*> states_;
+            irr::core::list<irr::u32> runningStates_;
         };
     }
 }

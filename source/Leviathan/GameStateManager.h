@@ -64,14 +64,15 @@ namespace leviathan
             unsigned int getGameStateCount();
 
             /*! \brief Gibt den Identifikator des aktiven Spielzustands zurück.
-             *  \attention Nur für Testzwecke gedacht!
+             *  \attention Nur für Testzwecke public gemacht!
+             *  \note Gibt 0xffffffff zurück wenn kein Zustand aktiv ist.
              */
             irr::u32 getActiveStateID();
 
         private:
 
             irr::core::map<irr::u32, GameState*> states_;
-            irr::core::list<irr::u32> runningStates_;
+            irr::core::list<irr::u32> runningStateIDs_;
         };
     }
 }

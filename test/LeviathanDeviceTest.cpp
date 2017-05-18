@@ -1,28 +1,9 @@
 #include "catch.hpp"
 #include "leviathan.h"
 #include "Testhelper.h"
+#include "TesthelperLeviathan.h"
 
-class GameStateSub final: public leviathan::core::GameState
-{
-public:
-    bool isDrawn, isUpdated;
-    irr::f32 delta;
-
-    GameStateSub() : isDrawn(false), isUpdated(false), delta(0.0f) {};
-
-    void draw() final
-    {
-        isDrawn = true;
-    }
-
-    void update( const irr::f32 frameDeltaTime ) final
-    {
-        isUpdated = true;
-        delta = frameDeltaTime;
-    }
-}; // TODO try to remove this duplicate!
-
-TEST_CASE( "LeviathanDevice" ) {
+TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\nscreen_x=320\nscreen_y=200\n" );
@@ -46,9 +27,10 @@ TEST_CASE( "LeviathanDevice" ) {
         REQUIRE( subject.Configuration().getGraphicEngineParams().Bits == 16 );
         subject.init( configFileName );
         REQUIRE( subject.Configuration().getGraphicEngineParams().Bits == 42 );
+        SECTION( "it can write a config file" ) {}
     }
     SECTION( "it provides a ready-to-use GameStateManager" ) {
-        GameStateSub gameState;
+        TesthelperLeviathan::GameStateSub gameState;
         subject.GameStateManager().add( gameState, 1 );
         subject.GameStateManager().transitTo( 1 );
         subject.GameStateManager().update( 12.34f );
@@ -60,5 +42,4 @@ TEST_CASE( "LeviathanDevice" ) {
         REQUIRE( gameState.isUpdated );
         REQUIRE( gameState.delta == Approx( 12.34f ) );
     }
-    SECTION( "it can write a config file" ) {}
 }

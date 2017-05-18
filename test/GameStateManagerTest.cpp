@@ -1,29 +1,10 @@
 #include "catch.hpp"
 #include "leviathan.h"
-
-class GameStateSub final: public leviathan::core::GameState
-{
-public:
-    bool isDrawn, isUpdated;
-    irr::f32 delta;
-
-    GameStateSub() : isDrawn(false), isUpdated(false), delta(0.0f) {};
-
-    void draw() final
-    {
-        isDrawn = true;
-    }
-
-    void update( const irr::f32 frameDeltaTime ) final
-    {
-        isUpdated = true;
-        delta = frameDeltaTime;
-    }
-}; // TODO try to remove this duplicate!
+#include "TesthelperLeviathan.h"
 
 TEST_CASE( "GameStateManager: add game states" ) {
     leviathan::core::GameStateManager subject;
-    GameStateSub start, play, stop;
+    TesthelperLeviathan::GameStateSub start, play, stop;
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );
@@ -46,7 +27,7 @@ TEST_CASE( "GameStateManager: add game states" ) {
 
 TEST_CASE( "GameStateManager: transit between game states" ) {
     leviathan::core::GameStateManager subject;
-    GameStateSub start, play, pause, options;
+    TesthelperLeviathan::GameStateSub start, play, pause, options;
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE, STATE_OPTIONS };
     subject.add( start, STATE_START );
     subject.add( options, STATE_OPTIONS );
@@ -86,7 +67,7 @@ TEST_CASE( "GameStateManager: transit between game states" ) {
 
 TEST_CASE( "GameStateManager: update and draw active game states" ) {
     leviathan::core::GameStateManager subject;
-    GameStateSub start, play, pause;
+    TesthelperLeviathan::GameStateSub start, play, pause;
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );

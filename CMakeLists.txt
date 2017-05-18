@@ -93,6 +93,7 @@ set(SOURCES_FOR_TESTS
   ${TEST_DIR}/LeviathanDeviceTest.cpp
   ${TEST_DIR}/LoggerTest.cpp
   ${TEST_DIR}/Testhelper.cpp
+  ${TEST_DIR}/TesthelperLeviathan.cpp
   ${TEST_DIR}/TimeControlTest.cpp
   ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp

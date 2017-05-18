@@ -60,7 +60,7 @@ TEST_CASE( "Configuration: read values" ) {
             REQUIRE( subject.getGraphicEngineParams().Bits == 16 );
             REQUIRE( subject.getGraphicEngineParams().Fullscreen == false );
             REQUIRE( subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE );
-            REQUIRE( subject.getFarValue() == Approx( 300.0f ) ); // TODO: find good default!
+            REQUIRE( subject.getFarValue() == Approx( 300.0f ) );
             REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO );
         }
         SECTION( "if file is missing" ) {

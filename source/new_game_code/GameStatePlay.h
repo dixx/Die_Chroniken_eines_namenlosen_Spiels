@@ -23,6 +23,9 @@ public:
      */
 	~GameStatePlay() final;
 
+    GameStatePlay( const GameStatePlay& ) = delete;
+    GameStatePlay& operator=( const GameStatePlay& ) = delete;
+
     /*! \brief Aktualisiert das Spiel.
      *  \param frameDeltaTime: Dauer des letzten Frames in Sekunden
      */
@@ -31,14 +34,6 @@ public:
     /*! \brief Zeichnet das Spiel auf den Bildschirm.
      */
     void draw() final;
-
-    // TODO handle events
-    // TODO pause
-
-private:
-
-    GameStatePlay( const GameStatePlay& );
-    GameStatePlay& operator=( const GameStatePlay& );
 };
 
 #endif

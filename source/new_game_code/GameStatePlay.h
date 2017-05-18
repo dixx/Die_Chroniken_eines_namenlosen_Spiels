@@ -27,9 +27,9 @@ public:
     GameStatePlay& operator=( const GameStatePlay& ) = delete;
 
     /*! \brief Aktualisiert das Spiel.
-     *  \param frameDeltaTime: Dauer des letzten Frames in Sekunden
+     *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
      */
-    void update( const irr::f32 frameDeltaTime ) final;
+    void update( const irr::f32 elapsedSeconds ) final;
 
     /*! \brief Zeichnet das Spiel auf den Bildschirm.
      */

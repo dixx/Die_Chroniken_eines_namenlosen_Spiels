@@ -10,9 +10,9 @@ GameStatePlay::~GameStatePlay()
 
 }
 
-void GameStatePlay::update( const irr::f32 frameDeltaTime )
+void GameStatePlay::update( const irr::f32 elapsedSeconds )
 {
-    (void)frameDeltaTime;
+    (void)elapsedSeconds;
 }
 
 void GameStatePlay::draw()

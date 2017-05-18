@@ -12,7 +12,7 @@ namespace TesthelperLeviathan
         irr::f32 delta;
         GameStateSub();
         void draw() final;
-        void update( const irr::f32 frameDeltaTime ) final;
+        void update( const irr::f32 seconds ) final;
     };
 }
 

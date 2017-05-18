@@ -44,11 +44,11 @@ namespace leviathan
             }
         }
 
-        void GameStateManager::update( const irr::f32 frameDeltaTime )
+        void GameStateManager::update( const irr::f32 elapsedSeconds )
         {
             irr::u32 id = getActiveStateID();
             if ( id != 0xffffffff )
-                ((GameState*)states_[id])->update( frameDeltaTime );
+                ((GameState*)states_[id])->update( elapsedSeconds );
         }
 
         void GameStateManager::draw()

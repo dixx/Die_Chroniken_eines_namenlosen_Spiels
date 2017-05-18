@@ -38,10 +38,10 @@ namespace leviathan
                 timer->resume();
         }
 
-        void TimeControl::tick( const irr::f32 frameDeltaTime )
+        void TimeControl::tick( const irr::f32 seconds )
         {
             for( auto& timer : timerList_ )
-                timer->tick( frameDeltaTime );
+                timer->tick( seconds );
         }
     }
 }

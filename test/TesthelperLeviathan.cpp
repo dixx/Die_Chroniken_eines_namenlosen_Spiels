@@ -11,9 +11,9 @@ namespace TesthelperLeviathan
         isDrawn = true;
     }
 
-    void GameStateSub::update( const irr::f32 frameDeltaTime )
+    void GameStateSub::update( const irr::f32 seconds )
     {
         isUpdated = true;
-        delta = frameDeltaTime;
+        delta = seconds;
     }
 }

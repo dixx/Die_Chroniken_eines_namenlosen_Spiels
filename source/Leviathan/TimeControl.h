@@ -51,10 +51,10 @@ namespace leviathan
              */
             void resume();
 
-            /*! \brief Erhöht alle verwalteten Timer um die seit dem letzten Tick vergangene Zeit.
-             *  \param frameDeltaTime: Zeitwert in Sekunden
+            /*! \brief Erhöht alle verwalteten Timer, z.B. um die seit dem letzten Tick vergangene Zeit.
+             *  \param seconds: Zeitwert in Sekunden
              */
-            void tick( const irr::f32 frameDeltaTime );
+            void tick( const irr::f32 seconds );
 
         private:
 

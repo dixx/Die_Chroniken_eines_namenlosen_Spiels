@@ -30,10 +30,10 @@ namespace leviathan
             Timer& operator=( const Timer& ) = delete;
 
             /*! \brief Erhöht den Timer um bestimmten Wert (in Sekunden).
-             *  \param frameDeltaTime: Zeit (in Sekunden)
+             *  \param seconds: Zeit (in Sekunden)
              *  \return Referenz auf sich selbst
              */
-            Timer& tick( const irr::f32 frameDeltaTime );
+            Timer& tick( const irr::f32 seconds );
 
             /*! \brief Startet den Timer bei null.
              */

@@ -51,9 +51,9 @@ namespace leviathan
             void transitTo( irr::u32 id );
 
             /*! \brief Aktualisiert den momentan aktiven Zustand.
-             *  \param frameDeltaTime: Dauer des letzten Frames in Sekunden
+             *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
              */
-            void update( const irr::f32 frameDeltaTime );
+            void update( const irr::f32 elapsedSeconds );
 
             /*! \brief Zeichnet den momentan aktiven Zustand auf den Bildschirm.
              */

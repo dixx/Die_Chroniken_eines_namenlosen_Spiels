@@ -34,9 +34,9 @@ namespace leviathan
             GameState& operator=( const GameState& ) = delete;
 
             /*! \brief Aktualisiert den Zustand.
-             *  \param frameDeltaTime: Dauer des letzten Frames in Sekunden
+             *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
              */
-            virtual void update( const irr::f32 frameDeltaTime ) = 0;
+            virtual void update( const irr::f32 elapsedSeconds ) = 0;
 
             /*! \brief Zeichnet den Zustand auf den Bildschirm.
              */

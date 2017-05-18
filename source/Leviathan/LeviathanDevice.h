@@ -9,6 +9,7 @@
 
 #include <irrlicht.h>
 #include "Configuration.h"
+#include "GameStateManager.h"
 #include "Logger.h"
 #include "TimeControl.h"
 
@@ -39,6 +40,17 @@ namespace leviathan
          */
         void init( const irr::io::path& fileName );
 
+        /*! \brief Der eigentliche Game-Loop.
+         *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,
+         *         Berechnen der Zeit, Entscheiden ob die KI aktualisiert werden muss usw.
+         */
+        void run(); // TODO test!
+
+        /*! \brief Gibt das Errorlevel der Engine zurück.
+         *  \return 0 wenn alles gut lief, ansonsten eine ganzzahlige positive Fehlernummer.
+         */
+        int exitStatus(); // TODO test!
+
         /*! \brief Zugriff auf die TimeControl Instanz.
          */
         core::TimeControl& TimeControl();
@@ -51,11 +63,16 @@ namespace leviathan
          */
         core::Configuration& Configuration();
 
+        /*! \brief Zugriff auf die Verwaltung der Spielzustände.
+         */
+        core::GameStateManager& GameStateManager();
+
     private:
 
         core::Configuration configuration_;
         irr::IrrlichtDevice* graphicEngine_;
         core::TimeControl timeControl_;
+        core::GameStateManager gameStateManager_;
         core::Logger* logger_;
     };
 }

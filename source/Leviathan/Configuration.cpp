@@ -1,5 +1,4 @@
 #include "Configuration.h"
-#include "Logger.h"
 
 namespace leviathan
 {

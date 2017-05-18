@@ -4,6 +4,8 @@
   - Logging
   - Timers
   - Configuration
+  - game states
+  - a game loop
 
 ### Version 0.4.0
 - added collision with objects

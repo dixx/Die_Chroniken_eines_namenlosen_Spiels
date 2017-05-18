@@ -6,15 +6,16 @@ namespace leviathan
     : configuration_(),
       graphicEngine_( irr::createDeviceEx( configuration_.getGraphicEngineParams() ) ),
       timeControl_(),
+      gameStateManager_(),
       logger_(
           new leviathan::core::Logger(
               graphicEngine_->getFileSystem(),
               graphicEngine_->getTimer(),
-    #ifdef _DEBUG_MODE
+#ifdef _DEBUG_MODE
               "debug.log",
-    #else
+#else
               "game.log",
-    #endif
+#endif
               configuration_.getLoggingLevel()
           )
       )
@@ -55,6 +56,49 @@ namespace leviathan
         );
     }
 
+    void LeviathanDevice::run()
+    {
+        const irr::f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
+        const irr::u32 FRAME_DELTA_TIME_IN_MS = static_cast<irr::u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
+        irr::u32 next = graphicEngine_->getTimer()->getTime();
+
+        while ( graphicEngine_->run() )
+        {
+            if ( !graphicEngine_->isWindowActive() )
+                graphicEngine_->yield();
+            irr::u32 loops = 0;
+            bool we_must_draw = false;
+            while ( graphicEngine_->getTimer()->getTime() > next && loops < 10 ) // Time will slow down if FPS<12.5 (125FPS / 10)
+            {
+                timeControl_.tick( FRAME_DELTA_TIME );
+                gameStateManager_.update( FRAME_DELTA_TIME );
+                if ( !graphicEngine_->run() )
+                {
+                    we_must_draw = false;
+                    break;
+                }
+                // eventreceiver.setKeysLastState();
+                next += FRAME_DELTA_TIME_IN_MS;
+                we_must_draw = true;
+                // if ( gameStateManager_.allFramesMustBeShown() )
+                //     break;
+                ++loops;
+            }
+            if ( we_must_draw )
+            {
+#ifdef _DEBUG_MODE
+                // printFPS();
+#endif
+                gameStateManager_.draw();
+            }
+        }
+    }
+
+    int LeviathanDevice::exitStatus()
+    {
+        return 0;
+    }
+
     core::Logger& LeviathanDevice::Logger()
     {
         return *logger_;
@@ -68,5 +112,10 @@ namespace leviathan
     core::Configuration& LeviathanDevice::Configuration()
     {
         return configuration_;
+    }
+
+    core::GameStateManager& LeviathanDevice::GameStateManager()
+    {
+        return gameStateManager_;
     }
 }

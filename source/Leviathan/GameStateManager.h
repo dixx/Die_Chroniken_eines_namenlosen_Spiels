@@ -1,5 +1,6 @@
 /*! \file GameStateManager.h
  *  \brief Klasse stellt Schnittstelle für Zugriff auf die verschiedenen Zustände des Spiels bereit.
+ *  \note Bestandteil der Leviathan Engine
  */
 
 #ifndef _LEVIATHAN_GAMESTATEMANAGER_HEADER

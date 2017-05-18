@@ -1,5 +1,6 @@
 /*! \file GameState.h
  *  \brief Klasse stellt Interfacemethoden für Spielzustände bereit.
+ *  \note Bestandteil der Leviathan Engine
  */
 
 #ifndef _LEVIATHAN_GAMESTATE_HEADER

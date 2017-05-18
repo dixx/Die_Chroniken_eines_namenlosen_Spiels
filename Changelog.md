@@ -1,7 +1,4 @@
 ### comming soon...
-- tbd
-
-### Version 0.5.0
 - divided game and game engine "leviathan"
 - game engine now supports
   - Logging

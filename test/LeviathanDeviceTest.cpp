@@ -43,3 +43,23 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         REQUIRE( gameState.delta == Approx( 12.34f ) );
     }
 }
+
+TEST_CASE( "LeviathanDevice main loop" ) {
+    leviathan::LeviathanDevice subject;
+
+    SECTION( "it provides a ready-to-use Logger" ) {
+    }
+}
+
+TEST_CASE( "LeviathanDevice exit status" ) {
+    leviathan::LeviathanDevice subject;
+    Testhelper testhelper;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\nscreen_x=320\nscreen_y=200\n" );
+
+    SECTION( "it is 0 if everything ran well" ) {
+        REQUIRE( 0 == subject.exitStatus() );
+        subject.init( configFileName );
+        REQUIRE( 0 == subject.exitStatus() );
+    }
+}

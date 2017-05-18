@@ -4,8 +4,9 @@ int main()
 {
     leviathan::LeviathanDevice gameEngine;
     gameEngine.init( "config.ini" );
-    // add game states to engine
+    GameStatePlay play;
+    gameEngine.GameStateManager().add( play, 1 );
+    gameEngine.GameStateManager().transitTo( 1 );
     // gameEngine.run();
-    // return status
-    return 0;
+    return 0; // gameEngine.exitStatus();
 }

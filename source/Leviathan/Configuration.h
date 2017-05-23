@@ -61,6 +61,11 @@ namespace leviathan
              */
             Logger::Level getLoggingLevel() const;
 
+            /*! \brief Gibt die Anzahl der maximal anzuzeigenden Bilder pro Sekunde zurück.
+             *  \return Anzahl der maximal anzuzeigenden Bilder pro Sekunde
+             */
+            irr::u32 getMaxFPS() const;
+
             /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
              *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.
              *  \param section: Name der Sektion
@@ -75,6 +80,7 @@ namespace leviathan
             irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
             irr::f32 farValue_; // Sichtweite der Kamera
             Logger::Level loggingLevel_;
+            irr::u32 maxFPS_;
 
             void generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem );
             const irr::core::stringc getItem(

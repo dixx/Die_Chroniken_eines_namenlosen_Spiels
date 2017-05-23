@@ -8,7 +8,8 @@ namespace leviathan
         : content_(),
           params_(),
           farValue_(300.0f),
-          loggingLevel_(Logger::Level::INFO)
+          loggingLevel_(Logger::Level::INFO),
+          maxFPS_(125)
         {
             params_.DriverType = irr::video::EDT_NULL;
             params_.LoggingLevel = irr::ELL_WARNING;
@@ -58,6 +59,7 @@ namespace leviathan
                 loggingLevel_ = Logger::Level::DETAIL;
             else
                 loggingLevel_ = Logger::Level::INFO;
+            maxFPS_ = irr::core::strtoul10( getItem( "video", "max_fps", "125" ).c_str() );
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const
@@ -73,6 +75,11 @@ namespace leviathan
         Logger::Level Configuration::getLoggingLevel() const
         {
             return loggingLevel_;
+        }
+
+        irr::u32 Configuration::getMaxFPS() const
+        {
+            return maxFPS_;
         }
 
         int Configuration::getInt( const irr::core::stringc& section, const irr::core::stringc& key )

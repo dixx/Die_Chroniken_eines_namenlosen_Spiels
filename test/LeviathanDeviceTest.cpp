@@ -46,8 +46,44 @@ TEST_CASE( "LeviathanDevice supporter" ) {
 
 TEST_CASE( "LeviathanDevice main loop" ) {
     leviathan::LeviathanDevice subject;
+    // TODO how to mock the IrrlichtDevice?
+    // TODO get framerate from configuration
 
-    SECTION( "it provides a ready-to-use Logger" ) {
+    SECTION( "it should be fair to other apps if inactive" ) {
+    }
+
+    SECTION( "it should not draw if engine is shut down directly after game state update" ) {
+    }
+
+    SECTION( "without calculation stress" ) {
+        SECTION( "it should draw with a fixed maximum frame rate" ) {
+        }
+        SECTION( "it should update every tick" ) {
+        }
+    }
+    SECTION( "with moderate calculation stress" ) {
+        SECTION( "it should begin to skip frames" ) {
+        }
+        SECTION( "it should update every tick" ) {
+        }
+    }
+    SECTION( "with much calculation stress" ) {
+        SECTION( "it should draw with a fixed minimum frame rate" ) {
+        }
+        SECTION( "it should update every tick" ) {
+        }
+    }
+    SECTION( "with peak load" ) {
+        SECTION( "it should draw with a fixed minimum frame rate" ) {
+        }
+        SECTION( "it should update every tick" ) {
+        }
+    }
+    SECTION( "with zero elapsed time" ) {
+        SECTION( "it should draw with a fixed maximum frame rate" ) {
+        }
+        SECTION( "it should update every tick" ) {
+        }
     }
 }
 

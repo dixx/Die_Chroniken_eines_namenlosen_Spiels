@@ -32,6 +32,7 @@ TEST_CASE( "Configuration: read values" ) {
         content += "fullscreen = true\n";
         content += "# drivers: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), BURNINGSVIDEO, NULL\n";
         content += "driver = OPENGL\n";
+        content += "max_fps = 42\n";
         content += "\n";
         content += "[camera]\n";
         content += "far_value = 300.0\n";
@@ -44,6 +45,7 @@ TEST_CASE( "Configuration: read values" ) {
         REQUIRE( subject.getGraphicEngineParams().DriverType == irr::video::EDT_OPENGL );
         REQUIRE( subject.getFarValue() == Approx( 300.0f ) );
         REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::ALL );
+        REQUIRE( subject.getMaxFPS() == 42 );
 
         SECTION( "reading again overwrites changes" ) {
             testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\n" );
@@ -62,6 +64,7 @@ TEST_CASE( "Configuration: read values" ) {
             REQUIRE( subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE );
             REQUIRE( subject.getFarValue() == Approx( 300.0f ) );
             REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO );
+            REQUIRE( subject.getMaxFPS() == 125 );
         }
         SECTION( "if file is missing" ) {
             subject.readFromFile( "totally_nonexisting_file", testhelper.getFileSystem() );

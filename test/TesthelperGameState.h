@@ -1,9 +1,9 @@
-#ifndef _TESTHELPER_LEVIATHAN_HEADER
-#define _TESTHELPER_LEVIATHAN_HEADER
+#ifndef _TESTHELPER_GAME_STATE_HEADER
+#define _TESTHELPER_GAME_STATE_HEADER
 
 #include "leviathan.h"
 
-namespace TesthelperLeviathan
+namespace TesthelperGameState
 {
     class GameStateSub final: public leviathan::core::GameState
     {

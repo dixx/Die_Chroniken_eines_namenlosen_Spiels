@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "leviathan.h"
 #include "Testhelper.h"
-#include "TesthelperLeviathan.h"
+#include "TesthelperGameState.h"
 
 TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;
@@ -30,7 +30,7 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         SECTION( "it can write a config file" ) {}
     }
     SECTION( "it provides a ready-to-use GameStateManager" ) {
-        TesthelperLeviathan::GameStateSub gameState;
+        TesthelperGameState::GameStateSub gameState;
         subject.GameStateManager().add( gameState, 1 );
         subject.GameStateManager().transitTo( 1 );
         subject.GameStateManager().update( 12.34f );
@@ -45,9 +45,11 @@ TEST_CASE( "LeviathanDevice supporter" ) {
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {
+    Testhelper testhelper;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    testhelper.writeFile( configFileName, "[video]\nmax_fps=42\n" );
     leviathan::LeviathanDevice subject;
     // TODO how to mock the IrrlichtDevice?
-    // TODO get framerate from configuration
 
     SECTION( "it should be fair to other apps if inactive" ) {
     }

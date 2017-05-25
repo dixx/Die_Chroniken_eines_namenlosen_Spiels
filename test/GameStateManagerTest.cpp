@@ -1,10 +1,10 @@
 #include "catch.hpp"
 #include "leviathan.h"
-#include "TesthelperLeviathan.h"
+#include "TesthelperGameState.h"
 
 TEST_CASE( "GameStateManager: add game states" ) {
     leviathan::core::GameStateManager subject;
-    TesthelperLeviathan::GameStateSub start, play, stop;
+    TesthelperGameState::GameStateSub start, play, stop;
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );
@@ -27,7 +27,7 @@ TEST_CASE( "GameStateManager: add game states" ) {
 
 TEST_CASE( "GameStateManager: transit between game states" ) {
     leviathan::core::GameStateManager subject;
-    TesthelperLeviathan::GameStateSub start, play, pause, options;
+    TesthelperGameState::GameStateSub start, play, pause, options;
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE, STATE_OPTIONS };
     subject.add( start, STATE_START );
     subject.add( options, STATE_OPTIONS );
@@ -67,7 +67,7 @@ TEST_CASE( "GameStateManager: transit between game states" ) {
 
 TEST_CASE( "GameStateManager: update and draw active game states" ) {
     leviathan::core::GameStateManager subject;
-    TesthelperLeviathan::GameStateSub start, play, pause;
+    TesthelperGameState::GameStateSub start, play, pause;
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );

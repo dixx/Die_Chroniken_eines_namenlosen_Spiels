@@ -1,6 +1,6 @@
-#include "TesthelperLeviathan.h"
+#include "TesthelperGameState.h"
 
-namespace TesthelperLeviathan
+namespace TesthelperGameState
 {
     GameStateSub::GameStateSub() : isDrawn(false), isUpdated(false), delta(0.0f)
     {

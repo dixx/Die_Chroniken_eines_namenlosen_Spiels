@@ -58,8 +58,8 @@ namespace leviathan
 
     void LeviathanDevice::run()
     {
-        const irr::f32 FRAME_DELTA_TIME = 0.008f;  // 0.008s ~= 125 FPS fixed
-        const irr::u32 FRAME_DELTA_TIME_IN_MS = static_cast<irr::u32>( FRAME_DELTA_TIME * 1000 );  // for performance.
+        const irr::f32 FRAME_DELTA_TIME = 1.f / static_cast<irr::f32>( configuration_.getMaxFPS() );
+        const irr::u32 FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / configuration_.getMaxFPS();  // for performance.
         irr::u32 next = graphicEngine_->getTimer()->getTime();
 
         while ( graphicEngine_->run() )
@@ -68,7 +68,7 @@ namespace leviathan
                 graphicEngine_->yield();
             irr::u32 loops = 0;
             bool we_must_draw = false;
-            while ( graphicEngine_->getTimer()->getTime() > next && loops < 10 ) // Time will slow down if FPS<12.5 (125FPS / 10)
+            while ( graphicEngine_->getTimer()->getTime() > next && loops < 10 ) // in-game time will slow down if framerate drops below 10% of maxFPS // FIXME for FPS > 250
             {
                 timeControl_.tick( FRAME_DELTA_TIME );
                 gameStateManager_.update( FRAME_DELTA_TIME );
@@ -78,7 +78,7 @@ namespace leviathan
                     break;
                 }
                 // eventreceiver.setKeysLastState();
-                next += FRAME_DELTA_TIME_IN_MS;
+                next += FRAME_DELTA_TIME_IN_MILLISECONDS;
                 we_must_draw = true;
                 // if ( gameStateManager_.allFramesMustBeShown() )
                 //     break;

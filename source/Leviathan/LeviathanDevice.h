@@ -13,6 +13,8 @@
 #include "Logger.h"
 #include "TimeControl.h"
 
+namespace TesthelperLeviathanDevice { class LeviathanDeviceWithIrrlichtMock; } // forward declaration for unit tests
+
 namespace leviathan
 {
 
@@ -74,6 +76,8 @@ namespace leviathan
         core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
+
+        friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
     };
 }
 

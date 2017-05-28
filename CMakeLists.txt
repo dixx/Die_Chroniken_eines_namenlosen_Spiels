@@ -90,10 +90,13 @@ set(SOURCES_FOR_TESTS
   ${TEST_DIR}/ConfigurationTest.cpp
   ${TEST_DIR}/GameStateManagerTest.cpp
   ${TEST_DIR}/GameStateTest.cpp
+  ${TEST_DIR}/IrrlichtDeviceMock.cpp
+  ${TEST_DIR}/IrrlichtTimerMock.cpp
   ${TEST_DIR}/LeviathanDeviceTest.cpp
   ${TEST_DIR}/LoggerTest.cpp
   ${TEST_DIR}/Testhelper.cpp
   ${TEST_DIR}/TesthelperGameState.cpp
+  ${TEST_DIR}/TesthelperLeviathanDevice.cpp
   ${TEST_DIR}/TimeControlTest.cpp
   ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp

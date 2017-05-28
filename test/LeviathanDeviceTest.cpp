@@ -2,6 +2,7 @@
 #include "leviathan.h"
 #include "Testhelper.h"
 #include "TesthelperGameState.h"
+#include "TesthelperLeviathanDevice.h"
 
 TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;
@@ -48,16 +49,23 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile( configFileName, "[video]\nmax_fps=42\n" );
-    leviathan::LeviathanDevice subject;
-    // TODO how to mock the IrrlichtDevice?
+    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
+    subject.init( configFileName );
 
     SECTION( "it should be fair to other apps if inactive" ) {
+        subject.enableMock();
     }
 
     SECTION( "it should not draw if engine is shut down directly after game state update" ) {
     }
 
     SECTION( "without calculation stress" ) {
+        SECTION( "it should draw with a fixed maximum frame rate" ) {
+        }
+        SECTION( "it should update every tick" ) {
+        }
+    }
+    SECTION( "with zero elapsed time" ) {
         SECTION( "it should draw with a fixed maximum frame rate" ) {
         }
         SECTION( "it should update every tick" ) {
@@ -77,12 +85,6 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     }
     SECTION( "with peak load" ) {
         SECTION( "it should draw with a fixed minimum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
-        }
-    }
-    SECTION( "with zero elapsed time" ) {
-        SECTION( "it should draw with a fixed maximum frame rate" ) {
         }
         SECTION( "it should update every tick" ) {
         }

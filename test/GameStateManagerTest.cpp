@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include "leviathan.h"
-#include "TesthelperGameState.h"
+#include "helpers/TesthelperGameState.h"
 
 TEST_CASE( "GameStateManager: add game states" ) {
     leviathan::core::GameStateManager subject;

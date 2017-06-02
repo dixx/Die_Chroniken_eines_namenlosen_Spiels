@@ -1,8 +1,8 @@
 #include "catch.hpp"
 #include "leviathan.h"
-#include "Testhelper.h"
-#include "TesthelperGameState.h"
-#include "TesthelperLeviathanDevice.h"
+#include "helpers/Testhelper.h"
+#include "helpers/TesthelperGameState.h"
+#include "helpers/TesthelperLeviathanDevice.h"
 
 TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;

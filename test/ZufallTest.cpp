@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../source/Zufall.h"
+#include "../source/Zufall.h" // TODO change to engine randomizer later
 #include <time.h>
 #include <irrlicht.h>
 

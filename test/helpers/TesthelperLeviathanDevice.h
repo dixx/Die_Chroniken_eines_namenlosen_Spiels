@@ -2,7 +2,7 @@
 #define _TESTHELPER_LEVIATHAN_DEVICE_HEADER
 
 #include "leviathan.h"
-#include "IrrlichtDeviceMock.h"
+#include "mocks/IrrlichtDeviceMock.h"
 
 namespace TesthelperLeviathanDevice
 {

@@ -7,7 +7,7 @@
 TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\nscreen_x=320\nscreen_y=200\n" );
+    testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\nscreen_x=32\nscreen_y=20\n" );
     leviathan::LeviathanDevice subject;
 
     SECTION( "it provides a ready-to-use Logger" ) {
@@ -48,12 +48,24 @@ TEST_CASE( "LeviathanDevice supporter" ) {
 TEST_CASE( "LeviathanDevice main loop" ) {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile( configFileName, "[video]\nmax_fps=42\n" );
+    testhelper.writeFile( configFileName, "[video]\nmax_fps=42\nscreen_x=5\nscreen_y=5\n" );
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
 
     SECTION( "it should be fair to other apps if inactive" ) {
         subject.enableMock();
+        subject.mockedGraphicEngine.letRunReturn( true );
+        subject.mockedGraphicEngine.letRunReturn( true );
+        subject.mockedGraphicEngine.letRunReturn( true );
+        subject.mockedGraphicEngine.letRunReturn( true );
+        subject.mockedGraphicEngine.letRunReturn( true );
+        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
+        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
+        subject.mockedGraphicEngine.letIsWindowActiveReturn( false );
+        subject.mockedGraphicEngine.letIsWindowActiveReturn( false );
+        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
+        subject.run();
+        REQUIRE( subject.mockedGraphicEngine.timesYieldWasCalled() == 2 );
     }
 
     SECTION( "it should not draw if engine is shut down directly after game state update" ) {
@@ -95,7 +107,7 @@ TEST_CASE( "LeviathanDevice exit status" ) {
     leviathan::LeviathanDevice subject;
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile( configFileName, "[video]\ncolor_depth=42\nscreen_x=320\nscreen_y=200\n" );
+    testhelper.writeFile( configFileName, "[video]\nscreen_x=32\nscreen_y=20\n" );
 
     SECTION( "it is 0 if everything ran well" ) {
         REQUIRE( 0 == subject.exitStatus() );

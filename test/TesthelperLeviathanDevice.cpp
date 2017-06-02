@@ -3,8 +3,8 @@
 namespace TesthelperLeviathanDevice
 {
     LeviathanDeviceWithIrrlichtMock::LeviathanDeviceWithIrrlichtMock()
-    : originalGraphicEngine_(graphicEngine_),
-      mockedGraphicEngine_(graphicEngine_)
+    : mockedGraphicEngine(),
+      originalGraphicEngine_(0)
     {
     }
 
@@ -15,7 +15,8 @@ namespace TesthelperLeviathanDevice
 
     void LeviathanDeviceWithIrrlichtMock::enableMock()
     {
-        graphicEngine_ = (irr::IrrlichtDevice*)(&mockedGraphicEngine_);
+        originalGraphicEngine_ = graphicEngine_; // graphicEngine_ may have been changed by parents init method
+        graphicEngine_ = (irr::IrrlichtDevice*)(&mockedGraphicEngine);
     }
 
     void LeviathanDeviceWithIrrlichtMock::disableMock()

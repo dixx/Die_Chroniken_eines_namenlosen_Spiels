@@ -6,7 +6,7 @@ IrrlichtDeviceMock::IrrlichtDeviceMock()
   runReturnDefault_(false),
   runCallCount_(0),
   isWindowActiveReturn_(),
-  isWindowActiveReturnDefault_(true), // TODO write setter for this
+  isWindowActiveReturnDefault_(false),
   isWindowActiveCallCount_(0),
   yieldCallCount_(0)
 {
@@ -34,6 +34,11 @@ bool IrrlichtDeviceMock::run()
     return ret;
 }
 
+void IrrlichtDeviceMock::letRunReturnByDefault( bool ret )
+{
+    runReturnDefault_ = ret;
+}
+
 void IrrlichtDeviceMock::letRunReturn( bool ret )
 {
     runReturn_.push_back( ret );
@@ -55,6 +60,11 @@ bool IrrlichtDeviceMock::isWindowActive() const
     bool ret = *first;
     isWindowActiveReturn_.erase( first );
     return ret;
+}
+
+void IrrlichtDeviceMock::letIsWindowActiveReturnByDefault( bool ret )
+{
+    isWindowActiveReturnDefault_ = ret;
 }
 
 void IrrlichtDeviceMock::letIsWindowActiveReturn( bool ret )

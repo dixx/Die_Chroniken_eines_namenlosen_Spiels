@@ -54,11 +54,13 @@ TEST_CASE( "LeviathanDevice main loop" ) {
 
     SECTION( "it should be fair to other apps if inactive" ) {
         subject.enableMock();
+        subject.mockedGraphicEngine.letRunReturnByDefault( false );
         subject.mockedGraphicEngine.letRunReturn( true );
         subject.mockedGraphicEngine.letRunReturn( true );
         subject.mockedGraphicEngine.letRunReturn( true );
         subject.mockedGraphicEngine.letRunReturn( true );
         subject.mockedGraphicEngine.letRunReturn( true );
+        subject.mockedGraphicEngine.letIsWindowActiveReturnByDefault( true );
         subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
         subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
         subject.mockedGraphicEngine.letIsWindowActiveReturn( false );

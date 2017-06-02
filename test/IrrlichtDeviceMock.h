@@ -15,7 +15,8 @@ public:
     virtual bool isWindowActive() const;
     virtual void yield();
     // setter for mocked method default return values
-    // TODO
+    void letRunReturnByDefault( bool ret );
+    void letIsWindowActiveReturnByDefault( bool ret );
     // setter for mocked method return values; these can be called multiple times for sequential returns
     void letRunReturn( bool ret );
     void letIsWindowActiveReturn( bool ret );

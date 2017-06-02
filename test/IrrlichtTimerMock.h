@@ -8,6 +8,7 @@ class IrrlichtTimerMock : public irr::ITimer
 public:
     // mocked methods
     virtual irr::u32 getTime() const;
+    // setter for mocked method default return values
     // setter for mocked method return values; these can be called multiple times for sequential returns
     // getter for how many times mocked method was called so far
     // so far unused methods

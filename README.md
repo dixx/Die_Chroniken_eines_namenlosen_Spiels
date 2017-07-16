@@ -17,6 +17,10 @@ Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 ###### OS-X:
 - todo
 
+#### Tests
+Die *Leviathan Game Engine* ist komplett testgetrieben entwickelt worden. Die Unit-Tests sind mit den Frameworks [**Catch**](https://github.com/philsquared/Catch) und [**FakeIt**](https://github.com/eranpeer/FakeIt) erstellt worden.
+Beim Builden wird auch ein Binary `unit_tests` angelegt, welches die Tests in der Konsole abfährt.
+
 #### Troubleshooting
 
 ##### Lua
@@ -38,10 +42,13 @@ Nun suche das am besten passende Package raus und installiere es.
 #### CREDITS
 A thousand thanks to:
 - the *Irrlicht 3D Engine* creators and maintainers, as well as to the great community!
+  - According to the prophecy, I hereby acknowledge that, by using Irrlicht, I’ve used the IJG code, the zlib and libpng.
 - the *irrKlang Sound Library* creators and maintainers
 - the *LUA* people
 - Dimitri van Heesch for *Doxygen*
 - Mastiff Odit for his *MastEventReceiver*, giving me a great start with EventReceivers
+- Phil Nash for the nice and easy unit test framework *Catch*
+- Eran Pe'er for his marvellous mocking framework *FakeIt*
 - the wonderful community around *stackoverflow.com* for many many many hints
 - the awesome people behind and around *GitHub*
 - and all the others silently involved.

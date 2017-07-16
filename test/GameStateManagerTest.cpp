@@ -10,9 +10,7 @@ TEST_CASE( "GameStateManager: add game states" ) {
     Fake( Method( startDouble, update ), Method( startDouble, draw ) );
     Fake( Method( playDouble, update ), Method( playDouble, draw ) );
     Fake( Method( stopDouble, update ), Method( stopDouble, draw ) );
-    leviathan::core::GameState &start = startDouble.get();
-    leviathan::core::GameState &play = playDouble.get();
-    leviathan::core::GameState &stop = stopDouble.get();
+    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get(), &stop = stopDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );
@@ -40,10 +38,8 @@ TEST_CASE( "GameStateManager: transit between game states" ) {
     Fake( Method( playDouble, update ), Method( playDouble, draw ) );
     Fake( Method( pauseDouble, update ), Method( pauseDouble, draw ) );
     Fake( Method( optionsDouble, update ), Method( optionsDouble, draw ) );
-    leviathan::core::GameState &start = startDouble.get();
-    leviathan::core::GameState &play = playDouble.get();
-    leviathan::core::GameState &pause = pauseDouble.get();
-    leviathan::core::GameState &options = optionsDouble.get();
+    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get(), &pause = pauseDouble.get(),
+            &options = optionsDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE, STATE_OPTIONS };
     subject.add( start, STATE_START );
     subject.add( options, STATE_OPTIONS );
@@ -87,9 +83,7 @@ TEST_CASE( "GameStateManager: update and draw active game states" ) {
     Fake( Method( startDouble, update ), Method( startDouble, draw ) );
     Fake( Method( playDouble, update ), Method( playDouble, draw ) );
     Fake( Method( pauseDouble, update ), Method( pauseDouble, draw ) );
-    leviathan::core::GameState &start = startDouble.get();
-    leviathan::core::GameState &play = playDouble.get();
-    leviathan::core::GameState &pause = pauseDouble.get();
+    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get(), &pause = pauseDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );

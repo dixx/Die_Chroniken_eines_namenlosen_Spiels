@@ -47,27 +47,31 @@ TEST_CASE( "LeviathanDevice supporter" ) {
 
 TEST_CASE( "LeviathanDevice main loop" ) {
     Testhelper testhelper;
+    TesthelperGameState::GameStateSub gameState;
     const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile( configFileName, "[video]\nmax_fps=42\nscreen_x=5\nscreen_y=5\n" );
+    testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
+    subject.enableMock();
+    IrrlichtDeviceMock& graphicEngineMock = subject.mockedGraphicEngine;
+    subject.GameStateManager().add( gameState, 42 );
+    subject.GameStateManager().transitTo( 42 );
 
     SECTION( "it should be fair to other apps if inactive" ) {
-        subject.enableMock();
-        subject.mockedGraphicEngine.letRunReturnByDefault( false );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturnByDefault( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( false );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( false );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
+        graphicEngineMock.letRunReturnByDefault( false );
+        graphicEngineMock.letRunReturn( true );
+        graphicEngineMock.letRunReturn( true );
+        graphicEngineMock.letRunReturn( true );
+        graphicEngineMock.letRunReturn( true );
+        graphicEngineMock.letRunReturn( true );
+        graphicEngineMock.letIsWindowActiveReturnByDefault( true );
+        graphicEngineMock.letIsWindowActiveReturn( true );
+        graphicEngineMock.letIsWindowActiveReturn( true );
+        graphicEngineMock.letIsWindowActiveReturn( false );
+        graphicEngineMock.letIsWindowActiveReturn( false );
+        graphicEngineMock.letIsWindowActiveReturn( true );
         subject.run();
-        REQUIRE( subject.mockedGraphicEngine.timesYieldWasCalled() == 2 );
+        REQUIRE( graphicEngineMock.timesYieldWasCalled() == 2 );
     }
 
     SECTION( "it should not draw if engine is shut down directly after game state update" ) {
@@ -75,32 +79,32 @@ TEST_CASE( "LeviathanDevice main loop" ) {
 
     SECTION( "without calculation stress" ) {
         SECTION( "it should draw with a fixed maximum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
+            SECTION( "and it should update every cycle" ) {
+            }
         }
     }
-    SECTION( "with zero elapsed time" ) {
+    SECTION( "with sometimes zero elapsed time" ) {
         SECTION( "it should draw with a fixed maximum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
+            SECTION( "and it should update every cycle" ) {
+            }
         }
     }
     SECTION( "with moderate calculation stress" ) {
         SECTION( "it should begin to skip frames" ) {
-        }
-        SECTION( "it should update every tick" ) {
+            SECTION( "but it should update every cycle" ) {
+            }
         }
     }
     SECTION( "with much calculation stress" ) {
         SECTION( "it should draw with a fixed minimum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
+            SECTION( "but it should update every cycle" ) {
+            }
         }
     }
     SECTION( "with peak load" ) {
         SECTION( "it should draw with a fixed minimum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
+            SECTION( "but it should update every cycle" ) {
+            }
         }
     }
 }

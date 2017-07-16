@@ -32,8 +32,8 @@ TEST_CASE( "LeviathanDevice supporter" ) {
     }
     SECTION( "it provides a ready-to-use GameStateManager" ) {
         TesthelperGameState::GameStateSub gameState;
-        subject.GameStateManager().add( gameState, 1 );
-        subject.GameStateManager().transitTo( 1 );
+        subject.GameStateManager().add( gameState, 1234 );
+        subject.GameStateManager().transitTo( 1234 );
         subject.GameStateManager().update( 12.34f );
         REQUIRE_FALSE( gameState.isDrawn );
         REQUIRE( gameState.isUpdated );

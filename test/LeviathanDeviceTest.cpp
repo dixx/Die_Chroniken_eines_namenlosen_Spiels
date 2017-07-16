@@ -1,8 +1,10 @@
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
-#include "helpers/TesthelperGameState.h"
 #include "helpers/TesthelperLeviathanDevice.h"
+
+using namespace fakeit;
 
 TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;
@@ -31,29 +33,32 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         SECTION( "it can write a config file" ) {}
     }
     SECTION( "it provides a ready-to-use GameStateManager" ) {
-        TesthelperGameState::GameStateSub gameState;
+        Mock<leviathan::core::GameState> gameStateDouble;
+        Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
+        leviathan::core::GameState &gameState = gameStateDouble.get();
         subject.GameStateManager().add( gameState, 1234 );
         subject.GameStateManager().transitTo( 1234 );
         subject.GameStateManager().update( 12.34f );
-        REQUIRE_FALSE( gameState.isDrawn );
-        REQUIRE( gameState.isUpdated );
-        REQUIRE( gameState.delta == Approx( 12.34f ) );
+        Verify( Method( gameStateDouble, draw ) ).Exactly( 0 );
+        Verify( Method( gameStateDouble, update ).Using( 12.34f ) ).Once();
         subject.GameStateManager().draw();
-        REQUIRE( gameState.isDrawn );
-        REQUIRE( gameState.isUpdated );
-        REQUIRE( gameState.delta == Approx( 12.34f ) );
+        Verify( Method( gameStateDouble, draw ) ).Once();
+        VerifyNoOtherInvocations( Method( gameStateDouble, update ) );
     }
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {
     Testhelper testhelper;
-    TesthelperGameState::GameStateSub gameState;
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
-    subject.enableMock();
-    IrrlichtDeviceMock& graphicEngineMock = subject.mockedGraphicEngine;
+    subject.enableMock(); // TODO inject mock?
+    IrrlichtDeviceMock& graphicEngineMock = subject.mockedGraphicEngine; // TODO repace with mock
+
+    Mock<leviathan::core::GameState> gameStateDouble;
+    Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
+    leviathan::core::GameState &gameState = gameStateDouble.get();
     subject.GameStateManager().add( gameState, 42 );
     subject.GameStateManager().transitTo( 42 );
 

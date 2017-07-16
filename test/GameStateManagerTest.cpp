@@ -1,10 +1,18 @@
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include "leviathan.h"
-#include "helpers/TesthelperGameState.h"
+
+using namespace fakeit;
 
 TEST_CASE( "GameStateManager: add game states" ) {
     leviathan::core::GameStateManager subject;
-    TesthelperGameState::GameStateSub start, play, stop;
+    Mock<leviathan::core::GameState> startDouble, playDouble, stopDouble;
+    Fake( Method( startDouble, update ), Method( startDouble, draw ) );
+    Fake( Method( playDouble, update ), Method( playDouble, draw ) );
+    Fake( Method( stopDouble, update ), Method( stopDouble, draw ) );
+    leviathan::core::GameState &start = startDouble.get();
+    leviathan::core::GameState &play = playDouble.get();
+    leviathan::core::GameState &stop = stopDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );
@@ -27,7 +35,15 @@ TEST_CASE( "GameStateManager: add game states" ) {
 
 TEST_CASE( "GameStateManager: transit between game states" ) {
     leviathan::core::GameStateManager subject;
-    TesthelperGameState::GameStateSub start, play, pause, options;
+    Mock<leviathan::core::GameState> startDouble, playDouble, pauseDouble, optionsDouble;
+    Fake( Method( startDouble, update ), Method( startDouble, draw ) );
+    Fake( Method( playDouble, update ), Method( playDouble, draw ) );
+    Fake( Method( pauseDouble, update ), Method( pauseDouble, draw ) );
+    Fake( Method( optionsDouble, update ), Method( optionsDouble, draw ) );
+    leviathan::core::GameState &start = startDouble.get();
+    leviathan::core::GameState &play = playDouble.get();
+    leviathan::core::GameState &pause = pauseDouble.get();
+    leviathan::core::GameState &options = optionsDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE, STATE_OPTIONS };
     subject.add( start, STATE_START );
     subject.add( options, STATE_OPTIONS );
@@ -67,7 +83,13 @@ TEST_CASE( "GameStateManager: transit between game states" ) {
 
 TEST_CASE( "GameStateManager: update and draw active game states" ) {
     leviathan::core::GameStateManager subject;
-    TesthelperGameState::GameStateSub start, play, pause;
+    Mock<leviathan::core::GameState> startDouble, playDouble, pauseDouble;
+    Fake( Method( startDouble, update ), Method( startDouble, draw ) );
+    Fake( Method( playDouble, update ), Method( playDouble, draw ) );
+    Fake( Method( pauseDouble, update ), Method( pauseDouble, draw ) );
+    leviathan::core::GameState &start = startDouble.get();
+    leviathan::core::GameState &play = playDouble.get();
+    leviathan::core::GameState &pause = pauseDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE };
     subject.add( start, STATE_START );
     subject.add( play, STATE_PLAY );
@@ -77,21 +99,20 @@ TEST_CASE( "GameStateManager: update and draw active game states" ) {
         subject.transitTo( STATE_START );
         subject.draw();
         subject.update( 1.1f );
-        REQUIRE( start.isDrawn );
-        REQUIRE( start.isUpdated );
-        REQUIRE( start.delta == Approx( 1.1f ) );
+        Verify( Method( startDouble, draw ) ).Once();
+        Verify( Method( startDouble, update ).Using( 1.1f ) ).Once();
 
         SECTION( "and only the active state is drawn and updated" ) {
             subject.transitTo( STATE_PLAY );
             subject.transitTo( STATE_PAUSE );
             subject.draw();
             subject.update( 23.456f );
-            REQUIRE( start.delta == Approx( 1.1f ) );
-            REQUIRE_FALSE( play.isDrawn );
-            REQUIRE_FALSE( play.isUpdated );
-            REQUIRE( pause.isDrawn );
-            REQUIRE( pause.isUpdated );
-            REQUIRE( pause.delta == Approx( 23.456f ) );
+            VerifyNoOtherInvocations( Method( startDouble, draw ) );
+            VerifyNoOtherInvocations( Method( startDouble, update ) );
+            Verify( Method( playDouble, draw ) ).Exactly( 0 );
+            Verify( Method( playDouble, update ) ).Exactly( 0 );
+            Verify( Method( pauseDouble, draw ) ).Once();
+            Verify( Method( pauseDouble, update ).Using( 23.456f ) ).Once();
         }
     }
 }

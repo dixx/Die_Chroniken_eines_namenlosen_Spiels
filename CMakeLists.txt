@@ -16,15 +16,17 @@ set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 include(compilerFlags)
 
 find_package(Catch REQUIRED)
+find_package(FakeIt REQUIRED)
 find_package(IrrKlang REQUIRED)
 find_package(Irrlicht REQUIRED)
 find_package(Lua REQUIRED)
 include_directories(
   ${CATCH_INCLUDE_DIRS}
-  ${ENGINE_SOURCES_DIR}
+  ${FAKEIT_INCLUDE_DIRS}
   ${IRRKLANG_INCLUDE_DIRS}
   ${IRRLICHT_INCLUDE_DIRS}
   ${LUA_INCLUDE_DIRS}
+  ${ENGINE_SOURCES_DIR}
 )
 link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/) # TODO only if MacOSX?
 link_directories(${IRRLICHT_SOURCES_DIR}/MacOSX/BD/) # TODO only if MacOSX?

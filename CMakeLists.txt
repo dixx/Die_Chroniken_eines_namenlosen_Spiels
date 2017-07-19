@@ -91,8 +91,6 @@ set(SOURCES_FOR_TESTS
   ${SOURCES_DIR}/Zufall.cpp
   ${TEST_DIR}/helpers/Testhelper.cpp
   ${TEST_DIR}/helpers/TesthelperLeviathanDevice.cpp
-  ${TEST_DIR}/helpers/mocks/IrrlichtDeviceMock.cpp
-  ${TEST_DIR}/helpers/mocks/IrrlichtTimerMock.cpp
   ${TEST_DIR}/ConfigurationTest.cpp
   ${TEST_DIR}/GameStateManagerTest.cpp
   ${TEST_DIR}/GameStateTest.cpp

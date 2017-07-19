@@ -35,8 +35,7 @@ TEST_CASE( "LeviathanDevice supporter" ) {
     SECTION( "it provides a ready-to-use GameStateManager" ) {
         Mock<leviathan::core::GameState> gameStateDouble;
         Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
-        leviathan::core::GameState &gameState = gameStateDouble.get();
-        subject.GameStateManager().add( gameState, 1234 );
+        subject.GameStateManager().add( gameStateDouble.get(), 1234 );
         subject.GameStateManager().transitTo( 1234 );
         subject.GameStateManager().update( 12.34f );
         Verify( Method( gameStateDouble, draw ) ).Exactly( 0 );
@@ -53,30 +52,22 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
-    subject.enableMock(); // TODO inject mock?
-    IrrlichtDeviceMock& graphicEngineMock = subject.mockedGraphicEngine; // TODO repace with mock
-
+    Mock<irr::IrrlichtDevice> graphicEngineDouble;
+    Fake( Method( graphicEngineDouble, yield ) );
+    Mock<irr::ITimer> timerDouble;
+    When( Method( timerDouble, getTime ) ).AlwaysReturn( 0 );
+    When( Method( graphicEngineDouble, getTimer ) ).AlwaysReturn( &(timerDouble.get()) );
+    subject.injectMockedGraphicEngine( graphicEngineDouble.get() );
     Mock<leviathan::core::GameState> gameStateDouble;
     Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
-    leviathan::core::GameState &gameState = gameStateDouble.get();
-    subject.GameStateManager().add( gameState, 42 );
+    subject.GameStateManager().add( gameStateDouble.get(), 42 );
     subject.GameStateManager().transitTo( 42 );
 
     SECTION( "it should be fair to other apps if inactive" ) {
-        graphicEngineMock.letRunReturnByDefault( false );
-        graphicEngineMock.letRunReturn( true );
-        graphicEngineMock.letRunReturn( true );
-        graphicEngineMock.letRunReturn( true );
-        graphicEngineMock.letRunReturn( true );
-        graphicEngineMock.letRunReturn( true );
-        graphicEngineMock.letIsWindowActiveReturnByDefault( true );
-        graphicEngineMock.letIsWindowActiveReturn( true );
-        graphicEngineMock.letIsWindowActiveReturn( true );
-        graphicEngineMock.letIsWindowActiveReturn( false );
-        graphicEngineMock.letIsWindowActiveReturn( false );
-        graphicEngineMock.letIsWindowActiveReturn( true );
+        When( Method( graphicEngineDouble, run ) ).Return( 5_Times( true ), 2_Times( false ) );
+        When( Method( graphicEngineDouble, isWindowActive ) ).Return( true, true, false, false, true );
         subject.run();
-        REQUIRE( graphicEngineMock.timesYieldWasCalled() == 2 );
+        Verify( Method( graphicEngineDouble, yield ) ).Exactly( 2_Times );
     }
 
     SECTION( "it should not draw if engine is shut down directly after game state update" ) {

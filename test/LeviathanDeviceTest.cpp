@@ -52,11 +52,13 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
+    Mock<irr::ITimer> timerDouble;
+    static irr::u32 timeDelta = 0;
+    When( Method( timerDouble, getTime ) ).AlwaysReturn( 0 );
     Mock<irr::IrrlichtDevice> graphicEngineDouble;
     Fake( Method( graphicEngineDouble, yield ) );
-    Mock<irr::ITimer> timerDouble;
-    When( Method( timerDouble, getTime ) ).AlwaysReturn( 0 );
     When( Method( graphicEngineDouble, getTimer ) ).AlwaysReturn( &(timerDouble.get()) );
+    When( Method( graphicEngineDouble, isWindowActive ) ).AlwaysReturn( true );
     subject.injectMockedGraphicEngine( graphicEngineDouble.get() );
     Mock<leviathan::core::GameState> gameStateDouble;
     Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
@@ -64,40 +66,60 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     subject.GameStateManager().transitTo( 42 );
 
     SECTION( "it should be fair to other apps if inactive" ) {
-        When( Method( graphicEngineDouble, run ) ).Return( 5_Times( true ), 2_Times( false ) );
+        When( Method( graphicEngineDouble, run ) ).Return( 5_Times( true ), false );
         When( Method( graphicEngineDouble, isWindowActive ) ).Return( true, true, false, false, true );
         subject.run();
         Verify( Method( graphicEngineDouble, yield ) ).Exactly( 2_Times );
     }
 
     SECTION( "it should not draw if engine is shut down directly after game state update" ) {
+        When( Method( graphicEngineDouble, run ) ).Return( true, false );
+        subject.run();
+        Verify( Method( gameStateDouble, draw ) ).Exactly( 0_Times );
     }
 
     SECTION( "without calculation stress" ) {
+        When( Method( graphicEngineDouble, run ) ).Return( 1000_Times( true ), false );
+        When( Method( timerDouble, getTime ) ).AlwaysDo( []{ return timeDelta++; } );
+        subject.run();
         SECTION( "it should draw with a fixed maximum frame rate" ) {
+            Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
             SECTION( "and it should update every cycle" ) {
+                Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
             }
         }
     }
+
     SECTION( "with sometimes zero elapsed time" ) {
+        When( Method( graphicEngineDouble, run ) ).Return( 2000_Times( true ), false );
+        When( Method( timerDouble, getTime ) ).AlwaysDo( []{ return timeDelta&1 ? timeDelta++ : timeDelta; } );
+        subject.run();
         SECTION( "it should draw with a fixed maximum frame rate" ) {
+            Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
             SECTION( "and it should update every cycle" ) {
+                Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
             }
         }
     }
+
     SECTION( "with moderate calculation stress" ) {
+        // this needs a better approach. The assumption is that draw() needs much more time than update().
         SECTION( "it should begin to skip frames" ) {
             SECTION( "but it should update every cycle" ) {
             }
         }
     }
+
     SECTION( "with much calculation stress" ) {
+        // this needs a better approach. The assumption is that draw() needs much more time than update().
         SECTION( "it should draw with a fixed minimum frame rate" ) {
             SECTION( "but it should update every cycle" ) {
             }
         }
     }
+
     SECTION( "with peak load" ) {
+        // this needs a better approach. The assumption is that draw() needs much more time than update().
         SECTION( "it should draw with a fixed minimum frame rate" ) {
             SECTION( "but it should update every cycle" ) {
             }

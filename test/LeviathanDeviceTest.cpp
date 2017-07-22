@@ -3,6 +3,7 @@
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
 #include "helpers/TesthelperLeviathanDevice.h"
+#include <cstdlib>
 
 using namespace fakeit;
 
@@ -53,7 +54,6 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
     Mock<irr::ITimer> timerDouble;
-    static irr::u32 timeDelta = 0;
     When( Method( timerDouble, getTime ) ).AlwaysReturn( 0 );
     Mock<irr::IrrlichtDevice> graphicEngineDouble;
     Fake( Method( graphicEngineDouble, yield ) );
@@ -78,50 +78,70 @@ TEST_CASE( "LeviathanDevice main loop" ) {
         Verify( Method( gameStateDouble, draw ) ).Exactly( 0_Times );
     }
 
-    SECTION( "without calculation stress" ) {
-        When( Method( graphicEngineDouble, run ) ).Return( 1000_Times( true ), false );
-        When( Method( timerDouble, getTime ) ).AlwaysDo( []{ return timeDelta++; } );
-        subject.run();
-        SECTION( "it should draw with a fixed maximum frame rate" ) {
-            Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
-            SECTION( "and it should update every cycle" ) {
-                Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+    SECTION( "performance tests" ) {
+        irr::u32 virtualTime = 0;
+        When( Method( timerDouble, getTime ) ).AlwaysDo( [&virtualTime]{ return virtualTime++; } );
+        When( Method( graphicEngineDouble, run ) ).AlwaysDo( [&virtualTime]{ return virtualTime < 1000; } );
+
+        SECTION( "without calculation stress" ) {
+            subject.run();
+            SECTION( "it should draw with a fixed maximum frame rate" ) {
+                Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
+                SECTION( "and it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
             }
         }
-    }
 
-    SECTION( "with sometimes zero elapsed time" ) {
-        When( Method( graphicEngineDouble, run ) ).Return( 2000_Times( true ), false );
-        When( Method( timerDouble, getTime ) ).AlwaysDo( []{ return timeDelta&1 ? timeDelta++ : timeDelta; } );
-        subject.run();
-        SECTION( "it should draw with a fixed maximum frame rate" ) {
-            Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
-            SECTION( "and it should update every cycle" ) {
-                Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+        SECTION( "with peak load" ) {
+            When( Method( gameStateDouble, draw ) ).AlwaysDo(
+                [&virtualTime]{ if ( virtualTime == 3 ) virtualTime += 800; }
+            );
+            When( Method( gameStateDouble, update ) ).AlwaysDo( [&virtualTime](...){ virtualTime++; } );
+            subject.run();
+            SECTION( "it should draw with a fixed maximum frame rate" ) {
+                Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
+                SECTION( "and it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
             }
         }
-    }
 
-    SECTION( "with moderate calculation stress" ) {
-        // this needs a better approach. The assumption is that draw() needs much more time than update().
-        SECTION( "it should begin to skip frames" ) {
-            SECTION( "but it should update every cycle" ) {
+        SECTION( "with sometimes zero elapsed time" ) {
+            std::srand( 42 );
+            When( Method( timerDouble, getTime ) ).AlwaysDo(
+                [&virtualTime]{ return std::rand()&1 ? virtualTime : virtualTime++; }
+            );
+            subject.run();
+            SECTION( "it should draw with a fixed maximum frame rate" ) {
+                Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
+                SECTION( "and it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
             }
         }
-    }
 
-    SECTION( "with much calculation stress" ) {
-        // this needs a better approach. The assumption is that draw() needs much more time than update().
-        SECTION( "it should draw with a fixed minimum frame rate" ) {
-            SECTION( "but it should update every cycle" ) {
+        SECTION( "with moderate calculation stress" ) {
+            When( Method( gameStateDouble, draw ) ).AlwaysDo( [&virtualTime]{ virtualTime += 8; } );
+            When( Method( gameStateDouble, update ) ).AlwaysDo( [&virtualTime](...){ virtualTime++; } );
+            subject.run();
+            SECTION( "it should begin to skip frames" ) {
+                Verify( Method( gameStateDouble, draw ) ).AtLeast( 85_Times );
+                SECTION( "but it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
             }
         }
-    }
 
-    SECTION( "with peak load" ) {
-        // this needs a better approach. The assumption is that draw() needs much more time than update().
-        SECTION( "it should draw with a fixed minimum frame rate" ) {
-            SECTION( "but it should update every cycle" ) {
+        SECTION( "with much calculation stress" ) {
+            When( Method( gameStateDouble, draw ) ).AlwaysDo( [&virtualTime]{ virtualTime += 200; } );
+            When( Method( gameStateDouble, update ) ).AlwaysDo( [&virtualTime](...){ virtualTime++; } );
+            subject.run();
+            SECTION( "it should still try to draw" ) {
+                Verify( Method( gameStateDouble, draw ) ).AtLeast( 5_Times );
+                SECTION( "and it should try to update many cycles" ) {
+                    Verify( Method( gameStateDouble, update ) ).AtLeast( 40_Times );
+                }
             }
         }
     }

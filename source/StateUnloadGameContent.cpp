@@ -16,6 +16,7 @@
 StateUnloadGameContent::StateUnloadGameContent( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device),
+  pictures_(),
   moduleCounter_(0)
 {
     if ( device_ == 0 )

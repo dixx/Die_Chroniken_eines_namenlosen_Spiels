@@ -41,7 +41,8 @@ void GenericHelperMethods::pushMeshToVRAM( irr::scene::IMesh* mesh )
 
 
 GenericHelperMethods::GenericHelperMethods( irr::IrrlichtDevice* device )
-: bufferCount_(0),
+: fs_(0),
+  bufferCount_(0),
   buffer_(0)
 {
     if ( device == 0 ) {

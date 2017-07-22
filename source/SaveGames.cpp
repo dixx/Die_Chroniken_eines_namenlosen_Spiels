@@ -12,6 +12,8 @@ SaveGames::SaveGames( irr::IrrlichtDevice* device )
 : device_(device),
   fs_(0),
   savegameName_(""),
+  applicationDirectory_(),
+  savegamesDirectory_(),
   CURRENT_VERSION(2)
 {
     if ( device_ == 0 )

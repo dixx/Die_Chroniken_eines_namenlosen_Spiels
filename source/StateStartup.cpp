@@ -22,7 +22,9 @@
 StateStartup::StateStartup( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device),
-  classCounter_(0)
+  classCounter_(0),
+  loadingScreen_(0),
+  fader_(0)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateStartup] nicht mehr gefunden! Abbruch." );

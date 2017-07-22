@@ -118,9 +118,14 @@ Mauspfeil::Mauspfeil( irr::IrrlichtDevice* device )
   control_(0),
   imageCatalog_(0),
   imageCatalogRaster_(irr::core::dimension2di( 3, 3 )),
+  imageCatalogActualPosition_(),
+  startImageNumber_(),
+  endImageNumber_(),
   actualImageNumber_(0),
+  sequenceSpeed_(),
   interFrameTime_(0),
   imageSize_(irr::core::recti( 0, 0, 60, 60 )),
+  hotSpot_(),
   sequenceTimer_(0),
   currentArrow_(MAUSPFEIL_MISCHMASCH)
 {

@@ -336,7 +336,19 @@ irr::u32 ObjectManager::loadedNodes()
 
 
 ObjectManager::ObjectManager( irr::IrrlichtDevice* device )
-: device_(device),
+: worldNode(0),
+  nodesRespondingToMouse(0),
+  walkableNodes(0),
+  walkableNodesInRange(0),
+  corpseNodes(0),
+  lifeformNodes(0),
+  inventoryNodes(0),
+  interactiveNodes(0),
+  obstacleNodes(0),
+  decorativeNodes(0),
+  weatherNodes(0),
+  bulletNodes(0),
+  device_(device),
   smgr_(0),
   staticObjects_(0),
   npcs_(0),

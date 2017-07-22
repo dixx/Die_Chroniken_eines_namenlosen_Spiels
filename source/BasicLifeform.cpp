@@ -16,6 +16,7 @@ BasicLifeform::BasicLifeform( const irr::core::stringc& objectData, irr::scene::
   wasMoving_(false),
   speed_(1.0f),
   movementDelta_(0.0f),
+  collisionRadius_(0.0f),
   currentPosition_(VEC_3DF_NULL),
   targetPosition_(VEC_3DF_NULL),
   positionOffset_(VEC_3DF_NULL),

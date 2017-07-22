@@ -72,15 +72,15 @@ Logfile::Logfile( irr::io::IFileSystem* fs, const irr::io::path& filename, const
   logfile_(0),
   globalLogLevel_(logginglevel),
   newLine_("\r\n"),
-  debugPrefix_("[debug] ")
+  newLineSize_(newLine_.size()),
+  debugPrefix_("[debug] "),
+  debugPrefixSize_(debugPrefix_.size())
 {
     if ( fs_ == 0 )
         exit( 1 );
     logfile_ = fs_->createAndWriteFile( filename_ );
     if ( logfile_ == 0 )
         exit( 1 );
-    newLineSize_ = newLine_.size();
-    debugPrefixSize_ = debugPrefix_.size();
     writeLine( INFO, "Logdatei gestartet. LogLevel: ", globalLogLevel_ );
     writeLine( INFO, "" );
     closeLogfile();

@@ -91,11 +91,15 @@ void Camera::followNode( irr::scene::ISceneNode* node )
 
 Camera::Camera( irr::scene::ISceneManager* sceneManager )
 : smgr_(sceneManager),
+  firstCameraNode_(0),
   lockNode_(0),
+  currentTarget_(VEC_3DF_NULL),
   targetOffset_(VEC_3DF_NULL),
   currentPosition_(VEC_3DF_NULL),
+  positionOffset_(VEC_3DF_NULL),
   speed_(150.0f),
   zoomingSpeed_(100.0f),
+  desiredPositionOffsetHeight_(0.0f),
   zoomMin_(1.0f),
   zoomMax_(15.0f),
   isZooming_(false),

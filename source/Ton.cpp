@@ -42,7 +42,8 @@ void Ton::playGUISound( const Sound_ID id )
 
 Ton::Ton( irr::io::IFileSystem* fs )
 : soundEngine_(0),
-  fileSystem_(fs)
+  fileSystem_(fs),
+  sndGuiArray_()
 {
     Logfile& log = Logfile::getInstance();
     if ( fileSystem_ == 0 )

@@ -17,6 +17,8 @@ public:
 private:
     irr::IrrlichtDevice* graphicEngine_;
     irr::io::IFileSystem* fileSystem_;
+    Testhelper( const Testhelper& );
+    void operator=( const Testhelper& );
 };
 
 #endif

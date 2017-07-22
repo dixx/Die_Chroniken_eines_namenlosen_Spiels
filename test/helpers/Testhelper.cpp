@@ -1,6 +1,8 @@
 #include "Testhelper.h"
 
 Testhelper::Testhelper()
+: graphicEngine_(0),
+  fileSystem_(0)
 {
     irr::SIrrlichtCreationParameters params;
     params.DriverType = irr::video::EDT_NULL;

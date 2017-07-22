@@ -12,9 +12,18 @@ BufferCullMeshSceneNode::BufferCullMeshSceneNode(
 		const irr::core::vector3df& scale
 )
 : IMeshSceneNode( parent, mgr, id, position, rotation, scale ),
+  Materials(),
+  Box(),
+  tmpReadOnlyMaterial(),
   Mesh(0),
+  Shadow(0),
   PassCount(0),
-  ReadOnlyMaterials(false)
+  ReadOnlyMaterials(false),
+  R_bufbox(),
+  R_camBox(),
+  R_mb(0),
+  R_rnd(0),
+  cam(0)
 {
 //    validatorStart = 0;
 //    validatorEnd = 0;

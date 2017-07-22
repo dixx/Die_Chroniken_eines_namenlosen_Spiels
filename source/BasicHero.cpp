@@ -6,7 +6,8 @@
 
 
 BasicHero::BasicHero( const irr::core::stringc& heroData, irr::scene::ISceneManager* smgr, bool isParent )
-: BasicLifeform( heroData, smgr, true )
+: BasicLifeform( heroData, smgr, true ),
+  traceTimer_(0)
 {
     if ( smgr_ == 0 )
         Logfile::getInstance().emergencyExit( "SceneManager in [BasicHero] nicht mehr gefunden! Abbruch." );

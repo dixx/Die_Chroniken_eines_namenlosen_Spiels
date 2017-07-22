@@ -9,6 +9,8 @@
 
 Vegetation::Vegetation( irr::scene::ISceneManager* smgr )
 : smgr_(smgr),
+  meshManipulator_(0),
+  grassMesh_(0),
   grassNode_(0)
 {
     if ( smgr_ == 0 )

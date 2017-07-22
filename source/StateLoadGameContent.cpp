@@ -16,6 +16,7 @@
 StateLoadGameContent::StateLoadGameContent( irr::IrrlichtDevice* device )
 : GameState(),
   device_(device),
+  pictures_(),
   levelName_("GFX/LEVELS/Level_X"),
   moduleCounter_(0)
 {

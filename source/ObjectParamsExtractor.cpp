@@ -3,7 +3,9 @@
 
 
 ObjectParamsExtractor::ObjectParamsExtractor( const irr::core::stringc& objectData )
-: extractedValue_(""),
+: objectParams_(),
+  values_(),
+  extractedValue_(""),
   dummyValue_(""),
   result_(false),
   isUseless_(true)

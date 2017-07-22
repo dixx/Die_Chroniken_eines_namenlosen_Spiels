@@ -28,7 +28,8 @@ StateMainMenu::StateMainMenu( irr::IrrlichtDevice* device )
   mainMenuTexture_(0),
   mainMenuBgColor_(irr::video::SColor( 255, 248, 245, 240 )),
   hover_(false),
-  currentMenu_(NONE)
+  currentMenu_(NONE),
+  menuRoot_(0)
 {
     if ( device == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [StateMainMenu] nicht mehr gefunden! Abbruch." );

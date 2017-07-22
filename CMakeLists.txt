@@ -16,15 +16,17 @@ set(ENGINE_SOURCES_DIR ${SOURCES_DIR}/Leviathan)
 include(compilerFlags)
 
 find_package(Catch REQUIRED)
+find_package(FakeIt REQUIRED)
 find_package(IrrKlang REQUIRED)
 find_package(Irrlicht REQUIRED)
 find_package(Lua REQUIRED)
 include_directories(
   ${CATCH_INCLUDE_DIRS}
-  ${ENGINE_SOURCES_DIR}
+  ${FAKEIT_INCLUDE_DIRS}
   ${IRRKLANG_INCLUDE_DIRS}
   ${IRRLICHT_INCLUDE_DIRS}
   ${LUA_INCLUDE_DIRS}
+  ${ENGINE_SOURCES_DIR}
 )
 link_directories(${IRRKLANG_DIR}/bin/macosx-gcc/) # TODO only if MacOSX?
 link_directories(${IRRLICHT_SOURCES_DIR}/MacOSX/BD/) # TODO only if MacOSX?
@@ -87,16 +89,13 @@ set(SOURCES
 
 set(SOURCES_FOR_TESTS
   ${SOURCES_DIR}/Zufall.cpp
+  ${TEST_DIR}/helpers/Testhelper.cpp
+  ${TEST_DIR}/helpers/TesthelperLeviathanDevice.cpp
   ${TEST_DIR}/ConfigurationTest.cpp
   ${TEST_DIR}/GameStateManagerTest.cpp
   ${TEST_DIR}/GameStateTest.cpp
-  ${TEST_DIR}/IrrlichtDeviceMock.cpp
-  ${TEST_DIR}/IrrlichtTimerMock.cpp
   ${TEST_DIR}/LeviathanDeviceTest.cpp
   ${TEST_DIR}/LoggerTest.cpp
-  ${TEST_DIR}/Testhelper.cpp
-  ${TEST_DIR}/TesthelperGameState.cpp
-  ${TEST_DIR}/TesthelperLeviathanDevice.cpp
   ${TEST_DIR}/TimeControlTest.cpp
   ${TEST_DIR}/TimerTest.cpp
   ${TEST_DIR}/ZufallTest.cpp

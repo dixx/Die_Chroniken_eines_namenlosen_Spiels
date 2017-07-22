@@ -1,6 +1,6 @@
 #include <catch.hpp>
 #include "leviathan.h"
-#include "Testhelper.h"
+#include "helpers/Testhelper.h"
 
 // TODO
 // - enum values are allowed (only /[A-Z0-9_]/)

@@ -1,8 +1,11 @@
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include "leviathan.h"
-#include "Testhelper.h"
-#include "TesthelperGameState.h"
-#include "TesthelperLeviathanDevice.h"
+#include "helpers/Testhelper.h"
+#include "helpers/TesthelperLeviathanDevice.h"
+#include <cstdlib>
+
+using namespace fakeit;
 
 TEST_CASE( "LeviathanDevice supporter" ) {
     Testhelper testhelper;
@@ -31,76 +34,115 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         SECTION( "it can write a config file" ) {}
     }
     SECTION( "it provides a ready-to-use GameStateManager" ) {
-        TesthelperGameState::GameStateSub gameState;
-        subject.GameStateManager().add( gameState, 1 );
-        subject.GameStateManager().transitTo( 1 );
+        Mock<leviathan::core::GameState> gameStateDouble;
+        Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
+        subject.GameStateManager().add( gameStateDouble.get(), 1234 );
+        subject.GameStateManager().transitTo( 1234 );
         subject.GameStateManager().update( 12.34f );
-        REQUIRE_FALSE( gameState.isDrawn );
-        REQUIRE( gameState.isUpdated );
-        REQUIRE( gameState.delta == Approx( 12.34f ) );
+        Verify( Method( gameStateDouble, draw ) ).Exactly( 0 );
+        Verify( Method( gameStateDouble, update ).Using( 12.34f ) ).Once();
         subject.GameStateManager().draw();
-        REQUIRE( gameState.isDrawn );
-        REQUIRE( gameState.isUpdated );
-        REQUIRE( gameState.delta == Approx( 12.34f ) );
+        Verify( Method( gameStateDouble, draw ) ).Once();
+        VerifyNoOtherInvocations( Method( gameStateDouble, update ) );
     }
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile( configFileName, "[video]\nmax_fps=42\nscreen_x=5\nscreen_y=5\n" );
+    testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
     subject.init( configFileName );
+    Mock<irr::ITimer> timerDouble;
+    When( Method( timerDouble, getTime ) ).AlwaysReturn( 0 );
+    Mock<irr::IrrlichtDevice> graphicEngineDouble;
+    Fake( Method( graphicEngineDouble, yield ) );
+    When( Method( graphicEngineDouble, getTimer ) ).AlwaysReturn( &(timerDouble.get()) );
+    When( Method( graphicEngineDouble, isWindowActive ) ).AlwaysReturn( true );
+    subject.injectMockedGraphicEngine( graphicEngineDouble.get() );
+    Mock<leviathan::core::GameState> gameStateDouble;
+    Fake( Method( gameStateDouble, update ), Method( gameStateDouble, draw ) );
+    subject.GameStateManager().add( gameStateDouble.get(), 42 );
+    subject.GameStateManager().transitTo( 42 );
 
     SECTION( "it should be fair to other apps if inactive" ) {
-        subject.enableMock();
-        subject.mockedGraphicEngine.letRunReturnByDefault( false );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letRunReturn( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturnByDefault( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( false );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( false );
-        subject.mockedGraphicEngine.letIsWindowActiveReturn( true );
+        When( Method( graphicEngineDouble, run ) ).Return( 5_Times( true ), false );
+        When( Method( graphicEngineDouble, isWindowActive ) ).Return( true, true, false, false, true );
         subject.run();
-        REQUIRE( subject.mockedGraphicEngine.timesYieldWasCalled() == 2 );
+        Verify( Method( graphicEngineDouble, yield ) ).Exactly( 2_Times );
     }
 
     SECTION( "it should not draw if engine is shut down directly after game state update" ) {
+        When( Method( graphicEngineDouble, run ) ).Return( true, false );
+        subject.run();
+        Verify( Method( gameStateDouble, draw ) ).Exactly( 0_Times );
     }
 
-    SECTION( "without calculation stress" ) {
-        SECTION( "it should draw with a fixed maximum frame rate" ) {
+    SECTION( "performance tests" ) {
+        irr::u32 virtualTime = 0;
+        When( Method( timerDouble, getTime ) ).AlwaysDo( [&virtualTime]{ return virtualTime++; } );
+        When( Method( graphicEngineDouble, run ) ).AlwaysDo( [&virtualTime]{ return virtualTime < 1000; } );
+
+        SECTION( "without calculation stress" ) {
+            subject.run();
+            SECTION( "it should draw with a fixed maximum frame rate" ) {
+                Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
+                SECTION( "and it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
+            }
         }
-        SECTION( "it should update every tick" ) {
+
+        SECTION( "with peak load" ) {
+            When( Method( gameStateDouble, draw ) ).AlwaysDo(
+                [&virtualTime]{ if ( virtualTime == 3 ) virtualTime += 800; }
+            );
+            When( Method( gameStateDouble, update ) ).AlwaysDo( [&virtualTime](...){ virtualTime++; } );
+            subject.run();
+            SECTION( "it should draw with a fixed maximum frame rate" ) {
+                Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
+                SECTION( "and it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
+            }
         }
-    }
-    SECTION( "with zero elapsed time" ) {
-        SECTION( "it should draw with a fixed maximum frame rate" ) {
+
+        SECTION( "with sometimes zero elapsed time" ) {
+            std::srand( 42 );
+            When( Method( timerDouble, getTime ) ).AlwaysDo(
+                [&virtualTime]{ return std::rand()&1 ? virtualTime : virtualTime++; }
+            );
+            subject.run();
+            SECTION( "it should draw with a fixed maximum frame rate" ) {
+                Verify( Method( gameStateDouble, draw ) ).Exactly( 100_Times );
+                SECTION( "and it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
+            }
         }
-        SECTION( "it should update every tick" ) {
+
+        SECTION( "with moderate calculation stress" ) {
+            When( Method( gameStateDouble, draw ) ).AlwaysDo( [&virtualTime]{ virtualTime += 8; } );
+            When( Method( gameStateDouble, update ) ).AlwaysDo( [&virtualTime](...){ virtualTime++; } );
+            subject.run();
+            SECTION( "it should begin to skip frames" ) {
+                Verify( Method( gameStateDouble, draw ) ).AtLeast( 85_Times );
+                SECTION( "but it should update every cycle" ) {
+                    Verify( Method( gameStateDouble, update ) ).Exactly( 100_Times );
+                }
+            }
         }
-    }
-    SECTION( "with moderate calculation stress" ) {
-        SECTION( "it should begin to skip frames" ) {
-        }
-        SECTION( "it should update every tick" ) {
-        }
-    }
-    SECTION( "with much calculation stress" ) {
-        SECTION( "it should draw with a fixed minimum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
-        }
-    }
-    SECTION( "with peak load" ) {
-        SECTION( "it should draw with a fixed minimum frame rate" ) {
-        }
-        SECTION( "it should update every tick" ) {
+
+        SECTION( "with much calculation stress" ) {
+            When( Method( gameStateDouble, draw ) ).AlwaysDo( [&virtualTime]{ virtualTime += 200; } );
+            When( Method( gameStateDouble, update ) ).AlwaysDo( [&virtualTime](...){ virtualTime++; } );
+            subject.run();
+            SECTION( "it should still try to draw" ) {
+                Verify( Method( gameStateDouble, draw ) ).AtLeast( 5_Times );
+                SECTION( "and it should try to update many cycles" ) {
+                    Verify( Method( gameStateDouble, update ) ).AtLeast( 40_Times );
+                }
+            }
         }
     }
 }

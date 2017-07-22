@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include "leviathan.h"
-#include "Testhelper.h"
+#include "helpers/Testhelper.h"
 
 TEST_CASE( "Logger: init" ) {
     Testhelper testhelper;

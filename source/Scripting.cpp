@@ -106,7 +106,8 @@ irr::core::stringc Scripting::getObjectDataFromScript( const irr::c8* filename )
 
 
 Scripting::Scripting()
-: nextStringValue_(""),
+: luaVM_(0),
+  nextStringValue_(""),
   nextFloatValue_(0.0f)
 {
     // DEPRECATED since 5.1:

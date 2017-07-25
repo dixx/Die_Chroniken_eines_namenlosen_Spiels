@@ -1,6 +1,8 @@
 #include "Testhelper.h"
 
 Testhelper::Testhelper()
+: graphicEngine_(0),
+  fileSystem_(0)
 {
     irr::SIrrlichtCreationParameters params;
     params.DriverType = irr::video::EDT_NULL;
@@ -32,11 +34,11 @@ irr::io::IFileSystem* Testhelper::getFileSystem()
 irr::core::stringc Testhelper::readFile( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    irr::u32 size = (irr::u32)file->getSize();
-    irr::u8 buffer[ size + 4 ];
-    file->read( &buffer, size );
+    irr::u32 size = static_cast<irr::u32>( file->getSize() );
+    irr::core::array<irr::u8> buffer( size + 4 );
+    file->read( buffer.pointer(), size );
     file->drop();
-    return (irr::core::stringc)buffer;
+    return buffer.const_pointer();
 }
 
 void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& content )
@@ -49,7 +51,7 @@ void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& co
 irr::u32 Testhelper::getFileSize( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    irr::u32 size = (irr::u32)file->getSize();
+    irr::u32 size = static_cast<irr::u32>( file->getSize() );
     file->drop();
     return size;
 }

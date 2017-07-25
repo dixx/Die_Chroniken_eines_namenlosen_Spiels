@@ -95,13 +95,20 @@ irr::f32 Weather::getMoonPhase() const
 Weather::Weather( irr::scene::ISceneManager* smgr )
 : SUNCYCLEDURATION_(240000.0f),
   MOONCYCLEDURATION_(330000.0f),
+  SUNMOVEMENTDELTA_(0.0f),
+  MOONMOVEMENTDELTA_(0.0f),
+  FACTOR_V2R_SEC_(0.0f),
   smgr_(smgr),
+  dayLightSource_(),
+  sunCircleY_(),
+  moonCircleY_(),
   fogDensity_(0.0f),
   lightRadius_(0.0f),
   currentDayTime_(0.0f),
   currentMoonPhase_(0.0f),
   seasonOffsetY_(0.0f),
-  skyColor_(COL_PURPLE)
+  skyColor_(COL_PURPLE),
+  updateTimer_(0)
 {
     if ( smgr_ == 0 )
         Logfile::getInstance().emergencyExit( "ScenenManager in [Weather] nicht mehr gefunden! Abbruch." );

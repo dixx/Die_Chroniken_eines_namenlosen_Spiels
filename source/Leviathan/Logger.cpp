@@ -11,7 +11,8 @@ namespace leviathan
                 const Level globalLogLevel,
                 const bool append
         )
-        : fileName_(fileName),
+        : text("LogLevel: "),
+          fileName_(fileName),
           fileSystem_(fileSystem),
           clock_(clock),
           logFile_(0),
@@ -21,7 +22,6 @@ namespace leviathan
                 exit( 1 );
             fileSystem_->grab();
             openLogFile( append );
-            text = "LogLevel: ";
             addLogLevelName( text, globalLogLevel_ );
             write();
         }

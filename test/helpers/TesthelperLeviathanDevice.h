@@ -15,6 +15,8 @@ namespace TesthelperLeviathanDevice
 
     private:
         irr::IrrlichtDevice* originalGraphicEngine_;
+        LeviathanDeviceWithIrrlichtMock( const LeviathanDeviceWithIrrlichtMock& );
+        void operator=( const LeviathanDeviceWithIrrlichtMock& );
     };
 }
 

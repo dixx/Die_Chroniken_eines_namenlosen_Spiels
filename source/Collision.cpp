@@ -237,7 +237,11 @@ Collision::Collision( irr::scene::ISceneManager* sceneManager )
   collisionNode(0),
   collisionDodgeVector(VEC_3DF_NULL),
   smgr_(sceneManager),
-  selector_(0)
+  colliman_(0),
+  selector_(0),
+  walkableSelector_(0),
+  collidableObjects_(),
+  iter_()
 {
     if ( smgr_ == 0 )
         Logfile::getInstance().emergencyExit( "SceneManager in [Collision] nicht mehr gefunden! Abbruch." );

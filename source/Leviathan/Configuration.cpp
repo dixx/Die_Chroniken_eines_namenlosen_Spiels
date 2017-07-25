@@ -93,11 +93,11 @@ namespace leviathan
         void Configuration::generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem )
         {
             irr::io::IReadFile* file = fileSystem->createAndOpenFile( fileName );
-            auto size = file->getSize();
-            irr::u8 buffer[ size + 4 ];
-            file->read( &buffer, (irr::u32)size );
+            irr::u32 size = static_cast<irr::u32>( file->getSize() );
+            irr::core::array<irr::u8> buffer( size + 4 );
+            file->read( buffer.pointer(), size );
             file->drop();
-            irr::core::stringc rawContent = buffer;
+            irr::core::stringc rawContent = buffer.const_pointer();
             rawContent.split( content_, "\n", 1, /* ignoreEmptyTokens = */ false );
         }
 

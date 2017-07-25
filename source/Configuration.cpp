@@ -35,10 +35,10 @@ void Configuration::readConfigFile( const irr::c8* filename )
         logfile.write( Logfile::INFO, "Konfigdatei ", filename );
         logfile.emergencyExit( " konnte nicht geöffnet werden!" );
     }
-    irr::u32 size = (irr::u32)configfile->getSize();
+    irr::u32 size = static_cast<irr::u32>( configfile->getSize() );
     // 8bit Integer-Array nehmen, da read() nur in Byte-Schritten einliest!
-    irr::u8 buffer[ size + 4 ];
-    if ( configfile->read( &buffer, size ) != static_cast<irr::s32>( size ) )
+    irr::core::array<irr::u8> buffer( size + 4 );
+    if ( configfile->read( buffer.pointer(), size ) != static_cast<irr::s32>( size ) )
     {
         configfile->drop();
         logfile.write( Logfile::INFO, "Fehler beim Lesen von Konfigdatei ", filename );
@@ -46,10 +46,10 @@ void Configuration::readConfigFile( const irr::c8* filename )
     }
     configfile->drop();
     configfile = 0;
-    irr::core::stringc inhalt = buffer;
-    colorDepht_ = (irr::u16)irr::core::strtol10( getItem( inhalt, "video", "farbtiefe", "16" ).c_str() );
-    screenSizeX_ = (irr::u16)irr::core::strtol10( getItem( inhalt, "video", "screen_x", "640" ).c_str() );
-    screenSizeY_ = (irr::u16)irr::core::strtol10( getItem( inhalt, "video", "screen_y", "480" ).c_str() );
+    irr::core::stringc inhalt = buffer.const_pointer();
+    colorDepht_ = static_cast<irr::u16>( irr::core::strtol10( getItem( inhalt, "video", "farbtiefe", "16" ).c_str() ) );
+    screenSizeX_ = static_cast<irr::u16>( irr::core::strtol10( getItem( inhalt, "video", "screen_x", "640" ).c_str() ) );
+    screenSizeY_ = static_cast<irr::u16>( irr::core::strtol10( getItem( inhalt, "video", "screen_y", "480" ).c_str() ) );
     fullscreen_ = getItem( inhalt, "video", "fullscreen", "false" ).equals_ignore_case( "true" );
     irr::core::stringc rendermode = getItem( inhalt, "video", "rendermode", "SOFTWARE" );
     if ( rendermode.equals_ignore_case( "DIRECT3D9" ) )

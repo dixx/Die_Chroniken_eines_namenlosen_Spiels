@@ -64,7 +64,9 @@ void TimerManager::tick( const irr::f32 frameDeltaTime )
 
 
 TimerManager::TimerManager()
-: timerCount_(0),
+: timerList_(),
+  itr_(),
+  timerCount_(0),
   isPaused_(false)
 {
 	timerList_.clear();

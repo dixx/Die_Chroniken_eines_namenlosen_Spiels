@@ -8,7 +8,9 @@
 
 LoadingScreen::LoadingScreen( irr::IrrlichtDevice* device, irr::io::path imageFileName )
 :  device_(device),
-  imageFileName_(imageFileName)
+  imageFileName_(imageFileName),
+  loadingScreenImageFrame_(0),
+  loadingText_(0)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [LoadingScreen] nicht mehr gefunden! Abbruch." );

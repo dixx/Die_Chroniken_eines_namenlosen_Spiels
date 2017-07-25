@@ -258,13 +258,18 @@ Eventreceiver::Eventreceiver()
   mouseY_(0),
   mouseLastY_(0),
   mouseWheel_(0.0f),
+  ShiftIsDown_(false),
+  ShiftWasDown_(false),
+  CtrlIsDown_(false),
+  CtrlWasDown_(false),
   LMBIsDown_(false),
   LMBWasDown_(false),
   MMBIsDown_(false),
   MMBWasDown_(false),
   RMBIsDown_(false),
   RMBWasDown_(false),
-  hover_(false)
+  hover_(false),
+  thereWasKeyEvent_(false)
 {
     resetKeyStates();
 }

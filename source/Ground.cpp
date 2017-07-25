@@ -276,15 +276,22 @@ void Ground::switchDebugMode()
 
 Ground::Ground( irr::IrrlichtDevice* device )
 : device_(device),
+  smgr_(0),
+  mapTiles_(),
   SECTORDIMENSION(irr::core::dimension2df( 400.0f, 400.0f )),
   gridWidth_(0),
   gridDepth_(0),
   ray_(VEC_3DF_NULL, VEC_3DF_NULL),
   minHeight_(100000.0f),
   maxHeight_(0.0f),
+  updateTimer_(0),
   updateSectorX_(0),
   updateSectorZ_(0),
   endPosition_(VEC_3DF_NULL)
+#ifdef _DEBUG_MODE
+  ,visibleNodeCount_(0)
+  ,debugCounter_(0)
+#endif
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [Ground] nicht mehr gefunden! Abbruch." );

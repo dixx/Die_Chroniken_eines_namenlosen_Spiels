@@ -4,6 +4,12 @@ namespace leviathan
 {
     namespace core
     {
+        TimeControl::TimeControl()
+        : timerList_()
+        {
+            ;
+        }
+
         TimeControl::~TimeControl()
         {
             timerList_.clear();

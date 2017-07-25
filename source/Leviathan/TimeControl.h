@@ -23,7 +23,7 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              */
-            TimeControl() {};
+            TimeControl();
 
             /*! \brief Destruktor.
              */

@@ -37,6 +37,7 @@ public:
      *  \return -
      */
     void moveTo( const irr::core::vector3df target, const bool isTriggered );
+    virtual void moveTo( const irr::core::vector3df target ) { (void)target; };
 
 #ifdef _DEBUG_MODE
     void toggleSpeed();

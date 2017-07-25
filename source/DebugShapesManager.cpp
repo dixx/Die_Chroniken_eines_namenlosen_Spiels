@@ -39,7 +39,10 @@ void DebugShapesManager::drawAll()
 
 
 DebugShapesManager::DebugShapesManager( irr::video::IVideoDriver* driver )
-: driver_(driver)
+: driver_(driver),
+  shapes_(),
+  iter_(),
+  material_()
 {
     if ( driver_ == 0 )
         exit(1);

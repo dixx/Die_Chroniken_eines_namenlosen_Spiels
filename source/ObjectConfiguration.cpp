@@ -8,7 +8,12 @@
 
 
 ObjectConfiguration::ObjectConfiguration()
-:   CURRENT_VERSION(0)
+: CURRENT_VERSION(0),
+  object(0),
+  node(0),
+  mesh(0),
+  materials(0),
+  files(0)
 {
     object = new ObjectConfigurationContextForObject;
     node = new ObjectConfigurationContextForNode;

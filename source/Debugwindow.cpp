@@ -63,8 +63,12 @@ bool Debugwindow::isVisible() const
 
 Debugwindow::Debugwindow( irr::IrrlichtDevice* device )
 : device_(device),
+  dwin_(0),
+  fragments_(),
+  fragment_(),
   content_(L""),
-  newLine_(L"\r\n")
+  newLine_(L"\r\n"),
+  displayTimer_(0)
 {
     if ( device_ == 0 )
         Logfile::getInstance().emergencyExit( "Entchen in [Debugwindow] nicht mehr gefunden! Abbruch." );

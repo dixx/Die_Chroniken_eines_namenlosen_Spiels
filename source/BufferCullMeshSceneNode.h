@@ -113,7 +113,8 @@ public:
 
 private:
 //	void validateObject();
-
+    BufferCullMeshSceneNode( const BufferCullMeshSceneNode& );
+    void operator=( const BufferCullMeshSceneNode& );
 protected:
     // Validator, um Ueberschreiber mittels Breakpoints finden zu koennen
 //    s32 validatorEnd;

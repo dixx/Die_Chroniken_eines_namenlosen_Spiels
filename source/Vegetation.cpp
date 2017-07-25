@@ -89,8 +89,8 @@ void Vegetation::create()
         // search all available grasMeshBuffers
         for ( register irr::u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
         {
-            grasMeshBuffer = (irr::scene::SMeshBuffer*)grassMesh_->getMeshBuffer( bufferIndex );
-            patchBuffer = (irr::scene::SMeshBuffer*)patch->getMeshBuffer(0);
+            grasMeshBuffer = static_cast<irr::scene::SMeshBuffer*>( grassMesh_->getMeshBuffer( bufferIndex ) );
+            patchBuffer = static_cast<irr::scene::SMeshBuffer*>( patch->getMeshBuffer(0) );
             if ( grasMeshBuffer->Material != patchBuffer->Material )
                 continue;  // material different
             if ( grasMeshBuffer->BoundingBox.getCenter().getDistanceFrom( patchBuffer->BoundingBox.getCenter() )

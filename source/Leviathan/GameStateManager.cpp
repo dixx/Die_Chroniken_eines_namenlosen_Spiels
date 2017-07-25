@@ -48,14 +48,14 @@ namespace leviathan
         {
             irr::u32 id = getActiveStateID();
             if ( id != 0xffffffff )
-                ((GameState*)states_[id])->update( elapsedSeconds );
+                static_cast<GameState*>( states_[id] )->update( elapsedSeconds );
         }
 
         void GameStateManager::draw()
         {
             irr::u32 id = getActiveStateID();
             if ( id != 0xffffffff )
-                ((GameState*)states_[id])->draw();
+                static_cast<GameState*>( states_[id] )->draw();
         }
 
         unsigned int GameStateManager::getGameStateCount()

@@ -187,7 +187,7 @@ void BufferCullMeshSceneNode::render()
 			{
 				const irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( g );
 				const irr::u32 vSize = irr::video::getVertexPitchFromType( mb->getVertexType() );
-				const irr::video::S3DVertex* v = (const irr::video::S3DVertex*)mb->getVertices();
+				const irr::video::S3DVertex* v = static_cast<const irr::video::S3DVertex*>( mb->getVertices() );
 				const bool normalize = mb->getMaterial().NormalizeNormals;
 				for ( register irr::u32 i = 0; i != mb->getVertexCount(); ++i )
 				{
@@ -199,7 +199,7 @@ void BufferCullMeshSceneNode::render()
 					        v->Pos + ( normalizedNormal * DebugNormalLength ),
 					        DebugNormalColor
 					);
-					v = (const irr::video::S3DVertex*)( (irr::u8*)v + vSize );
+					v = reinterpret_cast<const irr::video::S3DVertex*>( reinterpret_cast<const irr::u8*>( v ) + vSize );
 				}
 			}
 			driver->setTransform( irr::video::ETS_WORLD, AbsoluteTransformation );

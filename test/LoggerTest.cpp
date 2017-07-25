@@ -93,7 +93,7 @@ TEST_CASE( "Logger: logging" ) {
             content = testhelper.readFile( logFileName );
             irr::s32 firstIndex = content.find( "line." );
             REQUIRE( firstIndex > -1 );
-            REQUIRE( content.find( "line.", (irr::u32)firstIndex + 1 ) > -1 );
+            REQUIRE( content.find( "line.", static_cast<irr::u32>( firstIndex + 1 ) ) > -1 );
         }
     }
     SECTION( "it handles different logLevels" ) {

@@ -285,7 +285,7 @@ Eventreceiver::~Eventreceiver()
 
 void Eventreceiver::resetKeyStates()
 {
-    for ( register irr::u32 i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i )
+    for ( irr::u32 i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i )
     {
         KeyIsDown_[ i ] = false;
         KeyLastState_[ i ] = false;

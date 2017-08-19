@@ -58,7 +58,7 @@ const irr::io::path& SaveGames::findNewest()
     savegameName_ = "";
     irr::io::IReadFile* stream = 0;
     irr::u32 newestTimestamp = 0;
-    for ( register irr::u32 i = 0; i < fileList->getFileCount(); ++i )
+    for ( irr::u32 i = 0; i < fileList->getFileCount(); ++i )
     {
         if ( fileList->getFileName( i ).find( ".sav" ) == -1 )
             continue;

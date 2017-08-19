@@ -239,7 +239,7 @@ irr::core::stringc Scripting::stackDump()
     message += "total in stack: ";
     message += items;
     message += "\n";
-    for ( register irr::s32 i = 1; i <= lua_gettop( luaVM_ ); ++i )
+    for ( irr::s32 i = 1; i <= lua_gettop( luaVM_ ); ++i )
     {
         switch ( lua_type( luaVM_, i ) )
         {

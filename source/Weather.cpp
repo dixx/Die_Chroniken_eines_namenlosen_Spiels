@@ -39,7 +39,7 @@ void Weather::load()
 void Weather::unload()
 {
     updateTimer_->stop();
-    for ( register irr::u32 i = 0; i < 7; ++i )
+    for ( irr::u32 i = 0; i < 7; ++i )
         dayLightSource_[i]->remove();
 }
 
@@ -117,7 +117,7 @@ Weather::Weather( irr::scene::ISceneManager* smgr )
     FACTOR_V2R_SEC_ = SUNCYCLEDURATION_ / 7200;
     updateTimer_ = TimerManager::getInstance().createTimer( 0.10f );
     clearArrays();
-    for ( register irr::u32 i = 0; i < 7; ++i )
+    for ( irr::u32 i = 0; i < 7; ++i )
     {
         dayLightSource_.push_back( 0 );
         sunCircleY_.push_back( 0.0f );
@@ -176,7 +176,7 @@ void Weather::setFog()
 
 void Weather::createLights()
 {
-    for ( register irr::u32 i = 0; i < 7; ++i )
+    for ( irr::u32 i = 0; i < 7; ++i )
     {
         dayLightSource_[i] = smgr_->addLightSceneNode(
                 ObjectManager::getInstance().weatherNodes,
@@ -233,7 +233,7 @@ void Weather::calculateLightValues()
     {
         lightColorMoon = irr::video::SColorf( 0.02f, 0.02f, 0.08f );
     }
-    for ( register irr::u32 i = 0; i < 7; ++i )
+    for ( irr::u32 i = 0; i < 7; ++i )
     {
         irr::video::SLight& lightData = dayLightSource_[i]->getLightData();
         lightData.DiffuseColor = irr::video::SColorf(

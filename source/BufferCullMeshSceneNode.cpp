@@ -68,7 +68,7 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 		// count transparent and solid materials in this scene node
 		if ( ReadOnlyMaterials && Mesh )
 		{
-			for ( register irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
+			for ( irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
 			{
 				irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
 				irr::video::IMaterialRenderer* renderer =
@@ -83,7 +83,7 @@ void BufferCullMeshSceneNode::OnRegisterSceneNode()
 		}
 		else
 		{
-			for ( register irr::u32 i = 0; i < Materials.size(); ++i )
+			for ( irr::u32 i = 0; i < Materials.size(); ++i )
 			{
 				irr::video::IMaterialRenderer* renderer =
 					driver->getMaterialRenderer( Materials[ i ].MaterialType );
@@ -122,7 +122,7 @@ void BufferCullMeshSceneNode::render()
 		// overwrite half transparency
 		if ( DebugDataVisible & irr::scene::EDS_HALF_TRANSPARENCY )
 		{
-			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			for ( irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 			{
 				mat = Materials[ g ];
 				mat.MaterialType = irr::video::EMT_TRANSPARENT_ADD_COLOR;
@@ -137,7 +137,7 @@ void BufferCullMeshSceneNode::render()
 	{
         cam = SceneManager->getActiveCamera();
         R_camBox = cam->getBoundingBox();
-		for ( register irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
+		for ( irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
 		{
             R_mb = Mesh->getMeshBuffer( i );
 			if ( R_mb )
@@ -174,7 +174,7 @@ void BufferCullMeshSceneNode::render()
 		if ( DebugDataVisible & irr::scene::EDS_BBOX )
 			driver->draw3DBox( Box, COL_WHITE );
 		if ( DebugDataVisible & irr::scene::EDS_BBOX_BUFFERS )
-			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			for ( irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 				driver->draw3DBox( Mesh->getMeshBuffer( g )->getBoundingBox(), irr::video::SColor( 255, 190, 128, 128 ) );
 		if ( DebugDataVisible & irr::scene::EDS_NORMALS )
 		{
@@ -183,13 +183,13 @@ void BufferCullMeshSceneNode::render()
 			        SceneManager->getParameters()->getAttributeAsFloat( irr::scene::DEBUG_NORMAL_LENGTH );
 			const irr::video::SColor DebugNormalColor =
 			        SceneManager->getParameters()->getAttributeAsColor( irr::scene::DEBUG_NORMAL_COLOR );
-			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			for ( irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 			{
 				const irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( g );
 				const irr::u32 vSize = irr::video::getVertexPitchFromType( mb->getVertexType() );
 				const irr::video::S3DVertex* v = static_cast<const irr::video::S3DVertex*>( mb->getVertices() );
 				const bool normalize = mb->getMaterial().NormalizeNormals;
-				for ( register irr::u32 i = 0; i != mb->getVertexCount(); ++i )
+				for ( irr::u32 i = 0; i != mb->getVertexCount(); ++i )
 				{
 					normalizedNormal = v->Normal;
 					if ( normalize )
@@ -208,7 +208,7 @@ void BufferCullMeshSceneNode::render()
 		{
 			m.Wireframe = true;
 			driver->setMaterial( m );
-			for ( register irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
+			for ( irr::u32 g = 0; g < Mesh->getMeshBufferCount(); ++g )
 				driver->drawMeshBuffer( Mesh->getMeshBuffer( g ) );
 		}
 	}
@@ -279,7 +279,7 @@ void BufferCullMeshSceneNode::copyMaterials()
 	if ( Mesh )
 	{
 		irr::video::SMaterial mat;
-		for ( register irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
+		for ( irr::u32 i = 0; i < Mesh->getMeshBufferCount(); ++i )
 		{
 		    irr::scene::IMeshBuffer* mb = Mesh->getMeshBuffer( i );
 			if ( mb )

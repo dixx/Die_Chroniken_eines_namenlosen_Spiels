@@ -141,7 +141,7 @@ Mauspfeil::Mauspfeil( irr::IrrlichtDevice* device )
     clearArrays();
     // Vorberechnen der Positionen aller Einzelbilder innerhalb des
     // Imagekataloges, für schnelleren Zugriff
-    for ( register irr::s32 i = 0; i < imageCatalogRaster_.getArea(); ++i )
+    for ( irr::s32 i = 0; i < imageCatalogRaster_.getArea(); ++i )
     {
         imageCatalogActualPosition_.push_back(
                 irr::core::recti(

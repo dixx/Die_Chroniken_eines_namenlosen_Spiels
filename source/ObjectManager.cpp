@@ -39,7 +39,7 @@ Logfile::getInstance().writeLine( Logfile::DEBUG - 1, "ms erstellt." );
 #ifdef _DEBUG_MODE
 now = device_->getTimer()->getRealTime();
 #endif
-    for ( register irr::u32 i = 0; i < objectsDataList.size(); ++i )
+    for ( irr::u32 i = 0; i < objectsDataList.size(); ++i )
     {
         BasicStaticObject* object = new BasicStaticObject( objectsDataList[ i ], smgr_ );
         if ( object->getNode() == 0 )
@@ -76,7 +76,7 @@ void ObjectManager::loadNPCs( const char* npcsFilename )
 #ifdef _DEBUG_MODE
 irr::u32 now = device_->getTimer()->getRealTime();
 #endif
-    for ( register irr::u32 i = 0; i < objectsDataList.size(); ++i )
+    for ( irr::u32 i = 0; i < objectsDataList.size(); ++i )
     {
         BasicLifeform* npc = new BasicLifeform( objectsDataList[ i ], smgr_ );
         if ( npc->getNode() == 0 )
@@ -231,7 +231,7 @@ void ObjectManager::switchStaticsDebugMode()
     ( debugCounter_ == 4 ) ? debugCounter_ = 0 : debugCounter_++;
     BufferCullMeshSceneNode* helperNode = 0;
     BasicStaticObject* helperObject = 0;
-    for ( register irr::u32 i = 0; i < staticObjects_.size(); ++i )
+    for ( irr::u32 i = 0; i < staticObjects_.size(); ++i )
     {
         helperObject = staticObjects_[ i ];
         if ( !helperObject )
@@ -274,7 +274,7 @@ void ObjectManager::switchNPCsDebugMode()
     ( debugCounter_ == 4 ) ? debugCounter_ = 0 : debugCounter_++;
     irr::scene::IAnimatedMeshSceneNode* helperNode = 0;
     BasicLifeform* helperObject = 0;
-    for ( register irr::u32 i = 0; i < npcs_.size(); ++i )
+    for ( irr::u32 i = 0; i < npcs_.size(); ++i )
     {
         helperObject = npcs_[ i ];
         if ( !helperObject )
@@ -440,7 +440,7 @@ void ObjectManager::clearArrays()
 {
     if ( staticObjects_.size() > 0 )
     {
-        for ( register irr::u32 i = 0; i < staticObjects_.size(); ++i )
+        for ( irr::u32 i = 0; i < staticObjects_.size(); ++i )
         {
             if ( staticObjects_[ i ] )
             {
@@ -453,7 +453,7 @@ void ObjectManager::clearArrays()
     staticObjects_.clear();
     if ( npcs_.size() > 0 )
     {
-        for ( register irr::u32 i = 0; i < npcs_.size(); ++i )
+        for ( irr::u32 i = 0; i < npcs_.size(); ++i )
         {
             if ( npcs_[ i ] )
             {

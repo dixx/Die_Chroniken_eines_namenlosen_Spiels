@@ -163,7 +163,7 @@ void StatePlayTheGame::checkCameraSpecificInput( irr::f32 frameDeltaTime )
         receiver.getMouseWheel() > 0.0f ? camera.startZoomingIn() : camera.startZoomingOut();
     if ( receiver.isMMBDown() )
     {
-        register irr::s32 delta = receiver.getMouseLastX() - receiver.getMouseX();
+        irr::s32 delta = receiver.getMouseLastX() - receiver.getMouseX();
         if ( delta != 0 )
         {
             if ( frameDeltaTime < 0.003f )

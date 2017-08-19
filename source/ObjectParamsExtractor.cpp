@@ -50,7 +50,7 @@ bool ObjectParamsExtractor::tryToExtractValue(
     if ( key.size() == 0 || isUseless_ )
         return false;
     clearMembers();
-    for ( register irr::u32 i = 0; i < objectParams_.size(); ++i )
+    for ( irr::u32 i = 0; i < objectParams_.size(); ++i )
     {
         if ( objectParams_[ i ].equalsn( key, 5 ) == false )
             continue;

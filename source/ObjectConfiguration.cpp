@@ -36,7 +36,7 @@ void ObjectConfiguration::readFrom( irr::io::IReadFile* stream, irr::u32 version
         mesh->scale = read<irr::core::vector3df>( stream );
         mesh->rotation = read<irr::core::vector3df>( stream );
         mesh->materialCount = read<irr::u32>( stream );
-        for ( register irr::u32 i = 0; i < mesh->materialCount; ++i )
+        for ( irr::u32 i = 0; i < mesh->materialCount; ++i )
         {
             materials->isTransparent.push_back( read<bool>( stream ) );
             materials->isBackFaceCulled.push_back( read<bool>( stream ) );
@@ -70,7 +70,7 @@ void ObjectConfiguration::writeTo( irr::io::IWriteFile* stream )
     write<irr::core::vector3df>( stream, mesh->scale );
     write<irr::core::vector3df>( stream, mesh->rotation );
     write<irr::u32>( stream, mesh->materialCount );
-    for ( register irr::u32 i = 0; i < mesh->materialCount; ++i )
+    for ( irr::u32 i = 0; i < mesh->materialCount; ++i )
     {
         write<bool>( stream, materials->isTransparent[ i ] );
         write<bool>( stream, materials->isBackFaceCulled[ i ] );

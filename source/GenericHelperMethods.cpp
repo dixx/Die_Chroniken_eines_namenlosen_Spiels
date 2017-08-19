@@ -25,7 +25,7 @@ void GenericHelperMethods::validateFileExistence( const irr::io::path& filename 
 void GenericHelperMethods::pushMeshToVRAM( irr::scene::IMesh* mesh )
 {
     bufferCount_ = mesh->getMeshBufferCount();
-    for ( register irr::u32 i = 0; i < bufferCount_; ++i )
+    for ( irr::u32 i = 0; i < bufferCount_; ++i )
     {
         buffer_ = mesh->getMeshBuffer( i );
         buffer_->setHardwareMappingHint( irr::scene::EHM_STATIC );

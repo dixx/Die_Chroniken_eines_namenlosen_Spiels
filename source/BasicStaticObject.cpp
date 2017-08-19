@@ -77,7 +77,7 @@ const irr::core::vector3df& BasicStaticObject::getMaxBoundingBoxExtent() const
 //    objectData_2->mesh->position = node_->getAbsolutePosition();
 //    objectData_2->mesh->rotation = node_->getRotation();
 //    objectData_2->mesh->scale = node_->getScale();
-//    for ( register u32 cnt = 0; cnt < objectData_2->mesh->materialCount; ++cnt )
+//    for ( u32 cnt = 0; cnt < objectData_2->mesh->materialCount; ++cnt )
 //    {
 //        objectData_2->materials->isBackFaceCulled[ cnt ] = node_->getMaterial( cnt ).BackfaceCulling;
 //        objectData_2->materials->isLighted[ cnt ] = node_->getMaterial( cnt ).Lighting;

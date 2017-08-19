@@ -51,7 +51,7 @@ StateLoadGameContent::StateLoadGameContent( irr::IrrlichtDevice* device )
 StateLoadGameContent::~StateLoadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    for ( register irr::u32 i = 0; i < COUNT; ++i )
+    for ( irr::u32 i = 0; i < COUNT; ++i )
     {
         if ( pictures_[ i ] )
         {
@@ -68,7 +68,7 @@ void StateLoadGameContent::start( irr::f32 frameDeltaTime )
 {
     (void)frameDeltaTime; // game state does no real-time graphics on startup
     Zufall& zufall = Zufall::getInstance();
-    for ( register irr::u32 i = 0; i < 8; ++i )
+    for ( irr::u32 i = 0; i < 8; ++i )
     {
         if ( zufall.doesOccur( 20.f ) )
         {

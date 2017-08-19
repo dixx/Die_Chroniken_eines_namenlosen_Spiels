@@ -34,7 +34,7 @@ void Ground::load( const char* mapfilename )
     Scripting::getInstance().getObjectDataFromScript( mapfilename ).split( tileList, "\n" );
 
     // berechne Grid-Größe, prüfe Positionen auf Gültigkeit
-    for ( register irr::u32 i = 0; i < tileList.size(); ++i )
+    for ( irr::u32 i = 0; i < tileList.size(); ++i )
     {
         ObjectParamsExtractor* extractor = new ObjectParamsExtractor( tileList[ i ] );
         if ( extractor->tryToExtractValue( "POSXZ", "x", 0 ) )
@@ -57,14 +57,14 @@ void Ground::load( const char* mapfilename )
     gridDepth_ += 1;
 
     // initialisiere Grid
-    for ( register irr::u32 i = 0; i <= gridWidth_ * gridDepth_; ++i )
+    for ( irr::u32 i = 0; i <= gridWidth_ * gridDepth_; ++i )
         mapTiles_.push_back( 0 );
 
     // erstelle Grid mit Kartenteilen
 #ifdef _DEBUG_MODE
 irr::u32 now = device_->getTimer()->getRealTime();
 #endif
-    for ( register irr::u32 i = 0; i < tileList.size(); ++i )
+    for ( irr::u32 i = 0; i < tileList.size(); ++i )
     {
         MapTile* tile = new MapTile( tileList[ i ], smgr_, SECTORDIMENSION );
         if ( tile->getNode() == 0 )
@@ -130,12 +130,12 @@ void Ground::update()
 #ifdef _DEBUG_MODE
         visibleNodeCount_ = 0;
 #endif
-        for ( register irr::s32 z = -2; z < 3; ++z )
+        for ( irr::s32 z = -2; z < 3; ++z )
         {
             sumZ = updateSectorZ_ + z;
             if ( sumZ < 0 || sumZ >= static_cast<irr::s32>( gridDepth_ ) )
                 continue;
-            for ( register irr::s32 x = -2; x < 3; ++x )
+            for ( irr::s32 x = -2; x < 3; ++x )
             {
                 sumX = updateSectorX_ + x;
                 if ( sumX < 0 || sumX >= static_cast<irr::s32>( gridWidth_ ) )
@@ -228,9 +228,9 @@ void Ground::switchDebugMode()
     ( debugCounter_ == 4 ) ? debugCounter_ = 0 : ++debugCounter_;
     BufferCullMeshSceneNode* helperNode = 0;
     MapTile* helperTile = 0;
-    for ( register irr::u32 z = 0; z < gridDepth_; ++z )
+    for ( irr::u32 z = 0; z < gridDepth_; ++z )
     {
-        for ( register irr::u32 x = 0; x < gridWidth_; ++x )
+        for ( irr::u32 x = 0; x < gridWidth_; ++x )
         {
             helperTile = mapTiles_[ x + z * gridWidth_ ];
             if ( !helperTile ) continue;
@@ -319,7 +319,7 @@ void Ground::clearArrays()
 {
     if ( mapTiles_.size() > 0 )
     {
-        for ( register irr::u32 i = 0; i < mapTiles_.size(); ++i )
+        for ( irr::u32 i = 0; i < mapTiles_.size(); ++i )
         {
             if ( mapTiles_[ i ] )
             {

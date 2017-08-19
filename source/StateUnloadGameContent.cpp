@@ -33,7 +33,7 @@ StateUnloadGameContent::StateUnloadGameContent( irr::IrrlichtDevice* device )
     pictures_[ICON_FLORA] =     new LoadingScreen( device_, irr::io::path( "GFX/Pflanzen_icon.png" ) );
     pictures_[ICON_FAUNA] =     new LoadingScreen( device_, irr::io::path( "GFX/Tiere_icon.png" ) );
     pictures_[ICON_WEATHER] =   new LoadingScreen( device_, irr::io::path( "GFX/Wetter_icon.png" ) );
-    for ( register irr::u32 i = CONCEPT_1; i <= CONCEPT_8; ++i )
+    for ( irr::u32 i = CONCEPT_1; i <= CONCEPT_8; ++i )
         pictures_[i] = 0;
     forceDraw_ = true;
     transitTo( STARTING );
@@ -44,7 +44,7 @@ StateUnloadGameContent::StateUnloadGameContent( irr::IrrlichtDevice* device )
 StateUnloadGameContent::~StateUnloadGameContent()
 {
     // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
-    for ( register irr::u32 i = 0; i < COUNT; ++i )
+    for ( irr::u32 i = 0; i < COUNT; ++i )
     {
         if ( pictures_[ i ] )
         {
@@ -156,7 +156,7 @@ void StateUnloadGameContent::transitTo( internalState state )
     {
         case STARTING:
             currentInternalState_ = STARTING;
-            for ( register irr::u32 i = LOADING_SCREEN; i <= ICON_WEATHER; ++i )
+            for ( irr::u32 i = LOADING_SCREEN; i <= ICON_WEATHER; ++i )
                 pictures_[i]->enable();
             Eventreceiver::getInstance().setEventReactionActive( false, false, false );
             Mauspfeil::getInstance().setCurrentArrow( Mauspfeil::MAUSPFEIL_UNSICHTBAR );

@@ -72,7 +72,7 @@ void Vegetation::create()
     bool addbuffer = true;
     irr::scene::SMeshBuffer* patchBuffer;
     irr::scene::SMeshBuffer* grasMeshBuffer;
-    for( register irr::u32 i = 0; i < 4000; ++i )
+    for( irr::u32 i = 0; i < 4000; ++i )
     {
         x = zufall.getFloatBetween( 0.0f, 50.0f );
         z = zufall.getFloatBetween( 0.0f, 50.0f );
@@ -87,7 +87,7 @@ void Vegetation::create()
         // add grass patch to the overall grass mesh, to the right buffer, 'Best Fit'
         addbuffer = true;
         // search all available grasMeshBuffers
-        for ( register irr::u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
+        for ( irr::u32 bufferIndex = 0; bufferIndex < grassMesh_->getMeshBufferCount(); ++bufferIndex )
         {
             grasMeshBuffer = static_cast<irr::scene::SMeshBuffer*>( grassMesh_->getMeshBuffer( bufferIndex ) );
             patchBuffer = static_cast<irr::scene::SMeshBuffer*>( patch->getMeshBuffer(0) );

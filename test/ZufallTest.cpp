@@ -1,7 +1,9 @@
 #include "catch.hpp"
 #include "../source/Zufall.h" // TODO change to engine randomizer later
-#include <time.h>
+#include <chrono>
 #include <irrlicht.h>
+
+const auto SEED = std::chrono::system_clock::now().time_since_epoch().count();
 
 TEST_CASE( "Zufall: architecture" ) {
     SECTION( "it exists only one instance" ) {
@@ -37,7 +39,7 @@ TEST_CASE( "Zufall: seeding" ) {
 
 TEST_CASE( "Zufall: get random Int" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     //REQUIRE( subject.getInt() >= 0 ); // comparison of unsigned expression >= 0 is always true
     REQUIRE( subject.getInt() <= static_cast<irr::u32>( 4294967295UL ) );
 
@@ -51,7 +53,7 @@ TEST_CASE( "Zufall: get random Int" ) {
 
 TEST_CASE( "Zufall: get random Float" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     REQUIRE( subject.getFloat() >= 0.0f );
     REQUIRE( subject.getFloat() < 1.0f );
 
@@ -65,7 +67,7 @@ TEST_CASE( "Zufall: get random Float" ) {
 
 TEST_CASE( "Zufall: get random int within range" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     REQUIRE( subject.getIntBetween(3, 5) >= 3 );
     REQUIRE( subject.getIntBetween(3, 5) <= 5 );
     REQUIRE( subject.getIntBetween(3, 3) == 3 );
@@ -106,7 +108,7 @@ TEST_CASE( "Zufall: get random int within range" ) {
 
 TEST_CASE( "Zufall: get random float within range" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     REQUIRE( subject.getFloatBetween(3.0f, 5.0f) >= 3.0f );
     REQUIRE( subject.getFloatBetween(3.0f, 5.0f) <= 5.0f );
     REQUIRE( subject.getFloatBetween(3.0f, 3.0f) == Approx( 3.0f ) );
@@ -121,7 +123,7 @@ TEST_CASE( "Zufall: get random float within range" ) {
 
 TEST_CASE( "Zufall: let an event occur or not, using one probability" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     REQUIRE( subject.doesOccur(100.0f) );
     REQUIRE_FALSE( subject.doesOccur(0.0f) );
 
@@ -151,7 +153,7 @@ TEST_CASE( "Zufall: let an event occur or not, using one probability" ) {
 
 TEST_CASE( "Zufall: let one out of two events occur, using ratio of both" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     REQUIRE( subject.doesAoccur(0.001f, 0.0f) );
     REQUIRE( subject.doesAoccur(100.0f, 0.0f) );
     REQUIRE( subject.doesAoccur(1000.0f, 0.0f) );
@@ -168,7 +170,7 @@ TEST_CASE( "Zufall: let one out of two events occur, using ratio of both" ) {
 
 TEST_CASE( "Zufall: let one out of two events occur, using limited probabilities for both" ) {
     Zufall& subject = Zufall::getInstance();
-    subject.start( static_cast<irr::u32>( time( NULL ) ) );
+    subject.start( static_cast<irr::u32>( SEED ) );
     // REQUIRE( subject.doesAoccur100(100, 0) ); // TODO bug#61
     // REQUIRE_FALSE( subject.doesAoccur100(0, 100) ); // TODO bug#61
     // REQUIRE_FALSE( subject.doesAoccur100(0, 0) ); // TODO bug#61

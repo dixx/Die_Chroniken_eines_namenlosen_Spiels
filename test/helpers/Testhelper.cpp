@@ -1,8 +1,10 @@
 #include "Testhelper.h"
+#include <iostream>
+#include <cstdlib>
 
 Testhelper::Testhelper()
-: graphicEngine_(0),
-  fileSystem_(0)
+: graphicEngine_(nullptr),
+  fileSystem_(nullptr)
 {
     irr::SIrrlichtCreationParameters params;
     params.DriverType = irr::video::EDT_NULL;
@@ -13,11 +15,9 @@ Testhelper::Testhelper()
 
 Testhelper::~Testhelper()
 {
-    fileSystem_ = 0;
-    if( graphicEngine_ )
+    if ( graphicEngine_ )
     {
         graphicEngine_->drop();
-        graphicEngine_ = 0;
     }
 }
 
@@ -34,8 +34,14 @@ irr::io::IFileSystem* Testhelper::getFileSystem()
 irr::core::stringc Testhelper::readFile( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    irr::u32 size = static_cast<irr::u32>( file->getSize() );
-    irr::core::array<irr::u8> buffer( size + 4 );
+    int32_t result = file->getSize();
+    if ( result == -1L )
+    {
+        std::cout << std::endl << "Error: Could not get file size of " << fileName.c_str() << std::endl;
+        exit( EXIT_FAILURE );
+    }
+    uint32_t size = static_cast<uint32_t>( result );
+    irr::core::array<uint8_t> buffer( size + 4 );
     file->read( buffer.pointer(), size );
     file->drop();
     return buffer.const_pointer();
@@ -48,12 +54,17 @@ void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& co
     file->drop();
 }
 
-irr::u32 Testhelper::getFileSize( irr::io::path fileName )
+uint32_t Testhelper::getFileSize( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    irr::u32 size = static_cast<irr::u32>( file->getSize() );
+    int32_t result = file->getSize();
+    if ( result == -1L )
+    {
+        std::cout << std::endl << "Error: Could not get file size of " << fileName.c_str() << std::endl;
+        exit( EXIT_FAILURE );
+    }
     file->drop();
-    return size;
+    return static_cast<uint32_t>( result );
 }
 
 bool Testhelper::existFile( irr::io::path fileName )

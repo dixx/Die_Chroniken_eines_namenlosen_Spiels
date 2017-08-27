@@ -1,6 +1,7 @@
 #include "Testhelper.h"
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 Testhelper::Testhelper()
 : graphicEngine_(nullptr),
@@ -34,17 +35,17 @@ irr::io::IFileSystem* Testhelper::getFileSystem()
 irr::core::stringc Testhelper::readFile( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    int32_t result = file->getSize();
+    const int32_t result = file->getSize();
     if ( result == -1L )
     {
-        std::cout << std::endl << "Error: Could not get file size of " << fileName.c_str() << std::endl;
+        std::cerr << "Error: Could not get file size of \"" << fileName.c_str() << "\"!" << std::endl;
         exit( EXIT_FAILURE );
     }
-    uint32_t size = static_cast<uint32_t>( result );
-    irr::core::array<uint8_t> buffer( size + 4 );
-    file->read( buffer.pointer(), size );
+    const uint32_t size = static_cast<uint32_t>( result );
+    std::vector<uint8_t> buffer( size );
+    file->read( buffer.data(), size );
     file->drop();
-    return buffer.const_pointer();
+    return buffer.data();
 }
 
 void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& content )
@@ -57,10 +58,10 @@ void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& co
 uint32_t Testhelper::getFileSize( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    int32_t result = file->getSize();
+    const int32_t result = file->getSize();
     if ( result == -1L )
     {
-        std::cout << std::endl << "Error: Could not get file size of " << fileName.c_str() << std::endl;
+        std::cerr << "Error: Could not get file size of \"" << fileName.c_str() << "\"!" << std::endl;
         exit( EXIT_FAILURE );
     }
     file->drop();

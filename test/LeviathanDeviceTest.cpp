@@ -1,9 +1,11 @@
-#include "catch.hpp"
-#include "fakeit.hpp"
+#include <catch.hpp>
+#include <fakeit.hpp>
+#include <irrlicht.h>
+#include <cstdint>
+#include <cstdlib>
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
 #include "helpers/TesthelperLeviathanDevice.h"
-#include <cstdlib>
 
 using namespace fakeit;
 
@@ -79,7 +81,7 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     }
 
     SECTION( "performance tests" ) {
-        irr::u32 virtualTime = 0;
+        uint32_t virtualTime = 0;
         When( Method( timerDouble, getTime ) ).AlwaysDo( [&virtualTime]{ return virtualTime++; } );
         When( Method( graphicEngineDouble, run ) ).AlwaysDo( [&virtualTime]{ return virtualTime < 1000; } );
 

@@ -1,6 +1,7 @@
 #ifndef _TESTHELPER_LEVIATHAN_DEVICE_HEADER
 #define _TESTHELPER_LEVIATHAN_DEVICE_HEADER
 
+#include <irrlicht.h>
 #include "leviathan.h"
 
 namespace TesthelperLeviathanDevice

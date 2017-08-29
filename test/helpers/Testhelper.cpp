@@ -1,7 +1,7 @@
-#include "Testhelper.h"
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 #include <vector>
+#include "Testhelper.h"
 
 Testhelper::Testhelper()
 : graphicEngine_(nullptr),

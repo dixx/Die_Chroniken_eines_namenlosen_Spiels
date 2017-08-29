@@ -1,7 +1,7 @@
-#include "catch.hpp"
-#include "../source/Zufall.h" // TODO change to engine randomizer later
-#include <chrono>
+#include <catch.hpp>
 #include <irrlicht.h>
+#include <chrono>
+#include "../source/Zufall.h" // TODO change to engine randomizer later
 
 const auto SEED = std::chrono::system_clock::now().time_since_epoch().count();
 

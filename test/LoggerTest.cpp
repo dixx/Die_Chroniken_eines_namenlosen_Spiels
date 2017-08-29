@@ -1,4 +1,5 @@
-#include "catch.hpp"
+#include <catch.hpp>
+#include <irrlicht.h>
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
 

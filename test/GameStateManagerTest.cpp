@@ -1,5 +1,5 @@
-#include "catch.hpp"
-#include "fakeit.hpp"
+#include <catch.hpp>
+#include <fakeit.hpp>
 #include "leviathan.h"
 
 using namespace fakeit;

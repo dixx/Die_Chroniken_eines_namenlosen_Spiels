@@ -29,7 +29,7 @@ public:
     /*! \brief Aktualisiert das Spiel.
      *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
      */
-    void update( const irr::f32 elapsedSeconds ) final;
+    void update( const float elapsedSeconds ) final;
 
     /*! \brief Zeichnet das Spiel auf den Bildschirm.
      */

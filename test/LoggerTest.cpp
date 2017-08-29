@@ -1,5 +1,6 @@
 #include <catch.hpp>
 #include <irrlicht.h>
+#include <cstdint>
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
 
@@ -17,7 +18,7 @@ TEST_CASE( "Logger: init" ) {
     SECTION( "it creates a logfile" ) {
         REQUIRE( testhelper.existFile( logFileName ) );
 
-        irr::u32 size = testhelper.getFileSize( logFileName );
+        uint32_t size = testhelper.getFileSize( logFileName );
 
         SECTION( "by overwriting an existing logfile" ) {
             leviathan::core::Logger subject(
@@ -27,7 +28,7 @@ TEST_CASE( "Logger: init" ) {
                     leviathan::core::Logger::Level::INFO
             );
             subject.flush();
-            irr::u32 newSize = testhelper.getFileSize( logFileName );
+            uint32_t newSize = testhelper.getFileSize( logFileName );
             REQUIRE( newSize == size );
         }
         SECTION( "by appending to an existing logfile" ) {
@@ -39,7 +40,7 @@ TEST_CASE( "Logger: init" ) {
                     true
             );
             subject.flush();
-            irr::u32 newSize = testhelper.getFileSize( logFileName );
+            uint32_t newSize = testhelper.getFileSize( logFileName );
             REQUIRE( newSize == size * 2 );
         }
         SECTION( "and writes the global logging level into it" ) {
@@ -92,9 +93,9 @@ TEST_CASE( "Logger: logging" ) {
             subject.write();
             subject.flush();
             content = testhelper.readFile( logFileName );
-            irr::s32 firstIndex = content.find( "line." );
+            int32_t firstIndex = content.find( "line." );
             REQUIRE( firstIndex > -1 );
-            REQUIRE( content.find( "line.", static_cast<irr::u32>( firstIndex + 1 ) ) > -1 );
+            REQUIRE( content.find( "line.", static_cast<uint32_t>( firstIndex ) + 1 ) > -1 );
         }
     }
     SECTION( "it handles different logLevels" ) {

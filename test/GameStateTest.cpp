@@ -5,7 +5,7 @@ class GameStateSub final: public leviathan::core::GameState
 {
 public:
     bool isDrawn, isUpdated;
-    irr::f32 delta;
+    float delta;
 
     GameStateSub() : isDrawn(false), isUpdated(false), delta(0.0f) {};
 
@@ -14,7 +14,7 @@ public:
         isDrawn = true;
     }
 
-    void update( const irr::f32 frameDeltaTime ) final
+    void update( const float frameDeltaTime ) final
     {
         isUpdated = true;
         delta = frameDeltaTime;
@@ -30,5 +30,5 @@ TEST_CASE( "GameState: interface methods" ) {
     subject->update( 42.21f );
     REQUIRE( sample.isDrawn );
     REQUIRE( sample.isUpdated );
-    REQUIRE( sample.delta == Approx( 42.21 ) );
+    REQUIRE( sample.delta == Approx( 42.21f ) );
 }

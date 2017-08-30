@@ -35,10 +35,10 @@ namespace leviathan
             }
             params_.WindowSize.Width = irr::core::strtoul10( getItem( "video", "screen_x", "800" ).c_str() );
             params_.WindowSize.Height = irr::core::strtoul10( getItem( "video", "screen_y", "600" ).c_str() );
-            params_.Bits = static_cast<irr::u8>(
+            params_.Bits = static_cast<uint8_t>(
                     irr::core::strtoul10( getItem( "video", "color_depth", "16" ).c_str() ) );
             params_.Fullscreen = getItem( "video", "fullscreen", "false" ).equals_ignore_case( "true" );
-            if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D9" ) )
+            if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D9" ) ) // TODO refactor with map
                 params_.DriverType = irr::video::EDT_DIRECT3D9;
             else if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D8" ) )
                 params_.DriverType = irr::video::EDT_DIRECT3D8;
@@ -51,7 +51,7 @@ namespace leviathan
             else
                 params_.DriverType = irr::video::EDT_SOFTWARE;
             farValue_ = irr::core::strtof10( getItem( "camera", "far_value", "300.0" ).c_str() );
-            if ( getItem( "general", "logging_level" ).equals_ignore_case( "ALL" ) )
+            if ( getItem( "general", "logging_level" ).equals_ignore_case( "ALL" ) ) // TODO refactor with map
                 loggingLevel_ = Logger::Level::ALL;
             else if ( getItem( "general", "logging_level" ).equals_ignore_case( "DEBUG" ) )
                 loggingLevel_ = Logger::Level::DEBUG;
@@ -67,7 +67,7 @@ namespace leviathan
             return params_;
         }
 
-        irr::f32 Configuration::getFarValue() const
+        float Configuration::getFarValue() const
         {
             return farValue_;
         }
@@ -77,7 +77,7 @@ namespace leviathan
             return loggingLevel_;
         }
 
-        irr::u32 Configuration::getMaxFPS() const
+        uint32_t Configuration::getMaxFPS() const
         {
             return maxFPS_;
         }
@@ -93,8 +93,8 @@ namespace leviathan
         void Configuration::generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem )
         {
             irr::io::IReadFile* file = fileSystem->createAndOpenFile( fileName );
-            irr::u32 size = static_cast<irr::u32>( file->getSize() );
-            irr::core::array<irr::u8> buffer( size + 4 );
+            uint32_t size = static_cast<uint32_t>( file->getSize() ); // TODO add error check!
+            irr::core::array<uint8_t> buffer( size + 4 );
             file->read( buffer.pointer(), size );
             file->drop();
             irr::core::stringc rawContent = buffer.const_pointer();
@@ -126,8 +126,8 @@ namespace leviathan
                         continue;
                     if ( line.find( key.c_str() ) == -1 )
                         continue;
-                    irr::u32 valueStart = static_cast<irr::u32>( line.findFirstChar( "=" ) + 1 );
-                    result = line.subString( valueStart, static_cast<irr::s32>( line.size() - valueStart ) ).trim();
+                    uint32_t valueStart = static_cast<uint32_t>( line.findFirstChar( "=" ) + 1 );
+                    result = line.subString( valueStart, static_cast<int32_t>( line.size() - valueStart ) ).trim();
                     break;
                 }
             }

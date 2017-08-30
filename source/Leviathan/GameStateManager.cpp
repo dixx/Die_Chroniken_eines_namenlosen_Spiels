@@ -1,4 +1,5 @@
 #include "GameStateManager.h"
+#include <iterator>
 
 namespace leviathan
 {
@@ -14,25 +15,23 @@ namespace leviathan
         {
         }
 
-        void GameStateManager::add( GameState& gameState, irr::u32 id )
+        void GameStateManager::add( GameState& gameState, uint32_t id )
         {
-            states_.insert( id, &gameState );
+            states_[id] = &gameState;
         }
 
-        void GameStateManager::transitTo( irr::u32 id )
+        void GameStateManager::transitTo( uint32_t id )
         {
-            // TODO refactor!
-            auto iter = runningStateIDs_.begin();
             auto size = runningStateIDs_.size();
             if ( 0 == size )
             {
                 runningStateIDs_.push_front( id );
                 return;
             }
-            if ( *iter == id ) return;  // id is already on top of stack
-            if ( size > 1 && *(iter + 1) == id )  // id is second on stack
+            if ( runningStateIDs_.front() == id ) return;  // id is already on top of stack
+            if ( size > 1 && *std::next( runningStateIDs_.begin() ) == id )  // id is second on stack
             {
-                runningStateIDs_.erase( iter );
+                runningStateIDs_.pop_front();
             }
             else
             {
@@ -44,18 +43,18 @@ namespace leviathan
             }
         }
 
-        void GameStateManager::update( const irr::f32 elapsedSeconds )
+        void GameStateManager::update( const float elapsedSeconds )
         {
-            irr::u32 id = getActiveStateID();
+            uint32_t id = getActiveStateID();
             if ( id != 0xffffffff )
-                static_cast<GameState*>( states_[id] )->update( elapsedSeconds );
+                states_[id]->update( elapsedSeconds );
         }
 
         void GameStateManager::draw()
         {
-            irr::u32 id = getActiveStateID();
+            uint32_t id = getActiveStateID();
             if ( id != 0xffffffff )
-                static_cast<GameState*>( states_[id] )->draw();
+                states_[id]->draw();
         }
 
         unsigned int GameStateManager::getGameStateCount()
@@ -63,10 +62,9 @@ namespace leviathan
             return states_.size();
         }
 
-        irr::u32 GameStateManager::getActiveStateID()
+        uint32_t GameStateManager::getActiveStateID()
         {
-            auto iter = runningStateIDs_.begin();
-            return 0 == runningStateIDs_.size() ? 0xffffffff : *iter;
+            return 0 == runningStateIDs_.size() ? 0xffffffff : runningStateIDs_.front();
         }
     }
 }

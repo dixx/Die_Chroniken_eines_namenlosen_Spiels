@@ -6,8 +6,6 @@
 #ifndef _LEVIATHAN_TIMER_HEADER
 #define _LEVIATHAN_TIMER_HEADER
 
-#include <irrlicht.h>
-
 namespace leviathan
 {
     namespace core

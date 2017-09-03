@@ -6,7 +6,6 @@
 #ifndef _LEVIATHAN_TIMECONTROL_HEADER
 #define _LEVIATHAN_TIMECONTROL_HEADER
 
-#include <irrlicht.h>
 #include <cstdint>
 #include <list>
 #include "Timer.h"

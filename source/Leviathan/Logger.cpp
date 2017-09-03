@@ -73,7 +73,7 @@ namespace leviathan
 
         void Logger::addLogLevelName( irr::core::stringc& txt, const Level logLevel )
         {
-            switch( logLevel )
+            switch ( logLevel )
             {
                 case Level::INFO:
                     txt += "Info";
@@ -108,9 +108,9 @@ namespace leviathan
             addNumberWithLeadingZero( txt, now.Second );
         }
 
-        void Logger::addNumberWithLeadingZero( irr::core::stringc& txt, const irr::u32 number )
+        void Logger::addNumberWithLeadingZero( irr::core::stringc& txt, const uint32_t number )
         {
-            if( number < 10 )
+            if ( number < 10 )
                 txt += '0';
             txt += number;
         }

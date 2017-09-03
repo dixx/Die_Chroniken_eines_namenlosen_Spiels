@@ -24,7 +24,7 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            explicit Timer( const irr::f32 maxValue );
+            explicit Timer( const float maxValue );
 
             Timer( const Timer& ) = delete;
             Timer& operator=( const Timer& ) = delete;
@@ -33,7 +33,7 @@ namespace leviathan
              *  \param seconds: Zeit (in Sekunden)
              *  \return Referenz auf sich selbst
              */
-            Timer& tick( const irr::f32 seconds );
+            Timer& tick( const float seconds );
 
             /*! \brief Startet den Timer bei null.
              */
@@ -74,12 +74,12 @@ namespace leviathan
             /*! \brief Gibt den eingestellten Endwert zurück.
              *  \return Endwert in Sekunden
              */
-            irr::f32 getMaxValue() const;
+            float getMaxValue() const;
 
         private:
 
-            irr::f32 maxValue_;
-            irr::f32 currentValue_;
+            float maxValue_;
+            float currentValue_;
             bool timerIsRunning_;
             bool timerIsPaused_;
             bool timerIsFull_;
@@ -97,7 +97,7 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            AlwaysRunningTimer( const irr::f32 maxValue ) : Timer(maxValue) {}
+            AlwaysRunningTimer( const float maxValue ) : Timer(maxValue) {}
 
             AlwaysRunningTimer( const AlwaysRunningTimer& ) = delete;
             AlwaysRunningTimer& operator=( const AlwaysRunningTimer& ) = delete;

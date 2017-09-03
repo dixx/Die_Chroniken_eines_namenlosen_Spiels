@@ -7,6 +7,7 @@
 #define _LEVIATHAN_LOGGER_HEADER
 
 #include <irrlicht.h>
+#include <cstdint>
 
 namespace leviathan
 {
@@ -97,7 +98,7 @@ namespace leviathan
             inline void closeLogFile();
             inline void addLogLevelName( irr::core::stringc& txt, const Level logLevel );
             inline void addTimeStamp( irr::core::stringc& txt );
-            inline void addNumberWithLeadingZero( irr::core::stringc& txt, const irr::u32 number );
+            inline void addNumberWithLeadingZero( irr::core::stringc& txt, const uint32_t number );
         };
     }
 }

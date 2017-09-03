@@ -1,4 +1,5 @@
 #include "LeviathanDevice.h"
+#include <cstdint>
 
 namespace leviathan
 {
@@ -11,11 +12,7 @@ namespace leviathan
           new leviathan::core::Logger(
               graphicEngine_->getFileSystem(),
               graphicEngine_->getTimer(),
-#ifdef _DEBUG_MODE
-              "debug.log",
-#else
-              "game.log",
-#endif
+              LOG_FILE_NAME,
               configuration_.getLoggingLevel()
           )
       )
@@ -25,15 +22,9 @@ namespace leviathan
     LeviathanDevice::~LeviathanDevice()
     {
         if ( logger_ )
-        {
             delete logger_;
-            logger_ = 0;
-        }
         if ( graphicEngine_ )
-        {
             graphicEngine_->drop();
-            graphicEngine_ = 0;
-        }
     }
 
     void LeviathanDevice::init( const irr::io::path& fileName )
@@ -46,11 +37,7 @@ namespace leviathan
         logger_ = new leviathan::core::Logger(
             graphicEngine_->getFileSystem(),
             graphicEngine_->getTimer(),
-#ifdef _DEBUG_MODE
-            "debug.log",
-#else
-            "game.log",
-#endif
+            LOG_FILE_NAME,
             configuration_.getLoggingLevel(),
             /*append = */ true
         );
@@ -58,15 +45,15 @@ namespace leviathan
 
     void LeviathanDevice::run()
     {
-        const irr::f32 FRAME_DELTA_TIME = 1.f / static_cast<irr::f32>( configuration_.getMaxFPS() );
-        const irr::u32 FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / configuration_.getMaxFPS();  // for performance.
-        irr::u32 next = graphicEngine_->getTimer()->getTime();
+        const float FRAME_DELTA_TIME = 1.f / static_cast<float>( configuration_.getMaxFPS() );
+        const uint32_t FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / configuration_.getMaxFPS();  // for performance.
+        uint32_t next = graphicEngine_->getTimer()->getTime();
 
         while ( graphicEngine_->run() )
         {
             if ( !graphicEngine_->isWindowActive() )
                 graphicEngine_->yield();
-            irr::u32 loops = 0;
+            uint32_t loops = 0;
             bool we_must_draw = false;
             while ( graphicEngine_->getTimer()->getTime() > next && loops < 10 ) // in-game time will slow down if framerate drops below 10% of maxFPS // FIXME for FPS > 250
             {
@@ -85,12 +72,7 @@ namespace leviathan
                 ++loops;
             }
             if ( we_must_draw )
-            {
-#ifdef _DEBUG_MODE
-                // printFPS();
-#endif
                 gameStateManager_.draw();
-            }
         }
     }
 

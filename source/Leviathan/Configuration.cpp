@@ -38,27 +38,9 @@ namespace leviathan
             params_.Bits = static_cast<uint8_t>(
                     irr::core::strtoul10( getItem( "video", "color_depth", "16" ).c_str() ) );
             params_.Fullscreen = getItem( "video", "fullscreen", "false" ).equals_ignore_case( "true" );
-            if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D9" ) ) // TODO refactor with map
-                params_.DriverType = irr::video::EDT_DIRECT3D9;
-            else if ( getItem( "video", "driver" ).equals_ignore_case( "DIRECT3D8" ) )
-                params_.DriverType = irr::video::EDT_DIRECT3D8;
-            else if ( getItem( "video", "driver" ).equals_ignore_case( "OPENGL" ) )
-                params_.DriverType = irr::video::EDT_OPENGL;
-            else if ( getItem( "video", "driver" ).equals_ignore_case( "BURNINGSVIDEO" ) )
-                params_.DriverType = irr::video::EDT_BURNINGSVIDEO;
-            else if ( getItem( "video", "driver" ).equals_ignore_case( "NULL" ) )
-                params_.DriverType = irr::video::EDT_NULL;
-            else
-                params_.DriverType = irr::video::EDT_SOFTWARE;
+            params_.DriverType = driverMap[ getItem( "video", "driver", "SOFTWARE" ).c_str() ];
             farValue_ = irr::core::strtof10( getItem( "camera", "far_value", "300.0" ).c_str() );
-            if ( getItem( "general", "logging_level" ).equals_ignore_case( "ALL" ) ) // TODO refactor with map
-                loggingLevel_ = Logger::Level::ALL;
-            else if ( getItem( "general", "logging_level" ).equals_ignore_case( "DEBUG" ) )
-                loggingLevel_ = Logger::Level::DEBUG;
-            else if ( getItem( "general", "logging_level" ).equals_ignore_case( "DETAIL" ) )
-                loggingLevel_ = Logger::Level::DETAIL;
-            else
-                loggingLevel_ = Logger::Level::INFO;
+            loggingLevel_ = logLevelMap[ getItem( "general", "logging_level", "INFO" ).c_str() ];
             maxFPS_ = irr::core::strtoul10( getItem( "video", "max_fps", "125" ).c_str() );
         }
 

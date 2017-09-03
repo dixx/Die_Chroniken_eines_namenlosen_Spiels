@@ -8,7 +8,9 @@
 
 #include <irrlicht.h>
 #include <cstdint>
+#include <string>
 #include "Logger.h"
+#include "MapWithDefault.h"
 
 namespace leviathan
 {
@@ -82,6 +84,20 @@ namespace leviathan
             float farValue_; // Sichtweite der Kamera
             Logger::Level loggingLevel_;
             uint32_t maxFPS_;
+            MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap {
+                {"SOFTWARE", irr::video::EDT_SOFTWARE},
+                {"NULL", irr::video::EDT_NULL},
+                {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
+                {"OPENGL", irr::video::EDT_OPENGL},
+                {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
+                {"DIRECT3D9", irr::video::EDT_DIRECT3D9}
+            };
+            MapWithDefault<std::string, Logger::Level> logLevelMap {
+                {"INFO", Logger::Level::INFO},
+                {"ALL", Logger::Level::ALL},
+                {"DEBUG", Logger::Level::DEBUG},
+                {"DETAIL", Logger::Level::DETAIL}
+            };
 
             void generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem );
             const irr::core::stringc getItem(

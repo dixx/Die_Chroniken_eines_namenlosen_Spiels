@@ -41,7 +41,7 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         subject.GameStateManager().add( gameStateDouble.get(), 1234 );
         subject.GameStateManager().transitTo( 1234 );
         subject.GameStateManager().update( 12.34f );
-        Verify( Method( gameStateDouble, draw ) ).Exactly( 0 );
+        Verify( Method( gameStateDouble, draw ) ).Exactly( 0_Times );
         Verify( Method( gameStateDouble, update ).Using( 12.34f ) ).Once();
         subject.GameStateManager().draw();
         Verify( Method( gameStateDouble, draw ) ).Once();

@@ -103,8 +103,8 @@ TEST_CASE( "GameStateManager: update and draw active game states" ) {
             subject.update( 23.456f );
             VerifyNoOtherInvocations( Method( startDouble, draw ) );
             VerifyNoOtherInvocations( Method( startDouble, update ) );
-            Verify( Method( playDouble, draw ) ).Exactly( 0 );
-            Verify( Method( playDouble, update ) ).Exactly( 0 );
+            Verify( Method( playDouble, draw ) ).Exactly( 0_Times );
+            Verify( Method( playDouble, update ) ).Exactly( 0_Times );
             Verify( Method( pauseDouble, draw ) ).Once();
             Verify( Method( pauseDouble, update ).Using( 23.456f ) ).Once();
         }

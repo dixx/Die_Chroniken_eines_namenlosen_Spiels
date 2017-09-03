@@ -22,22 +22,21 @@ namespace leviathan
 
         void GameStateManager::transitTo( uint32_t id )
         {
-            auto size = runningStateIDs_.size();
-            if ( 0 == size )
+            if ( runningStateIDs_.empty() )
             {
                 runningStateIDs_.push_front( id );
                 return;
             }
             if ( runningStateIDs_.front() == id ) return;  // id is already on top of stack
-            if ( size > 1 && *std::next( runningStateIDs_.begin() ) == id )  // id is second on stack
+            if ( runningStateIDs_.size() > 1 && *std::next( runningStateIDs_.begin() ) == id )  // id is second on stack
             {
                 runningStateIDs_.pop_front();
             }
             else
             {
-                for ( auto& it : runningStateIDs_ )
+                for ( auto& item : runningStateIDs_ )
                 {
-                    if ( it == id ) return;
+                    if ( item == id ) return;
                 }
                 runningStateIDs_.push_front( id );
             }
@@ -64,7 +63,7 @@ namespace leviathan
 
         uint32_t GameStateManager::getActiveStateID()
         {
-            return 0 == runningStateIDs_.size() ? 0xffffffff : runningStateIDs_.front();
+            return runningStateIDs_.empty() ? 0xffffffff : runningStateIDs_.front();
         }
     }
 }

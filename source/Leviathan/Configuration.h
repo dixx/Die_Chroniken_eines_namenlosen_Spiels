@@ -41,7 +41,7 @@ namespace leviathan
              *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );
+            void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = nullptr );
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname

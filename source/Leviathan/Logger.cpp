@@ -15,10 +15,10 @@ namespace leviathan
           fileName_(fileName),
           fileSystem_(fileSystem),
           clock_(clock),
-          logFile_(0),
+          logFile_(nullptr),
           globalLogLevel_(globalLogLevel)
         {
-            if ( fileSystem_ == 0 || clock_ == 0 )
+            if ( !fileSystem_ || !clock_ )
                 exit( 1 );
             fileSystem_->grab();
             openLogFile( append );
@@ -58,16 +58,16 @@ namespace leviathan
         void Logger::openLogFile( const bool append )
         {
             logFile_ = fileSystem_->createAndWriteFile( fileName_, append );
-            if ( logFile_ == 0 )
+            if ( !logFile_ )
                 exit( 1 );
         }
 
         void Logger::closeLogFile()
         {
-            if ( logFile_ != 0 )
+            if ( logFile_ )
             {
                 logFile_->drop();
-                logFile_ = 0;
+                logFile_ = nullptr;
             }
         }
 

@@ -7,7 +7,10 @@
 #define _LEVIATHAN_CONFIGURATION_HEADER
 
 #include <irrlicht.h>
+#include <cstdint>
+#include <string>
 #include "Logger.h"
+#include "MapWithDefault.h"
 
 namespace leviathan
 {
@@ -38,7 +41,7 @@ namespace leviathan
              *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );
+            void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = nullptr );
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname
@@ -54,7 +57,7 @@ namespace leviathan
             /*! \brief Gibt die Sichtweite der Kamera zurück.
              *  \return maximale Sichtweite (in Meter)
              */
-            irr::f32 getFarValue() const;
+            float getFarValue() const;
 
             /*! \brief Gibt den Loglevel zurück.
              *  \return Loglevel
@@ -64,7 +67,7 @@ namespace leviathan
             /*! \brief Gibt die Anzahl der maximal anzuzeigenden Bilder pro Sekunde zurück.
              *  \return Anzahl der maximal anzuzeigenden Bilder pro Sekunde
              */
-            irr::u32 getMaxFPS() const;
+            uint32_t getMaxFPS() const;
 
             /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
              *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.
@@ -78,9 +81,23 @@ namespace leviathan
 
             irr::core::list<irr::core::stringc> content_;
             irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
-            irr::f32 farValue_; // Sichtweite der Kamera
+            float farValue_; // Sichtweite der Kamera
             Logger::Level loggingLevel_;
-            irr::u32 maxFPS_;
+            uint32_t maxFPS_;
+            MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap {
+                {"SOFTWARE", irr::video::EDT_SOFTWARE},
+                {"NULL", irr::video::EDT_NULL},
+                {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
+                {"OPENGL", irr::video::EDT_OPENGL},
+                {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
+                {"DIRECT3D9", irr::video::EDT_DIRECT3D9}
+            };
+            MapWithDefault<std::string, Logger::Level> logLevelMap {
+                {"INFO", Logger::Level::INFO},
+                {"ALL", Logger::Level::ALL},
+                {"DEBUG", Logger::Level::DEBUG},
+                {"DETAIL", Logger::Level::DETAIL}
+            };
 
             void generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem );
             const irr::core::stringc getItem(

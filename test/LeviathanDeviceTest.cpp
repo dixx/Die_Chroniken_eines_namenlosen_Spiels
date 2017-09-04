@@ -1,9 +1,11 @@
-#include "catch.hpp"
-#include "fakeit.hpp"
+#include <catch.hpp>
+#include <fakeit.hpp>
+#include <irrlicht.h>
+#include <cstdint>
+#include <cstdlib>
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
 #include "helpers/TesthelperLeviathanDevice.h"
-#include <cstdlib>
 
 using namespace fakeit;
 
@@ -39,7 +41,7 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         subject.GameStateManager().add( gameStateDouble.get(), 1234 );
         subject.GameStateManager().transitTo( 1234 );
         subject.GameStateManager().update( 12.34f );
-        Verify( Method( gameStateDouble, draw ) ).Exactly( 0 );
+        Verify( Method( gameStateDouble, draw ) ).Exactly( 0_Times );
         Verify( Method( gameStateDouble, update ).Using( 12.34f ) ).Once();
         subject.GameStateManager().draw();
         Verify( Method( gameStateDouble, draw ) ).Once();
@@ -79,7 +81,7 @@ TEST_CASE( "LeviathanDevice main loop" ) {
     }
 
     SECTION( "performance tests" ) {
-        irr::u32 virtualTime = 0;
+        uint32_t virtualTime = 0;
         When( Method( timerDouble, getTime ) ).AlwaysDo( [&virtualTime]{ return virtualTime++; } );
         When( Method( graphicEngineDouble, run ) ).AlwaysDo( [&virtualTime]{ return virtualTime < 1000; } );
 

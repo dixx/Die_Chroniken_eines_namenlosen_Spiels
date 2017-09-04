@@ -15,10 +15,10 @@ namespace leviathan
           fileName_(fileName),
           fileSystem_(fileSystem),
           clock_(clock),
-          logFile_(0),
+          logFile_(nullptr),
           globalLogLevel_(globalLogLevel)
         {
-            if ( fileSystem_ == 0 || clock_ == 0 )
+            if ( !fileSystem_ || !clock_ )
                 exit( 1 );
             fileSystem_->grab();
             openLogFile( append );
@@ -58,22 +58,22 @@ namespace leviathan
         void Logger::openLogFile( const bool append )
         {
             logFile_ = fileSystem_->createAndWriteFile( fileName_, append );
-            if ( logFile_ == 0 )
+            if ( !logFile_ )
                 exit( 1 );
         }
 
         void Logger::closeLogFile()
         {
-            if ( logFile_ != 0 )
+            if ( logFile_ )
             {
                 logFile_->drop();
-                logFile_ = 0;
+                logFile_ = nullptr;
             }
         }
 
         void Logger::addLogLevelName( irr::core::stringc& txt, const Level logLevel )
         {
-            switch( logLevel )
+            switch ( logLevel )
             {
                 case Level::INFO:
                     txt += "Info";
@@ -108,9 +108,9 @@ namespace leviathan
             addNumberWithLeadingZero( txt, now.Second );
         }
 
-        void Logger::addNumberWithLeadingZero( irr::core::stringc& txt, const irr::u32 number )
+        void Logger::addNumberWithLeadingZero( irr::core::stringc& txt, const uint32_t number )
         {
-            if( number < 10 )
+            if ( number < 10 )
                 txt += '0';
             txt += number;
         }

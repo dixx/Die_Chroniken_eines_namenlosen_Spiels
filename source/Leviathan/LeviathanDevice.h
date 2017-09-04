@@ -13,6 +13,12 @@
 #include "Logger.h"
 #include "TimeControl.h"
 
+#ifndef NDEBUG
+    #define LOG_FILE_NAME "game.log"
+#else
+    #define LOG_FILE_NAME "debug.log"
+#endif
+
 namespace TesthelperLeviathanDevice { class LeviathanDeviceWithIrrlichtMock; } // forward declaration for unit tests
 
 namespace leviathan

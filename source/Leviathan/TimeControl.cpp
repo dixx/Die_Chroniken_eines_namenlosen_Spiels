@@ -5,28 +5,28 @@ namespace leviathan
     namespace core
     {
         TimeControl::TimeControl()
-        : timerList_()
+        : timers_()
         {
-            ;
         }
 
         TimeControl::~TimeControl()
         {
-            timerList_.clear();
+            for ( auto& timer : timers_ )
+                timers_.remove( timer);
         }
 
         void TimeControl::add( Timer& timer )
         {
-            timerList_.push_back( &timer );
+            timers_.push_back( &timer );
         }
 
         void TimeControl::remove( Timer& timer )
         {
-            for( auto itr = timerList_.begin(); itr != timerList_.end(); ++itr )
+            for ( auto& item : timers_ )
             {
-                if( *itr == &timer )
+                if ( item == &timer )
                 {
-                    timerList_.erase( itr );
+                    timers_.remove( item );
                     break;
                 }
             }
@@ -34,19 +34,19 @@ namespace leviathan
 
         void TimeControl::pause()
         {
-            for( auto& timer : timerList_ )
+            for ( auto& timer : timers_ )
                 timer->pause();
         }
 
         void TimeControl::resume()
         {
-            for( auto& timer : timerList_ )
+            for ( auto& timer : timers_ )
                 timer->resume();
         }
 
-        void TimeControl::tick( const irr::f32 seconds )
+        void TimeControl::tick( const float seconds )
         {
-            for( auto& timer : timerList_ )
+            for ( auto& timer : timers_ )
                 timer->tick( seconds );
         }
     }

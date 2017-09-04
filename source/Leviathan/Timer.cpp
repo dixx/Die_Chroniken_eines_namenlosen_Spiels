@@ -5,7 +5,7 @@ namespace leviathan
     namespace core
     {
 
-        Timer::Timer( const irr::f32 maxValue )
+        Timer::Timer( const float maxValue )
         : maxValue_(maxValue),
           currentValue_(0.0f),
           timerIsRunning_(false),
@@ -15,7 +15,7 @@ namespace leviathan
             // nop
         }
 
-        Timer& Timer::tick( const irr::f32 seconds )
+        Timer& Timer::tick( const float seconds )
         {
             if ( timerIsRunning_ && !timerIsPaused_ )
                 currentValue_ += seconds;
@@ -74,7 +74,7 @@ namespace leviathan
             return timerIsFull_;
         }
 
-        irr::f32 Timer::getMaxValue() const
+        float Timer::getMaxValue() const
         {
             return maxValue_;
         }

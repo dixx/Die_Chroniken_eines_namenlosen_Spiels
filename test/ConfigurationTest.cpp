@@ -66,6 +66,16 @@ TEST_CASE( "Configuration: read values" ) {
             REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO );
             REQUIRE( subject.getMaxFPS() == 125 );
         }
+        SECTION( "if keys are unknown" ) {
+            irr::core::stringc content = "[general]\n";
+            content += "logging_level=UNKNOWN\n";
+            content += "[video]\n";
+            content += "driver=UNKNOWN\n";
+            testhelper.writeFile( configFileName, content );
+            subject.readFromFile( configFileName, testhelper.getFileSystem() );
+            REQUIRE( subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE );
+            REQUIRE( subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO );
+        }
         SECTION( "if file is missing" ) {
             subject.readFromFile( "totally_nonexisting_file", testhelper.getFileSystem() );
             REQUIRE( subject.getGraphicEngineParams().Bits == 16 );

@@ -10,7 +10,7 @@ GameStatePlay::~GameStatePlay()
 
 }
 
-void GameStatePlay::update( const irr::f32 elapsedSeconds )
+void GameStatePlay::update( const float elapsedSeconds )
 {
     (void)elapsedSeconds;
 }

@@ -6,7 +6,8 @@
 #ifndef _LEVIATHAN_TIMECONTROL_HEADER
 #define _LEVIATHAN_TIMECONTROL_HEADER
 
-#include <irrlicht.h>
+#include <cstdint>
+#include <list>
 #include "Timer.h"
 
 namespace leviathan
@@ -54,11 +55,11 @@ namespace leviathan
             /*! \brief Erhöht alle verwalteten Timer, z.B. um die seit dem letzten Tick vergangene Zeit.
              *  \param seconds: Zeitwert in Sekunden
              */
-            void tick( const irr::f32 seconds );
+            void tick( const float seconds );
 
         private:
 
-            irr::core::list<Timer*> timerList_;
+            std::list<Timer*> timers_;
         };
     }
 }

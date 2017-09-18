@@ -64,7 +64,7 @@ namespace leviathan
             /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
              *  \attention Nur für Testzwecke gedacht!
              */
-            unsigned int getGameStateCount();
+            size_t getGameStateCount();
 
             /*! \brief Gibt den Identifikator des aktiven Spielzustands zurück.
              *  \attention Nur für Testzwecke public gemacht!

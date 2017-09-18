@@ -35,7 +35,7 @@ irr::io::IFileSystem* Testhelper::getFileSystem()
 irr::core::stringc Testhelper::readFile( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    const int32_t result = file->getSize();
+    const intmax_t result = file->getSize();
     if ( result == -1L )
     {
         std::cerr << "Error: Could not get file size of \"" << fileName.c_str() << "\"!" << std::endl;
@@ -58,7 +58,7 @@ void Testhelper::writeFile( irr::io::path fileName, const irr::core::stringc& co
 uint32_t Testhelper::getFileSize( irr::io::path fileName )
 {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile( fileName );
-    const int32_t result = file->getSize();
+    const intmax_t result = file->getSize();
     if ( result == -1L )
     {
         std::cerr << "Error: Could not get file size of \"" << fileName.c_str() << "\"!" << std::endl;

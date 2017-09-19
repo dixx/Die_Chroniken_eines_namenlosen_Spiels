@@ -28,6 +28,7 @@ namespace leviathan
             GameStateManager();
 
             /*! \brief Destruktor.
+             *  \note Verwaltete Spielzustände werden hier nicht gelöscht.
              */
             ~GameStateManager();
 
@@ -64,7 +65,7 @@ namespace leviathan
             /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
              *  \attention Nur für Testzwecke gedacht!
              */
-            unsigned int getGameStateCount();
+            size_t getGameStateCount();
 
             /*! \brief Gibt den Identifikator des aktiven Spielzustands zurück.
              *  \attention Nur für Testzwecke public gemacht!

@@ -11,8 +11,6 @@ namespace leviathan
 
         TimeControl::~TimeControl()
         {
-            for ( auto& timer : timers_ )
-                timers_.remove( timer);
         }
 
         void TimeControl::add( Timer& timer )

@@ -56,7 +56,7 @@ namespace leviathan
                 states_[id]->draw();
         }
 
-        unsigned int GameStateManager::getGameStateCount()
+        size_t GameStateManager::getGameStateCount()
         {
             return states_.size();
         }

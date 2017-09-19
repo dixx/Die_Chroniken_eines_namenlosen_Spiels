@@ -28,6 +28,7 @@ namespace leviathan
             GameStateManager();
 
             /*! \brief Destruktor.
+             *  \note Verwaltete Spielzustände werden hier nicht gelöscht.
              */
             ~GameStateManager();
 

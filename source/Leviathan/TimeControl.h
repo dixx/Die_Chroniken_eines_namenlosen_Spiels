@@ -27,6 +27,7 @@ namespace leviathan
             TimeControl();
 
             /*! \brief Destruktor.
+             *  \note Vorhandene Timer werden nicht gelöscht.
              */
             ~TimeControl();
 

@@ -47,6 +47,11 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         Verify( Method( gameStateDouble, draw ) ).Once();
         VerifyNoOtherInvocations( Method( gameStateDouble, update ) );
     }
+    SECTION( "it provides keyboard access" ) {
+        REQUIRE_FALSE( subject.Keyboard().isKeyDown( 42 ) );
+        // TODO simulateKeyInput( 42 );
+        // REQUIRE( subject.Keyboard().isKeyDown( 42 ) );
+    }
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {

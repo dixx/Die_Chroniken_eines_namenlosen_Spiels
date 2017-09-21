@@ -16,6 +16,11 @@ namespace leviathan
     namespace core
     {
     }
+
+    //! Hilfsklassen für Eingabegeräte
+    namespace input
+    {
+    }
 }
 
 #endif

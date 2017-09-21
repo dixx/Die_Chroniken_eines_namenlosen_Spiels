@@ -15,7 +15,8 @@ namespace leviathan
               LOG_FILE_NAME,
               configuration_.getLoggingLevel()
           )
-      )
+      ),
+      keyboard_()
     {
     }
 
@@ -99,5 +100,10 @@ namespace leviathan
     core::GameStateManager& LeviathanDevice::GameStateManager()
     {
         return gameStateManager_;
+    }
+
+    input::Keyboard& LeviathanDevice::Keyboard()
+    {
+        return keyboard_;
     }
 }

@@ -10,6 +10,7 @@
 #include <irrlicht.h>
 #include "Configuration.h"
 #include "GameStateManager.h"
+#include "Keyboard.h"
 #include "Logger.h"
 #include "TimeControl.h"
 
@@ -75,6 +76,10 @@ namespace leviathan
          */
         core::GameStateManager& GameStateManager();
 
+        /*! \brief Zugriff auf das Keyboard.
+         */
+        input::Keyboard& Keyboard();
+
     private:
 
         core::Configuration configuration_;
@@ -82,6 +87,7 @@ namespace leviathan
         core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
+        input::Keyboard keyboard_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
     };

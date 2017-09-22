@@ -13,6 +13,7 @@ namespace TesthelperLeviathanDevice
         ~LeviathanDeviceWithIrrlichtMock();
         void injectMockedGraphicEngine( irr::IrrlichtDevice& mock );
         void restoreOriginalGraphicEngine();
+        irr::IrrlichtDevice* getGraphicEngine();
 
     private:
         irr::IrrlichtDevice* originalGraphicEngine_;

@@ -6,58 +6,62 @@ namespace leviathan
     {
         Keyboard::Keyboard()
         : keyIsDown_(),
-          keyLastState_()
+          keyLastState_(),
+          shiftIsDown_(false),
+          shiftWasDown_(false),
+          ctrlIsDown_(false),
+          ctrlWasDown_(false)
         {
             keyIsDown_.fill( false );
             keyLastState_.fill( false );
         }
 
-        bool Keyboard::isKeyDown( const uint8_t keycode ) const
+        bool Keyboard::isKeyDown( const irr::EKEY_CODE keycode ) const
         {
             return keyIsDown_[ keycode ];
         }
 
-        bool Keyboard::wasKeyDown( const uint8_t keycode ) const
+        bool Keyboard::wasKeyDown( const irr::EKEY_CODE keycode ) const
         {
             return keyLastState_[ keycode ];
         }
 
-        bool Keyboard::hasKeyJustBeenSuppressed( const uint8_t keycode ) const
+        bool Keyboard::hasKeyJustBeenSuppressed( const irr::EKEY_CODE keycode ) const
         {
             return ( isKeyDown( keycode ) && !wasKeyDown( keycode ) );
         }
 
-        bool Keyboard::hasKeyJustBeenReleased( const uint8_t keycode ) const
+        bool Keyboard::hasKeyJustBeenReleased( const irr::EKEY_CODE keycode ) const
         {
             return ( !isKeyDown( keycode ) && wasKeyDown( keycode ) );
         }
 
-        // bool Keyboard::isShiftDown() const
-        // {
-        //     return false;
-        // }
-        //
-        // bool Keyboard::wasShiftDown() const
-        // {
-        //     return false;
-        // }
-        //
-        // bool Keyboard::isCtrlDown() const
-        // {
-        //     return false;
-        // }
-        //
-        // bool Keyboard::wasCtrlDown() const
-        // {
-        //     return false;
-        // }
+        bool Keyboard::isShiftDown() const
+        {
+            return shiftIsDown_;
+        }
+
+        bool Keyboard::wasShiftDown() const
+        {
+            return shiftWasDown_;
+        }
+
+        bool Keyboard::isCtrlDown() const
+        {
+            return ctrlIsDown_;
+        }
+
+        bool Keyboard::wasCtrlDown() const
+        {
+            return ctrlWasDown_;
+        }
 
         void Keyboard::update()
         {
             keyLastState_ = keyIsDown_;
         }
 
-        void Keyboard::setKeyState( const uint8_t keycode, const bool state )
+        void Keyboard::setKeyState( const irr::EKEY_CODE keycode, const bool state )
         {
             keyIsDown_[ keycode ] = state;
         }

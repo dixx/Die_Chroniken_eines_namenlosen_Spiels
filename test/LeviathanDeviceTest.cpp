@@ -48,9 +48,7 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         VerifyNoOtherInvocations( Method( gameStateDouble, update ) );
     }
     SECTION( "it provides keyboard access" ) {
-        REQUIRE_FALSE( subject.Keyboard().isKeyDown( 42 ) );
-        // TODO simulateKeyInput( 42 );
-        // REQUIRE( subject.Keyboard().isKeyDown( 42 ) );
+        REQUIRE_FALSE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
     }
 }
 
@@ -160,9 +158,19 @@ TEST_CASE( "LeviathanDevice exit status" ) {
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile( configFileName, "[video]\nscreen_x=32\nscreen_y=20\n" );
 
-    SECTION( "it is 0 if everything ran well" ) {
+    SECTION( "it is 0 if everything went well" ) {
         REQUIRE( 0 == subject.exitStatus() );
         subject.init( configFileName );
         REQUIRE( 0 == subject.exitStatus() );
     }
+}
+
+TEST_CASE( "LeviathanDevice input event handling" ) {
+    Testhelper testhelper;
+    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
+    subject.init( configFileName );
+    // SECTION( "additional keys pressed" ) {} // TODO integration test
+
 }

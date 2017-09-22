@@ -22,4 +22,9 @@ namespace TesthelperLeviathanDevice
     {
         graphicEngine_ = originalGraphicEngine_;
     }
+
+    irr::IrrlichtDevice* LeviathanDeviceWithIrrlichtMock::getGraphicEngine()
+    {
+        return graphicEngine_;
+    }
 }

@@ -9,6 +9,7 @@
 
 #include <irrlicht.h>
 #include "Configuration.h"
+#include "EventReceiver.h"
 #include "GameStateManager.h"
 #include "Keyboard.h"
 #include "Logger.h"
@@ -88,6 +89,7 @@ namespace leviathan
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
         input::Keyboard keyboard_;
+        core::EventReceiver eventReceiver_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
     };

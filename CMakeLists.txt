@@ -33,6 +33,7 @@ link_directories("${IRRLICHT_SOURCES_DIR}/MacOSX/BD/") # TODO only if MacOSX?
 
 set(ENGINE_SOURCES
   "${ENGINE_SOURCES_DIR}/Configuration.cpp"
+  "${ENGINE_SOURCES_DIR}/EventReceiver.cpp"
   "${ENGINE_SOURCES_DIR}/GameStateManager.cpp"
   "${ENGINE_SOURCES_DIR}/Keyboard.cpp"
   "${ENGINE_SOURCES_DIR}/LeviathanDevice.cpp"

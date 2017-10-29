@@ -16,7 +16,8 @@ namespace leviathan
               configuration_.getLoggingLevel()
           )
       ),
-      keyboard_()
+      keyboard_(),
+      eventReceiver_(keyboard_)
     {
     }
 
@@ -35,6 +36,7 @@ namespace leviathan
         graphicEngine_->closeDevice();
         graphicEngine_->drop();
         graphicEngine_ = irr::createDeviceEx( configuration_.getGraphicEngineParams() );
+        graphicEngine_->setEventReceiver( &eventReceiver_ );
         logger_ = new leviathan::core::Logger(
             graphicEngine_->getFileSystem(),
             graphicEngine_->getTimer(),

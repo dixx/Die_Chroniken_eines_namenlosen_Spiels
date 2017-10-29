@@ -171,6 +171,18 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     subject.init( configFileName );
-    // SECTION( "additional keys pressed" ) {} // TODO integration test
 
+    SECTION( "keys pressed" ) {
+        REQUIRE_FALSE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
+
+        irr::SEvent event;
+        event.EventType = irr::EET_KEY_INPUT_EVENT;
+        event.KeyInput.Key = irr::KEY_KEY_Z;
+        event.KeyInput.PressedDown = true;
+        subject.getGraphicEngine()->postEventFromUser( event );
+        subject.getGraphicEngine()->run();
+        subject.Keyboard().update();
+
+        REQUIRE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
+    }
 }

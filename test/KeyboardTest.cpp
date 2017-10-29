@@ -22,7 +22,7 @@ TEST_CASE( "Keyboard" ) {
         REQUIRE_FALSE( subject.isKeyDown( irr::KEY_KEY_Z ) );
     }
 
-    SECTION( "key states create history at update" ) {
+    SECTION( "key states create history on update" ) {
         subject.setKeyState( irr::KEY_KEY_Z, true );
         REQUIRE( subject.isKeyDown( irr::KEY_KEY_Z ) );
         REQUIRE_FALSE( subject.wasKeyDown( irr::KEY_KEY_Z ) );

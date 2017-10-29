@@ -88,8 +88,11 @@ namespace leviathan
              *  \attention Diese Methode sollte nur intern vom Eventreceiver verwendet werden!
              *  \param keyCode: Irrlicht Tastencode
              *  \param state: `true` wenn die Taste gedrückt ist, ansonsten `false`
+             *  \param shiftState: `true` wenn Shift -wie auch immer- an ist, ansonsten `false`
+             *  \param ctrlState: `true` wenn irgendein CTRL gedrückt ist, ansonsten `false`
              */
-            void setKeyState( const irr::EKEY_CODE keycode, const bool state );
+            void setKeyState( const irr::EKEY_CODE keycode, const bool state, const bool shiftState,
+                const bool ctrlState );
 
         private:
 

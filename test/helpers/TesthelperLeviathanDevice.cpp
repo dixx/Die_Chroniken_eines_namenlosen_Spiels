@@ -27,4 +27,16 @@ namespace TesthelperLeviathanDevice
     {
         return graphicEngine_;
     }
+
+    void LeviathanDeviceWithIrrlichtMock::sendKeyboardEvent( const irr::EKEY_CODE keycode, const bool state,
+        const bool shiftState, const bool ctrlState )
+    {
+        irr::SEvent event;
+        event.EventType = irr::EET_KEY_INPUT_EVENT;
+        event.KeyInput.Key = keycode;
+        event.KeyInput.PressedDown = state;
+        event.KeyInput.Shift = shiftState;
+        event.KeyInput.Control = ctrlState;
+        graphicEngine_->postEventFromUser( event );
+    }
 }

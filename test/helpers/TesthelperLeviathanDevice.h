@@ -14,6 +14,8 @@ namespace TesthelperLeviathanDevice
         void injectMockedGraphicEngine( irr::IrrlichtDevice& mock );
         void restoreOriginalGraphicEngine();
         irr::IrrlichtDevice* getGraphicEngine();
+        void sendKeyboardEvent( const irr::EKEY_CODE keycode, const bool state, const bool shiftState,
+            const bool ctrlState );
 
     private:
         irr::IrrlichtDevice* originalGraphicEngine_;

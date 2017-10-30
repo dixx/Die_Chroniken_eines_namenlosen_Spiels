@@ -173,16 +173,18 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
     subject.init( configFileName );
 
     SECTION( "keys pressed" ) {
-        REQUIRE_FALSE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
-
-        irr::SEvent event;
-        event.EventType = irr::EET_KEY_INPUT_EVENT;
-        event.KeyInput.Key = irr::KEY_KEY_Z;
-        event.KeyInput.PressedDown = true;
-        subject.getGraphicEngine()->postEventFromUser( event );
-        subject.getGraphicEngine()->run();
+        subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+        subject.sendKeyboardEvent( irr::KEY_KEY_J, true, false, true );
         subject.Keyboard().update();
-
+        subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+        subject.sendKeyboardEvent( irr::KEY_KEY_J, false, true, true );
+        // subject.Keyboard().update();
         REQUIRE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
+        REQUIRE( subject.Keyboard().wasKeyDown( irr::KEY_KEY_Z ) );
+        REQUIRE( subject.Keyboard().hasKeyJustBeenReleased( irr::KEY_KEY_J ) );
+        REQUIRE( subject.Keyboard().isCtrlDown() );
+        REQUIRE( subject.Keyboard().wasCtrlDown() );
+        REQUIRE( subject.Keyboard().isShiftDown() );
+        REQUIRE_FALSE( subject.Keyboard().wasShiftDown() );
     }
 }

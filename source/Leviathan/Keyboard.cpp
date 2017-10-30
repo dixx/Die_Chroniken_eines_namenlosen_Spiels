@@ -63,10 +63,10 @@ namespace leviathan
             ctrlWasDown_ = ctrlIsDown_;
         }
 
-        void Keyboard::setKeyState( const irr::EKEY_CODE keycode, const bool state, const bool shiftState,
+        void Keyboard::setKeyState( const irr::EKEY_CODE keycode, const bool keyState, const bool shiftState,
             const bool ctrlState )
         {
-            keyIsDown_[ keycode ] = state;
+            keyIsDown_[ keycode ] = keyState;
             shiftIsDown_ = shiftState;
             ctrlIsDown_ = ctrlState;
         }

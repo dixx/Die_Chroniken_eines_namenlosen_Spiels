@@ -18,7 +18,7 @@ Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 - todo
 
 #### Tests
-Die *Leviathan Game Engine* ist komplett testgetrieben entwickelt worden. Die Unit-Tests sind mit den Frameworks [**Catch**](https://github.com/philsquared/Catch) und [**FakeIt**](https://github.com/eranpeer/FakeIt) erstellt worden.
+Die *Leviathan Game Engine* wird komplett testgetrieben entwickelt. Die Unit-Tests werden mit den Frameworks [**Catch**](https://github.com/philsquared/Catch) und [**FakeIt**](https://github.com/eranpeer/FakeIt) erstellt.
 Beim Builden wird auch ein Binary `unit_tests` angelegt, welches die Tests in der Konsole abfährt.
 
 #### Troubleshooting

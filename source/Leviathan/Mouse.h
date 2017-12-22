@@ -46,7 +46,7 @@ namespace leviathan
              *         Wichtig, um mit Veränderungen (Maustaste wurde gerade gedrückt/losgelassen) arbeiten zu können,
              *         da diese Zustandsänderungen über Events asynchron hier ankommen.
              */
-            // void update();
+            void update();
 
             /*! \brief Abfrage des aktuellen Zustands der linken Maustaste.
              *  \return `true` wenn die Maustaste gedrückt ist, ansonsten `false`

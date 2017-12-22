@@ -15,6 +15,12 @@ namespace leviathan
             buttonLastState_.fill( false );
         }
 
+        void Mouse::update()
+        {
+            buttonLastState_ = buttonIsDown_;
+            lastPosition_ = position_;
+        }
+
         bool Mouse::isLMBDown() const
         {
             return buttonIsDown_[ LEFT ];

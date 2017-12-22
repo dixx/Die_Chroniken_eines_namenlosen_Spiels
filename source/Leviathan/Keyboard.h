@@ -85,7 +85,7 @@ namespace leviathan
             bool wasCtrlDown() const;
 
             /*! \brief Speichert den aktuellen Zustand einer Taste.
-             *  \attention Diese Methode sollte nur intern vom Eventreceiver verwendet werden!
+             *  \note Diese Methode wird intern vom Eventreceiver verwendet.
              *  \param keyCode: Irrlicht Tastencode
              *  \param state: `true` wenn die Taste gedrückt ist, ansonsten `false`
              *  \param shiftState: `true` wenn Shift -wie auch immer- an ist, ansonsten `false`

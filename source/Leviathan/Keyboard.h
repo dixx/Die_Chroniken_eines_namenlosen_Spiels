@@ -9,7 +9,6 @@
 #define _LEVIATHAN_KEYBOARD_HEADER
 
 #include <array>
-#include <cstdint>
 #include <irrlicht.h>
 
 namespace leviathan

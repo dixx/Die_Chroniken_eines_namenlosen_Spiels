@@ -172,7 +172,7 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
     testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
     subject.init( configFileName );
 
-    SECTION( "keys pressed" ) {
+    SECTION( "keyboard used" ) {
         subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
         subject.sendKeyboardEvent( irr::KEY_KEY_J, true, false, true );
         subject.Keyboard().update();
@@ -185,5 +185,20 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
         REQUIRE( subject.Keyboard().wasCtrlDown() );
         REQUIRE( subject.Keyboard().isShiftDown() );
         REQUIRE_FALSE( subject.Keyboard().wasShiftDown() );
+    }
+
+    SECTION( "mouse used" ) {
+        // subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+        // subject.sendKeyboardEvent( irr::KEY_KEY_J, true, false, true );
+        // subject.Keyboard().update();
+        // subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+        // subject.sendKeyboardEvent( irr::KEY_KEY_J, false, true, true );
+        // REQUIRE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
+        // REQUIRE( subject.Keyboard().wasKeyDown( irr::KEY_KEY_Z ) );
+        // REQUIRE( subject.Keyboard().hasKeyJustBeenReleased( irr::KEY_KEY_J ) );
+        // REQUIRE( subject.Keyboard().isCtrlDown() );
+        // REQUIRE( subject.Keyboard().wasCtrlDown() );
+        // REQUIRE( subject.Keyboard().isShiftDown() );
+        // REQUIRE_FALSE( subject.Keyboard().wasShiftDown() );
     }
 }

@@ -30,7 +30,7 @@ namespace leviathan
 
             /*! Destruktor.
              */
-        	virtual ~EventReceiver();
+            virtual ~EventReceiver();
 
             EventReceiver( const EventReceiver& ) = delete;
             EventReceiver& operator=( const EventReceiver& ) = delete;

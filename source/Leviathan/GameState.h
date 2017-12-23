@@ -26,7 +26,7 @@ namespace leviathan
 
             /*! \brief Destruktor.
              */
-        	virtual ~GameState() {};
+            virtual ~GameState() {};
 
             GameState( const GameState& ) = delete;
             GameState& operator=( const GameState& ) = delete;

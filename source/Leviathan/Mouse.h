@@ -98,19 +98,19 @@ namespace leviathan
              *  \param button: Maustaste
              *  \param state: `true` wenn die Taste gedrückt ist, ansonsten `false`
              */
-            void setMouseButtonState( const Button button, const bool state );
+            void setButtonState( const Button button, const bool state );
 
             /*! \brief Speichert die aktuellen 2D-Koordinaten des Mauszeigers.
              *  \note Diese Methode wird intern vom Eventreceiver verwendet.
              *  \param x, y: 2D-Koordinaten des Mauszeigers
              */
-            void setMouseCoordinateState( const int32_t x, const int32_t y );
+            void setCoordinates( const int32_t x, const int32_t y );
 
             /*! \brief Speichert das aktuelle Mausrad-Delta.
              *  \note Diese Methode wird intern vom Eventreceiver verwendet.
              *  \param delta: Scrollrichtung und -Geschwindigkeit des Mausrades
              */
-            void setMouseWheelState( const float delta );
+            void setWheelDelta( const float delta );
 
         private:
 
@@ -118,7 +118,7 @@ namespace leviathan
             std::array<bool, Button::COUNT> buttonLastState_;
             irr::core::position2di position_;
             irr::core::position2di lastPosition_;
-            float wheelData_;
+            float wheelDelta_;
         };
     }
 }

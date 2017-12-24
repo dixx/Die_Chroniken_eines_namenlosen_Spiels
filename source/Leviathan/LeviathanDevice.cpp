@@ -18,7 +18,7 @@ namespace leviathan
       ),
       keyboard_(),
       mouse_(),
-      eventReceiver_(keyboard_)
+      eventReceiver_(keyboard_, mouse_)
     {
     }
 
@@ -108,5 +108,10 @@ namespace leviathan
     input::Keyboard& LeviathanDevice::Keyboard()
     {
         return keyboard_;
+    }
+
+    input::Mouse& LeviathanDevice::Mouse()
+    {
+        return mouse_;
     }
 }

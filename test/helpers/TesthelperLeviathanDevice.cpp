@@ -39,4 +39,25 @@ namespace TesthelperLeviathanDevice
         event.KeyInput.Control = ctrlState;
         graphicEngine_->postEventFromUser( event );
     }
+
+    void LeviathanDeviceWithIrrlichtMock::sendMouseEvent( const leviathan::input::Mouse::Button button,
+        const bool buttonState, const int32_t x, const int32_t y, const float wheelDelta )
+    {
+        irr::SEvent event;
+        event.EventType = irr::EET_MOUSE_INPUT_EVENT;
+        event.MouseInput.X = x;
+        event.MouseInput.Y = y;
+        event.MouseInput.Event = irr::EMIE_MOUSE_MOVED;
+        graphicEngine_->postEventFromUser( event );
+        event.MouseInput.Wheel = wheelDelta;
+        event.MouseInput.Event = irr::EMIE_MOUSE_WHEEL;
+        graphicEngine_->postEventFromUser( event );
+        if( button == leviathan::input::Mouse::Button::LEFT )
+            event.MouseInput.Event = buttonState ? irr::EMIE_LMOUSE_PRESSED_DOWN : irr::EMIE_LMOUSE_LEFT_UP;
+        if( button == leviathan::input::Mouse::Button::MIDDLE )
+            event.MouseInput.Event = buttonState ? irr::EMIE_MMOUSE_PRESSED_DOWN : irr::EMIE_MMOUSE_LEFT_UP;
+        if( button == leviathan::input::Mouse::Button::RIGHT )
+            event.MouseInput.Event = buttonState ? irr::EMIE_RMOUSE_PRESSED_DOWN : irr::EMIE_RMOUSE_LEFT_UP;
+        graphicEngine_->postEventFromUser( event );
+    }
 }

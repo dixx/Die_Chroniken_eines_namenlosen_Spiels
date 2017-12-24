@@ -16,6 +16,8 @@ namespace TesthelperLeviathanDevice
         irr::IrrlichtDevice* getGraphicEngine();
         void sendKeyboardEvent( const irr::EKEY_CODE keycode, const bool state, const bool shiftState,
             const bool ctrlState );
+        void sendMouseEvent( const leviathan::input::Mouse::Button button, const bool buttonState, const int32_t x,
+            const int32_t y, const float wheelDelta );
 
     private:
         irr::IrrlichtDevice* originalGraphicEngine_;

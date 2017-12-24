@@ -10,6 +10,7 @@
 
 #include <irrlicht.h>
 #include "Keyboard.h"
+#include "Mouse.h"
 
 namespace leviathan
 {
@@ -26,7 +27,7 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              */
-            EventReceiver( leviathan::input::Keyboard& keyboard );
+            EventReceiver( leviathan::input::Keyboard& keyboard, leviathan::input::Mouse& mouse );
 
             /*! Destruktor.
              */
@@ -47,6 +48,7 @@ namespace leviathan
         private:
 
             leviathan::input::Keyboard& keyboard_;
+            leviathan::input::Mouse& mouse_;
         };
     }
 }

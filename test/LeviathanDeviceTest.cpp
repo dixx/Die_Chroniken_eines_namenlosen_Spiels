@@ -188,17 +188,14 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
     }
 
     SECTION( "mouse used" ) {
-        // subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
-        // subject.sendKeyboardEvent( irr::KEY_KEY_J, true, false, true );
-        // subject.Keyboard().update();
-        // subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
-        // subject.sendKeyboardEvent( irr::KEY_KEY_J, false, true, true );
-        // REQUIRE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
-        // REQUIRE( subject.Keyboard().wasKeyDown( irr::KEY_KEY_Z ) );
-        // REQUIRE( subject.Keyboard().hasKeyJustBeenReleased( irr::KEY_KEY_J ) );
-        // REQUIRE( subject.Keyboard().isCtrlDown() );
-        // REQUIRE( subject.Keyboard().wasCtrlDown() );
-        // REQUIRE( subject.Keyboard().isShiftDown() );
-        // REQUIRE_FALSE( subject.Keyboard().wasShiftDown() );
+        subject.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, true, 12, 34, -2.4f );
+        subject.Mouse().update();
+        subject.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, false, 12, 34, 0.0f );
+        subject.sendMouseEvent( leviathan::input::Mouse::Button::RIGHT, true, 13, 33, 1.2f );
+        REQUIRE_FALSE( subject.Mouse().isMMBDown() );
+        REQUIRE( subject.Mouse().isRMBDown() );
+        REQUIRE( subject.Mouse().getPosition() == irr::core::position2di(13, 33) );
+        REQUIRE( subject.Mouse().getLastPosition() == irr::core::position2di(12, 34) );
+        REQUIRE( subject.Mouse().getWheelDelta() == Approx( 1.2f ) );
     }
 }

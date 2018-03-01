@@ -18,7 +18,7 @@ namespace leviathan
       ),
       keyboard_(),
       mouse_(),
-      eventReceiver_(keyboard_, mouse_)
+      eventReceiver_(keyboard_, mouse_, gameStateManager_)
     {
     }
 

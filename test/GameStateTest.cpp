@@ -31,4 +31,5 @@ TEST_CASE( "GameState: interface methods" ) {
     REQUIRE( sample.isDrawn );
     REQUIRE( sample.isUpdated );
     REQUIRE( sample.delta == Approx( 42.21f ) );
+    // subject->handleGuiEvents( 0 ); // implementation pending
 }

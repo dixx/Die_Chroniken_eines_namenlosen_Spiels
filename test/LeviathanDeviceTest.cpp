@@ -198,4 +198,8 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
         REQUIRE( subject.Mouse().getLastPosition() == irr::core::position2di(12, 34) );
         REQUIRE( subject.Mouse().getWheelDelta() == Approx( 1.2f ) );
     }
+
+    SECTION( "gui used" ) {
+        subject.sendGUIEvent( irr::gui::EGET_ELEMENT_FOCUSED );
+    }
 }

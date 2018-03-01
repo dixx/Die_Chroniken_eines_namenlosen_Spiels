@@ -11,6 +11,7 @@
 #include <irrlicht.h>
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "GameStateManager.h"
 
 namespace leviathan
 {
@@ -27,7 +28,8 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              */
-            EventReceiver( leviathan::input::Keyboard& keyboard, leviathan::input::Mouse& mouse );
+            EventReceiver( leviathan::input::Keyboard& keyboard, leviathan::input::Mouse& mouse,
+                leviathan::core::GameStateManager& gameStateManager );
 
             /*! Destruktor.
              */
@@ -39,7 +41,7 @@ namespace leviathan
             /*! \brief Event-Handler.
              *
              *  Hier wird festgelegt, was bei einem beliebigen Tastatur-, Maus- oder GUI-Ereignis passieren soll.
-             *  \attention Funktion wird im Hintergrund über Events bedient und darf nicht aufgerufen werden!
+             *  \attention Funktion wird im Hintergrund über Events bedient und sollte nicht aufgerufen werden!
              *  \param event: Event vom Betriebssystem oder sonstwo her.
              *  \return `true` wenn Event erfolgreich behandelt wurde, ansonsten `false`
              */
@@ -49,6 +51,10 @@ namespace leviathan
 
             leviathan::input::Keyboard& keyboard_;
             leviathan::input::Mouse& mouse_;
+            leviathan::core::GameStateManager& gameStateManager_;
+
+            bool handleKeyboardEvents( const irr::SEvent& event );
+            bool handleMouseEvents( const irr::SEvent& event );
         };
     }
 }

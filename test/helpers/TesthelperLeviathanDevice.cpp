@@ -60,4 +60,11 @@ namespace TesthelperLeviathanDevice
             event.MouseInput.Event = buttonState ? irr::EMIE_RMOUSE_PRESSED_DOWN : irr::EMIE_RMOUSE_LEFT_UP;
         graphicEngine_->postEventFromUser( event );
     }
+
+    void LeviathanDeviceWithIrrlichtMock::sendGUIEvent( irr::gui::EGUI_EVENT_TYPE type)
+    {
+        irr::SEvent event;
+        event.EventType = irr::EET_GUI_EVENT;
+        graphicEngine_->postEventFromUser( event );
+    }
 }

@@ -18,6 +18,7 @@ namespace TesthelperLeviathanDevice
             const bool ctrlState );
         void sendMouseEvent( const leviathan::input::Mouse::Button button, const bool buttonState, const int32_t x,
             const int32_t y, const float wheelDelta );
+        void sendGUIEvent( const irr::gui::IGUIElement& caller, const irr::gui::EGUI_EVENT_TYPE eventType );
 
     private:
         irr::IrrlichtDevice* originalGraphicEngine_;

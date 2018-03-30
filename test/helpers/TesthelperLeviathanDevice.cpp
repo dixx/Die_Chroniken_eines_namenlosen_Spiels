@@ -61,10 +61,13 @@ namespace TesthelperLeviathanDevice
         graphicEngine_->postEventFromUser( event );
     }
 
-    void LeviathanDeviceWithIrrlichtMock::sendGUIEvent( irr::gui::EGUI_EVENT_TYPE type)
+    void LeviathanDeviceWithIrrlichtMock::sendGUIEvent( const irr::gui::IGUIElement& caller,
+        const irr::gui::EGUI_EVENT_TYPE eventType )
     {
         irr::SEvent event;
         event.EventType = irr::EET_GUI_EVENT;
+        event.GUIEvent.caller = caller;
+        event.GUIEvent.EventType = eventType;
         graphicEngine_->postEventFromUser( event );
     }
 }

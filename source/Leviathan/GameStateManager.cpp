@@ -56,7 +56,7 @@ namespace leviathan
                 states_[id]->draw();
         }
 
-        bool GameStateManager::handleGuiEvents( const irr::SEvent& event )
+        bool GameStateManager::handleGuiEvent( const irr::SEvent& event )
         {
             (void)event;
             return false;

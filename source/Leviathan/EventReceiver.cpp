@@ -23,7 +23,7 @@ namespace leviathan
             if ( event.EventType == irr::EET_KEY_INPUT_EVENT )
                 return handleKeyboardEvents( event );
             if ( event.EventType == irr::EET_GUI_EVENT )
-                return gameStateManager_.handleGuiEvents( event );
+                return gameStateManager_.handleGuiEvent( event );
             return false;
         }
 

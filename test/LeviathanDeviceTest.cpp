@@ -200,6 +200,8 @@ TEST_CASE( "LeviathanDevice input event handling" ) {
     }
 
     SECTION( "gui used" ) {
-        subject.sendGUIEvent( irr::gui::EGET_ELEMENT_FOCUSED );
+        // TODO refactor as soon as we have proper GUI management implemented
+
+        subject.sendGUIEvent( nullptr, irr::gui::EGET_ELEMENT_FOCUSED );
     }
 }

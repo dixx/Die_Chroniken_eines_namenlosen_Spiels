@@ -123,7 +123,6 @@ TEST_CASE( "GameStateManager: let the states handle GUI events" ) {
 
     SECTION( "only the active state receives GUI events" ) {
         subject.transitTo( STATE_PLAY );
-        subject.sendGUIEvent();
-        // subject.handleGuiEvent( 0 ); // implementation pending
+        // subject.handleGuiEvent( 0 ); // TODO implementation pending
     }
 }

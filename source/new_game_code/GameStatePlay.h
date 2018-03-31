@@ -34,6 +34,12 @@ public:
     /*! \brief Zeichnet das Spiel auf den Bildschirm.
      */
     void draw() final;
+
+    /*! \brief Behandelt ein GUI-Event.
+     *  \param event: zu behandelndes GUI-Event
+     *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
+     */
+    bool handleGuiEvent( const irr::SEvent& event ) final;
 };
 
 #endif

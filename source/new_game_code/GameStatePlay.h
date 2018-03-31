@@ -19,9 +19,9 @@ public:
      */
     GameStatePlay();
 
-	/*! \brief Destruktor
+    /*! \brief Destruktor
      */
-	~GameStatePlay() final;
+    ~GameStatePlay() final;
 
     GameStatePlay( const GameStatePlay& ) = delete;
     GameStatePlay& operator=( const GameStatePlay& ) = delete;

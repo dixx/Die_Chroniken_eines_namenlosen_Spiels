@@ -47,6 +47,9 @@ TEST_CASE( "LeviathanDevice supporter" ) {
         Verify( Method( gameStateDouble, draw ) ).Once();
         VerifyNoOtherInvocations( Method( gameStateDouble, update ) );
     }
+    SECTION( "it provides keyboard access" ) {
+        REQUIRE_FALSE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
+    }
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {
@@ -155,9 +158,50 @@ TEST_CASE( "LeviathanDevice exit status" ) {
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile( configFileName, "[video]\nscreen_x=32\nscreen_y=20\n" );
 
-    SECTION( "it is 0 if everything ran well" ) {
+    SECTION( "it is 0 if everything went well" ) {
         REQUIRE( 0 == subject.exitStatus() );
         subject.init( configFileName );
         REQUIRE( 0 == subject.exitStatus() );
+    }
+}
+
+TEST_CASE( "LeviathanDevice input event handling" ) {
+    Testhelper testhelper;
+    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    testhelper.writeFile( configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n" );
+    subject.init( configFileName );
+
+    SECTION( "keyboard used" ) {
+        subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+        subject.sendKeyboardEvent( irr::KEY_KEY_J, true, false, true );
+        subject.Keyboard().update();
+        subject.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+        subject.sendKeyboardEvent( irr::KEY_KEY_J, false, true, true );
+        REQUIRE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
+        REQUIRE( subject.Keyboard().wasKeyDown( irr::KEY_KEY_Z ) );
+        REQUIRE( subject.Keyboard().hasKeyJustBeenReleased( irr::KEY_KEY_J ) );
+        REQUIRE( subject.Keyboard().isCtrlDown() );
+        REQUIRE( subject.Keyboard().wasCtrlDown() );
+        REQUIRE( subject.Keyboard().isShiftDown() );
+        REQUIRE_FALSE( subject.Keyboard().wasShiftDown() );
+    }
+
+    SECTION( "mouse used" ) {
+        subject.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, true, 12, 34, -2.4f );
+        subject.Mouse().update();
+        subject.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, false, 12, 34, 0.0f );
+        subject.sendMouseEvent( leviathan::input::Mouse::Button::RIGHT, true, 13, 33, 1.2f );
+        REQUIRE_FALSE( subject.Mouse().isMMBDown() );
+        REQUIRE( subject.Mouse().isRMBDown() );
+        REQUIRE( subject.Mouse().getPosition() == irr::core::position2di(13, 33) );
+        REQUIRE( subject.Mouse().getLastPosition() == irr::core::position2di(12, 34) );
+        REQUIRE( subject.Mouse().getWheelDelta() == Approx( 1.2f ) );
+    }
+
+    SECTION( "gui used" ) {
+        // TODO refactor as soon as we have proper GUI management implemented
+
+        subject.sendGUIEvent( nullptr, irr::gui::EGET_ELEMENT_FOCUSED );
     }
 }

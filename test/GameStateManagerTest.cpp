@@ -110,3 +110,19 @@ TEST_CASE( "GameStateManager: update and draw active game states" ) {
         }
     }
 }
+
+TEST_CASE( "GameStateManager: let the states handle GUI events" ) {
+    leviathan::core::GameStateManager subject;
+    Mock<leviathan::core::GameState> startDouble, playDouble;
+    Fake( Method( startDouble, handleGuiEvent ) );
+    Fake( Method( playDouble, handleGuiEvent ) );
+    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get();
+    enum { STATE_START = 1, STATE_PLAY };
+    subject.add( start, STATE_START );
+    subject.add( play, STATE_PLAY );
+
+    SECTION( "only the active state receives GUI events" ) {
+        subject.transitTo( STATE_PLAY );
+        // subject.handleGuiEvent( 0 ); // TODO implementation pending
+    }
+}

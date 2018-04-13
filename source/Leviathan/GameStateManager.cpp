@@ -56,6 +56,12 @@ namespace leviathan
                 states_[id]->draw();
         }
 
+        bool GameStateManager::handleGuiEvent( const irr::SEvent& event )
+        {
+            (void)event;
+            return false;
+        }
+
         size_t GameStateManager::getGameStateCount()
         {
             return states_.size();

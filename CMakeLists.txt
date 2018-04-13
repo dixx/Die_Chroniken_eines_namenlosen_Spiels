@@ -33,9 +33,12 @@ link_directories("${IRRLICHT_SOURCES_DIR}/MacOSX/BD/") # TODO only if MacOSX?
 
 set(ENGINE_SOURCES
   "${ENGINE_SOURCES_DIR}/Configuration.cpp"
+  "${ENGINE_SOURCES_DIR}/EventReceiver.cpp"
   "${ENGINE_SOURCES_DIR}/GameStateManager.cpp"
+  "${ENGINE_SOURCES_DIR}/Keyboard.cpp"
   "${ENGINE_SOURCES_DIR}/LeviathanDevice.cpp"
   "${ENGINE_SOURCES_DIR}/Logger.cpp"
+  "${ENGINE_SOURCES_DIR}/Mouse.cpp"
   "${ENGINE_SOURCES_DIR}/TimeControl.cpp"
   "${ENGINE_SOURCES_DIR}/Timer.cpp"
 )
@@ -94,8 +97,10 @@ set(SOURCES_FOR_TESTS
   "${TEST_DIR}/ConfigurationTest.cpp"
   "${TEST_DIR}/GameStateManagerTest.cpp"
   "${TEST_DIR}/GameStateTest.cpp"
+  "${TEST_DIR}/KeyboardTest.cpp"
   "${TEST_DIR}/LeviathanDeviceTest.cpp"
   "${TEST_DIR}/LoggerTest.cpp"
+  "${TEST_DIR}/MouseTest.cpp"
   "${TEST_DIR}/TimeControlTest.cpp"
   "${TEST_DIR}/TimerTest.cpp"
   "${TEST_DIR}/ZufallTest.cpp"

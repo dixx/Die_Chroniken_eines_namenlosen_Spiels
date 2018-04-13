@@ -1,5 +1,5 @@
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c") # compile, but no linking
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32") # irrKlang 64bit is only available for VisualStudio
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything") # applies only to clang compiler
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
   -Weffc++ \

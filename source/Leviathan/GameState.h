@@ -26,7 +26,7 @@ namespace leviathan
 
             /*! \brief Destruktor.
              */
-        	virtual ~GameState() {};
+            virtual ~GameState() {};
 
             GameState( const GameState& ) = delete;
             GameState& operator=( const GameState& ) = delete;
@@ -39,6 +39,12 @@ namespace leviathan
             /*! \brief Zeichnet den Zustand auf den Bildschirm.
              */
             virtual void draw() = 0;
+
+            /*! \brief Behandelt ein GUI-Event.
+             *  \param event: zu behandelndes GUI-Event
+             *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
+             */
+            virtual bool handleGuiEvent( const irr::SEvent& event ) = 0;
         };
     }
 }

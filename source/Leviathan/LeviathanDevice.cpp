@@ -15,7 +15,10 @@ namespace leviathan
               LOG_FILE_NAME,
               configuration_.getLoggingLevel()
           )
-      )
+      ),
+      keyboard_(),
+      mouse_(),
+      eventReceiver_(keyboard_, mouse_, gameStateManager_)
     {
     }
 
@@ -34,6 +37,7 @@ namespace leviathan
         graphicEngine_->closeDevice();
         graphicEngine_->drop();
         graphicEngine_ = irr::createDeviceEx( configuration_.getGraphicEngineParams() );
+        graphicEngine_->setEventReceiver( &eventReceiver_ );
         logger_ = new leviathan::core::Logger(
             graphicEngine_->getFileSystem(),
             graphicEngine_->getTimer(),
@@ -99,5 +103,15 @@ namespace leviathan
     core::GameStateManager& LeviathanDevice::GameStateManager()
     {
         return gameStateManager_;
+    }
+
+    input::Keyboard& LeviathanDevice::Keyboard()
+    {
+        return keyboard_;
+    }
+
+    input::Mouse& LeviathanDevice::Mouse()
+    {
+        return mouse_;
     }
 }

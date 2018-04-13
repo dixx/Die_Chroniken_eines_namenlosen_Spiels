@@ -9,8 +9,11 @@
 
 #include <irrlicht.h>
 #include "Configuration.h"
+#include "EventReceiver.h"
 #include "GameStateManager.h"
+#include "Keyboard.h"
 #include "Logger.h"
+#include "Mouse.h"
 #include "TimeControl.h"
 
 #ifndef NDEBUG
@@ -75,6 +78,14 @@ namespace leviathan
          */
         core::GameStateManager& GameStateManager();
 
+        /*! \brief Zugriff auf das Keyboard.
+         */
+        input::Keyboard& Keyboard();
+
+        /*! \brief Zugriff auf die Maus.
+         */
+        input::Mouse& Mouse();
+
     private:
 
         core::Configuration configuration_;
@@ -82,6 +93,9 @@ namespace leviathan
         core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
+        input::Keyboard keyboard_;
+        input::Mouse mouse_;
+        core::EventReceiver eventReceiver_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
     };

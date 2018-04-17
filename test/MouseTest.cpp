@@ -11,6 +11,8 @@ TEST_CASE( "Mouse" ) {
         REQUIRE_FALSE( subject.wasLMBDown() );
         REQUIRE_FALSE( subject.wasMMBDown() );
         REQUIRE_FALSE( subject.wasRMBDown() );
+        REQUIRE_FALSE( subject.isWheelMovedUp() );
+        REQUIRE_FALSE( subject.isWheelMovedDown() );
         REQUIRE( subject.getPosition() == irr::core::position2di(0, 0) );
         REQUIRE( subject.getLastPosition() == irr::core::position2di(0, 0) );
         REQUIRE( subject.getWheelDelta() == Approx( 0.0f ) );
@@ -31,6 +33,8 @@ TEST_CASE( "Mouse" ) {
         REQUIRE_FALSE( subject.isLMBDown() );
         REQUIRE( subject.isMMBDown() );
         REQUIRE( subject.getPosition() == irr::core::position2di(30, 10) );
+        REQUIRE_FALSE( subject.isWheelMovedUp() );
+        REQUIRE( subject.isWheelMovedDown() );
         REQUIRE( subject.getWheelDelta() == Approx( -2.2f ) );
     }
 
@@ -40,6 +44,7 @@ TEST_CASE( "Mouse" ) {
         subject.setWheelDelta( 33.3f );
         REQUIRE( subject.isRMBDown() );
         REQUIRE( subject.getPosition() == irr::core::position2di(11, 22) );
+        REQUIRE( subject.isWheelMovedUp() );
         REQUIRE( subject.getWheelDelta() == Approx( 33.3f ) );
         subject.update();
         subject.setButtonState( leviathan::input::Mouse::Button::RIGHT, false );
@@ -49,6 +54,7 @@ TEST_CASE( "Mouse" ) {
         REQUIRE( subject.wasRMBDown() );
         REQUIRE( subject.getPosition() == irr::core::position2di(111, 222) );
         REQUIRE( subject.getLastPosition() == irr::core::position2di(11, 22) );
+        REQUIRE( subject.isWheelMovedDown() );
         REQUIRE( subject.getWheelDelta() == Approx( -6.9f ) );
 
         SECTION( "key states are cleared without continuous input" ) {
@@ -56,7 +62,7 @@ TEST_CASE( "Mouse" ) {
             REQUIRE( subject.getLastPosition() == irr::core::position2di(111, 222) );
 
             SECTION( "...but mousewheel is updated by events only" ) {
-                REQUIRE( subject.getWheelDelta() == Approx( -6.9f ) );
+                REQUIRE( subject.getWheelDelta() == Approx( -6.9f ) ); // TODO check why this is inconsistent with the rest
             }
         }
     }

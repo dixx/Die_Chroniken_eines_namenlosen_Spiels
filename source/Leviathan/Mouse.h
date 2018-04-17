@@ -63,6 +63,16 @@ namespace leviathan
              */
             bool isRMBDown() const;
 
+            /*! \brief Abfrage des aktuellen Zustands des Mausrades.
+            *  \return `true` wenn das Mausrad nach oben bewegt wurde, ansonsten `false`
+            */
+            bool isWheelMovedUp() const;
+
+            /*! \brief Abfrage des aktuellen Zustands des Mausrades.
+            *  \return `true` wenn das Mausrad nach unten bewegt wurde, ansonsten `false`
+            */
+            bool isWheelMovedDown() const;
+
             /*! \brief Abfrage des vorherigen Zustands der linken Maustaste.
              *  \return `true` wenn die Maustaste gedrückt war, ansonsten `false`
              */

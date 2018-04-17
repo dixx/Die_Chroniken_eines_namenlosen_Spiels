@@ -50,6 +50,9 @@ TEST_CASE( "LeviathanDevice supporter" ) {
     SECTION( "it provides keyboard access" ) {
         REQUIRE_FALSE( subject.Keyboard().isKeyDown( irr::KEY_KEY_Z ) );
     }
+    SECTION( "it provides mouse access" ) {
+        REQUIRE_FALSE( subject.Mouse().isRMBDown() );
+    }
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {

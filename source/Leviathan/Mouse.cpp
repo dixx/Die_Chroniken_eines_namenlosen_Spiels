@@ -36,6 +36,16 @@ namespace leviathan
             return buttonIsDown_[ RIGHT ];
         }
 
+        bool Mouse::isWheelMovedUp() const
+        {
+            return wheelDelta_ > 0;
+        }
+
+        bool Mouse::isWheelMovedDown() const
+        {
+            return wheelDelta_ < 0;
+        }
+
         bool Mouse::wasLMBDown() const
         {
             return buttonLastState_[ LEFT ];

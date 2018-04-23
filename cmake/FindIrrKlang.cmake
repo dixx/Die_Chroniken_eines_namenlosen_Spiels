@@ -1,4 +1,4 @@
-set(IRRKLANG_DIR "${CMAKE_SOURCE_DIR}/dependencies/irrKlang-1.6.0")
+set(IRRKLANG_DIR "${3RDPARTY_DIR}/irrKlang-1.6.0")
 set(IRRKLANG_INCLUDE_DIRS "${IRRKLANG_DIR}/include")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES Windows)

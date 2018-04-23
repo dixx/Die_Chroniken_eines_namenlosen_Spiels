@@ -1,6 +1,6 @@
 # TODO find existing LUA
 
-set(LUA_DIR "${CMAKE_SOURCE_DIR}/dependencies/lua-5.3.2")
+set(LUA_DIR "${3RDPARTY_DIR}/lua-5.3.2")
 set(LUA_INCLUDE_DIRS "${LUA_DIR}/include")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES Windows)

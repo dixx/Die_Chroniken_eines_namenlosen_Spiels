@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.9.2)
-project(spiel)
+project("Die Chroniken eines namenlosen Spiels")
 
-if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE) # TODO check!
   set(CMAKE_BUILD_TYPE Debug)
 endif(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_SOURCE_DIR}/cmake/Modules")
 set(3RDPARTY_DIR "${CMAKE_SOURCE_DIR}/dependencies")
 set(RESOURCES_DIR "${CMAKE_SOURCE_DIR}/dev_media")
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
@@ -90,32 +90,15 @@ set(SOURCES
   "${SOURCES_DIR}/main.cpp"
 )
 
-set(SOURCES_FOR_TESTS
-  "${SOURCES_DIR}/Zufall.cpp"
-  "${TEST_DIR}/helpers/Testhelper.cpp"
-  "${TEST_DIR}/helpers/TesthelperLeviathanDevice.cpp"
-  "${TEST_DIR}/ConfigurationTest.cpp"
-  "${TEST_DIR}/GameStateManagerTest.cpp"
-  "${TEST_DIR}/GameStateTest.cpp"
-  "${TEST_DIR}/KeyboardTest.cpp"
-  "${TEST_DIR}/LeviathanDeviceTest.cpp"
-  "${TEST_DIR}/LoggerTest.cpp"
-  "${TEST_DIR}/MouseTest.cpp"
-  "${TEST_DIR}/TimeControlTest.cpp"
-  "${TEST_DIR}/TimerTest.cpp"
-  "${TEST_DIR}/ZufallTest.cpp"
-  "${TEST_DIR}/unit_tests.cpp"
-)
+add_subdirectory(test ./test)
 
-add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${ENGINE_SOURCES} ${SOURCES})
+add_executable(chroniken_alt MACOSX_BUNDLE ${ENGINE_SOURCES} ${SOURCES})
 add_executable(neues_spiel ${ENGINE_SOURCES} ${NEW_GAME_SOURCES})
-add_executable(unit_tests ${ENGINE_SOURCES} ${SOURCES_FOR_TESTS})
-#set_target_properties(${PROJECT_NAME} PROPERTIES)
-target_link_libraries(${PROJECT_NAME} ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
+#set_target_properties(chroniken_alt PROPERTIES)
+target_link_libraries(chroniken_alt ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
 target_link_libraries(neues_spiel ${IRRLICHT_LIBRARY} ${IRRKLANG_LIBRARY} ${LUA_LIBRARY})
-target_link_libraries(unit_tests ${IRRLICHT_LIBRARY})
 if(APPLE)
-  set_target_properties(${PROJECT_NAME} PROPERTIES
+  set_target_properties(chroniken_alt PROPERTIES
     LINK_FLAGS "-framework cocoa -framework opengl -framework IOKit"
     OUTPUT_NAME Spiel
   )
@@ -123,7 +106,7 @@ endif(APPLE)
 
 # on installation, put everything where it belongs
 set(CMAKE_INSTALL_PREFIX ../Debug) # change later
-install(TARGETS ${PROJECT_NAME} neues_spiel unit_tests DESTINATION .)
+install(TARGETS chroniken_alt neues_spiel DESTINATION .) # TODO rework!
 install(DIRECTORY "${RESOURCES_DIR}/GFX" "${RESOURCES_DIR}/SFX" "${RESOURCES_DIR}/SCRIPTS" DESTINATION .)
 install(DIRECTORY DESTINATION ./SAVEGAMES)
 install(FILES "${RESOURCES_DIR}/chroniken.ico" DESTINATION .)

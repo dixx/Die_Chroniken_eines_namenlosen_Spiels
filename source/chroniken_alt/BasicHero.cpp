@@ -1,0 +1,81 @@
+#include "BasicHero.h"
+#include "Ground.h"
+#include "Logfile.h"
+#include "TimerManager.h"
+
+
+
+BasicHero::BasicHero( const irr::core::stringc& heroData, irr::scene::ISceneManager* smgr, bool isParent )
+: BasicLifeform( heroData, smgr, true ),
+  traceTimer_(0)
+{
+    if ( smgr_ == 0 )
+        Logfile::getInstance().emergencyExit( "SceneManager in [BasicHero] nicht mehr gefunden! Abbruch." );
+    traceTimer_ = TimerManager::getInstance().createTimer( 0.8f );
+    init();
+    if ( !isParent )
+        deleteExtractor();
+}
+
+
+
+BasicHero::~BasicHero()
+{
+    // Niemals droppen, wenn Objekt nicht durch "create" erzeugt wurde!
+    TimerManager::getInstance().removeTimer( traceTimer_ );
+}
+
+
+
+void BasicHero::moveTo( const irr::core::vector3df target, bool isTriggered )
+{
+    if ( target.equals( currentPosition_, 0.5f ) ) // TODO replace with some hero radius
+        return;
+    targetPosition_ = Ground::getInstance().getHeightFromPositionRanged( target, maxJumpHeight_ );
+    if ( isTriggered )
+    {
+        if ( !traceTimer_->isRunning() )
+            traceTimer_->restart();
+        isMoving_ = true;
+    }
+    else
+    {
+        if ( traceTimer_->isFull() )
+            targetPosition_ = currentPosition_;
+        traceTimer_->stop();
+    }
+}
+
+
+
+#ifdef _DEBUG_MODE
+void BasicHero::toggleSpeed()
+{
+    speed_ = ( irr::core::equals( speed_, 4.0f ) ) ? 200.0f : 4.0f;
+}
+#endif
+
+
+
+/* private */
+
+
+
+void BasicHero::init()
+{
+    speed_ = 4.0f;
+    maxJumpHeight_ = 1.8f;
+    node_->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+    node_->setMaterialFlag( irr::video::EMF_NORMALIZE_NORMALS, true);
+    node_->setMD2Animation( irr::scene::EMAT_STAND );
+    //node->setFrameLoop( 1, 40 );
+    //node->setLoopMode( true );
+    node_->setVisible( true );
+}
+
+
+
+//void Hero::calculateCollisionRadius()
+//{
+//    collisionRadius_ = 0.2f;
+//}

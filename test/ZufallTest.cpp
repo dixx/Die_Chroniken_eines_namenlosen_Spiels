@@ -2,7 +2,7 @@
 #include <irrlicht.h>
 #include <chrono>
 #include <cstdint>
-#include "../source/Zufall.h" // TODO change to engine randomizer later
+#include "../source/chroniken_alt/Zufall.h" // TODO change to engine randomizer later
 
 const uint32_t SEED = static_cast<uint32_t>( std::chrono::system_clock::now().time_since_epoch().count() );
 

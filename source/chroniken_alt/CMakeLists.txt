@@ -2,10 +2,12 @@ include_directories(
   "${IRRKLANG_INCLUDE_DIRS}"
   "${IRRLICHT_INCLUDE_DIRS}"
   "${LUA_INCLUDE_DIRS}"
-  ../Leviathan
+  "${LEVIATHAN_INCLUDE_DIRS}"
 )
-link_directories("${IRRKLANG_DIR}/bin/macosx-gcc/") # TODO only if MacOSX?
-link_directories("${IRRLICHT_SOURCES_DIR}/MacOSX/BD/") # TODO only if MacOSX?
+if(APPLE)
+  link_directories("${IRRKLANG_DIR}/bin/macosx-gcc/")
+  link_directories("${IRRLICHT_SOURCES_DIR}/MacOSX/BD/")
+endif(APPLE)
 
 add_executable(chroniken_alt MACOSX_BUNDLE
   Basic3DObject.cpp
@@ -55,6 +57,7 @@ if(APPLE)
     OUTPUT_NAME Chroniken_alt
   )
 endif(APPLE)
+
 install(TARGETS chroniken_alt DESTINATION .)
 install(FILES "${IRRKLANG_BINARY_LIBRARY}" "${LUA_BINARY_LIBRARY}" DESTINATION .)
 install(DIRECTORY "${RESOURCES_DIR}/GFX" "${RESOURCES_DIR}/SFX" "${RESOURCES_DIR}/SCRIPTS" DESTINATION .)

@@ -6,6 +6,8 @@
 #ifndef _LEVIATHAN_GAMESTATE_HEADER
 #define _LEVIATHAN_GAMESTATE_HEADER
 
+#include <irrlicht.h>
+
 namespace leviathan
 {
     namespace core

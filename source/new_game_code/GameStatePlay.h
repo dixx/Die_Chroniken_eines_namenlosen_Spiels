@@ -5,6 +5,7 @@
 #ifndef _GAMESTATEPLAY_HEADER
 #define _GAMESTATEPLAY_HEADER
 
+#include <irrlicht.h>
 #include "leviathan.h"
 
 /*! \class GameStatePlay GameStatePlay.h "GameStatePlay.h"

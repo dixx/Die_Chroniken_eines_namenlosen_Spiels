@@ -1,3 +1,5 @@
+include_directories("${IRRLICHT_INCLUDE_DIRS}")
+
 add_library(leviathan SHARED
   Configuration.cpp
   EventReceiver.cpp
@@ -9,10 +11,13 @@ add_library(leviathan SHARED
   TimeControl.cpp
   Timer.cpp
 )
+
 target_link_libraries(leviathan "${IRRLICHT_LIBRARY}")
 set_target_properties(leviathan PROPERTIES
   LIBRARY_OUTPUT_NAME leviathan
   PREFIX ""
 )
-install(FILES "${IRRLICHT_BINARY_LIBRARY}" DESTINATION .)
+set(LEVIATHAN_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+
 install(TARGETS leviathan RUNTIME DESTINATION .)
+install(FILES "${IRRLICHT_BINARY_LIBRARY}" DESTINATION .)

@@ -10,6 +10,7 @@ Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 
 ###### Windows:
 ...und `cmake -G "MinGW Makefiles" ..` eingeben. Das erstellt ein Makefile für genau dein System. Damit kannst du dann machen was du willst, z.B. ein Eclipse-Projekt erstellen oder einfach `make` ausführen.
+Hinweis: Wir empfehlen Ninja anstelle von Make zu nutzen.
 
 ###### Linux:
 ...und dann noch flink die gerade entpackten Bibliotheken compilen. (siehe **Troubleshooting**). Dann kannst du `cmake ..` eingeben, danach `make`.
@@ -51,4 +52,5 @@ A thousand thanks to:
 - Eran Pe'er for his marvellous mocking framework *FakeIt*
 - the wonderful community around *stackoverflow.com* for many many many hints
 - the awesome people behind and around *GitHub*
+- all GNUs and Ninjas
 - and all the others silently involved.

@@ -82,10 +82,10 @@ TEST_CASE( "Zufall: get random int within range" ) {
 
     SECTION( "probability" ) {
         bool first, second, third, invalid = false;
-        uint32_t value = 0;
+        // uint32_t value = 0;
         for( int i = 0; i < 100; ++i ) {
-            value = subject.getIntBetween( 123456, 123458 );
-            switch (value) {
+            // value = subject.getIntBetween( 123456, 123458 );
+            switch( subject.getIntBetween( 123456, 123458 ) ) {
             case 123456:
                 first = true;
                 break;

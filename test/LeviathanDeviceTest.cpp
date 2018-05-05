@@ -118,7 +118,7 @@ TEST_CASE( "LeviathanDevice main loop" ) {
         SECTION( "with sometimes zero elapsed time" ) {
             std::srand( 42 );
             When( Method( timerDouble, getTime ) ).AlwaysDo(
-                [&virtualTime]{ return std::rand()&1 ? virtualTime : virtualTime++; }
+                [&virtualTime]{ return ( std::rand()&1 ) ? virtualTime : virtualTime++; }
             );
             subject.run();
             SECTION( "it should draw with a fixed maximum frame rate" ) {

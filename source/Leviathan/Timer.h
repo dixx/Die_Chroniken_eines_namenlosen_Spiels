@@ -95,7 +95,7 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            AlwaysRunningTimer( const float maxValue ) : Timer(maxValue) {}
+            explicit AlwaysRunningTimer( const float maxValue ) : Timer(maxValue) {}
 
             AlwaysRunningTimer( const AlwaysRunningTimer& ) = delete;
             AlwaysRunningTimer& operator=( const AlwaysRunningTimer& ) = delete;

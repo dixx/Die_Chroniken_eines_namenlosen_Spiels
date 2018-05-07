@@ -12,6 +12,7 @@ set(3RDPARTY_DIR "${PROJECT_SOURCE_DIR}/dependencies")
 set(RESOURCES_DIR "${PROJECT_SOURCE_DIR}/dev_media") # TODO (re)move together with chroniken_alt
 
 include(compilerFlags)
+include(cotire)
 
 find_package(Catch REQUIRED)
 find_package(FakeIt REQUIRED)

@@ -55,12 +55,12 @@ namespace leviathan
          *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,
          *         Berechnen der Zeit, Entscheiden ob die KI aktualisiert werden muss usw.
          */
-        void run(); // TODO test!
+        void run();
 
         /*! \brief Gibt das Errorlevel der Engine zurück.
          *  \return 0 wenn alles gut lief, ansonsten eine ganzzahlige positive Fehlernummer.
          */
-        int exitStatus(); // TODO test!
+        int exitStatus();
 
         /*! \brief Zugriff auf die TimeControl Instanz.
          */

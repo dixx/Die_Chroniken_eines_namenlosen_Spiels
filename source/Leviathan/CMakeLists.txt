@@ -18,6 +18,7 @@ set_target_properties(leviathan PROPERTIES
   PREFIX ""
 )
 set(LEVIATHAN_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+cotire(leviathan)
 
 install(TARGETS leviathan RUNTIME DESTINATION .)
 install(FILES "${IRRLICHT_BINARY_LIBRARY}" DESTINATION .)

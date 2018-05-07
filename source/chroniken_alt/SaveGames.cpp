@@ -4,7 +4,7 @@
 
 // these defines are for better readability only
 #define UNKNOWN_SAVEGAME_FORMAT "Unbekanntes Savegame-Format! Abbruch."
-#define BROKEN_STREAM "Schreiben in Savegame-Datei fehlgeschlagen! Abbruch."
+#define SAV_BROKEN_STREAM "Schreiben in Savegame-Datei fehlgeschlagen! Abbruch."
 
 
 
@@ -92,7 +92,7 @@ void SaveGames::save( const irr::io::path& filename )
     if ( !stream )
     {
         Logfile::getInstance().writeLine( Logfile::INFO, "Savegame: ", filename);
-        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
+        Logfile::getInstance().emergencyExit( SAV_BROKEN_STREAM );
     }
     write<irr::u8>( stream, CURRENT_VERSION );
     write<irr::u32>( stream, getTimestamp() );
@@ -136,7 +136,7 @@ irr::core::stringc SaveGames::readString( irr::io::IReadFile* stream )
 template <typename T> void SaveGames::write( irr::io::IWriteFile* stream, const T& number )
 {
     if ( stream->write( &number, sizeof( T ) ) < static_cast<irr::s32>( sizeof( T ) ) )
-        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
+        Logfile::getInstance().emergencyExit( SAV_BROKEN_STREAM );
 }
 // explicit instantiations:
 template void SaveGames::write<irr::u8>( irr::io::IWriteFile* stream, const irr::u8& number );
@@ -148,9 +148,9 @@ void SaveGames::writeString( irr::io::IWriteFile* stream, const irr::core::strin
 {
     irr::u32 count = text.size() + 1; // + 1 == trailing \0
     if ( stream->write( &count, sizeof( irr::u32 ) ) < static_cast<irr::s32>( sizeof( irr::u32 ) ) )
-        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
+        Logfile::getInstance().emergencyExit( SAV_BROKEN_STREAM );
     if ( stream->write( text.c_str(), count ) < static_cast<irr::s32>( count ) )
-        Logfile::getInstance().emergencyExit( BROKEN_STREAM );
+        Logfile::getInstance().emergencyExit( SAV_BROKEN_STREAM );
 }
 
 

@@ -17,5 +17,6 @@ add_executable(unit_tests
   unit_tests.cpp
 )
 target_link_libraries(unit_tests "${IRRLICHT_LIBRARY}" leviathan catch fakeit)
+cotire(unit_tests)
 
 install(TARGETS unit_tests DESTINATION .)

@@ -57,6 +57,7 @@ if(APPLE)
     OUTPUT_NAME Chroniken_alt
   )
 endif(APPLE)
+cotire(chroniken_alt)
 
 install(TARGETS chroniken_alt DESTINATION .)
 install(FILES "${IRRKLANG_BINARY_LIBRARY}" "${LUA_BINARY_LIBRARY}" DESTINATION .)

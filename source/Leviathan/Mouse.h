@@ -38,6 +38,10 @@ namespace leviathan
              */
             Mouse();
 
+            /*! \brief Destruktor.
+             */
+            ~Mouse() = default;
+
             Mouse( const Mouse& ) = delete;
             Mouse& operator=( const Mouse& ) = delete;
 

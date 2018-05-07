@@ -31,7 +31,7 @@ namespace leviathan
             /*! \brief Destruktor.
              *  \note Verwaltete Spielzustände werden hier nicht gelöscht.
              */
-            ~GameStateManager();
+            ~GameStateManager() = default;
 
             GameStateManager( const GameStateManager& ) = delete;
             GameStateManager& operator=( const GameStateManager& ) = delete;

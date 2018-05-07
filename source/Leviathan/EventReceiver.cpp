@@ -12,10 +12,6 @@ namespace leviathan
         {
         }
 
-        EventReceiver::~EventReceiver()
-        {
-        }
-
         bool EventReceiver::OnEvent( const irr::SEvent& event )
         {
             if ( event.EventType == irr::EET_MOUSE_INPUT_EVENT )

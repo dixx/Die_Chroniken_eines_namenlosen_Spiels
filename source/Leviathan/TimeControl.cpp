@@ -9,10 +9,6 @@ namespace leviathan
         {
         }
 
-        TimeControl::~TimeControl()
-        {
-        }
-
         void TimeControl::add( Timer& timer )
         {
             timers_.push_back( &timer );

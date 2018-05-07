@@ -15,11 +15,6 @@ namespace leviathan
             params_.LoggingLevel = irr::ELL_WARNING;
         }
 
-        Configuration::~Configuration()
-        {
-            // nothing to do here
-        }
-
         void Configuration::readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem )
         {
             content_.clear();

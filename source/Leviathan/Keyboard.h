@@ -28,6 +28,10 @@ namespace leviathan
              */
             Keyboard();
 
+            /*! \brief Destruktor.
+             */
+            ~Keyboard() = default;
+
             Keyboard( const Keyboard& ) = delete;
             Keyboard& operator=( const Keyboard& ) = delete;
 

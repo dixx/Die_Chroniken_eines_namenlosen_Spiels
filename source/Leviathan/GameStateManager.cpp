@@ -11,10 +11,6 @@ namespace leviathan
         {
         }
 
-        GameStateManager::~GameStateManager()
-        {
-        }
-
         void GameStateManager::add( GameState& gameState, uint32_t id )
         {
             states_[id] = &gameState;

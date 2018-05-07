@@ -29,7 +29,7 @@ namespace leviathan
             /*! \brief Destruktor.
              *  \note Vorhandene Timer werden nicht gelöscht.
              */
-            ~TimeControl();
+            ~TimeControl() = default;
 
             TimeControl( const TimeControl& ) = delete;
             TimeControl& operator=( const TimeControl& ) = delete;

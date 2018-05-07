@@ -24,6 +24,10 @@ namespace leviathan
              */
             explicit Timer( const float maxValue );
 
+            /*! \brief Destruktor.
+             */
+            ~Timer() = default;
+
             Timer( const Timer& ) = delete;
             Timer& operator=( const Timer& ) = delete;
 

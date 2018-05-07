@@ -32,7 +32,7 @@ namespace leviathan
 
             /*! \brief Destruktor.
              */
-            ~Configuration();
+            ~Configuration() = default;
 
             Configuration( const Configuration& ) = delete;
             Configuration& operator=( const Configuration& ) = delete;

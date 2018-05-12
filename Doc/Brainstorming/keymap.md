@@ -1,6 +1,6 @@
 ### key map
 
-There is a link between an _action_, an _input_, and it's _state_.
+There is a link between an _action_, an _input_, and its _state_.
 
 # the action
 - _actions_ have a meaning
@@ -25,6 +25,14 @@ There is a link between an _action_, an _input_, and it's _state_.
     - name: string
     - type: enum (Keyboard, Mouse, ...)
     - id: enum (LMB, KEY_X, Joystick_moved_right, ...)
+  - input1default:
+    - name: string
+    - type: enum (Keyboard, Mouse, ...)
+    - id: enum (LMB, KEY_X, Joystick_moved_right, ...)
+  - input2default:
+    - name: string
+    - type: enum (Keyboard, Mouse, ...)
+    - id: enum (LMB, KEY_X, Joystick_moved_right, ...)
 
 
 
@@ -32,7 +40,7 @@ There is a link between an _action_, an _input_, and it's _state_.
 - must have a unchangeable section for menu actions and the like
   - values may be hard-coded
 - should have a customizable section that holds actions necessary for gameplay
-  * this section must not be part of the engine, but part of a GameState.
+  - this section must not be part of the engine, but part of a GameState.
 - should be able to handle every kind of input
 - should somehow "collect" available actions from the game states
 

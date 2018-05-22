@@ -53,6 +53,11 @@ TEST_CASE( "LeviathanDevice supporter" ) {
     SECTION( "it provides mouse access" ) {
         REQUIRE_FALSE( subject.Mouse().isRMBDown() );
     }
+    SECTION( "it provides action mapping" ) {
+        Mock<leviathan::core::GameState> gameStateDouble;
+        // game state provides action mapping
+        // REQUIRE_FALSE( subject.Actions().is(TALKING) );
+    }
 }
 
 TEST_CASE( "LeviathanDevice main loop" ) {

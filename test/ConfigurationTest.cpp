@@ -4,7 +4,6 @@
 
 // TODO
 // - enum values are allowed (only /[A-Z0-9_]/)
-// - boolean values are `true` and `false`
 // - integer values can be positive or negative
 // - float values may not have leading zeroes, can be positive or negative, and must have a `.` in them
 

@@ -33,7 +33,10 @@ There is a link between an _action_, an _input_, and its _state_.
     - name: string
     - type: enum (Keyboard, Mouse, ...)
     - id: enum (LMB, KEY_X, Joystick_moved_right, ...)
-
+- possible actions in-game:
+  - attack_primary, use, talk, pick_up, move_to, run, ...
+- possible actions in menu:
+  - toggle, choose, go_back, highlight/hover/mark?, ...
 
 
 # the action map
@@ -45,9 +48,17 @@ There is a link between an _action_, an _input_, and its _state_.
 - should somehow "collect" available actions from the game states
 
 
+# flow
+1. input goes from OS to Irrlicht device
+2. available as keyboard- and mouse events
+3. is consumed by Leviathan eventreceiver
+4. eventreceiver pushes inputs to action mappings
+5. game state polls several action states
+
+
 # access
 
 `leviathan.Actions().started(TALKING)`
 `leviathan.Actions().is(ATTACKING_PRIMARY)`
 `leviathan.Actions().stopped(RUNNING)`
-`leviathan.Actions().isNot(ATTACKING_PRIMARY)`
+~~`leviathan.Actions().isNot(ATTACKING_PRIMARY)`~~

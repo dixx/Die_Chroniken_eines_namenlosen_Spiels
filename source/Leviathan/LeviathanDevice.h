@@ -8,6 +8,7 @@
 #define _LEVIATHAN_DEVICE_HEADER
 
 #include <irrlicht.h>
+#include "Actions.h"
 #include "Configuration.h"
 #include "EventReceiver.h"
 #include "GameStateManager.h"

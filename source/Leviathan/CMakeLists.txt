@@ -1,6 +1,7 @@
 include_directories("${IRRLICHT_INCLUDE_DIRS}")
 
 add_library(leviathan SHARED
+  Actions.cpp
   Configuration.cpp
   EventReceiver.cpp
   GameStateManager.cpp

@@ -7,9 +7,9 @@ SCENARIO( "Leviathan Engine can map input to actions" ) {
     const irr::io::path mappingsFileName = "testactionmappings.yml";
     irr::core::stringc content = "---\n";
     content += "customizable:\n";
-    content += "  talk:\n";
+    content += "  - name: talk\n";
     content += "    id: 1\n";
-    content += "    name: initiate communication\n";
+    content += "    description: initiate communication\n";
     content += "    input_mappings:\n";
     content += "      primary:\n";
     content += "        name: left mouse button\n";
@@ -19,14 +19,14 @@ SCENARIO( "Leviathan Engine can map input to actions" ) {
     content += "        name: <E>\n";
     content += "        type: keyboard\n";
     content += "        id: 0x45\n";
-    content += "  attack:\n";
-    content += "    name: main hand attack\n";
+    content += "  - name: attack\n";
     content += "    id: 2\n";
+    content += "    description: main hand attack\n";
     content += "    input_mappings:\n";
     content += "internal:\n";
-    content += "  select:\n";
+    content += "  - name: select\n";
     content += "    id: 100\n";
-    content += "    name: select a menu entry\n";
+    content += "    description: select a menu entry\n";
     content += "    input_mappings:\n";
     content += "      primary:\n";
     content += "        name: <SPACE>\n";
@@ -45,9 +45,8 @@ SCENARIO( "Leviathan Engine can map input to actions" ) {
         }
 
         WHEN( "action map is read from file" ) {
-            subject.mergeFromFile( mappingsFileName, testhelper.getFileSystem() );
+            subject.mergeFromFile( mappingsFileName );
             enum { TALK = 1, ATTACK, SELECTION = 100 };
-            // send events
 
             THEN( "it provides an action for each defined input mapping" ) {
                 REQUIRE_FALSE( subject.inProgress( ATTACK ) );
@@ -55,19 +54,22 @@ SCENARIO( "Leviathan Engine can map input to actions" ) {
                 REQUIRE_FALSE( subject.inProgress( SELECTION ) );
 
                 AND_THEN( "convenience methods are more helpfull" ) {
-                    REQUIRE( subject.justStarted( TALK ) );
+                    REQUIRE( subject.inactive( TALK ) );
                     // send keyboard event
+                    REQUIRE( subject.justStarted( TALK ) );
+                    REQUIRE( subject.inProgress( TALK ) );
+                    // send keyboard event
+                    REQUIRE_FALSE( subject.justStarted( TALK ) );
                     REQUIRE( subject.inProgress( TALK ) );
                     REQUIRE_FALSE( subject.inactive( TALK ) );
-                    REQUIRE_FALSE( subject.justStarted( TALK ) );
                     REQUIRE_FALSE( subject.justStopped( TALK ) );
                     // send keyboard event
                     REQUIRE( subject.justStopped( TALK ) );
                 }
                 // AND_THEN( "actions have a state" ) {/*input1 || input2*/}
             }
-            AND_THEN( "mappings can be overridden" ) {}
-            AND_WHEN( "no action is available" ) {}
+            THEN( "mappings can be overridden by custom values" ) {
+            }
         }
     }
 }

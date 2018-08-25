@@ -1,0 +1,79 @@
+@startuml
+together {
+  interface IEvent
+  class MouseEvent
+  class KeyboardEvent
+  class GuiEvent
+  class CustomEvent
+}
+class EventReceiver
+together {
+  class Mouse
+  class Keyboard
+  class ActionMapping
+}
+together {
+  class GUI
+  class Camera
+  class Mauspfeil
+  class SomeClient
+}
+
+MouseEvent .up.|> IEvent
+KeyboardEvent .up.|> IEvent
+GuiEvent .up.|> IEvent
+CustomEvent .up.|> IEvent
+
+EventReceiver -up-> IEvent
+EventReceiver "1" *-up-* "1" Keyboard : updates >
+EventReceiver "1" *-up-* "1" Mouse : updates >
+EventReceiver "1" *-up-* "1" GUI : updates >
+Mouse "1" -down- "1..n" Camera : nothing yet
+Mouse "1" -right-* "1" ActionMapping : updates >
+Mouse "1" -down- "1" Mauspfeil : nothing yet
+Mouse "1" -down-* "1..n" SomeClient : is asked by >
+Keyboard "1" -down- "1" Camera : nothing yet
+Keyboard "1" -right-* "1" ActionMapping : updates >
+Keyboard "1" -down-* "1..n" SomeClient : is asked by >
+ActionMapping "1" -down- "1..n" SomeClient : nothing yet
+@enduml
+
+@startuml
+together {
+  interface IEvent
+  class MouseEvent
+  class GuiEvent
+  class KeyboardEvent
+  class CustomEvent
+}
+class EventReceiver
+class ActionMapping
+class Action
+together {
+  class GUI
+  class Mauspfeil
+}
+together {
+  class Camera
+  class SomeClient
+}
+
+MouseEvent ..|> IEvent
+GuiEvent ..|> IEvent
+KeyboardEvent .up.|> IEvent
+CustomEvent .up.|> IEvent
+
+Mauspfeil --> MouseEvent : receives >
+GUI --> GuiEvent : receives >
+EventReceiver --> IEvent : receives >
+ActionMapping --> MouseEvent : receives >
+ActionMapping --> KeyboardEvent : receives >
+ActionMapping --> Action : sends >
+Camera -up-> Action : receives >
+SomeClient -up-> Action : receives >
+EventReceiver "1" *-down- "1" GUI : brokers events to >
+EventReceiver "1" *-down- "1" Mauspfeil : brokers events to >
+EventReceiver "1" *-right- "1" ActionMapping : brokers events to >
+ActionMapping "1" *-down- "1" Camera : sends actions to >
+ActionMapping "1" *-down- "1..n" SomeClient :sends actions to >
+@enduml

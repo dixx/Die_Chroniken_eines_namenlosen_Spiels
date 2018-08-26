@@ -1,6 +1,7 @@
 #include <catch.hpp>
 #include "leviathan.h"
 #include "helpers/Testhelper.h"
+#include "helpers/TesthelperLeviathanDevice.h"
 
 SCENARIO( "Leviathan Engine can map input to actions" ) {
     Testhelper testhelper;
@@ -33,42 +34,45 @@ SCENARIO( "Leviathan Engine can map input to actions" ) {
     content += "        type: keyboard\n";
     content += "        id: 0x20\n";
     testhelper.writeFile( mappingsFileName, content );
+    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock device;
+    //leviathan::input::Actions& subject = device.Actions();
+    subject.mergeFromFile( mappingsFileName );
+    enum { TALK = 1, ATTACK, SELECT = 100 };
 
-    GIVEN( "Leviathan Engine provides Actions" ) {
-        leviathan::input::Actions subject;
+    GIVEN( "I subscribe to Leviathan Engine Actions" ) {
 
-        THEN( "it provides convenience methods" ) {
-            REQUIRE_FALSE( subject.inProgress( 0 ) );
-            REQUIRE( subject.inactive( 0 ) );
-            REQUIRE_FALSE( subject.justStarted( 0 ) );
-            REQUIRE_FALSE( subject.justStopped( 0 ) );
+        AND_WHEN( "there is input for my action" ) {
+            device.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+
+            THEN( "I will be updated" ) {
+
+            }
         }
 
-        WHEN( "action map is read from file" ) {
-            subject.mergeFromFile( mappingsFileName );
-            enum { TALK = 1, ATTACK, SELECTION = 100 };
+        AND_WHEN( "there is input for any action but mine" ) {
+            //device.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, true, 12, 34, -2.4f );
 
-            THEN( "it provides an action for each defined input mapping" ) {
-                REQUIRE_FALSE( subject.inProgress( ATTACK ) );
-                REQUIRE_FALSE( subject.inProgress( TALK ) );
-                REQUIRE_FALSE( subject.inProgress( SELECTION ) );
+            THEN( "I won't be updated" ) {
 
-                AND_THEN( "convenience methods are more helpfull" ) {
-                    REQUIRE( subject.inactive( TALK ) );
-                    // send keyboard event
-                    REQUIRE( subject.justStarted( TALK ) );
-                    REQUIRE( subject.inProgress( TALK ) );
-                    // send keyboard event
-                    REQUIRE_FALSE( subject.justStarted( TALK ) );
-                    REQUIRE( subject.inProgress( TALK ) );
-                    REQUIRE_FALSE( subject.inactive( TALK ) );
-                    REQUIRE_FALSE( subject.justStopped( TALK ) );
-                    // send keyboard event
-                    REQUIRE( subject.justStopped( TALK ) );
-                }
-                // AND_THEN( "actions have a state" ) {/*input1 || input2*/}
             }
-            THEN( "mappings can be overridden by custom values" ) {
+        }
+
+        WHEN( "I choose another input for an action" ) {
+
+            AND_WHEN( "this input occurs" ) {
+                //device.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, true, 12, 34, -2.4f );
+
+                THEN( "I will be updated" ) {
+
+                }
+            }
+
+            AND_WHEN( "the old input occurs" ) {
+                device.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+
+                THEN( "I won't be updated" ) {
+
+                }
             }
         }
     }

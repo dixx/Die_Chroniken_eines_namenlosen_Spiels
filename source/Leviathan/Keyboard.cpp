@@ -12,28 +12,28 @@ namespace leviathan
           ctrlIsDown_(false),
           ctrlWasDown_(false)
         {
-            keyIsDown_.fill( false );
-            keyLastState_.fill( false );
+            keyIsDown_.fill(false);
+            keyLastState_.fill(false);
         }
 
-        bool Keyboard::isKeyDown( const irr::EKEY_CODE keycode ) const
+        bool Keyboard::isKeyDown(const irr::EKEY_CODE keycode) const
         {
             return keyIsDown_[ keycode ];
         }
 
-        bool Keyboard::wasKeyDown( const irr::EKEY_CODE keycode ) const
+        bool Keyboard::wasKeyDown(const irr::EKEY_CODE keycode) const
         {
             return keyLastState_[ keycode ];
         }
 
-        bool Keyboard::hasKeyJustBeenSuppressed( const irr::EKEY_CODE keycode ) const
+        bool Keyboard::hasKeyJustBeenSuppressed(const irr::EKEY_CODE keycode) const
         {
-            return ( isKeyDown( keycode ) && !wasKeyDown( keycode ) );
+            return (isKeyDown(keycode) && !wasKeyDown(keycode));
         }
 
-        bool Keyboard::hasKeyJustBeenReleased( const irr::EKEY_CODE keycode ) const
+        bool Keyboard::hasKeyJustBeenReleased(const irr::EKEY_CODE keycode) const
         {
-            return ( !isKeyDown( keycode ) && wasKeyDown( keycode ) );
+            return (!isKeyDown(keycode) && wasKeyDown(keycode));
         }
 
         bool Keyboard::isShiftDown() const
@@ -63,8 +63,8 @@ namespace leviathan
             ctrlWasDown_ = ctrlIsDown_;
         }
 
-        void Keyboard::setKeyState( const irr::EKEY_CODE keycode, const bool keyState, const bool shiftState,
-            const bool ctrlState )
+        void Keyboard::setKeyState(const irr::EKEY_CODE keycode, const bool keyState, const bool shiftState,
+            const bool ctrlState)
         {
             keyIsDown_[ keycode ] = keyState;
             shiftIsDown_ = shiftState;

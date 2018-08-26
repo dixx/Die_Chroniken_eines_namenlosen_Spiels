@@ -24,13 +24,13 @@ public:
      */
     ~GameStatePlay() final;
 
-    GameStatePlay( const GameStatePlay& ) = delete;
-    GameStatePlay& operator=( const GameStatePlay& ) = delete;
+    GameStatePlay( const GameStatePlay&) = delete;
+    GameStatePlay& operator=( const GameStatePlay&) = delete;
 
     /*! \brief Aktualisiert das Spiel.
      *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
      */
-    void update( const float elapsedSeconds ) final;
+    void update( const float elapsedSeconds) final;
 
     /*! \brief Zeichnet das Spiel auf den Bildschirm.
      */
@@ -40,7 +40,7 @@ public:
      *  \param event: zu behandelndes GUI-Event
      *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
      */
-    bool handleGuiEvent( const irr::SEvent& event ) final;
+    bool handleGuiEvent( const irr::SEvent& event) final;
 };
 
 #endif

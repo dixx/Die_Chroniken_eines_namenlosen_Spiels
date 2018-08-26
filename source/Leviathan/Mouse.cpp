@@ -11,8 +11,8 @@ namespace leviathan
           lastPosition_(0, 0),
           wheelDelta_(0.0f)
         {
-            buttonIsDown_.fill( false );
-            buttonLastState_.fill( false );
+            buttonIsDown_.fill(false);
+            buttonLastState_.fill(false);
         }
 
         void Mouse::update()
@@ -76,18 +76,18 @@ namespace leviathan
             return wheelDelta_;
         }
 
-        void Mouse::setButtonState( const Button button, const bool state )
+        void Mouse::setButtonState(const Button button, const bool state)
         {
             buttonIsDown_[ button ] = state;
         }
 
-        void Mouse::setCoordinates( const int32_t x, const int32_t y )
+        void Mouse::setCoordinates(const int32_t x, const int32_t y)
         {
             position_.X = x;
             position_.Y = y;
         }
 
-        void Mouse::setWheelDelta( const float delta )
+        void Mouse::setWheelDelta(const float delta)
         {
             wheelDelta_ = delta;
         }

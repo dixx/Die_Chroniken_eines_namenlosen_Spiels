@@ -22,20 +22,20 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            explicit Timer( const float maxValue );
+            explicit Timer(const float maxValue);
 
             /*! \brief Destruktor.
              */
             ~Timer() = default;
 
-            Timer( const Timer& ) = delete;
-            Timer& operator=( const Timer& ) = delete;
+            Timer(const Timer&) = delete;
+            Timer& operator=(const Timer&) = delete;
 
             /*! \brief Erhöht den Timer um bestimmten Wert (in Sekunden).
              *  \param seconds: Zeit (in Sekunden)
              *  \return Referenz auf sich selbst
              */
-            Timer& tick( const float seconds );
+            Timer& tick(const float seconds);
 
             /*! \brief Startet den Timer bei null.
              */
@@ -99,10 +99,10 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
              */
-            explicit AlwaysRunningTimer( const float maxValue ) : Timer(maxValue) {}
+            explicit AlwaysRunningTimer(const float maxValue) : Timer(maxValue) {}
 
-            AlwaysRunningTimer( const AlwaysRunningTimer& ) = delete;
-            AlwaysRunningTimer& operator=( const AlwaysRunningTimer& ) = delete;
+            AlwaysRunningTimer(const AlwaysRunningTimer&) = delete;
+            AlwaysRunningTimer& operator=(const AlwaysRunningTimer&) = delete;
 
             /*! \brief Timer reagiert nicht auf stop.
              */

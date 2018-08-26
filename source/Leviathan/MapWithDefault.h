@@ -26,7 +26,7 @@ namespace leviathan
             /*! \brief Konstruktor. Wird mit Initialisierungsliste initialisiert.
              *  \note Der erste angegebene Wert wird als Defaultwert genutzt.
              */
-            explicit MapWithDefault( std::initializer_list<std::pair<const Key, Value>> init )
+            explicit MapWithDefault(std::initializer_list<std::pair<const Key, Value>> init)
                 : map_(init), defaultValue_(init.begin()->second) {};
 
             /*! \brief Zugriffsoperator.
@@ -35,9 +35,9 @@ namespace leviathan
              *  \param key: Key für den zu suchenden Eintrag
              *  \return Referenz auf den gefundenen Eintrag oder den Defaultwert
              */
-            const Value& operator[] ( const Key& key )
+            const Value& operator[] (const Key& key)
             {
-                typename std::map<Key, Value>::const_iterator it = map_.find( key );
+                typename std::map<Key, Value>::const_iterator it = map_.find(key);
                 return it == map_.end() ? defaultValue_ : it->second;
             };
 

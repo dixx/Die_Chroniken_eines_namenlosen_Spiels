@@ -31,19 +31,19 @@ namespace leviathan
              */
             ~TimeControl() = default;
 
-            TimeControl( const TimeControl& ) = delete;
-            TimeControl& operator=( const TimeControl& ) = delete;
+            TimeControl(const TimeControl&) = delete;
+            TimeControl& operator=(const TimeControl&) = delete;
 
             /*! \brief Fügt einen vorhandenen Timer zur zentralen Steuerung hinzu.
              *  \param timer: Referenz auf den Timer
              */
-            void add( Timer& timer );
+            void add(Timer& timer);
 
             /*! \brief Entfernt einen Timer aus zentralen Steuerung.
              *  \note Timer wird nicht gelöscht.
              *  \param timer: Referenz auf den Timer
              */
-            void remove( Timer& timer );
+            void remove(Timer& timer);
 
             /*! \brief Pausiert alle verwalteten Timer.
              */
@@ -56,7 +56,7 @@ namespace leviathan
             /*! \brief Erhöht alle verwalteten Timer, z.B. um die seit dem letzten Tick vergangene Zeit.
              *  \param seconds: Zeitwert in Sekunden
              */
-            void tick( const float seconds );
+            void tick(const float seconds);
 
         private:
 

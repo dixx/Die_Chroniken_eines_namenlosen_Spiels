@@ -44,13 +44,13 @@ namespace leviathan
          */
         ~LeviathanDevice();
 
-        LeviathanDevice( const LeviathanDevice& ) = delete;
-        LeviathanDevice& operator=( const LeviathanDevice& ) = delete;
+        LeviathanDevice(const LeviathanDevice&) = delete;
+        LeviathanDevice& operator=(const LeviathanDevice&) = delete;
 
         /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Engine-Bestandteile damit.
          *  \param filename: Konfigdateiname
          */
-        void init( const irr::io::path& fileName );
+        void init(const irr::io::path& fileName);
 
         /*! \brief Der eigentliche Game-Loop.
          *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,

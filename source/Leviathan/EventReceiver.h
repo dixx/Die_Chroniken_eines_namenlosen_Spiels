@@ -28,15 +28,15 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              */
-            EventReceiver( leviathan::input::Keyboard& keyboard, leviathan::input::Mouse& mouse,
-                leviathan::core::GameStateManager& gameStateManager );
+            EventReceiver(leviathan::input::Keyboard& keyboard, leviathan::input::Mouse& mouse,
+                leviathan::core::GameStateManager& gameStateManager);
 
             /*! Destruktor.
              */
             virtual ~EventReceiver() = default;
 
-            EventReceiver( const EventReceiver& ) = delete;
-            EventReceiver& operator=( const EventReceiver& ) = delete;
+            EventReceiver(const EventReceiver&) = delete;
+            EventReceiver& operator=(const EventReceiver&) = delete;
 
             /*! \brief Event-Handler.
              *
@@ -45,7 +45,7 @@ namespace leviathan
              *  \param event: Event vom Betriebssystem oder sonstwo her.
              *  \return `true` wenn Event erfolgreich behandelt wurde, ansonsten `false`
              */
-            bool OnEvent( const irr::SEvent& event ) final;
+            bool OnEvent(const irr::SEvent& event) final;
 
         private:
 
@@ -53,8 +53,8 @@ namespace leviathan
             leviathan::input::Mouse& mouse_;
             leviathan::core::GameStateManager& gameStateManager_;
 
-            bool handleKeyboardEvents( const irr::SEvent& event );
-            bool handleMouseEvents( const irr::SEvent& event );
+            bool handleKeyboardEvents(const irr::SEvent& event);
+            bool handleMouseEvents(const irr::SEvent& event);
         };
     }
 }

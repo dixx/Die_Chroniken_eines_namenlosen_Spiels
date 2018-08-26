@@ -9,18 +9,18 @@ namespace leviathan
         {
         }
 
-        void TimeControl::add( Timer& timer )
+        void TimeControl::add(Timer& timer)
         {
-            timers_.push_back( &timer );
+            timers_.push_back(&timer);
         }
 
-        void TimeControl::remove( Timer& timer )
+        void TimeControl::remove(Timer& timer)
         {
-            for ( auto& item : timers_ )
+            for (auto& item : timers_)
             {
-                if ( item == &timer )
+                if (item == &timer)
                 {
-                    timers_.remove( item );
+                    timers_.remove(item);
                     break;
                 }
             }
@@ -28,20 +28,20 @@ namespace leviathan
 
         void TimeControl::pause()
         {
-            for ( auto& timer : timers_ )
+            for (auto& timer : timers_)
                 timer->pause();
         }
 
         void TimeControl::resume()
         {
-            for ( auto& timer : timers_ )
+            for (auto& timer : timers_)
                 timer->resume();
         }
 
-        void TimeControl::tick( const float seconds )
+        void TimeControl::tick(const float seconds)
         {
-            for ( auto& timer : timers_ )
-                timer->tick( seconds );
+            for (auto& timer : timers_)
+                timer->tick(seconds);
         }
     }
 }

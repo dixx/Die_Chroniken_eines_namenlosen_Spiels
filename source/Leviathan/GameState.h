@@ -30,13 +30,13 @@ namespace leviathan
              */
             virtual ~GameState() {};
 
-            GameState( const GameState& ) = delete;
-            GameState& operator=( const GameState& ) = delete;
+            GameState(const GameState&) = delete;
+            GameState& operator=(const GameState&) = delete;
 
             /*! \brief Aktualisiert den Zustand.
              *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
              */
-            virtual void update( const float elapsedSeconds ) = 0;
+            virtual void update(const float elapsedSeconds) = 0;
 
             /*! \brief Zeichnet den Zustand auf den Bildschirm.
              */
@@ -46,7 +46,7 @@ namespace leviathan
              *  \param event: zu behandelndes GUI-Event
              *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
              */
-            virtual bool handleGuiEvent( const irr::SEvent& event ) = 0;
+            virtual bool handleGuiEvent(const irr::SEvent& event) = 0;
         };
     }
 }

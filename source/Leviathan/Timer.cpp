@@ -5,7 +5,7 @@ namespace leviathan
     namespace core
     {
 
-        Timer::Timer( const float maxValue )
+        Timer::Timer(const float maxValue)
         : maxValue_(maxValue),
           currentValue_(0.0f),
           timerIsRunning_(false),
@@ -15,9 +15,9 @@ namespace leviathan
             // nop
         }
 
-        Timer& Timer::tick( const float seconds )
+        Timer& Timer::tick(const float seconds)
         {
-            if ( timerIsRunning_ && !timerIsPaused_ )
+            if (timerIsRunning_ && !timerIsPaused_)
                 currentValue_ += seconds;
             return *this;
         }
@@ -44,13 +44,13 @@ namespace leviathan
 
         void Timer::pause()
         {
-            if ( timerIsRunning_ )
+            if (timerIsRunning_)
                 timerIsPaused_ = true;
         }
 
         void Timer::resume()
         {
-            if ( timerIsPaused_ )
+            if (timerIsPaused_)
             {
                 timerIsRunning_ = true;
                 timerIsPaused_ = false;
@@ -69,7 +69,7 @@ namespace leviathan
 
         bool Timer::isFull()
         {
-            if ( currentValue_ >= maxValue_ )
+            if (currentValue_ >= maxValue_)
                 timerIsFull_ = true;
             return timerIsFull_;
         }

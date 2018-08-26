@@ -32,8 +32,8 @@ namespace leviathan
              */
             ~Keyboard() = default;
 
-            Keyboard( const Keyboard& ) = delete;
-            Keyboard& operator=( const Keyboard& ) = delete;
+            Keyboard(const Keyboard&) = delete;
+            Keyboard& operator=(const Keyboard&) = delete;
 
             /*! \brief Speichert die letzten Tastenzustände.
              *
@@ -46,26 +46,26 @@ namespace leviathan
              *  \param keyCode: Irrlicht Tastencode
              *  \return `true` wenn die Taste gedrückt ist, ansonsten `false`
              */
-            bool isKeyDown( const irr::EKEY_CODE keycode ) const;
+            bool isKeyDown(const irr::EKEY_CODE keycode) const;
 
             /*! \brief Abfrage des vorherigen Zustands einer Taste.
              *  \param keyCode: Irrlicht Tastencode
              *  \return `true` wenn die Taste gedrückt ist, ansonsten `false`
              */
-            bool wasKeyDown( const irr::EKEY_CODE keycode ) const;
+            bool wasKeyDown(const irr::EKEY_CODE keycode) const;
 
             /*! \brief Abfrage der Änderung des Zustands einer Taste.
              *  \param keyCode: Irrlicht Tastencode
              *  \return `true` wenn die Taste gerade noch nicht gedrückt war und jetzt gedrückt ist, ansonsten `false`
              */
-            bool hasKeyJustBeenSuppressed( const irr::EKEY_CODE keycode ) const;
+            bool hasKeyJustBeenSuppressed(const irr::EKEY_CODE keycode) const;
 
             /*! \brief Abfrage der Änderung des Zustands einer Taste.
              *  \param keyCode: Irrlicht Tastencode
              *  \return `true` wenn die Taste gerade noch gedrückt war und jetzt nicht mehr gedrückt ist,
              *          ansonsten `false`
              */
-            bool hasKeyJustBeenReleased( const irr::EKEY_CODE keycode ) const;
+            bool hasKeyJustBeenReleased(const irr::EKEY_CODE keycode) const;
 
             /*! \brief Abfrage des aktuellen Zustands einer zusätzlich gedrückten SHIFT-Taste.
              *  \return `true` wenn irgendeine SHIFT-Taste gedrückt ist, ansonsten `false`
@@ -94,8 +94,8 @@ namespace leviathan
              *  \param shiftState: `true` wenn Shift -wie auch immer- an ist, ansonsten `false`
              *  \param ctrlState: `true` wenn irgendein CTRL gedrückt ist, ansonsten `false`
              */
-            void setKeyState( const irr::EKEY_CODE keycode, const bool state, const bool shiftState,
-                const bool ctrlState );
+            void setKeyState(const irr::EKEY_CODE keycode, const bool state, const bool shiftState,
+                const bool ctrlState);
 
         private:
 

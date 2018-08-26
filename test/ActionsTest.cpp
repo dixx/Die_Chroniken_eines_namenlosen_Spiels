@@ -3,7 +3,7 @@
 #include "helpers/Testhelper.h"
 #include "helpers/TesthelperLeviathanDevice.h"
 
-SCENARIO( "Leviathan Engine can map input to actions" ) {
+TEST_CASE("Action Mapping") {
     Testhelper testhelper;
     const irr::io::path mappingsFileName = "testactionmappings.yml";
     irr::core::stringc content = "---\n";
@@ -33,47 +33,24 @@ SCENARIO( "Leviathan Engine can map input to actions" ) {
     content += "        name: <SPACE>\n";
     content += "        type: keyboard\n";
     content += "        id: 0x20\n";
-    testhelper.writeFile( mappingsFileName, content );
-    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock device;
-    //leviathan::input::Actions& subject = device.Actions();
-    subject.mergeFromFile( mappingsFileName );
-    enum { TALK = 1, ATTACK, SELECT = 100 };
+    testhelper.writeFile(mappingsFileName, content);
+    leviathan::input::Actions subject;
 
-    GIVEN( "I subscribe to Leviathan Engine Actions" ) {
+    SECTION("can subscribe to an event receiver") {
 
-        AND_WHEN( "there is input for my action" ) {
-            device.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
+    }
+    SECTION("client can subscribe to the action mapping") {
 
-            THEN( "I will be updated" ) {
+    }
+    SECTION("no input mappings exist") {
 
-            }
-        }
+    }
+    SECTION("mappings can be loaded from file") {
+        subject.mergeFromFile(mappingsFileName);
+        enum { TALK = 1, ATTACK, SELECT = 100 };
 
-        AND_WHEN( "there is input for any action but mine" ) {
-            //device.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, true, 12, 34, -2.4f );
-
-            THEN( "I won't be updated" ) {
-
-            }
-        }
-
-        WHEN( "I choose another input for an action" ) {
-
-            AND_WHEN( "this input occurs" ) {
-                //device.sendMouseEvent( leviathan::input::Mouse::Button::MIDDLE, true, 12, 34, -2.4f );
-
-                THEN( "I will be updated" ) {
-
-                }
-            }
-
-            AND_WHEN( "the old input occurs" ) {
-                device.sendKeyboardEvent( irr::KEY_KEY_Z, true, false, false );
-
-                THEN( "I won't be updated" ) {
-
-                }
-            }
+        SECTION("") {
+            
         }
     }
 }

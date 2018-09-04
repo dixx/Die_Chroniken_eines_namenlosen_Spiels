@@ -5,10 +5,8 @@ add_library(leviathan SHARED
   Configuration.cpp
   EventReceiver.cpp
   GameStateManager.cpp
-  Keyboard.cpp
   LeviathanDevice.cpp
   Logger.cpp
-  Mouse.cpp
   TimeControl.cpp
   Timer.cpp
 )

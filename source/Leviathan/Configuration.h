@@ -6,7 +6,7 @@
 #ifndef _LEVIATHAN_CONFIGURATION_HEADER
 #define _LEVIATHAN_CONFIGURATION_HEADER
 
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 #include <string>
 #include "Logger.h"

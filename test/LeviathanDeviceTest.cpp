@@ -1,6 +1,6 @@
 #include <catch.hpp>
 #include <fakeit.hpp>
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 #include <cstdlib>
 #include "leviathan.h"
@@ -46,12 +46,6 @@ TEST_CASE("LeviathanDevice supporter") {
         subject.GameStateManager().draw();
         Verify(Method(gameStateDouble, draw)).Once();
         VerifyNoOtherInvocations(Method(gameStateDouble, update));
-    }
-    SECTION("it provides keyboard access") {
-        REQUIRE_FALSE(subject.Keyboard().isKeyDown(irr::KEY_KEY_Z));
-    }
-    SECTION("it provides mouse access") {
-        REQUIRE_FALSE(subject.Mouse().isRMBDown());
     }
     SECTION("it provides input-to-action mapping") {
         Mock<leviathan::core::GameState> gameStateDouble;

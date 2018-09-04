@@ -1,7 +1,7 @@
 #ifndef _TESTHELPER_HEADER
 #define _TESTHELPER_HEADER
 
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 
 class Testhelper

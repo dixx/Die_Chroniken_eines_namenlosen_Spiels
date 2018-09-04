@@ -19,9 +19,3 @@ void GameStatePlay::draw()
 {
 
 }
-
-bool GameStatePlay::handleGuiEvent( const irr::SEvent& event)
-{
-    (void)event;
-    return true;
-}

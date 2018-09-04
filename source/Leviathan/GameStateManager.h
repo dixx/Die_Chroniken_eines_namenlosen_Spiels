@@ -9,7 +9,6 @@
 #include <cstdint>
 #include <list>
 #include <map>
-#include <irrlicht.h>
 #include "GameState.h"
 
 namespace leviathan
@@ -62,12 +61,6 @@ namespace leviathan
             /*! \brief Zeichnet den momentan aktiven Zustand auf den Bildschirm.
              */
             void draw();
-
-            /*! \brief Reicht ein GUI-Event zur Behandlung an den aktiven Zustand weiter.
-             *  \param event: zu behandelndes GUI-Event
-             *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
-             */
-            bool handleGuiEvent(const irr::SEvent& event);
 
             /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
              *  \attention Nur für Testzwecke gedacht!

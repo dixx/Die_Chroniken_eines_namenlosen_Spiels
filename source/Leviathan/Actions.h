@@ -3,14 +3,18 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef _LEVIATHAN_ACTIONS_HEADER
-#define _LEVIATHAN_ACTIONS_HEADER
+#ifndef LEVIATHAN_ACTIONS_H
+#define LEVIATHAN_ACTIONS_H
 
-#include <irrlicht.h>
 #include <cstdint>
 #include <map>
+#include <set>
 #include <string>
+#include "irrlicht.h"
 #include <yaml-cpp/yaml.h>
+#include "IActionConsumer.h"
+#include "IEventProducer.h"
+#include "IEventConsumer.h"
 
 namespace leviathan
 {
@@ -20,45 +24,36 @@ namespace leviathan
         /*! \class Actions Actions.h "Actions.h"
          *  \brief Mapping von Input zu Aktion
          */
-        class Actions
+        class Actions : public IEventConsumer
         {
 
         public:
 
             /*! \brief Konstruktor.
              */
-            Actions();
+            Actions(IEventProducer& producer);
 
-            /*! \brief Destruktor.
-             */
+            Actions() = delete;
             ~Actions() = default;
-
             Actions(const Actions&) = delete;
             Actions& operator=(const Actions&) = delete;
 
-            /*! \brief Passiert eine Aktion gerade?
-             *  \param id: Identifikator einer Aktion
-             *  \return `true` wenn die Aktion gerade passiert, ansonsten `false`
+            /*! \brief Konsumenten von Aktionen können sich hier anmelden
+             *  \param consumer: Konsument welcher bei seinen gewünschten Aktionen benachrichtigt werden soll
+             *  \param id: ID der Aktion auf die der Konsument wartet
              */
-            bool inProgress(uint32_t id) const;
+            void subscribe(IActionConsumer& consumer, const uint32_t id);
 
-            /*! \brief Passiert eine Aktion gerade nicht?
-             *  \param id: Identifikator einer Aktion
-             *  \return `true` wenn die Aktion gerade nicht passiert, ansonsten `false`
+            /*! \brief Konsumenten von Aktionen können sich hier abmelden
+             *  \param consumer: Konsument welcher sich abmelden möchte
+             *  \param id: ID der Aktion von welcher der Konsument sich abmelden möchte
              */
-            bool inactive(uint32_t id) const;
+            void unsubscribe(IActionConsumer& consumer, const uint32_t id);
 
-            /*! \brief Hat eine Aktion gerade erst begonnen?
-             *  \param id: Identifikator einer Aktion
-             *  \return `true` wenn die Aktion gerade erst begonnen hat, ansonsten `false`
+            /*! \brief Reagiert auf Events vom Broker.
+             *  \param event: Input-Event
              */
-            bool justStarted(uint32_t id) const;
-
-            /*! \brief Hat eine Aktion gerade erst aufgehört?
-             *  \param id: Identifikator einer Aktion
-             *  \return `true` wenn die Aktion gerade erst aufgehört hat, ansonsten `false`
-             */
-            bool justStopped(uint32_t id) const;
+            void onEvent(const irr::SEvent& event);
 
             /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
              *  \note Bereits vorhandene Aktionen werden mit denen aus der Datei überschrieben.
@@ -67,24 +62,26 @@ namespace leviathan
             void mergeFromFile(const irr::io::path& fileName);
 
         private:
-
             struct Input {
-                Input(); // std::map needs this
+                Input() {}; // std::map needs this
                 explicit Input(const YAML::Node& node);
-                std::string name, type;
-                uint32_t id;
-                bool isActive, wasActive;
+                std::string name = "- None -", type = "unknown";
+                uint32_t id = 0;
+                bool isActive = false, wasActive = false;
             };
             struct Action {
-                Action(); // std::map needs this
+                Action() {}; // std::map needs this
                 explicit Action(const YAML::Node& node);
-                std::string name, description;
-                uint32_t id;
-                Input primary, secondary;
+                std::string name = "nameless action", description = "";
+                uint32_t id = 0;
+                bool internal = false;
+                Input primary = Input(), secondary = Input();
             };
-            std::map<uint32_t, Action> _custom;
-            std::map<uint32_t, Action> _internal;
-            const Action& getAction(const uint32_t id) const;
+            std::map<uint32_t, Action> _actions = std::map<uint32_t, Action>();
+            std::map<uint32_t, std::set<IActionConsumer*>> _subscriptions = std::map<uint32_t, std::set<IActionConsumer*>>();
+            std::vector<std::map<uint32_t, uint32_t>> _converter = std::vector(2, std::map<uint32_t, uint32_t>());
+
+            void addActionToConverter(const Action& action);
         };
     }
 }

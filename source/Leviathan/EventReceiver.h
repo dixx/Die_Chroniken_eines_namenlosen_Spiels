@@ -8,9 +8,7 @@
 #ifndef _LEVIATHAN_EVENTRECEIVER_HEADER
 #define _LEVIATHAN_EVENTRECEIVER_HEADER
 
-#include <irrlicht.h>
-#include "Keyboard.h"
-#include "Mouse.h"
+#include "irrlicht.h"
 #include "GameStateManager.h"
 
 namespace leviathan
@@ -28,8 +26,7 @@ namespace leviathan
 
             /*! \brief Konstruktor.
              */
-            EventReceiver(leviathan::input::Keyboard& keyboard, leviathan::input::Mouse& mouse,
-                leviathan::core::GameStateManager& gameStateManager);
+            EventReceiver() = default;
 
             /*! Destruktor.
              */
@@ -46,15 +43,6 @@ namespace leviathan
              *  \return `true` wenn Event erfolgreich behandelt wurde, ansonsten `false`
              */
             bool OnEvent(const irr::SEvent& event) final;
-
-        private:
-
-            leviathan::input::Keyboard& keyboard_;
-            leviathan::input::Mouse& mouse_;
-            leviathan::core::GameStateManager& gameStateManager_;
-
-            bool handleKeyboardEvents(const irr::SEvent& event);
-            bool handleMouseEvents(const irr::SEvent& event);
         };
     }
 }

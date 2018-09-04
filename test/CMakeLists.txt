@@ -8,10 +8,8 @@ add_executable(unit_tests
   ConfigurationTest.cpp
   GameStateManagerTest.cpp
   GameStateTest.cpp
-  KeyboardTest.cpp
   LeviathanDeviceTest.cpp
   LoggerTest.cpp
-  MouseTest.cpp
   TimeControlTest.cpp
   TimerTest.cpp
   ZufallTest.cpp

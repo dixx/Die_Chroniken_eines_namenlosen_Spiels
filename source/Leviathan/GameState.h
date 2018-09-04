@@ -6,8 +6,6 @@
 #ifndef _LEVIATHAN_GAMESTATE_HEADER
 #define _LEVIATHAN_GAMESTATE_HEADER
 
-#include <irrlicht.h>
-
 namespace leviathan
 {
     namespace core
@@ -41,12 +39,6 @@ namespace leviathan
             /*! \brief Zeichnet den Zustand auf den Bildschirm.
              */
             virtual void draw() = 0;
-
-            /*! \brief Behandelt ein GUI-Event.
-             *  \param event: zu behandelndes GUI-Event
-             *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
-             */
-            virtual bool handleGuiEvent(const irr::SEvent& event) = 0;
         };
     }
 }

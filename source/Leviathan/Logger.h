@@ -6,7 +6,7 @@
 #ifndef _LEVIATHAN_LOGGER_HEADER
 #define _LEVIATHAN_LOGGER_HEADER
 
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 
 namespace leviathan

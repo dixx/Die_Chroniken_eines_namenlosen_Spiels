@@ -1,5 +1,5 @@
 #include <catch.hpp>
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 #include "leviathan.h"
 #include "helpers/Testhelper.h"

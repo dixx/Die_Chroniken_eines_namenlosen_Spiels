@@ -16,9 +16,7 @@ namespace leviathan
               configuration_.getLoggingLevel()
           )
       ),
-      keyboard_(),
-      mouse_(),
-      eventReceiver_(keyboard_, mouse_, gameStateManager_)
+      eventReceiver_()
     {
     }
 
@@ -103,15 +101,5 @@ namespace leviathan
     core::GameStateManager& LeviathanDevice::GameStateManager()
     {
         return gameStateManager_;
-    }
-
-    input::Keyboard& LeviathanDevice::Keyboard()
-    {
-        return keyboard_;
-    }
-
-    input::Mouse& LeviathanDevice::Mouse()
-    {
-        return mouse_;
     }
 }

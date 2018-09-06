@@ -30,7 +30,6 @@ namespace leviathan
                             break;
                         case irr::EMIE_LMOUSE_LEFT_UP:
                             id = _converter[0].at(irr::EMBSM_LEFT);
-                            isActive = false;
                             break;
                         case irr::EMIE_RMOUSE_PRESSED_DOWN:
                             id = _converter[0].at(irr::EMBSM_RIGHT);
@@ -38,7 +37,6 @@ namespace leviathan
                             break;
                         case irr::EMIE_RMOUSE_LEFT_UP:
                             id = _converter[0].at(irr::EMBSM_RIGHT);
-                            isActive = false;
                             break;
                         case irr::EMIE_MMOUSE_PRESSED_DOWN:
                             id = _converter[0].at(irr::EMBSM_MIDDLE);
@@ -46,7 +44,6 @@ namespace leviathan
                             break;
                         case irr::EMIE_MMOUSE_LEFT_UP:
                             id = _converter[0].at(irr::EMBSM_MIDDLE);
-                            isActive = false;
                             break;
                         default:
                             return;

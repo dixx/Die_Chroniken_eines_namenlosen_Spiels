@@ -38,72 +38,60 @@ TEST_CASE("Action Mapping") {
                                  "      id: 0x20\n";
     testhelper.writeFile(mappingsFileName, content);
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
-    Fake(Method(eventBrokerMock, subscribe));
+    Mock<leviathan::input::IActionConsumer> consumerMock;
+    Fake(Method(eventBrokerMock, subscribe), Method(consumerMock, onAction));
+    irr::SEvent leftMouseButtonEvent, spaceBarEvent;
+    leftMouseButtonEvent.EventType = irr::EET_MOUSE_INPUT_EVENT;
+    leftMouseButtonEvent.MouseInput.ButtonStates = irr::EMBSM_LEFT;
+    leftMouseButtonEvent.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;
+    spaceBarEvent.EventType = irr::EET_KEY_INPUT_EVENT;
+    spaceBarEvent.KeyInput.Key = irr::KEY_SPACE;
+    spaceBarEvent.KeyInput.PressedDown = false;
+    enum { TALK = 1, ATTACK, SELECT = 100 };
 
-    SECTION("subscribes to an event producer for input event types") {
+    SECTION("subscribes to an event producer for certain input event types") {
         leviathan::input::Actions subject(eventBrokerMock.get());
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_KEY_INPUT_EVENT)).Exactly(Once);
     }
 
-    SECTION("mappings can be loaded from file") {
+    SECTION("consumers can subscribe to certain actions") {
         leviathan::input::Actions subject(eventBrokerMock.get());
-        // Mock<leviathan::input::Actions> spy(subject);
-        // check mappings == empty
-        subject.mergeFromFile(mappingsFileName);
-        enum { TALK = 1, ATTACK, SELECT = 100 };
-        // check mappings == 3
+        subject.subscribe(consumerMock.get(), TALK);
 
-        SECTION("consumers can subscribe to certain actions") {
-            Mock<leviathan::input::IActionConsumer> consumerMock;
-            Mock<leviathan::input::IActionConsumer> anotherConsumerMock;
-            Fake(Method(consumerMock, onAction), Method(anotherConsumerMock, onAction));
-            subject.subscribe(consumerMock.get(), TALK);
-            subject.subscribe(consumerMock.get(), ATTACK);
-            subject.subscribe(anotherConsumerMock.get(), SELECT);
+        SECTION("mappings can be loaded from file") {
+            subject.onEvent(leftMouseButtonEvent);
+            VerifyNoOtherInvocations(Method(consumerMock, onAction));
+            subject.mergeFromFile(mappingsFileName);
+            subject.onEvent(leftMouseButtonEvent);
+            Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
+            consumerMock.ClearInvocationHistory();
 
             SECTION("and receive only their subscribed actions") {
-                irr::SEvent event;
+                Mock<leviathan::input::IActionConsumer> anotherConsumerMock;
+                Fake(Method(anotherConsumerMock, onAction));
+                subject.subscribe(consumerMock.get(), ATTACK);
+                subject.subscribe(anotherConsumerMock.get(), SELECT);
 
-                event.EventType = irr::EET_MOUSE_INPUT_EVENT;
-                event.MouseInput.ButtonStates = irr::EMBSM_LEFT;
-                event.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;
-                subject.onEvent(event);
+                subject.onEvent(leftMouseButtonEvent);
                 VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction));
-                Verify(
-                    Method(consumerMock, onAction).Using(
-                        [](uint32_t id, bool isActive){ return id == TALK && isActive; }
-                    )
-                ).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
                 VerifyNoOtherInvocations(Method(consumerMock, onAction));
 
-                event.EventType = irr::EET_KEY_INPUT_EVENT;
-                event.KeyInput.Key = irr::KEY_SPACE;
-                event.KeyInput.PressedDown = false;
-                subject.onEvent(event);
+                subject.onEvent(spaceBarEvent);
                 VerifyNoOtherInvocations(Method(consumerMock, onAction));
-                Verify(
-                    Method(anotherConsumerMock, onAction).Using(
-                        [](uint32_t id, bool isActive){ return id == SELECT && !isActive; }
-                    )
-                ).Exactly(Once);
+                Verify(Method(anotherConsumerMock, onAction).Using(SELECT, false)).Exactly(Once);
                 VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction));
             }
 
-            SECTION("and can unsubscribe from certain actions") {
+            SECTION("consumers can unsubscribe from certain actions") {
                 subject.unsubscribe(consumerMock.get(), TALK);
-
-                irr::SEvent event;
-
-                event.EventType = irr::EET_MOUSE_INPUT_EVENT;
-                event.MouseInput.ButtonStates = irr::EMBSM_LEFT;
-                event.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;
-                subject.onEvent(event);
+                subject.onEvent(leftMouseButtonEvent);
                 VerifyNoOtherInvocations(Method(consumerMock, onAction));
             }
         }
-        SECTION("and can be changed by the user") {
+        SECTION("action mappings can be changed by the user") {
             SECTION("except for internal actions") {}
         }
     }

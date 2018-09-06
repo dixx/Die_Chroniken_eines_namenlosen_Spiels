@@ -10,8 +10,8 @@
 #include <map>
 #include <set>
 #include <string>
-#include "irrlicht.h"
 #include <yaml-cpp/yaml.h>
+#include "irrlicht.h"
 #include "IActionConsumer.h"
 #include "IEventProducer.h"
 #include "IEventConsumer.h"
@@ -21,7 +21,7 @@ namespace leviathan
     namespace input
     {
 
-        /*! \class Actions Actions.h "Actions.h"
+        /*! \class Actions
          *  \brief Mapping von Input zu Aktion
          */
         class Actions : public IEventConsumer
@@ -30,6 +30,7 @@ namespace leviathan
         public:
 
             /*! \brief Konstruktor.
+             *  \param producer: produziert (versendet) Events
              */
             Actions(IEventProducer& producer);
 

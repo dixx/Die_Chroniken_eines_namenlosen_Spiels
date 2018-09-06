@@ -1,6 +1,5 @@
 #include <catch.hpp>
 #include <fakeit.hpp>
-#include <cstdint>
 #include "irrlicht.h"
 #include "../source/Leviathan/Actions.h"
 #include "helpers/Testhelper.h"
@@ -75,14 +74,12 @@ TEST_CASE("Action Mapping") {
                 subject.subscribe(anotherConsumerMock.get(), SELECT);
 
                 subject.onEvent(leftMouseButtonEvent);
-                VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction));
                 Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
-                VerifyNoOtherInvocations(Method(consumerMock, onAction));
+                VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction), Method(consumerMock, onAction));
 
                 subject.onEvent(spaceBarEvent);
-                VerifyNoOtherInvocations(Method(consumerMock, onAction));
                 Verify(Method(anotherConsumerMock, onAction).Using(SELECT, false)).Exactly(Once);
-                VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction));
+                VerifyNoOtherInvocations(Method(consumerMock, onAction), Method(anotherConsumerMock, onAction));
             }
 
             SECTION("consumers can unsubscribe from certain actions") {

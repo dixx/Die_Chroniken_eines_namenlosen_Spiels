@@ -51,7 +51,7 @@ namespace leviathan
              */
             void unsubscribe(IActionConsumer& consumer, const uint32_t id);
 
-            /*! \brief Reagiert auf Events vom Broker.
+            /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event
              */
             void onEvent(const irr::SEvent& event);

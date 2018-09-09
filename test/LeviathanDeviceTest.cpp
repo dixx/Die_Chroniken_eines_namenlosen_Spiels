@@ -1,9 +1,9 @@
 #include <catch.hpp>
 #include <fakeit.hpp>
-#include "irrlicht.h"
 #include <cstdint>
 #include <cstdlib>
-#include "leviathan.h"
+#include "irrlicht.h"
+#include "../source/Leviathan/LeviathanDevice.h"
 #include "helpers/Testhelper.h"
 #include "helpers/TesthelperLeviathanDevice.h"
 
@@ -48,9 +48,10 @@ TEST_CASE("LeviathanDevice supporter") {
         VerifyNoOtherInvocations(Method(gameStateDouble, update));
     }
     SECTION("it provides input-to-action mapping") {
-        Mock<leviathan::core::GameState> gameStateDouble;
-        // game state provides action mapping
-        // REQUIRE_FALSE(subject.Actions().is(TALKING));
+        Mock<leviathan::input::IActionConsumer> consumerMock;
+        subject.Actions().subscribe(consumerMock.get(), 42);
+        subject.Actions().unsubscribe(consumerMock.get());
+        // Assertation???
     }
 }
 

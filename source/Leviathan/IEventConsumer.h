@@ -21,8 +21,9 @@ namespace leviathan
 
             /*! \brief Kann von einem Producer mit Events bedient werden, sobald sie auftreten.
              *  \param event: beliebiges Event, z.B. Keyboard-Tastendruck
+             *  \return `true` wenn Event erfolgreich behandelt wurde, ansonsten `false`
              */
-            virtual void onEvent(const irr::SEvent& event) = 0;
+            virtual bool onEvent(const irr::SEvent& event) = 0;
         };
     }
 }

@@ -24,7 +24,7 @@ namespace leviathan
              *  \param consumer: Konsument von Events
              *  \param eventType: Typ des Events (Mouse, Keyboard, ...)
              */
-            virtual void subscribe(const IEventConsumer& consumer, irr::EEVENT_TYPE eventType) = 0;
+            virtual void subscribe(IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) = 0;
         };
     }
 }

@@ -6,6 +6,7 @@ add_executable(unit_tests
   helpers/TesthelperLeviathanDevice.cpp
   ActionsTest.cpp
   ConfigurationTest.cpp
+  EventReceiverTest.cpp
   GameStateManagerTest.cpp
   GameStateTest.cpp
   LeviathanDeviceTest.cpp

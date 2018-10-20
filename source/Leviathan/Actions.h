@@ -53,8 +53,9 @@ namespace leviathan
 
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event
+             *  \return `true` wenn es zu diesem Event eine Aktion mit mindestens einem Empfänger gibt, ansonsten `false`
              */
-            void onEvent(const irr::SEvent& event);
+            bool onEvent(const irr::SEvent& event);
 
             /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
              *  \note Bereits vorhandene Aktionen werden mit denen aus der Datei überschrieben.

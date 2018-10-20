@@ -2,6 +2,8 @@
 #include <fakeit.hpp>
 #include "irrlicht.h"
 #include "../source/Leviathan/Actions.h"
+#include "../source/Leviathan/IActionConsumer.h"
+#include "../source/Leviathan/IEventProducer.h"
 #include "helpers/Testhelper.h"
 
 using namespace fakeit;
@@ -47,16 +49,15 @@ TEST_CASE("Action Mapping") {
     spaceBarEvent.KeyInput.Key = irr::KEY_SPACE;
     spaceBarEvent.KeyInput.PressedDown = false;
     enum { TALK = 1, ATTACK, SELECT = 100 };
+    leviathan::input::Actions subject(eventBrokerMock.get());
 
     SECTION("subscribes to an event producer for certain input event types") {
-        leviathan::input::Actions subject(eventBrokerMock.get());
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_KEY_INPUT_EVENT)).Exactly(Once);
     }
 
     SECTION("consumers can subscribe to certain actions") {
-        leviathan::input::Actions subject(eventBrokerMock.get());
         subject.subscribe(consumerMock.get(), TALK);
 
         SECTION("mappings can be loaded from file") {
@@ -92,5 +93,12 @@ TEST_CASE("Action Mapping") {
             SECTION("except for internal actions") {
             }
         }
+    }
+
+    SECTION("onEvent returns success of event procession") {
+        subject.subscribe(consumerMock.get(), TALK);
+        subject.mergeFromFile(mappingsFileName);
+        REQUIRE(subject.onEvent(leftMouseButtonEvent));
+        REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
     }
 }

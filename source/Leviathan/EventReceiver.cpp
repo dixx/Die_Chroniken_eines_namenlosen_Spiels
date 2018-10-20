@@ -6,8 +6,19 @@ namespace leviathan
     {
         bool EventReceiver::OnEvent(const irr::SEvent& event)
         {
-            (void)event;
-            return false;
+            if (_subscriptions[event.EventType].empty()) {
+                return false;
+            }
+            bool processed = false;
+            for (auto consumer : _subscriptions[event.EventType]) {
+                if (consumer->onEvent(event)) processed = true;
+            }
+            return processed;
+        }
+
+        void EventReceiver::subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType)
+        {
+            _subscriptions[eventType].insert(&consumer);
         }
     }
 }

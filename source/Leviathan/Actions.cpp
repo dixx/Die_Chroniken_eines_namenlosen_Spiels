@@ -18,7 +18,7 @@ namespace leviathan
             _subscriptions[id].erase(&consumer);
         }
 
-        void Actions::onEvent(const irr::SEvent& event) {
+        bool Actions::onEvent(const irr::SEvent& event) {
             uint32_t id = 0;
             bool isActive = false;
             try {
@@ -46,20 +46,24 @@ namespace leviathan
                             id = _converter[0].at(irr::EMBSM_MIDDLE);
                             break;
                         default:
-                            return;
+                            return false;
                     }
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
                     id = _converter[1].at(event.KeyInput.Key);
                     isActive = event.KeyInput.PressedDown;
                 } else {
-                    return;
+                    return false;
                 }
             } catch(const std::out_of_range& e) {
-                return;
+                return false;
+            }
+            if (_subscriptions[id].empty()) {
+                return false;
             }
             for (auto consumer : _subscriptions[id]) {
                 consumer->onAction(id, isActive);
             }
+            return true;
         }
 
         void Actions::mergeFromFile(const irr::io::path& fileName) {

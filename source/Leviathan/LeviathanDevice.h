@@ -80,6 +80,10 @@ namespace leviathan
          */
         core::GameStateManager& GameStateManager();
 
+        /*! \brief Zugriff auf Input-Mappings.
+         */
+        input::Actions& Actions();
+
     private:
 
         core::Configuration configuration_;
@@ -88,6 +92,7 @@ namespace leviathan
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
         core::EventReceiver eventReceiver_;
+        input::Actions actions_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
     };

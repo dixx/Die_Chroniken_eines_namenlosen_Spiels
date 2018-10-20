@@ -89,7 +89,8 @@ TEST_CASE("Action Mapping") {
             }
         }
         SECTION("action mappings can be changed by the user") {
-            SECTION("except for internal actions") {}
+            SECTION("except for internal actions") {
+            }
         }
     }
 }

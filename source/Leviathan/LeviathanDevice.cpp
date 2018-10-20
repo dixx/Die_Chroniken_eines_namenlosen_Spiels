@@ -16,7 +16,8 @@ namespace leviathan
               configuration_.getLoggingLevel()
           )
       ),
-      eventReceiver_()
+      eventReceiver_(),
+      actions_(eventReceiver_)
     {
     }
 
@@ -101,5 +102,10 @@ namespace leviathan
     core::GameStateManager& LeviathanDevice::GameStateManager()
     {
         return gameStateManager_;
+    }
+
+    input::Actions& LeviathanDevice::Actions()
+    {
+        return actions_;
     }
 }

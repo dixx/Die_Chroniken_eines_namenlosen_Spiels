@@ -2,6 +2,7 @@
 #include <fakeit.hpp>
 #include <cstdint>
 #include <cstdlib>
+#include <typeinfo>
 #include "irrlicht.h"
 #include "../source/Leviathan/LeviathanDevice.h"
 #include "helpers/Testhelper.h"
@@ -10,48 +11,14 @@
 using namespace fakeit;
 
 TEST_CASE("LeviathanDevice supporter") {
-    Testhelper testhelper;
-    const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile(configFileName, "[video]\ncolor_depth=42\nscreen_x=32\nscreen_y=20\n");
     leviathan::LeviathanDevice subject;
 
-    SECTION("it provides a ready-to-use Logger") {
-        subject.Logger().text = L"it works!";
-        REQUIRE(subject.Logger().text == L"it works!");
-        subject.init(configFileName);
-        subject.Logger().text = L"it still works!";
-        REQUIRE(subject.Logger().text == L"it still works!");
-    }
-    SECTION("it provides a ready-to-use TimeControl") {
-        leviathan::core::Timer timer(123);
-        subject.TimeControl().add(timer);
-        timer.start();
-        subject.TimeControl().pause();
-        REQUIRE(timer.isPaused());
-    }
-    SECTION("it provides a ready-to-use Configuration") {
-        REQUIRE(subject.Configuration().getGraphicEngineParams().Bits == 16);
-        subject.init(configFileName);
-        REQUIRE(subject.Configuration().getGraphicEngineParams().Bits == 42);
-        SECTION("it can write a config file") {}
-    }
-    SECTION("it provides a ready-to-use GameStateManager") {
-        Mock<leviathan::core::GameState> gameStateDouble;
-        Fake(Method(gameStateDouble, update), Method(gameStateDouble, draw));
-        subject.GameStateManager().add(gameStateDouble.get(), 1234);
-        subject.GameStateManager().transitTo(1234);
-        subject.GameStateManager().update(12.34f);
-        Verify(Method(gameStateDouble, draw)).Exactly(0_Times);
-        Verify(Method(gameStateDouble, update).Using(12.34f)).Once();
-        subject.GameStateManager().draw();
-        Verify(Method(gameStateDouble, draw)).Once();
-        VerifyNoOtherInvocations(Method(gameStateDouble, update));
-    }
-    SECTION("it provides input-to-action mapping") {
-        Mock<leviathan::input::IActionConsumer> consumerMock;
-        subject.Actions().subscribe(consumerMock.get(), 42);
-        subject.Actions().unsubscribe(consumerMock.get());
-        // Assertation???
+    SECTION("it provides instances of usefull tools") {
+        REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
+        REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
+        REQUIRE(typeid(subject.Configuration()) == typeid(leviathan::core::Configuration));
+        REQUIRE(typeid(subject.GameStateManager()) == typeid(leviathan::core::GameStateManager));
+        REQUIRE(typeid(subject.Actions()) == typeid(leviathan::input::Actions));
     }
 }
 

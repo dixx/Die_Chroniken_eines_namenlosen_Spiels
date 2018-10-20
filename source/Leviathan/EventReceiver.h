@@ -10,6 +10,8 @@
 
 #include "irrlicht.h"
 #include "GameStateManager.h"
+#include "IEventConsumer.h"
+#include "IEventProducer.h"
 
 namespace leviathan
 {
@@ -19,7 +21,7 @@ namespace leviathan
         /*! \class EventReceiver EventReceiver.h "EventReceiver.h"
          *  \brief Diese Klasse enthält Funktionen zum Behandeln von Events.
          */
-        class EventReceiver : public irr::IEventReceiver
+        class EventReceiver : public irr::IEventReceiver, public leviathan::input::IEventProducer
         {
 
         public:
@@ -43,6 +45,12 @@ namespace leviathan
              *  \return `true` wenn Event erfolgreich behandelt wurde, ansonsten `false`
              */
             bool OnEvent(const irr::SEvent& event) final;
+
+            virtual void subscribe(const leviathan::input::IEventConsumer& consumer, irr::EEVENT_TYPE eventType) {
+                // FIXME: implement!
+                (void)consumer;
+                (void)eventType;
+            };
         };
     }
 }

@@ -91,11 +91,15 @@ TEST_CASE("Action Mapping") {
         }
         SECTION("action mappings can be changed by the user") {
             SECTION("except for internal actions") {
+                // TODO: when needed.
             }
         }
     }
 
     SECTION("onEvent returns success of event procession") {
+        REQUIRE_FALSE(subject.onEvent(leftMouseButtonEvent));
+        REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
+
         subject.subscribe(consumerMock.get(), TALK);
         subject.mergeFromFile(mappingsFileName);
         REQUIRE(subject.onEvent(leftMouseButtonEvent));

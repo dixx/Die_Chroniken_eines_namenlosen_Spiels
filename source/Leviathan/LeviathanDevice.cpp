@@ -67,7 +67,6 @@ namespace leviathan
                     we_must_draw = false;
                     break;
                 }
-                // eventreceiver.setKeysLastState();
                 next += FRAME_DELTA_TIME_IN_MILLISECONDS;
                 we_must_draw = true;
                 // if (gameStateManager_.allFramesMustBeShown())

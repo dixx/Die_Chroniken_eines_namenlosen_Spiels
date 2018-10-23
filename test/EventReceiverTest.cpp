@@ -54,6 +54,8 @@ TEST_CASE("Event Receiver") {
     }
 
     SECTION("OnEvent returns success of event procession") {
+        REQUIRE_FALSE(subject.OnEvent(spaceBarEvent));
+
         subject.subscribe(consumerMock.get(), irr::EET_KEY_INPUT_EVENT);
         When(Method(consumerMock, onEvent)).Return(false);
         REQUIRE_FALSE(subject.OnEvent(spaceBarEvent));

@@ -59,6 +59,11 @@ namespace leviathan
          */
         void run();
 
+        /*! /brief Stoppt den Game-Loop.
+         *  /note Der aktuelle Game-Loop läuft noch zu Ende durch.
+         */
+        void halt();
+
         /*! \brief Gibt das Errorlevel der Engine zurück.
          *  \return 0 wenn alles gut lief, ansonsten eine ganzzahlige positive Fehlernummer.
          */

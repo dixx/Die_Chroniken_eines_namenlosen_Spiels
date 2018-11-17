@@ -32,6 +32,7 @@ TEST_CASE("LeviathanDevice main loop") {
     When(Method(timerDouble, getTime)).AlwaysReturn(0);
     Mock<irr::IrrlichtDevice> graphicEngineDouble;
     Fake(Method(graphicEngineDouble, yield));
+    Fake(Method(graphicEngineDouble, closeDevice));
     When(Method(graphicEngineDouble, getTimer)).AlwaysReturn(&(timerDouble.get()));
     When(Method(graphicEngineDouble, isWindowActive)).AlwaysReturn(true);
     subject.injectMockedGraphicEngine(graphicEngineDouble.get());
@@ -39,6 +40,11 @@ TEST_CASE("LeviathanDevice main loop") {
     Fake(Method(gameStateDouble, update), Method(gameStateDouble, draw));
     subject.GameStateManager().add(gameStateDouble.get(), 42);
     subject.GameStateManager().transitTo(42);
+
+    SECTION("it can be halted") {
+        subject.halt();
+        Verify(Method(graphicEngineDouble, closeDevice)).Exactly(1_Times);
+    }
 
     SECTION("it should be fair to other apps if inactive") {
         When(Method(graphicEngineDouble, run)).Return(5_Times(true), false);

@@ -78,6 +78,10 @@ namespace leviathan
         }
     }
 
+    void LeviathanDevice::halt() {
+        graphicEngine_->closeDevice();
+    }
+
     int LeviathanDevice::exitStatus()
     {
         return 0;

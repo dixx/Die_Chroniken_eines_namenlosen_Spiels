@@ -6,8 +6,6 @@
 #ifndef _LEVIATHAN_GAMESTATE_HEADER
 #define _LEVIATHAN_GAMESTATE_HEADER
 
-#include <irrlicht.h>
-
 namespace leviathan
 {
     namespace core
@@ -30,23 +28,17 @@ namespace leviathan
              */
             virtual ~GameState() {};
 
-            GameState( const GameState& ) = delete;
-            GameState& operator=( const GameState& ) = delete;
+            GameState(const GameState&) = delete;
+            GameState& operator=(const GameState&) = delete;
 
             /*! \brief Aktualisiert den Zustand.
              *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
              */
-            virtual void update( const float elapsedSeconds ) = 0;
+            virtual void update(const float elapsedSeconds) = 0;
 
             /*! \brief Zeichnet den Zustand auf den Bildschirm.
              */
             virtual void draw() = 0;
-
-            /*! \brief Behandelt ein GUI-Event.
-             *  \param event: zu behandelndes GUI-Event
-             *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
-             */
-            virtual bool handleGuiEvent( const irr::SEvent& event ) = 0;
         };
     }
 }

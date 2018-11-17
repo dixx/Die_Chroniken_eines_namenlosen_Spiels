@@ -6,7 +6,7 @@
 #ifndef _LEVIATHAN_LOGGER_HEADER
 #define _LEVIATHAN_LOGGER_HEADER
 
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 
 namespace leviathan
@@ -66,8 +66,8 @@ namespace leviathan
              */
             ~Logger();
 
-            Logger( const Logger& ) = delete;
-            Logger& operator=( const Logger& ) = delete;
+            Logger(const Logger&) = delete;
+            Logger& operator=(const Logger&) = delete;
 
             /*! \brief Schreibt eine Zeile Text in die Logdatei
              *  \note Schreibt eine Irrlicht-Zeichenkette inklusive "Zeitstempel [LogLevel] " und abschließendem
@@ -75,7 +75,7 @@ namespace leviathan
              *        LogLevel ist.
              *  \param logLevel: logLevel ab welchem der Text tatsächlich in die Logdatei geschrieben wird
              */
-            void write( const Level logLevel = Level::INFO );
+            void write(const Level logLevel = Level::INFO);
 
             /*! \brief Schreibt den Logdatei-Buffer auf die Platte.
              *  \attention Dies schließt die Logdatei und öffnet sie erneut! (Keine Irrlicht-Implementation dafür
@@ -94,11 +94,11 @@ namespace leviathan
             irr::io::IWriteFile* logFile_; // Logdatei
             Level globalLogLevel_; // Globales LogLevel
 
-            inline void openLogFile( const bool append = true );
+            inline void openLogFile(const bool append = true);
             inline void closeLogFile();
-            inline void addLogLevelName( irr::core::stringc& txt, const Level logLevel );
-            inline void addTimeStamp( irr::core::stringc& txt );
-            inline void addNumberWithLeadingZero( irr::core::stringc& txt, const uint32_t number );
+            inline void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
+            inline void addTimeStamp(irr::core::stringc& txt);
+            inline void addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number);
         };
     }
 }

@@ -9,7 +9,6 @@
 #include <cstdint>
 #include <list>
 #include <map>
-#include <irrlicht.h>
 #include "GameState.h"
 
 namespace leviathan
@@ -33,8 +32,8 @@ namespace leviathan
              */
             ~GameStateManager() = default;
 
-            GameStateManager( const GameStateManager& ) = delete;
-            GameStateManager& operator=( const GameStateManager& ) = delete;
+            GameStateManager(const GameStateManager&) = delete;
+            GameStateManager& operator=(const GameStateManager&) = delete;
 
             /*! \brief Fügt einen Spielzustand zur Verwaltung hinzu.
              *  \note Existiert die ID wird der existierende Zustand nicht mit dem neuen ersetzt.
@@ -42,7 +41,7 @@ namespace leviathan
              *  \param gameState: zu verwaltender Spielzustand
              *  \param id: Identifikator für späteren Zugriff auf den Zustand
              */
-            void add( GameState& gameState, uint32_t id );
+            void add(GameState& gameState, uint32_t id);
 
             /*! \brief Wechselt zum Spielzustand welcher unter dieser ID abgelegt wurde.
              *  \note Zustände werden übereinander auf einen Stack gelegt.
@@ -52,22 +51,16 @@ namespace leviathan
              *        Ist der Zustand bereits aktiv, oder weiter unten im Stack, findet kein Transit statt.
              *  \param id: Identifikator des gewünschten Zustands
              */
-            void transitTo( uint32_t id );
+            void transitTo(uint32_t id);
 
             /*! \brief Aktualisiert den momentan aktiven Zustand.
              *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
              */
-            void update( const float elapsedSeconds );
+            void update(const float elapsedSeconds);
 
             /*! \brief Zeichnet den momentan aktiven Zustand auf den Bildschirm.
              */
             void draw();
-
-            /*! \brief Reicht ein GUI-Event zur Behandlung an den aktiven Zustand weiter.
-             *  \param event: zu behandelndes GUI-Event
-             *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
-             */
-            bool handleGuiEvent( const irr::SEvent& event );
 
             /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
              *  \attention Nur für Testzwecke gedacht!

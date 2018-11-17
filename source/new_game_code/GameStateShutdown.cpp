@@ -1,0 +1,19 @@
+#include "GameStateShutdown.h"
+#include "defines.h"
+
+GameStateShutdown::GameStateShutdown(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
+
+}
+
+GameStateShutdown::~GameStateShutdown() {
+
+}
+
+void GameStateShutdown::update(const float elapsedSeconds) {
+    (void)elapsedSeconds;
+    gameEngine_.halt();
+}
+
+void GameStateShutdown::draw() {
+
+}

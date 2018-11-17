@@ -7,13 +7,15 @@
 #ifndef _LEVIATHAN_DEVICE_HEADER
 #define _LEVIATHAN_DEVICE_HEADER
 
-#include <irrlicht.h>
+#include "irrlicht.h"
+#include "Actions.h"
 #include "Configuration.h"
 #include "EventReceiver.h"
+#include "IActionConsumer.h"
+#include "IEventProducer.h"
+#include "IEventConsumer.h"
 #include "GameStateManager.h"
-#include "Keyboard.h"
 #include "Logger.h"
-#include "Mouse.h"
 #include "TimeControl.h"
 
 #ifndef NDEBUG
@@ -43,19 +45,24 @@ namespace leviathan
          */
         ~LeviathanDevice();
 
-        LeviathanDevice( const LeviathanDevice& ) = delete;
-        LeviathanDevice& operator=( const LeviathanDevice& ) = delete;
+        LeviathanDevice(const LeviathanDevice&) = delete;
+        LeviathanDevice& operator=(const LeviathanDevice&) = delete;
 
         /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Engine-Bestandteile damit.
          *  \param filename: Konfigdateiname
          */
-        void init( const irr::io::path& fileName );
+        void init(const irr::io::path& fileName);
 
         /*! \brief Der eigentliche Game-Loop.
          *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,
          *         Berechnen der Zeit, Entscheiden ob die KI aktualisiert werden muss usw.
          */
         void run();
+
+        /*! /brief Stoppt den Game-Loop.
+         *  /note Der aktuelle Game-Loop läuft noch zu Ende durch.
+         */
+        void halt();
 
         /*! \brief Gibt das Errorlevel der Engine zurück.
          *  \return 0 wenn alles gut lief, ansonsten eine ganzzahlige positive Fehlernummer.
@@ -78,13 +85,9 @@ namespace leviathan
          */
         core::GameStateManager& GameStateManager();
 
-        /*! \brief Zugriff auf das Keyboard.
+        /*! \brief Zugriff auf Input-Mappings.
          */
-        input::Keyboard& Keyboard();
-
-        /*! \brief Zugriff auf die Maus.
-         */
-        input::Mouse& Mouse();
+        input::Actions& Actions();
 
     private:
 
@@ -93,9 +96,8 @@ namespace leviathan
         core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
-        input::Keyboard keyboard_;
-        input::Mouse mouse_;
         core::EventReceiver eventReceiver_;
+        input::Actions actions_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
     };

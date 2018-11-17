@@ -19,6 +19,7 @@ find_package(FakeIt REQUIRED)
 find_package(IrrKlang REQUIRED)
 find_package(Irrlicht REQUIRED)
 find_package(Lua REQUIRED)
+find_package(Yaml REQUIRED)
 
 add_subdirectory(source/leviathan)
 add_subdirectory(source/new_game_code)

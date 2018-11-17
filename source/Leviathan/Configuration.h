@@ -6,7 +6,7 @@
 #ifndef _LEVIATHAN_CONFIGURATION_HEADER
 #define _LEVIATHAN_CONFIGURATION_HEADER
 
-#include <irrlicht.h>
+#include "irrlicht.h"
 #include <cstdint>
 #include <string>
 #include "Logger.h"
@@ -34,20 +34,20 @@ namespace leviathan
              */
             ~Configuration() = default;
 
-            Configuration( const Configuration& ) = delete;
-            Configuration& operator=( const Configuration& ) = delete;
+            Configuration(const Configuration&) = delete;
+            Configuration& operator=(const Configuration&) = delete;
 
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            void readFromFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = nullptr );
+            void readFromFile(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = nullptr);
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname
              *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            // void writeToFile( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0 );
+            // void writeToFile(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0);
 
             /*! \brief Gibt eine Sammlung von Parametern zur Erstellung eines Irrlicht-Device zurück.
              *  \return Parametersammlung
@@ -75,7 +75,7 @@ namespace leviathan
              *  \param key: Name des Schlüssels
              *  \return Integer-Wert
              */
-            int getInt( const irr::core::stringc& section, const irr::core::stringc& key );
+            int getInt(const irr::core::stringc& section, const irr::core::stringc& key);
 
         private:
 
@@ -99,7 +99,7 @@ namespace leviathan
                 {"DETAIL", Logger::Level::DETAIL}
             };
 
-            void generateContent( const irr::io::path& fileName, irr::io::IFileSystem* fileSystem );
+            void generateContent(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem);
             const irr::core::stringc getItem(
                 const irr::core::stringc& section,
                 const irr::core::stringc& key,

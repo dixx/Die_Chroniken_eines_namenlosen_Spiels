@@ -1,46 +1,31 @@
-/*! \file GameStatePlay.h
- *  \brief Klasse stellt Schnittstelle für das eigentliche Spiel bereit.
- */
+#ifndef GAMESTATEPLAY_H
+#define GAMESTATEPLAY_H
 
-#ifndef _GAMESTATEPLAY_HEADER
-#define _GAMESTATEPLAY_HEADER
-
-#include <irrlicht.h>
 #include "leviathan.h"
 
-/*! \class GameStatePlay GameStatePlay.h "GameStatePlay.h"
- *  \brief Schnittstelle für das Spiel.
- */
-class GameStatePlay final : public leviathan::core::GameState
-{
+class GameStatePlay final : public leviathan::core::GameState, leviathan::input::IActionConsumer {
 
 public:
 
-    /*! \brief Konstruktor.
-     */
-    GameStatePlay();
+    enum actions {
+        OPEN_IN_GAME_OPTIONS = 2
+    };
 
-    /*! \brief Destruktor
-     */
-    ~GameStatePlay() final;
+    explicit GameStatePlay(leviathan::LeviathanDevice& gameEngine);
 
-    GameStatePlay( const GameStatePlay& ) = delete;
-    GameStatePlay& operator=( const GameStatePlay& ) = delete;
+    virtual ~GameStatePlay() final;
 
-    /*! \brief Aktualisiert das Spiel.
-     *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
-     */
-    void update( const float elapsedSeconds ) final;
+    GameStatePlay(const GameStatePlay&) = delete;
+    GameStatePlay& operator=(const GameStatePlay&) = delete;
 
-    /*! \brief Zeichnet das Spiel auf den Bildschirm.
-     */
+    void update(const float elapsedSeconds) final;
+
     void draw() final;
 
-    /*! \brief Behandelt ein GUI-Event.
-     *  \param event: zu behandelndes GUI-Event
-     *  \return `true` wenn das Event erfolgreich behandelt werden konnte, ansonsten `false`
-     */
-    bool handleGuiEvent( const irr::SEvent& event ) final;
+    void onAction(const uint32_t id, const bool isActive) final;
+
+private:
+    leviathan::LeviathanDevice& gameEngine_;
 };
 
 #endif

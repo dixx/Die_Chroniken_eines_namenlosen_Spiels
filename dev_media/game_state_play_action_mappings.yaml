@@ -1,0 +1,22 @@
+---
+- name: target selected
+  id: 1
+  description: select a target, may it be a position on the ground, an NPC or an object.
+  input_mappings:
+    primary:
+      name: left mouse button
+      type: mouse
+      id: 0x01
+    secondary:
+      name: <E>
+      type: keyboard
+      id: 0x45
+- name: options
+  id: 2
+  description: bring up the in-game options menu
+  internal: true
+  input_mappings:
+    primary:
+      name: <ESC>
+      type: keyboard
+      id: 0x1B

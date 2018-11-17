@@ -18,11 +18,11 @@ namespace leviathan
           logFile_(nullptr),
           globalLogLevel_(globalLogLevel)
         {
-            if ( !fileSystem_ || !clock_ )
-                exit( 1 );
+            if (!fileSystem_ || !clock_)
+                exit(1);
             fileSystem_->grab();
-            openLogFile( append );
-            addLogLevelName( text, globalLogLevel_ );
+            openLogFile(append);
+            addLogLevelName(text, globalLogLevel_);
             write();
         }
 
@@ -32,18 +32,18 @@ namespace leviathan
             fileSystem_->drop();
         }
 
-        void Logger::write( const Level logLevel )
+        void Logger::write(const Level logLevel)
         {
-            if ( logLevel <= globalLogLevel_ )
+            if (logLevel <= globalLogLevel_)
             {
-                irr::core::stringc logline( "" );
-                addTimeStamp( logline );
+                irr::core::stringc logline("");
+                addTimeStamp(logline);
                 logline += " [";
-                addLogLevelName( logline, logLevel );
+                addLogLevelName(logline, logLevel);
                 logline += "] ";
                 logline += text;
                 logline += "\r\n";
-                logFile_->write( logline.c_str(), logline.size() );
+                logFile_->write(logline.c_str(), logline.size());
             }
         }
 
@@ -55,25 +55,25 @@ namespace leviathan
 
         /* private: */
 
-        void Logger::openLogFile( const bool append )
+        void Logger::openLogFile(const bool append)
         {
-            logFile_ = fileSystem_->createAndWriteFile( fileName_, append );
-            if ( !logFile_ )
-                exit( 1 );
+            logFile_ = fileSystem_->createAndWriteFile(fileName_, append);
+            if (!logFile_)
+                exit(1);
         }
 
         void Logger::closeLogFile()
         {
-            if ( logFile_ )
+            if (logFile_)
             {
                 logFile_->drop();
                 logFile_ = nullptr;
             }
         }
 
-        void Logger::addLogLevelName( irr::core::stringc& txt, const Level logLevel )
+        void Logger::addLogLevelName(irr::core::stringc& txt, const Level logLevel)
         {
-            switch ( logLevel )
+            switch (logLevel)
             {
                 case Level::INFO:
                     txt += "Info";
@@ -92,25 +92,25 @@ namespace leviathan
             }
         }
 
-        void Logger::addTimeStamp( irr::core::stringc& txt )
+        void Logger::addTimeStamp(irr::core::stringc& txt)
         {
             auto now = clock_->getRealTimeAndDate();
-            addNumberWithLeadingZero( txt, now.Day );
+            addNumberWithLeadingZero(txt, now.Day);
             txt += ".";
-            addNumberWithLeadingZero( txt, now.Month );
+            addNumberWithLeadingZero(txt, now.Month);
             txt += ".";
             txt += now.Year;
             txt += " ";
-            addNumberWithLeadingZero( txt, now.Hour );
+            addNumberWithLeadingZero(txt, now.Hour);
             txt += ":";
-            addNumberWithLeadingZero( txt, now.Minute );
+            addNumberWithLeadingZero(txt, now.Minute);
             txt += ":";
-            addNumberWithLeadingZero( txt, now.Second );
+            addNumberWithLeadingZero(txt, now.Second);
         }
 
-        void Logger::addNumberWithLeadingZero( irr::core::stringc& txt, const uint32_t number )
+        void Logger::addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number)
         {
-            if ( number < 10 )
+            if (number < 10)
                 txt += '0';
             txt += number;
         }

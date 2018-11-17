@@ -4,13 +4,13 @@ add_executable(unit_tests
   ../source/chroniken_alt/Zufall.cpp # TODO will go away when we implement it in the game engine
   helpers/Testhelper.cpp
   helpers/TesthelperLeviathanDevice.cpp
+  ActionsTest.cpp
   ConfigurationTest.cpp
+  EventReceiverTest.cpp
   GameStateManagerTest.cpp
   GameStateTest.cpp
-  KeyboardTest.cpp
   LeviathanDeviceTest.cpp
   LoggerTest.cpp
-  MouseTest.cpp
   TimeControlTest.cpp
   TimerTest.cpp
   ZufallTest.cpp

@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
   -Wno-aggregate-return \
   -Woverloaded-virtual \
   -Wold-style-cast \
-  -std=c++14 \
+  -std=c++17 \
   -fmessage-length=80 \
   -fdiagnostics-color=always \
   -fdiagnostics-show-location=once \

@@ -75,6 +75,11 @@ TEST_CASE("GameStateManager: transit between game states") {
         subject.transitTo(STATE_START);
         REQUIRE(subject.getActiveStateID() == STATE_PAUSE);
     }
+    SECTION("it ignores unknown states") {
+        subject.transitTo(STATE_START);
+        subject.transitTo(42);
+        REQUIRE(subject.getActiveStateID() == STATE_START);
+    }
 }
 
 TEST_CASE("GameStateManager: update and draw active game states") {

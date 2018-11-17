@@ -18,6 +18,7 @@ namespace leviathan
 
         void GameStateManager::transitTo(uint32_t id)
         {
+            if (states_.find(id) == states_.end()) return;
             if (runningStateIDs_.empty())
             {
                 runningStateIDs_.push_front(id);

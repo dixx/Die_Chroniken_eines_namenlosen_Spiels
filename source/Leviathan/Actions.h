@@ -32,7 +32,7 @@ namespace leviathan
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
              */
-            Actions(IEventProducer& producer);
+            explicit Actions(IEventProducer& producer);
 
             Actions() = delete;
             ~Actions() = default;

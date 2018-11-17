@@ -18,6 +18,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
   -Wno-aggregate-return \
   -Woverloaded-virtual \
   -Wold-style-cast \
+  -Wnon-virtual-dtor \
+  -Wdelete-non-virtual-dtor \
   -std=c++17 \
   -fmessage-length=80 \
   -fdiagnostics-color=always \

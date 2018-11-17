@@ -1,4 +1,5 @@
 #include "Actions.h"
+#include <iostream>
 
 namespace leviathan
 {
@@ -57,23 +58,37 @@ namespace leviathan
             } catch(const std::out_of_range& e) {
                 return false;
             }
+            std::cout << "Event: " << id << std::endl;
             if (_subscriptions[id].empty()) {
                 return false;
             }
+            std::cout << "Consumer-Event, id: " << id << std::endl;
             for (auto consumer : _subscriptions[id]) {
                 consumer->onAction(id, isActive);
             }
             return true;
         }
 
-        void Actions::mergeFromFile(const irr::io::path& fileName) {
+        void Actions::loadFromFile(const irr::io::path& fileName) {
             YAML::Node actionMap = YAML::LoadFile(fileName.c_str());
+            _actions.clear();
+            _converter[0].clear();
+            _converter[1].clear();
             for (const auto actionNode : actionMap) {
                 Action action(actionNode);
                 _actions[action.id] = action;
                 addActionToConverter(action);
             }
         }
+
+        // void Actions::mergeFromFile(const irr::io::path& fileName) {
+        //     YAML::Node actionMap = YAML::LoadFile(fileName.c_str());
+        //     for (const auto actionNode : actionMap) {
+        //         Action action(actionNode);
+        //         _actions[action.id] = action;
+        //         addActionToConverter(action);
+        //     }
+        // }
 
         Actions::Input::Input(const YAML::Node& node)
         : name(node && node["name"] ? node["name"].as<std::string>() : "- None -"),

@@ -58,10 +58,16 @@ namespace leviathan
             bool onEvent(const irr::SEvent& event);
 
             /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
-             *  \note Bereits vorhandene Aktionen werden mit denen aus der Datei überschrieben.
+             *  \note Alle bereits vorhandene Aktionen werden entfernt.
              *  \param fileName: Mapping-Dateiname
              */
-            void mergeFromFile(const irr::io::path& fileName);
+            void loadFromFile(const irr::io::path& fileName);
+
+            // /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
+            //  *  \note Bereits vorhandene Aktionen werden mit denen aus der Datei ergänzt/überschrieben.
+            //  *  \param fileName: Mapping-Dateiname
+            //  */
+            // void mergeFromFile(const irr::io::path& fileName);
 
         private:
             struct Input {

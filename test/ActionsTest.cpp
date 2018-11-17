@@ -63,7 +63,7 @@ TEST_CASE("Action Mapping") {
         SECTION("mappings can be loaded from file") {
             subject.onEvent(leftMouseButtonEvent);
             VerifyNoOtherInvocations(Method(consumerMock, onAction));
-            subject.mergeFromFile(mappingsFileName);
+            subject.loadFromFile(mappingsFileName);
             subject.onEvent(leftMouseButtonEvent);
             Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
             consumerMock.ClearInvocationHistory();
@@ -101,7 +101,7 @@ TEST_CASE("Action Mapping") {
         REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
 
         subject.subscribe(consumerMock.get(), TALK);
-        subject.mergeFromFile(mappingsFileName);
+        subject.loadFromFile(mappingsFileName);
         REQUIRE(subject.onEvent(leftMouseButtonEvent));
         REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
     }

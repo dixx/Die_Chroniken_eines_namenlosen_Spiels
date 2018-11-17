@@ -58,11 +58,9 @@ namespace leviathan
             } catch(const std::out_of_range& e) {
                 return false;
             }
-            std::cout << "Event: " << id << std::endl;
             if (_subscriptions[id].empty()) {
                 return false;
             }
-            std::cout << "Consumer-Event, id: " << id << std::endl;
             for (auto consumer : _subscriptions[id]) {
                 consumer->onAction(id, isActive);
             }

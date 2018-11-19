@@ -1,5 +1,6 @@
 #include <catch.hpp>
 #include <fakeit.hpp>
+#include "irrlicht.h"
 #include "../source/Leviathan/EventReceiver.h"
 #include "../source/Leviathan/IEventConsumer.h"
 

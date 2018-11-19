@@ -1,7 +1,7 @@
 #include <catch.hpp>
-#include "irrlicht.h"
 #include <cstdint>
-#include "leviathan.h"
+#include "irrlicht.h"
+#include "../source/Leviathan/Logger.h"
 #include "helpers/Testhelper.h"
 
 TEST_CASE("Logger: init") {

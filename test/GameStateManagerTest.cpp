@@ -1,6 +1,7 @@
 #include <catch.hpp>
 #include <fakeit.hpp>
-#include "leviathan.h"
+#include "../source/Leviathan/GameState.h"
+#include "../source/Leviathan/GameStateManager.h"
 
 using namespace fakeit;
 

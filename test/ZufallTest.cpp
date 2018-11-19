@@ -1,5 +1,4 @@
 #include <catch.hpp>
-#include "irrlicht.h"
 #include <chrono>
 #include <cstdint>
 #include "../source/chroniken_alt/Zufall.h" // TODO change to engine randomizer later

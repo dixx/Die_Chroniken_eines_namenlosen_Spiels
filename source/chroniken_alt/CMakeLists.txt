@@ -1,3 +1,6 @@
+# this costs a lot of compile time, so we skip it for now.
+return()
+
 include_directories(
   "${IRRKLANG_INCLUDE_DIRS}"
   "${IRRLICHT_INCLUDE_DIRS}"

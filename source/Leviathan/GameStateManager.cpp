@@ -40,7 +40,7 @@ namespace leviathan {
                 states_[id]->draw();
         }
 
-        size_t GameStateManager::getGameStateCount() {
+        size_t GameStateManager::getGameStateCount() const {
             return states_.size();
         }
 

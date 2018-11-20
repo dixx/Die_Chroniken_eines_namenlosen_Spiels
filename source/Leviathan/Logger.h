@@ -89,9 +89,9 @@ namespace leviathan {
 
             inline void openLogFile(const bool append = true);
             inline void closeLogFile();
-            inline void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
+            inline static void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
             inline void addTimeStamp(irr::core::stringc& txt);
-            inline void addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number);
+            inline static void addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number);
         };
     }
 }

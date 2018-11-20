@@ -6,16 +6,13 @@
 #ifndef _LEVIATHAN_TIMER_HEADER
 #define _LEVIATHAN_TIMER_HEADER
 
-namespace leviathan
-{
-    namespace core
-    {
+namespace leviathan {
+    namespace core {
 
         /*! \class Timer Timer.h "Timer.h"
          *  \brief millisekundengenauer Timer
          */
-        class Timer
-        {
+        class Timer {
 
         public:
 
@@ -81,18 +78,17 @@ namespace leviathan
         private:
 
             float maxValue_;
-            float currentValue_;
-            bool timerIsRunning_;
-            bool timerIsPaused_;
-            bool timerIsFull_;
+            float currentValue_ = 0.0f;
+            bool timerIsRunning_ = false;
+            bool timerIsPaused_ = false;
+            bool timerIsFull_ = false;
         };
 
         /*! \class AlwaysRunningTimer
          *  \brief Schnittstelle für millisekundengenaue Timer, welche nicht zu stoppen sind.
          *  \attention Einmal gestartet, sind diese Timer durch nichts zu stoppen oder zu pausieren.
          */
-        class AlwaysRunningTimer : public Timer
-        {
+        class AlwaysRunningTimer : public Timer {
 
         public:
 

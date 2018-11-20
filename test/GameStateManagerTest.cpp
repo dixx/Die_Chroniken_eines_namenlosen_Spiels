@@ -1,17 +1,17 @@
-#include <catch.hpp>
-#include <fakeit.hpp>
-#include "../source/Leviathan/GameState.h"
 #include "../source/Leviathan/GameStateManager.h"
+#include "../source/Leviathan/IGameState.h"
+#include "catch.hpp"
+#include "fakeit.hpp"
 
 using namespace fakeit;
 
 TEST_CASE("GameStateManager: add game states") {
     leviathan::core::GameStateManager subject;
-    Mock<leviathan::core::GameState> startDouble, playDouble, stopDouble;
+    Mock<leviathan::core::IGameState> startDouble, playDouble, stopDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
     Fake(Method(playDouble, update), Method(playDouble, draw));
     Fake(Method(stopDouble, update), Method(stopDouble, draw));
-    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get(), &stop = stopDouble.get();
+    leviathan::core::IGameState &start = startDouble.get(), &play = playDouble.get(), &stop = stopDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add(start, STATE_START);
     subject.add(play, STATE_PLAY);
@@ -34,13 +34,13 @@ TEST_CASE("GameStateManager: add game states") {
 
 TEST_CASE("GameStateManager: transit between game states") {
     leviathan::core::GameStateManager subject;
-    Mock<leviathan::core::GameState> startDouble, playDouble, pauseDouble, optionsDouble;
+    Mock<leviathan::core::IGameState> startDouble, playDouble, pauseDouble, optionsDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
     Fake(Method(playDouble, update), Method(playDouble, draw));
     Fake(Method(pauseDouble, update), Method(pauseDouble, draw));
     Fake(Method(optionsDouble, update), Method(optionsDouble, draw));
-    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get(), &pause = pauseDouble.get(),
-            &options = optionsDouble.get();
+    leviathan::core::IGameState &start = startDouble.get(), &play = playDouble.get(), &pause = pauseDouble.get(),
+                                &options = optionsDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE, STATE_OPTIONS };
     subject.add(start, STATE_START);
     subject.add(options, STATE_OPTIONS);
@@ -85,11 +85,11 @@ TEST_CASE("GameStateManager: transit between game states") {
 
 TEST_CASE("GameStateManager: update and draw active game states") {
     leviathan::core::GameStateManager subject;
-    Mock<leviathan::core::GameState> startDouble, playDouble, pauseDouble;
+    Mock<leviathan::core::IGameState> startDouble, playDouble, pauseDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
     Fake(Method(playDouble, update), Method(playDouble, draw));
     Fake(Method(pauseDouble, update), Method(pauseDouble, draw));
-    leviathan::core::GameState &start = startDouble.get(), &play = playDouble.get(), &pause = pauseDouble.get();
+    leviathan::core::IGameState &start = startDouble.get(), &play = playDouble.get(), &pause = pauseDouble.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_PAUSE };
     subject.add(start, STATE_START);
     subject.add(play, STATE_PLAY);

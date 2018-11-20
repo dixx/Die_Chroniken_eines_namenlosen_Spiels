@@ -1,33 +1,27 @@
 /*! \file EventReceiver.h
  *  \brief Behandlung von Tastatur/Maus, GUI und anderen Events.
  *  \note Bestandteil der Leviathan Engine.
- *        The code here and in the Keyboard class is based on version 1.2a of the MastEventReceiver code,
- *        © (Copyright) Robert E. Demarest, AKA Mastiff or Mastiff Odit. A thousand thanks to him!
  */
 
-#ifndef _LEVIATHAN_EVENTRECEIVER_HEADER
-#define _LEVIATHAN_EVENTRECEIVER_HEADER
+#ifndef LEVIATHAN_CORE_EVENTRECEIVER_H
+#define LEVIATHAN_CORE_EVENTRECEIVER_H
 
-#include <map>
-#include <set>
-#include "irrlicht.h"
 #include "GameStateManager.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
+#include "irrlicht.h"
+#include <map>
+#include <set>
 
-namespace leviathan
-{
-    namespace core
-    {
+namespace leviathan {
+    namespace core {
 
         /*! \class EventReceiver EventReceiver.h "EventReceiver.h"
          *  \brief Diese Klasse enthält Funktionen zum Behandeln von Events.
          */
-        class EventReceiver : public irr::IEventReceiver, public leviathan::input::IEventProducer
-        {
+        class EventReceiver : public irr::IEventReceiver, public leviathan::input::IEventProducer {
 
         public:
-
             /*! \brief Konstruktor.
              */
             EventReceiver() = default;

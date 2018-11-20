@@ -3,14 +3,11 @@
 
 #include "leviathan.h"
 
-class GameStateShutdown final : public leviathan::core::GameState {
+class GameStateShutdown final : public leviathan::core::IGameState {
 
 public:
-
     explicit GameStateShutdown(leviathan::LeviathanDevice& gameEngine);
-
     virtual ~GameStateShutdown() final;
-
     GameStateShutdown(const GameStateShutdown&) = delete;
     GameStateShutdown& operator=(const GameStateShutdown&) = delete;
 

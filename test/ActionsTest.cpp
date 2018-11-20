@@ -1,41 +1,41 @@
-#include <catch.hpp>
-#include <fakeit.hpp>
-#include "irrlicht.h"
 #include "../source/Leviathan/Actions.h"
 #include "../source/Leviathan/IActionConsumer.h"
 #include "../source/Leviathan/IEventProducer.h"
+#include "catch.hpp"
+#include "fakeit.hpp"
 #include "helpers/Testhelper.h"
+#include "irrlicht.h"
 
 using namespace fakeit;
 
 TEST_CASE("Action Mapping") {
     Testhelper testhelper;
     const irr::io::path mappingsFileName = "testactionmappings.yml";
-    irr::core::stringc content = "---\n" \
-                                 "- name: talk\n" \
-                                 "  id: 1\n" \
-                                 "  description: initiate communication\n" \
-                                 "  input_mappings:\n" \
-                                 "    primary:\n" \
-                                 "      name: left mouse button\n" \
-                                 "      type: mouse\n" \
-                                 "      id: 0x01\n" \
-                                 "    secondary:\n" \
-                                 "      name: <E>\n" \
-                                 "      type: keyboard\n" \
-                                 "      id: 0x45\n" \
-                                 "- name: attack\n" \
-                                 "  id: 2\n" \
-                                 "  description: main hand attack\n" \
-                                 "  input_mappings:\n" \
-                                 "- name: select\n" \
-                                 "  id: 100\n" \
-                                 "  description: select a menu entry\n" \
-                                 "  internal: true\n" \
-                                 "  input_mappings:\n" \
-                                 "    primary:\n" \
-                                 "      name: <SPACE>\n" \
-                                 "      type: keyboard\n" \
+    irr::core::stringc content = "---\n"
+                                 "- name: talk\n"
+                                 "  id: 1\n"
+                                 "  description: initiate communication\n"
+                                 "  input_mappings:\n"
+                                 "    primary:\n"
+                                 "      name: left mouse button\n"
+                                 "      type: mouse\n"
+                                 "      id: 0x01\n"
+                                 "    secondary:\n"
+                                 "      name: <E>\n"
+                                 "      type: keyboard\n"
+                                 "      id: 0x45\n"
+                                 "- name: attack\n"
+                                 "  id: 2\n"
+                                 "  description: main hand attack\n"
+                                 "  input_mappings:\n"
+                                 "- name: select\n"
+                                 "  id: 100\n"
+                                 "  description: select a menu entry\n"
+                                 "  internal: true\n"
+                                 "  input_mappings:\n"
+                                 "    primary:\n"
+                                 "      name: <SPACE>\n"
+                                 "      type: keyboard\n"
                                  "      id: 0x20\n";
     testhelper.writeFile(mappingsFileName, content);
     Mock<leviathan::input::IEventProducer> eventBrokerMock;

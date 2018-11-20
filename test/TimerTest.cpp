@@ -1,6 +1,6 @@
-#include <catch.hpp>
-#include "irrlicht.h"
 #include "../source/Leviathan/Timer.h"
+#include "catch.hpp"
+#include "irrlicht.h"
 
 TEST_CASE("Timer: architecture") {
     leviathan::core::Timer timer(2.0f);

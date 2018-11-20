@@ -1,7 +1,7 @@
-#include <catch.hpp>
-#include "irrlicht.h"
 #include "../source/Leviathan/Configuration.h"
+#include "catch.hpp"
 #include "helpers/Testhelper.h"
+#include "irrlicht.h"
 
 // TODO
 // - enum values are allowed (only /[A-Z0-9_]/)

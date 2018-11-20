@@ -1,8 +1,8 @@
-#include <catch.hpp>
-#include <cstdint>
-#include "irrlicht.h"
 #include "../source/Leviathan/Logger.h"
+#include "catch.hpp"
 #include "helpers/Testhelper.h"
+#include "irrlicht.h"
+#include <cstdint>
 
 TEST_CASE("Logger: init") {
     Testhelper testhelper;
@@ -11,8 +11,7 @@ TEST_CASE("Logger: init") {
         testhelper.getFileSystem(),
         testhelper.getGraphicEngine()->getTimer(),
         logFileName,
-        leviathan::core::Logger::Level::INFO
-    );
+        leviathan::core::Logger::Level::INFO);
     sample.flush();
 
     SECTION("it creates a logfile") {
@@ -22,23 +21,21 @@ TEST_CASE("Logger: init") {
 
         SECTION("by overwriting an existing logfile") {
             leviathan::core::Logger subject(
-                    testhelper.getFileSystem(),
-                    testhelper.getGraphicEngine()->getTimer(),
-                    logFileName,
-                    leviathan::core::Logger::Level::INFO
-            );
+                testhelper.getFileSystem(),
+                testhelper.getGraphicEngine()->getTimer(),
+                logFileName,
+                leviathan::core::Logger::Level::INFO);
             subject.flush();
             uint32_t newSize = testhelper.getFileSize(logFileName);
             REQUIRE(newSize == size);
         }
         SECTION("by appending to an existing logfile") {
             leviathan::core::Logger subject(
-                    testhelper.getFileSystem(),
-                    testhelper.getGraphicEngine()->getTimer(),
-                    logFileName,
-                    leviathan::core::Logger::Level::INFO,
-                    true
-            );
+                testhelper.getFileSystem(),
+                testhelper.getGraphicEngine()->getTimer(),
+                logFileName,
+                leviathan::core::Logger::Level::INFO,
+                true);
             subject.flush();
             uint32_t newSize = testhelper.getFileSize(logFileName);
             REQUIRE(newSize == size * 2);
@@ -51,11 +48,10 @@ TEST_CASE("Logger: init") {
     SECTION("multiple logfiles may exist") {
         const irr::io::path anotherLogFileName = "testlogfile2.log";
         leviathan::core::Logger sample2(
-                testhelper.getFileSystem(),
-                testhelper.getGraphicEngine()->getTimer(),
-                anotherLogFileName,
-                leviathan::core::Logger::Level::INFO
-        );
+            testhelper.getFileSystem(),
+            testhelper.getGraphicEngine()->getTimer(),
+            anotherLogFileName,
+            leviathan::core::Logger::Level::INFO);
         REQUIRE(testhelper.existFile(logFileName));
         REQUIRE(testhelper.existFile(anotherLogFileName));
     }
@@ -67,11 +63,10 @@ TEST_CASE("Logger: logging") {
 
     SECTION("it writes text into the logfile") {
         leviathan::core::Logger subject(
-                testhelper.getFileSystem(),
-                testhelper.getGraphicEngine()->getTimer(),
-                logFileName,
-                leviathan::core::Logger::Level::INFO
-        );
+            testhelper.getFileSystem(),
+            testhelper.getGraphicEngine()->getTimer(),
+            logFileName,
+            leviathan::core::Logger::Level::INFO);
         subject.text = "Kilroy wuz here";
         subject.write();
         subject.flush();
@@ -103,8 +98,7 @@ TEST_CASE("Logger: logging") {
             testhelper.getFileSystem(),
             testhelper.getGraphicEngine()->getTimer(),
             logFileName,
-            leviathan::core::Logger::Level::DETAIL
-        );
+            leviathan::core::Logger::Level::DETAIL);
         subject.text = "a line just for information";
         subject.write(leviathan::core::Logger::Level::INFO);
         subject.text = "a line full of details";

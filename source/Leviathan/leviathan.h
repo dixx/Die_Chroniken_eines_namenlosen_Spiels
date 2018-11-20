@@ -3,24 +3,19 @@
  *         Dies ist der einzige Header der inkludiert werden muss.
  */
 
-#ifndef _LEVIATHAN_HEADER
-#define _LEVIATHAN_HEADER
+#ifndef LEVIATHAN_H
+#define LEVIATHAN_H
 
 #include "LeviathanDevice.h"
 
 //! Alle bedienbaren Teile der Leviathan Game Engine findest du hier.
-namespace leviathan
-{
+namespace leviathan {
 
     //! Grundlegende Bestandteile der Engine.
-    namespace core
-    {
-    }
+    namespace core {}
 
     //! Hilfsklassen für Eingabegeräte
-    namespace input
-    {
-    }
+    namespace input {}
 }
 
 #endif

@@ -9,16 +9,15 @@
 #include "IEventConsumer.h"
 #include "irrlicht.h"
 
-namespace leviathan
-{
-    namespace input
-    {
+namespace leviathan {
+    namespace input {
+
         /*! \interface IEventProducer
          *  \brief Interface für Verteiler von `irr::SEvent`s.
          */
-        struct IEventProducer
-        {
-            virtual ~IEventProducer() {};
+        struct IEventProducer {
+
+            virtual ~IEventProducer() {}
 
             /*! \brief Konsumenten von Events melden sich hier an.
              *  \param consumer: Konsument von Events

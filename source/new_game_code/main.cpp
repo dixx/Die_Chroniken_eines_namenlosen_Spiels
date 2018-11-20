@@ -1,7 +1,7 @@
-#include "leviathan.h"
-#include "defines.h"
 #include "GameStatePlay.h"
 #include "GameStateShutdown.h"
+#include "defines.h"
+#include "leviathan.h"
 
 int main() {
     leviathan::LeviathanDevice gameEngine;

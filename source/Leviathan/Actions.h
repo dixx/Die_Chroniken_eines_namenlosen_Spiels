@@ -3,32 +3,28 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_ACTIONS_H
-#define LEVIATHAN_ACTIONS_H
+#ifndef LEVIATHAN_INPUT_ACTIONS_H
+#define LEVIATHAN_INPUT_ACTIONS_H
 
+#include "IActionConsumer.h"
+#include "IEventConsumer.h"
+#include "IEventProducer.h"
+#include "irrlicht.h"
+#include "yaml-cpp/yaml.h"
 #include <cstdint>
 #include <map>
 #include <set>
 #include <string>
-#include <yaml-cpp/yaml.h>
-#include "irrlicht.h"
-#include "IActionConsumer.h"
-#include "IEventProducer.h"
-#include "IEventConsumer.h"
 
-namespace leviathan
-{
-    namespace input
-    {
+namespace leviathan {
+    namespace input {
 
         /*! \class Actions
          *  \brief Mapping von Input zu Aktion
          */
-        class Actions : public IEventConsumer
-        {
+        class Actions : public IEventConsumer {
 
         public:
-
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
              */
@@ -53,7 +49,8 @@ namespace leviathan
 
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event
-             *  \return `true` wenn es zu diesem Event eine Aktion mit mindestens einem Empfänger gibt, ansonsten `false`
+             *  \return `true` wenn es zu diesem Event eine Aktion mit mindestens einem Empfänger gibt, ansonsten
+             * `false`
              */
             bool onEvent(const irr::SEvent& event);
 
@@ -71,14 +68,14 @@ namespace leviathan
 
         private:
             struct Input {
-                Input() {}; // std::map needs this
+                Input(){};  // std::map needs this
                 explicit Input(const YAML::Node& node);
                 std::string name = "- None -", type = "unknown";
                 uint32_t id = 0;
                 bool isActive = false, wasActive = false;
             };
             struct Action {
-                Action() {}; // std::map needs this
+                Action(){};  // std::map needs this
                 explicit Action(const YAML::Node& node);
                 std::string name = "nameless action", description = "";
                 uint32_t id = 0;
@@ -86,7 +83,8 @@ namespace leviathan
                 Input primary = Input(), secondary = Input();
             };
             std::map<uint32_t, Action> _actions = std::map<uint32_t, Action>();
-            std::map<uint32_t, std::set<IActionConsumer*>> _subscriptions = std::map<uint32_t, std::set<IActionConsumer*>>();
+            std::map<uint32_t, std::set<IActionConsumer*>> _subscriptions =
+                std::map<uint32_t, std::set<IActionConsumer*>>();
             std::vector<std::map<uint32_t, uint32_t>> _converter = std::vector(2, std::map<uint32_t, uint32_t>());
 
             void addActionToConverter(const Action& action);

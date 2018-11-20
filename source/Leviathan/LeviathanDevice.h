@@ -2,41 +2,40 @@
  *  \brief Die eigentliche 'Leviathan Engine'.
  *         Bietet Zugriff auf alle Funktionalitäten, kümmert sich um Instanzierung ihrer Teile usw.
  *  \note Bestandteil der Leviathan Engine
-*/
+ */
 
-#ifndef _LEVIATHAN_DEVICE_HEADER
-#define _LEVIATHAN_DEVICE_HEADER
+#ifndef LEVIATHAN_DEVICE_H
+#define LEVIATHAN_DEVICE_H
 
-#include "irrlicht.h"
 #include "Actions.h"
 #include "Configuration.h"
 #include "EventReceiver.h"
-#include "IActionConsumer.h"
-#include "IEventProducer.h"
-#include "IEventConsumer.h"
 #include "GameStateManager.h"
+#include "IActionConsumer.h"
+#include "IEventConsumer.h"
+#include "IEventProducer.h"
 #include "Logger.h"
 #include "TimeControl.h"
+#include "irrlicht.h"
 
 #ifndef NDEBUG
-    #define LOG_FILE_NAME "game.log"
+#    define LOG_FILE_NAME "game.log"
 #else
-    #define LOG_FILE_NAME "debug.log"
+#    define LOG_FILE_NAME "debug.log"
 #endif
 
-namespace TesthelperLeviathanDevice { class LeviathanDeviceWithIrrlichtMock; } // forward declaration for unit tests
+namespace TesthelperLeviathanDevice {
+    class LeviathanDeviceWithIrrlichtMock;
+}  // namespace TesthelperLeviathanDevice
 
-namespace leviathan
-{
+namespace leviathan {
 
     /*! \class LeviathanDevice LeviathanDevice.h "LeviathanDevice.h"
      *  \brief Die eigentliche Engine.
      */
-    class LeviathanDevice
-    {
+    class LeviathanDevice {
 
     public:
-
         /*! \brief Konstruktor. Initialisiert alle Bestandteile der Engine.
          */
         LeviathanDevice();
@@ -90,7 +89,6 @@ namespace leviathan
         input::Actions& Actions();
 
     private:
-
         core::Configuration configuration_;
         irr::IrrlichtDevice* graphicEngine_;
         core::TimeControl timeControl_;
@@ -99,7 +97,7 @@ namespace leviathan
         core::EventReceiver eventReceiver_;
         input::Actions actions_;
 
-        friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock; // now Irrlicht can be mocked in unit tests
+        friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests
     };
 }
 

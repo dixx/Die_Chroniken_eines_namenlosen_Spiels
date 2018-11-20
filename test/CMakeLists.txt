@@ -8,7 +8,6 @@ add_executable(unit_tests
   ConfigurationTest.cpp
   EventReceiverTest.cpp
   GameStateManagerTest.cpp
-  GameStateTest.cpp
   LeviathanDeviceTest.cpp
   LoggerTest.cpp
   TimeControlTest.cpp

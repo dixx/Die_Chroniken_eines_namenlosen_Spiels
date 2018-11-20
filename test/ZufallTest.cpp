@@ -1,8 +1,7 @@
-#include <catch.hpp>
-#include "irrlicht.h"
+#include "../source/chroniken_alt/Zufall.h"  // TODO change to engine randomizer later
+#include "catch.hpp"
 #include <chrono>
 #include <cstdint>
-#include "../source/chroniken_alt/Zufall.h" // TODO change to engine randomizer later
 
 const uint32_t SEED = static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count());
 
@@ -41,7 +40,7 @@ TEST_CASE("Zufall: seeding") {
 TEST_CASE("Zufall: get random Int") {
     Zufall& subject = Zufall::getInstance();
     subject.start(SEED);
-    //REQUIRE(subject.getInt() >= 0); // comparison of unsigned expression >= 0 is always true
+    // REQUIRE(subject.getInt() >= 0); // comparison of unsigned expression >= 0 is always true
     REQUIRE(subject.getInt() <= 4294967295UL);
 
     SECTION("different seed, different result") {
@@ -83,9 +82,9 @@ TEST_CASE("Zufall: get random int within range") {
     SECTION("probability") {
         bool first, second, third, invalid = false;
         // uint32_t value = 0;
-        for(int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 100; ++i) {
             // value = subject.getIntBetween(123456, 123458);
-            switch(subject.getIntBetween(123456, 123458)) {
+            switch (subject.getIntBetween(123456, 123458)) {
             case 123456:
                 first = true;
                 break;
@@ -135,7 +134,7 @@ TEST_CASE("Zufall: let an event occur or not, using one probability") {
 
     SECTION("probability") {
         bool occured = false;
-        for(int16_t i = 0; i < 1000; ++i) {
+        for (int16_t i = 0; i < 1000; ++i) {
             if (subject.doesOccur(1.0f)) {
                 occured = true;
             }
@@ -143,7 +142,7 @@ TEST_CASE("Zufall: let an event occur or not, using one probability") {
         REQUIRE(occured);
 
         occured = true;
-        for(int16_t i = 0; i < 1000; ++i) {
+        for (int16_t i = 0; i < 1000; ++i) {
             if (!subject.doesOccur(99.0f)) {
                 occured = false;
             }
@@ -163,7 +162,7 @@ TEST_CASE("Zufall: let one out of two events occur, using ratio of both") {
     REQUIRE_FALSE(subject.doesAoccur(0.0f, 1000.0f));
     REQUIRE_FALSE(subject.doesAoccur(0.0f, 0.0f));
 
-    SECTION("negative values") { // TODO bug#61
+    SECTION("negative values") {  // TODO bug#61
         // REQUIRE(subject.doesAoccur(100.0f, -100.0f));
         // REQUIRE_FALSE(subject.doesAoccur(-100.0f, 0.0f));
     }

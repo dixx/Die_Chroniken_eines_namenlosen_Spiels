@@ -3,18 +3,13 @@
 
 #include "leviathan.h"
 
-class GameStatePlay final : public leviathan::core::GameState, leviathan::input::IActionConsumer {
+class GameStatePlay final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 
 public:
-
-    enum actions {
-        OPEN_IN_GAME_OPTIONS = 2
-    };
+    enum actions { OPEN_IN_GAME_OPTIONS = 2 };
 
     explicit GameStatePlay(leviathan::LeviathanDevice& gameEngine);
-
     virtual ~GameStatePlay() final;
-
     GameStatePlay(const GameStatePlay&) = delete;
     GameStatePlay& operator=(const GameStatePlay&) = delete;
 

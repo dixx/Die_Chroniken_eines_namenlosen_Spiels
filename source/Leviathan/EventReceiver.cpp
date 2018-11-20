@@ -1,14 +1,8 @@
 #include "EventReceiver.h"
 
-namespace leviathan
-{
-    namespace core
-    {
-        bool EventReceiver::OnEvent(const irr::SEvent& event)
-        {
-            if (_subscriptions[event.EventType].empty()) {
-                return false;
-            }
+namespace leviathan {
+    namespace core {
+        bool EventReceiver::OnEvent(const irr::SEvent& event) {
             bool processed = false;
             for (auto consumer : _subscriptions[event.EventType]) {
                 if (consumer->onEvent(event)) {
@@ -18,8 +12,7 @@ namespace leviathan
             return processed;
         }
 
-        void EventReceiver::subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType)
-        {
+        void EventReceiver::subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
             _subscriptions[eventType].insert(&consumer);
         }
     }

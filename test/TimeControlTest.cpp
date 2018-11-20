@@ -1,5 +1,6 @@
-#include <catch.hpp>
-#include "leviathan.h"
+#include "../source/Leviathan/TimeControl.h"
+#include "../source/Leviathan/Timer.h"
+#include "catch.hpp"
 
 TEST_CASE("TimeControl: ticking") {
     leviathan::core::TimeControl subject;

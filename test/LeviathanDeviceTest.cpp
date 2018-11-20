@@ -1,12 +1,12 @@
-#include <catch.hpp>
-#include <fakeit.hpp>
+#include "../source/Leviathan/LeviathanDevice.h"
+#include "catch.hpp"
+#include "fakeit.hpp"
+#include "helpers/Testhelper.h"
+#include "helpers/TesthelperLeviathanDevice.h"
+#include "irrlicht.h"
 #include <cstdint>
 #include <cstdlib>
 #include <typeinfo>
-#include "irrlicht.h"
-#include "../source/Leviathan/LeviathanDevice.h"
-#include "helpers/Testhelper.h"
-#include "helpers/TesthelperLeviathanDevice.h"
 
 using namespace fakeit;
 
@@ -36,7 +36,7 @@ TEST_CASE("LeviathanDevice main loop") {
     When(Method(graphicEngineDouble, getTimer)).AlwaysReturn(&(timerDouble.get()));
     When(Method(graphicEngineDouble, isWindowActive)).AlwaysReturn(true);
     subject.injectMockedGraphicEngine(graphicEngineDouble.get());
-    Mock<leviathan::core::GameState> gameStateDouble;
+    Mock<leviathan::core::IGameState> gameStateDouble;
     Fake(Method(gameStateDouble, update), Method(gameStateDouble, draw));
     subject.GameStateManager().add(gameStateDouble.get(), 42);
     subject.GameStateManager().transitTo(42);
@@ -61,8 +61,8 @@ TEST_CASE("LeviathanDevice main loop") {
 
     SECTION("performance tests") {
         uint32_t virtualTime = 0;
-        When(Method(timerDouble, getTime)).AlwaysDo([&virtualTime]{ return virtualTime++; });
-        When(Method(graphicEngineDouble, run)).AlwaysDo([&virtualTime]{ return virtualTime < 1000; });
+        When(Method(timerDouble, getTime)).AlwaysDo([&virtualTime] { return virtualTime++; });
+        When(Method(graphicEngineDouble, run)).AlwaysDo([&virtualTime] { return virtualTime < 1000; });
 
         SECTION("without calculation stress") {
             subject.run();
@@ -75,10 +75,11 @@ TEST_CASE("LeviathanDevice main loop") {
         }
 
         SECTION("with peak load") {
-            When(Method(gameStateDouble, draw)).AlwaysDo(
-                [&virtualTime]{ if (virtualTime == 3) virtualTime += 800; }
-            );
-            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...){ virtualTime++; });
+            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime] {
+                if (virtualTime == 3)
+                    virtualTime += 800;
+            });
+            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();
             SECTION("it should draw with a fixed maximum frame rate") {
                 Verify(Method(gameStateDouble, draw)).Exactly(100_Times);
@@ -90,9 +91,9 @@ TEST_CASE("LeviathanDevice main loop") {
 
         SECTION("with sometimes zero elapsed time") {
             std::srand(42);
-            When(Method(timerDouble, getTime)).AlwaysDo(
-                [&virtualTime]{ return (std::rand()&1) ? virtualTime : virtualTime++; }
-            );
+            When(Method(timerDouble, getTime)).AlwaysDo([&virtualTime] {
+                return (std::rand() & 1) ? virtualTime : virtualTime++;
+            });
             subject.run();
             SECTION("it should draw with a fixed maximum frame rate") {
                 Verify(Method(gameStateDouble, draw)).Exactly(100_Times);
@@ -103,8 +104,8 @@ TEST_CASE("LeviathanDevice main loop") {
         }
 
         SECTION("with moderate calculation stress") {
-            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime]{ virtualTime += 8; });
-            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...){ virtualTime++; });
+            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime] { virtualTime += 8; });
+            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();
             SECTION("it should begin to skip frames") {
                 Verify(Method(gameStateDouble, draw)).AtLeast(85_Times);
@@ -115,8 +116,8 @@ TEST_CASE("LeviathanDevice main loop") {
         }
 
         SECTION("with much calculation stress") {
-            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime]{ virtualTime += 200; });
-            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...){ virtualTime++; });
+            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime] { virtualTime += 200; });
+            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();
             SECTION("it should still try to draw") {
                 Verify(Method(gameStateDouble, draw)).AtLeast(5_Times);

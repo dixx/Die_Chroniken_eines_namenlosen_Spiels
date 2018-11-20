@@ -1,12 +1,9 @@
+#include "Testhelper.h"
 #include <cstdlib>
 #include <iostream>
 #include <vector>
-#include "Testhelper.h"
 
-Testhelper::Testhelper()
-: graphicEngine_(nullptr),
-  fileSystem_(nullptr)
-{
+Testhelper::Testhelper() {
     irr::SIrrlichtCreationParameters params;
     params.DriverType = irr::video::EDT_NULL;
     params.LoggingLevel = irr::ELL_WARNING;
@@ -14,30 +11,23 @@ Testhelper::Testhelper()
     fileSystem_ = graphicEngine_->getFileSystem();
 }
 
-Testhelper::~Testhelper()
-{
+Testhelper::~Testhelper() {
     if (graphicEngine_)
-    {
         graphicEngine_->drop();
-    }
 }
 
-irr::IrrlichtDevice* Testhelper::getGraphicEngine()
-{
+irr::IrrlichtDevice* Testhelper::getGraphicEngine() {
     return graphicEngine_;
 }
 
-irr::io::IFileSystem* Testhelper::getFileSystem()
-{
+irr::io::IFileSystem* Testhelper::getFileSystem() {
     return fileSystem_;
 }
 
-irr::core::stringc Testhelper::readFile(irr::io::path fileName)
-{
+irr::core::stringc Testhelper::readFile(irr::io::path fileName) {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile(fileName);
     const intmax_t result = file->getSize();
-    if (result == -1L)
-    {
+    if (result == -1L) {
         std::cerr << "Error: Could not get file size of \"" << fileName.c_str() << "\"!" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -48,19 +38,16 @@ irr::core::stringc Testhelper::readFile(irr::io::path fileName)
     return buffer.data();
 }
 
-void Testhelper::writeFile(irr::io::path fileName, const irr::core::stringc& content)
-{
+void Testhelper::writeFile(irr::io::path fileName, const irr::core::stringc& content) {
     irr::io::IWriteFile* file = fileSystem_->createAndWriteFile(fileName, /* append = */ false);
     file->write(content.c_str(), content.size());
     file->drop();
 }
 
-uint32_t Testhelper::getFileSize(irr::io::path fileName)
-{
+uint32_t Testhelper::getFileSize(irr::io::path fileName) {
     irr::io::IReadFile* file = fileSystem_->createAndOpenFile(fileName);
     const intmax_t result = file->getSize();
-    if (result == -1L)
-    {
+    if (result == -1L) {
         std::cerr << "Error: Could not get file size of \"" << fileName.c_str() << "\"!" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -68,7 +55,6 @@ uint32_t Testhelper::getFileSize(irr::io::path fileName)
     return static_cast<uint32_t>(result);
 }
 
-bool Testhelper::existFile(irr::io::path fileName)
-{
+bool Testhelper::existFile(irr::io::path fileName) {
     return fileSystem_->existFile(fileName);
 }

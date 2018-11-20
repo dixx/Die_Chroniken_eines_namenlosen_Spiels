@@ -8,16 +8,15 @@
 
 #include <cstdint>
 
-namespace leviathan
-{
-    namespace input
-    {
+namespace leviathan {
+    namespace input {
+
         /*! \interface IActionConsumer
          *  \brief Interface für Konsumenten von Aktionen.
          */
-        struct IActionConsumer
-        {
-            virtual ~IActionConsumer() {};
+        struct IActionConsumer {
+
+            virtual ~IActionConsumer() {}
 
             /*! \brief Reagiert auf Aktionen.
              *  \param id: ID der Aktion

@@ -1,18 +1,16 @@
 /*! \file Logger.h
  *  \brief Methoden für das Loggen von Text in eine Datei.
  *  \note Bestandteil der Leviathan Engine
-*/
+ */
 
-#ifndef _LEVIATHAN_LOGGER_HEADER
-#define _LEVIATHAN_LOGGER_HEADER
+#ifndef LEVIATHAN_CORE_LOGGER_H
+#define LEVIATHAN_CORE_LOGGER_H
 
 #include "irrlicht.h"
 #include <cstdint>
 
-namespace leviathan
-{
-    namespace core
-    {
+namespace leviathan {
+    namespace core {
 
         /*! \class Logger Logger.h "Logger.h"
          *  \brief Enthält grundlegende Logging-Funktionen.
@@ -20,21 +18,18 @@ namespace leviathan
          *           werden.
          *           Je kleiner das LogLevel, desto allgemeiner die Informationen, je größer, desto detaillierter.
          */
-        class Logger
-        {
+        class Logger {
 
         public:
-
             /*! \brief Detailtiefe der Meldungen in der Logdatei
              *  \details Es können auch alle Zwischenwerte mit benutzerdefinierten Detailtiefen ergänzt und im Code
              *           verwendet werden, dies hier sind lediglich Richtwerte.
              */
-            enum class Level
-            {
-                INFO   = 1,   //!< Informative Sachen für die Logdatei, Warnungen und Fehlermeldungen
+            enum class Level {
+                INFO = 1,  //!< Informative Sachen für die Logdatei, Warnungen und Fehlermeldungen
                 DETAIL = 10,  //!< Details zu Warnungen und Fehlermeldungen
-                DEBUG  = 100, //!< Besonders detaillierte Informationen
-                ALL    = 1000 //!< Alle verfügbaren Informationen
+                DEBUG = 100,  //!< Besonders detaillierte Informationen
+                ALL = 1000  //!< Alle verfügbaren Informationen
             };
 
             /*! \brief Eine Zeile Text.
@@ -55,12 +50,11 @@ namespace leviathan
              *         sofern vorhanden.
              */
             Logger(
-                    irr::io::IFileSystem* fileSystem,
-                    irr::ITimer* clock,
-                    const irr::io::path& fileName,
-                    const Level globalLogLevel,
-                    const bool append = false
-            );
+                irr::io::IFileSystem* fileSystem,
+                irr::ITimer* clock,
+                const irr::io::path& fileName,
+                const Level globalLogLevel,
+                const bool append = false);
 
             /*! \brief Destruktor.
              */
@@ -87,18 +81,17 @@ namespace leviathan
             void flush();
 
         private:
-
-            irr::io::path fileName_; // Logdateiname
-            irr::io::IFileSystem* fileSystem_; // Irrlicht-Dateisystem
-            irr::ITimer* clock_; // Irrlicht-Zeitsystem
-            irr::io::IWriteFile* logFile_; // Logdatei
-            Level globalLogLevel_; // Globales LogLevel
+            irr::io::path fileName_;  // Logdateiname
+            irr::io::IFileSystem* fileSystem_;  // Irrlicht-Dateisystem
+            irr::ITimer* clock_;  // Irrlicht-Zeitsystem
+            irr::io::IWriteFile* logFile_ = nullptr;  // Logdatei
+            Level globalLogLevel_;  // Globales LogLevel
 
             inline void openLogFile(const bool append = true);
             inline void closeLogFile();
-            inline void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
+            inline static void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
             inline void addTimeStamp(irr::core::stringc& txt);
-            inline void addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number);
+            inline static void addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number);
         };
     }
 }

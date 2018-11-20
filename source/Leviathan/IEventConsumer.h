@@ -8,16 +8,15 @@
 
 #include "irrlicht.h"
 
-namespace leviathan
-{
-    namespace input
-    {
+namespace leviathan {
+    namespace input {
+
         /*! \interface IEventConsumer
-        *  \brief Interface für Konsumenten von `irr::SEvent`s.
+         *  \brief Interface für Konsumenten von `irr::SEvent`s.
          */
-        struct IEventConsumer
-        {
-            virtual ~IEventConsumer() {};
+        struct IEventConsumer {
+
+            virtual ~IEventConsumer() {}
 
             /*! \brief Kann von einem Producer mit Events bedient werden, sobald sie auftreten.
              *  \param event: beliebiges Event, z.B. Keyboard-Tastendruck

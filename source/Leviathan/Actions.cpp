@@ -1,12 +1,10 @@
 #include "Actions.h"
 #include <iostream>
 
-namespace leviathan
-{
-    namespace input
-    {
+namespace leviathan {
+    namespace input {
         Actions::Actions(IEventProducer& producer) {
-            _actions[0]; // init default
+            _actions[0];  // init default
             producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
         }
@@ -24,30 +22,30 @@ namespace leviathan
             bool isActive = false;
             try {
                 if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
-                    switch(event.MouseInput.Event) {
-                        case irr::EMIE_LMOUSE_PRESSED_DOWN:
-                            id = _converter[0].at(irr::EMBSM_LEFT);
-                            isActive = true;
-                            break;
-                        case irr::EMIE_LMOUSE_LEFT_UP:
-                            id = _converter[0].at(irr::EMBSM_LEFT);
-                            break;
-                        case irr::EMIE_RMOUSE_PRESSED_DOWN:
-                            id = _converter[0].at(irr::EMBSM_RIGHT);
-                            isActive = true;
-                            break;
-                        case irr::EMIE_RMOUSE_LEFT_UP:
-                            id = _converter[0].at(irr::EMBSM_RIGHT);
-                            break;
-                        case irr::EMIE_MMOUSE_PRESSED_DOWN:
-                            id = _converter[0].at(irr::EMBSM_MIDDLE);
-                            isActive = true;
-                            break;
-                        case irr::EMIE_MMOUSE_LEFT_UP:
-                            id = _converter[0].at(irr::EMBSM_MIDDLE);
-                            break;
-                        default:
-                            return false;
+                    switch (event.MouseInput.Event) {
+                    case irr::EMIE_LMOUSE_PRESSED_DOWN:
+                        id = _converter[0].at(irr::EMBSM_LEFT);
+                        isActive = true;
+                        break;
+                    case irr::EMIE_LMOUSE_LEFT_UP:
+                        id = _converter[0].at(irr::EMBSM_LEFT);
+                        break;
+                    case irr::EMIE_RMOUSE_PRESSED_DOWN:
+                        id = _converter[0].at(irr::EMBSM_RIGHT);
+                        isActive = true;
+                        break;
+                    case irr::EMIE_RMOUSE_LEFT_UP:
+                        id = _converter[0].at(irr::EMBSM_RIGHT);
+                        break;
+                    case irr::EMIE_MMOUSE_PRESSED_DOWN:
+                        id = _converter[0].at(irr::EMBSM_MIDDLE);
+                        isActive = true;
+                        break;
+                    case irr::EMIE_MMOUSE_LEFT_UP:
+                        id = _converter[0].at(irr::EMBSM_MIDDLE);
+                        break;
+                    default:
+                        return false;
                     }
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
                     id = _converter[1].at(event.KeyInput.Key);
@@ -55,7 +53,7 @@ namespace leviathan
                 } else {
                     return false;
                 }
-            } catch(const std::out_of_range& e) {
+            } catch (const std::out_of_range& e) {
                 return false;
             }
             if (_subscriptions[id].empty()) {
@@ -93,10 +91,7 @@ namespace leviathan
           type(node && node["type"] ? node["type"].as<std::string>() : "unknown"),
           id(node && node["id"] ? node["id"].as<uint32_t>() : 0),
           isActive(false),
-          wasActive(false)
-        {
-            // nop
-        }
+          wasActive(false) {}
 
         Actions::Action::Action(const YAML::Node& node)
         : name(node && node["name"] ? node["name"].as<std::string>() : "nameless action"),
@@ -104,10 +99,7 @@ namespace leviathan
           id(node && node["id"] ? node["id"].as<uint32_t>() : 0),
           internal(node && node["internal"]),
           primary(node["input_mappings"]["primary"]),
-          secondary(node["input_mappings"]["secondary"])
-        {
-            // nop
-        }
+          secondary(node["input_mappings"]["secondary"]) {}
 
         void Actions::addActionToConverter(const Action& action) {
             if (action.primary.type == "mouse") {

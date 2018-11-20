@@ -1,30 +1,26 @@
 /*! \file Configuration.h
  *  \brief Lesen und Schreiben der Konfig-Datei sowie Verwaltung der enthaltenen Daten.
  *  \note Bestandteil der Leviathan Engine
-*/
+ */
 
-#ifndef _LEVIATHAN_CONFIGURATION_HEADER
-#define _LEVIATHAN_CONFIGURATION_HEADER
+#ifndef LEVIATHAN_CORE_CONFIGURATION_H
+#define LEVIATHAN_CORE_CONFIGURATION_H
 
+#include "Logger.h"
+#include "MapWithDefault.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <string>
-#include "Logger.h"
-#include "MapWithDefault.h"
 
-namespace leviathan
-{
-    namespace core
-    {
+namespace leviathan {
+    namespace core {
 
         /*! \class Configuration Configuration.h "Configuration.h"
          *  \brief Enthält Funktionen zum Lesen und Schreiben von Konfig-Dateien sowie zum Verändern von Werten.
          */
-        class Configuration
-        {
+        class Configuration {
 
         public:
-
             /*! \brief Konstruktor.
              *  \note ein Default-Objekt wird erstellt
              */
@@ -78,33 +74,30 @@ namespace leviathan
             int getInt(const irr::core::stringc& section, const irr::core::stringc& key);
 
         private:
-
-            irr::core::list<irr::core::stringc> content_;
-            irr::SIrrlichtCreationParameters params_; // Parameter zum Erstellen eines Irrlicht-Device
-            float farValue_; // Sichtweite der Kamera
-            Logger::Level loggingLevel_;
-            uint32_t maxFPS_;
-            MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap {
+            irr::core::list<irr::core::stringc> content_ =
+                irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
+            irr::SIrrlichtCreationParameters params_ =
+                irr::SIrrlichtCreationParameters();  // Parameter zum Erstellen eines Irrlicht-Device
+            float farValue_ = 300.0f;  // Sichtweite der Kamera
+            Logger::Level loggingLevel_ = Logger::Level::INFO;
+            uint32_t maxFPS_ = 125;
+            MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_{
                 {"SOFTWARE", irr::video::EDT_SOFTWARE},
                 {"NULL", irr::video::EDT_NULL},
                 {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
                 {"OPENGL", irr::video::EDT_OPENGL},
                 {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
-                {"DIRECT3D9", irr::video::EDT_DIRECT3D9}
-            };
-            MapWithDefault<std::string, Logger::Level> logLevelMap {
-                {"INFO", Logger::Level::INFO},
-                {"ALL", Logger::Level::ALL},
-                {"DEBUG", Logger::Level::DEBUG},
-                {"DETAIL", Logger::Level::DETAIL}
-            };
+                {"DIRECT3D9", irr::video::EDT_DIRECT3D9}};
+            MapWithDefault<std::string, Logger::Level> logLevelMap{{"INFO", Logger::Level::INFO},
+                                                                   {"ALL", Logger::Level::ALL},
+                                                                   {"DEBUG", Logger::Level::DEBUG},
+                                                                   {"DETAIL", Logger::Level::DETAIL}};
 
             void generateContent(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem);
             const irr::core::stringc getItem(
                 const irr::core::stringc& section,
                 const irr::core::stringc& key,
-                const irr::core::stringc& defaultValue = ""
-            );
+                const irr::core::stringc& defaultValue = "");
         };
     }
 }

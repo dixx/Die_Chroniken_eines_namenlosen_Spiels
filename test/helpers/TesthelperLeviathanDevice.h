@@ -1,24 +1,22 @@
-#ifndef _TESTHELPER_LEVIATHAN_DEVICE_HEADER
-#define _TESTHELPER_LEVIATHAN_DEVICE_HEADER
+#ifndef HELPERS_TESTHELPER_LEVIATHAN_DEVICE_H
+#define HELPERS_TESTHELPER_LEVIATHAN_DEVICE_H
 
 #include "irrlicht.h"
 #include "leviathan.h"
 
-namespace TesthelperLeviathanDevice
-{
-    class LeviathanDeviceWithIrrlichtMock : public leviathan::LeviathanDevice
-    {
+namespace TesthelperLeviathanDevice {
+    class LeviathanDeviceWithIrrlichtMock : public leviathan::LeviathanDevice {
     public:
-        LeviathanDeviceWithIrrlichtMock();
+        LeviathanDeviceWithIrrlichtMock() = default;
         ~LeviathanDeviceWithIrrlichtMock();
+        LeviathanDeviceWithIrrlichtMock(const LeviathanDeviceWithIrrlichtMock&) = delete;
+        void operator=(const LeviathanDeviceWithIrrlichtMock&) = delete;
         void injectMockedGraphicEngine(irr::IrrlichtDevice& mock);
         void restoreOriginalGraphicEngine();
         irr::IrrlichtDevice* getGraphicEngine();
 
     private:
-        irr::IrrlichtDevice* originalGraphicEngine_;
-        LeviathanDeviceWithIrrlichtMock(const LeviathanDeviceWithIrrlichtMock&);
-        void operator=(const LeviathanDeviceWithIrrlichtMock&);
+        irr::IrrlichtDevice* originalGraphicEngine_ = nullptr;
     };
 }
 

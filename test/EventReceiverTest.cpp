@@ -1,7 +1,8 @@
-#include <catch.hpp>
-#include <fakeit.hpp>
 #include "../source/Leviathan/EventReceiver.h"
 #include "../source/Leviathan/IEventConsumer.h"
+#include "catch.hpp"
+#include "fakeit.hpp"
+#include "irrlicht.h"
 
 using namespace fakeit;
 

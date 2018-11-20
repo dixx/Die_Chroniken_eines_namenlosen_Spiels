@@ -3,29 +3,26 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef _LEVIATHAN_GAMESTATEMANAGER_HEADER
-#define _LEVIATHAN_GAMESTATEMANAGER_HEADER
+#ifndef LEVIATHAN_CORE_GAMESTATEMANAGER_H
+#define LEVIATHAN_CORE_GAMESTATEMANAGER_H
 
+#include "IGameState.h"
 #include <cstdint>
 #include <list>
 #include <map>
-#include "GameState.h"
 
-namespace leviathan
-{
-    namespace core
-    {
+namespace leviathan {
+    namespace core {
 
         /*! \class GameStateManager GameStateManager.h "GameStateManager.h"
          *  \brief Verwaltung der verschiedenen Zustände des Spiels
          */
-        class GameStateManager
-        {
-        public:
+        class GameStateManager {
 
+        public:
             /*! \brief Konstruktor.
              */
-            GameStateManager();
+            GameStateManager() = default;
 
             /*! \brief Destruktor.
              *  \note Verwaltete Spielzustände werden hier nicht gelöscht.
@@ -41,7 +38,7 @@ namespace leviathan
              *  \param gameState: zu verwaltender Spielzustand
              *  \param id: Identifikator für späteren Zugriff auf den Zustand
              */
-            void add(GameState& gameState, uint32_t id);
+            void add(IGameState& gameState, uint32_t id);
 
             /*! \brief Wechselt zum Spielzustand welcher unter dieser ID abgelegt wurde.
              *  \note Zustände werden übereinander auf einen Stack gelegt.
@@ -65,7 +62,7 @@ namespace leviathan
             /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
              *  \attention Nur für Testzwecke gedacht!
              */
-            size_t getGameStateCount();
+            size_t getGameStateCount() const;
 
             /*! \brief Gibt den Identifikator des aktiven Spielzustands zurück.
              *  \attention Nur für Testzwecke public gemacht!
@@ -74,9 +71,8 @@ namespace leviathan
             uint32_t getActiveStateID();
 
         private:
-
-            std::map<uint32_t, GameState*> states_;
-            std::list<uint32_t> runningStateIDs_;
+            std::map<uint32_t, IGameState*> states_ = std::map<uint32_t, IGameState*>();
+            std::list<uint32_t> runningStateIDs_ = std::list<uint32_t>();
         };
     }
 }

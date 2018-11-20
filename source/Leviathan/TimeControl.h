@@ -3,28 +3,25 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef _LEVIATHAN_TIMECONTROL_HEADER
-#define _LEVIATHAN_TIMECONTROL_HEADER
+#ifndef LEVIATHAN_CORE_TIMECONTROL_H
+#define LEVIATHAN_CORE_TIMECONTROL_H
 
+#include "Timer.h"
 #include <cstdint>
 #include <list>
-#include "Timer.h"
 
-namespace leviathan
-{
-    namespace core
-    {
+namespace leviathan {
+    namespace core {
 
         /*! \class TimeControl TimeControl.h "TimeControl.h"
          *  \brief zentrale Steuerung für übergebene Timer
          */
-        class TimeControl
-        {
-        public:
+        class TimeControl {
 
+        public:
             /*! \brief Konstruktor.
              */
-            TimeControl();
+            TimeControl() = default;
 
             /*! \brief Destruktor.
              *  \note Vorhandene Timer werden nicht gelöscht.
@@ -59,8 +56,7 @@ namespace leviathan
             void tick(const float seconds);
 
         private:
-
-            std::list<Timer*> timers_;
+            std::list<Timer*> timers_ = std::list<Timer*>();
         };
     }
 }

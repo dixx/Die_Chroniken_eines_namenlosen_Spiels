@@ -7,7 +7,7 @@ add_executable(unit_tests
   core/LoggerTest.cpp
   core/TimeControlTest.cpp
   core/TimerTest.cpp
-  core/ZufallTest.cpp
+  core/RandomizerTest.cpp
   helpers/Testhelper.cpp
   helpers/TesthelperLeviathanDevice.cpp
   input/ActionsTest.cpp

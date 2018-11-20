@@ -4,6 +4,7 @@ add_library(leviathan SHARED
   core/Configuration.cpp
   core/GameStateManager.cpp
   core/Logger.cpp
+  core/Randomizer.cpp
   core/TimeControl.cpp
   core/Timer.cpp
   input/Actions.cpp

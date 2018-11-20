@@ -6,7 +6,6 @@
 #ifndef LEVIATHAN_CORE_EVENTRECEIVER_H
 #define LEVIATHAN_CORE_EVENTRECEIVER_H
 
-#include "GameStateManager.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
 #include "irrlicht.h"
@@ -14,7 +13,7 @@
 #include <set>
 
 namespace leviathan {
-    namespace core {
+    namespace input {
 
         /*! \class EventReceiver EventReceiver.h "EventReceiver.h"
          *  \brief Diese Klasse enthält Funktionen zum Behandeln von Events.

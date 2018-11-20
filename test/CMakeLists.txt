@@ -2,17 +2,17 @@ include_directories(../source/chroniken_alt "${LEVIATHAN_INCLUDE_DIRS}" "${IRRLI
 
 add_executable(unit_tests
   ../source/chroniken_alt/Zufall.cpp # TODO will go away when we implement it in the game engine
+  core/ConfigurationTest.cpp
+  core/GameStateManagerTest.cpp
+  core/LoggerTest.cpp
+  core/TimeControlTest.cpp
+  core/TimerTest.cpp
+  core/ZufallTest.cpp
   helpers/Testhelper.cpp
   helpers/TesthelperLeviathanDevice.cpp
-  ActionsTest.cpp
-  ConfigurationTest.cpp
-  EventReceiverTest.cpp
-  GameStateManagerTest.cpp
+  input/ActionsTest.cpp
+  input/EventReceiverTest.cpp
   LeviathanDeviceTest.cpp
-  LoggerTest.cpp
-  TimeControlTest.cpp
-  TimerTest.cpp
-  ZufallTest.cpp
   unit_tests.cpp
 )
 target_link_libraries(unit_tests "${IRRLICHT_LIBRARY}" leviathan catch fakeit)

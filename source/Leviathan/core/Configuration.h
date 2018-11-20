@@ -6,8 +6,8 @@
 #ifndef LEVIATHAN_CORE_CONFIGURATION_H
 #define LEVIATHAN_CORE_CONFIGURATION_H
 
+#include "../support/MapWithDefault.h"
 #include "Logger.h"
-#include "MapWithDefault.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <string>

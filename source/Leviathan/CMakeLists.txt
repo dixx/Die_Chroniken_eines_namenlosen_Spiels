@@ -1,14 +1,14 @@
 include_directories("${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}")
 
 add_library(leviathan SHARED
-  Actions.cpp
-  Configuration.cpp
-  EventReceiver.cpp
-  GameStateManager.cpp
+  core/Configuration.cpp
+  core/GameStateManager.cpp
+  core/Logger.cpp
+  core/TimeControl.cpp
+  core/Timer.cpp
+  input/Actions.cpp
+  input/EventReceiver.cpp
   LeviathanDevice.cpp
-  Logger.cpp
-  TimeControl.cpp
-  Timer.cpp
 )
 
 target_link_libraries(leviathan "${IRRLICHT_LIBRARY}" "${YAML_LIBRARY}")

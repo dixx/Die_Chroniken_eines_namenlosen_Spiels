@@ -1,4 +1,4 @@
-#include "../source/chroniken_alt/Zufall.h"  // TODO change to engine randomizer later
+#include "../../source/chroniken_alt/Zufall.h"  // TODO change to engine randomizer later
 #include "catch.hpp"
 #include <chrono>
 #include <cstdint>

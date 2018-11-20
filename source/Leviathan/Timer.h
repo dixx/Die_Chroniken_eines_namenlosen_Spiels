@@ -3,8 +3,8 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef _LEVIATHAN_TIMER_HEADER
-#define _LEVIATHAN_TIMER_HEADER
+#ifndef LEVIATHAN_CORE_TIMER_H
+#define LEVIATHAN_CORE_TIMER_H
 
 namespace leviathan {
     namespace core {

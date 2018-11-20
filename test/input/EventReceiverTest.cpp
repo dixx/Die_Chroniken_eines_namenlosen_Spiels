@@ -1,5 +1,5 @@
-#include "../source/Leviathan/EventReceiver.h"
-#include "../source/Leviathan/IEventConsumer.h"
+#include "../../source/Leviathan/input/EventReceiver.h"
+#include "../../source/Leviathan/input/IEventConsumer.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
@@ -14,7 +14,7 @@ inline bool operator==(const irr::SEvent& lhs, const irr::SEvent& rhs) {
 TEST_CASE("Event Receiver") {
     Mock<leviathan::input::IEventConsumer> consumerMock;
     Fake(Method(consumerMock, onEvent));
-    leviathan::core::EventReceiver subject;
+    leviathan::input::EventReceiver subject;
     irr::SEvent leftMouseButtonEvent, spaceBarEvent;
     leftMouseButtonEvent.EventType = irr::EET_MOUSE_INPUT_EVENT;
     leftMouseButtonEvent.MouseInput.ButtonStates = irr::EMBSM_LEFT;

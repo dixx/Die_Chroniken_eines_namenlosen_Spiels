@@ -7,15 +7,12 @@
 #ifndef LEVIATHAN_DEVICE_H
 #define LEVIATHAN_DEVICE_H
 
-#include "Actions.h"
-#include "Configuration.h"
-#include "EventReceiver.h"
-#include "GameStateManager.h"
-#include "IActionConsumer.h"
-#include "IEventConsumer.h"
-#include "IEventProducer.h"
-#include "Logger.h"
-#include "TimeControl.h"
+#include "core/Configuration.h"
+#include "core/GameStateManager.h"
+#include "core/Logger.h"
+#include "core/TimeControl.h"
+#include "input/Actions.h"
+#include "input/EventReceiver.h"
 #include "irrlicht.h"
 
 #ifndef NDEBUG
@@ -94,7 +91,7 @@ namespace leviathan {
         core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
-        core::EventReceiver eventReceiver_;
+        input::EventReceiver eventReceiver_;
         input::Actions actions_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests

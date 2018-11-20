@@ -1,6 +1,6 @@
-#include "../source/Leviathan/Logger.h"
+#include "../../source/Leviathan/core/Logger.h"
+#include "../helpers/Testhelper.h"
 #include "catch.hpp"
-#include "helpers/Testhelper.h"
 #include "irrlicht.h"
 #include <cstdint>
 

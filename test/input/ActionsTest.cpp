@@ -1,9 +1,9 @@
-#include "../source/Leviathan/Actions.h"
-#include "../source/Leviathan/IActionConsumer.h"
-#include "../source/Leviathan/IEventProducer.h"
+#include "../../source/Leviathan/input/Actions.h"
+#include "../../source/Leviathan/input/IActionConsumer.h"
+#include "../../source/Leviathan/input/IEventProducer.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "helpers/Testhelper.h"
+#include "../helpers/Testhelper.h"
 #include "irrlicht.h"
 
 using namespace fakeit;

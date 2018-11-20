@@ -1,7 +1,7 @@
 #include "EventReceiver.h"
 
 namespace leviathan {
-    namespace core {
+    namespace input {
         bool EventReceiver::OnEvent(const irr::SEvent& event) {
             bool processed = false;
             for (auto consumer : _subscriptions[event.EventType]) {

@@ -1,6 +1,6 @@
-#include "../source/Leviathan/Configuration.h"
+#include "../../source/Leviathan/core/Configuration.h"
+#include "../helpers/Testhelper.h"
 #include "catch.hpp"
-#include "helpers/Testhelper.h"
 #include "irrlicht.h"
 
 // TODO

@@ -1,5 +1,5 @@
-#include "../source/Leviathan/GameStateManager.h"
-#include "../source/Leviathan/IGameState.h"
+#include "../../source/Leviathan/core/GameStateManager.h"
+#include "../../source/Leviathan/core/IGameState.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 

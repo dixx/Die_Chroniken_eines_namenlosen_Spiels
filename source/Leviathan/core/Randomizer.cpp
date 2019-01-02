@@ -1,5 +1,4 @@
 #include "Randomizer.h"
-#include "irrlicht.h"
 #include <math.h>
 
 namespace leviathan {
@@ -22,9 +21,13 @@ namespace leviathan {
         }
 
         float Randomizer::getFloat(const float min, const float max) {
-            if (irr::core::equals(min, max)) // TODO: replace with std methods
+            if (min < max) {
+                return min + getFloat() * (max - min);
+            } else if (min > max) {
+                return max + getFloat() * (min - max);
+            } else {
                 return min;
-            return (min > max) ? max + getFloat() * (min - max) : min + getFloat() * (max - min);
+            }
         }
 
         uint32_t Randomizer::getInt() {
@@ -37,13 +40,12 @@ namespace leviathan {
         }
 
         uint32_t Randomizer::getInt(const uint32_t min, const uint32_t max) {
-             // TODO: replace irr::core::round() with std methods
-            if (min == max) {
-                return min;
+            if (min < max) {
+                return min + static_cast<uint32_t>(std::round(getFloat() * static_cast<float>(max - min)));
             } else if (min > max) {
-                return max + static_cast<uint32_t>(irr::core::round32(getFloat() * static_cast<float>(min - max)));
+                return max + static_cast<uint32_t>(std::round(getFloat() * static_cast<float>(min - max)));
             } else {
-                return min + static_cast<uint32_t>(irr::core::round32(getFloat() * static_cast<float>(max - min)));
+                return min;
             }
         }
     }

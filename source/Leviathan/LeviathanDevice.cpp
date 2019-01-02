@@ -1,4 +1,5 @@
 #include "LeviathanDevice.h"
+#include <chrono>
 #include <cstdint>
 
 namespace leviathan {
@@ -12,8 +13,11 @@ namespace leviathan {
           graphicEngine_->getTimer(),
           LOG_FILE_NAME,
           configuration_.getLoggingLevel())),
+      randomizer_(),
       eventReceiver_(),
-      actions_(eventReceiver_) {}
+      actions_(eventReceiver_) {
+          randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
+      }
 
     LeviathanDevice::~LeviathanDevice() {
         if (logger_)
@@ -92,7 +96,15 @@ namespace leviathan {
         return gameStateManager_;
     }
 
+    core::Randomizer& LeviathanDevice::Randomizer() {
+        return randomizer_;
+    }
+
     input::Actions& LeviathanDevice::Actions() {
         return actions_;
+    }
+
+    input::EventReceiver& LeviathanDevice::EventReceiver() {
+        return eventReceiver_;
     }
 }

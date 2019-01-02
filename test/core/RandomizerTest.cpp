@@ -26,18 +26,44 @@ TEST_CASE("Randomizer: seeding") {
     }
 }
 
-TEST_CASE("Randomizer: get random Int") {
-    leviathan::core::Randomizer subject;
-    subject.start(SEED);
-    // REQUIRE(subject.getInt() >= 0); // comparison of unsigned expression >= 0 is always true
-    REQUIRE(subject.getInt() <= 4294967295UL);
-}
-
 TEST_CASE("Randomizer: get random Float") {
     leviathan::core::Randomizer subject;
     subject.start(SEED);
     REQUIRE(subject.getFloat() >= 0.0f);
     REQUIRE(subject.getFloat() < 1.0f);
+}
+
+TEST_CASE("Randomizer: get random float within range") {
+    leviathan::core::Randomizer subject;
+    subject.start(SEED);
+    REQUIRE(subject.getFloat(3.0f, 5.0f) >= 3.0f);
+    REQUIRE(subject.getFloat(3.0f, 5.0f) <= 5.0f);
+    REQUIRE(subject.getFloat(3.0f, 3.0f) == Approx(3.0f));
+    REQUIRE(subject.getFloat(0.0f, 0.0f) == Approx(0.0f));
+
+    SECTION("switched values are auto-corrected") {
+        REQUIRE_NOTHROW(subject.getFloat(5.0f, 3.0f));
+        REQUIRE(subject.getFloat(5.0f, 3.0f) >= 3.0f);
+        REQUIRE(subject.getFloat(5.0f, 3.0f) <= 5.0f);
+    }
+
+    SECTION("negative values are valid") {
+        REQUIRE_NOTHROW(subject.getFloat(-5.0f, -3.0f));
+        REQUIRE(subject.getFloat(-5.0f, -3.0f) >= -5.0f);
+        REQUIRE(subject.getFloat(-5.0f, -3.0f) <= -3.0f);
+    }
+
+    SECTION("limits") {
+        REQUIRE(subject.getFloat(0.0f, 0.0f) == Approx(0.0f));
+        REQUIRE(subject.getFloat(1.0f, 1.0f) == Approx(1.0f));
+    }
+}
+
+TEST_CASE("Randomizer: get random Int") {
+    leviathan::core::Randomizer subject;
+    subject.start(SEED);
+    // REQUIRE(subject.getInt() >= 0); // comparison of unsigned expression >= 0 is always true
+    REQUIRE(subject.getInt() <= UINT32_MAX);
 }
 
 TEST_CASE("Randomizer: get random int within range") {
@@ -52,6 +78,11 @@ TEST_CASE("Randomizer: get random int within range") {
         REQUIRE_NOTHROW(subject.getInt(5, 3));
         REQUIRE(subject.getInt(5, 3) >= 3);
         REQUIRE(subject.getInt(5, 3) <= 5);
+    }
+
+    SECTION("limits") {
+        REQUIRE(subject.getInt(0, 0) == 0);
+        REQUIRE(subject.getInt(UINT32_MAX, UINT32_MAX) == UINT32_MAX);
     }
 
     SECTION("probability") {
@@ -76,26 +107,5 @@ TEST_CASE("Randomizer: get random int within range") {
         REQUIRE(second);
         REQUIRE(third);
         REQUIRE_FALSE(invalid);
-    }
-}
-
-TEST_CASE("Randomizer: get random float within range") {
-    leviathan::core::Randomizer subject;
-    subject.start(SEED);
-    REQUIRE(subject.getFloat(3.0f, 5.0f) >= 3.0f);
-    REQUIRE(subject.getFloat(3.0f, 5.0f) <= 5.0f);
-    REQUIRE(subject.getFloat(3.0f, 3.0f) == Approx(3.0f));
-    REQUIRE(subject.getFloat(0.0f, 0.0f) == Approx(0.0f));
-
-    SECTION("switched values are auto-corrected") {
-        REQUIRE_NOTHROW(subject.getFloat(5.0f, 3.0f));
-        REQUIRE(subject.getFloat(5.0f, 3.0f) >= 3.0f);
-        REQUIRE(subject.getFloat(5.0f, 3.0f) <= 5.0f);
-    }
-
-    SECTION("negative values are valid") {
-        REQUIRE_NOTHROW(subject.getFloat(-5.0f, -3.0f));
-        REQUIRE(subject.getFloat(-5.0f, -3.0f) >= -5.0f);
-        REQUIRE(subject.getFloat(-5.0f, -3.0f) <= -3.0f);
     }
 }

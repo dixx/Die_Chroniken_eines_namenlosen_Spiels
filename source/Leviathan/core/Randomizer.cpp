@@ -1,5 +1,6 @@
 #include "Randomizer.h"
 #include "irrlicht.h"
+#include <math.h>
 
 namespace leviathan {
     namespace core {
@@ -17,11 +18,11 @@ namespace leviathan {
         }
 
         float Randomizer::getFloat() {
-            return (static_cast<float>(getInt()) / 4294967295.0f);
+            return (static_cast<float>(getInt()) / static_cast<float>(UINT32_MAX));
         }
 
         float Randomizer::getFloat(const float min, const float max) {
-            if (irr::core::equals(min, max))
+            if (irr::core::equals(min, max)) // TODO: replace with std methods
                 return min;
             return (min > max) ? max + getFloat() * (min - max) : min + getFloat() * (max - min);
         }
@@ -36,13 +37,14 @@ namespace leviathan {
         }
 
         uint32_t Randomizer::getInt(const uint32_t min, const uint32_t max) {
-            if (min == max)
+             // TODO: replace irr::core::round() with std methods
+            if (min == max) {
                 return min;
-            // Ersetzen des Modulo durch schnellere Rechenoperationen
-            // max + rand() % ( min - max + 1 ) :
-            // min + rand() % ( max - min + 1 );
-            return (min > max) ? max + static_cast<uint32_t>(getFloat() * static_cast<float>(min - max + 1)) // FIXME!
-                               : min + static_cast<uint32_t>(getFloat() * static_cast<float>(max - min + 1));
+            } else if (min > max) {
+                return max + static_cast<uint32_t>(irr::core::round32(getFloat() * static_cast<float>(min - max)));
+            } else {
+                return min + static_cast<uint32_t>(irr::core::round32(getFloat() * static_cast<float>(max - min)));
+            }
         }
     }
 }

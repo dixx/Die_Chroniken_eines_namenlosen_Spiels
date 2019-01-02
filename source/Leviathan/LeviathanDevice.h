@@ -11,6 +11,7 @@
 #include "core/GameStateManager.h"
 #include "core/Logger.h"
 #include "core/TimeControl.h"
+#include "core/Randomizer.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
 #include "irrlicht.h"
@@ -81,9 +82,17 @@ namespace leviathan {
          */
         core::GameStateManager& GameStateManager();
 
+        /*! \brief Zugriff auf den Zufallszahlengenerator.
+         */
+        core::Randomizer& Randomizer();
+
         /*! \brief Zugriff auf Input-Mappings.
          */
         input::Actions& Actions();
+
+        /*! \brief Zugriff auf Input-Events.
+         */
+        input::EventReceiver& EventReceiver();
 
     private:
         core::Configuration configuration_;
@@ -91,6 +100,7 @@ namespace leviathan {
         core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
         core::Logger* logger_;
+        core::Randomizer randomizer_;
         input::EventReceiver eventReceiver_;
         input::Actions actions_;
 

@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "irrlicht.h"
 
-TEST_CASE("Timer: architecture") {
+TEST_CASE("Timer: architecture", "[unit]") {
     leviathan::core::Timer timer(2.0f);
 
     SECTION("tick() starts chains") {
@@ -11,7 +11,7 @@ TEST_CASE("Timer: architecture") {
     }
 }
 
-TEST_CASE("Timer: max value") {
+TEST_CASE("Timer: max value", "[unit]") {
 
     SECTION("zero is not forbidden") {
         leviathan::core::Timer timer(0.0f);
@@ -39,7 +39,7 @@ TEST_CASE("Timer: max value") {
     }
 }
 
-TEST_CASE("Timer: ticking") {
+TEST_CASE("Timer: ticking", "[unit]") {
     leviathan::core::Timer timer(2.0f);
 
     SECTION("it does not tick") {
@@ -117,7 +117,7 @@ TEST_CASE("Timer: ticking") {
     }
 }
 
-TEST_CASE("Timer: states") {
+TEST_CASE("Timer: states", "[unit]") {
     leviathan::core::Timer timer(2.0f);
 
     SECTION("it is not running") {

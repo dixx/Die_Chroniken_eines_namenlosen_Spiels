@@ -5,7 +5,7 @@
 
 using namespace fakeit;
 
-TEST_CASE("GameStateManager: add game states") {
+TEST_CASE("GameStateManager: add game states", "[unit]") {
     leviathan::core::GameStateManager subject;
     Mock<leviathan::core::IGameState> startDouble, playDouble, stopDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
@@ -32,7 +32,7 @@ TEST_CASE("GameStateManager: add game states") {
     }
 }
 
-TEST_CASE("GameStateManager: transit between game states") {
+TEST_CASE("GameStateManager: transit between game states", "[unit]") {
     leviathan::core::GameStateManager subject;
     Mock<leviathan::core::IGameState> startDouble, playDouble, pauseDouble, optionsDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
@@ -83,7 +83,7 @@ TEST_CASE("GameStateManager: transit between game states") {
     }
 }
 
-TEST_CASE("GameStateManager: update and draw active game states") {
+TEST_CASE("GameStateManager: update and draw active game states", "[unit]") {
     leviathan::core::GameStateManager subject;
     Mock<leviathan::core::IGameState> startDouble, playDouble, pauseDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));

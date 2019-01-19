@@ -2,7 +2,7 @@
 #include "../../source/Leviathan/core/Timer.h"
 #include "catch.hpp"
 
-TEST_CASE("TimeControl: ticking") {
+TEST_CASE("TimeControl: ticking", "[unit]") {
     leviathan::core::TimeControl subject;
     leviathan::core::Timer timer(2.0f);
     timer.start();
@@ -20,7 +20,7 @@ TEST_CASE("TimeControl: ticking") {
     }
 }
 
-TEST_CASE("TimeControl: functionality") {
+TEST_CASE("TimeControl: functionality", "[unit]") {
     leviathan::core::TimeControl subject;
     leviathan::core::Timer timer1(1.0f);
     leviathan::core::Timer timer2(2.0f);

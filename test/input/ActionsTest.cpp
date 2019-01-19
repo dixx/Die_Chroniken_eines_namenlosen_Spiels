@@ -8,7 +8,7 @@
 
 using namespace fakeit;
 
-TEST_CASE("Action Mapping") {
+TEST_CASE("Action Mapping", "[unit]") {
     Testhelper testhelper;
     const irr::io::path mappingsFileName = "testactionmappings.yml";
     irr::core::stringc content = "---\n"
@@ -96,7 +96,7 @@ TEST_CASE("Action Mapping") {
         }
     }
 
-    SECTION("onEvent returns success of event procession") {
+    SECTION("onEvent returns success of event procession", "[unit]") {
         REQUIRE_FALSE(subject.onEvent(leftMouseButtonEvent));
         REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
 

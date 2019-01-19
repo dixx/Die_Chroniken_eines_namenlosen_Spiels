@@ -4,7 +4,7 @@
 
 const uint32_t SEED = static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count());
 
-TEST_CASE("Randomizer: seeding") {
+TEST_CASE("Randomizer: seeding", "[unit]") {
     leviathan::core::Randomizer subject;
 
     SECTION("seed evolves internally") {
@@ -26,14 +26,14 @@ TEST_CASE("Randomizer: seeding") {
     }
 }
 
-TEST_CASE("Randomizer: get random Float") {
+TEST_CASE("Randomizer: get random Float", "[unit]") {
     leviathan::core::Randomizer subject;
     subject.start(SEED);
     REQUIRE(subject.getFloat() >= 0.0f);
     REQUIRE(subject.getFloat() < 1.0f);
 }
 
-TEST_CASE("Randomizer: get random float within range") {
+TEST_CASE("Randomizer: get random float within range", "[unit]") {
     leviathan::core::Randomizer subject;
     subject.start(SEED);
     REQUIRE(subject.getFloat(3.0f, 5.0f) >= 3.0f);
@@ -59,14 +59,14 @@ TEST_CASE("Randomizer: get random float within range") {
     }
 }
 
-TEST_CASE("Randomizer: get random Int") {
+TEST_CASE("Randomizer: get random Int", "[unit]") {
     leviathan::core::Randomizer subject;
     subject.start(SEED);
     // REQUIRE(subject.getInt() >= 0); // comparison of unsigned expression >= 0 is always true
     REQUIRE(subject.getInt() <= UINT32_MAX);
 }
 
-TEST_CASE("Randomizer: get random int within range") {
+TEST_CASE("Randomizer: get random int within range", "[unit]") {
     leviathan::core::Randomizer subject;
     subject.start(SEED);
     REQUIRE(subject.getInt(3, 5) >= 3);

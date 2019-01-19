@@ -4,7 +4,7 @@
 #include "irrlicht.h"
 #include <cstdint>
 
-TEST_CASE("Logger: init") {
+TEST_CASE("Logger: init", "[unit]") {
     Testhelper testhelper;
     const irr::io::path logFileName = "testlogfile.log";
     leviathan::core::Logger sample(
@@ -57,7 +57,7 @@ TEST_CASE("Logger: init") {
     }
 }
 
-TEST_CASE("Logger: logging") {
+TEST_CASE("Logger: logging", "[unit]") {
     Testhelper testhelper;
     const irr::io::path logFileName = "testlogfile.log";
 
@@ -93,7 +93,7 @@ TEST_CASE("Logger: logging") {
             REQUIRE(content.find("line.", static_cast<uint32_t>(firstIndex) + 1) > -1);
         }
     }
-    SECTION("it handles different logLevels") {
+    SECTION("it handles different logLevels", "[unit]") {
         leviathan::core::Logger subject(
             testhelper.getFileSystem(),
             testhelper.getGraphicEngine()->getTimer(),

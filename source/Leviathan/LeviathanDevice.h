@@ -23,7 +23,7 @@
 
 namespace TesthelperLeviathanDevice {
     class LeviathanDeviceWithIrrlichtMock;
-}  // namespace TesthelperLeviathanDevice
+}
 
 namespace leviathan {
 

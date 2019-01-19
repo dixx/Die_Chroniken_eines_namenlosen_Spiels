@@ -10,7 +10,7 @@
 
 using namespace fakeit;
 
-TEST_CASE("LeviathanDevice supporter") {
+TEST_CASE("LeviathanDevice supporter", "[integration]") {
     leviathan::LeviathanDevice subject;
 
     SECTION("it provides instances of usefull tools") {
@@ -24,7 +24,7 @@ TEST_CASE("LeviathanDevice supporter") {
     }
 }
 
-TEST_CASE("LeviathanDevice main loop") {
+TEST_CASE("LeviathanDevice main loop", "[integration]") {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile(configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n");
@@ -131,7 +131,7 @@ TEST_CASE("LeviathanDevice main loop") {
     }
 }
 
-TEST_CASE("LeviathanDevice exit status") {
+TEST_CASE("LeviathanDevice exit status", "[integration]") {
     leviathan::LeviathanDevice subject;
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";

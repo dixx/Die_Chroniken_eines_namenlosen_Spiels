@@ -8,13 +8,13 @@
 // - integer values can be positive or negative
 // - float values may not have leading zeroes, can be positive or negative, and must have a `.` in them
 
-TEST_CASE("Configuration: it provides a default object") {
+TEST_CASE("Configuration: it provides a default object", "[unit]") {
     leviathan::core::Configuration subject;
     REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_NULL);
     REQUIRE(subject.getGraphicEngineParams().LoggingLevel == irr::ELL_WARNING);
 }
 
-TEST_CASE("Configuration: read values") {
+TEST_CASE("Configuration: read values", "[unit]") {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
     leviathan::core::Configuration subject;
@@ -106,7 +106,7 @@ TEST_CASE("Configuration: read values") {
     }
 }
 
-TEST_CASE("Configuration: write values") {
+TEST_CASE("Configuration: write values", "[.]") {
     SECTION("it writes back all sections and values") {}
     SECTION("it writes back comments and blank lines") {}
     SECTION("inline comments and white spaces are removed during write") {}

@@ -11,7 +11,7 @@ inline bool operator==(const irr::SEvent& lhs, const irr::SEvent& rhs) {
     return lhs.EventType == rhs.EventType;
 }
 
-TEST_CASE("Event Receiver") {
+TEST_CASE("Event Receiver", "[unit]") {
     Mock<leviathan::input::IEventConsumer> consumerMock;
     Fake(Method(consumerMock, onEvent));
     leviathan::input::EventReceiver subject;

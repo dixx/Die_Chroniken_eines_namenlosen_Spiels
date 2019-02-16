@@ -2,6 +2,7 @@
 #include "../../source/Leviathan/core/IGameState.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
+#include <stdexcept>
 
 using namespace fakeit;
 
@@ -29,6 +30,10 @@ TEST_CASE("GameStateManager: add game states", "[unit]") {
         REQUIRE(subject.getGameStateCount() == 3);
         subject.add(play, STATE_START);
         REQUIRE(subject.getGameStateCount() == 3);
+    }
+
+    SECTION("internal ID is not allowed") {
+        REQUIRE_THROWS_AS(subject.add(start, 0xffffffff), std::invalid_argument);
     }
 }
 

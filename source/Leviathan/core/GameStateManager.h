@@ -73,6 +73,7 @@ namespace leviathan {
         private:
             std::map<uint32_t, IGameState*> states_ = std::map<uint32_t, IGameState*>();
             std::list<uint32_t> runningStateIDs_ = std::list<uint32_t>();
+            const uint32_t NO_STATE_ACTIVE = 0xffffffff;
         };
     }
 }

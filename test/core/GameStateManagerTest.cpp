@@ -16,20 +16,29 @@ TEST_CASE("GameStateManager: add game states", "[unit]") {
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add(start, STATE_START);
     subject.add(play, STATE_PLAY);
-    REQUIRE(subject.getGameStateCount() == 2);
 
     SECTION("indexes are just numbers") {
         subject.add(stop, 17);
-        REQUIRE(subject.getGameStateCount() == 3);
+        subject.transitTo(17);
+        REQUIRE(subject.getActiveStateID() == 17);
     }
 
-    SECTION("indexes are unique, states are not, and the manager is not whiny about it") {
+    SECTION("existing indexes are not overwritten") {
         subject.add(start, STATE_START);
-        REQUIRE(subject.getGameStateCount() == 2);
-        subject.add(start, 4);
-        REQUIRE(subject.getGameStateCount() == 3);
+        subject.transitTo(STATE_START);
+        REQUIRE(subject.getActiveStateID() == STATE_START);
         subject.add(play, STATE_START);
-        REQUIRE(subject.getGameStateCount() == 3);
+        subject.transitTo(STATE_START);
+        REQUIRE(subject.getActiveStateID() == STATE_START);
+        subject.draw();
+        Verify(Method(startDouble, draw)).Once();
+        Verify(Method(playDouble, draw)).Exactly(0_Times);
+    }
+
+    SECTION("states can be added more than once with different index") {
+        subject.add(start, 4);
+        subject.transitTo(4);
+        REQUIRE(subject.getActiveStateID() == 4);
     }
 
     SECTION("internal ID is not allowed") {

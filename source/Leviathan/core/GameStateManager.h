@@ -15,7 +15,7 @@ namespace leviathan {
     namespace core {
 
         /*! \class GameStateManager GameStateManager.h "GameStateManager.h"
-         *  \brief Verwaltung der verschiedenen Zustände des Spiels
+         *  \brief Verwaltung der verschiedenen Zustände des Spiels.
          */
         class GameStateManager {
 
@@ -35,6 +35,7 @@ namespace leviathan {
             /*! \brief Fügt einen Spielzustand zur Verwaltung hinzu.
              *  \note Existiert die ID wird der existierende Zustand nicht mit dem neuen ersetzt.
              *        Ein bereits vorhandener Zustand kann unter neuer ID erneut hinzugefügt werden.
+             *  \attention 0xffffffff ist als ID nicht erlaubt!
              *  \param gameState: zu verwaltender Spielzustand
              *  \param id: Identifikator für späteren Zugriff auf den Zustand
              */
@@ -59,13 +60,7 @@ namespace leviathan {
              */
             void draw();
 
-            /*! \brief Gibt die Anzahl der registrierten Spielzustände zurück.
-             *  \attention Nur für Testzwecke gedacht!
-             */
-            size_t getGameStateCount() const;
-
-            /*! \brief Gibt den Identifikator des aktiven Spielzustands zurück.
-             *  \attention Nur für Testzwecke public gemacht!
+            /*! \brief Gibt die ID des aktiven Zustands zurück.
              *  \note Gibt 0xffffffff zurück wenn kein Zustand aktiv ist.
              */
             uint32_t getActiveStateID();

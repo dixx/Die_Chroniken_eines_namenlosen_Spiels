@@ -78,7 +78,7 @@ namespace leviathan {
              *             Virenscanner die Logdatei greifen, und Leviathan plötzlich keinen Zugriff mehr auf seine
              *             Logdatei hat! (Das bedeutet: sofortiger Programmabsturz)
              */
-            void flush();
+            void flush(); // TODO: check Irrlicht release 1.9, there may be an appropriate method available.
 
         private:
             irr::io::path fileName_;  // Logdateiname

@@ -85,7 +85,9 @@ namespace leviathan {
             std::map<uint32_t, Action> _actions = std::map<uint32_t, Action>();
             std::map<uint32_t, std::set<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::set<IActionConsumer*>>();
-            std::vector<std::map<uint32_t, uint32_t>> _converter = std::vector(2, std::map<uint32_t, uint32_t>());
+            enum CONVERTER_TYPES { MOUSE = 0, KEYBOARD, CONVERTER_TYPES_COUNT };
+            std::vector<std::map<uint32_t, uint32_t>> _converter =
+                std::vector(CONVERTER_TYPES_COUNT, std::map<uint32_t, uint32_t>());
 
             void addActionToConverter(const Action& action);
         };

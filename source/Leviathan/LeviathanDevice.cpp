@@ -5,14 +5,10 @@
 namespace leviathan {
     LeviathanDevice::LeviathanDevice()
     : configuration_(),
-      graphicEngine_(irr::createDeviceEx(configuration_.getGraphicEngineParams())),
+      graphicEngine_(irr::createDeviceEx(configuration_.getGraphicEngineParams())), // TODO not longer necessary, change!
       timeControl_(),
       gameStateManager_(),
-      logger_(new leviathan::core::Logger(
-          graphicEngine_->getFileSystem(),
-          graphicEngine_->getTimer(),
-          LOG_FILE_NAME,
-          configuration_.getLoggingLevel())),
+      logger_(new leviathan::core::Logger(LOG_FILE_NAME, configuration_.getLoggingLevel())),
       randomizer_(),
       eventReceiver_(),
       actions_(eventReceiver_) {
@@ -26,19 +22,14 @@ namespace leviathan {
             graphicEngine_->drop();
     }
 
-    void LeviathanDevice::init(const irr::io::path& fileName) {
+    void LeviathanDevice::init(const irr::io::path& fileName) { // TODO: rework!
         configuration_.readFromFile(fileName, graphicEngine_->getFileSystem());
         delete logger_;
         graphicEngine_->closeDevice();
         graphicEngine_->drop();
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
         graphicEngine_->setEventReceiver(&eventReceiver_);
-        logger_ = new leviathan::core::Logger(
-            graphicEngine_->getFileSystem(),
-            graphicEngine_->getTimer(),
-            LOG_FILE_NAME,
-            configuration_.getLoggingLevel(),
-            /*append = */ true);
+        logger_ = new leviathan::core::Logger(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true);
     }
 
     void LeviathanDevice::run() {

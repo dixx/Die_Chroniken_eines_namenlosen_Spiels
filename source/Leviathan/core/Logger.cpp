@@ -37,10 +37,10 @@ namespace leviathan {
         /* private: */
 
         void Logger::openLogFile(const bool append) {
-            auto mode = std::fstream::out;
+            std::ios_base::openmode mode = std::fstream::out;
             if (append)
                 mode |= std::fstream::app;
-            logFile_.open (fileName_.c_str(), mode);
+            logFile_.open(fileName_.c_str(), mode);
             if (!logFile_.is_open())
                 exit(1);
         }

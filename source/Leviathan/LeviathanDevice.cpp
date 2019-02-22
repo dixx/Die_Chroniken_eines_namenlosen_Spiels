@@ -23,7 +23,7 @@ namespace leviathan {
     }
 
     void LeviathanDevice::init(const irr::io::path& fileName) { // TODO: rework!
-        configuration_.readFromFile(fileName, graphicEngine_->getFileSystem());
+        configuration_.readFromFile(fileName);
         delete logger_;
         graphicEngine_->closeDevice();
         graphicEngine_->drop();

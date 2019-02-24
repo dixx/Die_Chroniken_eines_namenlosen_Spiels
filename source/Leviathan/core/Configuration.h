@@ -35,15 +35,13 @@ namespace leviathan {
 
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Konfigdateiname
-             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            void readFromFile(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = nullptr);
+            void readFromFile(const irr::io::path& fileName);
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname
-             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            // void writeToFile(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0);
+            // void writeToFile(const irr::io::path& fileName);
 
             /*! \brief Gibt eine Sammlung von Parametern zur Erstellung eines Irrlicht-Device zurück.
              *  \return Parametersammlung
@@ -93,7 +91,7 @@ namespace leviathan {
                                                                    {"DEBUG", Logger::Level::DEBUG},
                                                                    {"DETAIL", Logger::Level::DETAIL}};
 
-            void generateContent(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem);
+            void generateContent(const irr::io::path& fileName);
             const irr::core::stringc getItem(
                 const irr::core::stringc& section,
                 const irr::core::stringc& key,

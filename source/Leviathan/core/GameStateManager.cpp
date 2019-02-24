@@ -1,9 +1,12 @@
 #include "GameStateManager.h"
 #include <iterator>
+#include <stdexcept>
 
 namespace leviathan {
     namespace core {
         void GameStateManager::add(IGameState& gameState, uint32_t id) {
+            if (id == NO_STATE_ACTIVE)
+                throw std::invalid_argument("0xffffffff is the only value not allowed as an ID here, sorry!");
             states_[id] = &gameState;
         }
 
@@ -30,13 +33,13 @@ namespace leviathan {
 
         void GameStateManager::update(const float elapsedSeconds) {
             uint32_t id = getActiveStateID();
-            if (id != 0xffffffff)
+            if (id != NO_STATE_ACTIVE)
                 states_[id]->update(elapsedSeconds);
         }
 
         void GameStateManager::draw() {
             uint32_t id = getActiveStateID();
-            if (id != 0xffffffff)
+            if (id != NO_STATE_ACTIVE)
                 states_[id]->draw();
         }
 
@@ -45,7 +48,7 @@ namespace leviathan {
         }
 
         uint32_t GameStateManager::getActiveStateID() {
-            return runningStateIDs_.empty() ? 0xffffffff : runningStateIDs_.front();
+            return runningStateIDs_.empty() ? NO_STATE_ACTIVE : runningStateIDs_.front();
         }
     }
 }

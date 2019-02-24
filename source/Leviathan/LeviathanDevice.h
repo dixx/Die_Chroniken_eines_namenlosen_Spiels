@@ -48,7 +48,7 @@ namespace leviathan {
         /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Engine-Bestandteile damit.
          *  \param filename: Konfigdateiname
          */
-        void init(const irr::io::path& fileName);
+        void init(const irr::io::path& fileName); // FIXME:: use ctor. that's what they are for.
 
         /*! \brief Der eigentliche Game-Loop.
          *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,
@@ -95,13 +95,13 @@ namespace leviathan {
         input::EventReceiver& EventReceiver();
 
     private:
-        core::Configuration configuration_;
-        irr::IrrlichtDevice* graphicEngine_;
-        core::TimeControl timeControl_;
-        core::GameStateManager gameStateManager_;
-        core::Logger* logger_;
-        core::Randomizer randomizer_;
-        input::EventReceiver eventReceiver_;
+        core::Logger* logger_ = nullptr;
+        core::Configuration configuration_ = core::Configuration();
+        irr::IrrlichtDevice* graphicEngine_ = nullptr;
+        core::TimeControl timeControl_ = core::TimeControl();
+        core::GameStateManager gameStateManager_ = core::GameStateManager();
+        core::Randomizer randomizer_ = core::Randomizer();
+        input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests

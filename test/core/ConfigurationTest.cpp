@@ -37,7 +37,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
         content += "[camera]\n";
         content += "far_value = 300.0\n";
         testhelper.writeFile(configFileName, content);
-        subject.readFromFile(configFileName, testhelper.getFileSystem());
+        subject.readFromFile(configFileName);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 1366);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 768);
         REQUIRE(subject.getGraphicEngineParams().Bits == 32);
@@ -49,14 +49,14 @@ TEST_CASE("Configuration: read values", "[unit]") {
 
         SECTION("reading again overwrites changes") {
             testhelper.writeFile(configFileName, "[video]\ncolor_depth=42\n");
-            subject.readFromFile(configFileName, testhelper.getFileSystem());
+            subject.readFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().Bits == 42);
         }
     }
     SECTION("it uses default values") {
         SECTION("if keys are missing") {
             testhelper.writeFile(configFileName, "");
-            subject.readFromFile(configFileName, testhelper.getFileSystem());
+            subject.readFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 800);
             REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 600);
             REQUIRE(subject.getGraphicEngineParams().Bits == 16);
@@ -72,23 +72,23 @@ TEST_CASE("Configuration: read values", "[unit]") {
             content += "[video]\n";
             content += "driver=UNKNOWN\n";
             testhelper.writeFile(configFileName, content);
-            subject.readFromFile(configFileName, testhelper.getFileSystem());
+            subject.readFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE);
             REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
         }
         SECTION("if file is missing") {
-            subject.readFromFile("totally_nonexisting_file", testhelper.getFileSystem());
+            subject.readFromFile("totally_nonexisting_file");
             REQUIRE(subject.getGraphicEngineParams().Bits == 16);
         }
     }
     SECTION("# and ; are valid comment indicators") {
         testhelper.writeFile(configFileName, "[test_section]\n;test_value=1\n#test_value=2\ntest_value=3\n");
-        subject.readFromFile(configFileName, testhelper.getFileSystem());
+        subject.readFromFile(configFileName);
         REQUIRE(subject.getInt("test_section", "test_value") == 3);
     }
     SECTION("erroneous section will be ignored") {
         testhelper.writeFile(configFileName, "[s 1]\nv=42\n[s\n2]\nv=42\n[s3]v=42\n[[s4]s4]\nv=42\n[s]5]\nv=42\n");
-        subject.readFromFile(configFileName, testhelper.getFileSystem());
+        subject.readFromFile(configFileName);
         REQUIRE(subject.getInt("s1", "v") == 0);
         REQUIRE(subject.getInt("s2", "v") == 0);
         REQUIRE(subject.getInt("s3", "v") == 0);
@@ -97,7 +97,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
     }
     SECTION("erroneous key-value-pair will be ignored") {
         testhelper.writeFile(configFileName, "[s]\nv 1=42\nv2 == 42\nv3 42\nv4=\nv[5=42\n");
-        subject.readFromFile(configFileName, testhelper.getFileSystem());
+        subject.readFromFile(configFileName);
         REQUIRE(subject.getInt("s", "v1") == 0);
         REQUIRE(subject.getInt("s", "v2") == 0);
         REQUIRE(subject.getInt("s", "v3") == 0);

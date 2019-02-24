@@ -40,9 +40,8 @@ namespace leviathan {
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname
-             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
              */
-            // void writeToFile(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem = 0);
+            // void writeToFile(const irr::io::path& fileName);
 
             /*! \brief Gibt eine Sammlung von Parametern zur Erstellung eines Irrlicht-Device zurück.
              *  \return Parametersammlung

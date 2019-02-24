@@ -4,21 +4,23 @@
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice()
-    : logger_(new leviathan::core::Logger(LOG_FILE_NAME, configuration_.getLoggingLevel())),
-      actions_(eventReceiver_) {
+    : actions_(eventReceiver_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
     }
 
     LeviathanDevice::~LeviathanDevice() {
-        if (graphicEngine_)
+        if (graphicEngine_) {
             graphicEngine_->drop();
-        if (logger_)
+            graphicEngine_ = nullptr;
+        }
+        if (logger_) {
             delete logger_;
+            logger_ = nullptr;
+        }
     }
 
     void LeviathanDevice::init(const irr::io::path& fileName) {
         configuration_.readFromFile(fileName);
-        delete logger_;
         logger_ = new leviathan::core::Logger(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true);
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
         graphicEngine_->setEventReceiver(&eventReceiver_);

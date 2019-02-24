@@ -23,5 +23,5 @@ find_package(Yaml REQUIRED)
 
 add_subdirectory(source/leviathan)
 add_subdirectory(source/new_game_code)
-add_subdirectory(source/chroniken_alt)
+# add_subdirectory(source/chroniken_alt)
 add_subdirectory(test)

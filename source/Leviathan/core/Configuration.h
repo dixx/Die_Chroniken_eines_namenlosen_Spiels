@@ -26,6 +26,10 @@ namespace leviathan {
              */
             Configuration();
 
+            /*! \brief Konstruktor mit Konfigurationsdatei.
+             */
+            Configuration(const irr::io::path& fileName);
+
             /*! \brief Destruktor.
              */
             ~Configuration() = default;
@@ -72,13 +76,11 @@ namespace leviathan {
             int getInt(const irr::core::stringc& section, const irr::core::stringc& key);
 
         private:
-            irr::core::list<irr::core::stringc> content_ =
-                irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
-            irr::SIrrlichtCreationParameters params_ =
-                irr::SIrrlichtCreationParameters();  // Parameter zum Erstellen eines Irrlicht-Device
+            irr::core::list<irr::core::stringc> content_ = irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
+            irr::SIrrlichtCreationParameters params_ = irr::SIrrlichtCreationParameters();
             float farValue_ = 300.0f;  // Sichtweite der Kamera
             Logger::Level loggingLevel_ = Logger::Level::INFO;
-            uint32_t maxFPS_ = 125;
+            uint32_t maxFPS_ = 60;
             MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_{
                 {"SOFTWARE", irr::video::EDT_SOFTWARE},
                 {"NULL", irr::video::EDT_NULL},

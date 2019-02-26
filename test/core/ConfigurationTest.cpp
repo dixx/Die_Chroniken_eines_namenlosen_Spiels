@@ -1,4 +1,5 @@
 #include "../../source/Leviathan/core/Configuration.h"
+#include "../../source/Leviathan/core/Logger.h"
 #include "../helpers/Testhelper.h"
 #include "catch.hpp"
 #include "irrlicht.h"
@@ -8,16 +9,9 @@
 // - integer values can be positive or negative
 // - float values may not have leading zeroes, can be positive or negative, and must have a `.` in them
 
-TEST_CASE("Configuration: it provides a default object", "[unit]") {
-    leviathan::core::Configuration subject;
-    REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_NULL);
-    REQUIRE(subject.getGraphicEngineParams().LoggingLevel == irr::ELL_WARNING);
-}
-
 TEST_CASE("Configuration: read values", "[unit]") {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    leviathan::core::Configuration subject;
 
     SECTION("all relevant values can be read") {
         irr::core::stringc content = "[general]\n";
@@ -37,7 +31,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
         content += "[camera]\n";
         content += "far_value = 300.0\n";
         testhelper.writeFile(configFileName, content);
-        subject.readFromFile(configFileName);
+        leviathan::core::Configuration subject(configFileName);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 1366);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 768);
         REQUIRE(subject.getGraphicEngineParams().Bits == 32);
@@ -48,39 +42,56 @@ TEST_CASE("Configuration: read values", "[unit]") {
         REQUIRE(subject.getMaxFPS() == 42);
 
         SECTION("reading again overwrites changes") {
-            testhelper.writeFile(configFileName, "[video]\ncolor_depth=42\n");
+            testhelper.writeFile(configFileName, "[video]\ncolor_depth=111\n");
             subject.readFromFile(configFileName);
-            REQUIRE(subject.getGraphicEngineParams().Bits == 42);
+            REQUIRE(subject.getGraphicEngineParams().Bits == 111);
         }
     }
-    SECTION("it uses default values") {
-        SECTION("if keys are missing") {
-            testhelper.writeFile(configFileName, "");
-            subject.readFromFile(configFileName);
-            REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 800);
-            REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 600);
-            REQUIRE(subject.getGraphicEngineParams().Bits == 16);
-            REQUIRE(subject.getGraphicEngineParams().Fullscreen == false);
+}
+
+TEST_CASE("Configuration: default values", "[unit]") {
+    Testhelper testhelper;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    leviathan::core::Configuration subject;
+
+    SECTION("it has default values") {
+        REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 800);
+        REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 600);
+        REQUIRE(subject.getGraphicEngineParams().Bits == 16);
+        REQUIRE(subject.getGraphicEngineParams().Fullscreen == false);
+        REQUIRE(subject.getFarValue() == Approx(300.0f));
+        REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
+        REQUIRE(subject.getMaxFPS() == 60);
+
+        SECTION("with no screen output on using standard ctor") {
+            REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_NULL);
+        }
+        SECTION("with worst driver on unsuccessfull config file read") {
+            subject.readFromFile("");
             REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE);
-            REQUIRE(subject.getFarValue() == Approx(300.0f));
-            REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
-            REQUIRE(subject.getMaxFPS() == 125);
         }
         SECTION("if keys are unknown") {
             irr::core::stringc content = "[general]\n";
-            content += "logging_level=UNKNOWN\n";
+            content += "logging_level=who_knows\n";
             content += "[video]\n";
-            content += "driver=UNKNOWN\n";
+            content += "driver=something\n";
             testhelper.writeFile(configFileName, content);
             subject.readFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE);
             REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
         }
         SECTION("if file is missing") {
-            subject.readFromFile("totally_nonexisting_file");
+            subject.readFromFile("there_is_no_such.file");
             REQUIRE(subject.getGraphicEngineParams().Bits == 16);
         }
     }
+}
+
+TEST_CASE("Configuration: file format", "[unit]") {
+    Testhelper testhelper;
+    const irr::io::path configFileName = "testconfigfile.ini";
+    leviathan::core::Configuration subject;
+
     SECTION("# and ; are valid comment indicators") {
         testhelper.writeFile(configFileName, "[test_section]\n;test_value=1\n#test_value=2\ntest_value=3\n");
         subject.readFromFile(configFileName);

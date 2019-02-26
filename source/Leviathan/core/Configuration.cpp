@@ -8,6 +8,11 @@ namespace leviathan {
             params_.LoggingLevel = irr::ELL_WARNING;
         }
 
+        Configuration::Configuration(const irr::io::path& fileName) {
+            params_.LoggingLevel = irr::ELL_WARNING;
+            readFromFile(fileName);
+        }
+
         void Configuration::readFromFile(const irr::io::path& fileName) {
             content_.clear();
             generateContent(fileName);

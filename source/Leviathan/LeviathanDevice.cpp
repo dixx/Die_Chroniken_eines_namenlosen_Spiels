@@ -3,9 +3,13 @@
 #include <cstdint>
 
 namespace leviathan {
-    LeviathanDevice::LeviathanDevice()
-    : actions_(eventReceiver_) {
+    LeviathanDevice::LeviathanDevice(const irr::io::path& fileName)
+    : configuration_(fileName),
+      logger_(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true),
+      actions_(eventReceiver_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
+        graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
+        graphicEngine_->setEventReceiver(&eventReceiver_);
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -13,17 +17,6 @@ namespace leviathan {
             graphicEngine_->drop();
             graphicEngine_ = nullptr;
         }
-        if (logger_) {
-            delete logger_;
-            logger_ = nullptr;
-        }
-    }
-
-    void LeviathanDevice::init(const irr::io::path& fileName) {
-        configuration_.readFromFile(fileName);
-        logger_ = new leviathan::core::Logger(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true);
-        graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
-        graphicEngine_->setEventReceiver(&eventReceiver_);
     }
 
     void LeviathanDevice::run() {
@@ -66,7 +59,7 @@ namespace leviathan {
     }
 
     core::Logger& LeviathanDevice::Logger() {
-        return *logger_;
+        return logger_;
     }
 
     core::TimeControl& LeviathanDevice::TimeControl() {

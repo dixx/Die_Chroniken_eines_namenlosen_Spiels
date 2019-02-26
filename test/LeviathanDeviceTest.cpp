@@ -11,7 +11,7 @@
 using namespace fakeit;
 
 TEST_CASE("LeviathanDevice supporter", "[integration]") {
-    leviathan::LeviathanDevice subject;
+    leviathan::LeviathanDevice subject("");
 
     SECTION("it provides instances of usefull tools") {
         REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
@@ -28,8 +28,7 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile(configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n");
-    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject;
-    subject.init(configFileName);
+    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject(configFileName);
     Mock<irr::ITimer> timerDouble;
     When(Method(timerDouble, getTime)).AlwaysReturn(0);
     Mock<irr::IrrlichtDevice> graphicEngineDouble;
@@ -132,14 +131,13 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
 }
 
 TEST_CASE("LeviathanDevice exit status", "[integration]") {
-    leviathan::LeviathanDevice subject;
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
     testhelper.writeFile(configFileName, "[video]\nscreen_x=32\nscreen_y=20\n");
 
     SECTION("it is 0 if everything went well") {
-        REQUIRE(0 == subject.exitStatus());
-        subject.init(configFileName);
+        leviathan::LeviathanDevice subject(configFileName);
+        subject.halt();
         REQUIRE(0 == subject.exitStatus());
     }
 }

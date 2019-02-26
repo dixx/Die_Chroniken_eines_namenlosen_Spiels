@@ -52,37 +52,27 @@ TEST_CASE("Configuration: read values", "[unit]") {
 TEST_CASE("Configuration: default values", "[unit]") {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    leviathan::core::Configuration subject;
 
-    SECTION("it has default values") {
+    SECTION("it has default values on unsuccessfull config file read") {
+        leviathan::core::Configuration subject("");
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 800);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 600);
+        REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_OPENGL);
         REQUIRE(subject.getGraphicEngineParams().Bits == 16);
         REQUIRE(subject.getGraphicEngineParams().Fullscreen == false);
         REQUIRE(subject.getFarValue() == Approx(300.0f));
         REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
         REQUIRE(subject.getMaxFPS() == 60);
 
-        SECTION("with no screen output on using standard ctor") {
-            REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_NULL);
-        }
-        SECTION("with worst driver on unsuccessfull config file read") {
-            subject.readFromFile("");
-            REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE);
-        }
-        SECTION("if keys are unknown") {
+        SECTION("or if keys are unknown") {
             irr::core::stringc content = "[general]\n";
             content += "logging_level=who_knows\n";
             content += "[video]\n";
             content += "driver=something\n";
             testhelper.writeFile(configFileName, content);
             subject.readFromFile(configFileName);
-            REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_SOFTWARE);
+            REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_OPENGL);
             REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
-        }
-        SECTION("if file is missing") {
-            subject.readFromFile("there_is_no_such.file");
-            REQUIRE(subject.getGraphicEngineParams().Bits == 16);
         }
     }
 }
@@ -90,7 +80,7 @@ TEST_CASE("Configuration: default values", "[unit]") {
 TEST_CASE("Configuration: file format", "[unit]") {
     Testhelper testhelper;
     const irr::io::path configFileName = "testconfigfile.ini";
-    leviathan::core::Configuration subject;
+    leviathan::core::Configuration subject("");
 
     SECTION("# and ; are valid comment indicators") {
         testhelper.writeFile(configFileName, "[test_section]\n;test_value=1\n#test_value=2\ntest_value=3\n");

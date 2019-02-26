@@ -4,8 +4,7 @@
 #include "leviathan.h"
 
 int main() {
-    leviathan::LeviathanDevice gameEngine;
-    gameEngine.init("config.ini");
+    leviathan::LeviathanDevice gameEngine("config.ini");
     gameEngine.Actions().loadFromFile("./game_state_play_action_mappings.yaml");
     GameStatePlay play(gameEngine);
     GameStateShutdown shutdown(gameEngine);

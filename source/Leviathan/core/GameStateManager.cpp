@@ -13,10 +13,15 @@ namespace leviathan {
         void GameStateManager::transitTo(uint32_t id) {
             if (states_.find(id) == states_.end())
                 return;
-            if (getActiveStateID() == NO_STATE_ACTIVE) {
+            if (runningStateIDs_.empty()) {
                 runningStateIDs_.push_front(id);
-            } else if (runningStateIDs_.size() > 1 && *std::next(runningStateIDs_.begin()) == id) {
-                runningStateIDs_.pop_front();  // id is second on stack
+                return;
+            }
+            if (runningStateIDs_.front() == id)
+                return;  // id is already on top of stack
+            if (runningStateIDs_.size() > 1 && *std::next(runningStateIDs_.begin()) == id)  // id is second on stack
+            {
+                runningStateIDs_.pop_front();
             } else {
                 for (auto& item : runningStateIDs_) {
                     if (item == id)

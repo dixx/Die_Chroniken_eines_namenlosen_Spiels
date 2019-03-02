@@ -3,9 +3,9 @@
 
 namespace leviathan {
     namespace core {
-        Configuration::Configuration() {
-            params_.DriverType = irr::video::EDT_NULL;
+        Configuration::Configuration(const irr::io::path& fileName) {
             params_.LoggingLevel = irr::ELL_WARNING;
+            readFromFile(fileName);
         }
 
         void Configuration::readFromFile(const irr::io::path& fileName) {
@@ -15,10 +15,10 @@ namespace leviathan {
             params_.WindowSize.Height = irr::core::strtoul10(getItem("video", "screen_y", "600").c_str());
             params_.Bits = static_cast<uint8_t>(irr::core::strtoul10(getItem("video", "color_depth", "16").c_str()));
             params_.Fullscreen = getItem("video", "fullscreen", "false").equals_ignore_case("true");
-            params_.DriverType = driverMap_[getItem("video", "driver", "SOFTWARE").c_str()];
+            params_.DriverType = driverMap_[getItem("video", "driver", "OPENGL").c_str()];
             farValue_ = irr::core::strtof10(getItem("camera", "far_value", "300.0").c_str());
             loggingLevel_ = logLevelMap[getItem("general", "logging_level", "INFO").c_str()];
-            maxFPS_ = irr::core::strtoul10(getItem("video", "max_fps", "125").c_str());
+            maxFPS_ = irr::core::strtoul10(getItem("video", "max_fps", "60").c_str());
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const {

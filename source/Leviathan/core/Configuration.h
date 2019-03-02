@@ -21,15 +21,16 @@ namespace leviathan {
         class Configuration {
 
         public:
-            /*! \brief Konstruktor.
-             *  \note ein Default-Objekt wird erstellt
+            /*! \brief Konstruktor mit Konfigurationsdatei.
+             *  \param filename: Konfigdateiname
              */
-            Configuration();
+            explicit Configuration(const irr::io::path& fileName);
 
             /*! \brief Destruktor.
              */
             ~Configuration() = default;
 
+            Configuration() = delete;
             Configuration(const Configuration&) = delete;
             Configuration& operator=(const Configuration&) = delete;
 
@@ -72,20 +73,18 @@ namespace leviathan {
             int getInt(const irr::core::stringc& section, const irr::core::stringc& key);
 
         private:
-            irr::core::list<irr::core::stringc> content_ =
-                irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
-            irr::SIrrlichtCreationParameters params_ =
-                irr::SIrrlichtCreationParameters();  // Parameter zum Erstellen eines Irrlicht-Device
+            irr::core::list<irr::core::stringc> content_ = irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
+            irr::SIrrlichtCreationParameters params_ = irr::SIrrlichtCreationParameters();
             float farValue_ = 300.0f;  // Sichtweite der Kamera
             Logger::Level loggingLevel_ = Logger::Level::INFO;
-            uint32_t maxFPS_ = 125;
+            uint32_t maxFPS_ = 60;
             MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_{
-                {"SOFTWARE", irr::video::EDT_SOFTWARE},
-                {"NULL", irr::video::EDT_NULL},
-                {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
                 {"OPENGL", irr::video::EDT_OPENGL},
+                {"DIRECT3D9", irr::video::EDT_DIRECT3D9},
                 {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
-                {"DIRECT3D9", irr::video::EDT_DIRECT3D9}};
+                {"SOFTWARE", irr::video::EDT_SOFTWARE},
+                {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
+                {"NULL", irr::video::EDT_NULL}};
             MapWithDefault<std::string, Logger::Level> logLevelMap{{"INFO", Logger::Level::INFO},
                                                                    {"ALL", Logger::Level::ALL},
                                                                    {"DEBUG", Logger::Level::DEBUG},

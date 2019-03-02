@@ -7,8 +7,9 @@
 namespace TesthelperLeviathanDevice {
     class LeviathanDeviceWithIrrlichtMock : public leviathan::LeviathanDevice {
     public:
-        LeviathanDeviceWithIrrlichtMock() = default;
+        explicit LeviathanDeviceWithIrrlichtMock(const irr::io::path& fileName);
         ~LeviathanDeviceWithIrrlichtMock();
+        LeviathanDeviceWithIrrlichtMock() = delete;
         LeviathanDeviceWithIrrlichtMock(const LeviathanDeviceWithIrrlichtMock&) = delete;
         void operator=(const LeviathanDeviceWithIrrlichtMock&) = delete;
         void injectMockedGraphicEngine(irr::IrrlichtDevice& mock);

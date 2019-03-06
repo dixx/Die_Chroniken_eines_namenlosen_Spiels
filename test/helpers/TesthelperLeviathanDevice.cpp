@@ -1,6 +1,11 @@
 #include "TesthelperLeviathanDevice.h"
 
 namespace TesthelperLeviathanDevice {
+    LeviathanDeviceWithIrrlichtMock::LeviathanDeviceWithIrrlichtMock(const irr::io::path& fileName)
+    : LeviathanDevice(fileName) {
+        (void)fileName;
+    }
+
     LeviathanDeviceWithIrrlichtMock::~LeviathanDeviceWithIrrlichtMock() {
         restoreOriginalGraphicEngine();
     }

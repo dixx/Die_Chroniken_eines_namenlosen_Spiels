@@ -8,6 +8,7 @@
 
 #include "irrlicht.h"
 #include <cstdint>
+#include <fstream>
 
 namespace leviathan {
     namespace core {
@@ -42,19 +43,12 @@ namespace leviathan {
             irr::core::stringc text;
 
             /*! \brief Konstruktor.
-             *  \param fileSystem: Zeiger auf ein Irrlicht-Dateisystem
-             *  \param clock: Zeiger auf das Irrlicht-Zeitsystem
              *  \param fileName: Logdateiname
              *  \param globalLogLevel: Informationen bis zu diesem Level landen in der Logdatei, alles darüber nicht.
              *  \param append: Wenn `false`, dann wird immer eine neue Logdatei erzeugt. Wenn `true` wird angehängt,
              *         sofern vorhanden.
              */
-            Logger(
-                irr::io::IFileSystem* fileSystem,
-                irr::ITimer* clock,
-                const irr::io::path& fileName,
-                const Level globalLogLevel,
-                const bool append = false);
+            Logger(const irr::io::path& fileName, const Level globalLogLevel, const bool append = false);
 
             /*! \brief Destruktor.
              */
@@ -71,27 +65,15 @@ namespace leviathan {
              */
             void write(const Level logLevel = Level::INFO);
 
-            /*! \brief Schreibt den Logdatei-Buffer auf die Platte.
-             *  \attention Dies schließt die Logdatei und öffnet sie erneut! (Keine Irrlicht-Implementation dafür
-             *             vorhanden)
-             *             Nur in Ausnahmefällen benutzen, da die Gefahr besteht, dass sich Prozesse wie z.B. ein
-             *             Virenscanner die Logdatei greifen, und Leviathan plötzlich keinen Zugriff mehr auf seine
-             *             Logdatei hat! (Das bedeutet: sofortiger Programmabsturz)
-             */
-            void flush(); // TODO: check Irrlicht release 1.9, there may be an appropriate method available.
-
         private:
             irr::io::path fileName_;  // Logdateiname
-            irr::io::IFileSystem* fileSystem_;  // Irrlicht-Dateisystem
-            irr::ITimer* clock_;  // Irrlicht-Zeitsystem
-            irr::io::IWriteFile* logFile_ = nullptr;  // Logdatei
+            std::fstream logFile_;  // Stream auf die Logdatei
             Level globalLogLevel_;  // Globales LogLevel
 
             inline void openLogFile(const bool append = true);
             inline void closeLogFile();
             inline static void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
             inline void addTimeStamp(irr::core::stringc& txt);
-            inline static void addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number);
         };
     }
 }

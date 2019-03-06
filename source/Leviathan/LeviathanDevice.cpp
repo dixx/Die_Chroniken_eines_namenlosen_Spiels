@@ -3,42 +3,20 @@
 #include <cstdint>
 
 namespace leviathan {
-    LeviathanDevice::LeviathanDevice()
-    : configuration_(),
-      graphicEngine_(irr::createDeviceEx(configuration_.getGraphicEngineParams())),
-      timeControl_(),
-      gameStateManager_(),
-      logger_(new leviathan::core::Logger(
-          graphicEngine_->getFileSystem(),
-          graphicEngine_->getTimer(),
-          LOG_FILE_NAME,
-          configuration_.getLoggingLevel())),
-      randomizer_(),
-      eventReceiver_(),
+    LeviathanDevice::LeviathanDevice(const irr::io::path& fileName)
+    : configuration_(fileName),
+      logger_(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true),
       actions_(eventReceiver_) {
-          randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
-      }
-
-    LeviathanDevice::~LeviathanDevice() {
-        if (logger_)
-            delete logger_;
-        if (graphicEngine_)
-            graphicEngine_->drop();
-    }
-
-    void LeviathanDevice::init(const irr::io::path& fileName) {
-        configuration_.readFromFile(fileName, graphicEngine_->getFileSystem());
-        delete logger_;
-        graphicEngine_->closeDevice();
-        graphicEngine_->drop();
+        randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
         graphicEngine_->setEventReceiver(&eventReceiver_);
-        logger_ = new leviathan::core::Logger(
-            graphicEngine_->getFileSystem(),
-            graphicEngine_->getTimer(),
-            LOG_FILE_NAME,
-            configuration_.getLoggingLevel(),
-            /*append = */ true);
+    }
+
+    LeviathanDevice::~LeviathanDevice() {
+        if (graphicEngine_) {
+            graphicEngine_->drop();
+            graphicEngine_ = nullptr;
+        }
     }
 
     void LeviathanDevice::run() {
@@ -81,7 +59,7 @@ namespace leviathan {
     }
 
     core::Logger& LeviathanDevice::Logger() {
-        return *logger_;
+        return logger_;
     }
 
     core::TimeControl& LeviathanDevice::TimeControl() {

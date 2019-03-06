@@ -1,29 +1,24 @@
 #include "Configuration.h"
+#include <fstream>
 
 namespace leviathan {
     namespace core {
-        Configuration::Configuration() {
-            params_.DriverType = irr::video::EDT_NULL;
+        Configuration::Configuration(const irr::io::path& fileName) {
             params_.LoggingLevel = irr::ELL_WARNING;
+            readFromFile(fileName);
         }
 
-        void Configuration::readFromFile(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem) {
+        void Configuration::readFromFile(const irr::io::path& fileName) {
             content_.clear();
-            if (fileSystem && fileSystem->existFile(fileName)) {
-                fileSystem->grab();
-                generateContent(fileName, fileSystem);
-                fileSystem->drop();
-            } else {
-                content_.push_back("");
-            }
+            generateContent(fileName);
             params_.WindowSize.Width = irr::core::strtoul10(getItem("video", "screen_x", "800").c_str());
             params_.WindowSize.Height = irr::core::strtoul10(getItem("video", "screen_y", "600").c_str());
             params_.Bits = static_cast<uint8_t>(irr::core::strtoul10(getItem("video", "color_depth", "16").c_str()));
             params_.Fullscreen = getItem("video", "fullscreen", "false").equals_ignore_case("true");
-            params_.DriverType = driverMap_[getItem("video", "driver", "SOFTWARE").c_str()];
+            params_.DriverType = driverMap_[getItem("video", "driver", "OPENGL").c_str()];
             farValue_ = irr::core::strtof10(getItem("camera", "far_value", "300.0").c_str());
             loggingLevel_ = logLevelMap[getItem("general", "logging_level", "INFO").c_str()];
-            maxFPS_ = irr::core::strtoul10(getItem("video", "max_fps", "125").c_str());
+            maxFPS_ = irr::core::strtoul10(getItem("video", "max_fps", "60").c_str());
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const {
@@ -48,12 +43,24 @@ namespace leviathan {
 
         /* private */
 
-        void Configuration::generateContent(const irr::io::path& fileName, irr::io::IFileSystem* fileSystem) {
-            irr::io::IReadFile* file = fileSystem->createAndOpenFile(fileName);
-            uint32_t size = static_cast<uint32_t>(file->getSize());  // TODO add error check!
-            irr::core::array<uint8_t> buffer(size + 4);
-            file->read(buffer.pointer(), size);
-            file->drop();
+        void Configuration::generateContent(const irr::io::path& fileName) {
+            std::fstream filestream(fileName.c_str(), std::fstream::in);
+            if (filestream.fail()) {
+                filestream.close();
+                content_.push_back("");
+                return;
+            }
+            filestream.seekg (0, filestream.end);
+            std::streampos size = filestream.tellg();
+            filestream.seekg (0, filestream.beg);
+            if (size <= 0) {
+                filestream.close();
+                content_.push_back("");
+                return;
+            }
+            irr::core::array<char> buffer(static_cast<uint32_t>(size) + 4);
+            filestream.read(buffer.pointer(), static_cast<std::streamsize>(size));
+            filestream.close();
             irr::core::stringc rawContent = buffer.const_pointer();
             rawContent.split(content_, "\n", 1, /* ignoreEmptyTokens = */ false);
         }

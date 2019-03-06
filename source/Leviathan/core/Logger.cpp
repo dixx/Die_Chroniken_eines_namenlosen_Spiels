@@ -1,22 +1,18 @@
 #include "Logger.h"
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
+
 
 namespace leviathan {
     namespace core {
 
-        Logger::Logger(
-            irr::io::IFileSystem* fileSystem,
-            irr::ITimer* clock,
-            const irr::io::path& fileName,
-            const Level globalLogLevel,
-            const bool append)
+        Logger::Logger(const irr::io::path& fileName, const Level globalLogLevel, const bool append)
         : text("LogLevel: "),
           fileName_(fileName),
-          fileSystem_(fileSystem),
-          clock_(clock),
+          logFile_(),
           globalLogLevel_(globalLogLevel) {
-            if (!fileSystem_ || !clock_)
-                exit(1);
-            fileSystem_->grab();
             openLogFile(append);
             addLogLevelName(text, globalLogLevel_);
             write();
@@ -24,7 +20,6 @@ namespace leviathan {
 
         Logger::~Logger() {
             closeLogFile();
-            fileSystem_->drop();
         }
 
         void Logger::write(const Level logLevel) {
@@ -35,29 +30,24 @@ namespace leviathan {
                 addLogLevelName(logline, logLevel);
                 logline += "] ";
                 logline += text;
-                logline += "\r\n";
-                logFile_->write(logline.c_str(), logline.size());
+                logFile_ << logline.c_str() << std::endl;
             }
-        }
-
-        void Logger::flush() {
-            closeLogFile();
-            openLogFile();
         }
 
         /* private: */
 
         void Logger::openLogFile(const bool append) {
-            logFile_ = fileSystem_->createAndWriteFile(fileName_, append);
-            if (!logFile_)
+            std::ios_base::openmode mode = std::fstream::out;
+            if (append)
+                mode |= std::fstream::app;
+            logFile_.open(fileName_.c_str(), mode);
+            if (!logFile_.is_open())
                 exit(1);
         }
 
         void Logger::closeLogFile() {
-            if (logFile_) {
-                logFile_->drop();
-                logFile_ = nullptr;
-            }
+            if (logFile_.is_open())
+                logFile_.close();
         }
 
         void Logger::addLogLevelName(irr::core::stringc& txt, const Level logLevel) {
@@ -80,24 +70,10 @@ namespace leviathan {
         }
 
         void Logger::addTimeStamp(irr::core::stringc& txt) {
-            auto now = clock_->getRealTimeAndDate();
-            addNumberWithLeadingZero(txt, now.Day);
-            txt += ".";
-            addNumberWithLeadingZero(txt, now.Month);
-            txt += ".";
-            txt += now.Year;
-            txt += " ";
-            addNumberWithLeadingZero(txt, now.Hour);
-            txt += ":";
-            addNumberWithLeadingZero(txt, now.Minute);
-            txt += ":";
-            addNumberWithLeadingZero(txt, now.Second);
-        }
-
-        void Logger::addNumberWithLeadingZero(irr::core::stringc& txt, const uint32_t number) {
-            if (number < 10)
-                txt += '0';
-            txt += number;
+            auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            std::stringstream ss;
+            ss << std::put_time(std::localtime(&now), "%d.%m.%Y %H:%M:%S");
+            txt += ss.str().c_str();
         }
     }
 }

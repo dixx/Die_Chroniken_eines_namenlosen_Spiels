@@ -34,21 +34,19 @@ namespace leviathan {
     class LeviathanDevice {
 
     public:
-        /*! \brief Konstruktor. Initialisiert alle Bestandteile der Engine.
+        /*! \brief Konstruktor. Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
+         *         der Engine.
+         *  \param filename: Konfigdateiname
          */
-        LeviathanDevice();
+        explicit LeviathanDevice(const irr::io::path& fileName);
 
         /*! \brief Destruktor.
          */
         ~LeviathanDevice();
 
+        LeviathanDevice() = delete;
         LeviathanDevice(const LeviathanDevice&) = delete;
         LeviathanDevice& operator=(const LeviathanDevice&) = delete;
-
-        /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Engine-Bestandteile damit.
-         *  \param filename: Konfigdateiname
-         */
-        void init(const irr::io::path& fileName);
 
         /*! \brief Der eigentliche Game-Loop.
          *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,
@@ -56,7 +54,7 @@ namespace leviathan {
          */
         void run();
 
-        /*! /brief Stoppt den Game-Loop.
+        /*! /brief Stoppt den Game-Loop und fährt die Engine herunter.
          *  /note Der aktuelle Game-Loop läuft noch zu Ende durch.
          */
         void halt();
@@ -96,12 +94,12 @@ namespace leviathan {
 
     private:
         core::Configuration configuration_;
-        irr::IrrlichtDevice* graphicEngine_;
-        core::TimeControl timeControl_;
-        core::GameStateManager gameStateManager_;
-        core::Logger* logger_;
-        core::Randomizer randomizer_;
-        input::EventReceiver eventReceiver_;
+        core::Logger logger_;
+        irr::IrrlichtDevice* graphicEngine_ = nullptr;
+        core::TimeControl timeControl_ = core::TimeControl();
+        core::GameStateManager gameStateManager_ = core::GameStateManager();
+        core::Randomizer randomizer_ = core::Randomizer();
+        input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests

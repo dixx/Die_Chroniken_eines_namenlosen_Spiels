@@ -9,15 +9,15 @@ public:
     enum actions { OPEN_IN_GAME_OPTIONS = 2 };
 
     explicit GameStatePlay(leviathan::LeviathanDevice& gameEngine);
-    virtual ~GameStatePlay() final;
+    virtual ~GameStatePlay();
     GameStatePlay(const GameStatePlay&) = delete;
     GameStatePlay& operator=(const GameStatePlay&) = delete;
 
-    void update(const float elapsedSeconds) final;
+    void update(const float elapsedSeconds);
 
-    void draw() final;
+    void draw();
 
-    void onAction(const uint32_t id, const bool isActive) final;
+    void onAction(const uint32_t id, const bool isActive);
 
 private:
     leviathan::LeviathanDevice& gameEngine_;

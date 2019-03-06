@@ -7,7 +7,7 @@ namespace leviathan {
         void GameStateManager::add(IGameState& gameState, uint32_t id) {
             if (id == NO_STATE_ACTIVE)
                 throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");
-            if (isUnknownState(id)) {
+            if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
             } else {
                 // TODO: log it!
@@ -15,16 +15,10 @@ namespace leviathan {
         }
 
         void GameStateManager::transitTo(uint32_t id) {
-            if (isUnknownState(id)) {
-                // TODO: invalid request, log it!
-            } else if (runningStateIDs_.empty()) {
-                runningStateIDs_.push_front(id);
-            } else if (runningStateIDs_.front() == id) {
-                // TODO: bad request, log it!
-            } else if (isSecondOnStack(id)) {
+            if (isUnknownState(id) || isAlreadyActive(id) || isDeeperDownTheStack(id))
+                return;
+            if (isSecondOnStack(id)) {
                 runningStateIDs_.pop_front();
-            } else if (isInStack(id)) {
-                // TODO: bad request, log it!
             } else {
                 runningStateIDs_.push_front(id);
             }
@@ -44,16 +38,38 @@ namespace leviathan {
             states_[id]->draw();
         }
 
-        uint32_t GameStateManager::getActiveStateID() {
+        uint32_t GameStateManager::getActiveStateID() const {
             return runningStateIDs_.empty() ? NO_STATE_ACTIVE : runningStateIDs_.front();
         }
 
         bool GameStateManager::isUnknownState(const uint32_t id) const {
-            return states_.find(id) == states_.end();
+            if (states_.find(id) == states_.end()) {
+                // TODO: invalid request, log it!
+                return true;
+            }
+            return false;
+        }
+
+        bool GameStateManager::isAlreadyActive(const uint32_t id) const {
+            if (getActiveStateID() == id) {
+                // TODO: bad request, log it!
+                return true;
+            }
+            return false;
         }
 
         bool GameStateManager::isSecondOnStack(const uint32_t id) const {
             return runningStateIDs_.size() > 1 && *std::next(runningStateIDs_.begin()) == id;
+        }
+
+        bool GameStateManager::isDeeperDownTheStack(const uint32_t id) const {
+            if (runningStateIDs_.size() < 2 || isSecondOnStack(id))
+                return false;
+            if (isInStack(id)) {
+                // TODO: bad request, log it!
+                return true;
+            }
+            return false;
         }
 
         bool GameStateManager::isInStack(const uint32_t id) const {

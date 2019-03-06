@@ -63,14 +63,16 @@ namespace leviathan {
             /*! \brief Gibt die ID des aktiven Zustands zurück.
              *  \note Gibt 0xffffffff zurück wenn kein Zustand aktiv ist.
              */
-            uint32_t getActiveStateID();
+            uint32_t getActiveStateID() const;
 
         private:
             std::map<uint32_t, IGameState*> states_ = std::map<uint32_t, IGameState*>();
             std::list<uint32_t> runningStateIDs_ = std::list<uint32_t>();
             const uint32_t NO_STATE_ACTIVE = 0xffffffff;
             bool isUnknownState(const uint32_t id) const;
+            bool isAlreadyActive(const uint32_t id) const;
             bool isSecondOnStack(const uint32_t id) const;
+            bool isDeeperDownTheStack(const uint32_t id) const;
             bool isInStack(const uint32_t id) const;
         };
     }

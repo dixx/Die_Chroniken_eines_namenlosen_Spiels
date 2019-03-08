@@ -11,6 +11,7 @@ namespace leviathan {
 
         /*! \class Timer Timer.h "Timer.h"
          *  \brief millisekundengenauer Timer
+         *  \note Erhöht sich nicht selbst, sondern wird mittels tick(...) von außen erhöht.
          */
         class Timer {
 

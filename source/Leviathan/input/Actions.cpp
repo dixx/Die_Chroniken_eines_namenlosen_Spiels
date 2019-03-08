@@ -24,31 +24,31 @@ namespace leviathan {
                 if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
                     switch (event.MouseInput.Event) {
                     case irr::EMIE_LMOUSE_PRESSED_DOWN:
-                        id = _converter[0].at(irr::EMBSM_LEFT);
+                        id = _converter[MOUSE].at(irr::EMBSM_LEFT);
                         isActive = true;
                         break;
                     case irr::EMIE_LMOUSE_LEFT_UP:
-                        id = _converter[0].at(irr::EMBSM_LEFT);
+                        id = _converter[MOUSE].at(irr::EMBSM_LEFT);
                         break;
                     case irr::EMIE_RMOUSE_PRESSED_DOWN:
-                        id = _converter[0].at(irr::EMBSM_RIGHT);
+                        id = _converter[MOUSE].at(irr::EMBSM_RIGHT);
                         isActive = true;
                         break;
                     case irr::EMIE_RMOUSE_LEFT_UP:
-                        id = _converter[0].at(irr::EMBSM_RIGHT);
+                        id = _converter[MOUSE].at(irr::EMBSM_RIGHT);
                         break;
                     case irr::EMIE_MMOUSE_PRESSED_DOWN:
-                        id = _converter[0].at(irr::EMBSM_MIDDLE);
+                        id = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
                         isActive = true;
                         break;
                     case irr::EMIE_MMOUSE_LEFT_UP:
-                        id = _converter[0].at(irr::EMBSM_MIDDLE);
+                        id = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
                         break;
                     default:
                         return false;
                     }
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-                    id = _converter[1].at(event.KeyInput.Key);
+                    id = _converter[KEYBOARD].at(event.KeyInput.Key);
                     isActive = event.KeyInput.PressedDown;
                 } else {
                     return false;
@@ -68,8 +68,8 @@ namespace leviathan {
         void Actions::loadFromFile(const irr::io::path& fileName) {
             YAML::Node actionMap = YAML::LoadFile(fileName.c_str());
             _actions.clear();
-            _converter[0].clear();
-            _converter[1].clear();
+            _converter[MOUSE].clear();
+            _converter[KEYBOARD].clear();
             for (const auto actionNode : actionMap) {
                 Action action(actionNode);
                 _actions[action.id] = action;
@@ -103,14 +103,14 @@ namespace leviathan {
 
         void Actions::addActionToConverter(const Action& action) {
             if (action.primary.type == "mouse") {
-                _converter[0][action.primary.id] = action.id;
+                _converter[MOUSE][action.primary.id] = action.id;
             } else if (action.primary.type == "keyboard") {
-                _converter[1][action.primary.id] = action.id;
+                _converter[KEYBOARD][action.primary.id] = action.id;
             }
             if (action.secondary.type == "mouse") {
-                _converter[0][action.secondary.id] = action.id;
+                _converter[MOUSE][action.secondary.id] = action.id;
             } else if (action.secondary.type == "keyboard") {
-                _converter[1][action.secondary.id] = action.id;
+                _converter[KEYBOARD][action.secondary.id] = action.id;
             }
         }
     }

@@ -1,194 +1,200 @@
 #include "../../source/Leviathan/core/Timer.h"
 #include "catch.hpp"
 #include "irrlicht.h"
+#include <cfloat>
 
 TEST_CASE("Timer: architecture", "[unit]") {
-    leviathan::core::Timer timer(2.0f);
+    leviathan::core::Timer subject(2.0f);
 
     SECTION("tick() starts chains") {
-        timer.start();
-        REQUIRE(timer.tick(1.1f).tick(1.1f).isFull());
+        subject.start();
+        REQUIRE(subject.tick(1.1f).tick(1.1f).isFull());
     }
 }
 
 TEST_CASE("Timer: max value", "[unit]") {
-
     SECTION("zero is not forbidden") {
-        leviathan::core::Timer timer(0.0f);
-        REQUIRE(irr::core::equals(timer.getMaxValue(), 0.0f));
-        REQUIRE(timer.isFull());
+        leviathan::core::Timer subject(0.0f);
+        REQUIRE(irr::core::equals(subject.getMaxValue(), 0.0f));
+        REQUIRE(subject.isFull());
     }
 
     SECTION("negative values are not forbidden") {
-        leviathan::core::Timer timer(-10.0f);
-        REQUIRE(irr::core::equals(timer.getMaxValue(), -10.0f));
-        REQUIRE(timer.isFull());
+        leviathan::core::Timer subject(-10.0f);
+        REQUIRE(irr::core::equals(subject.getMaxValue(), -10.0f));
+        REQUIRE(subject.isFull());
     }
 
     SECTION("values are exactly met") {
-        leviathan::core::Timer timer(1.0f);
-        timer.start();
-        REQUIRE(irr::core::equals(timer.getMaxValue(), 1.0f));
-        REQUIRE_FALSE(timer.isFull());
+        leviathan::core::Timer subject(1.0f);
+        subject.start();
+        REQUIRE(irr::core::equals(subject.getMaxValue(), 1.0f));
+        REQUIRE_FALSE(subject.isFull());
 
-        timer.tick(1.0f - irr::core::ROUNDING_ERROR_f32);
-        REQUIRE_FALSE(timer.isFull());
+        subject.tick(1.0f - irr::core::ROUNDING_ERROR_f32);
+        REQUIRE_FALSE(subject.isFull());
 
-        timer.tick(irr::core::ROUNDING_ERROR_f32);
-        REQUIRE(timer.isFull());
+        subject.tick(irr::core::ROUNDING_ERROR_f32);
+        REQUIRE(subject.isFull());
+    }
+
+    SECTION("it can handle overflow") {
+        leviathan::core::Timer subject(FLT_MAX);
+        subject.start();
+        subject.tick(FLT_MAX);
+        subject.tick(1.0e+038f);
+        REQUIRE(subject.isFull());
     }
 }
 
 TEST_CASE("Timer: ticking", "[unit]") {
-    leviathan::core::Timer timer(2.0f);
+    leviathan::core::Timer subject(2.0f);
 
     SECTION("it does not tick") {
-
         SECTION("when it is not started") {
-            timer.tick(2.2f);
-            REQUIRE_FALSE(timer.isFull());
+            subject.tick(2.2f);
+            REQUIRE_FALSE(subject.isFull());
         }
 
         SECTION("when it is paused") {
-            timer.start();
-            timer.pause();
-            timer.tick(2.2f);
-            REQUIRE_FALSE(timer.isFull());
+            subject.start();
+            subject.pause();
+            subject.tick(2.2f);
+            REQUIRE_FALSE(subject.isFull());
         }
 
         SECTION("when it is stopped") {
-            timer.start();
-            timer.stop();
-            timer.tick(2.2f);
-            REQUIRE_FALSE(timer.isFull());
+            subject.start();
+            subject.stop();
+            subject.tick(2.2f);
+            REQUIRE_FALSE(subject.isFull());
         }
     }
 
     SECTION("it does tick") {
-
         SECTION("when it is started") {
-            timer.start();
-            timer.tick(2.2f);
-            REQUIRE(timer.isFull());
+            subject.start();
+            subject.tick(2.2f);
+            REQUIRE(subject.isFull());
         }
 
         SECTION("when it is resumed") {
-            timer.start();
-            timer.pause();
-            timer.resume();
-            timer.tick(2.2f);
-            REQUIRE(timer.isFull());
+            subject.start();
+            subject.pause();
+            subject.resume();
+            subject.tick(2.2f);
+            REQUIRE(subject.isFull());
         }
 
         SECTION("when it is restarted") {
-            timer.start();
-            timer.restart();
-            timer.tick(2.2f);
-            REQUIRE(timer.isFull());
+            subject.start();
+            subject.restart();
+            subject.tick(2.2f);
+            REQUIRE(subject.isFull());
         }
     }
 
     SECTION("it can tick more than once") {
-        timer.start();
-        timer.tick(0.6f);
-        timer.tick(0.6f);
-        REQUIRE_FALSE(timer.isFull());
+        subject.start();
+        subject.tick(0.6f);
+        subject.tick(0.6f);
+        REQUIRE_FALSE(subject.isFull());
 
-        timer.tick(0.6f);
-        timer.tick(0.6f);
-        REQUIRE(timer.isFull());
+        subject.tick(0.6f);
+        subject.tick(0.6f);
+        REQUIRE(subject.isFull());
     }
 
     SECTION("it can tick backwards") {
-        timer.start();
-        timer.tick(-10.0f);
-        REQUIRE_FALSE(timer.isFull());
+        subject.start();
+        subject.tick(-10.0f);
+        REQUIRE_FALSE(subject.isFull());
 
-        timer.tick(11.9f);
-        REQUIRE_FALSE(timer.isFull());
+        subject.tick(11.9f);
+        REQUIRE_FALSE(subject.isFull());
 
-        timer.tick(0.2f);
-        REQUIRE(timer.isFull());
+        subject.tick(0.2f);
+        REQUIRE(subject.isFull());
 
         SECTION("but it stays full if once reached") {
-            timer.tick(-10.0f);
-            REQUIRE(timer.isFull());
+            subject.tick(-10.0f);
+            REQUIRE(subject.isFull());
         }
     }
 }
 
 TEST_CASE("Timer: states", "[unit]") {
-    leviathan::core::Timer timer(2.0f);
+    leviathan::core::Timer subject(2.0f);
 
     SECTION("it is not running") {
         SECTION("when it is newly created") {
-            REQUIRE_FALSE(timer.isRunning());
+            REQUIRE_FALSE(subject.isRunning());
         }
 
         SECTION("when it is stopped") {
-            timer.start();
-            timer.stop();
-            REQUIRE_FALSE(timer.isRunning());
+            subject.start();
+            subject.stop();
+            REQUIRE_FALSE(subject.isRunning());
         }
     }
 
     SECTION("it is running") {
         SECTION("when it is started") {
-            timer.start();
-            REQUIRE(timer.isRunning());
+            subject.start();
+            REQUIRE(subject.isRunning());
 
             SECTION("and when it is paused") {
-                timer.pause();
-                REQUIRE(timer.isRunning());
+                subject.pause();
+                REQUIRE(subject.isRunning());
 
                 SECTION("and when it is resumed") {
-                    timer.resume();
-                    REQUIRE(timer.isRunning());
+                    subject.resume();
+                    REQUIRE(subject.isRunning());
                 }
             }
 
             SECTION("and when it is restarted") {
-                timer.restart();
-                REQUIRE(timer.isRunning());
+                subject.restart();
+                REQUIRE(subject.isRunning());
             }
         }
     }
 
     SECTION("it is paused") {
         SECTION("when it is paused after being started") {
-            timer.start();
-            timer.pause();
-            REQUIRE(timer.isPaused());
+            subject.start();
+            subject.pause();
+            REQUIRE(subject.isPaused());
         }
     }
 
     SECTION("it is not paused") {
         SECTION("when it is newly created") {
-            REQUIRE_FALSE(timer.isPaused());
+            REQUIRE_FALSE(subject.isPaused());
         }
 
         SECTION("when it is started") {
-            timer.start();
-            REQUIRE_FALSE(timer.isPaused());
+            subject.start();
+            REQUIRE_FALSE(subject.isPaused());
         }
 
         SECTION("when it is restarted") {
-            timer.start();
-            timer.restart();
-            REQUIRE_FALSE(timer.isPaused());
+            subject.start();
+            subject.restart();
+            REQUIRE_FALSE(subject.isPaused());
         }
 
         SECTION("when it is resumed") {
-            timer.start();
-            timer.pause();
-            timer.resume();
-            REQUIRE_FALSE(timer.isPaused());
+            subject.start();
+            subject.pause();
+            subject.resume();
+            REQUIRE_FALSE(subject.isPaused());
         }
 
         SECTION("when it is stopped") {
-            timer.start();
-            timer.stop();
-            REQUIRE_FALSE(timer.isPaused());
+            subject.start();
+            subject.stop();
+            REQUIRE_FALSE(subject.isPaused());
         }
     }
 }

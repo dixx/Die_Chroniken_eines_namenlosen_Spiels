@@ -54,6 +54,7 @@ namespace leviathan {
              */
             ~Logger();
 
+            Logger() = delete;
             Logger(const Logger&) = delete;
             Logger& operator=(const Logger&) = delete;
 

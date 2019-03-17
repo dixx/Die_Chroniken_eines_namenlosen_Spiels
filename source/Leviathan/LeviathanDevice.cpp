@@ -6,6 +6,7 @@ namespace leviathan {
     LeviathanDevice::LeviathanDevice(const irr::io::path& fileName)
     : configuration_(fileName),
       logger_(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true),
+      gameStateManager_(logger_),
       actions_(eventReceiver_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());

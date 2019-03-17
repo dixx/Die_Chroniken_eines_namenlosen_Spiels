@@ -1,5 +1,6 @@
 #include "../../source/Leviathan/core/GameStateManager.h"
 #include "../../source/Leviathan/core/IGameState.h"
+#include "../../source/Leviathan/core/Logger.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include <stdexcept>
@@ -7,7 +8,8 @@
 using namespace fakeit;
 
 TEST_CASE("GameStateManager: add game states", "[unit]") {
-    leviathan::core::GameStateManager subject;
+    leviathan::core::Logger logger("test.log", leviathan::core::Logger::Level::ALL);
+    leviathan::core::GameStateManager subject(logger);
     Mock<leviathan::core::IGameState> startDouble, playDouble, stopDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
     Fake(Method(playDouble, update), Method(playDouble, draw));
@@ -47,7 +49,8 @@ TEST_CASE("GameStateManager: add game states", "[unit]") {
 }
 
 TEST_CASE("GameStateManager: transit between game states", "[unit]") {
-    leviathan::core::GameStateManager subject;
+    leviathan::core::Logger logger("test.log", leviathan::core::Logger::Level::ALL);
+    leviathan::core::GameStateManager subject(logger);
     Mock<leviathan::core::IGameState> startDouble, playDouble, pauseDouble, optionsDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
     Fake(Method(playDouble, update), Method(playDouble, draw));
@@ -98,7 +101,8 @@ TEST_CASE("GameStateManager: transit between game states", "[unit]") {
 }
 
 TEST_CASE("GameStateManager: update and draw active game states", "[unit]") {
-    leviathan::core::GameStateManager subject;
+    leviathan::core::Logger logger("test.log", leviathan::core::Logger::Level::ALL);
+    leviathan::core::GameStateManager subject(logger);
     Mock<leviathan::core::IGameState> startDouble, playDouble, pauseDouble;
     Fake(Method(startDouble, update), Method(startDouble, draw));
     Fake(Method(playDouble, update), Method(playDouble, draw));

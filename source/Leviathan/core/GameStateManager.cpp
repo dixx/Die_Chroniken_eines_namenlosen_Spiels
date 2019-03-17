@@ -4,6 +4,8 @@
 
 namespace leviathan {
     namespace core {
+        GameStateManager::GameStateManager(Logger& logger) : logger_(logger) {}
+
         void GameStateManager::add(IGameState& gameState, uint32_t id) {
             if (id == NO_STATE_ACTIVE)
                 throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");

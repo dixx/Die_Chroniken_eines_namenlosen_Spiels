@@ -97,7 +97,7 @@ namespace leviathan {
         core::Logger logger_;
         irr::IrrlichtDevice* graphicEngine_ = nullptr;
         core::TimeControl timeControl_ = core::TimeControl();
-        core::GameStateManager gameStateManager_ = core::GameStateManager();
+        core::GameStateManager gameStateManager_;
         core::Randomizer randomizer_ = core::Randomizer();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;

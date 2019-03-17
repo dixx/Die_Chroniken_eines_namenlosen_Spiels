@@ -12,7 +12,10 @@ namespace leviathan {
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
             } else {
-                // TODO: log it!
+                logger_.text = "[Warning] - GameStateManager.add - cannot add state ";
+                logger_.text += id;
+                logger_.text += ", already exists!";
+                logger_.write(Logger::Level::DEBUG);
             }
         }
 
@@ -46,7 +49,10 @@ namespace leviathan {
 
         bool GameStateManager::isUnknownState(const uint32_t id) const {
             if (states_.find(id) == states_.end()) {
-                // TODO: invalid request, log it!
+                logger_.text = "[Warning] - GameStateManager.isUnknownState - unknown state ";
+                logger_.text += id;
+                logger_.text += " requested!";
+                logger_.write(Logger::Level::DEBUG);
                 return true;
             }
             return false;
@@ -54,7 +60,10 @@ namespace leviathan {
 
         bool GameStateManager::isAlreadyActive(const uint32_t id) const {
             if (getActiveStateID() == id) {
-                // TODO: bad request, log it!
+                logger_.text = "[Warning] - GameStateManager.isAlreadyActive - active state ";
+                logger_.text += id;
+                logger_.text += " requested!";
+                logger_.write(Logger::Level::DEBUG);
                 return true;
             }
             return false;
@@ -68,7 +77,10 @@ namespace leviathan {
             if (runningStateIDs_.size() < 2 || isSecondOnStack(id))
                 return false;
             if (isInStack(id)) {
-                // TODO: bad request, log it!
+                logger_.text = "[Warning] - GameStateManager.isDeeperDownTheStack - requested state ";
+                logger_.text += id;
+                logger_.text += " is too deep down the stack!";
+                logger_.write(Logger::Level::DEBUG);
                 return true;
             }
             return false;

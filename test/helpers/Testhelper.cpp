@@ -58,3 +58,8 @@ uint32_t Testhelper::getFileSize(irr::io::path fileName) {
 bool Testhelper::existFile(irr::io::path fileName) {
     return fileSystem_->existFile(fileName);
 }
+
+leviathan::core::Logger& Testhelper::Logger() {
+    static leviathan::core::Logger singleton("test.log", leviathan::core::Logger::Level::ALL);
+    return singleton;
+}

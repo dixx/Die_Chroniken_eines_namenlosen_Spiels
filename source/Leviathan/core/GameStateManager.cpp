@@ -12,7 +12,7 @@ namespace leviathan {
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
             } else {
-                logger_.text = "[Warning] - GameStateManager.add - cannot add state ";
+                logger_.text = "[Warning] - GameStateManager - cannot add state ";
                 logger_.text += id;
                 logger_.text += ", already exists!";
                 logger_.write(Logger::Level::DEBUG);
@@ -47,9 +47,11 @@ namespace leviathan {
             return runningStateIDs_.empty() ? NO_STATE_ACTIVE : runningStateIDs_.front();
         }
 
+        /* private */
+
         bool GameStateManager::isUnknownState(const uint32_t id) const {
             if (states_.find(id) == states_.end()) {
-                logger_.text = "[Warning] - GameStateManager.isUnknownState - unknown state ";
+                logger_.text = "[Warning] - GameStateManager - unknown state ";
                 logger_.text += id;
                 logger_.text += " requested!";
                 logger_.write(Logger::Level::DEBUG);
@@ -60,7 +62,7 @@ namespace leviathan {
 
         bool GameStateManager::isAlreadyActive(const uint32_t id) const {
             if (getActiveStateID() == id) {
-                logger_.text = "[Warning] - GameStateManager.isAlreadyActive - active state ";
+                logger_.text = "[Warning] - GameStateManager - active state ";
                 logger_.text += id;
                 logger_.text += " requested!";
                 logger_.write(Logger::Level::DEBUG);
@@ -77,7 +79,7 @@ namespace leviathan {
             if (runningStateIDs_.size() < 2 || isSecondOnStack(id))
                 return false;
             if (isInStack(id)) {
-                logger_.text = "[Warning] - GameStateManager.isDeeperDownTheStack - requested state ";
+                logger_.text = "[Warning] - GameStateManager - requested state ";
                 logger_.text += id;
                 logger_.text += " is too deep down the stack!";
                 logger_.write(Logger::Level::DEBUG);

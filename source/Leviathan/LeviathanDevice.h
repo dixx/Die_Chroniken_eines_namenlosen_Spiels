@@ -59,11 +59,6 @@ namespace leviathan {
          */
         void halt();
 
-        /*! \brief Gibt das Errorlevel der Engine zurück.
-         *  \return 0 wenn alles gut lief, ansonsten eine ganzzahlige positive Fehlernummer.
-         */
-        int exitStatus();
-
         /*! \brief Zugriff auf die TimeControl Instanz.
          */
         core::TimeControl& TimeControl();
@@ -97,7 +92,7 @@ namespace leviathan {
         core::Logger logger_;
         irr::IrrlichtDevice* graphicEngine_ = nullptr;
         core::TimeControl timeControl_ = core::TimeControl();
-        core::GameStateManager gameStateManager_ = core::GameStateManager();
+        core::GameStateManager gameStateManager_;
         core::Randomizer randomizer_ = core::Randomizer();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;

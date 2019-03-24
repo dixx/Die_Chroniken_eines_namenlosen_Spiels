@@ -4,13 +4,18 @@
 
 namespace leviathan {
     namespace core {
+        GameStateManager::GameStateManager(Logger& logger) : logger_(logger) {}
+
         void GameStateManager::add(IGameState& gameState, uint32_t id) {
             if (id == NO_STATE_ACTIVE)
                 throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
             } else {
-                // TODO: log it!
+                logger_.text = "[Warning] - GameStateManager - cannot add state ";
+                logger_.text += id;
+                logger_.text += ", already exists!";
+                logger_.write(Logger::Level::DEBUG);
             }
         }
 
@@ -42,9 +47,14 @@ namespace leviathan {
             return runningStateIDs_.empty() ? NO_STATE_ACTIVE : runningStateIDs_.front();
         }
 
+        /* private */
+
         bool GameStateManager::isUnknownState(const uint32_t id) const {
             if (states_.find(id) == states_.end()) {
-                // TODO: invalid request, log it!
+                logger_.text = "[Warning] - GameStateManager - unknown state ";
+                logger_.text += id;
+                logger_.text += " requested!";
+                logger_.write(Logger::Level::DEBUG);
                 return true;
             }
             return false;
@@ -52,7 +62,10 @@ namespace leviathan {
 
         bool GameStateManager::isAlreadyActive(const uint32_t id) const {
             if (getActiveStateID() == id) {
-                // TODO: bad request, log it!
+                logger_.text = "[Warning] - GameStateManager - active state ";
+                logger_.text += id;
+                logger_.text += " requested!";
+                logger_.write(Logger::Level::DEBUG);
                 return true;
             }
             return false;
@@ -66,7 +79,10 @@ namespace leviathan {
             if (runningStateIDs_.size() < 2 || isSecondOnStack(id))
                 return false;
             if (isInStack(id)) {
-                // TODO: bad request, log it!
+                logger_.text = "[Warning] - GameStateManager - requested state ";
+                logger_.text += id;
+                logger_.text += " is too deep down the stack!";
+                logger_.write(Logger::Level::DEBUG);
                 return true;
             }
             return false;

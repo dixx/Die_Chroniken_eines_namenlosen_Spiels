@@ -7,6 +7,7 @@
 #define LEVIATHAN_CORE_GAMESTATEMANAGER_H
 
 #include "IGameState.h"
+#include "Logger.h"
 #include <cstdint>
 #include <list>
 #include <map>
@@ -21,14 +22,16 @@ namespace leviathan {
 
         public:
             /*! \brief Konstruktor.
+             *  \param logger: Instanz eines Loggers
              */
-            GameStateManager() = default;
+            explicit GameStateManager(Logger& logger);
 
             /*! \brief Destruktor.
              *  \note Verwaltete Spielzustände werden hier nicht gelöscht.
              */
             ~GameStateManager() = default;
 
+            GameStateManager() = delete;
             GameStateManager(const GameStateManager&) = delete;
             GameStateManager& operator=(const GameStateManager&) = delete;
 
@@ -66,6 +69,7 @@ namespace leviathan {
             uint32_t getActiveStateID() const;
 
         private:
+            Logger& logger_;
             std::map<uint32_t, IGameState*> states_ = std::map<uint32_t, IGameState*>();
             std::list<uint32_t> runningStateIDs_ = std::list<uint32_t>();
             const uint32_t NO_STATE_ACTIVE = 0xffffffff;

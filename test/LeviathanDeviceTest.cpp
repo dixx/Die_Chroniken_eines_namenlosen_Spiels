@@ -129,15 +129,3 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
         }
     }
 }
-
-TEST_CASE("LeviathanDevice exit status", "[integration]") {
-    Testhelper testhelper;
-    const irr::io::path configFileName = "testconfigfile.ini";
-    testhelper.writeFile(configFileName, "[video]\nscreen_x=32\nscreen_y=20\n");
-
-    SECTION("it is 0 if everything went well") {
-        leviathan::LeviathanDevice subject(configFileName);
-        subject.halt();
-        REQUIRE(0 == subject.exitStatus());
-    }
-}

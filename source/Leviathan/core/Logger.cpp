@@ -32,6 +32,7 @@ namespace leviathan {
                 logline += text;
                 logFile_ << logline.c_str() << std::endl;
             }
+            text = "";
         }
 
         /* private: */

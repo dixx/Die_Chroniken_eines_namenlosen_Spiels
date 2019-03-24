@@ -12,18 +12,16 @@ TEST_CASE("Logger: init", "[unit]") {
         leviathan::core::Logger sample(logFileName, leviathan::core::Logger::Level::INFO);
         REQUIRE(testhelper.existFile(logFileName));
 
-        uint32_t size = testhelper.getFileSize(logFileName);
+        uint32_t oldSize = testhelper.getFileSize(logFileName);
 
         SECTION("by overwriting an existing logfile") {
             leviathan::core::Logger subject(logFileName, leviathan::core::Logger::Level::INFO);
-            uint32_t newSize = testhelper.getFileSize(logFileName);
-            REQUIRE(newSize == size);
+            REQUIRE(testhelper.getFileSize(logFileName) == oldSize);
         }
 
         SECTION("by appending to an existing logfile") {
             leviathan::core::Logger subject(logFileName, leviathan::core::Logger::Level::INFO, true);
-            uint32_t newSize = testhelper.getFileSize(logFileName);
-            REQUIRE(newSize == size * 2);
+            REQUIRE(testhelper.getFileSize(logFileName) == oldSize * 2);
         }
 
         SECTION("and writes the global logging level into it") {
@@ -69,6 +67,12 @@ TEST_CASE("Logger: logging", "[unit]") {
             int32_t firstIndex = content.find("line.");
             REQUIRE(firstIndex > -1);
             REQUIRE(content.find("line.", static_cast<uint32_t>(firstIndex) + 1) > -1);
+        }
+
+        SECTION("and clears the text afterwards") {
+            subject.text = "usefull information";
+            subject.write();
+            REQUIRE(subject.text.empty());
         }
     }
 

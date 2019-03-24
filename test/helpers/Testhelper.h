@@ -3,6 +3,7 @@
 
 #include "irrlicht.h"
 #include <cstdint>
+#include "../../source/Leviathan/core/Logger.h" // we dogfood our own code ;)
 
 class Testhelper {
 public:
@@ -16,6 +17,7 @@ public:
     void writeFile(irr::io::path fileName, const irr::core::stringc& content);
     uint32_t getFileSize(irr::io::path fileName);
     bool existFile(irr::io::path fileName);
+    static leviathan::core::Logger& Logger();
 
 private:
     irr::IrrlichtDevice* graphicEngine_ = nullptr;

@@ -140,4 +140,8 @@ TEST_CASE("LeviathanDevice exit status", "[integration]") {
         subject.halt();
         REQUIRE(0 == subject.exitStatus());
     }
+
+    SECTION("it returns 1 if Irrlicht Engine could not be initialized") {
+        // cannot test this, as FakeIt does not support constructor mocking or free function mocking
+    }
 }

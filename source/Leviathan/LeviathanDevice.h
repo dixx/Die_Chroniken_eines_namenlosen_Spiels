@@ -93,6 +93,7 @@ namespace leviathan {
         input::EventReceiver& EventReceiver();
 
     private:
+        int exitCode_ = 0;
         core::Configuration configuration_;
         core::Logger logger_;
         irr::IrrlichtDevice* graphicEngine_ = nullptr;

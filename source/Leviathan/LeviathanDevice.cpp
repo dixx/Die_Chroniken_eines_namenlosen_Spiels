@@ -6,7 +6,7 @@
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const irr::io::path& fileName)
     : configuration_(fileName),
-      logger_(LOG_FILE_NAME, configuration_.getLoggingLevel(), /*append = */ true),
+      logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()),
       gameStateManager_(logger_),
       actions_(eventReceiver_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
@@ -14,7 +14,6 @@ namespace leviathan {
         if (graphicEngine_ == nullptr) {
             logger_.text = "could not initialize Irrlicht Engine!";
             logger_.write(core::Logger::Level::INFO);
-            exitCode_ = 1;
             throw std::runtime_error("could not initialize Irrlicht Engine!");
         }
         graphicEngine_->setEventReceiver(&eventReceiver_);
@@ -60,10 +59,6 @@ namespace leviathan {
 
     void LeviathanDevice::halt() {
         graphicEngine_->closeDevice();
-    }
-
-    int LeviathanDevice::exitStatus() {
-        return exitCode_;
     }
 
     core::Logger& LeviathanDevice::Logger() {

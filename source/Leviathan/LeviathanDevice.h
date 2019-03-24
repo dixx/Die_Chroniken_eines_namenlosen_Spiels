@@ -59,11 +59,6 @@ namespace leviathan {
          */
         void halt();
 
-        /*! \brief Gibt das Errorlevel der Engine zurück.
-         *  \return 0 wenn alles gut lief, ansonsten eine ganzzahlige positive Fehlernummer.
-         */
-        int exitStatus();
-
         /*! \brief Zugriff auf die TimeControl Instanz.
          */
         core::TimeControl& TimeControl();
@@ -93,7 +88,6 @@ namespace leviathan {
         input::EventReceiver& EventReceiver();
 
     private:
-        int exitCode_ = 0;
         core::Configuration configuration_;
         core::Logger logger_;
         irr::IrrlichtDevice* graphicEngine_ = nullptr;

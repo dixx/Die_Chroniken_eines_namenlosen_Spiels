@@ -27,7 +27,7 @@ TEST_CASE("Logger", "[unit]") {
 
             SECTION("and writes the global logging level into it") {
                 std::string content = testhelper.readFile(logFileName);
-                REQUIRE_FALSE(content.find("] LogLevel: Info") == std::string::npos);
+                REQUIRE(content.find("] LogLevel: Info") != std::string::npos);
             }
         }
 
@@ -46,14 +46,14 @@ TEST_CASE("Logger", "[unit]") {
             subject.text = "Kilroy wuz here";
             subject.write();
             std::string content = testhelper.readFile(logFileName);
-            REQUIRE_FALSE(content.find("] Kilroy wuz here") == std::string::npos);
+            REQUIRE(content.find("] Kilroy wuz here") != std::string::npos);
 
             SECTION("with special characters") {
                 subject.text = "german umlauts: äöüß, some other things: >_%&$§?!@|";
                 subject.write();
                 content = testhelper.readFile(logFileName);
-                REQUIRE_FALSE(content.find("äöüß") == std::string::npos);
-                REQUIRE_FALSE(content.find(">_%&$§?!@|") == std::string::npos);
+                REQUIRE(content.find("äöüß") != std::string::npos);
+                REQUIRE(content.find(">_%&$§?!@|") != std::string::npos);
             }
 
             SECTION("over multiple lines") {
@@ -63,8 +63,8 @@ TEST_CASE("Logger", "[unit]") {
                 subject.write();
                 content = testhelper.readFile(logFileName);
                 uint32_t firstIndex = content.find("line.");
-                REQUIRE_FALSE(firstIndex == std::string::npos);
-                REQUIRE_FALSE(content.find("line.", firstIndex + 1) == std::string::npos);
+                REQUIRE(firstIndex != std::string::npos);
+                REQUIRE(content.find("line.", firstIndex + 1) != std::string::npos);
             }
 
             SECTION("and clears the text afterwards") {
@@ -85,8 +85,8 @@ TEST_CASE("Logger", "[unit]") {
             subject.text = "a line hopefully never ever written";
             subject.write(leviathan::core::Logger::Level::ALL);
             std::string content = testhelper.readFile(logFileName);
-            REQUIRE_FALSE(content.find("information") == std::string::npos);
-            REQUIRE_FALSE(content.find("details") == std::string::npos);
+            REQUIRE(content.find("information") != std::string::npos);
+            REQUIRE(content.find("details") != std::string::npos);
             REQUIRE(content.find("debugging") == std::string::npos);
             REQUIRE(content.find("never ever") == std::string::npos);
         }

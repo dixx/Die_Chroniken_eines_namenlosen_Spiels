@@ -26,7 +26,7 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
 
 TEST_CASE("LeviathanDevice main loop", "[integration]") {
     Testhelper testhelper;
-    const irr::io::path configFileName = "testconfigfile.ini";
+    const char* configFileName = "testconfigfile.ini";
     testhelper.writeFile(configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n");
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject(configFileName);
     Mock<irr::ITimer> timerDouble;

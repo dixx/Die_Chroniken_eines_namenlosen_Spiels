@@ -1,8 +1,8 @@
 #include "../../source/Leviathan/core/Logger.h"
 #include "../helpers/Testhelper.h"
 #include "catch.hpp"
-#include "irrlicht.h"
 #include <cstdint>
+#include <string>
 
 TEST_CASE("Logger", "[unit]") {
     const char* logFileName = "testlogfile.log";
@@ -26,8 +26,8 @@ TEST_CASE("Logger", "[unit]") {
             }
 
             SECTION("and writes the global logging level into it") {
-                irr::core::stringc content = testhelper.readFile(logFileName);
-                REQUIRE(content.find("] LogLevel: Info") > -1);
+                std::string content = testhelper.readFile(logFileName);
+                REQUIRE_FALSE(content.find("] LogLevel: Info") == std::string::npos);
             }
         }
 
@@ -45,15 +45,15 @@ TEST_CASE("Logger", "[unit]") {
             leviathan::core::Logger subject(logFileName, leviathan::core::Logger::Level::INFO);
             subject.text = "Kilroy wuz here";
             subject.write();
-            irr::core::stringc content = testhelper.readFile(logFileName);
-            REQUIRE(content.find("] Kilroy wuz here") > -1);
+            std::string content = testhelper.readFile(logFileName);
+            REQUIRE_FALSE(content.find("] Kilroy wuz here") == std::string::npos);
 
             SECTION("with special characters") {
                 subject.text = "german umlauts: äöüß, some other things: >_%&$§?!@|";
                 subject.write();
                 content = testhelper.readFile(logFileName);
-                REQUIRE(content.find("äöüß") > -1);
-                REQUIRE(content.find(">_%&$§?!@|") > -1);
+                REQUIRE_FALSE(content.find("äöüß") == std::string::npos);
+                REQUIRE_FALSE(content.find(">_%&$§?!@|") == std::string::npos);
             }
 
             SECTION("over multiple lines") {
@@ -62,9 +62,9 @@ TEST_CASE("Logger", "[unit]") {
                 subject.text = "another line.";
                 subject.write();
                 content = testhelper.readFile(logFileName);
-                int32_t firstIndex = content.find("line.");
-                REQUIRE(firstIndex > -1);
-                REQUIRE(content.find("line.", static_cast<uint32_t>(firstIndex) + 1) > -1);
+                uint32_t firstIndex = content.find("line.");
+                REQUIRE_FALSE(firstIndex == std::string::npos);
+                REQUIRE_FALSE(content.find("line.", firstIndex + 1) == std::string::npos);
             }
 
             SECTION("and clears the text afterwards") {
@@ -84,11 +84,11 @@ TEST_CASE("Logger", "[unit]") {
             subject.write(leviathan::core::Logger::Level::DEBUG);
             subject.text = "a line hopefully never ever written";
             subject.write(leviathan::core::Logger::Level::ALL);
-            irr::core::stringc content = testhelper.readFile(logFileName);
-            REQUIRE(content.find("information") > -1);
-            REQUIRE(content.find("details") > -1);
-            REQUIRE_FALSE(content.find("debugging") > -1);
-            REQUIRE_FALSE(content.find("never ever") > -1);
+            std::string content = testhelper.readFile(logFileName);
+            REQUIRE_FALSE(content.find("information") == std::string::npos);
+            REQUIRE_FALSE(content.find("details") == std::string::npos);
+            REQUIRE(content.find("debugging") == std::string::npos);
+            REQUIRE(content.find("never ever") == std::string::npos);
         }
     }
 }

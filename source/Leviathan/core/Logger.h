@@ -8,6 +8,7 @@
 
 #include "irrlicht.h"
 #include <cstdint>
+// #include <filesystem> // TODO: use this as soon as it is available in mingw!
 #include <fstream>
 
 namespace leviathan {
@@ -48,7 +49,7 @@ namespace leviathan {
              *  \param append: Wenn `false`, dann wird immer eine neue Logdatei erzeugt. Wenn `true` wird angehängt,
              *         sofern vorhanden.
              */
-            Logger(const irr::io::path& fileName, const Level globalLogLevel, const bool append = false);
+            Logger(const char* fileName, const Level globalLogLevel, const bool append = false);
 
             /*! \brief Destruktor.
              */
@@ -70,7 +71,7 @@ namespace leviathan {
             std::fstream logFile_;  // Stream auf die Logdatei
             Level globalLogLevel_;  // Globales LogLevel
 
-            inline void openLogFile(const irr::io::path& fileName, const bool append = true);
+            inline void openLogFile(const char* fileName, const bool append = true);
             inline static void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
             inline void addTimeStamp(irr::core::stringc& txt);
         };

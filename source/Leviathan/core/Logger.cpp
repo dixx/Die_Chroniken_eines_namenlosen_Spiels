@@ -17,7 +17,8 @@ namespace leviathan {
         }
 
         Logger::~Logger() {
-            closeLogFile();
+            if (logFile_.is_open())
+                logFile_.close();
         }
 
         void Logger::write(const Level logLevel) {
@@ -39,14 +40,9 @@ namespace leviathan {
             std::ios_base::openmode mode = std::fstream::out;
             if (append)
                 mode |= std::fstream::app;
-            logFile_.open(fileName_.c_str(), mode);
+            logFile_.open(fileName.c_str(), mode);
             if (!logFile_.is_open())
                 exit(1);
-        }
-
-        void Logger::closeLogFile() {
-            if (logFile_.is_open())
-                logFile_.close();
         }
 
         void Logger::addLogLevelName(irr::core::stringc& txt, const Level logLevel) {

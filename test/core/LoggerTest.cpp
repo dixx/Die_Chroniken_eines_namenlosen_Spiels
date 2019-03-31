@@ -43,13 +43,13 @@ TEST_CASE("Logger", "[unit]") {
     SECTION("logging") {
         SECTION("it writes text into the logfile") {
             leviathan::core::Logger subject(logFileName, leviathan::core::Logger::Level::INFO);
-            subject.text = "Kilroy wuz here";
+            subject.text << "Kilroy wuz here";
             subject.write();
             std::string content = testhelper.readFile(logFileName);
             REQUIRE(content.find("] Kilroy wuz here") != std::string::npos);
 
             SECTION("with special characters") {
-                subject.text = "german umlauts: äöüß, some other things: >_%&$§?!@|";
+                subject.text << "german umlauts: äöüß, some other things: >_%&$§?!@|";
                 subject.write();
                 content = testhelper.readFile(logFileName);
                 REQUIRE(content.find("äöüß") != std::string::npos);
@@ -57,9 +57,9 @@ TEST_CASE("Logger", "[unit]") {
             }
 
             SECTION("over multiple lines") {
-                subject.text = "one line.";
+                subject.text << "one line.";
                 subject.write();
-                subject.text = "another line.";
+                subject.text << "another line.";
                 subject.write();
                 content = testhelper.readFile(logFileName);
                 uint32_t firstIndex = content.find("line.");
@@ -68,21 +68,21 @@ TEST_CASE("Logger", "[unit]") {
             }
 
             SECTION("and clears the text afterwards") {
-                subject.text = "usefull information";
+                subject.text << "usefull information";
                 subject.write();
-                REQUIRE(subject.text.empty());
+                REQUIRE(subject.text.str().empty());
             }
         }
 
         SECTION("it handles different logLevels") {
             leviathan::core::Logger subject(logFileName, leviathan::core::Logger::Level::DETAIL);
-            subject.text = "a line just for information";
+            subject.text << "a line just for information";
             subject.write(leviathan::core::Logger::Level::INFO);
-            subject.text = "a line full of details";
+            subject.text << "a line full of details";
             subject.write(leviathan::core::Logger::Level::DETAIL);
-            subject.text = "a line for debugging";
+            subject.text << "a line for debugging";
             subject.write(leviathan::core::Logger::Level::DEBUG);
-            subject.text = "a line hopefully never ever written";
+            subject.text << "a line hopefully never ever written";
             subject.write(leviathan::core::Logger::Level::ALL);
             std::string content = testhelper.readFile(logFileName);
             REQUIRE(content.find("information") != std::string::npos);

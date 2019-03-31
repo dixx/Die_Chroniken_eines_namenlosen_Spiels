@@ -6,10 +6,11 @@
 #ifndef LEVIATHAN_CORE_LOGGER_H
 #define LEVIATHAN_CORE_LOGGER_H
 
-#include "irrlicht.h"
 #include <cstdint>
 // #include <filesystem> // TODO: use this as soon as it is available in mingw!
 #include <fstream>
+#include <iomanip>
+#include <ostream>
 
 namespace leviathan {
     namespace core {
@@ -34,14 +35,10 @@ namespace leviathan {
                 ALL = 1000  //!< Alle verfügbaren Informationen
             };
 
-            /*! \brief Eine Zeile Text.
-             *  \details Da die Irrlicht-Strings bereits sehr mächtige Append-Methoden haben und wir uns den Aufwand
-             *           echt sparen können, wird dieser Member ausnahmsweise ohne Getter oder Setter zugänglich
-             *           gemacht.
+            /*! \brief Zu schreibender Text.
              *  \note Wird geleert sobald er in die Logdatei geschrieben wurde.
-             *  \attention Erst initialisieren, dann anhängen!
              */
-            irr::core::stringc text;
+            std::ostringstream text = std::ostringstream();
 
             /*! \brief Konstruktor.
              *  \param fileName: Logdateiname
@@ -68,12 +65,12 @@ namespace leviathan {
             void write(const Level logLevel = Level::INFO);
 
         private:
-            std::fstream logFile_;  // Stream auf die Logdatei
-            Level globalLogLevel_;  // Globales LogLevel
+            std::fstream logFile_;
+            Level globalLogLevel_;
 
             inline void openLogFile(const char* fileName, const bool append = true);
-            inline static void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
-            inline void addTimeStamp(irr::core::stringc& txt);
+            inline std::string logLevelName(const Level logLevel);
+            inline void addTimeStamp(std::ostringstream& txt);
         };
     }
 }

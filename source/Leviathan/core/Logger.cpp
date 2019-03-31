@@ -1,18 +1,15 @@
 #include "Logger.h"
 #include <chrono>
 #include <ctime>
-#include <iomanip>
 #include <sstream>
-
 
 namespace leviathan {
     namespace core {
         Logger::Logger(const char* fileName, const Level globalLogLevel, const bool append)
-        : text("LogLevel: "),
-          logFile_(),
+        : logFile_(),
           globalLogLevel_(globalLogLevel) {
             openLogFile(fileName, append);
-            addLogLevelName(text, globalLogLevel_);
+            text << "LogLevel: " << logLevelName(globalLogLevel_);
             write();
         }
 
@@ -23,15 +20,12 @@ namespace leviathan {
 
         void Logger::write(const Level logLevel) {
             if (logLevel <= globalLogLevel_) {
-                irr::core::stringc logline("");
-                addTimeStamp(logline);
-                logline += " [";
-                addLogLevelName(logline, logLevel);
-                logline += "] ";
-                logline += text;
-                logFile_ << logline.c_str() << std::endl;
+                std::ostringstream loglinePrefix;
+                addTimeStamp(loglinePrefix);
+                loglinePrefix << " [" << logLevelName(logLevel) << "] ";
+                logFile_ << loglinePrefix.str() << text.str() << std::endl;
             }
-            text = "";
+            text.str(std::string());
         }
 
         /* private: */
@@ -45,30 +39,24 @@ namespace leviathan {
                 exit(1);
         }
 
-        void Logger::addLogLevelName(irr::core::stringc& txt, const Level logLevel) {
+        std::string Logger::logLevelName(const Level logLevel) {
             switch (logLevel) {
             case Level::INFO:
-                txt += "Info";
-                break;
+                return "Info";
             case Level::DETAIL:
-                txt += "Detail";
-                break;
+                return "Detail";
             case Level::DEBUG:
-                txt += "Debug";
-                break;
+                return "Debug";
             case Level::ALL:
-                txt += "All";
-                break;
+                return "All";
             default:
-                txt += "unknown log level!";
+                return "unknown log level!";
             }
         }
 
-        void Logger::addTimeStamp(irr::core::stringc& txt) {
+        void Logger::addTimeStamp(std::ostringstream& txt) {
             auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-            std::stringstream ss;
-            ss << std::put_time(std::localtime(&now), "%d.%m.%Y %H:%M:%S");
-            txt += ss.str().c_str();
+            txt << std::put_time(std::localtime(&now), "%d.%m.%Y %H:%M:%S");
         }
     }
 }

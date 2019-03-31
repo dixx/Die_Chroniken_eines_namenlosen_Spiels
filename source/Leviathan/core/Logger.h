@@ -67,11 +67,10 @@ namespace leviathan {
             void write(const Level logLevel = Level::INFO);
 
         private:
-            irr::io::path fileName_;  // Logdateiname
             std::fstream logFile_;  // Stream auf die Logdatei
             Level globalLogLevel_;  // Globales LogLevel
 
-            inline void openLogFile(const bool append = true);
+            inline void openLogFile(const irr::io::path& fileName, const bool append = true);
             inline void closeLogFile();
             inline static void addLogLevelName(irr::core::stringc& txt, const Level logLevel);
             inline void addTimeStamp(irr::core::stringc& txt);

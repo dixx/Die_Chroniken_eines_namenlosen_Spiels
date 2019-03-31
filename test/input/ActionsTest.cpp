@@ -10,7 +10,7 @@ using namespace fakeit;
 
 TEST_CASE("Action Mapping", "[unit]") {
     Testhelper testhelper;
-    const irr::io::path mappingsFileName = "testactionmappings.yml";
+    const char* mappingsFileName = "testactionmappings.yml";
     irr::core::stringc content = "---\n"
                                  "- name: talk\n"
                                  "  id: 1\n"

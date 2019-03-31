@@ -12,9 +12,7 @@ namespace leviathan {
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
             } else {
-                logger_.text = "[Warning] - GameStateManager - cannot add state ";
-                logger_.text += id;
-                logger_.text += ", already exists!";
+                logger_.text << "[Warning] - GameStateManager - cannot add state " << id << ", already exists!";
                 logger_.write(Logger::Level::DEBUG);
             }
         }
@@ -51,9 +49,7 @@ namespace leviathan {
 
         bool GameStateManager::isUnknownState(const uint32_t id) const {
             if (states_.find(id) == states_.end()) {
-                logger_.text = "[Warning] - GameStateManager - unknown state ";
-                logger_.text += id;
-                logger_.text += " requested!";
+                logger_.text << "[Warning] - GameStateManager - unknown state " << id << " requested!";
                 logger_.write(Logger::Level::DEBUG);
                 return true;
             }
@@ -62,9 +58,7 @@ namespace leviathan {
 
         bool GameStateManager::isAlreadyActive(const uint32_t id) const {
             if (getActiveStateID() == id) {
-                logger_.text = "[Warning] - GameStateManager - active state ";
-                logger_.text += id;
-                logger_.text += " requested!";
+                logger_.text << "[Warning] - GameStateManager - active state " << id << " requested!";
                 logger_.write(Logger::Level::DEBUG);
                 return true;
             }
@@ -79,9 +73,8 @@ namespace leviathan {
             if (runningStateIDs_.size() < 2 || isSecondOnStack(id))
                 return false;
             if (isInStack(id)) {
-                logger_.text = "[Warning] - GameStateManager - requested state ";
-                logger_.text += id;
-                logger_.text += " is too deep down the stack!";
+                logger_.text << "[Warning] - GameStateManager - requested state " << id
+                             << " is too deep down the stack!";
                 logger_.write(Logger::Level::DEBUG);
                 return true;
             }

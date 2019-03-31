@@ -17,7 +17,7 @@ int main() {
 
         game.transitTo(STATE_PLAY);
         gameEngine.run();
-    } catch (std::runtime_error) {
+    } catch (std::runtime_error& _) {
         return 1;
     }
     return 0;

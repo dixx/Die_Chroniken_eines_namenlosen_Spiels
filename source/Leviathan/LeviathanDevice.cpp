@@ -12,7 +12,7 @@ namespace leviathan {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
         if (graphicEngine_ == nullptr) {
-            logger_.text = "could not initialize Irrlicht Engine!";
+            logger_.text << "could not initialize Irrlicht Engine!";
             logger_.write(core::Logger::Level::INFO);
             throw std::runtime_error("could not initialize Irrlicht Engine!");
         }

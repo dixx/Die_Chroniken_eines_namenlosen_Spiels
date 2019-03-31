@@ -11,7 +11,7 @@
 
 TEST_CASE("Configuration: read values", "[unit]") {
     Testhelper testhelper;
-    const irr::io::path configFileName = "testconfigfile.ini";
+    const char* configFileName = "testconfigfile.ini";
 
     SECTION("all relevant values can be read") {
         irr::core::stringc content = "[general]\n";
@@ -51,7 +51,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
 
 TEST_CASE("Configuration: default values", "[unit]") {
     Testhelper testhelper;
-    const irr::io::path configFileName = "testconfigfile.ini";
+    const char* configFileName = "testconfigfile.ini";
 
     SECTION("it has default values on unsuccessfull config file read") {
         leviathan::core::Configuration subject("");
@@ -79,7 +79,7 @@ TEST_CASE("Configuration: default values", "[unit]") {
 
 TEST_CASE("Configuration: file format", "[unit]") {
     Testhelper testhelper;
-    const irr::io::path configFileName = "testconfigfile.ini";
+    const char* configFileName = "testconfigfile.ini";
     leviathan::core::Configuration subject("");
 
     SECTION("# and ; are valid comment indicators") {

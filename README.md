@@ -1,3 +1,5 @@
+[![BCH compliance](https://bettercodehub.com/edge/badge/dixx/Die_Chroniken_eines_namenlosen_Spiels?branch=master)](https://bettercodehub.com/)
+
 # Die Chroniken eines namenlosen Spiels
 
 bladibladibla RPG yaddayadda Eigenbau blafasel.

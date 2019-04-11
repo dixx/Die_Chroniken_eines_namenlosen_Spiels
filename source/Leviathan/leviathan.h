@@ -16,6 +16,9 @@ namespace leviathan {
 
     //! Hilfsklassen für Eingabegeräte
     namespace input {}
+
+    //! Hilfsklassen für das Anzeigen
+    namespace video {}
 }
 
 #endif

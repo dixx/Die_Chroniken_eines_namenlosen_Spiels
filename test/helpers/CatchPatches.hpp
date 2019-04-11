@@ -10,8 +10,8 @@ namespace Catch {
     template<>
     struct StringMaker<irr::core::vector2di> {
         static std::string convert(const irr::core::vector2di& obj) {
-            std::stringstream ss;
-            ss << "(" << obj.X << ", " << obj.Y << ")";
+            std::ostringstream ss;
+            ss << "vec(" << obj.X << ", " << obj.Y << ")";
             return ss.str();
         }
     };

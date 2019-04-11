@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <string>
 #include "../../source/Leviathan/core/Logger.h" // we dogfood our own code ;)
-#include "CatchPatches.hpp"
 
 class Testhelper {
 public:

@@ -9,6 +9,7 @@ add_library(leviathan SHARED
   core/Timer.cpp
   input/Actions.cpp
   input/EventReceiver.cpp
+  video/MousePointerControl.cpp
   LeviathanDevice.cpp
 )
 

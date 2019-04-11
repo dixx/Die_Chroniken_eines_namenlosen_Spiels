@@ -96,7 +96,7 @@ TEST_CASE("Action Mapping", "[unit]") {
         }
     }
 
-    SECTION("onEvent returns success of event procession", "[unit]") {
+    SECTION("onEvent returns success of event procession") {
         REQUIRE_FALSE(subject.onEvent(leftMouseButtonEvent));
         REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
 

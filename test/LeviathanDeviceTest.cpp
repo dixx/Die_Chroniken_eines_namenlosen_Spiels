@@ -21,6 +21,7 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
         REQUIRE(typeid(subject.Randomizer()) == typeid(leviathan::core::Randomizer));
         REQUIRE(typeid(subject.Actions()) == typeid(leviathan::input::Actions));
         REQUIRE(typeid(subject.EventReceiver()) == typeid(leviathan::input::EventReceiver));
+        REQUIRE(typeid(subject.MousePointerControl()) == typeid(leviathan::video::MousePointerControl));
     }
 }
 

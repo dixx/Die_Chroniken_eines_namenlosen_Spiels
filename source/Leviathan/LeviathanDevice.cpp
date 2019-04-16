@@ -17,6 +17,7 @@ namespace leviathan {
             throw std::runtime_error("could not initialize Irrlicht Engine!");
         }
         graphicEngine_->setEventReceiver(&eventReceiver_);
+        mousePointerControl_ = std::make_unique<video::MousePointerControl>(eventReceiver_, graphicEngine_, logger_);
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -87,5 +88,9 @@ namespace leviathan {
 
     input::EventReceiver& LeviathanDevice::EventReceiver() {
         return eventReceiver_;
+    }
+
+    video::MousePointerControl& LeviathanDevice::MousePointerControl() {
+        return *mousePointerControl_;
     }
 }

@@ -8,6 +8,7 @@
 
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
+#include "../core/Logger.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <unordered_map>
@@ -24,12 +25,16 @@ namespace leviathan {
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
              *  \param graphicDevice: initialisiertes Irrlicht Device
+             *  \param logger: Instanz eines Loggers
              */
-            explicit MousePointerControl(
-                leviathan::input::IEventProducer& producer, irr::IrrlichtDevice* graphicDevice);
+            MousePointerControl(
+                leviathan::input::IEventProducer& producer,
+                irr::IrrlichtDevice* graphicDevice,
+                leviathan::core::Logger& logger
+            );
 
-            MousePointerControl() = delete;
             ~MousePointerControl() = default;
+            MousePointerControl() = delete;
             MousePointerControl(const MousePointerControl&) = delete;
             MousePointerControl& operator=(const MousePointerControl&) = delete;
 
@@ -58,16 +63,17 @@ namespace leviathan {
             void draw();
 
         private:
+            leviathan::core::Logger& logger_;
             uint32_t activeMousePointer_ = 0;
             const irr::video::SColor backgroundColor_ = irr::video::SColor(255, 255, 255, 255);
             irr::core::vector2di position_ = irr::core::vector2di(0, 0);
             irr::IrrlichtDevice* graphicDevice_ = nullptr;
             std::unordered_map<uint32_t, irr::video::ITexture*> baseImage_ =
                 std::unordered_map<uint32_t, irr::video::ITexture*>({{0, nullptr}});
-            std::unordered_map<uint32_t, const irr::core::recti> imageArea_ =
-                std::unordered_map<uint32_t, const irr::core::recti>({{0, irr::core::recti(0, 0, 0, 0)}});
-            std::unordered_map<uint32_t, const irr::core::vector2di> hotSpot_ =
-                std::unordered_map<uint32_t, const irr::core::vector2di>({{0, irr::core::vector2di(0, 0)}});
+            std::unordered_map<uint32_t, irr::core::recti> imageArea_ =
+                std::unordered_map<uint32_t, irr::core::recti>({{0, irr::core::recti(0, 0, 0, 0)}});
+            std::unordered_map<uint32_t, irr::core::vector2di> hotSpot_ =
+                std::unordered_map<uint32_t, irr::core::vector2di>({{0, irr::core::vector2di(0, 0)}});
         };
     }
 }

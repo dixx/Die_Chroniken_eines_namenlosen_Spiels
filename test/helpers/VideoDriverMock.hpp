@@ -7,7 +7,9 @@
 namespace mocks {
     class VideoDriverMock : public irr::video::IVideoDriver {
     public:
+        const irr::video::ITexture* mpTexture = nullptr;
         irr::core::vector2di mPosition = irr::core::vector2di();
+        irr::core::recti mImageArea = irr::core::recti();
         uint32_t mDraw2DImageArgsCallCount = 0;
         const irr::core::recti* mClippingRectangle = nullptr;
         irr::video::SColor mBackgroundColor = irr::video::SColor(0, 0, 0, 0);
@@ -17,9 +19,9 @@ namespace mocks {
             const irr::core::recti& imageArea, const irr::core::recti* clippingRectangle = nullptr,
             irr::video::SColor backgroundColor = irr::video::SColor(0, 0, 0, 0), bool useAlphaChannel = false)
         {
-            (void)texture;
-            (void)imageArea;
+            mpTexture = texture;
             mPosition = position;
+            mImageArea = imageArea;
             mClippingRectangle = clippingRectangle;
             mBackgroundColor = backgroundColor;
             mUseAlphaChannel = useAlphaChannel;

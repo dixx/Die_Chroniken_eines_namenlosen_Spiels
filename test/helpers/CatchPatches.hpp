@@ -15,6 +15,16 @@ namespace Catch {
             return ss.str();
         }
     };
+
+    template<>
+    struct StringMaker<irr::core::recti> {
+        static std::string convert(const irr::core::recti& obj) {
+            std::ostringstream ss;
+            ss << "rect(" << obj.UpperLeftCorner.X << ", " << obj.UpperLeftCorner.Y << ", " << obj.LowerRightCorner.X
+                << ", " << obj.LowerRightCorner.Y << ")";
+            return ss.str();
+        }
+    };
 }
 
 #endif

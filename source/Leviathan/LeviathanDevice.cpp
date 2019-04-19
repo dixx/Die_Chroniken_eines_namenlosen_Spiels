@@ -62,6 +62,10 @@ namespace leviathan {
         graphicEngine_->closeDevice();
     }
 
+    irr::IrrlichtDevice& LeviathanDevice::GraphicDevice() {
+        return *graphicEngine_;
+    }
+
     core::Logger& LeviathanDevice::Logger() {
         return logger_;
     }

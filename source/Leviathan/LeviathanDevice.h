@@ -61,6 +61,10 @@ namespace leviathan {
          */
         void halt();
 
+        /*! \brief Zugriff auf das Grafik-Entchen.
+         */
+        irr::IrrlichtDevice& GraphicDevice();
+
         /*! \brief Zugriff auf die TimeControl Instanz.
          */
         core::TimeControl& TimeControl();

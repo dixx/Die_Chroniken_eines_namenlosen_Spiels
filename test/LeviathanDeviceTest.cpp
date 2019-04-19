@@ -15,6 +15,7 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
 
     SECTION("it provides instances of usefull tools") {
         REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
+        REQUIRE(typeid(subject.GraphicDevice()) == typeid(irr::IrrlichtDevice));
         REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
         REQUIRE(typeid(subject.Configuration()) == typeid(leviathan::core::Configuration));
         REQUIRE(typeid(subject.GameStateManager()) == typeid(leviathan::core::GameStateManager));

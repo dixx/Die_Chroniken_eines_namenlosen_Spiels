@@ -89,11 +89,10 @@ TEST_CASE("Action Mapping", "[unit]") {
                 VerifyNoOtherInvocations(Method(consumerMock, onAction));
             }
         }
-        SECTION("action mappings can be changed by the user") {
-            SECTION("except for internal actions") {
-                // TODO: when needed.
-            }
-        }
+        // SECTION("action mappings can be changed by the user") {
+        //     SECTION("except for internal actions") {
+        //     }
+        // }
     }
 
     SECTION("onEvent returns success of event procession") {

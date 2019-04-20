@@ -4,11 +4,6 @@
 #include "catch.hpp"
 #include "irrlicht.h"
 
-// TODO
-// - enum values are allowed (only /[A-Z0-9_]/)
-// - integer values can be positive or negative
-// - float values may not have leading zeroes, can be positive or negative, and must have a `.` in them
-
 TEST_CASE("Configuration: read values", "[unit]") {
     Testhelper testhelper;
     const char* configFileName = "testconfigfile.ini";

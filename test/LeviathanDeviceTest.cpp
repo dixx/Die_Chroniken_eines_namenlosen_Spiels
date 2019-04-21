@@ -30,105 +30,105 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
     const char* configFileName = "testconfigfile.ini";
     testhelper.writeFile(configFileName, "[video]\nmax_fps=100\nscreen_x=5\nscreen_y=5\n");
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject(configFileName);
-    Mock<irr::ITimer> timerDouble;
-    When(Method(timerDouble, getTime)).AlwaysReturn(0);
-    Mock<irr::IrrlichtDevice> graphicEngineDouble;
+    Mock<irr::ITimer> timerMock;
+    When(Method(timerMock, getTime)).AlwaysReturn(0);
+    Mock<irr::IrrlichtDevice> graphicEngineMock;
     Mock<irr::video::IVideoDriver> videoDriverMock;
-    Fake(Method(graphicEngineDouble, yield));
     Fake(Method(videoDriverMock, beginScene));
     Fake(Method(videoDriverMock, endScene));
-    Fake(Method(graphicEngineDouble, closeDevice));
-    When(Method(graphicEngineDouble, getTimer)).AlwaysReturn(&(timerDouble.get()));
-    When(Method(graphicEngineDouble, getVideoDriver)).AlwaysReturn(&(videoDriverMock.get()));
-    When(Method(graphicEngineDouble, isWindowActive)).AlwaysReturn(true);
-    subject.injectMockedGraphicEngine(graphicEngineDouble.get());
-    Mock<leviathan::core::IGameState> gameStateDouble;
-    Fake(Method(gameStateDouble, update), Method(gameStateDouble, draw));
-    subject.GameStateManager().add(gameStateDouble.get(), 42);
+    When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&(videoDriverMock.get()));
+    Fake(Method(graphicEngineMock, yield));
+    Fake(Method(graphicEngineMock, closeDevice));
+    When(Method(graphicEngineMock, getTimer)).AlwaysReturn(&(timerMock.get()));
+    When(Method(graphicEngineMock, isWindowActive)).AlwaysReturn(true);
+    subject.injectMockedGraphicEngine(graphicEngineMock.get());
+    Mock<leviathan::core::IGameState> gameStateMock;
+    Fake(Method(gameStateMock, update), Method(gameStateMock, draw));
+    subject.GameStateManager().add(gameStateMock.get(), 42);
     subject.GameStateManager().transitTo(42);
 
     SECTION("it can be halted") {
         subject.halt();
-        Verify(Method(graphicEngineDouble, closeDevice)).Exactly(1_Times);
+        Verify(Method(graphicEngineMock, closeDevice)).Exactly(1_Times);
     }
 
     SECTION("it should be fair to other apps if inactive") {
-        When(Method(graphicEngineDouble, run)).Return(5_Times(true), false);
-        When(Method(graphicEngineDouble, isWindowActive)).Return(true, true, false, false, true);
+        When(Method(graphicEngineMock, run)).Return(5_Times(true), false);
+        When(Method(graphicEngineMock, isWindowActive)).Return(true, true, false, false, true);
         subject.run();
-        Verify(Method(graphicEngineDouble, yield)).Exactly(2_Times);
+        Verify(Method(graphicEngineMock, yield)).Exactly(2_Times);
     }
 
     SECTION("it should not draw if engine is shut down directly after game state update") {
-        When(Method(graphicEngineDouble, run)).Return(true, false);
+        When(Method(graphicEngineMock, run)).Return(true, false);
         subject.run();
-        Verify(Method(gameStateDouble, draw)).Exactly(0_Times);
+        Verify(Method(gameStateMock, draw)).Exactly(0_Times);
     }
 
     SECTION("performance tests") {
         uint32_t virtualTime = 0;
-        When(Method(timerDouble, getTime)).AlwaysDo([&virtualTime] { return virtualTime++; });
-        When(Method(graphicEngineDouble, run)).AlwaysDo([&virtualTime] { return virtualTime < 1000; });
+        When(Method(timerMock, getTime)).AlwaysDo([&virtualTime] { return virtualTime++; });
+        When(Method(graphicEngineMock, run)).AlwaysDo([&virtualTime] { return virtualTime < 1000; });
 
         SECTION("without calculation stress") {
             subject.run();
             SECTION("it should draw with a fixed maximum frame rate") {
-                Verify(Method(gameStateDouble, draw)).Exactly(100_Times);
+                Verify(Method(gameStateMock, draw)).Exactly(100_Times);
                 SECTION("and it should update every cycle") {
-                    Verify(Method(gameStateDouble, update)).Exactly(100_Times);
+                    Verify(Method(gameStateMock, update)).Exactly(100_Times);
                 }
             }
         }
 
         SECTION("with peak load") {
-            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime] {
+            When(Method(gameStateMock, draw)).AlwaysDo([&virtualTime] {
                 if (virtualTime == 3)
                     virtualTime += 800;
             });
-            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
+            When(Method(gameStateMock, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();
             SECTION("it should draw with a fixed maximum frame rate") {
-                Verify(Method(gameStateDouble, draw)).Exactly(100_Times);
+                Verify(Method(gameStateMock, draw)).Exactly(100_Times);
                 SECTION("and it should update every cycle") {
-                    Verify(Method(gameStateDouble, update)).Exactly(100_Times);
+                    Verify(Method(gameStateMock, update)).Exactly(100_Times);
                 }
             }
         }
 
         SECTION("with sometimes zero elapsed time") {
             std::srand(42);
-            When(Method(timerDouble, getTime)).AlwaysDo([&virtualTime] {
+            When(Method(timerMock, getTime)).AlwaysDo([&virtualTime] {
                 return (std::rand() & 1) ? virtualTime : virtualTime++;
             });
             subject.run();
             SECTION("it should draw with a fixed maximum frame rate") {
-                Verify(Method(gameStateDouble, draw)).Exactly(100_Times);
+                Verify(Method(gameStateMock, draw)).Exactly(100_Times);
                 SECTION("and it should update every cycle") {
-                    Verify(Method(gameStateDouble, update)).Exactly(100_Times);
+                    Verify(Method(gameStateMock, update)).Exactly(100_Times);
                 }
             }
         }
 
         SECTION("with moderate calculation stress") {
-            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime] { virtualTime += 8; });
-            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
+            When(Method(gameStateMock, draw)).AlwaysDo([&virtualTime] { virtualTime += 8; });
+            When(Method(gameStateMock, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();
             SECTION("it should begin to skip frames") {
-                Verify(Method(gameStateDouble, draw)).AtLeast(85_Times);
+                Verify(Method(gameStateMock, draw)).AtLeast(85_Times);
                 SECTION("but it should update every cycle") {
-                    Verify(Method(gameStateDouble, update)).Exactly(100_Times);
+                    Verify(Method(gameStateMock, update)).Exactly(100_Times);
                 }
             }
         }
 
         SECTION("with much calculation stress") {
-            When(Method(gameStateDouble, draw)).AlwaysDo([&virtualTime] { virtualTime += 200; });
-            When(Method(gameStateDouble, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
+            When(Method(gameStateMock, draw)).AlwaysDo([&virtualTime] { virtualTime += 200; });
+            When(Method(gameStateMock, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();
             SECTION("it should still try to draw") {
-                Verify(Method(gameStateDouble, draw)).AtLeast(5_Times);
+                Verify(Method(gameStateMock, draw)).AtLeast(5_Times);
                 SECTION("and it should try to update many cycles") {
-                    Verify(Method(gameStateDouble, update)).AtLeast(40_Times);
+                    Verify(Method(gameStateMock, update)).AtLeast(40_Times);
                 }
             }
         }

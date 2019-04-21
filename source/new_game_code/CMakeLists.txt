@@ -13,3 +13,6 @@ install(FILES
   "${RESOURCES_DIR}/config.ini"
   "${RESOURCES_DIR}/game_state_play_action_mappings.yaml"
 DESTINATION .)
+install(FILES
+  "${RESOURCES_DIR}/GFX/Mauszeiger.bmp"
+DESTINATION ./gfx)

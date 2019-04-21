@@ -1,4 +1,5 @@
 #include "MousePointerControl.h"
+#include "Constants.h"
 #include <stdexcept>
 
 namespace leviathan {
@@ -19,8 +20,12 @@ namespace leviathan {
             return true;
         }
 
-        void MousePointerControl::createMousePointer(const uint32_t id, const irr::io::path& imageFileName,
-            const irr::core::recti& imageArea, const irr::core::vector2di& hotSpot) {
+        void MousePointerControl::createMousePointer(
+            const uint32_t id,
+            const irr::io::path& imageFileName,
+            const irr::core::recti& imageArea,
+            const irr::core::vector2di& hotSpot
+        ) {
             irr::video::ITexture* texture = graphicDevice_->getVideoDriver()->getTexture(imageFileName);
             if (texture == nullptr) {
                 logger_.text << "[Warning] - MousePointerControl - cannot load texture " << imageFileName.c_str() << "!";
@@ -33,6 +38,7 @@ namespace leviathan {
                 return;
             }
             baseImage_[id] = texture;
+            graphicDevice_->getVideoDriver()->makeColorKeyTexture(baseImage_[id], COL_MAGICPINK);
             imageArea_[id] = imageArea;
             hotSpot_[id] = hotSpot;
         }

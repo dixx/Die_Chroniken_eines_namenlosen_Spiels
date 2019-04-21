@@ -1,3 +1,4 @@
+#include "../../source/Leviathan/video/Constants.h"
 #include "../../source/Leviathan/video/MousePointerControl.h"
 #include "../../source/Leviathan/input/IEventProducer.h"
 #include "catch.hpp"
@@ -10,6 +11,9 @@
 
 using namespace fakeit;
 
+#define getTextureArgs irr::video::ITexture*(const irr::io::path&)
+#define makeColorKeyTextureArgs void(irr::video::ITexture*, irr::video::SColor, bool)
+
 TEST_CASE("MousePointerControl", "[unit]") {
     Testhelper testhelper;
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
@@ -20,8 +24,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
     Mock<irr::gui::ICursorControl> cursorControlMock;
     Fake(OverloadedMethod(cursorControlMock, setVisible, void(bool)));
     Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
-    When(OverloadedMethod(videoDriverSpy, getTexture, irr::video::ITexture*(const irr::io::path&)))
-        .AlwaysReturn(&textureMock.get());
+    When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
     When(Method(graphicDeviceMock, getVideoDriver)).AlwaysReturn(&videoDriverMock);
     When(Method(graphicDeviceMock, getCursorControl)).AlwaysReturn(&cursorControlMock.get());
     irr::SEvent mouseMovementEvent, mouseButtonEvent, keyboardEvent;
@@ -40,7 +43,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
 
     SECTION("events") {
         SECTION("subscribes to an event producer for movement input events") {
-            // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
+            // FIXME: issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
             Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
         }
 
@@ -55,19 +58,26 @@ TEST_CASE("MousePointerControl", "[unit]") {
             subject.setActiveMousPointer(1);
             subject.draw();
             REQUIRE(videoDriverMock.mPosition == irr::core::vector2di(0, 0));
-            REQUIRE(videoDriverMock.mDraw2DImageArgsCallCount == 1);
+            REQUIRE(videoDriverMock.mDraw2DImageMethodCallCount == 1);
 
             videoDriverMock.ClearInvocationHistory();
             subject.onEvent(mouseMovementEvent);
             subject.draw();
             REQUIRE(videoDriverMock.mPosition == irr::core::vector2di(123, 234));
-            REQUIRE(videoDriverMock.mDraw2DImageArgsCallCount == 1);
+            REQUIRE(videoDriverMock.mDraw2DImageMethodCallCount == 1);
         }
     }
 
     SECTION("creation") {
         SECTION("can create a mouse pointer from image") {
             subject.createMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
+
+            // FIXME: method is called but Fakeit ignores it
+            // SECTION("with color key transparency") {
+            //     Verify(ConstOverloadedMethod(videoDriverSpy, makeColorKeyTexture, makeColorKeyTextureArgs)
+            //         .Using(&textureMock.get(), leviathan::video::COL_MAGICPINK, false)
+            //     ).Once();
+            // }
 
             SECTION("but will not overwrite an existing mouse pointer") {
                 subject.createMousePointer(
@@ -80,13 +90,12 @@ TEST_CASE("MousePointerControl", "[unit]") {
             }
 
             SECTION("and creates no mouse arrow on error") {
-                When(OverloadedMethod(videoDriverSpy, getTexture, irr::video::ITexture*(const irr::io::path&)))
-                    .Return(nullptr);
+                When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).Return(nullptr);
                 subject.createMousePointer(
                     2, "unknown_image.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
                 subject.setActiveMousPointer(2);
                 subject.draw();
-                REQUIRE(videoDriverMock.mDraw2DImageArgsCallCount == 0);
+                REQUIRE(videoDriverMock.mDraw2DImageMethodCallCount == 0);
             }
         }
     }
@@ -98,7 +107,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
         SECTION("draws the current mouse pointer") {
             subject.setActiveMousPointer(1);
             subject.draw();
-            REQUIRE(videoDriverMock.mDraw2DImageArgsCallCount == 1);
+            REQUIRE(videoDriverMock.mDraw2DImageMethodCallCount == 1);
             REQUIRE(videoDriverMock.mpTexture == &textureMock.get());
             REQUIRE(videoDriverMock.mImageArea == irr::core::recti(40, 40, 80, 80));
             REQUIRE(videoDriverMock.mPosition == irr::core::vector2di(-20, -20));
@@ -117,7 +126,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
         SECTION("defaults to the system mouse arrow on unknown mouse pointer id") {
             subject.setActiveMousPointer(42);
             subject.draw();
-            REQUIRE(videoDriverMock.mDraw2DImageArgsCallCount == 0);
+            REQUIRE(videoDriverMock.mDraw2DImageMethodCallCount == 0);
         }
     }
 }

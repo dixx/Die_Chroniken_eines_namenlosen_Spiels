@@ -10,7 +10,7 @@ namespace mocks {
         const irr::video::ITexture* mpTexture = nullptr;
         irr::core::vector2di mPosition = irr::core::vector2di();
         irr::core::recti mImageArea = irr::core::recti();
-        uint32_t mDraw2DImageArgsCallCount = 0;
+        uint32_t mDraw2DImageMethodCallCount = 0;
         const irr::core::recti* mClippingRectangle = nullptr;
         irr::video::SColor mBackgroundColor = irr::video::SColor(0, 0, 0, 0);
         bool mUseAlphaChannel = false;
@@ -25,11 +25,11 @@ namespace mocks {
             mClippingRectangle = clippingRectangle;
             mBackgroundColor = backgroundColor;
             mUseAlphaChannel = useAlphaChannel;
-            mDraw2DImageArgsCallCount++;
+            mDraw2DImageMethodCallCount++;
         }
 
         void ClearInvocationHistory() {
-            mDraw2DImageArgsCallCount = 0;
+            mDraw2DImageMethodCallCount = 0;
         }
 
         _IRR_DEPRECATED_ irr::video::IImage* createImage(

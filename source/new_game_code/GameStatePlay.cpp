@@ -17,9 +17,7 @@ void GameStatePlay::update(const float elapsedSeconds) {
 }
 
 void GameStatePlay::draw() {
-    gameEngine_.GraphicDevice().getVideoDriver()->beginScene(true, false);
     gameEngine_.MousePointerControl().draw();
-    gameEngine_.GraphicDevice().getVideoDriver()->endScene();
 }
 
 void GameStatePlay::onAction(const uint32_t id, const bool isActive) {

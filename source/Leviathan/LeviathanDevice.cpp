@@ -53,17 +53,16 @@ namespace leviathan {
                 //     break;
                 ++loops;
             }
-            if (we_must_draw)
+            if (we_must_draw) {
+                graphicEngine_->getVideoDriver()->beginScene(true, false);
                 gameStateManager_.draw();
+                graphicEngine_->getVideoDriver()->endScene();
+            }
         }
     }
 
     void LeviathanDevice::halt() {
         graphicEngine_->closeDevice();
-    }
-
-    irr::IrrlichtDevice& LeviathanDevice::GraphicDevice() {
-        return *graphicEngine_;
     }
 
     core::Logger& LeviathanDevice::Logger() {

@@ -15,7 +15,6 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
 
     SECTION("it provides instances of usefull tools") {
         REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
-        // REQUIRE(typeid(subject.GraphicDevice()) == typeid(irr::IrrlichtDevice)); // FIXME: find out why SEGFAULT
         REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
         REQUIRE(typeid(subject.Configuration()) == typeid(leviathan::core::Configuration));
         REQUIRE(typeid(subject.GameStateManager()) == typeid(leviathan::core::GameStateManager));
@@ -34,9 +33,13 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
     Mock<irr::ITimer> timerDouble;
     When(Method(timerDouble, getTime)).AlwaysReturn(0);
     Mock<irr::IrrlichtDevice> graphicEngineDouble;
+    Mock<irr::video::IVideoDriver> videoDriverMock;
     Fake(Method(graphicEngineDouble, yield));
+    Fake(Method(videoDriverMock, beginScene));
+    Fake(Method(videoDriverMock, endScene));
     Fake(Method(graphicEngineDouble, closeDevice));
     When(Method(graphicEngineDouble, getTimer)).AlwaysReturn(&(timerDouble.get()));
+    When(Method(graphicEngineDouble, getVideoDriver)).AlwaysReturn(&(videoDriverMock.get()));
     When(Method(graphicEngineDouble, isWindowActive)).AlwaysReturn(true);
     subject.injectMockedGraphicEngine(graphicEngineDouble.get());
     Mock<leviathan::core::IGameState> gameStateDouble;

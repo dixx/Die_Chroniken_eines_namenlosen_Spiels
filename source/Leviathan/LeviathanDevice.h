@@ -14,7 +14,9 @@
 #include "core/Randomizer.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
+#include "video/MousePointerControl.h"
 #include "irrlicht.h"
+#include <memory>
 
 #ifndef NDEBUG
 #    define LOG_FILE_NAME "game.log"
@@ -87,6 +89,10 @@ namespace leviathan {
          */
         input::EventReceiver& EventReceiver();
 
+        /*! \brief Zugriff auf Mauszeiger.
+         */
+        video::MousePointerControl& MousePointerControl();
+
     private:
         core::Configuration configuration_;
         core::Logger logger_;
@@ -96,6 +102,7 @@ namespace leviathan {
         core::Randomizer randomizer_ = core::Randomizer();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
+        std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests
     };

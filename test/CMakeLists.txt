@@ -7,10 +7,13 @@ add_executable(unit_tests
   core/TimeControlTest.cpp
   core/TimerTest.cpp
   core/RandomizerTest.cpp
+  helpers/CatchPatches.hpp
+  helpers/FakeitPatches.hpp
   helpers/Testhelper.cpp
   helpers/TesthelperLeviathanDevice.cpp
   input/ActionsTest.cpp
   input/EventReceiverTest.cpp
+  video/MousePointerControlTest.cpp
   LeviathanDeviceTest.cpp
   unit_tests.cpp
 )

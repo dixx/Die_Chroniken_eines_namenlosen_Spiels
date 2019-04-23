@@ -42,7 +42,7 @@ namespace leviathan {
              *  \param gameState: zu verwaltender Spielzustand
              *  \param id: Identifikator für späteren Zugriff auf den Zustand
              */
-            void add(IGameState& gameState, uint32_t id);
+            void add(IGameState& gameState, uint32_t id); // TODO: add const
 
             /*! \brief Wechselt zum Spielzustand welcher unter dieser ID abgelegt wurde.
              *  \note Zustände werden übereinander auf einen Stack gelegt.
@@ -52,7 +52,7 @@ namespace leviathan {
              *        Ist der Zustand bereits aktiv, oder weiter unten im Stack, findet kein Transit statt.
              *  \param id: Identifikator des gewünschten Zustands
              */
-            void transitTo(uint32_t id);
+            void transitTo(uint32_t id); // TODO: add const
 
             /*! \brief Aktualisiert den momentan aktiven Zustand.
              *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden

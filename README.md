@@ -1,6 +1,5 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/dixx/Die_Chroniken_eines_namenlosen_Spiels?branch=master)](https://bettercodehub.com/)
 [![CodeFactor](https://www.codefactor.io/repository/github/dixx/die_chroniken_eines_namenlosen_spiels/badge)](https://www.codefactor.io/repository/github/dixx/die_chroniken_eines_namenlosen_spiels)
-[![Coverage Status](https://coveralls.io/repos/github/dixx/Die_Chroniken_eines_namenlosen_Spiels/badge.svg?branch=master)](https://coveralls.io/github/dixx/Die_Chroniken_eines_namenlosen_Spiels?branch=master)
 
 # Die Chroniken eines namenlosen Spiels
 

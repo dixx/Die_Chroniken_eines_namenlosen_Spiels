@@ -12,6 +12,7 @@
 #include "core/Logger.h"
 #include "core/TimeControl.h"
 #include "core/Randomizer.h"
+#include "gui/MenuControl.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
 #include "video/MousePointerControl.h"
@@ -81,6 +82,10 @@ namespace leviathan {
          */
         core::Randomizer& Randomizer();
 
+        /*! \brief Zugriff auf Erstellen und Verwalten von Menüs.
+         */
+        gui::MenuControl& MenuControl();
+
         /*! \brief Zugriff auf Input-Mappings.
          */
         input::Actions& Actions();
@@ -100,6 +105,7 @@ namespace leviathan {
         core::TimeControl timeControl_ = core::TimeControl();
         core::GameStateManager gameStateManager_;
         core::Randomizer randomizer_ = core::Randomizer();
+        gui::MenuControl menuControl_ = gui::MenuControl();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;

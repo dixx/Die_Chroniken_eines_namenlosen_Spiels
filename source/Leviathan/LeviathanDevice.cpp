@@ -85,6 +85,10 @@ namespace leviathan {
         return randomizer_;
     }
 
+    gui::MenuControl& LeviathanDevice::MenuControl() {
+        return menuControl_;
+    }
+
     input::Actions& LeviathanDevice::Actions() {
         return actions_;
     }

@@ -55,6 +55,7 @@ TEST_CASE("Action Mapping", "[unit]") {
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_KEY_INPUT_EVENT)).Exactly(Once);
+        VerifyNoOtherInvocations(eventBrokerMock);
     }
 
     SECTION("consumers can subscribe to certain actions") {

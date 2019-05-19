@@ -45,6 +45,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
         SECTION("subscribes to an event producer for movement input events") {
             // FIXME: issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
             Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
+            VerifyNoOtherInvocations(eventBrokerMock);
         }
 
         SECTION("does only handle mouse movement events") {

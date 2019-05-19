@@ -105,8 +105,8 @@ namespace leviathan {
         core::TimeControl timeControl_ = core::TimeControl();
         core::GameStateManager gameStateManager_;
         core::Randomizer randomizer_ = core::Randomizer();
-        gui::MenuControl menuControl_ = gui::MenuControl();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
+        gui::MenuControl menuControl_;
         input::Actions actions_;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
 

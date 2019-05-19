@@ -7,6 +7,7 @@ add_executable(unit_tests
   core/TimeControlTest.cpp
   core/TimerTest.cpp
   core/RandomizerTest.cpp
+  gui/MenuControlTest.cpp
   helpers/CatchPatches.hpp
   helpers/FakeitPatches.hpp
   helpers/Testhelper.cpp

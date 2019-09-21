@@ -23,7 +23,7 @@ namespace leviathan {
              *  \param guiEnv: Zeiger auf die GUI-Umgebung der Graphic Engine
              *  \param producer: produziert (versendet) Events
              */
-            explicit MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer);
+            MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer);
 
             MenuControl() = delete;
             ~MenuControl() = default;

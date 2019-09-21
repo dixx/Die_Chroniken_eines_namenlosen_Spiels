@@ -20,9 +20,10 @@ namespace leviathan {
 
         public:
             /*! \brief Konstruktor.
+             *  \param guiEnv: Zeiger auf die GUI-Umgebung der Graphic Engine
              *  \param producer: produziert (versendet) Events
              */
-            explicit MenuControl(input::IEventProducer& producer);
+            explicit MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer);
 
             MenuControl() = delete;
             ~MenuControl() = default;
@@ -35,6 +36,9 @@ namespace leviathan {
              * `false`
              */
             bool onEvent(const irr::SEvent& event);
+
+        private:
+            irr::gui::IGUIEnvironment* _guiEnv = nullptr;
         };
     }
 }

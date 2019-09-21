@@ -2,7 +2,9 @@
 
 namespace leviathan {
     namespace gui {
-        MenuControl::MenuControl(input::IEventProducer& producer) {
+        MenuControl::MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer)
+        : _guiEnv(guiEnv)
+        {
             producer.subscribe(*this, irr::EET_GUI_EVENT);
         }
 

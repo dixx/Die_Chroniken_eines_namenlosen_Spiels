@@ -106,8 +106,8 @@ namespace leviathan {
         core::GameStateManager gameStateManager_;
         core::Randomizer randomizer_ = core::Randomizer();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
-        gui::MenuControl menuControl_;
         input::Actions actions_;
+        std::unique_ptr<gui::MenuControl> menuControl_= nullptr;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests

@@ -28,9 +28,43 @@ TEST_CASE("Event Receiver", "[unit]") {
 
         SECTION("and receive only subscribed events") {
             subject.OnEvent(leftMouseButtonEvent);
-            VerifyNoOtherInvocations(Method(consumerMock, onEvent));
             subject.OnEvent(spaceBarEvent);
             Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            VerifyNoOtherInvocations(Method(consumerMock, onEvent));
+        }
+
+        SECTION("foolproof") {
+            subject.subscribe(consumerMock.get(), irr::EET_KEY_INPUT_EVENT);
+            subject.OnEvent(leftMouseButtonEvent);
+            subject.OnEvent(spaceBarEvent);
+            Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            VerifyNoOtherInvocations(Method(consumerMock, onEvent));
+        }
+    }
+
+    SECTION("consumers can unsubscribe from certain event types") {
+        subject.subscribe(consumerMock.get(), irr::EET_KEY_INPUT_EVENT);
+        subject.subscribe(consumerMock.get(), irr::EET_MOUSE_INPUT_EVENT);
+
+        subject.OnEvent(spaceBarEvent);
+        subject.OnEvent(leftMouseButtonEvent);
+        Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+        Verify(Method(consumerMock, onEvent).Using(leftMouseButtonEvent)).Exactly(Once);
+        consumerMock.ClearInvocationHistory();
+
+        subject.unsubscribe(consumerMock.get(), irr::EET_MOUSE_INPUT_EVENT);
+        subject.OnEvent(spaceBarEvent);
+        subject.OnEvent(leftMouseButtonEvent);
+        Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+        VerifyNoOtherInvocations(Method(consumerMock, onEvent));
+        consumerMock.ClearInvocationHistory();
+
+        SECTION("foolproof") {
+            subject.unsubscribe(consumerMock.get(), irr::EET_MOUSE_INPUT_EVENT);
+            subject.OnEvent(spaceBarEvent);
+            subject.OnEvent(leftMouseButtonEvent);
+            Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            VerifyNoOtherInvocations(Method(consumerMock, onEvent));
         }
     }
 

@@ -48,6 +48,7 @@ namespace leviathan {
              *  \param eventType: Typ der Events, die weitergeleitet werden sollen
              */
             void subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
+            void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
 
         private:
             std::map<irr::EEVENT_TYPE, std::set<leviathan::input::IEventConsumer*>> _subscriptions =

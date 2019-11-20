@@ -15,5 +15,9 @@ namespace leviathan {
         void EventReceiver::subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
             _subscriptions[eventType].insert(&consumer);
         }
+
+        void EventReceiver::unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
+            _subscriptions[eventType].erase(&consumer);
+        }
     }
 }

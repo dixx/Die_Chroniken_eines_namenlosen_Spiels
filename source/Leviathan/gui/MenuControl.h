@@ -6,6 +6,7 @@
 #ifndef LEVIATHAN_GUI_MENUCONTROL_H
 #define LEVIATHAN_GUI_MENUCONTROL_H
 
+#include <memory>
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
 #include "irrlicht.h"
@@ -25,8 +26,9 @@ namespace leviathan {
              */
             MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer);
 
+            ~MenuControl();
+
             MenuControl() = delete;
-            ~MenuControl() = default;
             MenuControl(const MenuControl&) = delete;
             MenuControl& operator=(const MenuControl&) = delete;
 
@@ -37,8 +39,15 @@ namespace leviathan {
              */
             bool onEvent(const irr::SEvent& event);
 
+            /*! \brief Fügt ein neues Menü hinzu.
+             *  \param name: Bezeichner/Identifikator für das neue Menü
+             *  \return Zeiger auf das neue Menü
+             */
+            irr::gui::IGUIElement* add(const char* name); // TODO: better create a wrapper?
+
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
+            input::IEventProducer& _producer;
         };
     }
 }

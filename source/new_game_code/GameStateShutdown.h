@@ -15,6 +15,10 @@ public:
 
     void draw();
 
+    void setActive();
+
+    void setInactive();
+
 private:
     leviathan::LeviathanDevice& gameEngine_;
 };

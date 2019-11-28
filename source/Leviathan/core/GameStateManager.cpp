@@ -11,6 +11,8 @@ namespace leviathan {
                 throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
+                logger_.text << "GameStateManager - add state: " << id << " = " << &gameState;
+                logger_.write(Logger::Level::ALL);
             } else {
                 logger_.text << "[Warning] - GameStateManager - cannot add state " << id << ", already exists!";
                 logger_.write(Logger::Level::DEBUG);
@@ -18,13 +20,23 @@ namespace leviathan {
         }
 
         void GameStateManager::transitTo(uint32_t id) {
-            if (isUnknownState(id) || isAlreadyActive(id) || isDeeperDownTheStack(id))
+            if (isUnknownState(id) || isAlreadyActive(id) || isDeeperDownTheStack(id)) {
+                logger_.text << "GameStateManager - transit to " << id << " failed.";
+                logger_.write(Logger::Level::ALL);
                 return;
+            }
+            if (getActiveStateID() != NO_STATE_ACTIVE)
+                states_[getActiveStateID()]->setInactive();
             if (isSecondOnStack(id)) {
                 runningStateIDs_.pop_front();
+                logger_.text << "GameStateManager - transit to " << id  << " by pop.";
+                logger_.write(Logger::Level::ALL);
             } else {
                 runningStateIDs_.push_front(id);
+                logger_.text << "GameStateManager - transit to " << id  << " by push.";
+                logger_.write(Logger::Level::ALL);
             }
+            states_[id]->setActive();
         }
 
         void GameStateManager::update(const float elapsedSeconds) {

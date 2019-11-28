@@ -44,7 +44,8 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
     When(Method(graphicEngineMock, isWindowActive)).AlwaysReturn(true);
     subject.injectMockedGraphicEngine(graphicEngineMock.get());
     Mock<leviathan::core::IGameState> gameStateMock;
-    Fake(Method(gameStateMock, update), Method(gameStateMock, draw));
+    Fake(Method(gameStateMock, update), Method(gameStateMock, draw), Method(gameStateMock, setActive),
+        Method(gameStateMock, setInactive));
     subject.GameStateManager().add(gameStateMock.get(), 42);
     subject.GameStateManager().transitTo(42);
 

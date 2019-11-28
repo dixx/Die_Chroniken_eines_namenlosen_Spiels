@@ -9,6 +9,7 @@
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
+#include "../core/Logger.h"
 #include "irrlicht.h"
 #include "yaml-cpp/yaml.h"
 #include <cstdint>
@@ -27,8 +28,9 @@ namespace leviathan {
         public:
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
+             *  \param logger: Instanz eines Loggers
              */
-            explicit Actions(IEventProducer& producer);
+            Actions(IEventProducer& producer, core::Logger& logger);
 
             Actions() = delete;
             ~Actions() = default;
@@ -67,6 +69,7 @@ namespace leviathan {
             // void mergeFromFile(const irr::io::path& fileName);
 
         private:
+            core::Logger& _logger;
             struct Input {
                 Input(){};  // std::map needs this
                 explicit Input(const YAML::Node& node);

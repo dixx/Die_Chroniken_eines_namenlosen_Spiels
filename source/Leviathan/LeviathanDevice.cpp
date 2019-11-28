@@ -8,7 +8,7 @@ namespace leviathan {
     : configuration_(fileName),
       logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()),
       gameStateManager_(logger_),
-      actions_(eventReceiver_) {
+      actions_(eventReceiver_, logger_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
         if (graphicEngine_ == nullptr) {

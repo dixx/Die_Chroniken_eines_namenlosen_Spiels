@@ -32,29 +32,39 @@ TEST_CASE("MenuControl", "[unit]") {
         VerifyNoOtherInvocations(eventBrokerMock);
     }
 
-    SECTION("#add adds a blank menu") {
+    SECTION("#addMenu adds a blank menu") {
         When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu, &anotherMenu);
 
-        auto result = subject.add("some menue");
+        auto result = subject.addMenu("some menu");
         REQUIRE(result == &menu);
         REQUIRE(result->getParent() == rootElement);
         REQUIRE(result->getChildren().size() == 0);
-        result = subject.add("some other menue");
+        result = subject.addMenu("some other menu");
         REQUIRE(result == &anotherMenu);
         REQUIRE(result->getParent() == rootElement);
         REQUIRE(result->getChildren().size() == 0);
     }
 
-    SECTION("#addButton adds a button to a menu") {
-    }
-
     SECTION("#disable hides a menu from view and from events") {
+        When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
+        auto sample = subject.addMenu("some menu");
+        REQUIRE(sample->isVisible());
+        REQUIRE(sample->isEnabled());
+
+        subject.disable("some menu");
+        REQUIRE_FALSE(sample->isVisible());
+        REQUIRE_FALSE(sample->isEnabled());
     }
 
     SECTION("#enable makes a menu visible for view and events") {
     }
 
     SECTION("#draw displays the visible menues onto the screen") {
+        When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
+        // auto sample = subject.addMenu("some menu");
+
+        subject.draw();
+        // TODO: how to test this?
     }
 
 

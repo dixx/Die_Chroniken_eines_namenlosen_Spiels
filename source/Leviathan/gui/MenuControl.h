@@ -6,7 +6,9 @@
 #ifndef LEVIATHAN_GUI_MENUCONTROL_H
 #define LEVIATHAN_GUI_MENUCONTROL_H
 
+#include <map>
 #include <memory>
+#include <string>
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
 #include "irrlicht.h"
@@ -43,11 +45,26 @@ namespace leviathan {
              *  \param name: Bezeichner/Identifikator für das neue Menü
              *  \return Zeiger auf das neue Menü
              */
-            irr::gui::IGUIElement* add(const char* name); // TODO: better create a wrapper?
+            irr::gui::IGUIElement* addMenu(const char* name); // TODO: better create a wrapper?
+
+            /*! \brief Macht das Menü sichtbar für Anzeige und Interaktionen.
+             *  \param name: Bezeichner/Identifikator für das neue Menü
+             */
+            void enable(const char* name);
+
+            /*! \brief Macht das Menü unsichtbar für Anzeige und Interaktionen.
+             *  \param name: Bezeichner/Identifikator für das neue Menü
+             */
+            void disable(const char* name);
+
+            /*! \brief Zeichnet das Menü auf den Bildschirm.
+             */
+            void draw();
 
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
             input::IEventProducer& _producer;
+            std::map<std::string, irr::gui::IGUIElement*> _menus = std::map<std::string, irr::gui::IGUIElement*>();
         };
     }
 }

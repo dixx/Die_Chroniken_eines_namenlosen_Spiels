@@ -49,7 +49,7 @@ TEST_CASE("Action Mapping", "[unit]") {
     spaceBarEvent.KeyInput.Key = irr::KEY_SPACE;
     spaceBarEvent.KeyInput.PressedDown = false;
     enum { TALK = 1, ATTACK, SELECT = 100 };
-    leviathan::input::Actions subject(eventBrokerMock.get());
+    leviathan::input::Actions subject(eventBrokerMock.get(), Testhelper::Logger());
 
     SECTION("subscribes to an event producer for certain input event types") {
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)

@@ -3,7 +3,7 @@
 
 namespace leviathan {
     namespace input {
-        Actions::Actions(IEventProducer& producer) {
+        Actions::Actions(IEventProducer& producer, core::Logger& logger) : _logger(logger) {
             _actions[0];  // init default
             producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
@@ -74,6 +74,10 @@ namespace leviathan {
                 Action action(actionNode);
                 _actions[action.id] = action;
                 addActionToConverter(action);
+            }
+            for (const auto &p : _actions) {
+                _logger.text << "Actions - loaded actions: [" << p.first << "] = " << p.second.name;
+                _logger.write(_logger.Level::ALL);
             }
         }
 

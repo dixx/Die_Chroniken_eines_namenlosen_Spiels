@@ -6,7 +6,7 @@
 class GameStatePlay final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 
 public:
-    enum actions { OPEN_IN_GAME_OPTIONS = 2 };
+    enum actions { OPEN_IN_GAME_OPTIONS = 2002 };
 
     explicit GameStatePlay(leviathan::LeviathanDevice& gameEngine);
     virtual ~GameStatePlay();
@@ -16,6 +16,10 @@ public:
     void update(const float elapsedSeconds);
 
     void draw();
+
+    void setActive();
+
+    void setInactive();
 
     void onAction(const uint32_t id, const bool isActive);
 

@@ -24,7 +24,15 @@ void GameStatePlay::onAction(const uint32_t id, const bool isActive) {
     switch (id) {
     case actions::OPEN_IN_GAME_OPTIONS:
         if (isActive)
-            gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);
+            gameEngine_.GameStateManager().transitTo(STATE_MAIN_MENU);
         break;
     }
+}
+
+void GameStatePlay::setActive() {
+    gameEngine_.Actions().subscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
+}
+
+void GameStatePlay::setInactive() {
+    gameEngine_.Actions().unsubscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
 }

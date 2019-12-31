@@ -3,9 +3,6 @@
 #include <cstdint>
 
 GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
-    for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
-        gameEngine_.Actions().subscribe(*this, action);
-    }
     gameEngine_.MousePointerControl().createMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
     gameEngine_.MousePointerControl().setActiveMousPointer(1);

@@ -48,6 +48,13 @@ namespace leviathan {
              *  \param eventType: Typ der Events, die weitergeleitet werden sollen
              */
             void subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
+
+            /*! \brief Abmeldung von Event-Empfängern.
+             *
+             *  Empfänger melden sich hier für den jeweiligen Event-Typ ab, den sie nicht mehr empfangen wollen.
+             *  \param consumer: Empfänger, an den Events nicht mehr weitergeleitet werden sollen
+             *  \param eventType: Typ der Events, die nicht mehr weitergeleitet werden sollen
+             */
             void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
 
         private:

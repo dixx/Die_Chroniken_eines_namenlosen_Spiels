@@ -18,37 +18,37 @@ namespace leviathan {
         }
 
         bool Actions::onEvent(const irr::SEvent& event) {
-            uint32_t id = 0;
+            std::list<uint32_t> action_ids = {};
             bool isActive = false;
             try {
                 if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
                     switch (event.MouseInput.Event) {
                     case irr::EMIE_LMOUSE_PRESSED_DOWN:
-                        id = _converter[MOUSE].at(irr::EMBSM_LEFT);
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
                         isActive = true;
                         break;
                     case irr::EMIE_LMOUSE_LEFT_UP:
-                        id = _converter[MOUSE].at(irr::EMBSM_LEFT);
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
                         break;
                     case irr::EMIE_RMOUSE_PRESSED_DOWN:
-                        id = _converter[MOUSE].at(irr::EMBSM_RIGHT);
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
                         isActive = true;
                         break;
                     case irr::EMIE_RMOUSE_LEFT_UP:
-                        id = _converter[MOUSE].at(irr::EMBSM_RIGHT);
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
                         break;
                     case irr::EMIE_MMOUSE_PRESSED_DOWN:
-                        id = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
                         isActive = true;
                         break;
                     case irr::EMIE_MMOUSE_LEFT_UP:
-                        id = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
                         break;
                     default:
                         return false;
                     }
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-                    id = _converter[KEYBOARD].at(event.KeyInput.Key);
+                    action_ids = _converter[KEYBOARD].at(event.KeyInput.Key);
                     isActive = event.KeyInput.PressedDown;
                 } else {
                     return false;
@@ -56,11 +56,13 @@ namespace leviathan {
             } catch (const std::out_of_range& e) {
                 return false;
             }
-            if (_subscriptions[id].empty()) {
+            if (action_ids.empty()) {
                 return false;
             }
-            for (auto consumer : _subscriptions[id]) {
-                consumer->onAction(id, isActive);
+            for (auto id: action_ids) {
+                for (auto consumer : _subscriptions[id]) {
+                    consumer->onAction(id, isActive);
+                }
             }
             return true;
         }
@@ -76,8 +78,9 @@ namespace leviathan {
                 addActionToConverter(action);
             }
             for (const auto &p : _actions) {
-                _logger.text << "Actions - loaded actions: [" << p.first << "] = " << p.second.name;
-                _logger.write(_logger.Level::ALL);
+                _logger.text << "Actions - loaded actions: [" << p.first << "] = " << p.second.name << "(" <<
+                                p.second.primary.id << ", " << p.second.secondary.id << ")";
+                _logger.write(_logger.Level::DEBUG);
             }
         }
 
@@ -107,14 +110,18 @@ namespace leviathan {
 
         void Actions::addActionToConverter(const Action& action) {
             if (action.primary.type == "mouse") {
-                _converter[MOUSE][action.primary.id] = action.id;
+                _converter[MOUSE][action.primary.id].push_back(action.id);
+                _converter[MOUSE][action.primary.id].unique();
             } else if (action.primary.type == "keyboard") {
-                _converter[KEYBOARD][action.primary.id] = action.id;
+                _converter[KEYBOARD][action.primary.id].push_back(action.id);
+                _converter[KEYBOARD][action.primary.id].unique();
             }
             if (action.secondary.type == "mouse") {
-                _converter[MOUSE][action.secondary.id] = action.id;
+                _converter[MOUSE][action.secondary.id].push_back(action.id);
+                _converter[MOUSE][action.secondary.id].unique();
             } else if (action.secondary.type == "keyboard") {
-                _converter[KEYBOARD][action.secondary.id] = action.id;
+                _converter[KEYBOARD][action.secondary.id].push_back(action.id);
+                _converter[KEYBOARD][action.secondary.id].unique();
             }
         }
     }

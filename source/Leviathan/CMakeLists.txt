@@ -7,6 +7,7 @@ add_library(leviathan SHARED
   core/Randomizer.cpp
   core/TimeControl.cpp
   core/Timer.cpp
+  gui/MenuControl.cpp
   input/Actions.cpp
   input/EventReceiver.cpp
   video/MousePointerControl.cpp

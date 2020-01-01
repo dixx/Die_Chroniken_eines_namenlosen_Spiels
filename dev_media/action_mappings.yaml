@@ -1,0 +1,71 @@
+---
+- name: exit
+  id: 1
+  description: leaves the game
+  internal: true
+  input_mappings:
+    primary:
+      name: <ESC>
+      type: keyboard
+      id: 0x1B
+- name: start new game
+  id: 2
+  description: starts a new game
+  internal: true
+  input_mappings:
+    primary:
+      name: <1>
+      type: keyboard
+      id: 0x31
+- name: execute selection
+  id: 3
+  description: execute the selected menu entry
+  internal: true
+  input_mappings:
+    primary:
+      name: <left mouse button>
+      type: mouse
+      id: 0x01
+    secondary:
+      name: <Space>
+      type: keyboard
+      id: 0x20
+- name: select next entry
+  id: 4
+  description: select the next menu entry
+  internal: true
+  input_mappings:
+    primary:
+      name: <Arrow Down>
+      type: keyboard
+      id: 0x28
+- name: select previous entry
+  id: 5
+  description: select the previous menu entry
+  internal: true
+  input_mappings:
+    primary:
+      name: <Arrow Up>
+      type: keyboard
+      id: 0x26
+- name: target selected
+  id: 2001
+  description: select a target, may it be a position on the ground, an NPC or an object.
+  input_mappings:
+    primary:
+      name: left mouse button
+      type: mouse
+      id: 0x01
+    secondary:
+      name: <E>
+      type: keyboard
+      id: 0x45
+- name: options
+  id: 2002
+  description: bring up the in-game options menu
+  internal: true
+  input_mappings:
+    primary:
+      name: <ESC>
+      type: keyboard
+      id: 0x1B

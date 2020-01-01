@@ -14,14 +14,15 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
     leviathan::LeviathanDevice subject("");
 
     SECTION("it provides instances of usefull tools") {
-        REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
-        REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
-        REQUIRE(typeid(subject.Configuration()) == typeid(leviathan::core::Configuration));
-        REQUIRE(typeid(subject.GameStateManager()) == typeid(leviathan::core::GameStateManager));
-        REQUIRE(typeid(subject.Randomizer()) == typeid(leviathan::core::Randomizer));
         REQUIRE(typeid(subject.Actions()) == typeid(leviathan::input::Actions));
+        REQUIRE(typeid(subject.Configuration()) == typeid(leviathan::core::Configuration));
         REQUIRE(typeid(subject.EventReceiver()) == typeid(leviathan::input::EventReceiver));
+        REQUIRE(typeid(subject.GameStateManager()) == typeid(leviathan::core::GameStateManager));
+        REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
+        REQUIRE(typeid(subject.MenuControl()) == typeid(leviathan::gui::MenuControl));
         REQUIRE(typeid(subject.MousePointerControl()) == typeid(leviathan::video::MousePointerControl));
+        REQUIRE(typeid(subject.Randomizer()) == typeid(leviathan::core::Randomizer));
+        REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
     }
 }
 
@@ -43,7 +44,8 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
     When(Method(graphicEngineMock, isWindowActive)).AlwaysReturn(true);
     subject.injectMockedGraphicEngine(graphicEngineMock.get());
     Mock<leviathan::core::IGameState> gameStateMock;
-    Fake(Method(gameStateMock, update), Method(gameStateMock, draw));
+    Fake(Method(gameStateMock, update), Method(gameStateMock, draw), Method(gameStateMock, setActive),
+        Method(gameStateMock, setInactive));
     subject.GameStateManager().add(gameStateMock.get(), 42);
     subject.GameStateManager().transitTo(42);
 

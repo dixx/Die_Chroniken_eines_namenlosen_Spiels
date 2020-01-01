@@ -20,11 +20,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
   -Wold-style-cast \
   -Wnon-virtual-dtor \
   -Wdelete-non-virtual-dtor \
+  -Wfatal-errors \
   -std=c++17 \
-  -fmessage-length=80 \
+  -fmessage-length=160 \
   -fdiagnostics-color=always \
   -fdiagnostics-show-location=once \
+  -fdiagnostics-generate-patch \
 ")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g3")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb") # use GDB for debugging
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG_MODE=1") # a switch for additional debug stuff in the old code
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=gold") # use another linker (faster Catch linking)

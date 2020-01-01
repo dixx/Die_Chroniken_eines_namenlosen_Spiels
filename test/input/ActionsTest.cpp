@@ -24,6 +24,14 @@ TEST_CASE("Action Mapping", "[unit]") {
                                  "      name: <E>\n"
                                  "      type: keyboard\n"
                                  "      id: 0x45\n"
+                                 "- name: enable menu item\n"
+                                 "  id: 1001\n"
+                                 "  description: enable menu item\n"
+                                 "  input_mappings:\n"
+                                 "    primary:\n"
+                                 "      name: <E>\n"
+                                 "      type: keyboard\n"
+                                 "      id: 0x45\n"
                                  "- name: attack\n"
                                  "  id: 2\n"
                                  "  description: main hand attack\n"
@@ -41,20 +49,26 @@ TEST_CASE("Action Mapping", "[unit]") {
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Mock<leviathan::input::IActionConsumer> consumerMock;
     Fake(Method(eventBrokerMock, subscribe), Method(consumerMock, onAction));
-    irr::SEvent leftMouseButtonEvent, spaceBarEvent;
+    irr::SEvent leftMouseButtonEvent, spaceBarEvent, eKeyEvent, unregisteredKeyEvent;
     leftMouseButtonEvent.EventType = irr::EET_MOUSE_INPUT_EVENT;
     leftMouseButtonEvent.MouseInput.ButtonStates = irr::EMBSM_LEFT;
     leftMouseButtonEvent.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;
     spaceBarEvent.EventType = irr::EET_KEY_INPUT_EVENT;
     spaceBarEvent.KeyInput.Key = irr::KEY_SPACE;
     spaceBarEvent.KeyInput.PressedDown = false;
-    enum { TALK = 1, ATTACK, SELECT = 100 };
-    leviathan::input::Actions subject(eventBrokerMock.get());
+    eKeyEvent.EventType = irr::EET_KEY_INPUT_EVENT;
+    eKeyEvent.KeyInput.Key = irr::KEY_KEY_E;
+    eKeyEvent.KeyInput.PressedDown = true;
+    unregisteredKeyEvent.EventType = irr::EET_KEY_INPUT_EVENT;
+    unregisteredKeyEvent.KeyInput.Key = irr::KEY_KEY_N;
+    enum { TALK = 1, ATTACK, SELECT = 100, ENABLE = 1001 };
+    leviathan::input::Actions subject(eventBrokerMock.get(), Testhelper::Logger());
 
     SECTION("subscribes to an event producer for certain input event types") {
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_KEY_INPUT_EVENT)).Exactly(Once);
+        VerifyNoOtherInvocations(eventBrokerMock);
     }
 
     SECTION("consumers can subscribe to certain actions") {
@@ -83,25 +97,30 @@ TEST_CASE("Action Mapping", "[unit]") {
                 VerifyNoOtherInvocations(Method(consumerMock, onAction), Method(anotherConsumerMock, onAction));
             }
 
+            SECTION("with same input for multiple actions") {
+                subject.subscribe(consumerMock.get(), ENABLE);
+                subject.onEvent(eKeyEvent);
+                Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Using(ENABLE, true)).Exactly(Once);
+            }
+
             SECTION("consumers can unsubscribe from certain actions") {
                 subject.unsubscribe(consumerMock.get(), TALK);
                 subject.onEvent(leftMouseButtonEvent);
                 VerifyNoOtherInvocations(Method(consumerMock, onAction));
             }
         }
-        // SECTION("action mappings can be changed by the user") {
-        //     SECTION("except for internal actions") {
-        //     }
-        // }
     }
 
     SECTION("onEvent returns success of event procession") {
         REQUIRE_FALSE(subject.onEvent(leftMouseButtonEvent));
         REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
+        REQUIRE_FALSE(subject.onEvent(unregisteredKeyEvent));
 
         subject.subscribe(consumerMock.get(), TALK);
         subject.loadFromFile(mappingsFileName);
         REQUIRE(subject.onEvent(leftMouseButtonEvent));
-        REQUIRE_FALSE(subject.onEvent(spaceBarEvent));
+        REQUIRE(subject.onEvent(spaceBarEvent));
+        REQUIRE_FALSE(subject.onEvent(unregisteredKeyEvent));
     }
 }

@@ -14,6 +14,9 @@ namespace leviathan {
     //! Grundlegende Bestandteile der Engine.
     namespace core {}
 
+    //! Hilfsklassen für Grafische Benutzeroberflächen
+    namespace gui {}
+
     //! Hilfsklassen für Eingabegeräte
     namespace input {}
 

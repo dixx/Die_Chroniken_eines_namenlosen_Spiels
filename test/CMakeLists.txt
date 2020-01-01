@@ -1,4 +1,4 @@
-include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}")
+include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}")
 
 add_executable(unit_tests
   core/ConfigurationTest.cpp
@@ -7,6 +7,7 @@ add_executable(unit_tests
   core/TimeControlTest.cpp
   core/TimerTest.cpp
   core/RandomizerTest.cpp
+  gui/MenuControlTest.cpp
   helpers/CatchPatches.hpp
   helpers/FakeitPatches.hpp
   helpers/Testhelper.cpp

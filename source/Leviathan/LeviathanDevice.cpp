@@ -8,7 +8,7 @@ namespace leviathan {
     : configuration_(fileName),
       logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()),
       gameStateManager_(logger_),
-      actions_(eventReceiver_) {
+      actions_(eventReceiver_, logger_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
         if (graphicEngine_ == nullptr) {
@@ -18,6 +18,7 @@ namespace leviathan {
         }
         graphicEngine_->setEventReceiver(&eventReceiver_);
         mousePointerControl_ = std::make_unique<video::MousePointerControl>(eventReceiver_, graphicEngine_, logger_);
+        menuControl_ = std::make_unique<gui::MenuControl>(graphicEngine_->getGUIEnvironment(), eventReceiver_);
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -83,6 +84,10 @@ namespace leviathan {
 
     core::Randomizer& LeviathanDevice::Randomizer() {
         return randomizer_;
+    }
+
+    gui::MenuControl& LeviathanDevice::MenuControl() {
+        return *menuControl_;
     }
 
     input::Actions& LeviathanDevice::Actions() {

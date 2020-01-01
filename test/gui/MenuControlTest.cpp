@@ -60,13 +60,5 @@ TEST_CASE("MenuControl", "[unit]") {
     }
 
     SECTION("#draw displays the visible menues onto the screen") {
-        When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
-        // auto sample = subject.addMenu("some menu");
-
-        subject.draw();
-        // TODO: how to test this?
     }
-
-
-    // TODO: onAction must be tested elsewhere
 }

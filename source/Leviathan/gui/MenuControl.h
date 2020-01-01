@@ -37,7 +37,7 @@ namespace leviathan {
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event
              *  \return `true` wenn es zu diesem Event eine Aktion mit mindestens einem Empfänger gibt, ansonsten
-             * `false`
+             *          `false`
              */
             bool onEvent(const irr::SEvent& event);
 
@@ -45,7 +45,7 @@ namespace leviathan {
              *  \param name: Bezeichner/Identifikator für das neue Menü
              *  \return Zeiger auf das neue Menü
              */
-            irr::gui::IGUIElement* addMenu(const char* name); // TODO: better create a wrapper?
+            irr::gui::IGUIElement* addMenu(const char* name);
 
             /*! \brief Macht das Menü sichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü

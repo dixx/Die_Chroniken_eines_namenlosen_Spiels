@@ -53,7 +53,7 @@ namespace leviathan {
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event
              *  \return `true` wenn es zu diesem Event eine Aktion mit mindestens einem Empfänger gibt, ansonsten
-             * `false`
+             *          `false`
              */
             bool onEvent(const irr::SEvent& event);
 
@@ -62,12 +62,6 @@ namespace leviathan {
              *  \param fileName: Mapping-Dateiname
              */
             void loadFromFile(const irr::io::path& fileName);
-
-            // /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
-            //  *  \note Bereits vorhandene Aktionen werden mit denen aus der Datei ergänzt/überschrieben.
-            //  *  \param fileName: Mapping-Dateiname
-            //  */
-            // void mergeFromFile(const irr::io::path& fileName);
 
         private:
             core::Logger& _logger;

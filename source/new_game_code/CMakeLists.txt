@@ -16,4 +16,5 @@ install(FILES
 DESTINATION .)
 install(FILES
   "${RESOURCES_DIR}/GFX/Mauszeiger.bmp"
+  "${RESOURCES_DIR}/GFX/menues1.bmp"
 DESTINATION ./gfx)

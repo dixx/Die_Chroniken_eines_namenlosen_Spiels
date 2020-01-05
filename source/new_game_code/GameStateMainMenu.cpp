@@ -36,10 +36,12 @@ void GameStateMainMenu::setActive() {
     for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
         gameEngine_.Actions().subscribe(*this, action);
     }
+    gameEngine_.MenuControl().enable("Main Menu");
 }
 
 void GameStateMainMenu::setInactive() {
     for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
         gameEngine_.Actions().unsubscribe(*this, action);
     }
+    gameEngine_.MenuControl().disable("Main Menu");
 }

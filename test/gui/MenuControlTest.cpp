@@ -19,11 +19,6 @@ TEST_CASE("MenuControl", "[unit]") {
     irr::gui::IGUIElement anotherMenu = irr::gui::IGUIElement(
         irr::gui::EGUIET_MODAL_SCREEN, nullptr, rootElement, 43, irr::core::recti());
 
-    // enum guiItemIds {
-    //     GUI_SOME_BUTTON = 101,
-    //     GUI_ANOTHER_BUTTON
-    // };
-
     leviathan::gui::MenuControl subject(&guiEnvironmentSpy.get(), eventBrokerMock.get());
 
     SECTION("subscribes to an action producer for certain input event types") {
@@ -35,30 +30,34 @@ TEST_CASE("MenuControl", "[unit]") {
     SECTION("#addMenu adds a blank menu") {
         When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu, &anotherMenu);
 
-        auto result = subject.addMenu("some menu");
-        REQUIRE(result == &menu);
-        REQUIRE(result->getParent() == rootElement);
-        REQUIRE(result->getChildren().size() == 0);
-        result = subject.addMenu("some other menu");
-        REQUIRE(result == &anotherMenu);
-        REQUIRE(result->getParent() == rootElement);
-        REQUIRE(result->getChildren().size() == 0);
+        subject.addMenu("some menu");
+        subject.addMenu("some other menu");
+        Verify(Method(guiEnvironmentSpy, addModalScreen).Using(rootElement)).Exactly(2_Times);
     }
 
     SECTION("#disable hides a menu from view and from events") {
         When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
-        auto sample = subject.addMenu("some menu");
-        REQUIRE(sample->isVisible());
-        REQUIRE(sample->isEnabled());
+        subject.addMenu("some menu");
+        REQUIRE(menu.isVisible());
+        REQUIRE(menu.isEnabled());
 
         subject.disable("some menu");
-        REQUIRE_FALSE(sample->isVisible());
-        REQUIRE_FALSE(sample->isEnabled());
-    }
+        REQUIRE_FALSE(menu.isVisible());
+        REQUIRE_FALSE(menu.isEnabled());
 
-    SECTION("#enable makes a menu visible for view and events") {
+        SECTION("#enable makes a menu visible for view and events") {
+            subject.enable("some menu");
+            REQUIRE(menu.isVisible());
+            REQUIRE(menu.isEnabled());
+        }
     }
 
     SECTION("#draw displays the visible menues onto the screen") {
+        When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu, &anotherMenu);
+        subject.addMenu("some menu");
+        subject.addMenu("some other menu");
+        subject.disable("some other menu");
+        subject.draw();
+        // not testable atm, because: Can't mock a type with multiple inheritance
     }
 }

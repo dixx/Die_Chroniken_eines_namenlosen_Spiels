@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include "Menu.h"
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
 #include "irrlicht.h"
@@ -43,9 +44,8 @@ namespace leviathan {
 
             /*! \brief Fügt ein neues Menü hinzu.
              *  \param name: Bezeichner/Identifikator für das neue Menü
-             *  \return Zeiger auf das neue Menü
              */
-            irr::gui::IGUIElement* addMenu(const char* name);
+            void addMenu(const char* name);
 
             /*! \brief Macht das Menü sichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü
@@ -57,14 +57,14 @@ namespace leviathan {
              */
             void disable(const char* name);
 
-            /*! \brief Zeichnet das Menü auf den Bildschirm.
+            /*! \brief Zeichnet alle aktiven Menüs auf den Bildschirm.
              */
             void draw();
 
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
             input::IEventProducer& _producer;
-            std::map<std::string, irr::gui::IGUIElement*> _menus = std::map<std::string, irr::gui::IGUIElement*>();
+            std::map<std::string, std::unique_ptr<Menu>> _menus = std::map<std::string, std::unique_ptr<Menu>>();
         };
     }
 }

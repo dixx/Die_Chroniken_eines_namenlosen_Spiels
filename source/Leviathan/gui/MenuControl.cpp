@@ -9,9 +9,7 @@ namespace leviathan {
         }
 
         MenuControl::~MenuControl() {
-            for (auto menu : _menus) {
-                menu.second->drop();
-            }
+            _menus.clear();
             _producer.unsubscribe(*this, irr::EET_GUI_EVENT);
         }
 
@@ -20,28 +18,22 @@ namespace leviathan {
             return false;
         }
 
-        irr::gui::IGUIElement* MenuControl::addMenu(const char* name) {
-            auto menu = _guiEnv->addModalScreen(_guiEnv->getRootGUIElement());
-            menu->grab();
-            _menus[name] = menu;
-            return menu;
+        void MenuControl::addMenu(const char* name) {
+            _menus[name] = std::make_unique<Menu>(_guiEnv);
         }
 
         void MenuControl::enable(const char* name) {
-            auto menu = _menus[name];
-            menu->setEnabled(true);
-            menu->setVisible(true);
+            _menus[name]->enable();
         }
 
         void MenuControl::disable(const char* name) {
-            auto menu = _menus[name];
-            menu->setEnabled(false);
-            menu->setVisible(false);
+            _menus[name]->disable();
         }
 
         void MenuControl::draw() {
-            for (auto menu : _menus) {
-                menu.second->draw();
+            std::map<std::string, std::unique_ptr<Menu>>::iterator it = _menus.begin();
+            for (; it != _menus.end(); ++it ) {
+                it->second->draw();
             }
         }
     }

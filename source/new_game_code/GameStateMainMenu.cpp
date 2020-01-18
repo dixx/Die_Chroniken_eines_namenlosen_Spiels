@@ -6,6 +6,7 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MousePointerControl().createMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
     gameEngine_.MousePointerControl().setActiveMousPointer(1);
+    gameEngine_.MenuControl().addMenu("Main Menu");
 }
 
 GameStateMainMenu::~GameStateMainMenu() {

@@ -10,7 +10,8 @@
 #include <memory>
 #include <string>
 #include "Menu.h"
-#include "../input/IEventConsumer.h"
+#include "types.h"
+#include "../input/IEventProducer.h"
 #include "../input/IEventProducer.h"
 #include "irrlicht.h"
 
@@ -45,17 +46,25 @@ namespace leviathan {
             /*! \brief Fügt ein neues Menü hinzu.
              *  \param name: Bezeichner/Identifikator für das neue Menü
              */
-            void addMenu(const char* name);
+            void addMenu(const wchar_t* name);
+
+            /*! \brief Fügt einem Menü einen neuen Button hinzu.
+             *  \param menuName: Bezeichner/Identifikator für das Menü
+             *  \param buttonName: Bezeichner/Identifikator für den neuen Button
+             *  \param buttonConfiguration: Definition des Erscheinungsbildes des neuen Buttons
+             */
+            void addButton(
+                const wchar_t* menuName, const wchar_t* buttonName, const ButtonConfiguration& buttonConfiguration);
 
             /*! \brief Macht das Menü sichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü
              */
-            void enable(const char* name);
+            void enable(const wchar_t* name);
 
             /*! \brief Macht das Menü unsichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü
              */
-            void disable(const char* name);
+            void disable(const wchar_t* name);
 
             /*! \brief Zeichnet alle aktiven Menüs auf den Bildschirm.
              */
@@ -64,7 +73,7 @@ namespace leviathan {
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
             input::IEventProducer& _producer;
-            std::map<std::string, std::unique_ptr<Menu>> _menus = std::map<std::string, std::unique_ptr<Menu>>();
+            std::map<std::wstring, std::unique_ptr<Menu>> _menus = std::map<std::wstring, std::unique_ptr<Menu>>();
         };
     }
 }

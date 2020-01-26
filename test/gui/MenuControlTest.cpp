@@ -30,23 +30,23 @@ TEST_CASE("MenuControl", "[unit]") {
     SECTION("#addMenu adds a blank menu") {
         When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu, &anotherMenu);
 
-        subject.addMenu("some menu");
-        subject.addMenu("some other menu");
+        subject.addMenu(L"some menu");
+        subject.addMenu(L"some other menu");
         Verify(Method(guiEnvironmentSpy, addModalScreen).Using(rootElement)).Exactly(2_Times);
     }
 
     SECTION("#disable hides a menu from view and from events") {
         When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
-        subject.addMenu("some menu");
+        subject.addMenu(L"some menu");
         REQUIRE(menu.isVisible());
         REQUIRE(menu.isEnabled());
 
-        subject.disable("some menu");
+        subject.disable(L"some menu");
         REQUIRE_FALSE(menu.isVisible());
         REQUIRE_FALSE(menu.isEnabled());
 
         SECTION("#enable makes a menu visible for view and events") {
-            subject.enable("some menu");
+            subject.enable(L"some menu");
             REQUIRE(menu.isVisible());
             REQUIRE(menu.isEnabled());
         }
@@ -54,9 +54,9 @@ TEST_CASE("MenuControl", "[unit]") {
 
     SECTION("#draw displays the visible menues onto the screen") {
         When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu, &anotherMenu);
-        subject.addMenu("some menu");
-        subject.addMenu("some other menu");
-        subject.disable("some other menu");
+        subject.addMenu(L"some menu");
+        subject.addMenu(L"some other menu");
+        subject.disable(L"some other menu");
         subject.draw();
         // not testable atm, because: Can't mock a type with multiple inheritance
     }

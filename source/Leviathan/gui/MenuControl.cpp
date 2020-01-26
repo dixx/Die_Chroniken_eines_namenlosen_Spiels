@@ -18,20 +18,20 @@ namespace leviathan {
             return false;
         }
 
-        void MenuControl::addMenu(const char* name) {
+        void MenuControl::addMenu(const wchar_t* name) {
             _menus[name] = std::make_unique<Menu>(_guiEnv);
         }
 
-        void MenuControl::enable(const char* name) {
+        void MenuControl::enable(const wchar_t* name) {
             _menus[name]->enable();
         }
 
-        void MenuControl::disable(const char* name) {
+        void MenuControl::disable(const wchar_t* name) {
             _menus[name]->disable();
         }
 
         void MenuControl::draw() {
-            std::map<std::string, std::unique_ptr<Menu>>::iterator it = _menus.begin();
+            std::map<std::wstring, std::unique_ptr<Menu>>::iterator it = _menus.begin();
             for (; it != _menus.end(); ++it ) {
                 it->second->draw();
             }

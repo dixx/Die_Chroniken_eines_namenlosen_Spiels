@@ -6,7 +6,7 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MousePointerControl().createMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
     gameEngine_.MousePointerControl().setActiveMousPointer(1);
-    gameEngine_.MenuControl().addMenu("Main Menu");
+    gameEngine_.MenuControl().addMenu(L"Main Menu");
 }
 
 GameStateMainMenu::~GameStateMainMenu() {
@@ -37,12 +37,12 @@ void GameStateMainMenu::setActive() {
     for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
         gameEngine_.Actions().subscribe(*this, action);
     }
-    gameEngine_.MenuControl().enable("Main Menu");
+    gameEngine_.MenuControl().enable(L"Main Menu");
 }
 
 void GameStateMainMenu::setInactive() {
     for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
         gameEngine_.Actions().unsubscribe(*this, action);
     }
-    gameEngine_.MenuControl().disable("Main Menu");
+    gameEngine_.MenuControl().disable(L"Main Menu");
 }

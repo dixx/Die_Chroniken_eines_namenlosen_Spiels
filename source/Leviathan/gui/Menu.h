@@ -18,6 +18,8 @@ namespace leviathan {
           Menu& operator=(const Menu&) = delete;
 
         public:
+            irr::gui::IGUIElement* menuElement = nullptr;
+
             explicit Menu(irr::gui::IGUIEnvironment* guiEnv);
             ~Menu() {};
             void enable();
@@ -26,7 +28,6 @@ namespace leviathan {
 
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
-            irr::gui::IGUIElement* _menuElement = nullptr;
         };
     }
 }

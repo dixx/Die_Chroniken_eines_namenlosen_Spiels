@@ -66,9 +66,9 @@ namespace leviathan {
                 return false;
             }
             for (auto id: action_ids) {
-                // we iterate in reverse, because _subscriptions can shrink while being iterated
                 if (_subscriptions[id].size() == 0) continue;
-                for (auto it = _subscriptions[id].size(); it != 0; it--) {
+                // we iterate in reverse, because _subscriptions can shrink while being iterated
+                for (uint32_t it = _subscriptions[id].size(); it != 0; it--) {
                     _subscriptions[id][it - 1]->onAction(id, isActive);
                 }
             }

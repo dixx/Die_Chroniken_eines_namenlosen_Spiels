@@ -12,8 +12,8 @@ namespace leviathan {
         }
 
         MenuControl::~MenuControl() {
-            _menus.clear();
             _producer.unsubscribe(*this, irr::EET_GUI_EVENT);
+            _menus.clear();
         }
 
         bool MenuControl::onEvent(const irr::SEvent& event) {

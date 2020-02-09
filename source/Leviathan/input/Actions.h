@@ -88,6 +88,7 @@ namespace leviathan {
                 std::vector(CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());
 
             void addActionToConverter(const Action& action);
+            void dispatchAction(const std::list<uint32_t>& action_ids, bool isActive);
         };
     }
 }

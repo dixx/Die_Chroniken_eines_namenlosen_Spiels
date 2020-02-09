@@ -65,13 +65,7 @@ namespace leviathan {
             if (action_ids.empty()) {
                 return false;
             }
-            for (auto id: action_ids) {
-                if (_subscriptions[id].size() == 0) continue;
-                // we iterate in reverse, because _subscriptions can shrink while being iterated
-                for (uint32_t it = _subscriptions[id].size(); it != 0; it--) {
-                    _subscriptions[id][it - 1]->onAction(id, isActive);
-                }
-            }
+            dispatchAction(action_ids, isActive);
             return true;
         }
 
@@ -121,6 +115,16 @@ namespace leviathan {
             } else if (action.secondary.type == "keyboard") {
                 _converter[KEYBOARD][action.secondary.id].push_back(action.id);
                 _converter[KEYBOARD][action.secondary.id].unique();
+            }
+        }
+
+        void Actions::dispatchAction(const std::list<uint32_t>& action_ids, bool isActive) {
+            for (auto id: action_ids) {
+                if (_subscriptions[id].size() == 0) continue;
+                // we iterate in reverse, because _subscriptions can shrink while being iterated
+                for (uint32_t it = _subscriptions[id].size(); it != 0; it--) {
+                    _subscriptions[id][it - 1]->onAction(id, isActive);
+                }
             }
         }
     }

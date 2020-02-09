@@ -9,6 +9,12 @@
 
 using namespace fakeit;
 
+#define getTextureArgs irr::video::ITexture*(const irr::io::path&)
+#define addImageArgs irr::gui::IGUIImage*(const irr::core::rect<irr::s32>&, irr::gui::IGUIElement*, irr::s32, \
+                                          const wchar_t*, bool)
+#define addButtonArgs irr::gui::IGUIButton*(const irr::core::rect<irr::s32>&, irr::gui::IGUIElement*, irr::s32, \
+                                          const wchar_t*, const wchar_t*)
+
 TEST_CASE("MenuControl", "[unit]") {
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Fake(Method(eventBrokerMock, subscribe), Method(eventBrokerMock, unsubscribe));
@@ -40,7 +46,6 @@ TEST_CASE("MenuControl", "[unit]") {
     }
 
     SECTION("#disable hides a menu from view and from events") {
-        When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
         subject.addMenu(L"some menu");
         REQUIRE(menu.isVisible());
         REQUIRE(menu.isEnabled());
@@ -62,6 +67,54 @@ TEST_CASE("MenuControl", "[unit]") {
         subject.addMenu(L"some other menu");
         subject.disable(L"some other menu");
         subject.draw();
+        // not testable atm, because: Can't mock a type with multiple inheritance
+    }
+}
+
+TEST_CASE("MenuControl Menu manipulation", "[integration]") {
+    SECTION("#addButton adds a button to a menu") {
+        Mock<leviathan::input::IEventProducer> eventBrokerMock;
+        Fake(Method(eventBrokerMock, subscribe), Method(eventBrokerMock, unsubscribe));
+        mocks::GUIEnvironmentMock guiEnvironmentMock;
+        Mock<mocks::GUIEnvironmentMock> guiEnvironmentSpy(guiEnvironmentMock);
+        // Mock<irr::video::ITexture> textureMock;
+        mocks::VideoDriverMock videoDriverMock;
+        Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
+        leviathan::gui::MenuControl subject(&guiEnvironmentSpy.get(), &videoDriverSpy.get(), eventBrokerMock.get());
+        // Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
+        // When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
+        // Fake(OverloadedMethod(guiEnvironmentSpy, addImage, addImageArgs));
+        // irr::gui::IGUIElement* button = new irr::gui::IGUIElement(
+        //     irr::gui::EGUIET_BUTTON, &guiEnvironmentSpy.get(), &menu, 42, irr::core::recti()
+        // );
+        // When(Method(guiEnvironmentSpy, addButton)).AlwaysReturn(static_cast<irr::gui::IGUIButton*>(button));
+
+        leviathan::gui::ButtonConfiguration buttonConfig(
+            {{40, 10}, {300, 400}, "../path/to.img", {30, 20}, {70, 60}, true});
+        // subject.addMenu(L"some menu");
+        // subject.addButton(L"some menu", L"some button", buttonConfig);
+
+        // delete button;
+        // Verify(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs).Using("../path/to.img")).Once();
+        // VerifyNoOtherInvocations(videoDriverSpy);
+
+        // Verify(OverloadedMethod(guiEnvironmentSpy, addImage, addImageArgs)
+        //     .Using(irr::core::rect<irr::s32>({300, 400}, {40, 10}), &menu, _, L"some button", true)
+        // ).Once();
+        // Verify(Method(guiEnvironmentSpy, addButton)
+        //     .Using(irr::core::rect<irr::s32>({300, 400}, {40, 10}), &menu, _, _, _)
+        // ).Once();
+        // VerifyNoOtherInvocations(guiEnvironmentSpy);
+
+        // irr::gui::IGUIImage* menueBgImage = guienv_->addImage(
+        //         irr::core::recti( imagePosition, textureSize ),
+        //         menuRoot_, ID_MAIN_BGIMAGE, L"Hauptmenü"
+        // );
+        // menueBgImage->setImage( mainMenuTexture_ );
+        // irr::gui::IGUIButton* newButton = guienv_->addButton(
+        //         irr::core::recti( irr::core::position2di( 85, 63 ), buttonSize ),
+        //         menueBgImage, ID_MAIN_NEWBUTTON, L"Neues Spiel"
+        // );
         // not testable atm, because: Can't mock a type with multiple inheritance
     }
 }

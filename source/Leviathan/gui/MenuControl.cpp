@@ -1,4 +1,5 @@
 #include "MenuControl.h"
+#include "../video/Constants.h"
 
 namespace leviathan {
     namespace gui {
@@ -25,6 +26,40 @@ namespace leviathan {
             _menus[name] = std::make_unique<Menu>(_guiEnv);
         }
 
+        void MenuControl::addButton(
+            const wchar_t* menuName,
+            const wchar_t* buttonName,
+            const ButtonConfiguration& config
+        ) {
+            irr::gui::IGUIButton* newButton = _guiEnv->addButton(
+                irr::core::recti(
+                    irr::core::position2di(config.relativePositionInMenu.x, config.relativePositionInMenu.y),
+                    irr::core::dimension2du(config.dimension.w, config.dimension.h)
+                ),
+                _menus[menuName].get()->menuElement,
+                -1,
+                buttonName
+            );
+            newButton->setIsPushButton(false);
+            newButton->setDrawBorder(false);
+            newButton->setUseAlphaChannel(config.hasImageTransparence);
+            irr::video::ITexture* imageCatalogue = loadTexture(config.imageFileName, config.hasImageTransparence);
+            newButton->setImage(
+                imageCatalogue,
+                irr::core::recti(
+                    irr::core::position2di(config.inactivePositionOnImage.x, config.inactivePositionOnImage.y),
+                    irr::core::dimension2du(config.dimension.w, config.dimension.h)
+                )
+            );
+            newButton->setPressedImage(
+                imageCatalogue,
+                irr::core::recti(
+                    irr::core::position2di(config.activePositionOnImage.x, config.activePositionOnImage.y),
+                    irr::core::dimension2du(config.dimension.w, config.dimension.h)
+                )
+            );
+        }
+
         void MenuControl::enable(const wchar_t* name) {
             _menus[name]->enable();
         }
@@ -38,6 +73,22 @@ namespace leviathan {
             for (; it != _menus.end(); ++it ) {
                 it->second->draw();
             }
+        }
+
+        /* private */
+
+        irr::video::ITexture* MenuControl::loadTexture(const std::string& filename, bool makeTransparent)
+        {
+            // GenericHelperMethods& helper = GenericHelperMethods::getInstance();
+            // helper.validateFileExistence( "GFX/menues1.bmp" );
+            _videoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // no LOD textures
+            irr::video::ITexture* texture = _videoDriver->getTexture(filename.c_str());
+            if (makeTransparent) {
+                // if (!texture->hasAlpha()) {
+                    _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
+                // }
+            }
+            return texture;
         }
     }
 }

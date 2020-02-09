@@ -80,6 +80,8 @@ namespace leviathan {
             irr::video::IVideoDriver* _videoDriver = nullptr;
             input::IEventProducer& _producer;
             std::map<std::wstring, std::unique_ptr<Menu>> _menus = std::map<std::wstring, std::unique_ptr<Menu>>();
+
+            irr::video::ITexture* loadTexture(const std::string& filename, bool makeTransparent);
         };
     }
 }

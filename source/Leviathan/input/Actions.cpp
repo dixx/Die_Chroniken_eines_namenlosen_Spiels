@@ -28,31 +28,24 @@ namespace leviathan {
             bool isActive = false;
             try {
                 if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
-                    switch (event.MouseInput.Event) {
+                    auto mouseEvent = event.MouseInput.Event;
+                    switch (mouseEvent) {
                     case irr::EMIE_LMOUSE_PRESSED_DOWN:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
-                        isActive = true;
-                        break;
                     case irr::EMIE_LMOUSE_LEFT_UP:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
-                        break;
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT); break;
                     case irr::EMIE_RMOUSE_PRESSED_DOWN:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
-                        isActive = true;
-                        break;
                     case irr::EMIE_RMOUSE_LEFT_UP:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
-                        break;
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT); break;
                     case irr::EMIE_MMOUSE_PRESSED_DOWN:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
-                        isActive = true;
-                        break;
                     case irr::EMIE_MMOUSE_LEFT_UP:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
-                        break;
-                    default:
-                        return false;
+                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE); break;
+                    default: return false;
                     }
+                    isActive = (
+                        mouseEvent == irr::EMIE_LMOUSE_PRESSED_DOWN ||
+                        mouseEvent == irr::EMIE_RMOUSE_PRESSED_DOWN ||
+                        mouseEvent == irr::EMIE_MMOUSE_PRESSED_DOWN
+                    );
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
                     action_ids = _converter[KEYBOARD].at(event.KeyInput.Key);
                     isActive = event.KeyInput.PressedDown;

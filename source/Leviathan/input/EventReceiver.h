@@ -10,7 +10,7 @@
 #include "IEventProducer.h"
 #include "irrlicht.h"
 #include <map>
-#include <set>
+#include <vector>
 
 namespace leviathan {
     namespace input {
@@ -58,8 +58,8 @@ namespace leviathan {
             void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
 
         private:
-            std::map<irr::EEVENT_TYPE, std::set<leviathan::input::IEventConsumer*>> _subscriptions =
-                std::map<irr::EEVENT_TYPE, std::set<leviathan::input::IEventConsumer*>>();
+            std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>> _subscriptions =
+                std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>>();
         };
     }
 }

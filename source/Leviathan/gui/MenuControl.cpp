@@ -2,8 +2,11 @@
 
 namespace leviathan {
     namespace gui {
-        MenuControl::MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer)
-        : _guiEnv(guiEnv), _producer(producer)
+        MenuControl::MenuControl(
+            irr::gui::IGUIEnvironment* guiEnv,
+            irr::video::IVideoDriver* videoDriver,
+            input::IEventProducer& producer
+        ) : _guiEnv(guiEnv), _videoDriver(videoDriver), _producer(producer)
         {
             _producer.subscribe(*this, irr::EET_GUI_EVENT);
         }

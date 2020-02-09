@@ -26,9 +26,14 @@ namespace leviathan {
         public:
             /*! \brief Konstruktor.
              *  \param guiEnv: Zeiger auf die GUI-Umgebung der Graphic Engine
+             *  \param videoDriver: Zeiger auf den Videotreiber der Graphic Engine
              *  \param producer: produziert (versendet) Events
              */
-            MenuControl(irr::gui::IGUIEnvironment* guiEnv, input::IEventProducer& producer);
+            MenuControl(
+                irr::gui::IGUIEnvironment* guiEnv,
+                irr::video::IVideoDriver* videoDriver,
+                input::IEventProducer& producer
+            );
 
             ~MenuControl();
 
@@ -72,6 +77,7 @@ namespace leviathan {
 
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
+            irr::video::IVideoDriver* _videoDriver = nullptr;
             input::IEventProducer& _producer;
             std::map<std::wstring, std::unique_ptr<Menu>> _menus = std::map<std::wstring, std::unique_ptr<Menu>>();
         };

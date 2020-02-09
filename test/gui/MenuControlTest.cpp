@@ -3,6 +3,7 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "../helpers/GUIEnvironmentMock.hpp"
+#include "../helpers/VideoDriverMock.hpp"
 #include "irrlicht.h"
 #include <memory>
 
@@ -13,13 +14,16 @@ TEST_CASE("MenuControl", "[unit]") {
     Fake(Method(eventBrokerMock, subscribe), Method(eventBrokerMock, unsubscribe));
     mocks::GUIEnvironmentMock guiEnvironmentMock;
     Mock<mocks::GUIEnvironmentMock> guiEnvironmentSpy(guiEnvironmentMock);
+    mocks::VideoDriverMock videoDriverMock;
+    Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
     irr::gui::IGUIElement* rootElement = guiEnvironmentSpy.get().getRootGUIElement();
     irr::gui::IGUIElement menu = irr::gui::IGUIElement(
         irr::gui::EGUIET_MODAL_SCREEN, nullptr, rootElement, 42, irr::core::recti());
     irr::gui::IGUIElement anotherMenu = irr::gui::IGUIElement(
         irr::gui::EGUIET_MODAL_SCREEN, nullptr, rootElement, 43, irr::core::recti());
 
-    leviathan::gui::MenuControl subject(&guiEnvironmentSpy.get(), eventBrokerMock.get());
+    leviathan::gui::MenuControl subject(&guiEnvironmentSpy.get(), &videoDriverSpy.get(), eventBrokerMock.get());
+    When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu);
 
     SECTION("subscribes to an action producer for certain input event types") {
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)

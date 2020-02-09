@@ -13,10 +13,10 @@
 #include "irrlicht.h"
 #include "yaml-cpp/yaml.h"
 #include <cstdint>
-#include <map>
-#include <set>
 #include <list>
+#include <map>
 #include <string>
+#include <vector>
 
 namespace leviathan {
     namespace input {
@@ -81,8 +81,8 @@ namespace leviathan {
                 Input primary = Input(), secondary = Input();
             };
             std::map<uint32_t, Action> _actions = std::map<uint32_t, Action>();
-            std::map<uint32_t, std::set<IActionConsumer*>> _subscriptions =
-                std::map<uint32_t, std::set<IActionConsumer*>>();
+            std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
+                std::map<uint32_t, std::vector<IActionConsumer*>>();
             enum CONVERTER_TYPES { MOUSE = 0, KEYBOARD, CONVERTER_TYPES_COUNT };
             std::vector<std::map<uint32_t, std::list<uint32_t>>> _converter =
                 std::vector(CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());

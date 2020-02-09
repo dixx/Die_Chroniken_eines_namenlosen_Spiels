@@ -1,5 +1,5 @@
 #include "Actions.h"
-#include <iostream>
+#include <algorithm>
 
 namespace leviathan {
     namespace input {
@@ -10,11 +10,17 @@ namespace leviathan {
         }
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {
-            _subscriptions[id].insert(&consumer);
+            auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
+            if (found == _subscriptions[id].end()) {
+                _subscriptions[id].push_back(&consumer);
+            }
         }
 
         void Actions::unsubscribe(IActionConsumer& consumer, const uint32_t id) {
-            _subscriptions[id].erase(&consumer);
+            auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
+            if (found != _subscriptions[id].end()) {
+                _subscriptions[id].erase(found);
+            }
         }
 
         bool Actions::onEvent(const irr::SEvent& event) {
@@ -60,8 +66,10 @@ namespace leviathan {
                 return false;
             }
             for (auto id: action_ids) {
-                for (auto consumer : _subscriptions[id]) {
-                    consumer->onAction(id, isActive);
+                // we iterate in reverse, because _subscriptions can shrink while being iterated
+                if (_subscriptions[id].size() == 0) continue;
+                for (auto it = _subscriptions[id].size(); it != 0; it--) {
+                    _subscriptions[id][it - 1]->onAction(id, isActive);
                 }
             }
             return true;

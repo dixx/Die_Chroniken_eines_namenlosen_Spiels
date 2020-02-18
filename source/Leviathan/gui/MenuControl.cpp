@@ -84,12 +84,10 @@ namespace leviathan {
         {
             // GenericHelperMethods& helper = GenericHelperMethods::getInstance();
             // helper.validateFileExistence( "GFX/menues1.bmp" );
-            _videoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // no LOD textures
+            _videoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = _videoDriver->getTexture(filename.c_str());
             if (makeTransparent) {
-                // if (!texture->hasAlpha()) {
-                    _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
-                // }
+                _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
             }
             return texture;
         }

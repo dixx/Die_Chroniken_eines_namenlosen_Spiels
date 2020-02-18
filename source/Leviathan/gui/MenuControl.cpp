@@ -9,17 +9,21 @@ namespace leviathan {
             input::IEventProducer& producer
         ) : _guiEnv(guiEnv), _videoDriver(videoDriver), _producer(producer)
         {
+            _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
+            _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_GUI_EVENT);
         }
 
         MenuControl::~MenuControl() {
+            _producer.unsubscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
+            _producer.unsubscribe(*this, irr::EET_KEY_INPUT_EVENT);
             _producer.unsubscribe(*this, irr::EET_GUI_EVENT);
             _menus.clear();
         }
 
         bool MenuControl::onEvent(const irr::SEvent& event) {
-            (void)event;
-            return false;
+            // GUI Env needs these events to decide if they result in a GUI event
+            return (_guiEnv->postEventFromUser(event));
         }
 
         void MenuControl::addMenu(const wchar_t* name) {

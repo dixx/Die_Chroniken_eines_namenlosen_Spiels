@@ -73,8 +73,7 @@ namespace leviathan {
         }
 
         void MenuControl::draw() {
-            std::map<std::wstring, std::unique_ptr<Menu>>::iterator it = _menus.begin();
-            for (; it != _menus.end(); ++it ) {
+            for (auto it = _menus.begin(); it != _menus.end(); ++it) {
                 it->second->draw();
             }
         }

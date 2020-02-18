@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "MenuControl.h"
 #include "../video/Constants.h"
 
@@ -12,6 +13,7 @@ namespace leviathan {
             _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_GUI_EVENT);
+            _guiEnv->addEmptySpriteBank("virtual/buttonSprites");
         }
 
         MenuControl::~MenuControl() {
@@ -35,33 +37,37 @@ namespace leviathan {
             const wchar_t* buttonName,
             const ButtonConfiguration& config
         ) {
-            irr::gui::IGUIButton* newButton = _guiEnv->addButton(
-                irr::core::recti(
-                    irr::core::position2di(config.relativePositionInMenu.x, config.relativePositionInMenu.y),
-                    irr::core::dimension2du(config.dimension.w, config.dimension.h)
-                ),
+            irr::core::dimension2du buttonDimension(config.dimension.w, config.dimension.h);
+            irr::core::position2di positionInMenu(config.relativePositionInMenu.x, config.relativePositionInMenu.y);
+            irr::core::position2di inactivePosition(config.inactivePositionOnImage.x, config.inactivePositionOnImage.y);
+            irr::core::position2di activePosition(config.activePositionOnImage.x, config.activePositionOnImage.y)
+            irr::gui::IGUIButton* button = _guiEnv->addButton(
+                irr::core::recti(positionInMenu, buttonDimension),
                 _menus[menuName].get()->menuElement,
                 -1,
                 buttonName
             );
-            newButton->setIsPushButton(false);
-            newButton->setDrawBorder(false);
-            newButton->setUseAlphaChannel(config.hasImageTransparence);
-            irr::video::ITexture* imageCatalogue = loadTexture(config.imageFileName, config.hasImageTransparence);
-            newButton->setImage(
-                imageCatalogue,
-                irr::core::recti(
-                    irr::core::position2di(config.inactivePositionOnImage.x, config.inactivePositionOnImage.y),
-                    irr::core::dimension2du(config.dimension.w, config.dimension.h)
-                )
+            button->setIsPushButton(false);
+            button->setDrawBorder(false);
+            button->setUseAlphaChannel(config.hasImageTransparence);
+            irr::video::ITexture* textureCatalogue = loadTexture(config.imageFileName, config.hasImageTransparence);
+            // normal button
+            button->setImage(textureCatalogue, irr::core::recti(inactivePosition, buttonDimension));
+            // pressed button
+            button->setPressedImage(textureCatalogue, irr::core::recti(inactivePosition, buttonDimension));
+            // hovered button
+            std::wstring virtualFileName(L"virtual/buttonActiveSprite - ");
+            virtualFileName += menuName;
+            virtualFileName += buttonName;
+            irr::video::IImage* partialImage = _videoDriver->createImage(
+                textureCatalogue, activePosition, buttonDimension
             );
-            newButton->setPressedImage(
-                imageCatalogue,
-                irr::core::recti(
-                    irr::core::position2di(config.activePositionOnImage.x, config.activePositionOnImage.y),
-                    irr::core::dimension2du(config.dimension.w, config.dimension.h)
-                )
-            );
+            irr::video::ITexture* texture = _videoDriver->addTexture(virtualFileName.c_str(), partialImage);
+            partialImage->drop();
+            irr::gui::IGUISpriteBank* sprites = _guiEnv->getSpriteBank("virtual/buttonSprites");
+            button->setSpriteBank(sprites);
+            int32_t index = sprites->addTextureAsSprite(texture);
+            button->setSprite(irr::gui::EGBS_BUTTON_MOUSE_OVER, index);
         }
 
         void MenuControl::enable(const wchar_t* name) {

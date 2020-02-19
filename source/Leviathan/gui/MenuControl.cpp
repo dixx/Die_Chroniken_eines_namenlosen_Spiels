@@ -40,7 +40,7 @@ namespace leviathan {
             irr::core::dimension2du buttonDimension(config.dimension.w, config.dimension.h);
             irr::core::position2di positionInMenu(config.relativePositionInMenu.x, config.relativePositionInMenu.y);
             irr::core::position2di inactivePosition(config.inactivePositionOnImage.x, config.inactivePositionOnImage.y);
-            irr::core::position2di activePosition(config.activePositionOnImage.x, config.activePositionOnImage.y)
+            irr::core::position2di activePosition(config.activePositionOnImage.x, config.activePositionOnImage.y);
             irr::gui::IGUIButton* button = _guiEnv->addButton(
                 irr::core::recti(positionInMenu, buttonDimension),
                 _menus[menuName].get()->menuElement,

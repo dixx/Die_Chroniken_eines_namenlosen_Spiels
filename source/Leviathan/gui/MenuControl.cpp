@@ -59,7 +59,7 @@ namespace leviathan {
             irr::core::position2di activePosition(config.activePositionOnImage.x, config.activePositionOnImage.y);
             irr::gui::IGUIButton* button = _guiEnv->addButton(
                 irr::core::recti(positionInMenu, buttonDimension),
-                _menus[menuName].get()->menuElement,
+                _menus[menuName]->menuElement,
                 -1,
                 buttonName
             );

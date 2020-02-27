@@ -6,7 +6,8 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MousePointerControl().createMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
     gameEngine_.MousePointerControl().setActiveMousPointer(1);
-    gameEngine_.MenuControl().addMenu(L"Main Menu");
+    leviathan::gui::MenuConfiguration menuConfig({{436, 555}, {663, 115}, "gfx/menues1.bmp", {588, 212}, true});
+    gameEngine_.MenuControl().addMenu(L"Main Menu", menuConfig);
     leviathan::gui::ButtonConfiguration buttonConfig({
         {313, 88}, {85, 63}, "gfx/menues1.bmp", {663, 115}, {654, 22}, true
     });

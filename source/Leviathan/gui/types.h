@@ -13,6 +13,16 @@
 namespace leviathan {
     namespace gui {
 
+        /*! \brief Definiert das Erscheinungsbild eines Menüs.
+         */
+        struct MenuConfiguration {
+            video::Dimension2D dimension = {0, 0};  //!< Größe des Menüs
+            video::Position2D position = {0, 0};  //!< Position relativ zur linken oberen Ecke des Bildschirms
+            std::string imageFileName = "";  //!< Name und Pfad der zu verwendenden Bilddatei
+            video::Position2D positionOnImage = {0, 0};  //!< Position des Bildausschnitts
+            bool hasImageTransparence = false;  //!< Soll Magic Pink im Bild transparent gemacht werden?
+        };
+
         /*! \brief Definiert das Erscheinungsbild eines Buttons.
          */
         struct ButtonConfiguration {

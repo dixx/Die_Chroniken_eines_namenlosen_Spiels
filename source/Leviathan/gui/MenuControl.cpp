@@ -28,8 +28,24 @@ namespace leviathan {
             return (_guiEnv->postEventFromUser(event));
         }
 
-        void MenuControl::addMenu(const wchar_t* name) {
+        void MenuControl::addMenu(const wchar_t* name, const MenuConfiguration& config) {
             _menus[name] = std::make_unique<Menu>(_guiEnv);
+            irr::core::dimension2du dimension(config.dimension.w, config.dimension.h);
+            irr::core::position2di position(config.position.x, config.position.y);
+            irr::core::position2di positionOnImage(config.positionOnImage.x, config.positionOnImage.y);
+            irr::video::ITexture* textureCatalogue = loadTexture(config.imageFileName, config.hasImageTransparence);
+            std::wstring virtualFileName(L"virtual/manuBackground - ");
+            virtualFileName += name;
+            irr::video::IImage* partialImage = _videoDriver->createImage(
+                textureCatalogue, positionOnImage, dimension
+            );
+            irr::video::ITexture* texture = _videoDriver->addTexture(virtualFileName.c_str(), partialImage);
+            partialImage->drop();
+            irr::gui::IGUIImage* backgroundImage = _guiEnv->addImage(
+                irr::core::recti(position, dimension),
+                _menus[name]->menuElement
+            );
+            backgroundImage->setImage(texture);
         }
 
         void MenuControl::addButton(

@@ -50,8 +50,9 @@ namespace leviathan {
 
             /*! \brief Fügt ein neues Menü hinzu.
              *  \param name: Bezeichner/Identifikator für das neue Menü
+             *  \param config: Definition des Erscheinungsbildes des neuen Menüs
              */
-            void addMenu(const wchar_t* name);
+            void addMenu(const wchar_t* name, const MenuConfiguration& config);
 
             /*! \brief Fügt einem Menü einen neuen Button hinzu.
              *  \param menuName: Bezeichner/Identifikator für das Menü

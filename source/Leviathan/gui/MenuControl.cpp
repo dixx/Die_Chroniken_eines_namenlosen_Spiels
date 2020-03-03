@@ -34,7 +34,7 @@ namespace leviathan {
             irr::core::position2di position(config.position.x, config.position.y);
             irr::core::position2di positionOnImage(config.positionOnImage.x, config.positionOnImage.y);
             irr::video::ITexture* textureCatalogue = loadTexture(config.imageFileName, config.hasImageTransparence);
-            std::wstring virtualFileName(L"virtual/manuBackground - ");
+            std::wstring virtualFileName(L"virtual/menuBackground - ");
             virtualFileName += name;
             irr::video::IImage* partialImage = _videoDriver->createImage(
                 textureCatalogue, positionOnImage, dimension

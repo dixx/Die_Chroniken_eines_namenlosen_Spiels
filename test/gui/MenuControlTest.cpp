@@ -9,12 +9,13 @@
 
 using namespace fakeit;
 
-#define addImageArgs irr::gui::IGUIImage*(const irr::core::rect<irr::s32>&, irr::gui::IGUIElement*, irr::s32, \
-                                          const wchar_t*, bool)
+#define addImageArgs \
+    irr::gui::IGUIImage*(const irr::core::rect<irr::s32>&, irr::gui::IGUIElement*, irr::s32, const wchar_t*, bool)
 #define makeColorKeyTextureArgs void(irr::video::ITexture*, irr::video::SColor, bool)
 #define getTextureArgs irr::video::ITexture*(const irr::io::path&)
 #define addTextureArgs irr::video::ITexture*(const irr::io::path&, irr::video::IImage*, void*)
-#define createImageArgs irr::video::IImage*(irr::video::ITexture*, const irr::core::position2di&, const irr::core::dimension2du&)
+#define createImageArgs \
+    irr::video::IImage*(irr::video::ITexture*, const irr::core::position2di&, const irr::core::dimension2du&)
 /*
 #define addButtonArgs irr::gui::IGUIButton*(const irr::core::rect<irr::s32>&, irr::gui::IGUIElement*, irr::s32, \
                                           const wchar_t*, const wchar_t*)
@@ -104,8 +105,8 @@ TEST_CASE("MenuControl", "[unit]") {
             // // Mock<irr::video::ITexture> textureMock;
             // mocks::VideoDriverMock videoDriverMock;
             // Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
-            // leviathan::gui::MenuControl subject(&guiEnvironmentSpy.get(), &videoDriverSpy.get(), eventBrokerMock.get());
-            // Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
+            // leviathan::gui::MenuControl subject(&guiEnvironmentSpy.get(), &videoDriverSpy.get(),
+            // eventBrokerMock.get()); Mock<mocks::VideoDriverMock> videoDriverSpy(videoDriverMock);
             // When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
             // Fake(OverloadedMethod(guiEnvironmentSpy, addImage, addImageArgs));
             // irr::gui::IGUIElement* button = new irr::gui::IGUIElement(

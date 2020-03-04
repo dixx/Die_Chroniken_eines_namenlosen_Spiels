@@ -1,15 +1,12 @@
-#include <cstdint>
 #include "MenuControl.h"
 #include "../video/Constants.h"
+#include <cstdint>
 
 namespace leviathan {
     namespace gui {
         MenuControl::MenuControl(
-            irr::gui::IGUIEnvironment* guiEnv,
-            irr::video::IVideoDriver* videoDriver,
-            input::IEventProducer& producer
-        ) : _guiEnv(guiEnv), _videoDriver(videoDriver), _producer(producer)
-        {
+            irr::gui::IGUIEnvironment* guiEnv, irr::video::IVideoDriver* videoDriver, input::IEventProducer& producer)
+        : _guiEnv(guiEnv), _videoDriver(videoDriver), _producer(producer) {
             _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_GUI_EVENT);
@@ -36,33 +33,22 @@ namespace leviathan {
             irr::video::ITexture* textureCatalogue = loadTexture(config.imageFileName, config.hasImageTransparence);
             std::wstring virtualFileName(L"virtual/menuBackground - ");
             virtualFileName += name;
-            irr::video::IImage* partialImage = _videoDriver->createImage(
-                textureCatalogue, positionOnImage, dimension
-            );
+            irr::video::IImage* partialImage = _videoDriver->createImage(textureCatalogue, positionOnImage, dimension);
             irr::video::ITexture* texture = _videoDriver->addTexture(virtualFileName.c_str(), partialImage);
             partialImage->drop();
             irr::gui::IGUIImage* backgroundImage = _guiEnv->addImage(
-                irr::core::recti(position, dimension),
-                _menus[name]->menuElement
-            );
+                irr::core::recti(position, dimension), _menus[name]->menuElement);
             backgroundImage->setImage(texture);
         }
 
         void MenuControl::addButton(
-            const wchar_t* menuName,
-            const wchar_t* buttonName,
-            const ButtonConfiguration& config
-        ) {
+            const wchar_t* menuName, const wchar_t* buttonName, const ButtonConfiguration& config) {
             irr::core::dimension2du buttonDimension(config.dimension.w, config.dimension.h);
             irr::core::position2di positionInMenu(config.relativePositionInMenu.x, config.relativePositionInMenu.y);
             irr::core::position2di inactivePosition(config.inactivePositionOnImage.x, config.inactivePositionOnImage.y);
             irr::core::position2di activePosition(config.activePositionOnImage.x, config.activePositionOnImage.y);
             irr::gui::IGUIButton* button = _guiEnv->addButton(
-                irr::core::recti(positionInMenu, buttonDimension),
-                _menus[menuName]->menuElement,
-                -1,
-                buttonName
-            );
+                irr::core::recti(positionInMenu, buttonDimension), _menus[menuName]->menuElement, -1, buttonName);
             button->setIsPushButton(false);
             button->setDrawBorder(false);
             button->setUseAlphaChannel(config.hasImageTransparence);
@@ -76,8 +62,7 @@ namespace leviathan {
             virtualFileName += menuName;
             virtualFileName += buttonName;
             irr::video::IImage* partialImage = _videoDriver->createImage(
-                textureCatalogue, activePosition, buttonDimension
-            );
+                textureCatalogue, activePosition, buttonDimension);
             irr::video::ITexture* texture = _videoDriver->addTexture(virtualFileName.c_str(), partialImage);
             partialImage->drop();
             irr::gui::IGUISpriteBank* sprites = _guiEnv->getSpriteBank("virtual/buttonSprites");
@@ -102,15 +87,12 @@ namespace leviathan {
 
         /* private */
 
-        irr::video::ITexture* MenuControl::loadTexture(const std::string& filename, bool makeTransparent)
-        {
+        irr::video::ITexture* MenuControl::loadTexture(const std::string& filename, bool makeTransparent) {
             // GenericHelperMethods& helper = GenericHelperMethods::getInstance();
             // helper.validateFileExistence( "GFX/menues1.bmp" );
             _videoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = _videoDriver->getTexture(filename.c_str());
-            if (makeTransparent) {
-                _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
-            }
+            if (makeTransparent) { _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK); }
             return texture;
         }
     }

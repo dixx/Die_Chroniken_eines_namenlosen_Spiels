@@ -12,10 +12,8 @@ TEST_CASE("GameStateManager: add game states", "[unit]") {
     Mock<leviathan::core::IGameState> startMock, playMock, stopMock;
     Fake(Method(startMock, update), Method(startMock, draw), Method(startMock, setActive),
         Method(startMock, setInactive));
-    Fake(Method(playMock, update), Method(playMock, draw), Method(playMock, setActive),
-        Method(playMock, setInactive));
-    Fake(Method(stopMock, update), Method(stopMock, draw), Method(stopMock, setActive),
-        Method(stopMock, setInactive));
+    Fake(Method(playMock, update), Method(playMock, draw), Method(playMock, setActive), Method(playMock, setInactive));
+    Fake(Method(stopMock, update), Method(stopMock, draw), Method(stopMock, setActive), Method(stopMock, setInactive));
     leviathan::core::IGameState &start = startMock.get(), &play = playMock.get(), &stop = stopMock.get();
     enum { STATE_START = 1, STATE_PLAY, STATE_STOP };
     subject.add(start, STATE_START);
@@ -55,8 +53,7 @@ TEST_CASE("GameStateManager: transit between game states", "[unit]") {
     Mock<leviathan::core::IGameState> startMock, playMock, pauseMock, optionsMock;
     Fake(Method(startMock, update), Method(startMock, draw), Method(startMock, setActive),
         Method(startMock, setInactive));
-    Fake(Method(playMock, update), Method(playMock, draw), Method(playMock, setActive),
-        Method(playMock, setInactive));
+    Fake(Method(playMock, update), Method(playMock, draw), Method(playMock, setActive), Method(playMock, setInactive));
     Fake(Method(pauseMock, update), Method(pauseMock, draw), Method(pauseMock, setActive),
         Method(pauseMock, setInactive));
     Fake(Method(optionsMock, update), Method(optionsMock, draw), Method(optionsMock, setActive),
@@ -120,8 +117,7 @@ TEST_CASE("GameStateManager: update and draw active game states", "[unit]") {
     Mock<leviathan::core::IGameState> startMock, playMock, pauseMock;
     Fake(Method(startMock, update), Method(startMock, draw), Method(startMock, setActive),
         Method(startMock, setInactive));
-    Fake(Method(playMock, update), Method(playMock, draw), Method(playMock, setActive),
-        Method(playMock, setInactive));
+    Fake(Method(playMock, update), Method(playMock, draw), Method(playMock, setActive), Method(playMock, setInactive));
     Fake(Method(pauseMock, update), Method(pauseMock, draw), Method(pauseMock, setActive),
         Method(pauseMock, setInactive));
     leviathan::core::IGameState &start = startMock.get(), &play = playMock.get(), &pause = pauseMock.get();

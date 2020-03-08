@@ -50,9 +50,9 @@ namespace leviathan {
                 content_.push_back("");
                 return;
             }
-            filestream.seekg (0, filestream.end);
+            filestream.seekg(0, filestream.end);
             std::streampos size = filestream.tellg();
-            filestream.seekg (0, filestream.beg);
+            filestream.seekg(0, filestream.beg);
             if (size <= 0) {
                 filestream.close();
                 content_.push_back("");
@@ -73,15 +73,11 @@ namespace leviathan {
             sectionIdent.append(section).append("]");
             for (auto& line : content_) {
                 if (!sectionFound) {
-                    if (line.find(sectionIdent.c_str()) == 0)
-                        sectionFound = true;
+                    if (line.find(sectionIdent.c_str()) == 0) sectionFound = true;
                 } else {
-                    if (line[0] == '[')
-                        break;
-                    if (line[0] == '#' || line[0] == ';')
-                        continue;
-                    if (line.find(key.c_str()) == -1)
-                        continue;
+                    if (line[0] == '[') break;
+                    if (line[0] == '#' || line[0] == ';') continue;
+                    if (line.find(key.c_str()) == -1) continue;
                     uint32_t valueStart = static_cast<uint32_t>(line.findFirstChar("=") + 1);
                     result = line.subString(valueStart, static_cast<int32_t>(line.size() - valueStart)).trim();
                     break;

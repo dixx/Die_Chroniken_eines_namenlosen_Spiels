@@ -7,8 +7,7 @@ namespace leviathan {
         GameStateManager::GameStateManager(Logger& logger) : logger_(logger) {}
 
         void GameStateManager::add(IGameState& gameState, uint32_t id) {
-            if (id == NO_STATE_ACTIVE)
-                throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");
+            if (id == NO_STATE_ACTIVE) throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
                 logger_.text << "GameStateManager - add state: " << id << " = " << &gameState;
@@ -25,15 +24,14 @@ namespace leviathan {
                 logger_.write(Logger::Level::ALL);
                 return;
             }
-            if (getActiveStateID() != NO_STATE_ACTIVE)
-                states_[getActiveStateID()]->setInactive();
+            if (getActiveStateID() != NO_STATE_ACTIVE) states_[getActiveStateID()]->setInactive();
             if (isSecondOnStack(id)) {
                 runningStateIDs_.pop_front();
-                logger_.text << "GameStateManager - transit to " << id  << " by pop.";
+                logger_.text << "GameStateManager - transit to " << id << " by pop.";
                 logger_.write(Logger::Level::ALL);
             } else {
                 runningStateIDs_.push_front(id);
-                logger_.text << "GameStateManager - transit to " << id  << " by push.";
+                logger_.text << "GameStateManager - transit to " << id << " by push.";
                 logger_.write(Logger::Level::ALL);
             }
             states_[id]->setActive();
@@ -41,15 +39,13 @@ namespace leviathan {
 
         void GameStateManager::update(const float elapsedSeconds) {
             uint32_t id = getActiveStateID();
-            if (id == NO_STATE_ACTIVE)
-                return;
+            if (id == NO_STATE_ACTIVE) return;
             states_[id]->update(elapsedSeconds);
         }
 
         void GameStateManager::draw() {
             uint32_t id = getActiveStateID();
-            if (id == NO_STATE_ACTIVE)
-                return;
+            if (id == NO_STATE_ACTIVE) return;
             states_[id]->draw();
         }
 
@@ -82,8 +78,7 @@ namespace leviathan {
         }
 
         bool GameStateManager::isDeeperDownTheStack(const uint32_t id) const {
-            if (runningStateIDs_.size() < 2 || isSecondOnStack(id))
-                return false;
+            if (runningStateIDs_.size() < 2 || isSecondOnStack(id)) return false;
             if (isInStack(id)) {
                 logger_.text << "[Warning] - GameStateManager - requested state " << id
                              << " is too deep down the stack!";
@@ -95,8 +90,7 @@ namespace leviathan {
 
         bool GameStateManager::isInStack(const uint32_t id) const {
             for (auto& item : runningStateIDs_) {
-                if (item == id)
-                    return true;
+                if (item == id) return true;
             }
             return false;
         }

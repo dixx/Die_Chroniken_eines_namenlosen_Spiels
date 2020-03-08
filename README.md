@@ -25,6 +25,9 @@ Hinweis: Wir nutzen gern Ninja anstelle von Make.
 Die *Leviathan Game Engine* wird komplett testgetrieben entwickelt. Die Unit-Tests werden mit den Frameworks [**Catch2**](https://github.com/catchorg/Catch2) und [**FakeIt**](https://github.com/eranpeer/FakeIt) erstellt.
 Beim Builden wird auch ein Binary `unit_tests` angelegt, welches die Tests in der Konsole abfährt.
 
+#### Code Style
+Für einheitlichen Code nutzen wir **clang-formatter**, die Regeln sind in `.clang-format` festgelegt.
+
 #### Troubleshooting
 
 ##### Lua

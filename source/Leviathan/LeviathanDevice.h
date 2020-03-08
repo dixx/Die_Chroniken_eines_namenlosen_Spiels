@@ -10,19 +10,19 @@
 #include "core/Configuration.h"
 #include "core/GameStateManager.h"
 #include "core/Logger.h"
-#include "core/TimeControl.h"
 #include "core/Randomizer.h"
+#include "core/TimeControl.h"
 #include "gui/MenuControl.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
-#include "video/MousePointerControl.h"
 #include "irrlicht.h"
+#include "video/MousePointerControl.h"
 #include <memory>
 
 #ifndef NDEBUG
-#    define LOG_FILE_NAME "game.log"
+#define LOG_FILE_NAME "game.log"
 #else
-#    define LOG_FILE_NAME "debug.log"
+#define LOG_FILE_NAME "debug.log"
 #endif
 
 namespace TesthelperLeviathanDevice {
@@ -35,7 +35,6 @@ namespace leviathan {
      *  \brief Die eigentliche Engine.
      */
     class LeviathanDevice {
-
     public:
         /*! \brief Konstruktor. Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
          *         der Engine.
@@ -107,7 +106,7 @@ namespace leviathan {
         core::Randomizer randomizer_ = core::Randomizer();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
-        std::unique_ptr<gui::MenuControl> menuControl_= nullptr;
+        std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests

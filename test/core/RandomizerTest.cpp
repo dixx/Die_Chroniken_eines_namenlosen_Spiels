@@ -62,7 +62,6 @@ TEST_CASE("Randomizer: get random float within range", "[unit]") {
 TEST_CASE("Randomizer: get random Int", "[unit]") {
     leviathan::core::Randomizer subject;
     subject.start(SEED);
-    // REQUIRE(subject.getInt() >= 0); // comparison of unsigned expression >= 0 is always true
     REQUIRE(subject.getInt() <= UINT32_MAX);
 }
 

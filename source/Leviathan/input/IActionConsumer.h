@@ -15,7 +15,6 @@ namespace leviathan {
          *  \brief Interface für Konsumenten von Aktionen.
          */
         struct IActionConsumer {
-
             virtual ~IActionConsumer() {}
 
             /*! \brief Reagiert auf Aktionen.

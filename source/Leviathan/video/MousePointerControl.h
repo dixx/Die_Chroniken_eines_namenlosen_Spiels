@@ -6,9 +6,9 @@
 #ifndef LEVIATHAN_VIDEO_MOUSEPOINTER_H
 #define LEVIATHAN_VIDEO_MOUSEPOINTER_H
 
+#include "../core/Logger.h"
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
-#include "../core/Logger.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <unordered_map>
@@ -20,18 +20,14 @@ namespace leviathan {
          *  \brief Bietet Zugriff auf die Darstellung des Mauszeigers
          */
         class MousePointerControl : public leviathan::input::IEventConsumer {
-
         public:
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
              *  \param graphicDevice: initialisiertes Irrlicht Device
              *  \param logger: Instanz eines Loggers
              */
-            MousePointerControl(
-                leviathan::input::IEventProducer& producer,
-                irr::IrrlichtDevice* graphicDevice,
-                leviathan::core::Logger& logger
-            );
+            MousePointerControl(leviathan::input::IEventProducer& producer, irr::IrrlichtDevice* graphicDevice,
+                leviathan::core::Logger& logger);
 
             ~MousePointerControl() = default;
             MousePointerControl() = delete;
@@ -70,8 +66,8 @@ namespace leviathan {
             irr::IrrlichtDevice* graphicDevice_ = nullptr;
             std::unordered_map<uint32_t, irr::video::ITexture*> baseImage_ =
                 std::unordered_map<uint32_t, irr::video::ITexture*>({{0, nullptr}});
-            std::unordered_map<uint32_t, irr::core::recti> imageArea_ =
-                std::unordered_map<uint32_t, irr::core::recti>({{0, irr::core::recti(0, 0, 0, 0)}});
+            std::unordered_map<uint32_t, irr::core::recti> imageArea_ = std::unordered_map<uint32_t, irr::core::recti>(
+                {{0, irr::core::recti(0, 0, 0, 0)}});
             std::unordered_map<uint32_t, irr::core::vector2di> hotSpot_ =
                 std::unordered_map<uint32_t, irr::core::vector2di>({{0, irr::core::vector2di(0, 0)}});
         };

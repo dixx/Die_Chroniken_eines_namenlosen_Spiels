@@ -1,12 +1,12 @@
-#include "../../source/Leviathan/video/Constants.h"
 #include "../../source/Leviathan/video/MousePointerControl.h"
 #include "../../source/Leviathan/input/IEventProducer.h"
-#include "catch.hpp"
-#include "fakeit.hpp"
+#include "../../source/Leviathan/video/Constants.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/FakeitPatches.hpp"
 #include "../helpers/Testhelper.h"
 #include "../helpers/VideoDriverMock.hpp"
+#include "catch.hpp"
+#include "fakeit.hpp"
 #include "irrlicht.h"
 
 using namespace fakeit;
@@ -39,7 +39,8 @@ TEST_CASE("MousePointerControl", "[unit]") {
     keyboardEvent.EventType = irr::EET_KEY_INPUT_EVENT;
     keyboardEvent.KeyInput.Key = irr::KEY_RETURN;
     keyboardEvent.KeyInput.PressedDown = true;
-    leviathan::video::MousePointerControl subject(eventBrokerMock.get(), &graphicDeviceMock.get(), Testhelper::Logger());
+    leviathan::video::MousePointerControl subject(
+        eventBrokerMock.get(), &graphicDeviceMock.get(), Testhelper::Logger());
 
     SECTION("events") {
         SECTION("subscribes to an event producer for movement input events") {

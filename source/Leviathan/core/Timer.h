@@ -14,7 +14,6 @@ namespace leviathan {
          *  \note Erhöht sich nicht selbst, sondern wird mittels tick(...) von außen erhöht.
          */
         class Timer {
-
         public:
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden
@@ -88,7 +87,6 @@ namespace leviathan {
          *  \attention Einmal gestartet, sind diese Timer durch nichts zu stoppen oder zu pausieren.
          */
         class AlwaysRunningTimer : public Timer {
-
         public:
             /*! \brief Konstruktor.
              *  \param maxValue: Maximalwert in Sekunden

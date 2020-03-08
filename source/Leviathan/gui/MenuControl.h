@@ -6,14 +6,14 @@
 #ifndef LEVIATHAN_GUI_MENUCONTROL_H
 #define LEVIATHAN_GUI_MENUCONTROL_H
 
+#include "../input/IEventConsumer.h"
+#include "../input/IEventProducer.h"
+#include "Menu.h"
+#include "irrlicht.h"
+#include "types.h"
 #include <map>
 #include <memory>
 #include <string>
-#include "Menu.h"
-#include "types.h"
-#include "../input/IEventProducer.h"
-#include "../input/IEventProducer.h"
-#include "irrlicht.h"
 
 namespace leviathan {
     namespace gui {
@@ -22,18 +22,14 @@ namespace leviathan {
          *  \brief Diese Klasse enthält Funktionen zum Erstellen und Verwalten von Menüs.
          */
         class MenuControl : public input::IEventConsumer {
-
         public:
             /*! \brief Konstruktor.
              *  \param guiEnv: Zeiger auf die GUI-Umgebung der Graphic Engine
              *  \param videoDriver: Zeiger auf den Videotreiber der Graphic Engine
              *  \param producer: produziert (versendet) Events
              */
-            MenuControl(
-                irr::gui::IGUIEnvironment* guiEnv,
-                irr::video::IVideoDriver* videoDriver,
-                input::IEventProducer& producer
-            );
+            MenuControl(irr::gui::IGUIEnvironment* guiEnv, irr::video::IVideoDriver* videoDriver,
+                input::IEventProducer& producer);
 
             ~MenuControl();
 
@@ -59,8 +55,7 @@ namespace leviathan {
              *  \param buttonName: Bezeichner/Identifikator für den neuen Button
              *  \param config: Definition des Erscheinungsbildes des neuen Buttons
              */
-            void addButton(
-                const wchar_t* menuName, const wchar_t* buttonName, const ButtonConfiguration& config);
+            void addButton(const wchar_t* menuName, const wchar_t* buttonName, const ButtonConfiguration& config);
 
             /*! \brief Macht das Menü sichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü

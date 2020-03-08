@@ -16,7 +16,6 @@ namespace leviathan {
          *         Die Berechnung basiert auf XORSHIFT mit 4 Seeds.
          */
         class Randomizer {
-
         public:
             /*! \brief Konstruktor.
              */
@@ -54,7 +53,7 @@ namespace leviathan {
             uint32_t getInt(const uint32_t min, const uint32_t max);
 
         private:
-          uint32_t seed_, seed2_, seed3_, seed4_, tmp_;
+            uint32_t seed_, seed2_, seed3_, seed4_, tmp_;
         };
     }
 }

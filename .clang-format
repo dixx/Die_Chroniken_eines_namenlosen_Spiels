@@ -108,15 +108,15 @@ SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
 SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: true
-SpaceBeforeSquareBrackets: false
-SpaceInEmptyBlock: false
+# SpaceBeforeSquareBrackets: false
+# SpaceInEmptyBlock: false
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
 SpacesInAngles: false
 SpacesInContainerLiterals: false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
-SpacesInConditionalStatement: false
+# SpacesInConditionalStatement: false
 SpacesInSquareBrackets: false
 Standard: Latest
 TabWidth: 4

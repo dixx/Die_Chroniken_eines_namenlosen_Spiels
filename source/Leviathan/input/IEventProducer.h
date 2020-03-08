@@ -16,7 +16,6 @@ namespace leviathan {
          *  \brief Interface für Verteiler von `irr::SEvent`s.
          */
         struct IEventProducer {
-
             virtual ~IEventProducer() {}
 
             /*! \brief Konsumenten von Events melden sich hier an.

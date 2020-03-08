@@ -15,9 +15,8 @@ namespace leviathan {
         /*! \class MapWithDefault MapWithDefault.h "MapWithDefault.h"
          *  \brief std::map erweitert um einen Defaultwert für unbekannte Keys.
          */
-        template <class Key, class Value>
+        template<class Key, class Value>
         class MapWithDefault {
-
         public:
             /*! \brief Konstruktor. Wird mit Initialisierungsliste initialisiert.
              *  \note Der erste angegebene Wert wird als Defaultwert genutzt.

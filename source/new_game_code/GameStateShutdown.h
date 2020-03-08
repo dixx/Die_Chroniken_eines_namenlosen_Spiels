@@ -4,7 +4,6 @@
 #include "leviathan.h"
 
 class GameStateShutdown final : public leviathan::core::IGameState {
-
 public:
     explicit GameStateShutdown(leviathan::LeviathanDevice& gameEngine);
     virtual ~GameStateShutdown();

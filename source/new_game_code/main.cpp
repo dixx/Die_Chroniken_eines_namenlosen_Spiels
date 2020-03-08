@@ -20,8 +20,6 @@ int main() {
 
         game.transitTo(STATE_MAIN_MENU);
         gameEngine.run();
-    } catch (std::runtime_error& _) {
-        return 1;
-    }
+    } catch (std::runtime_error& _) { return 1; }
     return 0;
 }

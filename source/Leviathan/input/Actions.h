@@ -25,7 +25,6 @@ namespace leviathan {
          *  \brief Mapping von Input zu Aktion
          */
         class Actions : public IEventConsumer {
-
         public:
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
@@ -66,14 +65,14 @@ namespace leviathan {
         private:
             core::Logger& _logger;
             struct Input {
-                Input(){};  // std::map needs this
+                Input() {};  // std::map needs this
                 explicit Input(const YAML::Node& node);
                 std::string name = "- None -", type = "unknown";
                 uint32_t id = 0;
                 bool isActive = false, wasActive = false;
             };
             struct Action {
-                Action(){};  // std::map needs this
+                Action() {};  // std::map needs this
                 explicit Action(const YAML::Node& node);
                 std::string name = "nameless action", description = "";
                 uint32_t id = 0;
@@ -84,8 +83,8 @@ namespace leviathan {
             std::map<uint32_t, std::set<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::set<IActionConsumer*>>();
             enum CONVERTER_TYPES { MOUSE = 0, KEYBOARD, CONVERTER_TYPES_COUNT };
-            std::vector<std::map<uint32_t, std::list<uint32_t>>> _converter =
-                std::vector(CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());
+            std::vector<std::map<uint32_t, std::list<uint32_t>>> _converter = std::vector(
+                CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());
 
             void addActionToConverter(const Action& action);
         };

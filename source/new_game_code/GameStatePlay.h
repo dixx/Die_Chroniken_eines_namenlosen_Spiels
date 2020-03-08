@@ -4,7 +4,6 @@
 #include "leviathan.h"
 
 class GameStatePlay final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
-
 public:
     enum actions { OPEN_IN_GAME_OPTIONS = 2002 };
 

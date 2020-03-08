@@ -6,16 +6,14 @@
 namespace leviathan {
     namespace core {
         Logger::Logger(const char* fileName, const Level globalLogLevel, const bool append)
-        : logFile_(),
-          globalLogLevel_(globalLogLevel) {
+        : logFile_(), globalLogLevel_(globalLogLevel) {
             openLogFile(fileName, append);
             text << "LogLevel: " << logLevelName(globalLogLevel_);
             write();
         }
 
         Logger::~Logger() {
-            if (logFile_.is_open())
-                logFile_.close();
+            if (logFile_.is_open()) logFile_.close();
         }
 
         void Logger::write(const Level logLevel) {
@@ -32,11 +30,9 @@ namespace leviathan {
 
         void Logger::openLogFile(const char* fileName, const bool append) {
             std::ios_base::openmode mode = std::fstream::out;
-            if (append)
-                mode |= std::fstream::app;
+            if (append) mode |= std::fstream::app;
             logFile_.open(fileName, mode);
-            if (!logFile_.is_open())
-                exit(1);
+            if (!logFile_.is_open()) exit(1);
         }
 
         std::string Logger::logLevelName(const Level logLevel) {

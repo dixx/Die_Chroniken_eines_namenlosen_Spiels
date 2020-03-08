@@ -56,9 +56,7 @@ TEST_CASE("MenuControl", "[unit]") {
         REQUIRE_FALSE(sample->isEnabled());
     }
 
-    SECTION("#enable makes a menu visible for view and events") {
-    }
+    SECTION("#enable makes a menu visible for view and events") {}
 
-    SECTION("#draw displays the visible menues onto the screen") {
-    }
+    SECTION("#draw displays the visible menues onto the screen") {}
 }

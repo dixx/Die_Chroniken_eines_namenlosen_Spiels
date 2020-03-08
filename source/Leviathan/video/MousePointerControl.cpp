@@ -4,31 +4,25 @@
 
 namespace leviathan {
     namespace video {
-        MousePointerControl::MousePointerControl(
-            leviathan::input::IEventProducer& producer,
-            irr::IrrlichtDevice* graphicDevice,
-            leviathan::core::Logger& logger
-        ) : logger_(logger), graphicDevice_(graphicDevice) {
+        MousePointerControl::MousePointerControl(leviathan::input::IEventProducer& producer,
+            irr::IrrlichtDevice* graphicDevice, leviathan::core::Logger& logger)
+        : logger_(logger), graphicDevice_(graphicDevice) {
             producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
         }
 
         bool MousePointerControl::onEvent(const irr::SEvent& event) {
-            if (event.MouseInput.Event != irr::EMIE_MOUSE_MOVED)
-                return false;
+            if (event.MouseInput.Event != irr::EMIE_MOUSE_MOVED) return false;
             position_.X = event.MouseInput.X;
             position_.Y = event.MouseInput.Y;
             return true;
         }
 
-        void MousePointerControl::createMousePointer(
-            const uint32_t id,
-            const irr::io::path& imageFileName,
-            const irr::core::recti& imageArea,
-            const irr::core::vector2di& hotSpot
-        ) {
+        void MousePointerControl::createMousePointer(const uint32_t id, const irr::io::path& imageFileName,
+            const irr::core::recti& imageArea, const irr::core::vector2di& hotSpot) {
             irr::video::ITexture* texture = graphicDevice_->getVideoDriver()->getTexture(imageFileName);
             if (texture == nullptr) {
-                logger_.text << "[Warning] - MousePointerControl - cannot load texture " << imageFileName.c_str() << "!";
+                logger_.text << "[Warning] - MousePointerControl - cannot load texture " << imageFileName.c_str()
+                             << "!";
                 logger_.write(leviathan::core::Logger::Level::DEBUG);
                 return;
             }
@@ -58,13 +52,12 @@ namespace leviathan {
 
         void MousePointerControl::draw() {
             if (activeMousePointer_ == 0) return;
-            graphicDevice_->getVideoDriver()->draw2DImage(
-                baseImage_.at(activeMousePointer_),
-                position_ - hotSpot_.at(activeMousePointer_), // upper left corner of mouse pointer image
+            graphicDevice_->getVideoDriver()->draw2DImage(baseImage_.at(activeMousePointer_),
+                position_ - hotSpot_.at(activeMousePointer_),  // upper left corner of mouse pointer image
                 imageArea_.at(activeMousePointer_),
-                nullptr, // clipping rectangle, not used here
-                backgroundColor_, // white for fully opaque mouse pointer image
-                true // use alpha channel for transparent parts of the mouse pointer image
+                nullptr,  // clipping rectangle, not used here
+                backgroundColor_,  // white for fully opaque mouse pointer image
+                true  // use alpha channel for transparent parts of the mouse pointer image
             );
         }
     }

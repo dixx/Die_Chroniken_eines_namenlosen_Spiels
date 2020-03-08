@@ -35,7 +35,6 @@ namespace leviathan {
      *  \brief Die eigentliche Engine.
      */
     class LeviathanDevice {
-
     public:
         /*! \brief Konstruktor. Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
          *         der Engine.
@@ -107,7 +106,7 @@ namespace leviathan {
         core::Randomizer randomizer_ = core::Randomizer();
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
-        std::unique_ptr<gui::MenuControl> menuControl_= nullptr;
+        std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests

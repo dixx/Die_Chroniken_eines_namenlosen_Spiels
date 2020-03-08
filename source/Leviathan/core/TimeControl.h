@@ -17,7 +17,6 @@ namespace leviathan {
          *  \brief zentrale Steuerung für übergebene Timer
          */
         class TimeControl {
-
         public:
             /*! \brief Konstruktor.
              */

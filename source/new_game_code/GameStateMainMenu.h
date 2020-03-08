@@ -4,7 +4,6 @@
 #include "leviathan.h"
 
 class GameStateMainMenu final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
-
 public:
     enum actions {
         EXIT = 1,

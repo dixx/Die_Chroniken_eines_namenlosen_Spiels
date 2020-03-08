@@ -13,7 +13,6 @@ namespace leviathan {
          *  \brief Interface für Spielzustände.
          */
         struct IGameState {
-
             virtual ~IGameState() {}
 
             /*! \brief Aktualisiert den Zustand.

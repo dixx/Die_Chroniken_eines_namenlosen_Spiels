@@ -19,7 +19,6 @@ namespace leviathan {
          *  \brief Enthält Funktionen zum Lesen und Schreiben von Konfig-Dateien sowie zum Verändern von Werten.
          */
         class Configuration {
-
         public:
             /*! \brief Konstruktor mit Konfigurationsdatei.
              *  \param filename: Konfigdateiname
@@ -73,27 +72,21 @@ namespace leviathan {
             int getInt(const irr::core::stringc& section, const irr::core::stringc& key);
 
         private:
-            irr::core::list<irr::core::stringc> content_ = irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
+            irr::core::list<irr::core::stringc> content_ =
+                irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
             irr::SIrrlichtCreationParameters params_ = irr::SIrrlichtCreationParameters();
             float farValue_ = 300.0f;  // Sichtweite der Kamera
             Logger::Level loggingLevel_ = Logger::Level::INFO;
             uint32_t maxFPS_ = 60;
-            MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_{
-                {"OPENGL", irr::video::EDT_OPENGL},
-                {"DIRECT3D9", irr::video::EDT_DIRECT3D9},
-                {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
-                {"SOFTWARE", irr::video::EDT_SOFTWARE},
-                {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
+            MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_ {{"OPENGL", irr::video::EDT_OPENGL},
+                {"DIRECT3D9", irr::video::EDT_DIRECT3D9}, {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
+                {"SOFTWARE", irr::video::EDT_SOFTWARE}, {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
                 {"NULL", irr::video::EDT_NULL}};
-            MapWithDefault<std::string, Logger::Level> logLevelMap{{"INFO", Logger::Level::INFO},
-                                                                   {"ALL", Logger::Level::ALL},
-                                                                   {"DEBUG", Logger::Level::DEBUG},
-                                                                   {"DETAIL", Logger::Level::DETAIL}};
+            MapWithDefault<std::string, Logger::Level> logLevelMap {{"INFO", Logger::Level::INFO},
+                {"ALL", Logger::Level::ALL}, {"DEBUG", Logger::Level::DEBUG}, {"DETAIL", Logger::Level::DETAIL}};
 
             void generateContent(const irr::io::path& fileName);
-            const irr::core::stringc getItem(
-                const irr::core::stringc& section,
-                const irr::core::stringc& key,
+            const irr::core::stringc getItem(const irr::core::stringc& section, const irr::core::stringc& key,
                 const irr::core::stringc& defaultValue = "");
         };
     }

@@ -84,8 +84,7 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
 
         SECTION("with peak load") {
             When(Method(gameStateMock, draw)).AlwaysDo([&virtualTime] {
-                if (virtualTime == 3)
-                    virtualTime += 800;
+                if (virtualTime == 3) virtualTime += 800;
             });
             When(Method(gameStateMock, update)).AlwaysDo([&virtualTime](...) { virtualTime++; });
             subject.run();

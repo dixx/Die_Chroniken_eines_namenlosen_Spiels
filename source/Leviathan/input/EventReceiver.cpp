@@ -5,9 +5,7 @@ namespace leviathan {
         bool EventReceiver::OnEvent(const irr::SEvent& event) {
             bool processed = false;
             for (auto consumer : _subscriptions[event.EventType]) {
-                if (consumer->onEvent(event)) {
-                    processed = true;
-                }
+                if (consumer->onEvent(event)) { processed = true; }
             }
             return processed;
         }

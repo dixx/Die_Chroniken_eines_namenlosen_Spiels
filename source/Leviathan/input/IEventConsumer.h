@@ -15,7 +15,6 @@ namespace leviathan {
          *  \brief Interface für Konsumenten von `irr::SEvent`s.
          */
         struct IEventConsumer {
-
             virtual ~IEventConsumer() {}
 
             /*! \brief Kann von einem Producer mit Events bedient werden, sobald sie auftreten.

@@ -21,7 +21,7 @@ namespace Catch {
         static std::string convert(const irr::core::recti& obj) {
             std::ostringstream ss;
             ss << "rect(" << obj.UpperLeftCorner.X << ", " << obj.UpperLeftCorner.Y << ", " << obj.LowerRightCorner.X
-                << ", " << obj.LowerRightCorner.Y << ")";
+               << ", " << obj.LowerRightCorner.Y << ")";
             return ss.str();
         }
     };

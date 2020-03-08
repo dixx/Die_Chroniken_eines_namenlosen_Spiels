@@ -5,9 +5,7 @@
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const irr::io::path& fileName)
-    : configuration_(fileName),
-      logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()),
-      gameStateManager_(logger_),
+    : configuration_(fileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), gameStateManager_(logger_),
       actions_(eventReceiver_, logger_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
@@ -34,8 +32,7 @@ namespace leviathan {
         uint32_t next = graphicEngine_->getTimer()->getTime();
 
         while (graphicEngine_->run()) {
-            if (!graphicEngine_->isWindowActive())
-                graphicEngine_->yield();
+            if (!graphicEngine_->isWindowActive()) graphicEngine_->yield();
             uint32_t loops = 0;
             bool we_must_draw = false;
             while (graphicEngine_->getTimer()->getTime() > next

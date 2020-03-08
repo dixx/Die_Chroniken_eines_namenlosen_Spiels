@@ -13,8 +13,7 @@ Testhelper::Testhelper() {
 }
 
 Testhelper::~Testhelper() {
-    if (graphicEngine_)
-        graphicEngine_->drop();
+    if (graphicEngine_) graphicEngine_->drop();
 }
 
 irr::IrrlichtDevice* Testhelper::getGraphicEngine() {
@@ -32,9 +31,9 @@ std::string Testhelper::readFile(const char* fileName) {
         std::cerr << "Error: Could not open file \"" << fileName << "\"!" << std::endl;
         exit(EXIT_FAILURE);
     }
-    filestream.seekg (0, filestream.end);
+    filestream.seekg(0, filestream.end);
     std::streampos size = filestream.tellg();
-    filestream.seekg (0, filestream.beg);
+    filestream.seekg(0, filestream.beg);
     if (size <= 0) {
         filestream.close();
         std::cerr << "Error: Could not get file size of \"" << fileName << "\"!" << std::endl;

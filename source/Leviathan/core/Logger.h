@@ -22,7 +22,6 @@ namespace leviathan {
          *           Je kleiner das LogLevel, desto allgemeiner die Informationen, je größer, desto detaillierter.
          */
         class Logger {
-
         public:
             /*! \brief Detailtiefe der Meldungen in der Logdatei
              *  \details Es können auch alle Zwischenwerte mit benutzerdefinierten Detailtiefen ergänzt und im Code

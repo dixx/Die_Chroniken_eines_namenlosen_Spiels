@@ -1,8 +1,8 @@
 #include "../../source/Leviathan/gui/MenuControl.h"
 #include "../../source/Leviathan/input/Actions.h"
+#include "../helpers/GUIEnvironmentMock.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "../helpers/GUIEnvironmentMock.hpp"
 #include "irrlicht.h"
 #include <memory>
 
@@ -56,9 +56,7 @@ TEST_CASE("MenuControl", "[unit]") {
         REQUIRE_FALSE(sample->isEnabled());
     }
 
-    SECTION("#enable makes a menu visible for view and events") {
-    }
+    SECTION("#enable makes a menu visible for view and events") {}
 
-    SECTION("#draw displays the visible menues onto the screen") {
-    }
+    SECTION("#draw displays the visible menues onto the screen") {}
 }

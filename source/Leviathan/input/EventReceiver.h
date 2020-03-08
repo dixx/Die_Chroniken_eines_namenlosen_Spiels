@@ -19,7 +19,6 @@ namespace leviathan {
          *  \brief Diese Klasse enthält Funktionen zum Behandeln von Events.
          */
         class EventReceiver : public irr::IEventReceiver, public leviathan::input::IEventProducer {
-
         public:
             /*! \brief Konstruktor.
              */

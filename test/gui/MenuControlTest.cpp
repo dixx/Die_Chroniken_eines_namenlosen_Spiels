@@ -93,7 +93,7 @@ TEST_CASE("MenuControl", "[unit]") {
         }
 
         SECTION("#draw displays the visible menues onto the screen") {
-            Mock<irr::gui::IGUIElement> menuSpy(menu);
+            // Mock<irr::gui::IGUIElement> menuSpy(menu);
             subject.addMenu(L"some menu", menuConfig);
             subject.draw();
             // Verify(Method(menuSpy, draw)).Once();

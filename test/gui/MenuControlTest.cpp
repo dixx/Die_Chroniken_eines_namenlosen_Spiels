@@ -50,52 +50,55 @@ TEST_CASE("MenuControl", "[unit]") {
         leviathan::gui::MenuConfiguration menuConfig({{320, 200}, {300, 400}, "../path/to.img", {70, 60}, true});
         irr::gui::IGUIElement menu(
             irr::gui::EGUIET_MODAL_SCREEN, &guiEnvironmentMock.get(), nullptr, 42, irr::core::recti());
+        mocks::IGUIImageMock backgroundImage(&guiEnvironmentMock.get(), nullptr, 123, irr::core::recti());
+        When(OverloadedMethod(guiEnvironmentMock, addImage, addImageArgs)).AlwaysReturn(&backgroundImage);
+        Fake(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs));
+        When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(nullptr);
+        When(OverloadedMethod(videoDriverMock, addTexture, addTextureArgs)).AlwaysReturn(nullptr);
+        mocks::IImageMock* image = new mocks::IImageMock();
+        image->grab();
+        When(OverloadedMethod(videoDriverMock, createImage, createImageArgs)).AlwaysReturn(image);
+        When(Method(guiEnvironmentMock, addModalScreen)).Return(&menu);
+
         leviathan::gui::MenuControl subject(&guiEnvironmentMock.get(), &videoDriverMock.get(), eventBrokerMock.get());
 
         SECTION("#addMenu adds a modal screen as menu root") {
             irr::gui::IGUIElement anotherMenu(
                 irr::gui::EGUIET_MODAL_SCREEN, &guiEnvironmentMock.get(), nullptr, 43, irr::core::recti());
             When(Method(guiEnvironmentMock, addModalScreen)).Return(&menu, &anotherMenu);
-            mocks::IGUIImageMock backgroundImage(&guiEnvironmentMock.get(), nullptr, 123, irr::core::recti());
-            When(OverloadedMethod(guiEnvironmentMock, addImage, addImageArgs)).AlwaysReturn(&backgroundImage);
-            Fake(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs));
-            When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(nullptr);
-            When(OverloadedMethod(videoDriverMock, addTexture, addTextureArgs)).AlwaysReturn(nullptr);
-            mocks::IImageMock* image = new mocks::IImageMock();
-            image->grab();
-            When(OverloadedMethod(videoDriverMock, createImage, createImageArgs)).AlwaysReturn(image);
 
             subject.addMenu(L"some menu", menuConfig);
             subject.addMenu(L"some other menu", menuConfig);
             Verify(Method(guiEnvironmentMock, addModalScreen)).Exactly(2_Times);
             Verify(OverloadedMethod(guiEnvironmentMock, addImage, addImageArgs).Using(_, &menu, -1, nullptr, true))
                 .Once();
+
+            SECTION("menu root is disabled for events") {
+                REQUIRE_FALSE(menu.isEnabled());
+            }
         }
 
-        // SECTION("#disable hides a menu from view and from events") {
-        //     subject.addMenu(L"some menu", menuConfig);
-        //     REQUIRE(menu.isVisible());
-        //     REQUIRE(menu.isEnabled());
-        //
-        //     subject.disable(L"some menu");
-        //     REQUIRE_FALSE(menu.isVisible());
-        //     REQUIRE_FALSE(menu.isEnabled());
-        //
-        //     SECTION("#enable makes a menu visible for view and events") {
-        //         subject.enable(L"some menu");
-        //         REQUIRE(menu.isVisible());
-        //         REQUIRE(menu.isEnabled());
-        //     }
-        // }
-        //
-        // SECTION("#draw displays the visible menues onto the screen") {
-        //     When(Method(guiEnvironmentSpy, addModalScreen)).Return(&menu, &anotherMenu);
-        //     subject.addMenu(L"some menu", menuConfig);
-        //     subject.addMenu(L"some other menu", menuConfig);
-        //     subject.disable(L"some other menu");
-        //     subject.draw();
-        //     // not testable atm, because: Can't mock a type with multiple inheritance
-        // }
+        SECTION("#enable makes a menu visible") {
+            subject.addMenu(L"some menu", menuConfig);
+            subject.enable(L"some menu");
+            REQUIRE(menu.isVisible());
+            REQUIRE_FALSE(menu.isEnabled());
+        }
+
+        SECTION("#disable hides a menu from view") {
+            subject.addMenu(L"some menu", menuConfig);
+            subject.disable(L"some menu");
+            REQUIRE_FALSE(menu.isVisible());
+            REQUIRE_FALSE(menu.isEnabled());
+        }
+
+        SECTION("#draw displays the visible menues onto the screen") {
+            Mock<irr::gui::IGUIElement> menuSpy(menu);
+            subject.addMenu(L"some menu", menuConfig);
+            subject.draw();
+            // Verify(Method(menuSpy, draw)).Once();
+            // not testable atm, because: Can't mock a type with multiple inheritance
+        }
 
         SECTION("#addButton adds a button to a menu") {
             // Mock<leviathan::input::IEventProducer> eventBrokerMock;

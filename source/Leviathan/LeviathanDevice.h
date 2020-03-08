@@ -10,19 +10,19 @@
 #include "core/Configuration.h"
 #include "core/GameStateManager.h"
 #include "core/Logger.h"
-#include "core/TimeControl.h"
 #include "core/Randomizer.h"
+#include "core/TimeControl.h"
 #include "gui/MenuControl.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
-#include "video/MousePointerControl.h"
 #include "irrlicht.h"
+#include "video/MousePointerControl.h"
 #include <memory>
 
 #ifndef NDEBUG
-#    define LOG_FILE_NAME "game.log"
+#define LOG_FILE_NAME "game.log"
 #else
-#    define LOG_FILE_NAME "debug.log"
+#define LOG_FILE_NAME "debug.log"
 #endif
 
 namespace TesthelperLeviathanDevice {

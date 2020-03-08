@@ -1,5 +1,5 @@
-#include "irrlicht.h"
 #include "AttributesMock.hpp"
+#include "irrlicht.h"
 #include <cstdint>
 
 // Fakeit keeps pointer to arguments beyond their lifetime and matches the given args too late, so we must implement

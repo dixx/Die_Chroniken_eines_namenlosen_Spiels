@@ -6,16 +6,16 @@
 #ifndef LEVIATHAN_INPUT_ACTIONS_H
 #define LEVIATHAN_INPUT_ACTIONS_H
 
+#include "../core/Logger.h"
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
-#include "../core/Logger.h"
 #include "irrlicht.h"
 #include "yaml-cpp/yaml.h"
 #include <cstdint>
+#include <list>
 #include <map>
 #include <set>
-#include <list>
 #include <string>
 
 namespace leviathan {

@@ -1,8 +1,8 @@
 #include "../../source/Leviathan/gui/MenuControl.h"
 #include "../../source/Leviathan/input/Actions.h"
+#include "../helpers/GUIEnvironmentMock.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "../helpers/GUIEnvironmentMock.hpp"
 #include "irrlicht.h"
 #include <memory>
 

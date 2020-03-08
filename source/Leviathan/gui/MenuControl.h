@@ -6,12 +6,12 @@
 #ifndef LEVIATHAN_GUI_MENUCONTROL_H
 #define LEVIATHAN_GUI_MENUCONTROL_H
 
-#include <map>
-#include <memory>
-#include <string>
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
 #include "irrlicht.h"
+#include <map>
+#include <memory>
+#include <string>
 
 namespace leviathan {
     namespace gui {

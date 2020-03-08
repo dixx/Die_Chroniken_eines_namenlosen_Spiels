@@ -1,10 +1,10 @@
 #ifndef HELPERS_TESTHELPER_H
 #define HELPERS_TESTHELPER_H
 
+#include "../../source/Leviathan/core/Logger.h"  // we dogfood our own code ;)
 #include "irrlicht.h"
 #include <cstdint>
 #include <string>
-#include "../../source/Leviathan/core/Logger.h" // we dogfood our own code ;)
 
 class Testhelper {
 public:

@@ -6,9 +6,9 @@
 #ifndef LEVIATHAN_VIDEO_MOUSEPOINTER_H
 #define LEVIATHAN_VIDEO_MOUSEPOINTER_H
 
+#include "../core/Logger.h"
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
-#include "../core/Logger.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <unordered_map>

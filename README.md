@@ -13,7 +13,7 @@ Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 
 ###### Windows:
 ...und `cmake -G "MinGW Makefiles" ..` eingeben. Das erstellt ein Makefile für genau dein System. Damit kannst du dann machen was du willst, z.B. ein Eclipse-Projekt erstellen oder einfach `make` ausführen.
-Hinweis: Wir empfehlen Ninja anstelle von Make zu nutzen.
+Hinweis: Wir nutzen gern Ninja anstelle von Make.
 
 ###### Linux:
 ...und dann noch flink die gerade entpackten Bibliotheken compilen. (siehe **Troubleshooting**). Dann kannst du `cmake ..` eingeben, danach `make`.
@@ -22,7 +22,7 @@ Hinweis: Wir empfehlen Ninja anstelle von Make zu nutzen.
 - todo
 
 #### Tests
-Die *Leviathan Game Engine* wird komplett testgetrieben entwickelt. Die Unit-Tests werden mit den Frameworks [**Catch**](https://github.com/philsquared/Catch) und [**FakeIt**](https://github.com/eranpeer/FakeIt) erstellt.
+Die *Leviathan Game Engine* wird komplett testgetrieben entwickelt. Die Unit-Tests werden mit den Frameworks [**Catch2**](https://github.com/catchorg/Catch2) und [**FakeIt**](https://github.com/eranpeer/FakeIt) erstellt.
 Beim Builden wird auch ein Binary `unit_tests` angelegt, welches die Tests in der Konsole abfährt.
 
 #### Troubleshooting

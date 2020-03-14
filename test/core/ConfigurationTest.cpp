@@ -35,6 +35,8 @@ TEST_CASE("Configuration: read values", "[unit]") {
         REQUIRE(subject.getFarValue() == Approx(300.0f));
         REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::ALL);
         REQUIRE(subject.getMaxFPS() == 42);
+        REQUIRE(subject.getScreenSize().w == 1366);
+        REQUIRE(subject.getScreenSize().h == 768);
 
         SECTION("reading again overwrites changes") {
             testhelper.writeFile(configFileName, "[video]\ncolor_depth=111\n");
@@ -58,6 +60,8 @@ TEST_CASE("Configuration: default values", "[unit]") {
         REQUIRE(subject.getFarValue() == Approx(300.0f));
         REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
         REQUIRE(subject.getMaxFPS() == 60);
+        REQUIRE(subject.getScreenSize().w == 800);
+        REQUIRE(subject.getScreenSize().h == 600);
 
         SECTION("or if keys are unknown") {
             irr::core::stringc content = "[general]\n";

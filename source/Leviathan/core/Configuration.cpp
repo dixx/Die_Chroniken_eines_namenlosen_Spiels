@@ -19,6 +19,7 @@ namespace leviathan {
             farValue_ = irr::core::strtof10(getItem("camera", "far_value", "300.0").c_str());
             loggingLevel_ = logLevelMap[getItem("general", "logging_level", "INFO").c_str()];
             maxFPS_ = irr::core::strtoul10(getItem("video", "max_fps", "60").c_str());
+            screenSize_ = {params_.WindowSize.Width, params_.WindowSize.Height};
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const {
@@ -35,6 +36,10 @@ namespace leviathan {
 
         uint32_t Configuration::getMaxFPS() const {
             return maxFPS_;
+        }
+
+        video::Dimension2D Configuration::getScreenSize() const {
+            return screenSize_;
         }
 
         int Configuration::getInt(const irr::core::stringc& section, const irr::core::stringc& key) {

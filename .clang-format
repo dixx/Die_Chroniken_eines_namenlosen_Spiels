@@ -12,7 +12,7 @@ AlignTrailingComments: false
 AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: Empty
+AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: WithoutElse
@@ -27,7 +27,7 @@ BinPackParameters: true
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
-  AfterControlStatement: Never
+  AfterControlStatement: false
   AfterEnum: false
   AfterFunction: false
   AfterNamespace: false
@@ -118,7 +118,7 @@ SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 # SpacesInConditionalStatement: false
 SpacesInSquareBrackets: false
-Standard: Latest
+Standard: Cpp11
 TabWidth: 4
 UseTab: Never
 ...

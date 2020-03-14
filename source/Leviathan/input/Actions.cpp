@@ -1,5 +1,5 @@
 #include "Actions.h"
-#include <iostream>
+#include <algorithm>
 
 namespace leviathan {
     namespace input {
@@ -10,11 +10,13 @@ namespace leviathan {
         }
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {
-            _subscriptions[id].insert(&consumer);
+            auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
+            if (found == _subscriptions[id].end()) { _subscriptions[id].push_back(&consumer); }
         }
 
         void Actions::unsubscribe(IActionConsumer& consumer, const uint32_t id) {
-            _subscriptions[id].erase(&consumer);
+            auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
+            if (found != _subscriptions[id].end()) { _subscriptions[id].erase(found); }
         }
 
         bool Actions::onEvent(const irr::SEvent& event) {
@@ -22,31 +24,26 @@ namespace leviathan {
             bool isActive = false;
             try {
                 if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
-                    switch (event.MouseInput.Event) {
+                    auto mouseEvent = event.MouseInput.Event;
+                    switch (mouseEvent) {
                     case irr::EMIE_LMOUSE_PRESSED_DOWN:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
-                        isActive = true;
-                        break;
                     case irr::EMIE_LMOUSE_LEFT_UP:
                         action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
                         break;
                     case irr::EMIE_RMOUSE_PRESSED_DOWN:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
-                        isActive = true;
-                        break;
                     case irr::EMIE_RMOUSE_LEFT_UP:
                         action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
                         break;
                     case irr::EMIE_MMOUSE_PRESSED_DOWN:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
-                        isActive = true;
-                        break;
                     case irr::EMIE_MMOUSE_LEFT_UP:
                         action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
                         break;
                     default:
                         return false;
                     }
+                    isActive = (mouseEvent == irr::EMIE_LMOUSE_PRESSED_DOWN
+                                || mouseEvent == irr::EMIE_RMOUSE_PRESSED_DOWN
+                                || mouseEvent == irr::EMIE_MMOUSE_PRESSED_DOWN);
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
                     action_ids = _converter[KEYBOARD].at(event.KeyInput.Key);
                     isActive = event.KeyInput.PressedDown;
@@ -55,11 +52,7 @@ namespace leviathan {
                 }
             } catch (const std::out_of_range& e) { return false; }
             if (action_ids.empty()) { return false; }
-            for (auto id : action_ids) {
-                for (auto consumer : _subscriptions[id]) {
-                    consumer->onAction(id, isActive);
-                }
-            }
+            dispatchAction(action_ids, isActive);
             return true;
         }
 
@@ -105,6 +98,16 @@ namespace leviathan {
             } else if (action.secondary.type == "keyboard") {
                 _converter[KEYBOARD][action.secondary.id].push_back(action.id);
                 _converter[KEYBOARD][action.secondary.id].unique();
+            }
+        }
+
+        void Actions::dispatchAction(const std::list<uint32_t>& action_ids, bool isActive) {
+            for (auto id : action_ids) {
+                if (_subscriptions[id].size() == 0) continue;
+                // we iterate in reverse, because _subscriptions can shrink while being iterated
+                for (uint32_t it = _subscriptions[id].size(); it != 0; it--) {
+                    _subscriptions[id][it - 1]->onAction(id, isActive);
+                }
             }
         }
     }

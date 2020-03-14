@@ -7,6 +7,7 @@
 #define LEVIATHAN_CORE_CONFIGURATION_H
 
 #include "../support/MapWithDefault.h"
+#include "../video/types.h"
 #include "Logger.h"
 #include "irrlicht.h"
 #include <cstdint>
@@ -51,17 +52,22 @@ namespace leviathan {
             /*! \brief Gibt die Sichtweite der Kamera zurück.
              *  \return maximale Sichtweite (in Meter)
              */
-            float getFarValue() const;
+            const float& getFarValue() const;
 
             /*! \brief Gibt den Loglevel zurück.
              *  \return Loglevel
              */
-            Logger::Level getLoggingLevel() const;
+            const Logger::Level& getLoggingLevel() const;
 
             /*! \brief Gibt die Anzahl der maximal anzuzeigenden Bilder pro Sekunde zurück.
              *  \return Anzahl der maximal anzuzeigenden Bilder pro Sekunde
              */
-            uint32_t getMaxFPS() const;
+            const uint32_t& getMaxFPS() const;
+
+            /*! \brief Gibt die Größe des anzuzeigenden Fensters in Pixel zurück.
+             *  \return Größe des anzuzeigenden Fensters in Pixel
+             */
+            const video::Dimension2D& getScreenSize() const;
 
             /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
              *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.
@@ -78,6 +84,7 @@ namespace leviathan {
             float farValue_ = 300.0f;  // Sichtweite der Kamera
             Logger::Level loggingLevel_ = Logger::Level::INFO;
             uint32_t maxFPS_ = 60;
+            video::Dimension2D screenSize_ = {800, 600};
             MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_ {{"OPENGL", irr::video::EDT_OPENGL},
                 {"DIRECT3D9", irr::video::EDT_DIRECT3D9}, {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
                 {"SOFTWARE", irr::video::EDT_SOFTWARE}, {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},

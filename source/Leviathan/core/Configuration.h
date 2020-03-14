@@ -52,22 +52,22 @@ namespace leviathan {
             /*! \brief Gibt die Sichtweite der Kamera zurück.
              *  \return maximale Sichtweite (in Meter)
              */
-            float getFarValue() const;
+            const float& getFarValue() const;
 
             /*! \brief Gibt den Loglevel zurück.
              *  \return Loglevel
              */
-            Logger::Level getLoggingLevel() const;
+            const Logger::Level& getLoggingLevel() const;
 
             /*! \brief Gibt die Anzahl der maximal anzuzeigenden Bilder pro Sekunde zurück.
              *  \return Anzahl der maximal anzuzeigenden Bilder pro Sekunde
              */
-            uint32_t getMaxFPS() const;
+            const uint32_t& getMaxFPS() const;
 
             /*! \brief Gibt die Größe des anzuzeigenden Fensters in Pixel zurück.
              *  \return Größe des anzuzeigenden Fensters in Pixel
              */
-            video::Dimension2D getScreenSize() const;
+            const video::Dimension2D& getScreenSize() const;
 
             /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
              *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.

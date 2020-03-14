@@ -26,19 +26,19 @@ namespace leviathan {
             return params_;
         }
 
-        float Configuration::getFarValue() const {
+        const float& Configuration::getFarValue() const {
             return farValue_;
         }
 
-        Logger::Level Configuration::getLoggingLevel() const {
+        const Logger::Level& Configuration::getLoggingLevel() const {
             return loggingLevel_;
         }
 
-        uint32_t Configuration::getMaxFPS() const {
+        const uint32_t& Configuration::getMaxFPS() const {
             return maxFPS_;
         }
 
-        video::Dimension2D Configuration::getScreenSize() const {
+        const video::Dimension2D& Configuration::getScreenSize() const {
             return screenSize_;
         }
 

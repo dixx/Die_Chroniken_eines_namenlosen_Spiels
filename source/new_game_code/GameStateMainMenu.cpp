@@ -6,14 +6,23 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MousePointerControl().createMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
     gameEngine_.MousePointerControl().setActiveMousPointer(1);
-    leviathan::gui::MenuConfiguration menuConfig({{436, 555}, {663, 115}, "gfx/menues1.bmp", {588, 212}, true});
+
+    const leviathan::video::Dimension2D screenSize = gameEngine_.Configuration().getScreenSize();
+    leviathan::video::Dimension2D menuSize({436, 555});
+    leviathan::video::Position2D menuPosition(
+        {static_cast<int32_t>(screenSize.w - menuSize.w), static_cast<int32_t>(screenSize.h - menuSize.h)});
+    leviathan::gui::MenuConfiguration menuConfig({menuSize, menuPosition, "gfx/menues1.bmp", {588, 212}, true});
     gameEngine_.MenuControl().addMenu(L"Main Menu", menuConfig);
-    leviathan::gui::ButtonConfiguration buttonConfig({
-        {313, 88}, {85, 63}, "gfx/menues1.bmp", {663, 115}, {654, 22}, true
-    });
+
+    leviathan::video::Position2D buttonPosition(
+        {static_cast<int32_t>(screenSize.w - menuSize.w + 80), static_cast<int32_t>(screenSize.h - menuSize.h + 64)});
+    leviathan::gui::ButtonConfiguration buttonConfig(
+        {{313, 88}, buttonPosition, "gfx/menues1.bmp", {663, 115}, {654, 22}, true});
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Start Game", buttonConfig);
-    buttonConfig.relativePositionInMenu.y = 134;
+    buttonConfig.relativePositionInMenu.y += 67;
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Load Game", buttonConfig);
+    buttonConfig.relativePositionInMenu.y += 284;
+    gameEngine_.MenuControl().addButton(L"Main Menu", L"Quit", buttonConfig);
 }
 
 GameStateMainMenu::~GameStateMainMenu() {

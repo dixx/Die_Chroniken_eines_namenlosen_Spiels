@@ -6,6 +6,7 @@
 #ifndef LEVIATHAN_INPUT_IACTIONCONSUMER_H
 #define LEVIATHAN_INPUT_IACTIONCONSUMER_H
 
+#include "types.h"
 #include <cstdint>
 
 namespace leviathan {
@@ -18,10 +19,9 @@ namespace leviathan {
             virtual ~IActionConsumer() {}
 
             /*! \brief Reagiert auf Aktionen.
-             *  \param id: ID der Aktion
-             *  \param isActive: `true` wenn die Aktion gerade läuft, ansonsten `false`
+             *  \param action: Aktion, gesendet vom Producer
              */
-            virtual void onAction(const uint32_t id, const bool isActive) = 0;
+            virtual void onAction(const Action action) = 0;
         };
     }
 }

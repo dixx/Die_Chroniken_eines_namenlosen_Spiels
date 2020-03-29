@@ -20,7 +20,6 @@
 
 namespace leviathan {
     namespace input {
-
         /*! \class Actions
          *  \brief Mapping von Input zu Aktion
          */
@@ -75,22 +74,22 @@ namespace leviathan {
                 uint32_t id = 0;
                 bool isActive = false, wasActive = false;
             };
-            struct Action {
-                Action() {};  // std::map needs this
-                explicit Action(const YAML::Node& node);
+            struct ActionMapping {
+                ActionMapping() {};  // std::map needs this
+                explicit ActionMapping(const YAML::Node& node);
                 std::string name = "nameless action", description = "";
                 uint32_t id = 0;
                 bool internal = false;
                 Input primary = Input(), secondary = Input();
             };
-            std::map<uint32_t, Action> _actions = std::map<uint32_t, Action>();
+            std::map<uint32_t, ActionMapping> _actions = std::map<uint32_t, ActionMapping>();
             std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();
             enum CONVERTER_TYPES { MOUSE = 0, KEYBOARD, CONVERTER_TYPES_COUNT };
             std::vector<std::map<uint32_t, std::list<uint32_t>>> _converter = std::vector(
                 CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());
 
-            void addActionToConverter(const Action& action);
+            void addActionToConverter(const ActionMapping& action);
             void dispatchAction(const std::list<uint32_t>& action_ids, bool isActive);
         };
     }

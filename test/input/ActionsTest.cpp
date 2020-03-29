@@ -8,6 +8,11 @@
 
 using namespace fakeit;
 
+// to be able to compare Action structs
+bool operator==(const leviathan::input::Action& lhs, const leviathan::input::Action& rhs) {
+    return lhs.id == rhs.id && lhs.isActive == rhs.isActive;
+}
+
 TEST_CASE("Action Mapping", "[unit]") {
     Testhelper testhelper;
     const char* mappingsFileName = "testactionmappings.yml";
@@ -78,7 +83,7 @@ TEST_CASE("Action Mapping", "[unit]") {
             VerifyNoOtherInvocations(Method(consumerMock, onAction));
             subject.loadFromFile(mappingsFileName);
             subject.onEvent(leftMouseButtonEvent);
-            Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
+            Verify(Method(consumerMock, onAction).Using({TALK, true})).Exactly(Once);
             consumerMock.ClearInvocationHistory();
 
             SECTION("and receive only their subscribed actions") {
@@ -88,19 +93,19 @@ TEST_CASE("Action Mapping", "[unit]") {
                 subject.subscribe(anotherConsumerMock.get(), SELECT);
 
                 subject.onEvent(leftMouseButtonEvent);
-                Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Using({TALK, true})).Exactly(Once);
                 VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction), Method(consumerMock, onAction));
 
                 subject.onEvent(spaceBarEvent);
-                Verify(Method(anotherConsumerMock, onAction).Using(SELECT, false)).Exactly(Once);
+                Verify(Method(anotherConsumerMock, onAction).Using({SELECT, false})).Exactly(Once);
                 VerifyNoOtherInvocations(Method(consumerMock, onAction), Method(anotherConsumerMock, onAction));
             }
 
             SECTION("with same input for multiple actions") {
                 subject.subscribe(consumerMock.get(), ENABLE);
                 subject.onEvent(eKeyEvent);
-                Verify(Method(consumerMock, onAction).Using(TALK, true)).Exactly(Once);
-                Verify(Method(consumerMock, onAction).Using(ENABLE, true)).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Using({TALK, true})).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Using({ENABLE, true})).Exactly(Once);
             }
 
             SECTION("consumers can unsubscribe from certain actions") {

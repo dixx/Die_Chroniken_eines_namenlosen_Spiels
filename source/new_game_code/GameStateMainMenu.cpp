@@ -40,10 +40,10 @@ void GameStateMainMenu::draw() {
     gameEngine_.MousePointerControl().draw();
 }
 
-void GameStateMainMenu::onAction(const uint32_t id, const bool isActive) {
-    switch (id) {
+void GameStateMainMenu::onAction(const leviathan::input::Action action) {
+    switch (action.id) {
     case actions::EXIT:
-        if (isActive) gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);
+        if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);
         break;
     }
 }

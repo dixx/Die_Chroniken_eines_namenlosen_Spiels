@@ -28,7 +28,7 @@ public:
 
     void setInactive();
 
-    void onAction(const uint32_t id, const bool isActive);
+    void onAction(const leviathan::input::Action action);
 
 private:
     leviathan::LeviathanDevice& gameEngine_;

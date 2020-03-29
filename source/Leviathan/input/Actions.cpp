@@ -1,4 +1,5 @@
 #include "Actions.h"
+#include "types.h"
 #include <algorithm>
 
 namespace leviathan {
@@ -75,7 +76,7 @@ namespace leviathan {
             _converter[MOUSE].clear();
             _converter[KEYBOARD].clear();
             for (const auto actionNode : actionMap) {
-                Action action(actionNode);
+                ActionMapping action(actionNode);
                 _actions[action.id] = action;
                 addActionToConverter(action);
             }
@@ -91,13 +92,14 @@ namespace leviathan {
           type(node && node["type"] ? node["type"].as<std::string>() : "unknown"),
           id(node && node["id"] ? node["id"].as<uint32_t>() : 0), isActive(false), wasActive(false) {}
 
-        Actions::Action::Action(const YAML::Node& node)
+        Actions::ActionMapping::ActionMapping(const YAML::Node& node)
         : name(node && node["name"] ? node["name"].as<std::string>() : "nameless action"),
           description(node && node["description"] ? node["description"].as<std::string>() : ""),
           id(node && node["id"] ? node["id"].as<uint32_t>() : 0), internal(node && node["internal"]),
           primary(node["input_mappings"]["primary"]), secondary(node["input_mappings"]["secondary"]) {}
 
-        void Actions::addActionToConverter(const Action& action) {
+        void Actions::addActionToConverter(
+            const ActionMapping& action) {  // refactor _converter to map with string keys
             if (action.primary.type == "mouse") {
                 _converter[MOUSE][action.primary.id].push_back(action.id);
                 _converter[MOUSE][action.primary.id].unique();
@@ -119,7 +121,7 @@ namespace leviathan {
                 if (_subscriptions[id].size() == 0) continue;
                 // we iterate in reverse, because _subscriptions can shrink while being iterated
                 for (uint32_t it = _subscriptions[id].size(); it != 0; it--) {
-                    _subscriptions[id][it - 1]->onAction(id, isActive);
+                    _subscriptions[id][it - 1]->onAction({id, isActive});
                 }
             }
         }

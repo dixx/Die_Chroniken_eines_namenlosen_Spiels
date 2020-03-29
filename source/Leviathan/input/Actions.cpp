@@ -38,21 +38,21 @@ namespace leviathan {
                     case irr::EMIE_LMOUSE_PRESSED_DOWN:
                     case irr::EMIE_LMOUSE_LEFT_UP:
                         action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
+                        isActive = event.MouseInput.isLeftPressed();
                         break;
                     case irr::EMIE_RMOUSE_PRESSED_DOWN:
                     case irr::EMIE_RMOUSE_LEFT_UP:
                         action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
+                        isActive = event.MouseInput.isRightPressed();
                         break;
                     case irr::EMIE_MMOUSE_PRESSED_DOWN:
                     case irr::EMIE_MMOUSE_LEFT_UP:
                         action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
+                        isActive = event.MouseInput.isMiddlePressed();
                         break;
                     default:
                         return false;
                     }
-                    isActive = (mouseEvent == irr::EMIE_LMOUSE_PRESSED_DOWN
-                                || mouseEvent == irr::EMIE_RMOUSE_PRESSED_DOWN
-                                || mouseEvent == irr::EMIE_MMOUSE_PRESSED_DOWN);
                 } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
                     action_ids = _converter[KEYBOARD].at(event.KeyInput.Key);
                     isActive = event.KeyInput.PressedDown;

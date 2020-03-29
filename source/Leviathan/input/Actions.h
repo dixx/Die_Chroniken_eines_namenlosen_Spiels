@@ -59,6 +59,8 @@ namespace leviathan {
 
             /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
              *  \note Alle bereits vorhandene Aktionen werden entfernt.
+             *  \note Tastatur-Codes gibt es unter anderem hier:
+             *        https://docs.microsoft.com/en-gb/windows/win32/inputdev/virtual-key-codes?redirectedfrom=MSDN
              *  \param fileName: Mapping-Dateiname
              */
             void loadFromFile(const irr::io::path& fileName);

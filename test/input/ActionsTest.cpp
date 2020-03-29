@@ -48,8 +48,7 @@ TEST_CASE("Action Mapping", "[unit]") {
     testhelper.writeFile(mappingsFileName, content);
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Mock<leviathan::input::IActionConsumer> consumerMock;
-    Fake(Method(eventBrokerMock, subscribe), Method(consumerMock, onAction));
-    irr::SEvent leftMouseButtonEvent, spaceBarEvent, eKeyEvent, unregisteredKeyEvent;
+    Fake(Method(eventBrokerMock, subscribe), Method(eventBrokerMock, unsubscribe), Method(consumerMock, onAction));
     leftMouseButtonEvent.EventType = irr::EET_MOUSE_INPUT_EVENT;
     leftMouseButtonEvent.MouseInput.ButtonStates = irr::EMBSM_LEFT;
     leftMouseButtonEvent.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;

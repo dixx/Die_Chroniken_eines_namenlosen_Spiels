@@ -16,12 +16,16 @@ namespace leviathan {
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {
             auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
-            if (found == _subscriptions[id].end()) { _subscriptions[id].push_back(&consumer); }
+            if (found == _subscriptions[id].end()) {
+                _subscriptions[id].push_back(&consumer);
+            }
         }
 
         void Actions::unsubscribe(IActionConsumer& consumer, const uint32_t id) {
             auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
-            if (found != _subscriptions[id].end()) { _subscriptions[id].erase(found); }
+            if (found != _subscriptions[id].end()) {
+                _subscriptions[id].erase(found);
+            }
         }
 
         bool Actions::onEvent(const irr::SEvent& event) {
@@ -55,8 +59,12 @@ namespace leviathan {
                 } else {
                     return false;
                 }
-            } catch (const std::out_of_range& e) { return false; }
-            if (action_ids.empty()) { return false; }
+            } catch (const std::out_of_range& e) {
+                return false;
+            }
+            if (action_ids.empty()) {
+                return false;
+            }
             dispatchAction(action_ids, isActive);
             return true;
         }

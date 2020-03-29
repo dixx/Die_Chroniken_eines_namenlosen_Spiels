@@ -32,8 +32,9 @@ namespace leviathan {
              */
             Actions(IEventProducer& producer, core::Logger& logger);
 
+            ~Actions();
+
             Actions() = delete;
-            ~Actions() = default;
             Actions(const Actions&) = delete;
             Actions& operator=(const Actions&) = delete;
 

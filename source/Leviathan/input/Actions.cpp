@@ -8,6 +8,10 @@ namespace leviathan {
             _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
         }
+
+        Actions::~Actions() {
+            _producer.unsubscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
+            _producer.unsubscribe(*this, irr::EET_KEY_INPUT_EVENT);
         }
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {

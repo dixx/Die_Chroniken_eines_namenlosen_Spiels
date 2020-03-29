@@ -3,10 +3,11 @@
 
 namespace leviathan {
     namespace input {
-        Actions::Actions(IEventProducer& producer, core::Logger& logger) : _logger(logger) {
+        Actions::Actions(IEventProducer& producer, core::Logger& logger) : _logger(logger), _producer(producer) {
             _actions[0];  // init default
-            producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
-            producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
+            _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
+            _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
+        }
         }
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {

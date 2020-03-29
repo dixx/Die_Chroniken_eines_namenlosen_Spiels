@@ -64,6 +64,7 @@ namespace leviathan {
 
         private:
             core::Logger& _logger;
+            input::IEventProducer& _producer;
             struct Input {
                 Input() {};  // std::map needs this
                 explicit Input(const YAML::Node& node);

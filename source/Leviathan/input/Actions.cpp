@@ -30,51 +30,27 @@ namespace leviathan {
         }
 
         bool Actions::onEvent(const irr::SEvent& event) {
-            std::list<uint32_t> action_ids = {};
-            bool isActive = false;
-            try {
-                if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
-                    auto mouseEvent = event.MouseInput.Event;
-                    switch (mouseEvent) {
-                    case irr::EMIE_LMOUSE_PRESSED_DOWN:
-                    case irr::EMIE_LMOUSE_LEFT_UP:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_LEFT);
-                        isActive = event.MouseInput.isLeftPressed();
-                        break;
-                    case irr::EMIE_RMOUSE_PRESSED_DOWN:
-                    case irr::EMIE_RMOUSE_LEFT_UP:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_RIGHT);
-                        isActive = event.MouseInput.isRightPressed();
-                        break;
-                    case irr::EMIE_MMOUSE_PRESSED_DOWN:
-                    case irr::EMIE_MMOUSE_LEFT_UP:
-                        action_ids = _converter[MOUSE].at(irr::EMBSM_MIDDLE);
-                        isActive = event.MouseInput.isMiddlePressed();
-                        break;
-                    default:
-                        return false;
-                    }
-                } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-                    action_ids = _converter[KEYBOARD].at(event.KeyInput.Key);
-                    isActive = event.KeyInput.PressedDown;
-                } else {
-                    return false;
-                }
-            } catch (const std::out_of_range& e) {
+            std::vector<Action> actions;
+            if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
+                actions = _mouseConverter.actionsFor(event);
+            } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+                actions = _keyboardConverter.actionsFor(event);
+            } else if (event.EventType == irr::EET_GUI_EVENT) {
+            } else {
                 return false;
             }
-            if (action_ids.empty()) {
+            if (actions.empty()) {
                 return false;
             }
-            dispatchAction(action_ids, isActive);
+            dispatchActions(actions);
             return true;
         }
 
         void Actions::loadFromFile(const irr::io::path& fileName) {
             YAML::Node actionMap = YAML::LoadFile(fileName.c_str());
             _actions.clear();
-            _converter[MOUSE].clear();
-            _converter[KEYBOARD].clear();
+            _mouseConverter.clear();
+            _keyboardConverter.clear();
             for (const auto actionNode : actionMap) {
                 ActionMapping action(actionNode);
                 _actions[action.id] = action;
@@ -98,30 +74,27 @@ namespace leviathan {
           id(node && node["id"] ? node["id"].as<uint32_t>() : 0), internal(node && node["internal"]),
           primary(node["input_mappings"]["primary"]), secondary(node["input_mappings"]["secondary"]) {}
 
-        void Actions::addActionToConverter(
-            const ActionMapping& action) {  // refactor _converter to map with string keys
+        void Actions::addActionToConverter(const ActionMapping& action) {
             if (action.primary.type == "mouse") {
-                _converter[MOUSE][action.primary.id].push_back(action.id);
-                _converter[MOUSE][action.primary.id].unique();
+                _mouseConverter.addMapping(action.primary.id, action.id);
             } else if (action.primary.type == "keyboard") {
-                _converter[KEYBOARD][action.primary.id].push_back(action.id);
-                _converter[KEYBOARD][action.primary.id].unique();
+                _keyboardConverter.addMapping(action.primary.id, action.id);
+            } else if (action.primary.type == "gui") {
             }
             if (action.secondary.type == "mouse") {
-                _converter[MOUSE][action.secondary.id].push_back(action.id);
-                _converter[MOUSE][action.secondary.id].unique();
+                _mouseConverter.addMapping(action.secondary.id, action.id);
             } else if (action.secondary.type == "keyboard") {
-                _converter[KEYBOARD][action.secondary.id].push_back(action.id);
-                _converter[KEYBOARD][action.secondary.id].unique();
+                _keyboardConverter.addMapping(action.secondary.id, action.id);
+            } else if (action.secondary.type == "gui") {
             }
         }
 
-        void Actions::dispatchAction(const std::list<uint32_t>& action_ids, bool isActive) {
-            for (auto id : action_ids) {
-                if (_subscriptions[id].size() == 0) continue;
+        void Actions::dispatchActions(const std::vector<Action>& actions) {
+            for (auto action : actions) {
+                if (_subscriptions[action.id].size() == 0) continue;
                 // we iterate in reverse, because _subscriptions can shrink while being iterated
-                for (uint32_t it = _subscriptions[id].size(); it != 0; it--) {
-                    _subscriptions[id][it - 1]->onAction({id, isActive});
+                for (uint32_t it = _subscriptions[action.id].size(); it != 0; it--) {
+                    _subscriptions[action.id][it - 1]->onAction(action);
                 }
             }
         }

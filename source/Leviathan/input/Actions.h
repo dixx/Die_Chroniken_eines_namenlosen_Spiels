@@ -10,10 +10,12 @@
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
+#include "KeyboardEventActions.h"
+#include "MouseEventActions.h"
 #include "irrlicht.h"
+#include "types.h"
 #include "yaml-cpp/yaml.h"
 #include <cstdint>
-#include <list>
 #include <map>
 #include <string>
 #include <vector>
@@ -85,12 +87,11 @@ namespace leviathan {
             std::map<uint32_t, ActionMapping> _actions = std::map<uint32_t, ActionMapping>();
             std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();
-            enum CONVERTER_TYPES { MOUSE = 0, KEYBOARD, CONVERTER_TYPES_COUNT };
-            std::vector<std::map<uint32_t, std::list<uint32_t>>> _converter = std::vector(
-                CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());
+            MouseEventActions _mouseConverter = MouseEventActions();
+            KeyboardEventActions _keyboardConverter = KeyboardEventActions();
 
             void addActionToConverter(const ActionMapping& action);
-            void dispatchAction(const std::list<uint32_t>& action_ids, bool isActive);
+            void dispatchActions(const std::vector<Action>& actions);
         };
     }
 }

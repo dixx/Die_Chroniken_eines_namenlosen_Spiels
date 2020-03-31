@@ -1,4 +1,4 @@
-/*! \file EventToActionConverter.h
+/*! \file MouseEventActions.h
  *  \brief Bietet Mappings von Maus-Eingaben zu in-Game Aktionen.
  *  \note Bestandteil der Leviathan Engine
  *        Wird nur intern benutzt.

@@ -30,18 +30,11 @@ namespace leviathan {
         }
 
         bool Actions::onEvent(const irr::SEvent& event) {
-            std::vector<Action> actions;
-            if (event.EventType == irr::EET_MOUSE_INPUT_EVENT) {
-                actions = _mouseConverter.actionsFor(event);
-            } else if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-                actions = _keyboardConverter.actionsFor(event);
-            } else if (event.EventType == irr::EET_GUI_EVENT) {
-            } else {
-                return false;
-            }
-            if (actions.empty()) {
-                return false;
-            }
+            if (converter(event.EventType) == nullptr) return false;
+
+            std::vector<Action> actions = converter(event.EventType)->actionsFor(event);
+            if (actions.empty()) return false;
+
             dispatchActions(actions);
             return true;
         }
@@ -75,18 +68,10 @@ namespace leviathan {
           primary(node["input_mappings"]["primary"]), secondary(node["input_mappings"]["secondary"]) {}
 
         void Actions::addActionToConverter(const ActionMapping& action) {
-            if (action.primary.type == "mouse") {
-                _mouseConverter.addMapping(action.primary.id, action.id);
-            } else if (action.primary.type == "keyboard") {
-                _keyboardConverter.addMapping(action.primary.id, action.id);
-            } else if (action.primary.type == "gui") {
-            }
-            if (action.secondary.type == "mouse") {
-                _mouseConverter.addMapping(action.secondary.id, action.id);
-            } else if (action.secondary.type == "keyboard") {
-                _keyboardConverter.addMapping(action.secondary.id, action.id);
-            } else if (action.secondary.type == "gui") {
-            }
+            if (converter(action.primary.type))
+                converter(action.primary.type)->addMapping(action.primary.id, action.id);
+            if (converter(action.secondary.type))
+                converter(action.secondary.type)->addMapping(action.secondary.id, action.id);
         }
 
         void Actions::dispatchActions(const std::vector<Action>& actions) {
@@ -97,6 +82,26 @@ namespace leviathan {
                     _subscriptions[action.id][it - 1]->onAction(action);
                 }
             }
+        }
+
+        EventToActionConverter* Actions::converter(const uint32_t eventType) {
+            switch (eventType) {
+            case irr::EET_MOUSE_INPUT_EVENT:
+                return &_mouseConverter;
+            case irr::EET_KEY_INPUT_EVENT:
+                return &_keyboardConverter;
+            default:
+                return nullptr;
+            }
+        }
+
+        EventToActionConverter* Actions::converter(const std::string& inputType) {
+            if (inputType == "mouse")
+                return &_mouseConverter;
+            else if (inputType == "keyboard")
+                return &_keyboardConverter;
+            else
+                return nullptr;
         }
     }
 }

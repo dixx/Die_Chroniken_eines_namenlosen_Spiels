@@ -92,6 +92,8 @@ namespace leviathan {
 
             void addActionToConverter(const ActionMapping& action);
             void dispatchActions(const std::vector<Action>& actions);
+            EventToActionConverter* converter(const uint32_t eventType);
+            EventToActionConverter* converter(const std::string& inputType);
         };
     }
 }

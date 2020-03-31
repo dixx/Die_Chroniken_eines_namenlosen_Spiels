@@ -11,6 +11,7 @@
 #include "types.h"
 #include <list>
 #include <map>
+#include <vector>
 
 namespace leviathan {
     namespace input {
@@ -20,11 +21,14 @@ namespace leviathan {
 
             void clear();
             void addMapping(const uint32_t inputId, const uint32_t actionId);
-            virtual const std::list<Action>& actionsFor(const irr::SEvent& event) = 0;
+            virtual std::vector<Action> actionsFor(const irr::SEvent& event) = 0;
 
         protected:
-            std::map<uint32_t, std::list<Action>> _actionsForInput = std::map<uint32_t, std::list<Action>>();
-        }
+            std::map<uint32_t, std::list<uint32_t>> _actionsForInput = std::map<uint32_t, std::list<uint32_t>>();
+            std::list<uint32_t> _emptyList = std::list<uint32_t>();
+            std::vector<Action> createActions(const uint32_t inputId, const bool isActive);
+            std::list<uint32_t>& actionIdsFor(const uint32_t inputId);
+        };
     }
 }
 #endif

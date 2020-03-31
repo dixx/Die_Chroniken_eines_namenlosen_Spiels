@@ -11,6 +11,8 @@ add_library(leviathan SHARED
   gui/MenuControl.cpp
   input/Actions.cpp
   input/EventReceiver.cpp
+  input/EventToActionConverter.cpp
+  input/MouseEventActions.cpp
   video/MousePointerControl.cpp
   LeviathanDevice.cpp
 )

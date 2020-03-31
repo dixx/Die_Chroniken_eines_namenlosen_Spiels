@@ -1,17 +1,13 @@
 #include "../../source/Leviathan/input/Actions.h"
 #include "../../source/Leviathan/input/IActionConsumer.h"
 #include "../../source/Leviathan/input/IEventProducer.h"
+#include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/Testhelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
 
 using namespace fakeit;
-
-// to be able to compare Action structs
-bool operator==(const leviathan::input::Action& lhs, const leviathan::input::Action& rhs) {
-    return lhs.id == rhs.id && lhs.isActive == rhs.isActive;
-}
 
 TEST_CASE("Action Mapping", "[unit]") {
     Testhelper testhelper;

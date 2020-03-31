@@ -1,17 +1,10 @@
 #include "../../source/Leviathan/input/MouseEventActions.h"
 #include "../../source/Leviathan/input/types.h"
+#include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "irrlicht.h"
 #include <cstdint>
 #include <vector>
-
-// we need this hack because std::vector== is not able to compare (or even find) our user-defined type
-// see https://stackoverflow.com/questions/24110928/overload-of-operator-not-found-when-called-from-stdostream-iterator
-namespace std {
-    bool operator==(const leviathan::input::Action& lhs, const leviathan::input::Action& rhs) {
-        return lhs.id == rhs.id && lhs.isActive == rhs.isActive;
-    }
-}
 
 TEST_CASE("Mouse events to actions converter", "[unit]") {
     irr::SEvent event;

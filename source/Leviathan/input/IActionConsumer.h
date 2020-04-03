@@ -6,7 +6,7 @@
 #ifndef LEVIATHAN_INPUT_IACTIONCONSUMER_H
 #define LEVIATHAN_INPUT_IACTIONCONSUMER_H
 
-#include "types.h"
+#include "Action.h"
 #include <cstdint>
 
 namespace leviathan {

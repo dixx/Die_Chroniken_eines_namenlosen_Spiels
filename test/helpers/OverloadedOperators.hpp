@@ -1,7 +1,7 @@
 #ifndef OVERLOADED_OPERATORS_H
 #define OVERLOADED_OPERATORS_H
 
-#include "../../source/Leviathan/input/types.h"
+#include "../../source/Leviathan/input/Action.h"
 #include "irrlicht.h"
 
 // Some of our user-defined types do not have certain operators, because they would only be used in tests.

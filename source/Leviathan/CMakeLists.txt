@@ -9,9 +9,11 @@ add_library(leviathan SHARED
   core/Timer.cpp
   gui/Menu.cpp
   gui/MenuControl.cpp
+  input/ActionMapping.cpp
   input/Actions.cpp
   input/EventReceiver.cpp
   input/EventToActionConverter.cpp
+  input/Input.cpp
   input/KeyboardEventActions.cpp
   input/MouseEventActions.cpp
   video/MousePointerControl.cpp

@@ -1,5 +1,5 @@
 #include "Actions.h"
-#include "types.h"
+#include "yaml-cpp/yaml.h"
 #include <algorithm>
 
 namespace leviathan {
@@ -56,22 +56,11 @@ namespace leviathan {
             }
         }
 
-        Actions::Input::Input(const YAML::Node& node)
-        : name(node && node["name"] ? node["name"].as<std::string>() : "- None -"),
-          type(node && node["type"] ? node["type"].as<std::string>() : "unknown"),
-          id(node && node["id"] ? node["id"].as<uint32_t>() : 0), isActive(false), wasActive(false) {}
-
-        Actions::ActionMapping::ActionMapping(const YAML::Node& node)
-        : name(node && node["name"] ? node["name"].as<std::string>() : "nameless action"),
-          description(node && node["description"] ? node["description"].as<std::string>() : ""),
-          id(node && node["id"] ? node["id"].as<uint32_t>() : 0), internal(node && node["internal"]),
-          primary(node["input_mappings"]["primary"]), secondary(node["input_mappings"]["secondary"]) {}
-
-        void Actions::addActionToConverter(const ActionMapping& action) {
-            if (converter(action.primary.type))
-                converter(action.primary.type)->addMapping(action.primary.id, action.id);
-            if (converter(action.secondary.type))
-                converter(action.secondary.type)->addMapping(action.secondary.id, action.id);
+        void Actions::addActionToConverter(const ActionMapping& mapping) {
+            if (converter(mapping.primary.type))
+                converter(mapping.primary.type)->addMapping(mapping.primary.id, mapping.id);
+            if (converter(mapping.secondary.type))
+                converter(mapping.secondary.type)->addMapping(mapping.secondary.id, mapping.id);
         }
 
         void Actions::dispatchActions(const std::vector<Action>& actions) {

@@ -7,14 +7,14 @@
 #define LEVIATHAN_INPUT_ACTIONS_H
 
 #include "../core/Logger.h"
+#include "Action.h"
+#include "ActionMapping.h"
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
 #include "KeyboardEventActions.h"
 #include "MouseEventActions.h"
 #include "irrlicht.h"
-#include "types.h"
-#include "yaml-cpp/yaml.h"
 #include <cstdint>
 #include <map>
 #include <string>
@@ -69,21 +69,6 @@ namespace leviathan {
         private:
             core::Logger& _logger;
             input::IEventProducer& _producer;
-            struct Input {
-                Input() {};  // std::map needs this
-                explicit Input(const YAML::Node& node);
-                std::string name = "- None -", type = "unknown";
-                uint32_t id = 0;
-                bool isActive = false, wasActive = false;
-            };
-            struct ActionMapping {
-                ActionMapping() {};  // std::map needs this
-                explicit ActionMapping(const YAML::Node& node);
-                std::string name = "nameless action", description = "";
-                uint32_t id = 0;
-                bool internal = false;
-                Input primary = Input(), secondary = Input();
-            };
             std::map<uint32_t, ActionMapping> _actions = std::map<uint32_t, ActionMapping>();
             std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();

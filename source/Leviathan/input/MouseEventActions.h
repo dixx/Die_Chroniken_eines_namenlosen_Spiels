@@ -14,6 +14,11 @@ namespace leviathan {
         class MouseEventActions : public EventToActionConverter {
         public:
             std::vector<Action> actionsFor(const irr::SEvent& event);
+
+        private:
+            bool isLeftButton(const irr::SEvent& event) const;
+            bool isMiddleButton(const irr::SEvent& event) const;
+            bool isRightButton(const irr::SEvent& event) const;
         };
     }
 }

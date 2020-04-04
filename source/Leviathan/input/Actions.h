@@ -69,16 +69,14 @@ namespace leviathan {
         private:
             core::Logger& _logger;
             input::IEventProducer& _producer;
-            std::map<uint32_t, ActionMapping> _actions = std::map<uint32_t, ActionMapping>();
             std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();
             MouseEventActions _mouseConverter = MouseEventActions();
             KeyboardEventActions _keyboardConverter = KeyboardEventActions();
 
-            void addActionToConverter(const ActionMapping& action);
+            void addMapping(const uint32_t actionId, const Input& input);
             void dispatchActions(const std::vector<Action>& actions);
             EventToActionConverter* converter(const uint32_t eventType);
-            EventToActionConverter* converter(const std::string& inputType);
         };
     }
 }

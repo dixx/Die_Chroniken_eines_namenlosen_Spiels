@@ -1,10 +1,13 @@
 ---
-- name: exit
+- name: main menu exit game
   id: 1
-  description: leaves the game
+  description: exits the game from within main menu
   internal: true
   input_mappings:
     primary:
+      name: Main Menu - Quit
+      type: gui
+    secondary:
       name: <ESC>
       type: keyboard
       id: 0x1B

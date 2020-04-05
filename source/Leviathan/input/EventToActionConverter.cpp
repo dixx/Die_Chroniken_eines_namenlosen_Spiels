@@ -6,12 +6,6 @@ namespace leviathan {
             _actionsForInput.clear();
         }
 
-        void EventToActionConverter::addMapping(const uint32_t inputId, const uint32_t actionId) {
-            _actionsForInput[inputId].push_back(actionId);
-            _actionsForInput[inputId].sort();
-            _actionsForInput[inputId].unique();
-        }
-
         std::list<uint32_t>& EventToActionConverter::actionIdsFor(const uint32_t inputId) {
             try {
                 return _actionsForInput.at(inputId);

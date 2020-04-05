@@ -9,6 +9,7 @@
 #include "../core/Logger.h"
 #include "Action.h"
 #include "ActionMapping.h"
+#include "GUIEventActions.h"
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
@@ -73,6 +74,7 @@ namespace leviathan {
                 std::map<uint32_t, std::vector<IActionConsumer*>>();
             MouseEventActions _mouseConverter = MouseEventActions();
             KeyboardEventActions _keyboardConverter = KeyboardEventActions();
+            GUIEventActions _guiConverter = GUIEventActions();
 
             void addMapping(const uint32_t actionId, const Input& input);
             void dispatchActions(const std::vector<Action>& actions);

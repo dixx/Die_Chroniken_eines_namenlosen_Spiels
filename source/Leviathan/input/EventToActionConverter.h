@@ -20,12 +20,12 @@ namespace leviathan {
             virtual ~EventToActionConverter() {}
 
             void clear();
-            void addMapping(const uint32_t inputId, const uint32_t actionId);
             virtual std::vector<Action> actionsFor(const irr::SEvent& event) = 0;
 
         protected:
             std::map<uint32_t, std::list<uint32_t>> _actionsForInput = std::map<uint32_t, std::list<uint32_t>>();
             std::list<uint32_t> _emptyList = std::list<uint32_t>();
+
             std::vector<Action> createActions(const uint32_t inputId, const bool isActive);
             std::list<uint32_t>& actionIdsFor(const uint32_t inputId);
         };

@@ -8,11 +8,13 @@ namespace leviathan {
         Actions::Actions(IEventProducer& producer, core::Logger& logger) : _logger(logger), _producer(producer) {
             _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
+            _producer.subscribe(*this, irr::EET_GUI_EVENT);
         }
 
         Actions::~Actions() {
             _producer.unsubscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.unsubscribe(*this, irr::EET_KEY_INPUT_EVENT);
+            _producer.unsubscribe(*this, irr::EET_GUI_EVENT);
         }
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {
@@ -58,6 +60,8 @@ namespace leviathan {
                 _mouseConverter.addMapping(input.id, actionId);
             else if (input.type == "keyboard")
                 _keyboardConverter.addMapping(input.id, actionId);
+            else if (input.type == "gui")
+                _guiConverter.addMapping(input.name, actionId);
         }
 
         void Actions::dispatchActions(const std::vector<Action>& actions) {
@@ -77,6 +81,8 @@ namespace leviathan {
                 return &_mouseConverter;
             case irr::EET_KEY_INPUT_EVENT:
                 return &_keyboardConverter;
+            case irr::EET_GUI_EVENT:
+                return &_guiConverter;
             default:
                 return nullptr;
             }

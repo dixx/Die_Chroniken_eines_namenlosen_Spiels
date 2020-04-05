@@ -13,6 +13,12 @@ namespace leviathan {
                 return {};
         }
 
+        void MouseEventActions::addMapping(const uint32_t inputId, const uint32_t actionId) {
+            _actionsForInput[inputId].push_back(actionId);
+            _actionsForInput[inputId].sort();
+            _actionsForInput[inputId].unique();
+        }
+
         bool MouseEventActions::isLeftButton(const irr::SEvent& event) const {
             return event.MouseInput.Event == irr::EMIE_LMOUSE_PRESSED_DOWN
                    || event.MouseInput.Event == irr::EMIE_LMOUSE_LEFT_UP;

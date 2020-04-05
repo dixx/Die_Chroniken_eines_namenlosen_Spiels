@@ -6,7 +6,7 @@ namespace leviathan {
     namespace core {
         GameStateManager::GameStateManager(Logger& logger) : logger_(logger) {}
 
-        void GameStateManager::add(IGameState& gameState, uint32_t id) {
+        void GameStateManager::add(IGameState& gameState, const uint32_t id) {
             if (id == NO_STATE_ACTIVE) throw std::invalid_argument("0xffffffff is not allowed as an ID here, sorry!");
             if (states_.find(id) == states_.end()) {
                 states_[id] = &gameState;
@@ -18,7 +18,7 @@ namespace leviathan {
             }
         }
 
-        void GameStateManager::transitTo(uint32_t id) {
+        void GameStateManager::transitTo(const uint32_t id) {
             if (isUnknownState(id) || isAlreadyActive(id) || isDeeperDownTheStack(id)) {
                 logger_.text << "GameStateManager - transit to " << id << " failed.";
                 logger_.write(Logger::Level::ALL);

@@ -49,6 +49,7 @@ namespace leviathan {
             irr::core::position2di activePosition(config.activePositionOnImage.x, config.activePositionOnImage.y);
             irr::gui::IGUIButton* button = _guiEnv->addButton(
                 irr::core::recti(positionInMenu, buttonDimension), _menus[menuName]->menuElement, -1, buttonName);
+            button->setName(std::wstring(buttonName).c_str());
             button->setIsPushButton(false);
             button->setDrawBorder(false);
             button->setUseAlphaChannel(config.hasImageTransparence);
@@ -92,7 +93,9 @@ namespace leviathan {
             // helper.validateFileExistence( "GFX/menues1.bmp" );
             _videoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = _videoDriver->getTexture(filename.c_str());
-            if (makeTransparent) { _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK); }
+            if (makeTransparent) {
+                _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
+            }
             return texture;
         }
     }

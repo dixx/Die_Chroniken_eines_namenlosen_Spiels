@@ -1,15 +1,11 @@
 #include "../../source/Leviathan/input/EventReceiver.h"
 #include "../../source/Leviathan/input/IEventConsumer.h"
+#include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
 
 using namespace fakeit;
-
-// a hack to make the irr::SEvent structs comparable via == operator, as needed by FakeIt
-inline bool operator==(const irr::SEvent& lhs, const irr::SEvent& rhs) {
-    return lhs.EventType == rhs.EventType;
-}
 
 TEST_CASE("Event Receiver", "[unit]") {
     Mock<leviathan::input::IEventConsumer> consumerMock;

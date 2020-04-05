@@ -7,20 +7,22 @@
 #define LEVIATHAN_INPUT_ACTIONS_H
 
 #include "../core/Logger.h"
+#include "Action.h"
+#include "ActionMapping.h"
+#include "GUIEventActions.h"
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
+#include "KeyboardEventActions.h"
+#include "MouseEventActions.h"
 #include "irrlicht.h"
-#include "yaml-cpp/yaml.h"
 #include <cstdint>
-#include <list>
 #include <map>
 #include <string>
 #include <vector>
 
 namespace leviathan {
     namespace input {
-
         /*! \class Actions
          *  \brief Mapping von Input zu Aktion
          */
@@ -32,8 +34,9 @@ namespace leviathan {
              */
             Actions(IEventProducer& producer, core::Logger& logger);
 
+            ~Actions();
+
             Actions() = delete;
-            ~Actions() = default;
             Actions(const Actions&) = delete;
             Actions& operator=(const Actions&) = delete;
 
@@ -58,36 +61,24 @@ namespace leviathan {
 
             /*! \brief Liest Aktionen und dazugehörige Eingaben aus einer Datei.
              *  \note Alle bereits vorhandene Aktionen werden entfernt.
+             *  \note Tastatur-Codes gibt es unter anderem hier:
+             *        https://docs.microsoft.com/en-gb/windows/win32/inputdev/virtual-key-codes?redirectedfrom=MSDN
              *  \param fileName: Mapping-Dateiname
              */
             void loadFromFile(const irr::io::path& fileName);
 
         private:
             core::Logger& _logger;
-            struct Input {
-                Input() {};  // std::map needs this
-                explicit Input(const YAML::Node& node);
-                std::string name = "- None -", type = "unknown";
-                uint32_t id = 0;
-                bool isActive = false, wasActive = false;
-            };
-            struct Action {
-                Action() {};  // std::map needs this
-                explicit Action(const YAML::Node& node);
-                std::string name = "nameless action", description = "";
-                uint32_t id = 0;
-                bool internal = false;
-                Input primary = Input(), secondary = Input();
-            };
-            std::map<uint32_t, Action> _actions = std::map<uint32_t, Action>();
+            input::IEventProducer& _producer;
             std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();
-            enum CONVERTER_TYPES { MOUSE = 0, KEYBOARD, CONVERTER_TYPES_COUNT };
-            std::vector<std::map<uint32_t, std::list<uint32_t>>> _converter = std::vector(
-                CONVERTER_TYPES_COUNT, std::map<uint32_t, std::list<uint32_t>>());
+            MouseEventActions _mouseConverter = MouseEventActions();
+            KeyboardEventActions _keyboardConverter = KeyboardEventActions();
+            GUIEventActions _guiConverter = GUIEventActions();
 
-            void addActionToConverter(const Action& action);
-            void dispatchAction(const std::list<uint32_t>& action_ids, bool isActive);
+            void addMapping(const uint32_t actionId, const Input& input);
+            void dispatchActions(const std::vector<Action>& actions);
+            EventToActionConverter* converter(const uint32_t eventType);
         };
     }
 }

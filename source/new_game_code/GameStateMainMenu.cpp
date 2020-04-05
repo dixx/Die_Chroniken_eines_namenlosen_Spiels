@@ -22,7 +22,7 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     buttonConfig.relativePositionInMenu.y += 67;
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Load Game", buttonConfig);
     buttonConfig.relativePositionInMenu.y += 284;
-    gameEngine_.MenuControl().addButton(L"Main Menu", L"Quit", buttonConfig);
+    gameEngine_.MenuControl().addButton(L"Main Menu", L"Main Menu - Quit", buttonConfig);
 }
 
 GameStateMainMenu::~GameStateMainMenu() {
@@ -40,10 +40,10 @@ void GameStateMainMenu::draw() {
     gameEngine_.MousePointerControl().draw();
 }
 
-void GameStateMainMenu::onAction(const uint32_t id, const bool isActive) {
-    switch (id) {
+void GameStateMainMenu::onAction(const leviathan::input::Action action) {
+    switch (action.id) {
     case actions::EXIT:
-        if (isActive) gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);
+        if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);
         break;
     }
 }

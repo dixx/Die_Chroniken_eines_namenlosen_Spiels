@@ -68,8 +68,8 @@ namespace leviathan {
             Level globalLogLevel_;
 
             inline void openLogFile(const char* fileName, const bool append = true);
-            inline std::string logLevelName(const Level logLevel);
-            inline void addTimeStamp(std::ostringstream& txt);
+            inline static std::string logLevelName(const Level logLevel);
+            inline static void addTimeStamp(std::ostringstream& txt);
         };
     }
 }

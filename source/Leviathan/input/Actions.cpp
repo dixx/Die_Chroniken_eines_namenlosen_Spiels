@@ -1,5 +1,5 @@
 #include "Actions.h"
-#include "Input.h"
+#include "ActionMapping.h"
 #include "yaml-cpp/yaml.h"
 #include <algorithm>
 

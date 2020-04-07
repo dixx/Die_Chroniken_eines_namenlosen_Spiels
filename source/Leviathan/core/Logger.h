@@ -6,11 +6,10 @@
 #ifndef LEVIATHAN_CORE_LOGGER_H
 #define LEVIATHAN_CORE_LOGGER_H
 
-#include <cstdint>
 // #include <filesystem> // TODO: use this as soon as it is available in mingw!
 #include <fstream>
 #include <iomanip>
-#include <ostream>
+#include <sstream>
 
 namespace leviathan {
     namespace core {

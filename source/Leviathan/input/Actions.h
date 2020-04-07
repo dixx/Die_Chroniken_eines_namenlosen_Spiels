@@ -8,11 +8,11 @@
 
 #include "../core/Logger.h"
 #include "Action.h"
-#include "ActionMapping.h"
 #include "GUIEventActions.h"
 #include "IActionConsumer.h"
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
+#include "Input.h"
 #include "KeyboardEventActions.h"
 #include "MouseEventActions.h"
 #include "irrlicht.h"

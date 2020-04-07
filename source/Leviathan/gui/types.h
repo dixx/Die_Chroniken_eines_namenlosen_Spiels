@@ -6,9 +6,9 @@
 #ifndef LEVIATHAN_GUI_TYPES_H
 #define LEVIATHAN_GUI_TYPES_H
 
-#include <cstdint>
-#include <string>
 #include "../video/types.h"
+#include "irrlicht.h"
+#include <string>
 
 namespace leviathan {
     namespace gui {

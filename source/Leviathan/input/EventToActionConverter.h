@@ -9,6 +9,7 @@
 
 #include "Action.h"
 #include "irrlicht.h"
+#include <cstdint>
 #include <list>
 #include <map>
 #include <vector>

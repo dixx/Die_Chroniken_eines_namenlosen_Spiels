@@ -1,7 +1,7 @@
 #include "Logger.h"
 #include <chrono>
 #include <ctime>
-#include <sstream>
+#include <string>
 
 namespace leviathan {
     namespace core {

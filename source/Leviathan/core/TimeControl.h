@@ -7,7 +7,6 @@
 #define LEVIATHAN_CORE_TIMECONTROL_H
 
 #include "Timer.h"
-#include <cstdint>
 #include <list>
 
 namespace leviathan {

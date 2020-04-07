@@ -7,7 +7,6 @@
 #define LEVIATHAN_INPUT_IACTIONCONSUMER_H
 
 #include "Action.h"
-#include <cstdint>
 
 namespace leviathan {
     namespace input {

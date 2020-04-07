@@ -7,6 +7,8 @@
 #ifndef LEVIATHAN_DEVICE_H
 #define LEVIATHAN_DEVICE_H
 
+#include "IFileSystem.h"
+#include "IrrlichtDevice.h"
 #include "core/Configuration.h"
 #include "core/GameStateManager.h"
 #include "core/Logger.h"
@@ -15,7 +17,6 @@
 #include "gui/MenuControl.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
-#include "irrlicht.h"
 #include "video/MousePointerControl.h"
 #include <memory>
 

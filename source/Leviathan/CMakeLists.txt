@@ -17,6 +17,7 @@ add_library(leviathan SHARED
   input/Input.cpp
   input/KeyboardEventActions.cpp
   input/MouseEventActions.cpp
+  video/Camera.cpp
   video/MousePointerControl.cpp
   LeviathanDevice.cpp
 )

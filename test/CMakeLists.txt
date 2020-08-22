@@ -16,6 +16,7 @@ add_executable(unit_tests
   input/EventReceiverTest.cpp
   input/KeyboardEventActionsTest.cpp
   input/MouseEventActionsTest.cpp
+  video/CameraTest.cpp
   video/MousePointerControlTest.cpp
   LeviathanDeviceTest.cpp
   unit_tests.cpp

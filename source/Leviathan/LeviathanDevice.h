@@ -16,6 +16,7 @@
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
 #include "irrlicht.h"
+#include "video/Camera.h"
 #include "video/MousePointerControl.h"
 #include <memory>
 
@@ -97,6 +98,10 @@ namespace leviathan {
          */
         video::MousePointerControl& MousePointerControl();
 
+        /*! \brief Zugriff auf eine Kamera.
+         */
+        video::Camera& Camera();
+
     private:
         core::Configuration configuration_;
         core::Logger logger_;
@@ -108,6 +113,7 @@ namespace leviathan {
         input::Actions actions_;
         std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
+        std::unique_ptr<video::Camera> camera_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests
     };

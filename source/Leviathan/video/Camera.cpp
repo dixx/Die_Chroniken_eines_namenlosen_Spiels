@@ -4,8 +4,8 @@
 
 namespace leviathan {
     namespace video {
-        Camera::Camera(irr::IrrlichtDevice* graphicDevice, leviathan::core::Configuration& config)
-        : camera_(graphicDevice->getSceneManager()->addCameraSceneNode()) {
+        Camera::Camera(irr::scene::ISceneManager* sceneManager, leviathan::core::Configuration& config)
+        : camera_(sceneManager->addCameraSceneNode()) {
             camera_->setFarValue(config.getFarValue());
         }
     }

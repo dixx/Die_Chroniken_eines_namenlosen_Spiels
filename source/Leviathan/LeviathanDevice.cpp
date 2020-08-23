@@ -17,10 +17,8 @@ namespace leviathan {
         graphicEngine_->setEventReceiver(&eventReceiver_);
         mousePointerControl_ = std::make_unique<video::MousePointerControl>(eventReceiver_, graphicEngine_, logger_);
         menuControl_ = std::make_unique<gui::MenuControl>(
-            graphicEngine_->getGUIEnvironment(),
-            graphicEngine_->getVideoDriver(),
-            eventReceiver_
-        );
+            graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);
+        camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -101,5 +99,9 @@ namespace leviathan {
 
     video::MousePointerControl& LeviathanDevice::MousePointerControl() {
         return *mousePointerControl_;
+    }
+
+    video::Camera& LeviathanDevice::Camera() {
+        return *camera_;
     }
 }

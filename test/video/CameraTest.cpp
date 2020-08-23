@@ -9,11 +9,9 @@
 using namespace fakeit;
 
 TEST_CASE("Camera", "[unit]") {
-    Mock<irr::IrrlichtDevice> graphicDeviceMock;
     Mock<irr::scene::ISceneManager> sceneManagerMock;
     mocks::ICameraSceneNodeMock* cameraMock = new mocks::ICameraSceneNodeMock(nullptr, nullptr, -1);
     cameraMock->grab();
-    When(Method(graphicDeviceMock, getSceneManager)).AlwaysReturn(&sceneManagerMock.get());
     When(Method(sceneManagerMock, addCameraSceneNode)).AlwaysReturn(cameraMock);
 
     SECTION("is created with settings from configuration") {
@@ -21,7 +19,7 @@ TEST_CASE("Camera", "[unit]") {
         const char* configFileName = "testconfigfile.ini";
         testhelper.writeFile(configFileName, "[camera]\nfar_value=123.0\nscreen_x=4\nscreen_y=2\n");
         leviathan::core::Configuration config(configFileName);
-        leviathan::video::Camera subject(&graphicDeviceMock.get(), config);
+        leviathan::video::Camera subject(&sceneManagerMock.get(), config);
 
         Verify(Method(sceneManagerMock, addCameraSceneNode)).Exactly(Once);
         REQUIRE(cameraMock->mFarValue == Approx(123.0f));

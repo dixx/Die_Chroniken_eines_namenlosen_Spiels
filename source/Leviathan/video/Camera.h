@@ -17,11 +17,6 @@ namespace leviathan {
          */
         class Camera {
         public:
-            /*! \brief Konstruktor.
-             *  \param graphicDevice: initialisiertes Irrlicht Device
-             */
-            explicit Camera(irr::IrrlichtDevice* graphicDevice);
-
             /*! \brief Konstruktor mit Konfiguration.
              *  \param graphicDevice: initialisiertes Irrlicht Device
              *  \param config: zu verwendende Konfiguration

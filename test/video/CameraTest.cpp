@@ -16,14 +16,7 @@ TEST_CASE("Camera", "[unit]") {
     When(Method(graphicDeviceMock, getSceneManager)).AlwaysReturn(&sceneManagerMock.get());
     When(Method(sceneManagerMock, addCameraSceneNode)).AlwaysReturn(cameraMock);
 
-    SECTION("with default settings") {
-        leviathan::video::Camera subject(&graphicDeviceMock.get());
-
-        Verify(Method(sceneManagerMock, addCameraSceneNode)).Exactly(Once);
-        REQUIRE(cameraMock->mFarValue == Approx(0.0f));
-    }
-
-    SECTION("with settings from configuration") {
+    SECTION("is created with settings from configuration") {
         Testhelper testhelper;
         const char* configFileName = "testconfigfile.ini";
         testhelper.writeFile(configFileName, "[camera]\nfar_value=123.0\nscreen_x=4\nscreen_y=2\n");

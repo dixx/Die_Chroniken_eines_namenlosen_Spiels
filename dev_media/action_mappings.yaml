@@ -17,6 +17,9 @@
   internal: true
   input_mappings:
     primary:
+      name: Start Game
+      type: gui
+    secondary:
       name: <1>
       type: keyboard
       id: 0x31

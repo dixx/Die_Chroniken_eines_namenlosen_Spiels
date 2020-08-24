@@ -3,8 +3,7 @@
 
 GameStatePlay::GameStatePlay(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
     gameEngine_.MousePointerControl().createMousePointer(
-        1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
-    gameEngine_.MousePointerControl().setActiveMousPointer(1);
+        2001, "gfx/Mauszeiger.bmp", irr::core::recti(0, 61, 60, 120), irr::core::vector2di(30, 30));
 }
 
 GameStatePlay::~GameStatePlay() {
@@ -29,6 +28,7 @@ void GameStatePlay::onAction(const leviathan::input::Action action) {
 
 void GameStatePlay::setActive() {
     gameEngine_.Actions().subscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
+    gameEngine_.MousePointerControl().setActiveMousPointer(2001);
 }
 
 void GameStatePlay::setInactive() {

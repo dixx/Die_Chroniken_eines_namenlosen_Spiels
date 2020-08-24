@@ -5,7 +5,6 @@
 GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
     gameEngine_.MousePointerControl().createMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
-    gameEngine_.MousePointerControl().setActiveMousPointer(1);
 
     const leviathan::video::Dimension2D screenSize = gameEngine_.Configuration().getScreenSize();
     leviathan::video::Dimension2D menuSize({436, 555});
@@ -42,6 +41,9 @@ void GameStateMainMenu::draw() {
 
 void GameStateMainMenu::onAction(const leviathan::input::Action action) {
     switch (action.id) {
+    case actions::START_NEW_GAME:
+        if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_PLAY);
+        break;
     case actions::EXIT:
         if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);
         break;
@@ -53,6 +55,7 @@ void GameStateMainMenu::setActive() {
         gameEngine_.Actions().subscribe(*this, action);
     }
     gameEngine_.MenuControl().enable(L"Main Menu");
+    gameEngine_.MousePointerControl().setActiveMousPointer(1);
 }
 
 void GameStateMainMenu::setInactive() {

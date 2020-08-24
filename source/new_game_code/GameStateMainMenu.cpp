@@ -25,7 +25,7 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
 }
 
 GameStateMainMenu::~GameStateMainMenu() {
-    for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
+    for (uint32_t action = actions::EXIT; action != actions::INVALID; ++action) {
         gameEngine_.Actions().unsubscribe(*this, action);
     }
 }
@@ -51,7 +51,7 @@ void GameStateMainMenu::onAction(const leviathan::input::Action action) {
 }
 
 void GameStateMainMenu::setActive() {
-    for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
+    for (uint32_t action = actions::EXIT; action != actions::INVALID; ++action) {
         gameEngine_.Actions().subscribe(*this, action);
     }
     gameEngine_.MenuControl().enable(L"Main Menu");
@@ -59,7 +59,7 @@ void GameStateMainMenu::setActive() {
 }
 
 void GameStateMainMenu::setInactive() {
-    for (uint32_t action = actions::EXIT; action != actions::ACTIONS_COUNT; ++action) {
+    for (uint32_t action = actions::EXIT; action != actions::INVALID; ++action) {
         gameEngine_.Actions().unsubscribe(*this, action);
     }
     gameEngine_.MenuControl().disable(L"Main Menu");

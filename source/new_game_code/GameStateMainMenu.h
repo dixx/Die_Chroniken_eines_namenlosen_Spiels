@@ -8,11 +8,8 @@ public:
     enum actions {
         EXIT = 1,
         START_NEW_GAME,
-        EXECUTE_SELECTION,
-        SELECT_NEXT_ENTRY,
-        SELECT_PREVIOUS_ENTRY,
 
-        ACTIONS_COUNT
+        INVALID  // helpful for looping over all actions
     };
 
     explicit GameStateMainMenu(leviathan::LeviathanDevice& gameEngine);

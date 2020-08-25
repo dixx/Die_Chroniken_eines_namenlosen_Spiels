@@ -2,7 +2,7 @@
  *  \brief Bietet Zugriff auf die Darstellung des Mauszeigers.
  *  \note Bestandteil der Leviathan Engine
  */
-
+// TODO: move to ../gui
 #ifndef LEVIATHAN_VIDEO_MOUSEPOINTER_H
 #define LEVIATHAN_VIDEO_MOUSEPOINTER_H
 

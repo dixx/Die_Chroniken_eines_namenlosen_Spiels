@@ -15,16 +15,27 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
 
     SECTION("it provides instances of usefull tools") {
         REQUIRE(typeid(subject.Actions()) == typeid(leviathan::input::Actions));
+        REQUIRE(&subject.Actions() != nullptr);
         REQUIRE(typeid(subject.Configuration()) == typeid(leviathan::core::Configuration));
+        REQUIRE(&subject.Configuration() != nullptr);
         REQUIRE(typeid(subject.EventReceiver()) == typeid(leviathan::input::EventReceiver));
+        REQUIRE(&subject.EventReceiver() != nullptr);
         REQUIRE(typeid(subject.GameStateManager()) == typeid(leviathan::core::GameStateManager));
+        REQUIRE(&subject.GameStateManager() != nullptr);
         REQUIRE(typeid(subject.Logger()) == typeid(leviathan::core::Logger));
+        REQUIRE(&subject.Logger() != nullptr);
         REQUIRE(typeid(subject.MenuControl()) == typeid(leviathan::gui::MenuControl));
+        REQUIRE(&subject.MenuControl() != nullptr);
         REQUIRE(typeid(subject.MousePointerControl()) == typeid(leviathan::video::MousePointerControl));
+        REQUIRE(&subject.MousePointerControl() != nullptr);
         REQUIRE(typeid(subject.Camera()) == typeid(leviathan::video::Camera));
+        REQUIRE(&subject.Camera() != nullptr);
         REQUIRE(typeid(subject.Randomizer()) == typeid(leviathan::core::Randomizer));
+        REQUIRE(&subject.Randomizer() != nullptr);
         REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
+        REQUIRE(&subject.TimeControl() != nullptr);
         REQUIRE(typeid(subject.Hero()) == typeid(leviathan::game::Hero));
+        REQUIRE(&subject.Hero() != nullptr);
     }
 }
 

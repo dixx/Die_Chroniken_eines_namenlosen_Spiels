@@ -12,6 +12,7 @@
 #include "core/Logger.h"
 #include "core/Randomizer.h"
 #include "core/TimeControl.h"
+#include "game/Hero.h"
 #include "gui/MenuControl.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
@@ -82,6 +83,10 @@ namespace leviathan {
          */
         core::Randomizer& Randomizer();
 
+        /*! \brief Zugriff auf einen Helden.
+         */
+        game::Hero& Hero();
+
         /*! \brief Zugriff auf Erstellen und Verwalten von Menüs.
          */
         gui::MenuControl& MenuControl();
@@ -114,6 +119,7 @@ namespace leviathan {
         std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
         std::unique_ptr<video::Camera> camera_ = nullptr;
+        std::unique_ptr<game::Hero> hero_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests
     };

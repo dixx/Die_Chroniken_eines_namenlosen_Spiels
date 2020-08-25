@@ -24,6 +24,7 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
         REQUIRE(typeid(subject.Camera()) == typeid(leviathan::video::Camera));
         REQUIRE(typeid(subject.Randomizer()) == typeid(leviathan::core::Randomizer));
         REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
+        REQUIRE(typeid(subject.Hero()) == typeid(leviathan::game::Hero));
     }
 }
 

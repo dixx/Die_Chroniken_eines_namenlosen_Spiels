@@ -1,6 +1,7 @@
 #ifndef OVERLOADED_OPERATORS_H
 #define OVERLOADED_OPERATORS_H
 
+#include "../../source/Leviathan/characters/Hero.h"
 #include "../../source/Leviathan/input/Action.h"
 #include "irrlicht.h"
 
@@ -9,6 +10,12 @@
 inline bool operator==(const leviathan::input::Action& lhs, const leviathan::input::Action& rhs) {
     return lhs.id == rhs.id && lhs.isActive == rhs.isActive;
 }
+
+inline bool operator==(const leviathan::characters::Hero& lhs, const leviathan::characters::Hero& rhs) {
+    return lhs.getInternalName() == rhs.getInternalName();
+}
+
+// Some of the Irrlicht types do not have certain operators, because they would only be used in tests.
 
 inline bool operator==(const irr::SEvent& lhs, const irr::SEvent& rhs) {
     return lhs.EventType == rhs.EventType;

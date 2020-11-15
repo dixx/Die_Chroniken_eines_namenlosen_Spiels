@@ -1,6 +1,8 @@
 include_directories("${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}")
 
 add_library(leviathan SHARED
+  characters/hero.cpp
+  characters/heroes.cpp
   core/Configuration.cpp
   core/GameStateManager.cpp
   core/Logger.cpp

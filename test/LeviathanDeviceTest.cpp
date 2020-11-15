@@ -34,8 +34,8 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
         REQUIRE(&subject.Randomizer() != nullptr);
         REQUIRE(typeid(subject.TimeControl()) == typeid(leviathan::core::TimeControl));
         REQUIRE(&subject.TimeControl() != nullptr);
-        REQUIRE(typeid(subject.Hero()) == typeid(leviathan::game::Hero));
-        REQUIRE(&subject.Hero() != nullptr);
+        REQUIRE(typeid(subject.Heroes()) == typeid(leviathan::characters::Heroes));
+        REQUIRE(&subject.Heroes() != nullptr);
     }
 }
 

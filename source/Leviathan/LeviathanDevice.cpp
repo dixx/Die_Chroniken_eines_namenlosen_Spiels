@@ -19,7 +19,7 @@ namespace leviathan {
         menuControl_ = std::make_unique<gui::MenuControl>(
             graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
-        hero_ = std::make_unique<game::Hero>();
+        heroes_ = std::make_unique<characters::Heroes>(graphicEngine_->getSceneManager());
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -86,8 +86,8 @@ namespace leviathan {
         return randomizer_;
     }
 
-    game::Hero& LeviathanDevice::Hero() {
-        return *hero_;
+    characters::Heroes& LeviathanDevice::Heroes() {
+        return *heroes_;
     }
 
     gui::MenuControl& LeviathanDevice::MenuControl() {

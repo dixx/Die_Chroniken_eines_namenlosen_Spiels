@@ -1,4 +1,5 @@
 #include "LeviathanDevice.h"
+#include "video/constants.h"
 #include <chrono>
 #include <cstdint>
 #include <exception>
@@ -55,7 +56,8 @@ namespace leviathan {
                 ++loops;
             }
             if (we_must_draw) {
-                graphicEngine_->getVideoDriver()->beginScene(true, false);
+                graphicEngine_->getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
+                graphicEngine_->getSceneManager()->drawAll();
                 gameStateManager_.draw();
                 graphicEngine_->getVideoDriver()->endScene();
             }

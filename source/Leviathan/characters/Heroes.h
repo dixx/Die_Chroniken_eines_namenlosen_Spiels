@@ -39,7 +39,7 @@ namespace leviathan {
 
             /*! \brief Gibt den aktiven Helden zurück.
              */
-            Hero& active();
+            Hero& getActive();
 
         private:
             irr::scene::ISceneManager* sceneManager_ = nullptr;

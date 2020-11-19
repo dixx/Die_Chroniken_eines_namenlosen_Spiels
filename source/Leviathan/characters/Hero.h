@@ -25,6 +25,14 @@ namespace leviathan {
              */
             void update();
 
+            /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
+             */
+            void enablePlayableCharacter();
+
+            /*! \brief Macht den spielbaren Szenenknoten des Helden unsichtbar.
+             */
+            void disablePlayableCharacter();
+
             /*! \brief Gibt den internen Namen des Helden zurück.
              */
             const std::string getInternalName() const;

@@ -5,10 +5,15 @@
 #include "irrlicht.h"
 
 TEST_CASE("Hero", "[integration]") {
-    leviathan::characters::Hero subject("the hero", GraphicEngineInstance::get()->getSceneManager());
+    auto name = GraphicEngineInstance::uniqueName().c_str();
+    leviathan::characters::Hero subject(name, GraphicEngineInstance::get()->getSceneManager());
+    auto sceneNode = GraphicEngineInstance::get()->getSceneManager()->getSceneNodeFromName(name);
 
+    SECTION("has a scene node") {
+        REQUIRE(sceneNode != nullptr);
+    }
     SECTION("has an internal name") {
-        REQUIRE(subject.getInternalName() == "the hero");
+        REQUIRE(subject.getInternalName() == name);
     }
     SECTION("has 3D attributes") {
         REQUIRE(subject.getPosition() == irr::core::vector3df(0.0f, 0.0f, 0.0f));
@@ -20,5 +25,14 @@ TEST_CASE("Hero", "[integration]") {
             REQUIRE(subject.getPosition() == irr::core::vector3df(1.0f, 2.0f, 3.0f));
             REQUIRE(subject.getRotation() == irr::core::vector3df(4.0f, 5.0f, 6.0f));
         }
+    }
+    SECTION("is not visible after creation") {
+        REQUIRE_FALSE(sceneNode->isVisible());
+    }
+    SECTION("in-game figurine can be enabled or disabled") {
+        subject.enablePlayableCharacter();
+        REQUIRE(sceneNode->isVisible());
+        subject.disablePlayableCharacter();
+        REQUIRE_FALSE(sceneNode->isVisible());
     }
 }

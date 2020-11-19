@@ -9,9 +9,21 @@ namespace leviathan {
             node_->setName(internalName.c_str());
             irr::video::ITexture* texture = sceneManager->getVideoDriver()->getTexture("gfx/sydney.bmp");
             node_->setMaterialTexture(0, texture);
+            node_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            node_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
+            node_->setMD2Animation(irr::scene::EMAT_STAND);
+            disablePlayableCharacter();
         }
 
         void Hero::update() {}
+
+        void Hero::enablePlayableCharacter() {
+            node_->setVisible(true);
+        }
+
+        void Hero::disablePlayableCharacter() {
+            node_->setVisible(false);
+        }
 
         const std::string Hero::getInternalName() const {
             return node_->getName();

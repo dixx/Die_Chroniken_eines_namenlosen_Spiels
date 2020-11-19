@@ -22,6 +22,8 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Load Game", buttonConfig);
     buttonConfig.relativePositionInMenu.y += 284;
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Main Menu - Quit", buttonConfig);
+    gameEngine_.Heroes().create("Punk");
+    gameEngine_.Heroes().activate("Punk");
 }
 
 GameStateMainMenu::~GameStateMainMenu() {

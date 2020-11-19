@@ -48,9 +48,12 @@ TEST_CASE("LeviathanDevice main loop", "[integration]") {
     When(Method(timerMock, getTime)).AlwaysReturn(0);
     Mock<irr::IrrlichtDevice> graphicEngineMock;
     Mock<irr::video::IVideoDriver> videoDriverMock;
+    Mock<irr::scene::ISceneManager> sceneManagerMock;
     Fake(Method(videoDriverMock, beginScene));
     Fake(Method(videoDriverMock, endScene));
+    Fake(Method(sceneManagerMock, drawAll));
     When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&(videoDriverMock.get()));
+    When(Method(graphicEngineMock, getSceneManager)).AlwaysReturn(&(sceneManagerMock.get()));
     Fake(Method(graphicEngineMock, yield));
     Fake(Method(graphicEngineMock, closeDevice));
     When(Method(graphicEngineMock, getTimer)).AlwaysReturn(&(timerMock.get()));

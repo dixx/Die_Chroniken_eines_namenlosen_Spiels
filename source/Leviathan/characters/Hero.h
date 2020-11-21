@@ -21,10 +21,6 @@ namespace leviathan {
              */
             Hero(const std::string& internalName, irr::scene::ISceneManager* sceneManager);
 
-            /*! \brief Aktualisiert den Helden.
-             */
-            void update();
-
             /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
              */
             void enablePlayableCharacter();

@@ -21,15 +21,5 @@ TEST_CASE("Heroes", "[unit]") {
         REQUIRE(subject.getActiveHero() == anotherHero);
         subject.activate("Jean Doe");
         REQUIRE(subject.getActiveHero() == anotherHero);
-
-        // SECTION("can update the active hero") {
-        //     Spy(Method(someHero, update));
-        //     Spy(Method(anotherHero, update));
-        //
-        //     subject.update();
-        //
-        //     VerifyNoOtherInvocations(Method(someHero, update));
-        //     Verify(Method(anotherHero, update)).Once();
-        // }
     }
 }

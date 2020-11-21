@@ -7,6 +7,7 @@
 #ifndef LEVIATHAN_DEVICE_H
 #define LEVIATHAN_DEVICE_H
 
+#include "characters/Heroes.h"
 #include "core/Configuration.h"
 #include "core/GameStateManager.h"
 #include "core/Logger.h"
@@ -62,6 +63,10 @@ namespace leviathan {
          */
         void halt();
 
+        /*! \brief Zugriff auf die Helden.
+         */
+        characters::Heroes& Heroes();
+
         /*! \brief Zugriff auf die TimeControl Instanz.
          */
         core::TimeControl& TimeControl();
@@ -114,6 +119,7 @@ namespace leviathan {
         std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
         std::unique_ptr<video::Camera> camera_ = nullptr;
+        std::unique_ptr<characters::Heroes> heroes_ = nullptr;
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests
     };

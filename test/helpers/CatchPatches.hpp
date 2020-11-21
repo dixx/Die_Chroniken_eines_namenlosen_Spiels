@@ -17,6 +17,15 @@ namespace Catch {
     };
 
     template<>
+    struct StringMaker<irr::core::vector3df> {
+        static std::string convert(const irr::core::vector3df& obj) {
+            std::ostringstream ss;
+            ss << "vec(" << obj.X << ", " << obj.Y << ", " << obj.Z << ")";
+            return ss.str();
+        }
+    };
+
+    template<>
     struct StringMaker<irr::core::recti> {
         static std::string convert(const irr::core::recti& obj) {
             std::ostringstream ss;

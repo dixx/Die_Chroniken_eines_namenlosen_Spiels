@@ -1,4 +1,5 @@
 #include "LeviathanDevice.h"
+#include "video/constants.h"
 #include <chrono>
 #include <cstdint>
 #include <exception>
@@ -19,6 +20,7 @@ namespace leviathan {
         menuControl_ = std::make_unique<gui::MenuControl>(
             graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
+        heroes_ = std::make_unique<characters::Heroes>(graphicEngine_->getSceneManager());
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -54,7 +56,8 @@ namespace leviathan {
                 ++loops;
             }
             if (we_must_draw) {
-                graphicEngine_->getVideoDriver()->beginScene(true, false);
+                graphicEngine_->getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
+                graphicEngine_->getSceneManager()->drawAll();
                 gameStateManager_.draw();
                 graphicEngine_->getVideoDriver()->endScene();
             }
@@ -83,6 +86,10 @@ namespace leviathan {
 
     core::Randomizer& LeviathanDevice::Randomizer() {
         return randomizer_;
+    }
+
+    characters::Heroes& LeviathanDevice::Heroes() {
+        return *heroes_;
     }
 
     gui::MenuControl& LeviathanDevice::MenuControl() {

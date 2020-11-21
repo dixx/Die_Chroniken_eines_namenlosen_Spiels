@@ -28,9 +28,11 @@ void GameStatePlay::onAction(const leviathan::input::Action action) {
 
 void GameStatePlay::setActive() {
     gameEngine_.Actions().subscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
+    gameEngine_.Heroes().getActiveHero().enablePlayableCharacter();
     gameEngine_.MousePointerControl().setActiveMousPointer(2001);
 }
 
 void GameStatePlay::setInactive() {
+    gameEngine_.Heroes().getActiveHero().disablePlayableCharacter();
     gameEngine_.Actions().unsubscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
 }

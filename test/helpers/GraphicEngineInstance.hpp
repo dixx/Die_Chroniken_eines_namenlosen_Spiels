@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <string>
 
+// TODO: try to move to TestHelper
 class GraphicEngineInstance {
 public:
     static irr::IrrlichtDevice* get() {

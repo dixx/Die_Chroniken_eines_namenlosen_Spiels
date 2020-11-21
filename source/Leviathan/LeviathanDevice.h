@@ -63,7 +63,7 @@ namespace leviathan {
          */
         void halt();
 
-        /*! \brief Zugriff auf einen Helden.
+        /*! \brief Zugriff auf die Helden.
          */
         characters::Heroes& Heroes();
 

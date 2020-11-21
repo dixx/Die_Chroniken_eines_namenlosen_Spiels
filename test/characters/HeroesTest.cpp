@@ -16,11 +16,11 @@ TEST_CASE("Heroes", "[unit]") {
         auto anotherHero = subject.create("Jane Doe");
 
         subject.activate("John Doe");
-        REQUIRE(subject.getActive() == someHero);
+        REQUIRE(subject.getActiveHero() == someHero);
         subject.activate("Jane Doe");
-        REQUIRE(subject.getActive() == anotherHero);
+        REQUIRE(subject.getActiveHero() == anotherHero);
         subject.activate("Jean Doe");
-        REQUIRE(subject.getActive() == anotherHero);
+        REQUIRE(subject.getActiveHero() == anotherHero);
 
         // SECTION("can update the active hero") {
         //     Spy(Method(someHero, update));

@@ -14,7 +14,7 @@ namespace leviathan {
             if (heroes_.count(internalName) == 1) activeHeroName_ = std::string(internalName);
         }
 
-        Hero& Heroes::getActive() {
+        Hero& Heroes::getActiveHero() {
             return *heroes_[activeHeroName_];
         }
     }

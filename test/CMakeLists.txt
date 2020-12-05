@@ -13,6 +13,7 @@ add_executable(unit_tests
   helpers/CatchPatches.hpp
   helpers/FakeitPatches.hpp
   helpers/Testhelper.cpp
+  helpers/TestHelper2.cpp
   helpers/TesthelperLeviathanDevice.cpp
   input/ActionsTest.cpp
   input/EventReceiverTest.cpp

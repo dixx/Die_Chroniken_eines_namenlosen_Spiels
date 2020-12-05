@@ -1,13 +1,14 @@
 #include "../../source/Leviathan/characters/Hero.h"
 #include "../helpers/CatchPatches.hpp"
-#include "../helpers/GraphicEngineInstance.hpp"
+#include "../helpers/TestHelper2.h"
 #include "catch.hpp"
 #include "irrlicht.h"
+#include <string>
 
 TEST_CASE("Hero", "[integration]") {
-    auto name = GraphicEngineInstance::uniqueName().c_str();
-    leviathan::characters::Hero subject(name, GraphicEngineInstance::get()->getSceneManager());
-    auto sceneNode = GraphicEngineInstance::get()->getSceneManager()->getSceneNodeFromName(name);
+    auto name = std::to_string(TestHelper2::getUniqueId()).c_str();
+    leviathan::characters::Hero subject(name, TestHelper2::graphicEngine()->getSceneManager());
+    auto sceneNode = TestHelper2::graphicEngine()->getSceneManager()->getSceneNodeFromName(name);
 
     SECTION("has a scene node") {
         REQUIRE(sceneNode != nullptr);

@@ -4,7 +4,7 @@
 #include "catch.hpp"
 #include "irrlicht.h"
 
-TEST_CASE("Heroes", "[unit]") {
+TEST_CASE("Heroes", "[integration]") {
     leviathan::characters::Heroes subject(TestHelper::graphicEngine()->getSceneManager());
 
     SECTION("can create default heroes") {

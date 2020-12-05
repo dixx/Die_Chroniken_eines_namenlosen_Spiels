@@ -3,7 +3,7 @@
 #include "../../source/Leviathan/input/IEventProducer.h"
 #include "../helpers/GUIEnvironmentMock.hpp"
 #include "../helpers/OverloadedOperators.hpp"
-#include "../helpers/Testhelper.h"
+#include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
@@ -12,7 +12,6 @@
 using namespace fakeit;
 
 TEST_CASE("Action Mapping", "[unit]") {
-    Testhelper testhelper;
     const char* mappingsFileName = "testactionmappings.yml";
     irr::core::stringc content = "---\n"
                                  "- name: talk\n"
@@ -56,7 +55,7 @@ TEST_CASE("Action Mapping", "[unit]") {
                                  "      name: <SPACE>\n"
                                  "      type: keyboard\n"
                                  "      id: 0x20\n";
-    testhelper.writeFile(mappingsFileName, content);
+    TestHelper::writeFile(mappingsFileName, content.c_str());
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Mock<leviathan::input::IActionConsumer> consumerMock;
     Fake(Method(eventBrokerMock, subscribe), Method(eventBrokerMock, unsubscribe), Method(consumerMock, onAction));
@@ -81,7 +80,7 @@ TEST_CASE("Action Mapping", "[unit]") {
     resumeButtonEvent.GUIEvent.EventType = irr::gui::EGET_BUTTON_CLICKED;
     resumeButtonEvent.GUIEvent.Caller = buttonElement.get();
     enum { TALK = 1, ATTACK, SELECT = 100, ENABLE = 1001, RESUME_GAME = 1002 };
-    leviathan::input::Actions subject(eventBrokerMock.get(), Testhelper::Logger());
+    leviathan::input::Actions subject(eventBrokerMock.get(), TestHelper::Logger());
 
     SECTION("subscribes to an event producer for certain input event types") {
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)

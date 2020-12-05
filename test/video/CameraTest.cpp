@@ -1,7 +1,7 @@
 #include "../../source/Leviathan/video/Camera.h"
 #include "../../source/Leviathan/core/Configuration.h"
 #include "../helpers/ICameraSceneNodeMock.hpp"
-#include "../helpers/Testhelper.h"
+#include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
@@ -15,9 +15,8 @@ TEST_CASE("Camera", "[unit]") {
     When(Method(sceneManagerMock, addCameraSceneNode)).AlwaysReturn(cameraMock);
 
     SECTION("is created with settings from configuration") {
-        Testhelper testhelper;
         const char* configFileName = "testconfigfile.ini";
-        testhelper.writeFile(configFileName, "[camera]\nfar_value=123.0\nscreen_x=4\nscreen_y=2\n");
+        TestHelper::writeFile(configFileName, "[camera]\nfar_value=123.0\nscreen_x=4\nscreen_y=2\n");
         leviathan::core::Configuration config(configFileName);
         leviathan::video::Camera subject(&sceneManagerMock.get(), config);
 

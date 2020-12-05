@@ -3,7 +3,7 @@
 #include "../../source/Leviathan/video/Constants.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/FakeitPatches.hpp"
-#include "../helpers/Testhelper.h"
+#include "../helpers/TestHelper.h"
 #include "../helpers/VideoDriverMock.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"
@@ -15,7 +15,6 @@ using namespace fakeit;
 #define makeColorKeyTextureArgs void(irr::video::ITexture*, irr::video::SColor, bool)
 
 TEST_CASE("MousePointerControl", "[unit]") {
-    Testhelper testhelper;
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Fake(Method(eventBrokerMock, subscribe));
     Mock<irr::IrrlichtDevice> graphicDeviceMock;
@@ -40,7 +39,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
     keyboardEvent.KeyInput.Key = irr::KEY_RETURN;
     keyboardEvent.KeyInput.PressedDown = true;
     leviathan::video::MousePointerControl subject(
-        eventBrokerMock.get(), &graphicDeviceMock.get(), Testhelper::Logger());
+        eventBrokerMock.get(), &graphicDeviceMock.get(), TestHelper::Logger());
 
     SECTION("events") {
         SECTION("subscribes to an event producer for movement input events") {

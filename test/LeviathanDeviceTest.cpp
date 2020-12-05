@@ -1,7 +1,7 @@
 #include "../source/Leviathan/LeviathanDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "helpers/Testhelper.h"
+#include "helpers/TestHelper.h"
 #include "helpers/TesthelperLeviathanDevice.h"
 #include "irrlicht.h"
 #include <cstdint>
@@ -11,9 +11,8 @@
 using namespace fakeit;
 
 TEST_CASE("LeviathanDevice supporter", "[integration]") {
-    Testhelper testhelper;
     const char* configFileName = "testconfigfile.ini";
-    testhelper.writeFile(configFileName, "[video]\nmax_fps=100\ndriver=NULL\n");
+    TestHelper::writeFile(configFileName, "[video]\nmax_fps=100\ndriver=NULL\n");
     leviathan::LeviathanDevice subject(configFileName);
 
     SECTION("it provides instances of usefull tools") {
@@ -43,9 +42,8 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
 }
 
 TEST_CASE("LeviathanDevice main loop", "[integration]") {
-    Testhelper testhelper;
     const char* configFileName = "testconfigfile.ini";
-    testhelper.writeFile(configFileName, "[video]\nmax_fps=100\ndriver=NULL\n");
+    TestHelper::writeFile(configFileName, "[video]\nmax_fps=100\ndriver=NULL\n");
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject(configFileName);
     Mock<irr::ITimer> timerMock;
     When(Method(timerMock, getTime)).AlwaysReturn(0);

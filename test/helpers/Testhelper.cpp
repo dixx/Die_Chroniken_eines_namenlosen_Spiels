@@ -1,36 +1,62 @@
-#include "Testhelper.h"
+#include "TestHelper.h"
 #include <cstdlib>
-#include <fstream>
-#include <iostream>
 #include <vector>
 
-Testhelper::Testhelper() {
-    irr::SIrrlichtCreationParameters params;
-    params.DriverType = irr::video::EDT_NULL;
-    params.LoggingLevel = irr::ELL_WARNING;
-    graphicEngine_ = irr::createDeviceEx(params);
-    fileSystem_ = graphicEngine_->getFileSystem();
+TestHelper& TestHelper::instance() {
+    static TestHelper instance;
+    return instance;
 }
 
-Testhelper::~Testhelper() {
-    if (graphicEngine_) graphicEngine_->drop();
+irr::IrrlichtDevice* TestHelper::graphicEngine() {
+    return instance().mGraphicEngine;
 }
 
-irr::IrrlichtDevice* Testhelper::getGraphicEngine() {
-    return graphicEngine_;
+leviathan::core::Logger& TestHelper::Logger() {
+    static leviathan::core::Logger loggerInstance("test.log", leviathan::core::Logger::Level::ALL);
+    return loggerInstance;
 }
 
-irr::io::IFileSystem* Testhelper::getFileSystem() {
-    return fileSystem_;
+uint32_t TestHelper::getUniqueId() {
+    return instance().mUniqueId++;
 }
 
-std::string Testhelper::readFile(const char* fileName) {
-    std::fstream filestream(fileName, std::fstream::in);
+std::string TestHelper::readFile(const char* fileName) {
+    std::ifstream filestream = getInputFileStream(fileName);
+    std::streampos size = getFileSize(filestream, fileName);
+    std::vector<char> buffer(static_cast<uint32_t>(size) + 4);
+    filestream.read(&buffer[0], static_cast<std::streamsize>(size));
+    filestream.close();
+    return std::string(buffer.begin(), buffer.end());
+}
+
+uint32_t TestHelper::getFileSize(const char* fileName) {
+    std::ifstream filestream = getInputFileStream(fileName);
+    std::streampos size = getFileSize(filestream, fileName);
+    filestream.close();
+    return static_cast<uint32_t>(size);
+}
+
+std::ifstream TestHelper::getInputFileStream(const char* fileName) {
+    std::ifstream filestream(fileName);
     if (filestream.fail()) {
         filestream.close();
         std::cerr << "Error: Could not open file \"" << fileName << "\"!" << std::endl;
         exit(EXIT_FAILURE);
     }
+    return filestream;
+}
+
+std::ofstream TestHelper::getOutputFileStream(const char* fileName) {
+    std::ofstream filestream(fileName);
+    if (filestream.fail()) {
+        filestream.close();
+        std::cerr << "Error: Could not open file \"" << fileName << "\"!" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    return filestream;
+}
+
+std::streampos TestHelper::getFileSize(std::ifstream& filestream, const char* fileName) {
     filestream.seekg(0, filestream.end);
     std::streampos size = filestream.tellg();
     filestream.seekg(0, filestream.beg);
@@ -39,34 +65,27 @@ std::string Testhelper::readFile(const char* fileName) {
         std::cerr << "Error: Could not get file size of \"" << fileName << "\"!" << std::endl;
         exit(EXIT_FAILURE);
     }
-    std::vector<char> buffer(static_cast<uint32_t>(size) + 4);
-    filestream.read(&buffer[0], static_cast<std::streamsize>(size));
+    return size;
+}
+
+void TestHelper::writeFile(const char* fileName, const std::string& content) {
+    std::ofstream filestream = getOutputFileStream(fileName);
+    filestream << content;
     filestream.close();
-    return std::string(buffer.begin(), buffer.end());
 }
 
-void Testhelper::writeFile(const char* fileName, const irr::core::stringc& content) {
-    irr::io::IWriteFile* file = fileSystem_->createAndWriteFile(fileName, /* append = */ false);
-    file->write(content.c_str(), content.size());
-    file->drop();
+bool TestHelper::existFile(const char* fileName) {
+    std::ifstream infile(fileName);
+    return infile.good();
 }
 
-uint32_t Testhelper::getFileSize(const char* fileName) {
-    irr::io::IReadFile* file = fileSystem_->createAndOpenFile(fileName);
-    const intmax_t result = file->getSize();
-    if (result == -1L) {
-        std::cerr << "Error: Could not get file size of \"" << fileName << "\"!" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    file->drop();
-    return static_cast<uint32_t>(result);
+TestHelper::TestHelper() {
+    irr::SIrrlichtCreationParameters params;
+    params.DriverType = irr::video::EDT_NULL;
+    params.LoggingLevel = irr::ELL_WARNING;
+    mGraphicEngine = irr::createDeviceEx(params);
 }
 
-bool Testhelper::existFile(const char* fileName) {
-    return fileSystem_->existFile(fileName);
-}
-
-leviathan::core::Logger& Testhelper::Logger() {
-    static leviathan::core::Logger singleton("test.log", leviathan::core::Logger::Level::ALL);
-    return singleton;
+TestHelper::~TestHelper() {
+    if (mGraphicEngine) mGraphicEngine->drop();
 }

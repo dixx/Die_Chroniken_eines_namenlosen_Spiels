@@ -1,7 +1,6 @@
 #include "../../source/Leviathan/input/Actions.h"
 #include "../../source/Leviathan/input/IActionConsumer.h"
 #include "../../source/Leviathan/input/IEventProducer.h"
-#include "../helpers/GUIEnvironmentMock.hpp"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
@@ -11,7 +10,7 @@
 
 using namespace fakeit;
 
-TEST_CASE("Action Mapping", "[unit]") {
+TEST_CASE("Action Mapping", "[integration]") {
     const char* mappingsFileName = "testactionmappings.yml";
     irr::core::stringc content = "---\n"
                                  "- name: talk\n"
@@ -71,10 +70,8 @@ TEST_CASE("Action Mapping", "[unit]") {
     eKeyEvent.KeyInput.PressedDown = true;
     unregisteredKeyEvent.EventType = irr::EET_KEY_INPUT_EVENT;
     unregisteredKeyEvent.KeyInput.Key = irr::KEY_KEY_N;
-    mocks::GUIEnvironmentMock guiEnvironmentMock;
-    Mock<mocks::GUIEnvironmentMock> guiEnvironmentSpy(guiEnvironmentMock);
     auto buttonElement = std::make_unique<irr::gui::IGUIElement>(
-        irr::gui::EGUIET_BUTTON, &guiEnvironmentSpy.get(), nullptr, 42, irr::core::recti());
+        irr::gui::EGUIET_BUTTON, TestHelper::graphicEngine()->getGUIEnvironment(), nullptr, 42, irr::core::recti());
     buttonElement->setName("Resume game");
     resumeButtonEvent.EventType = irr::EET_GUI_EVENT;
     resumeButtonEvent.GUIEvent.EventType = irr::gui::EGET_BUTTON_CLICKED;

@@ -1,5 +1,5 @@
-#ifndef HELPERS_TESTHELPER2_H
-#define HELPERS_TESTHELPER2_H
+#ifndef HELPERS_TESTHELPER_H
+#define HELPERS_TESTHELPER_H
 
 #include "../../source/Leviathan/core/Logger.h"
 #include "irrlicht.h"

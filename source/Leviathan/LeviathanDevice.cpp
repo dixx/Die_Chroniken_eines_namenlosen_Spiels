@@ -33,35 +33,43 @@ namespace leviathan {
     void LeviathanDevice::run() {
         const float FRAME_DELTA_TIME = 1.f / static_cast<float>(configuration_.getMaxFPS());
         const uint32_t FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / configuration_.getMaxFPS();  // for performance.
-        uint32_t next = graphicEngine_->getTimer()->getTime();
+        uint32_t nextDrawingTime = graphicEngine_->getTimer()->getTime();
 
         while (graphicEngine_->run()) {
-            if (!graphicEngine_->isWindowActive()) graphicEngine_->yield();
+            handleWindowInactivity();
             uint32_t loops = 0;
-            bool we_must_draw = false;
-            while (graphicEngine_->getTimer()->getTime() > next
+            bool drawNextFrame = false;
+            while (graphicEngine_->getTimer()->getTime() > nextDrawingTime
                    && loops < 10)  // in-game time will slow down if framerate drops below 10% of maxFPS // FIXME for
                                    // FPS > 250
             {
-                timeControl_.tick(FRAME_DELTA_TIME);
-                gameStateManager_.update(FRAME_DELTA_TIME);
+                updateGame(FRAME_DELTA_TIME);
                 if (!graphicEngine_->run()) {
-                    we_must_draw = false;
+                    drawNextFrame = false;
                     break;
                 }
-                next += FRAME_DELTA_TIME_IN_MILLISECONDS;
-                we_must_draw = true;
-                // if (gameStateManager_.allFramesMustBeShown())
-                //     break;
+                drawNextFrame = true;
+                nextDrawingTime += FRAME_DELTA_TIME_IN_MILLISECONDS;
                 ++loops;
             }
-            if (we_must_draw) {
-                graphicEngine_->getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
-                graphicEngine_->getSceneManager()->drawAll();
-                gameStateManager_.draw();
-                graphicEngine_->getVideoDriver()->endScene();
-            }
+            if (drawNextFrame) drawGame();
         }
+    }
+
+    void LeviathanDevice::handleWindowInactivity() {
+        if (!graphicEngine_->isWindowActive()) graphicEngine_->yield();
+    }
+
+    void LeviathanDevice::updateGame(const float frameDeltaTime) {
+        timeControl_.tick(frameDeltaTime);
+        gameStateManager_.update(frameDeltaTime);
+    }
+
+    void LeviathanDevice::drawGame() {
+        graphicEngine_->getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
+        graphicEngine_->getSceneManager()->drawAll();
+        gameStateManager_.draw();
+        graphicEngine_->getVideoDriver()->endScene();
     }
 
     void LeviathanDevice::halt() {

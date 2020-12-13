@@ -122,8 +122,8 @@ namespace leviathan {
         std::unique_ptr<characters::Heroes> heroes_ = nullptr;
 
         void handleWindowInactivity();
-        void drawAll();
         void updateGame(const float frameDeltaTime);
+        void drawGame();
 
         friend TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock;  // now Irrlicht can be mocked in unit tests
     };

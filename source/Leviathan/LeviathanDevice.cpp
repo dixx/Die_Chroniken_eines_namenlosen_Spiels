@@ -38,21 +38,21 @@ namespace leviathan {
         while (graphicEngine_->run()) {
             handleWindowInactivity();
             uint32_t loops = 0;
-            bool weMustDraw = false;
+            bool drawNextFrame = false;
             while (graphicEngine_->getTimer()->getTime() > nextDrawingTime
                    && loops < 10)  // in-game time will slow down if framerate drops below 10% of maxFPS // FIXME for
                                    // FPS > 250
             {
                 updateGame(FRAME_DELTA_TIME);
                 if (!graphicEngine_->run()) {
-                    weMustDraw = false;
+                    drawNextFrame = false;
                     break;
                 }
-                weMustDraw = true;
+                drawNextFrame = true;
                 nextDrawingTime += FRAME_DELTA_TIME_IN_MILLISECONDS;
                 ++loops;
             }
-            if (weMustDraw) drawAll();
+            if (drawNextFrame) drawGame();
         }
     }
 
@@ -65,7 +65,7 @@ namespace leviathan {
         gameStateManager_.update(frameDeltaTime);
     }
 
-    void LeviathanDevice::drawAll() {
+    void LeviathanDevice::drawGame() {
         graphicEngine_->getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
         graphicEngine_->getSceneManager()->drawAll();
         gameStateManager_.draw();

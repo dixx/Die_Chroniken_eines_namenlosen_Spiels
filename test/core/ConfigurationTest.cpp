@@ -1,11 +1,10 @@
 #include "../../source/Leviathan/core/Configuration.h"
 #include "../../source/Leviathan/core/Logger.h"
-#include "../helpers/Testhelper.h"
+#include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "irrlicht.h"
 
 TEST_CASE("Configuration: read values", "[unit]") {
-    Testhelper testhelper;
     const char* configFileName = "testconfigfile.ini";
 
     SECTION("all relevant values can be read") {
@@ -25,7 +24,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
         content += "\n";
         content += "[camera]\n";
         content += "far_value = 300.0\n";
-        testhelper.writeFile(configFileName, content);
+        TestHelper::writeFile(configFileName, content.c_str());
         leviathan::core::Configuration subject(configFileName);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 1366);
         REQUIRE(subject.getGraphicEngineParams().WindowSize.Height == 768);
@@ -39,7 +38,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
         REQUIRE(subject.getScreenSize().h == 768);
 
         SECTION("reading again overwrites changes") {
-            testhelper.writeFile(configFileName, "[video]\ncolor_depth=111\n");
+            TestHelper::writeFile(configFileName, "[video]\ncolor_depth=111\n");
             subject.readFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().Bits == 111);
         }
@@ -47,7 +46,6 @@ TEST_CASE("Configuration: read values", "[unit]") {
 }
 
 TEST_CASE("Configuration: default values", "[unit]") {
-    Testhelper testhelper;
     const char* configFileName = "testconfigfile.ini";
 
     SECTION("it has default values on unsuccessfull config file read") {
@@ -68,7 +66,7 @@ TEST_CASE("Configuration: default values", "[unit]") {
             content += "logging_level=who_knows\n";
             content += "[video]\n";
             content += "driver=something\n";
-            testhelper.writeFile(configFileName, content);
+            TestHelper::writeFile(configFileName, content.c_str());
             subject.readFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().DriverType == irr::video::EDT_OPENGL);
             REQUIRE(subject.getLoggingLevel() == leviathan::core::Logger::Level::INFO);
@@ -77,17 +75,16 @@ TEST_CASE("Configuration: default values", "[unit]") {
 }
 
 TEST_CASE("Configuration: file format", "[unit]") {
-    Testhelper testhelper;
     const char* configFileName = "testconfigfile.ini";
     leviathan::core::Configuration subject("");
 
     SECTION("# and ; are valid comment indicators") {
-        testhelper.writeFile(configFileName, "[test_section]\n;test_value=1\n#test_value=2\ntest_value=3\n");
+        TestHelper::writeFile(configFileName, "[test_section]\n;test_value=1\n#test_value=2\ntest_value=3\n");
         subject.readFromFile(configFileName);
         REQUIRE(subject.getInt("test_section", "test_value") == 3);
     }
     SECTION("erroneous section will be ignored") {
-        testhelper.writeFile(configFileName, "[s 1]\nv=42\n[s\n2]\nv=42\n[s3]v=42\n[[s4]s4]\nv=42\n[s]5]\nv=42\n");
+        TestHelper::writeFile(configFileName, "[s 1]\nv=42\n[s\n2]\nv=42\n[s3]v=42\n[[s4]s4]\nv=42\n[s]5]\nv=42\n");
         subject.readFromFile(configFileName);
         REQUIRE(subject.getInt("s1", "v") == 0);
         REQUIRE(subject.getInt("s2", "v") == 0);
@@ -96,7 +93,7 @@ TEST_CASE("Configuration: file format", "[unit]") {
         REQUIRE(subject.getInt("s]5", "v") == 42);
     }
     SECTION("erroneous key-value-pair will be ignored") {
-        testhelper.writeFile(configFileName, "[s]\nv 1=42\nv2 == 42\nv3 42\nv4=\nv[5=42\n");
+        TestHelper::writeFile(configFileName, "[s]\nv 1=42\nv2 == 42\nv3 42\nv4=\nv[5=42\n");
         subject.readFromFile(configFileName);
         REQUIRE(subject.getInt("s", "v1") == 0);
         REQUIRE(subject.getInt("s", "v2") == 0);

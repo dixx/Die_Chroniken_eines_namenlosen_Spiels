@@ -1,6 +1,6 @@
 #include "../../source/Leviathan/core/GameStateManager.h"
 #include "../../source/Leviathan/core/IGameState.h"
-#include "../helpers/Testhelper.h"
+#include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include <stdexcept>
@@ -8,7 +8,7 @@
 using namespace fakeit;
 
 TEST_CASE("GameStateManager: add game states", "[unit]") {
-    leviathan::core::GameStateManager subject(Testhelper::Logger());
+    leviathan::core::GameStateManager subject(TestHelper::Logger());
     Mock<leviathan::core::IGameState> startMock, playMock, stopMock;
     Fake(Method(startMock, update), Method(startMock, draw), Method(startMock, setActive),
         Method(startMock, setInactive));
@@ -49,7 +49,7 @@ TEST_CASE("GameStateManager: add game states", "[unit]") {
 }
 
 TEST_CASE("GameStateManager: transit between game states", "[unit]") {
-    leviathan::core::GameStateManager subject(Testhelper::Logger());
+    leviathan::core::GameStateManager subject(TestHelper::Logger());
     Mock<leviathan::core::IGameState> startMock, playMock, pauseMock, optionsMock;
     Fake(Method(startMock, update), Method(startMock, draw), Method(startMock, setActive),
         Method(startMock, setInactive));
@@ -113,7 +113,7 @@ TEST_CASE("GameStateManager: transit between game states", "[unit]") {
 }
 
 TEST_CASE("GameStateManager: update and draw active game states", "[unit]") {
-    leviathan::core::GameStateManager subject(Testhelper::Logger());
+    leviathan::core::GameStateManager subject(TestHelper::Logger());
     Mock<leviathan::core::IGameState> startMock, playMock, pauseMock;
     Fake(Method(startMock, update), Method(startMock, draw), Method(startMock, setActive),
         Method(startMock, setInactive));

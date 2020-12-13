@@ -1,11 +1,11 @@
 #include "../../source/Leviathan/characters/Heroes.h"
-#include "../helpers/GraphicEngineInstance.hpp"
 #include "../helpers/OverloadedOperators.hpp"
+#include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "irrlicht.h"
 
-TEST_CASE("Heroes", "[unit]") {
-    leviathan::characters::Heroes subject(GraphicEngineInstance::get()->getSceneManager());
+TEST_CASE("Heroes", "[integration]") {
+    leviathan::characters::Heroes subject(TestHelper::graphicEngine()->getSceneManager());
 
     SECTION("can create default heroes") {
         REQUIRE(subject.create().getInternalName() == "");

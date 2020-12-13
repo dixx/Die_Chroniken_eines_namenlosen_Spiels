@@ -12,7 +12,7 @@ add_executable(unit_tests
   gui/MenuControlTest.cpp
   helpers/CatchPatches.hpp
   helpers/FakeitPatches.hpp
-  helpers/Testhelper.cpp
+  helpers/TestHelper.cpp
   helpers/TesthelperLeviathanDevice.cpp
   input/ActionsTest.cpp
   input/EventReceiverTest.cpp

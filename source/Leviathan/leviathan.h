@@ -22,6 +22,9 @@ namespace leviathan {
 
     //! Hilfsklassen für das Anzeigen
     namespace video {}
+
+    //! Hilfsklassen für die Spielwelt
+    namespace world {}
 }
 
 #endif

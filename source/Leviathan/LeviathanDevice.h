@@ -19,6 +19,7 @@
 #include "irrlicht.h"
 #include "video/Camera.h"
 #include "video/MousePointerControl.h"
+#include "world/Ground.h"
 #include <memory>
 
 #ifndef NDEBUG
@@ -107,6 +108,10 @@ namespace leviathan {
          */
         video::Camera& Camera();
 
+        /*! \brief Zugriff auf begehbaren Boden.
+         */
+        world::Ground& Ground();
+
     private:
         core::Configuration configuration_;
         core::Logger logger_;
@@ -120,6 +125,7 @@ namespace leviathan {
         std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
         std::unique_ptr<video::Camera> camera_ = nullptr;
         std::unique_ptr<characters::Heroes> heroes_ = nullptr;
+        std::unique_ptr<world::Ground> ground_ = nullptr;
 
         void handleWindowInactivity();
         void updateGame(const float frameDeltaTime);

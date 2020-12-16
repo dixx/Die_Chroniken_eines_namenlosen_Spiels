@@ -21,6 +21,7 @@ namespace leviathan {
             graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
         heroes_ = std::make_unique<characters::Heroes>(graphicEngine_->getSceneManager());
+        ground_ = std::make_unique<world::Ground>(graphicEngine_->getSceneManager());
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -118,5 +119,9 @@ namespace leviathan {
 
     video::Camera& LeviathanDevice::Camera() {
         return *camera_;
+    }
+
+    world::Ground& LeviathanDevice::Ground() {
+        return *ground_;
     }
 }

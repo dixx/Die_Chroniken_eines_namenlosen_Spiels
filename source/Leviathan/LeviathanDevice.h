@@ -127,6 +127,7 @@ namespace leviathan {
         std::unique_ptr<characters::Heroes> heroes_ = nullptr;
         std::unique_ptr<world::Ground> ground_ = nullptr;
 
+        void initializeGraphicEngine();
         void handleWindowInactivity();
         void updateGame(const float frameDeltaTime);
         void drawGame();

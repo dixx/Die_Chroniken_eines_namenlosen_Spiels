@@ -1,6 +1,7 @@
 include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}")
 
 add_executable(neues_spiel
+  GameStateLoadGame.cpp
   GameStateMainMenu.cpp
   GameStatePlay.cpp
   GameStateShutdown.cpp
@@ -19,4 +20,5 @@ install(FILES
   "${RESOURCES_DIR}/GFX/menues1.bmp"
   "${RESOURCES_DIR}/GFX/OBJECTS/sydney.md2"
   "${RESOURCES_DIR}/GFX/sydney.bmp"
+  "${RESOURCES_DIR}/GFX/MAP/linksUnten.3ds"
 DESTINATION ./gfx)

@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/video/MousePointerControl.h"
+#include "../../source/Leviathan/gui/MousePointerControl.h"
 #include "../../source/Leviathan/input/IEventProducer.h"
 #include "../../source/Leviathan/video/Constants.h"
 #include "../helpers/CatchPatches.hpp"
@@ -49,7 +49,7 @@ TEST_CASE("MousePointerControl", "[integration]") {
     keyboardEvent.EventType = irr::EET_KEY_INPUT_EVENT;
     keyboardEvent.KeyInput.Key = irr::KEY_RETURN;
     keyboardEvent.KeyInput.PressedDown = true;
-    leviathan::video::MousePointerControl subject(
+    leviathan::gui::MousePointerControl subject(
         eventBrokerMock.get(), TestHelper::graphicEngine(), TestHelper::Logger());
 
     SECTION("events") {

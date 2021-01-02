@@ -18,7 +18,7 @@
 #include "input/EventReceiver.h"
 #include "irrlicht.h"
 #include "video/Camera.h"
-#include "video/MousePointerControl.h"
+#include "gui/MousePointerControl.h"
 #include "world/Ground.h"
 #include <memory>
 
@@ -92,6 +92,10 @@ namespace leviathan {
          */
         gui::MenuControl& MenuControl();
 
+        /*! \brief Zugriff auf Mauszeiger.
+         */
+        gui::MousePointerControl& MousePointerControl();
+
         /*! \brief Zugriff auf Input-Mappings.
          */
         input::Actions& Actions();
@@ -99,10 +103,6 @@ namespace leviathan {
         /*! \brief Zugriff auf Input-Events.
          */
         input::EventReceiver& EventReceiver();
-
-        /*! \brief Zugriff auf Mauszeiger.
-         */
-        video::MousePointerControl& MousePointerControl();
 
         /*! \brief Zugriff auf eine Kamera.
          */
@@ -122,7 +122,7 @@ namespace leviathan {
         input::EventReceiver eventReceiver_ = input::EventReceiver();
         input::Actions actions_;
         std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
-        std::unique_ptr<video::MousePointerControl> mousePointerControl_ = nullptr;
+        std::unique_ptr<gui::MousePointerControl> mousePointerControl_ = nullptr;
         std::unique_ptr<video::Camera> camera_ = nullptr;
         std::unique_ptr<characters::Heroes> heroes_ = nullptr;
         std::unique_ptr<world::Ground> ground_ = nullptr;

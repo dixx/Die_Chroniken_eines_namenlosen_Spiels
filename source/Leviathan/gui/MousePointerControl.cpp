@@ -1,9 +1,9 @@
 #include "MousePointerControl.h"
-#include "Constants.h"
+#include "../video/Constants.h"
 #include <stdexcept>
 
 namespace leviathan {
-    namespace video {
+    namespace gui {
         MousePointerControl::MousePointerControl(leviathan::input::IEventProducer& producer,
             irr::IrrlichtDevice* graphicDevice, leviathan::core::Logger& logger)
         : logger_(logger), graphicDevice_(graphicDevice) {
@@ -32,7 +32,7 @@ namespace leviathan {
                 return;
             }
             baseImage_[id] = texture;
-            graphicDevice_->getVideoDriver()->makeColorKeyTexture(baseImage_[id], COL_MAGICPINK);
+            graphicDevice_->getVideoDriver()->makeColorKeyTexture(baseImage_[id], video::COL_MAGICPINK);
             imageArea_[id] = imageArea;
             hotSpot_[id] = hotSpot;
         }

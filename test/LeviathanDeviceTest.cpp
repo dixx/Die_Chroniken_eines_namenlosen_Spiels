@@ -28,7 +28,7 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
         REQUIRE(&subject.Logger() != nullptr);
         REQUIRE(typeid(subject.MenuControl()) == typeid(leviathan::gui::MenuControl));
         REQUIRE(&subject.MenuControl() != nullptr);
-        REQUIRE(typeid(subject.MousePointerControl()) == typeid(leviathan::video::MousePointerControl));
+        REQUIRE(typeid(subject.MousePointerControl()) == typeid(leviathan::gui::MousePointerControl));
         REQUIRE(&subject.MousePointerControl() != nullptr);
         REQUIRE(typeid(subject.Camera()) == typeid(leviathan::video::Camera));
         REQUIRE(&subject.Camera() != nullptr);

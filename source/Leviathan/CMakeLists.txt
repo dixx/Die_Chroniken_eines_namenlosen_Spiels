@@ -11,6 +11,7 @@ add_library(leviathan SHARED
   core/Timer.cpp
   gui/Menu.cpp
   gui/MenuControl.cpp
+  gui/MousePointerControl.cpp
   input/ActionMapping.cpp
   input/Actions.cpp
   input/EventReceiver.cpp
@@ -21,7 +22,6 @@ add_library(leviathan SHARED
   input/MouseEventActions.cpp
   video/Camera.cpp
   video/MeshHelper.cpp
-  video/MousePointerControl.cpp
   world/Ground.cpp
   LeviathanDevice.cpp
 )

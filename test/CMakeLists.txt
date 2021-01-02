@@ -10,6 +10,7 @@ add_executable(unit_tests
   core/TimerTest.cpp
   core/RandomizerTest.cpp
   gui/MenuControlTest.cpp
+  gui/MousePointerControlTest.cpp
   helpers/CatchPatches.hpp
   helpers/FakeitPatches.hpp
   helpers/TestHelper.cpp
@@ -19,7 +20,6 @@ add_executable(unit_tests
   input/KeyboardEventActionsTest.cpp
   input/MouseEventActionsTest.cpp
   video/CameraTest.cpp
-  video/MousePointerControlTest.cpp
   world/GroundTest.cpp
   LeviathanDeviceTest.cpp
   unit_tests.cpp

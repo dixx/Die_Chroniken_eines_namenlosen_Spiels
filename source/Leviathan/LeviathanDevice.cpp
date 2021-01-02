@@ -9,18 +9,23 @@ namespace leviathan {
     : configuration_(fileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), gameStateManager_(logger_),
       actions_(eventReceiver_, logger_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
-        graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
-        if (graphicEngine_ == nullptr) {
-            logger_.text << "could not initialize Irrlicht Engine!";
-            logger_.write(core::Logger::Level::INFO);
-            throw std::runtime_error("could not initialize Irrlicht Engine!");
-        }
+        initializeGraphicEngine();
         graphicEngine_->setEventReceiver(&eventReceiver_);
         mousePointerControl_ = std::make_unique<video::MousePointerControl>(eventReceiver_, graphicEngine_, logger_);
         menuControl_ = std::make_unique<gui::MenuControl>(
             graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
         heroes_ = std::make_unique<characters::Heroes>(graphicEngine_->getSceneManager());
+        ground_ = std::make_unique<world::Ground>(graphicEngine_->getSceneManager());
+    }
+
+    void LeviathanDevice::initializeGraphicEngine() {
+        graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
+        if (graphicEngine_ == nullptr) {
+            logger_.text << "could not initialize Irrlicht Engine!";
+            logger_.write(core::Logger::Level::INFO);
+            throw std::runtime_error("could not initialize Irrlicht Engine!");
+        }
     }
 
     LeviathanDevice::~LeviathanDevice() {
@@ -118,5 +123,9 @@ namespace leviathan {
 
     video::Camera& LeviathanDevice::Camera() {
         return *camera_;
+    }
+
+    world::Ground& LeviathanDevice::Ground() {
+        return *ground_;
     }
 }

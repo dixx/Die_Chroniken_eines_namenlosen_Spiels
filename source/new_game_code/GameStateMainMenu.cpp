@@ -44,7 +44,7 @@ void GameStateMainMenu::draw() {
 void GameStateMainMenu::onAction(const leviathan::input::Action action) {
     switch (action.id) {
     case actions::START_NEW_GAME:
-        if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_PLAY);
+        if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_LOADER);
         break;
     case actions::EXIT:
         if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_SHUTDOWN);

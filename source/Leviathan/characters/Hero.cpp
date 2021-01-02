@@ -6,6 +6,7 @@ namespace leviathan {
             irr::scene::IAnimatedMesh* mesh = sceneManager->getMesh("gfx/sydney.md2");
             node_ = sceneManager->addAnimatedMeshSceneNode(mesh);
             node_->setName(internalName.c_str());
+            node_->setScale(irr::core::vector3df(0.025f, 0.025f, 0.025f));
             irr::video::ITexture* texture = sceneManager->getVideoDriver()->getTexture("gfx/sydney.bmp");
             node_->setMaterialTexture(0, texture);
             node_->setMaterialFlag(irr::video::EMF_LIGHTING, false);

@@ -13,7 +13,7 @@ namespace leviathan {
             groundTile_ = sceneManager_->addMeshSceneNode(mesh);
             mesh->drop();
             groundTile_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            // groundTile_->setVisible(false);
+            groundTile_->setVisible(true);
         }
 
         Ground::~Ground() {

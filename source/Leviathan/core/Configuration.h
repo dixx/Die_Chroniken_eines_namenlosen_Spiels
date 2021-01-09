@@ -10,6 +10,7 @@
 #include "../video/types.h"
 #include "Logger.h"
 #include "irrlicht.h"
+#include "yaml-cpp/yaml.h"
 #include <cstdint>
 #include <string>
 
@@ -24,7 +25,7 @@ namespace leviathan {
             /*! \brief Konstruktor mit Konfigurationsdatei.
              *  \param filename: Konfigdateiname
              */
-            explicit Configuration(const irr::io::path& fileName);
+            explicit Configuration(const char* fileName);
 
             /*! \brief Destruktor.
              */
@@ -37,7 +38,7 @@ namespace leviathan {
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Konfigdateiname
              */
-            void readFromFile(const irr::io::path& fileName);
+            void readFromFile(const char* fileName);
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname
@@ -69,17 +70,7 @@ namespace leviathan {
              */
             const video::Dimension2D& getScreenSize() const;
 
-            /*! \brief Gibt anhand einer Sektion und eines Schlüssels einen Integer-Wert zurück.
-             *  \note Nur für Testzwecke gedacht, Benutzen auf eigene Gefahr.
-             *  \param section: Name der Sektion
-             *  \param key: Name des Schlüssels
-             *  \return Integer-Wert
-             */
-            int getInt(const irr::core::stringc& section, const irr::core::stringc& key);
-
         private:
-            irr::core::list<irr::core::stringc> content_ =
-                irr::core::list<irr::core::stringc>();  // FIXME: use std::list instead!
             irr::SIrrlichtCreationParameters params_ = irr::SIrrlichtCreationParameters();
             float farValue_ = 300.0f;  // Sichtweite der Kamera
             Logger::Level loggingLevel_ = Logger::Level::INFO;
@@ -92,9 +83,12 @@ namespace leviathan {
             MapWithDefault<std::string, Logger::Level> logLevelMap {{"INFO", Logger::Level::INFO},
                 {"ALL", Logger::Level::ALL}, {"DEBUG", Logger::Level::DEBUG}, {"DETAIL", Logger::Level::DETAIL}};
 
-            void generateContent(const irr::io::path& fileName);
-            const irr::core::stringc getItem(const irr::core::stringc& section, const irr::core::stringc& key,
-                const irr::core::stringc& defaultValue = "");
+            void setCameraValues(YAML::Node& content);
+            void setGeneralValues(YAML::Node& content);
+            void setVideoValues(YAML::Node& content);
+            void setCameraDefaults();
+            void setGeneralDefaults();
+            void setVideoDefaults();
         };
     }
 }

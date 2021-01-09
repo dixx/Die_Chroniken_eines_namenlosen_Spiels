@@ -14,11 +14,11 @@
 #include "core/Randomizer.h"
 #include "core/TimeControl.h"
 #include "gui/MenuControl.h"
+#include "gui/MousePointerControl.h"
 #include "input/Actions.h"
 #include "input/EventReceiver.h"
 #include "irrlicht.h"
 #include "video/Camera.h"
-#include "gui/MousePointerControl.h"
 #include "world/Ground.h"
 #include <memory>
 
@@ -43,7 +43,7 @@ namespace leviathan {
          *         der Engine.
          *  \param filename: Konfigdateiname
          */
-        explicit LeviathanDevice(const irr::io::path& fileName);
+        explicit LeviathanDevice(const char* fileName);
 
         /*! \brief Destruktor.
          */

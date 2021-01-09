@@ -12,7 +12,7 @@ cotire(neues_spiel)
 
 install(TARGETS neues_spiel DESTINATION .)
 install(FILES
-  "${RESOURCES_DIR}/config.ini"
+  "${RESOURCES_DIR}/config.yaml"
   "${RESOURCES_DIR}/action_mappings.yaml"
 DESTINATION .)
 install(FILES

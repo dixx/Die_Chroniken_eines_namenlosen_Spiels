@@ -12,7 +12,7 @@ using namespace fakeit;
 
 TEST_CASE("LeviathanDevice supporter", "[integration]") {
     const char* configFileName = "testconfigfile.ini";
-    TestHelper::writeFile(configFileName, "[video]\nmax_fps=100\ndriver=NULL\n");
+    TestHelper::writeFile(configFileName, "video:\n  max_fps: 100\n  driver: NULL\n");
     leviathan::LeviathanDevice subject(configFileName);
 
     SECTION("it provides instances of usefull tools") {
@@ -45,7 +45,7 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
 
 TEST_CASE("LeviathanDevice main loop", "[integration]") {
     const char* configFileName = "testconfigfile.ini";
-    TestHelper::writeFile(configFileName, "[video]\nmax_fps=100\ndriver=NULL\n");
+    TestHelper::writeFile(configFileName, "video:\n  max_fps: 100\n  driver: NULL\n");
     TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject(configFileName);
     Mock<irr::ITimer> timerMock;
     When(Method(timerMock, getTime)).AlwaysReturn(0);

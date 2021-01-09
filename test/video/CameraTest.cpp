@@ -14,7 +14,7 @@ TEST_CASE("Camera", "[integration]") {
 
     SECTION("is created with settings from configuration") {
         const char* configFileName = "testconfigfile.ini";
-        TestHelper::writeFile(configFileName, "[camera]\nfar_value=123.0\nscreen_x=4\nscreen_y=2\n");
+        TestHelper::writeFile(configFileName, "camera:\n  far_value: 123.0\nvideo:\n  screen_x: 4\n  screen_y: 2\n");
         leviathan::core::Configuration config(configFileName);
         leviathan::video::Camera subject(&sceneManagerSpy.get(), config);
 

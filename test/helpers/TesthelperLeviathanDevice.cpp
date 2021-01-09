@@ -1,8 +1,7 @@
 #include "TesthelperLeviathanDevice.h"
 
 namespace TesthelperLeviathanDevice {
-    LeviathanDeviceWithIrrlichtMock::LeviathanDeviceWithIrrlichtMock(const irr::io::path& fileName)
-    : LeviathanDevice(fileName) {
+    LeviathanDeviceWithIrrlichtMock::LeviathanDeviceWithIrrlichtMock(const char* fileName) : LeviathanDevice(fileName) {
         (void)fileName;
     }
 

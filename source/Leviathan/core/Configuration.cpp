@@ -1,25 +1,24 @@
 #include "Configuration.h"
-#include <fstream>
 
 namespace leviathan {
     namespace core {
-        Configuration::Configuration(const irr::io::path& fileName) {
+        Configuration::Configuration(const char* fileName) {
             params_.LoggingLevel = irr::ELL_WARNING;
             readFromFile(fileName);
         }
 
-        void Configuration::readFromFile(const irr::io::path& fileName) {
-            content_.clear();
-            generateContent(fileName);
-            params_.WindowSize.Width = irr::core::strtoul10(getItem("video", "screen_x", "800").c_str());
-            params_.WindowSize.Height = irr::core::strtoul10(getItem("video", "screen_y", "600").c_str());
-            params_.Bits = static_cast<uint8_t>(irr::core::strtoul10(getItem("video", "color_depth", "16").c_str()));
-            params_.Fullscreen = getItem("video", "fullscreen", "false").equals_ignore_case("true");
-            params_.DriverType = driverMap_[getItem("video", "driver", "OPENGL").c_str()];
-            farValue_ = irr::core::strtof10(getItem("camera", "far_value", "300.0").c_str());
-            loggingLevel_ = logLevelMap[getItem("general", "logging_level", "INFO").c_str()];
-            maxFPS_ = irr::core::strtoul10(getItem("video", "max_fps", "60").c_str());
-            screenSize_ = {params_.WindowSize.Width, params_.WindowSize.Height};
+        void Configuration::readFromFile(const char* fileName) {
+            YAML::Node content;
+            try {
+                content = YAML::LoadFile(fileName);
+            } catch (const YAML::BadFile& e) {
+            } catch (const YAML::ParserException& e) {
+            }
+            if (!content) content = YAML::Load("---");
+
+            setCameraValues(content);
+            setGeneralValues(content);
+            setVideoValues(content);
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const {
@@ -42,53 +41,53 @@ namespace leviathan {
             return screenSize_;
         }
 
-        int Configuration::getInt(const irr::core::stringc& section, const irr::core::stringc& key) {
-            return static_cast<int>(irr::core::strtol10(getItem(section, key).c_str()));
-        }
-
-        /* private */
-
-        void Configuration::generateContent(const irr::io::path& fileName) {
-            std::fstream filestream(fileName.c_str(), std::fstream::in);
-            if (filestream.fail()) {
-                filestream.close();
-                content_.push_back("");
+        void Configuration::setCameraValues(YAML::Node& content) {
+            if (!content["camera"]) {
+                setCameraDefaults();
                 return;
             }
-            filestream.seekg(0, filestream.end);
-            std::streampos size = filestream.tellg();
-            filestream.seekg(0, filestream.beg);
-            if (size <= 0) {
-                filestream.close();
-                content_.push_back("");
-                return;
-            }
-            irr::core::array<char> buffer(static_cast<uint32_t>(size) + 4);
-            filestream.read(buffer.pointer(), static_cast<std::streamsize>(size));
-            filestream.close();
-            irr::core::stringc rawContent = buffer.const_pointer();
-            rawContent.split(content_, "\n", 1, /* ignoreEmptyTokens = */ false);
+
+            farValue_ = content["camera"]["far_value"].as<float>(300.0f);
         }
 
-        const irr::core::stringc Configuration::getItem(
-            const irr::core::stringc& section, const irr::core::stringc& key, const irr::core::stringc& defaultValue) {
-            bool sectionFound = false;
-            irr::core::stringc result;
-            irr::core::stringc sectionIdent = "[";
-            sectionIdent.append(section).append("]");
-            for (auto& line : content_) {
-                if (!sectionFound) {
-                    if (line.find(sectionIdent.c_str()) == 0) sectionFound = true;
-                } else {
-                    if (line[0] == '[') break;
-                    if (line[0] == '#' || line[0] == ';') continue;
-                    if (line.find(key.c_str()) == -1) continue;
-                    uint32_t valueStart = static_cast<uint32_t>(line.findFirstChar("=") + 1);
-                    result = line.subString(valueStart, static_cast<int32_t>(line.size() - valueStart)).trim();
-                    break;
-                }
+        void Configuration::setGeneralValues(YAML::Node& content) {
+            if (!content["general"]) {
+                setGeneralDefaults();
+                return;
             }
-            return result.empty() ? defaultValue : result;
+
+            loggingLevel_ = logLevelMap[content["general"]["logging_level"].as<std::string>("INFO")];
+        }
+
+        void Configuration::setVideoValues(YAML::Node& content) {
+            if (!content["video"]) {
+                setVideoDefaults();
+            } else {
+                params_.WindowSize.Width = content["video"]["screen_x"].as<uint32_t>(800);
+                params_.WindowSize.Height = content["video"]["screen_y"].as<uint32_t>(600);
+                params_.Bits = content["video"]["color_depth"].as<uint8_t>(16) == 32 ? 32 : 16;
+                params_.Fullscreen = content["video"]["fullscreen"].as<bool>(false);
+                params_.DriverType = driverMap_[content["video"]["driver"].as<std::string>("OPENGL")];
+                maxFPS_ = content["video"]["max_fps"].as<uint32_t>(60);
+            }
+            screenSize_ = {params_.WindowSize.Width, params_.WindowSize.Height};
+        }
+
+        void Configuration::setCameraDefaults() {
+            farValue_ = 300.0f;
+        }
+
+        void Configuration::setGeneralDefaults() {
+            loggingLevel_ = logLevelMap["INFO"];
+        }
+
+        void Configuration::setVideoDefaults() {
+            params_.WindowSize.Width = 800;
+            params_.WindowSize.Height = 600;
+            params_.Bits = 16;
+            params_.Fullscreen = false;
+            params_.DriverType = driverMap_["OPENGL"];
+            maxFPS_ = 60;
         }
     }
 }

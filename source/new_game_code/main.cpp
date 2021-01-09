@@ -8,7 +8,7 @@
 
 int main() {
     try {
-        leviathan::LeviathanDevice gameEngine("./config.ini");
+        leviathan::LeviathanDevice gameEngine("./config.yaml");
         gameEngine.Actions().loadFromFile("./action_mappings.yaml");
 
         leviathan::core::GameStateManager& game = gameEngine.GameStateManager();

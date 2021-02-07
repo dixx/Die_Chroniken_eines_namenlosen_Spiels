@@ -9,9 +9,15 @@
 #include "../core/Logger.h"
 #include "ITexture.h"
 #include "IVideoDriver.h"
+#include <string>
+#include <unordered_map>
 
 namespace leviathan {
     namespace video {
+        struct Texture {
+            bool alreadyColorKeyed = false;
+            irr::video::ITexture* irrTexture = nullptr;
+        };
 
         /*  \class Textures
          *  \brief Einfaches laden von Texturen
@@ -35,9 +41,16 @@ namespace leviathan {
              */
             irr::video::ITexture* get(const char* fileName);
 
+            /*  \brief Lädt eine Textur und wandelt Magic Pink in Transparenz um, ansonsten ohne weitere Features.
+             *  \note Ist die Textur bereits geladen, wird sie nicht noch einmal geladen.
+             *  \param fileName: Name und Pfad der Textur-Datei
+             */
+            irr::video::ITexture* getWithColorKeyTransparency(const char* fileName);
+
         private:
             irr::video::IVideoDriver* videoDriver_ = nullptr;
             leviathan::core::Logger& logger_;
+            std::unordered_map<std::string, Texture> textures_ = std::unordered_map<std::string, Texture>();
         };
     }
 }

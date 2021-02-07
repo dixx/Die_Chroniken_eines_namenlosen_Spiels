@@ -11,6 +11,7 @@ namespace leviathan {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         initializeGraphicEngine();
         graphicEngine_->setEventReceiver(&eventReceiver_);
+        textures_ = std::make_unique<video::Textures>(graphicEngine_->getVideoDriver(), logger_);
         mousePointerControl_ = std::make_unique<gui::MousePointerControl>(eventReceiver_, graphicEngine_, logger_);
         menuControl_ = std::make_unique<gui::MenuControl>(
             graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);

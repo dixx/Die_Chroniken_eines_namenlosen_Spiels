@@ -117,10 +117,10 @@ namespace leviathan {
         core::Configuration configuration_;
         core::Logger logger_;
         irr::IrrlichtDevice* graphicEngine_ = nullptr;
-        core::TimeControl timeControl_ = core::TimeControl();
+        core::TimeControl timeControl_;
         core::GameStateManager gameStateManager_;
-        core::Randomizer randomizer_ = core::Randomizer();
-        input::EventReceiver eventReceiver_ = input::EventReceiver();
+        core::Randomizer randomizer_;
+        input::EventReceiver eventReceiver_;
         input::Actions actions_;
         std::unique_ptr<video::Textures> textures_ = nullptr;
         std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;

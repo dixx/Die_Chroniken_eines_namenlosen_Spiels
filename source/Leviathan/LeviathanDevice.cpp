@@ -6,8 +6,8 @@
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const char* fileName)
-    : configuration_(fileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), gameStateManager_(logger_),
-      actions_(eventReceiver_, logger_) {
+    : configuration_(fileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), timeControl_(),
+      gameStateManager_(logger_), randomizer_(), eventReceiver_(), actions_(eventReceiver_, logger_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
         initializeGraphicEngine();
         graphicEngine_->setEventReceiver(&eventReceiver_);

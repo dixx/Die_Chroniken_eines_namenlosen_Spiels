@@ -22,6 +22,7 @@ TEST_CASE("MousePointerControl", "[integration]") {
     Mock<irr::video::ITexture> textureMock;
     Mock<irr::video::IVideoDriver> videoDriverSpy(*(TestHelper::graphicEngine()->getVideoDriver()));
     When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
+    leviathan::video::Textures textures(TestHelper::graphicEngine()->getVideoDriver(), TestHelper::Logger());
     // FakeIt has a bug (https://github.com/eranpeer/FakeIt/issues/92) where reference arguments are tested way too
     // late, so we have to remember them at call time:
     irr::core::vector2di lastRememberedPosition;
@@ -50,7 +51,7 @@ TEST_CASE("MousePointerControl", "[integration]") {
     keyboardEvent.KeyInput.Key = irr::KEY_RETURN;
     keyboardEvent.KeyInput.PressedDown = true;
     leviathan::gui::MousePointerControl subject(
-        eventBrokerMock.get(), TestHelper::graphicEngine(), TestHelper::Logger());
+        eventBrokerMock.get(), TestHelper::graphicEngine(), TestHelper::Logger(), textures);
 
     SECTION("events") {
         SECTION("subscribes to an event producer for movement input events") {

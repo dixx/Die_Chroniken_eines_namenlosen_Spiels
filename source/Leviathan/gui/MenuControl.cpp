@@ -1,12 +1,11 @@
 #include "MenuControl.h"
-#include "../video/Constants.h"
 #include <cstdint>
 
 namespace leviathan {
     namespace gui {
-        MenuControl::MenuControl(
-            irr::gui::IGUIEnvironment* guiEnv, irr::video::IVideoDriver* videoDriver, input::IEventProducer& producer)
-        : _guiEnv(guiEnv), _videoDriver(videoDriver), _producer(producer) {
+        MenuControl::MenuControl(irr::gui::IGUIEnvironment* guiEnv, irr::video::IVideoDriver* videoDriver,
+            input::IEventProducer& producer, leviathan::video::Textures& textures)
+        : _guiEnv(guiEnv), _videoDriver(videoDriver), _producer(producer), textures_(textures) {
             _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_GUI_EVENT);
@@ -89,14 +88,11 @@ namespace leviathan {
         /* private */
 
         irr::video::ITexture* MenuControl::loadTexture(const std::string& filename, bool makeTransparent) {
-            // GenericHelperMethods& helper = GenericHelperMethods::getInstance();
-            // helper.validateFileExistence( "GFX/menues1.bmp" );
-            _videoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
-            irr::video::ITexture* texture = _videoDriver->getTexture(filename.c_str());
             if (makeTransparent) {
-                _videoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
+                return textures_.getWithColorKeyTransparency(filename.c_str());
             }
-            return texture;
+
+            return textures_.get(filename.c_str());
         }
     }
 }

@@ -8,6 +8,7 @@
 
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
+#include "../video/Textures.h"
 #include "Menu.h"
 #include "irrlicht.h"
 #include "types.h"
@@ -27,9 +28,10 @@ namespace leviathan {
              *  \param guiEnv: Zeiger auf die GUI-Umgebung der Graphic Engine
              *  \param videoDriver: Zeiger auf den Videotreiber der Graphic Engine
              *  \param producer: produziert (versendet) Events
+             *  \param textures: Instanz der Texturenverwaltung
              */
             MenuControl(irr::gui::IGUIEnvironment* guiEnv, irr::video::IVideoDriver* videoDriver,
-                input::IEventProducer& producer);
+                input::IEventProducer& producer, leviathan::video::Textures& textures);
 
             ~MenuControl();
 
@@ -75,6 +77,7 @@ namespace leviathan {
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;
             irr::video::IVideoDriver* _videoDriver = nullptr;
             input::IEventProducer& _producer;
+            leviathan::video::Textures& textures_;
             std::map<std::wstring, std::unique_ptr<Menu>> _menus = std::map<std::wstring, std::unique_ptr<Menu>>();
 
             irr::video::ITexture* loadTexture(const std::string& filename, bool makeTransparent);

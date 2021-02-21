@@ -12,9 +12,10 @@ namespace leviathan {
         initializeGraphicEngine();
         graphicEngine_->setEventReceiver(&eventReceiver_);
         textures_ = std::make_unique<video::Textures>(graphicEngine_->getVideoDriver(), logger_);
-        mousePointerControl_ = std::make_unique<gui::MousePointerControl>(eventReceiver_, graphicEngine_, logger_);
+        mousePointerControl_ = std::make_unique<gui::MousePointerControl>(
+            eventReceiver_, graphicEngine_, logger_, *textures_);
         menuControl_ = std::make_unique<gui::MenuControl>(
-            graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_);
+            graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_, *textures_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
         heroes_ = std::make_unique<characters::Heroes>(graphicEngine_->getSceneManager());
         ground_ = std::make_unique<world::Ground>(graphicEngine_->getSceneManager());

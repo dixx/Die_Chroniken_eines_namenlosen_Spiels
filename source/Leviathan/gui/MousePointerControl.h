@@ -8,6 +8,7 @@
 #include "../core/Logger.h"
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
+#include "../video/Textures.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <unordered_map>
@@ -24,9 +25,10 @@ namespace leviathan {
              *  \param producer: produziert (versendet) Events
              *  \param graphicDevice: initialisiertes Irrlicht Device
              *  \param logger: Instanz eines Loggers
+             *  \param textures: Instanz der Texturenverwaltung
              */
             MousePointerControl(leviathan::input::IEventProducer& producer, irr::IrrlichtDevice* graphicDevice,
-                leviathan::core::Logger& logger);
+                leviathan::core::Logger& logger, leviathan::video::Textures& textures);
 
             ~MousePointerControl() = default;
             MousePointerControl() = delete;
@@ -59,6 +61,7 @@ namespace leviathan {
 
         private:
             leviathan::core::Logger& logger_;
+            leviathan::video::Textures& textures_;
             uint32_t activeMousePointer_ = 0;
             const irr::video::SColor backgroundColor_ = irr::video::SColor(255, 255, 255, 255);
             irr::core::vector2di position_ = irr::core::vector2di(0, 0);

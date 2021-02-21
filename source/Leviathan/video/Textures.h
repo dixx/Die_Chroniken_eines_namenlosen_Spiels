@@ -14,11 +14,6 @@
 
 namespace leviathan {
     namespace video {
-        struct Texture {
-            bool alreadyColorKeyed = false;
-            irr::video::ITexture* irrTexture = nullptr;
-        };
-
         /*  \class Textures
          *  \brief Einfaches laden von Texturen
          */
@@ -48,6 +43,11 @@ namespace leviathan {
             irr::video::ITexture* getWithColorKeyTransparency(const char* fileName);
 
         private:
+            struct Texture {
+                bool alreadyColorKeyed = false;
+                irr::video::ITexture* irrTexture = nullptr;
+            };
+
             irr::video::IVideoDriver* videoDriver_ = nullptr;
             leviathan::core::Logger& logger_;
             std::unordered_map<std::string, Texture> textures_ = std::unordered_map<std::string, Texture>();

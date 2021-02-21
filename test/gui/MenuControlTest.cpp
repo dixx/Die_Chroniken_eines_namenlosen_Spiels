@@ -2,6 +2,7 @@
 #include "../../source/Leviathan/input/IEventProducer.h"
 #include "../helpers/IGUIImageMock.hpp"
 #include "../helpers/IImageMock.hpp"
+#include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
@@ -25,12 +26,13 @@ TEST_CASE("MenuControl", "[unit]") {
     Mock<irr::gui::IGUIEnvironment> guiEnvironmentMock;
     Fake(Method(guiEnvironmentMock, addEmptySpriteBank), Method(guiEnvironmentMock, getRootGUIElement));
     Mock<irr::video::IVideoDriver> videoDriverMock;
+    leviathan::video::Textures textures(&videoDriverMock.get(), TestHelper::Logger());
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Fake(Method(eventBrokerMock, subscribe), Method(eventBrokerMock, unsubscribe));
 
     SECTION("subscribes and unsubscribes to an action producer for certain input event types") {
         auto subject = new leviathan::gui::MenuControl(
-            &guiEnvironmentMock.get(), &videoDriverMock.get(), eventBrokerMock.get());
+            &guiEnvironmentMock.get(), &videoDriverMock.get(), eventBrokerMock.get(), textures);
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_GUI_EVENT)).Exactly(Once);
         Verify(Method(eventBrokerMock, subscribe).Using(_, irr::EET_MOUSE_INPUT_EVENT)).Exactly(Once);
@@ -60,7 +62,8 @@ TEST_CASE("MenuControl", "[unit]") {
         When(OverloadedMethod(videoDriverMock, createImage, createImageArgs)).AlwaysReturn(image);
         When(Method(guiEnvironmentMock, addModalScreen)).Return(&menu);
 
-        leviathan::gui::MenuControl subject(&guiEnvironmentMock.get(), &videoDriverMock.get(), eventBrokerMock.get());
+        leviathan::gui::MenuControl subject(
+            &guiEnvironmentMock.get(), &videoDriverMock.get(), eventBrokerMock.get(), textures);
 
         SECTION("#addMenu adds a modal screen as menu root") {
             irr::gui::IGUIElement anotherMenu(

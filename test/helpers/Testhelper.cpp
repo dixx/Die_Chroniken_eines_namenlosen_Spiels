@@ -1,5 +1,6 @@
 #include "TestHelper.h"
 #include <cstdlib>
+#include <stdio.h>
 #include <vector>
 
 TestHelper& TestHelper::instance() {
@@ -77,6 +78,10 @@ void TestHelper::writeFile(const char* fileName, const std::string& content) {
 bool TestHelper::existFile(const char* fileName) {
     std::ifstream infile(fileName);
     return infile.good();
+}
+
+void TestHelper::deleteFile(const char* fileName) {
+    remove(fileName);
 }
 
 TestHelper::TestHelper() {

@@ -48,6 +48,10 @@ public:
      */
     static void writeFile(const char* fileName, const std::string& content);
 
+    /*! \brief Delete a file.
+     */
+    static void deleteFile(const char* fileName);
+
 private:
     irr::IrrlichtDevice* mGraphicEngine = nullptr;
     uint32_t mUniqueId = 0;

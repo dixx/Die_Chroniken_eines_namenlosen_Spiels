@@ -8,7 +8,7 @@ which lua || { echo Install Lua via Homebrew ; exit 1; }
 
 IRRLICHT_DIR_NAME=irrlicht-1.8.1
 IRRLICHT_PACKAGE_NAME="$IRRLICHT_DIR_NAME".zip
-IRRLICHT_DOWNLOAD=http://downloads.sourceforge.net/irrlicht/$IRRLICHT_PACKAGE_NAME
+IRRLICHT_DOWNLOAD=http://downloads.srcforge.net/irrlicht/$IRRLICHT_PACKAGE_NAME
 IRRKLANG_DIR_NAME=irrKlang-1.5.0
 IRRKLANG_PACKAGE_NAME=irrKlang-32bit-1.5.0.zip
 IRRKLANG_DOWNLOAD=http://www.ambiera.at/downloads/$IRRKLANG_PACKAGE_NAME
@@ -25,7 +25,7 @@ pushd Debug
     test -d "$IRRLICHT_DIR_NAME" || unzip "$IRRLICHT_PACKAGE_NAME"
     test -d "$IRRKLANG_DIR_NAME" || unzip "$IRRKLANG_PACKAGE_NAME"
 
-    pushd $IRRLICHT_DIR_NAME/source/Irrlicht/MacOSX
+    pushd $IRRLICHT_DIR_NAME/src/Irrlicht/MacOSX
 
       IRRLICHT_BUILD_DIR=$PWD/BD
       mkdir -p "$IRRLICHT_BUILD_DIR"

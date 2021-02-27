@@ -1,5 +1,5 @@
-#include "../../source/Leviathan/core/TimeControl.h"
-#include "../../source/Leviathan/core/Timer.h"
+#include "../../src/Leviathan/core/TimeControl.h"
+#include "../../src/Leviathan/core/Timer.h"
 #include "catch.hpp"
 
 TEST_CASE("TimeControl: ticking", "[unit]") {

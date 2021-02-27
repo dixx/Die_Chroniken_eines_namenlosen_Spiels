@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/characters/Heroes.h"
+#include "../../src/Leviathan/characters/Heroes.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"

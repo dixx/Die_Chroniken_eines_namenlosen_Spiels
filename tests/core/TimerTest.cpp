@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/core/Timer.h"
+#include "../../src/Leviathan/core/Timer.h"
 #include "catch.hpp"
 #include "irrlicht.h"
 #include <cfloat>

@@ -1,5 +1,5 @@
-#include "../../source/Leviathan/video/Camera.h"
-#include "../../source/Leviathan/core/Configuration.h"
+#include "../../src/Leviathan/video/Camera.h"
+#include "../../src/Leviathan/core/Configuration.h"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"

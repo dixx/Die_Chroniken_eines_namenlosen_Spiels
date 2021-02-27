@@ -1,5 +1,5 @@
-#include "../../source/Leviathan/input/MouseEventActions.h"
-#include "../../source/Leviathan/input/Action.h"
+#include "../../src/Leviathan/input/MouseEventActions.h"
+#include "../../src/Leviathan/input/Action.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "irrlicht.h"

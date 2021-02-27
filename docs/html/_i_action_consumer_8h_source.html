@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Die Chroniken eines namenlosen Spiels: source/Leviathan/IActionConsumer.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="chroniken.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Die Chroniken eines namenlosen Spiels
+   &#160;<span id="projectnumber">0.4.0</span>
+   </div>
+   <div id="projectbrief">Versuch, ein Spiel zu entwickeln</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Suchen');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_610047a6ba2d1d532cde694e8d84935b.html">Leviathan</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">IActionConsumer.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_i_action_consumer_8h.html">gehe zur Dokumentation dieser Datei</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef LEVIATHAN_INPUT_IACTIONCONSUMER_H</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define LEVIATHAN_INPUT_IACTIONCONSUMER_H</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceleviathan.html">leviathan</a></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">namespace </span>input</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    {</div><div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="structleviathan_1_1input_1_1_i_action_consumer.html">   18</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structleviathan_1_1input_1_1_i_action_consumer.html">IActionConsumer</a></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        {</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="structleviathan_1_1input_1_1_i_action_consumer.html">IActionConsumer</a>() {};</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="structleviathan_1_1input_1_1_i_action_consumer.html#a2d61fb3262bc6b497931150272e5851a">onAction</a>(<span class="keyword">const</span> uint32_t <span class="keywordtype">id</span>, <span class="keyword">const</span> <span class="keywordtype">bool</span> isActive) = 0;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        };</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="structleviathan_1_1input_1_1_i_action_consumer_html_a2d61fb3262bc6b497931150272e5851a"><div class="ttname"><a href="structleviathan_1_1input_1_1_i_action_consumer.html#a2d61fb3262bc6b497931150272e5851a">leviathan::input::IActionConsumer::onAction</a></div><div class="ttdeci">virtual void onAction(const uint32_t id, const bool isActive)=0</div><div class="ttdoc">Reagiert auf Aktionen. </div></div>
+<div class="ttc" id="structleviathan_1_1input_1_1_i_action_consumer_html"><div class="ttname"><a href="structleviathan_1_1input_1_1_i_action_consumer.html">leviathan::input::IActionConsumer</a></div><div class="ttdoc">Interface für Konsumenten von Aktionen. </div><div class="ttdef"><b>Definition:</b> IActionConsumer.h:18</div></div>
+<div class="ttc" id="namespaceleviathan_html"><div class="ttname"><a href="namespaceleviathan.html">leviathan</a></div><div class="ttdoc">Alle bedienbaren Teile der Leviathan Game Engine findest du hier. </div><div class="ttdef"><b>Definition:</b> Actions.cpp:3</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Erzeugt am Don Sep 6 2018 20:56:28 für Die Chroniken eines namenlosen Spiels von &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

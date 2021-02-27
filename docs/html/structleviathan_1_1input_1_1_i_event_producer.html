@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Die Chroniken eines namenlosen Spiels: leviathan::input::IEventProducer Schnittstellenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="chroniken.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Die Chroniken eines namenlosen Spiels
+   &#160;<span id="projectnumber">0.4.0</span>
+   </div>
+   <div id="projectbrief">Versuch, ein Spiel zu entwickeln</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Suchen');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceleviathan.html">leviathan</a></li><li class="navelem"><a class="el" href="namespaceleviathan_1_1input.html">input</a></li><li class="navelem"><a class="el" href="structleviathan_1_1input_1_1_i_event_producer.html">IEventProducer</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="structleviathan_1_1input_1_1_i_event_producer-members.html">Aufstellung aller Elemente</a>  </div>
+  <div class="headertitle">
+<div class="title">leviathan::input::IEventProducer Schnittstellenreferenz<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Interface für Verteiler von <code>irr::SEvent</code>s.  
+ <a href="structleviathan_1_1input_1_1_i_event_producer.html#details">Mehr ...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i_event_producer_8h_source.html">IEventProducer.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr class="memitem:ae190c227c3d2d3c695eebb3cab9be715"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structleviathan_1_1input_1_1_i_event_producer.html#ae190c227c3d2d3c695eebb3cab9be715">subscribe</a> (const <a class="el" href="structleviathan_1_1input_1_1_i_event_consumer.html">IEventConsumer</a> &amp;consumer, irr::EEVENT_TYPE eventType)=0</td></tr>
+<tr class="memdesc:ae190c227c3d2d3c695eebb3cab9be715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Konsumenten von Events melden sich hier an.  <a href="#ae190c227c3d2d3c695eebb3cab9be715">Mehr ...</a><br /></td></tr>
+<tr class="separator:ae190c227c3d2d3c695eebb3cab9be715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Interface für Verteiler von <code>irr::SEvent</code>s. </p>
+</div><h2 class="groupheader">Dokumentation der Elementfunktionen</h2>
+<a id="ae190c227c3d2d3c695eebb3cab9be715"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae190c227c3d2d3c695eebb3cab9be715">&#9670;&nbsp;</a></span>subscribe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void leviathan::input::IEventProducer::subscribe </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structleviathan_1_1input_1_1_i_event_consumer.html">IEventConsumer</a> &amp;&#160;</td>
+          <td class="paramname"><em>consumer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">irr::EEVENT_TYPE&#160;</td>
+          <td class="paramname"><em>eventType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Konsumenten von Events melden sich hier an. </p>
+<dl class="params"><dt>Parameter</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">consumer</td><td>Konsument von Events </td></tr>
+    <tr><td class="paramname">eventType</td><td>Typ des Events (Mouse, Keyboard, ...) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>Die Dokumentation für diese Schnittstelle wurde erzeugt aufgrund der Datei:<ul>
+<li>source/Leviathan/<a class="el" href="_i_event_producer_8h_source.html">IEventProducer.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Erzeugt am Don Sep 6 2018 20:56:28 für Die Chroniken eines namenlosen Spiels von &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Die Chroniken eines namenlosen Spiels: source/Leviathan/GameStateManager.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="chroniken.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Die Chroniken eines namenlosen Spiels
+   &#160;<span id="projectnumber">0.4.0</span>
+   </div>
+   <div id="projectbrief">Versuch, ein Spiel zu entwickeln</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Suchen');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li><li class="navelem"><a class="el" href="dir_610047a6ba2d1d532cde694e8d84935b.html">Leviathan</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">GameStateManager.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_game_state_manager_8h.html">gehe zur Dokumentation dieser Datei</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef _LEVIATHAN_GAMESTATEMANAGER_HEADER</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define _LEVIATHAN_GAMESTATEMANAGER_HEADER</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_game_state_8h.html">GameState.h</a>&quot;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceleviathan.html">leviathan</a></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">namespace </span>core</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    {</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classleviathan_1_1core_1_1_game_state_manager.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html">GameStateManager</a></div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        {</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">public</span>:</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a9e47ff2627b6af344e2c0ebca98a536a">GameStateManager</a>();</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a6ddd3a77d09d47575f84f5ed7e60835e">~GameStateManager</a>() = <span class="keywordflow">default</span>;</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a9e47ff2627b6af344e2c0ebca98a536a">GameStateManager</a>(<span class="keyword">const</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html">GameStateManager</a>&amp;) = <span class="keyword">delete</span>;</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html">GameStateManager</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html">GameStateManager</a>&amp;) = <span class="keyword">delete</span>;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#afcd5cd6895a9a8feadd95cf72e4e9911">add</a>(<a class="code" href="classleviathan_1_1core_1_1_game_state.html">GameState</a>&amp; gameState, uint32_t <span class="keywordtype">id</span>);</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a883642f63fbb7a33f9b1d159be5a936c">transitTo</a>(uint32_t <span class="keywordtype">id</span>);</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a0c9a38cdc8b17d8af2093e44c6da2b96">update</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> elapsedSeconds);</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a1f9b74f5de629a789ffadf35b496e6aa">draw</a>();</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordtype">size_t</span> <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#a66c322df19a0159855090b227579f6ed">getGameStateCount</a>();</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            uint32_t <a class="code" href="classleviathan_1_1core_1_1_game_state_manager.html#aead433b29795441643b73460b53752ed">getActiveStateID</a>();</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">private</span>:</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            std::map&lt;uint32_t, GameState*&gt; states_;</div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            std::list&lt;uint32_t&gt; runningStateIDs_;</div><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        };</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_a9e47ff2627b6af344e2c0ebca98a536a"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#a9e47ff2627b6af344e2c0ebca98a536a">leviathan::core::GameStateManager::GameStateManager</a></div><div class="ttdeci">GameStateManager()</div><div class="ttdoc">Konstruktor. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:8</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html">leviathan::core::GameStateManager</a></div><div class="ttdoc">Verwaltung der verschiedenen Zustände des Spiels. </div><div class="ttdef"><b>Definition:</b> GameStateManager.h:22</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_a6ddd3a77d09d47575f84f5ed7e60835e"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#a6ddd3a77d09d47575f84f5ed7e60835e">leviathan::core::GameStateManager::~GameStateManager</a></div><div class="ttdeci">~GameStateManager()=default</div><div class="ttdoc">Destruktor. </div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_afcd5cd6895a9a8feadd95cf72e4e9911"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#afcd5cd6895a9a8feadd95cf72e4e9911">leviathan::core::GameStateManager::add</a></div><div class="ttdeci">void add(GameState &amp;gameState, uint32_t id)</div><div class="ttdoc">Fügt einen Spielzustand zur Verwaltung hinzu. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:14</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_a883642f63fbb7a33f9b1d159be5a936c"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#a883642f63fbb7a33f9b1d159be5a936c">leviathan::core::GameStateManager::transitTo</a></div><div class="ttdeci">void transitTo(uint32_t id)</div><div class="ttdoc">Wechselt zum Spielzustand welcher unter dieser ID abgelegt wurde. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:19</div></div>
+<div class="ttc" id="namespaceleviathan_html"><div class="ttname"><a href="namespaceleviathan.html">leviathan</a></div><div class="ttdoc">Alle bedienbaren Teile der Leviathan Game Engine findest du hier. </div><div class="ttdef"><b>Definition:</b> Actions.cpp:3</div></div>
+<div class="ttc" id="_game_state_8h_html"><div class="ttname"><a href="_game_state_8h.html">GameState.h</a></div><div class="ttdoc">Klasse stellt Interfacemethoden für Spielzustände bereit. </div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_a66c322df19a0159855090b227579f6ed"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#a66c322df19a0159855090b227579f6ed">leviathan::core::GameStateManager::getGameStateCount</a></div><div class="ttdeci">size_t getGameStateCount()</div><div class="ttdoc">Gibt die Anzahl der registrierten Spielzustände zurück. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:55</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_aead433b29795441643b73460b53752ed"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#aead433b29795441643b73460b53752ed">leviathan::core::GameStateManager::getActiveStateID</a></div><div class="ttdeci">uint32_t getActiveStateID()</div><div class="ttdoc">Gibt den Identifikator des aktiven Spielzustands zurück. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:60</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_a1f9b74f5de629a789ffadf35b496e6aa"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#a1f9b74f5de629a789ffadf35b496e6aa">leviathan::core::GameStateManager::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Zeichnet den momentan aktiven Zustand auf den Bildschirm. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:48</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_manager_html_a0c9a38cdc8b17d8af2093e44c6da2b96"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state_manager.html#a0c9a38cdc8b17d8af2093e44c6da2b96">leviathan::core::GameStateManager::update</a></div><div class="ttdeci">void update(const float elapsedSeconds)</div><div class="ttdoc">Aktualisiert den momentan aktiven Zustand. </div><div class="ttdef"><b>Definition:</b> GameStateManager.cpp:41</div></div>
+<div class="ttc" id="classleviathan_1_1core_1_1_game_state_html"><div class="ttname"><a href="classleviathan_1_1core_1_1_game_state.html">leviathan::core::GameState</a></div><div class="ttdoc">Interface für Spielzustände. </div><div class="ttdef"><b>Definition:</b> GameState.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Erzeugt am Don Sep 6 2018 20:56:28 für Die Chroniken eines namenlosen Spiels von &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

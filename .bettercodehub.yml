@@ -1,7 +1,15 @@
 component_depth: 1
 default_excludes: true
 languages:
-- cpp
+- name: cpp
+  production:
+    exclude:
+      - .*/tests/.*\.hpp
+      - .*/tests/.*\.cpp
+  test:
+    include:
+      - .*/tests/.*\.hpp
+      - .*/tests/.*\.cpp
 - script
 exclude:
 - /tests/.*

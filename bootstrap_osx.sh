@@ -16,8 +16,8 @@ IRRKLANG_DOWNLOAD=http://www.ambiera.at/downloads/$IRRKLANG_PACKAGE_NAME
 pushd Debug
 
   # Download and build dependencies:
-  mkdir -p dependencies
-  pushd dependencies
+  mkdir -p external
+  pushd external
 
     test -f "$IRRLICHT_PACKAGE_NAME" || curl -LO "$IRRLICHT_DOWNLOAD"
     test -f "$IRRKLANG_PACKAGE_NAME" || curl -LO "$IRRKLANG_DOWNLOAD"

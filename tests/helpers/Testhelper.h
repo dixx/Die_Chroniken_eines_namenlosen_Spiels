@@ -1,7 +1,7 @@
 #ifndef HELPERS_TESTHELPER_H
 #define HELPERS_TESTHELPER_H
 
-#include "../../source/Leviathan/core/Logger.h"
+#include "../../src/Leviathan/core/Logger.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <fstream>

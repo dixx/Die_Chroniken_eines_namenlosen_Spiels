@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/core/Randomizer.h"
+#include "../../src/Leviathan/core/Randomizer.h"
 #include "catch.hpp"
 #include <chrono>
 

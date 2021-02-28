@@ -1,5 +1,5 @@
-#include "../../source/Leviathan/gui/MenuControl.h"
-#include "../../source/Leviathan/input/IEventProducer.h"
+#include "../../src/Leviathan/gui/MenuControl.h"
+#include "../../src/Leviathan/input/IEventProducer.h"
 #include "../helpers/IGUIImageMock.hpp"
 #include "../helpers/IImageMock.hpp"
 #include "../helpers/TestHelper.h"

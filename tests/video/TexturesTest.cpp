@@ -1,5 +1,5 @@
-#include "../../source/Leviathan/video/Textures.h"
-#include "../../source/Leviathan/video/Constants.h"
+#include "../../src/Leviathan/video/Textures.h"
+#include "../../src/Leviathan/video/Constants.h"
 #include "../helpers/TestHelper.h"
 #include "IImage.h"
 #include "ITexture.h"

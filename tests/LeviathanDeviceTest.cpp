@@ -1,4 +1,4 @@
-#include "../source/Leviathan/LeviathanDevice.h"
+#include "../src/Leviathan/LeviathanDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "helpers/TestHelper.h"

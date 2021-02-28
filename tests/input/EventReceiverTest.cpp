@@ -1,5 +1,5 @@
-#include "../../source/Leviathan/input/EventReceiver.h"
-#include "../../source/Leviathan/input/IEventConsumer.h"
+#include "../../src/Leviathan/input/EventReceiver.h"
+#include "../../src/Leviathan/input/IEventConsumer.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"

@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/world/Ground.h"
+#include "../../src/Leviathan/world/Ground.h"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"

@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/characters/Hero.h"
+#include "../../src/Leviathan/characters/Hero.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"

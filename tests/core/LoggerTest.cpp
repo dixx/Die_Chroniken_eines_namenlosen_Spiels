@@ -1,4 +1,4 @@
-#include "../../source/Leviathan/core/Logger.h"
+#include "../../src/Leviathan/core/Logger.h"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include <cstdint>

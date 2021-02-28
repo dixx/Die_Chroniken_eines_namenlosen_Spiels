@@ -25,7 +25,7 @@ pushd Debug
     test -d "$IRRLICHT_DIR_NAME" || unzip "$IRRLICHT_PACKAGE_NAME"
     test -d "$IRRKLANG_DIR_NAME" || unzip "$IRRKLANG_PACKAGE_NAME"
 
-    pushd $IRRLICHT_DIR_NAME/source/Irrlicht/MacOSX
+    pushd $IRRLICHT_DIR_NAME/src/Irrlicht/MacOSX
 
       IRRLICHT_BUILD_DIR=$PWD/BD
       mkdir -p "$IRRLICHT_BUILD_DIR"

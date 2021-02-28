@@ -11,5 +11,3 @@ languages:
       - .*/tests/.*\.hpp
       - .*/tests/.*\.cpp
 - script
-exclude:
-- /tests/.*

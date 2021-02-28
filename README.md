@@ -9,7 +9,7 @@ Wir wollen all die falschen Entscheidungen selber treffen, all den schlechten Co
 #### Installation
 Der Einfachheit halber benutzen wir Makefiles, und für deren Erstellung CMake.
 
-[**Irrlicht**](https://sourceforge.net/projects/irrlicht/files/), [**IrrKlang**](http://www.ambiera.com/irrklang/downloads.html) und [**Lua**](https://sourceforge.net/projects/luabinaries/files/)  in den entsprechenden Versionen **und passend zum Betriebssystem (32Bit/64Bit)** holen (siehe `CMakeLists.txt`) und nach `./dependencies` entpacken. Dann einen Ordner `./_build` anlegen, in diesen wechseln, dort eine Konsole öffnen...
+[**Irrlicht**](https://sourceforge.net/projects/irrlicht/files/), [**IrrKlang**](http://www.ambiera.com/irrklang/downloads.html) und [**Lua**](https://sourceforge.net/projects/luabinaries/files/) in den entsprechenden Versionen **und passend zum Betriebssystem (32Bit/64Bit)** holen (siehe `CMakeLists.txt`) und nach `./external` entpacken. Dann einen Ordner `./_build` anlegen, in diesen wechseln, dort eine Konsole öffnen...
 
 ###### Windows:
 ...und `cmake -G "MinGW Makefiles" ..` eingeben. Das erstellt ein Makefile für genau dein System. Damit kannst du dann machen was du willst, z.B. ein Eclipse-Projekt erstellen oder einfach `make` ausführen.

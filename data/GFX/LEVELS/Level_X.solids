@@ -1,0 +1,111 @@
+################################################################################
+#                                                                              #
+#  Dokumentation zu dieser Datei: <Installationspfad>/docs/OBJEKTE.DOC         #
+#                                                                              #
+################################################################################
+
+[START_OBJECT]
+  TYP           = "Deko"
+  NAME          = "baum 1"
+  MESH_DATEI    = "GFX/OBJECTS/3ds__tree6.3ds"
+  POSITION      = "60.0x10.0"
+  SKALIERUNG    = "0.07x0.07x0.07"
+  TEXTUR        = "GFX/OBJECTS/tree6.tga"
+  TRANSPARENZ   = "ja"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Deko"
+  NAME          = "zaunfeld01_1"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01.3ds"
+  POSITION      = "333.0x152.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  TEXTUR        = "GFX/zaunfeld01.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Hindernis"
+  NAME          = "zaunfeld01_2"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01.3ds"
+  POSITION      = "334.96x152.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  TEXTUR        = "GFX/zaunfeld01.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "zaunfeld01_3"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01.3ds"
+  POSITION      = "336.92x152.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  TEXTUR        = "GFX/zaunfeld01.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "zaunfeld01_4"
+  MESH_DATEI    = "GFX/OBJECTS/zaunfeld01.3ds"
+  POSITION      = "338.88x152.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  TEXTUR        = "GFX/zaunfeld01.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Hindernis"
+  NAME          = "zaunfeld02"
+  MESH_DATEI    = "GFX/OBJECTS/Weidenzaun.3ds"
+  POSITION      = "333.0x154.0"
+  OFFSET        = "0.0x0.2x0.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  TEXTUR        = "GFX/Zaun1.bmp"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "zaunfeld03"
+  MESH_DATEI    = "GFX/OBJECTS/Weidenzaun.3ds"
+  POSITION      = "335.0x154.0"
+  OFFSET        = "0.0x0.2x0.0"
+  SKALIERUNG    = "0.5x0.5x0.5"
+  TEXTUR        = "GFX/Zaun1.bmp"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "Deko"
+  NAME          = "fliegenpilz"
+  MESH_DATEI    = "GFX/OBJECTS/Fliegenpilz.3ds"
+  POSITION      = "345.0x164.0"
+  SKALIERUNG    = "0.1x0.1x0.1"
+  TEXTUR        = "GFX/Fliegenpilz_Color.png"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "bank"
+  MESH_DATEI    = "GFX/OBJECTS/Bank2.3ds"
+  POSITION      = "30.0x30.0"
+#  ROTATION      = "180.0x0.0x0.0"
+  OFFSET        = "0.0x-0.002x0.0"
+  SKALIERUNG    = "2.0x1.7x1.0"
+  TEXTUR        = "GFX/WoodRough0106_2_thumbhuge.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "bank"
+  MESH_DATEI    = "GFX/OBJECTS/Bank2.3ds"
+  POSITION      = "30.0x50.0"
+#  ROTATION      = "180.0x0.0x0.0"
+  OFFSET        = "0.0x-0.002x0.0"
+  SKALIERUNG    = "4.0x1.7x8.0"
+  TEXTUR        = "GFX/WoodRough0106_2_thumbhuge.jpg"
+[ENDE_OBJECT]
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "Haus_Modern"
+  MESH_DATEI    = "GFX/OBJECTS/Haus_Modern.3ds"
+  POSITION      = "395.0x34.0"
+  SKALIERUNG    = "1.5x1.5x1.5"
+  TEXTUR        = "GFX/Haus.png"
+[ENDE_OBJECT]
+
+[START_OBJECT]
+  TYP           = "interaktiv"
+  NAME          = "EinfachesHaus"
+  MESH_DATEI    = "GFX/OBJECTS/EinfachesHaus.3ds"
+  POSITION      = "395.0x84.0"
+  OFFSET        = "0.0x-0.2x0.0"
+  SKALIERUNG    = "1.5x1.5x1.5"
+  TEXTUR        = "GFX/Einfaches Haus Tex1.png"
+[ENDE_OBJECT]

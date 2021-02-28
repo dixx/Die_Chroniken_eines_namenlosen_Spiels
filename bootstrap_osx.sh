@@ -16,8 +16,8 @@ IRRKLANG_DOWNLOAD=http://www.ambiera.at/downloads/$IRRKLANG_PACKAGE_NAME
 pushd Debug
 
   # Download and build dependencies:
-  mkdir -p dependencies
-  pushd dependencies
+  mkdir -p external
+  pushd external
 
     test -f "$IRRLICHT_PACKAGE_NAME" || curl -LO "$IRRLICHT_DOWNLOAD"
     test -f "$IRRKLANG_PACKAGE_NAME" || curl -LO "$IRRKLANG_DOWNLOAD"
@@ -25,7 +25,7 @@ pushd Debug
     test -d "$IRRLICHT_DIR_NAME" || unzip "$IRRLICHT_PACKAGE_NAME"
     test -d "$IRRKLANG_DIR_NAME" || unzip "$IRRKLANG_PACKAGE_NAME"
 
-    pushd $IRRLICHT_DIR_NAME/source/Irrlicht/MacOSX
+    pushd $IRRLICHT_DIR_NAME/src/Irrlicht/MacOSX
 
       IRRLICHT_BUILD_DIR=$PWD/BD
       mkdir -p "$IRRLICHT_BUILD_DIR"

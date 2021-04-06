@@ -11,6 +11,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake" "${PROJ
 set(3RDPARTY_DIR "${PROJECT_SOURCE_DIR}/external")
 set(RESOURCES_DIR "${PROJECT_SOURCE_DIR}/data")
 
+set(PUBLIC_INTERFACES "${PROJECT_SOURCE_DIR}/include/Leviathan")
+set(PUBLIC_HEADER_FILES
+  ${PUBLIC_INTERFACES}/video/types.h
+  ${PUBLIC_INTERFACES}/world/INode3D.h
+)
+
 include(compilerFlags)
 include(cotire)
 

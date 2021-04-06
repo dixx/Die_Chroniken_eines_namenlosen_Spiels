@@ -29,9 +29,9 @@ namespace leviathan {
 
         void Ground::transformMesh(irr::scene::IMesh* mesh, const GroundTileConfiguration& tileConfig) {
             irr::core::matrix4 matrix = irr::core::matrix4();
-            matrix.setTranslation(tileConfig.position.toVector());
-            matrix.setRotationDegrees(tileConfig.rotation.toVector());
-            matrix.setScale(tileConfig.scale.toVector());
+            matrix.setTranslation(tileConfig.position.toIrrlichtVector());
+            matrix.setRotationDegrees(tileConfig.rotation.toIrrlichtVector());
+            matrix.setScale(tileConfig.scale.toIrrlichtVector());
             sceneManager_->getMeshManipulator()->transform(mesh, matrix);
             sceneManager_->getMeshManipulator()->recalculateNormals(mesh, true);
         }

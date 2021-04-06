@@ -6,8 +6,9 @@
 #ifndef LEVIATHAN_VIDEO_TYPES_H
 #define LEVIATHAN_VIDEO_TYPES_H
 
-#include "irrlicht.h"
 #include <cstdint>
+#include <irrlicht.h>
+#include <video/Vector3D.h>
 
 namespace leviathan {
     namespace video {
@@ -26,29 +27,25 @@ namespace leviathan {
             int32_t y = 0;  //!< Y-Koordinate in Pixeln
         };
 
-        /*! \brief Hilfsobjekt für generische 3D-Vektoren.
+        /*! \brief Hilfsobjekt für generische 3D-Vektoren, kann sich in Irrlicht-Vektor konvertieren.
          */
-        struct Vector3D {
-            float x = 0;
-            float y = 0;
-            float z = 0;
-
-            irr::core::vector3df toVector() const {
+        struct Vector3DCompatible : Vector3D {
+            irr::core::vector3df toIrrlichtVector() const {
                 return irr::core::vector3df(x, y, z);
             }
         };
 
         /*! \brief Alias für Skalierung der Ausdehnungen in Länge, Breite und Tiefe.
          */
-        using Scale3D = Vector3D;
+        using Scale3DCompatible = Vector3DCompatible;
 
         /*! \brief Alias für eine 3D-Position.
          */
-        using Position3D = Vector3D;
+        using Position3DCompatible = Vector3DCompatible;
 
         /*! \brief Alias für Rotation in einem kartesischen 3D-Koordinatensystem, in Grad.
          */
-        using Rotation3D = Vector3D;
+        using Rotation3DCompatible = Vector3DCompatible;
     }
 }
 #endif

@@ -15,9 +15,9 @@ namespace leviathan {
          */
         struct GroundTileConfiguration {
             const char* fileName;  //!< Pfad zur Mesh-Datei
-            leviathan::video::Position3D position;  //!< Position des Kartenteils
-            leviathan::video::Rotation3D rotation;  //!< Rotation des Kartenteils
-            leviathan::video::Scale3D scale;  //!< Skalierung des Kartenteils
+            leviathan::video::Position3DCompatible position;  //!< Position des Kartenteils
+            leviathan::video::Rotation3DCompatible rotation;  //!< Rotation des Kartenteils
+            leviathan::video::Scale3DCompatible scale;  //!< Skalierung des Kartenteils
         };
     }
 }

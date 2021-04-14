@@ -22,6 +22,7 @@ add_executable(unit_tests
   video/CameraTest.cpp
   video/TexturesTest.cpp
   world/GroundTest.cpp
+  world/NodeManagerTest.cpp
   LeviathanDeviceTest.cpp
   unit_tests.cpp
 )

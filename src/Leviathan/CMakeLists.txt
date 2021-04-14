@@ -27,6 +27,8 @@ target_sources(${PROJECT_NAME}
     video/MeshHelper.cpp
     video/Textures.cpp
     world/Ground.cpp
+    world/Node3D.cpp
+    world/NodeManager.cpp
     LeviathanDevice.cpp
     ${PUBLIC_HEADER_FILES}
 )

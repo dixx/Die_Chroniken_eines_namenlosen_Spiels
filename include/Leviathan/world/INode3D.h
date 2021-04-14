@@ -3,13 +3,13 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_PUBLIC_INTERFACES_INPUT_INODE3D_H
-#define LEVIATHAN_PUBLIC_INTERFACES_INPUT_INODE3D_H
+#ifndef LEVIATHAN_PUBLIC_INTERFACES_WORLD_NODE3D_H
+#define LEVIATHAN_PUBLIC_INTERFACES_WORLD_NODE3D_H
 
 #include "../video/Vector3D.h"
 
 namespace leviathan {
-    namespace physics {
+    namespace world {
 
         /*! \interface INode3D
          *  \brief Interface für ein 3D-Objekt.

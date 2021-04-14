@@ -19,6 +19,14 @@ namespace leviathan {
         /*! \brief Alias für eine 3D-Position.
          */
         using Position3D = Vector3D;
+
+        /*! \brief Alias für Rotationsinformationen in 3 Achsen, Angaben in °.
+         */
+        using Rotation3D = Vector3D;
+
+        /*! \brief Alias für Skalierung von 3 Dimensionen, Angaben als Multiplikatoren.
+         */
+        using Scale3D = Vector3D;
     }
 }
 #endif

@@ -21,6 +21,7 @@ add_executable(unit_tests
   input/MouseEventActionsTest.cpp
   video/CameraTest.cpp
   video/TexturesTest.cpp
+  video/Vector3DCompatibleTest.cpp
   world/GroundTest.cpp
   world/NodeManagerTest.cpp
   LeviathanDeviceTest.cpp

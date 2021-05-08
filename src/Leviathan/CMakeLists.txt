@@ -26,6 +26,7 @@ target_sources(${PROJECT_NAME}
     video/Camera.cpp
     video/MeshHelper.cpp
     video/Textures.cpp
+    video/Vector3DCompatible.cpp
     world/Ground.cpp
     world/Node3D.cpp
     world/NodeManager.cpp

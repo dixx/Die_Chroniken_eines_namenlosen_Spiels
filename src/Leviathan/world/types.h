@@ -6,7 +6,7 @@
 #ifndef LEVIATHAN_WORLD_TYPES_H
 #define LEVIATHAN_WORLD_TYPES_H
 
-#include "../video/types.h"
+#include "../video/Vector3DCompatible.h"
 
 namespace leviathan {
     namespace world {

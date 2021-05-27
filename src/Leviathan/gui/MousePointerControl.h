@@ -8,6 +8,7 @@
 #include "../core/Logger.h"
 #include "../input/IEventConsumer.h"
 #include "../input/IEventProducer.h"
+#include "../video/GraphicEngine.h"
 #include "../video/Textures.h"
 #include "irrlicht.h"
 #include <cstdint>
@@ -27,10 +28,11 @@ namespace leviathan {
              *  \param logger: Instanz eines Loggers
              *  \param textures: Instanz der Texturenverwaltung
              */
-            MousePointerControl(leviathan::input::IEventProducer& producer, irr::IrrlichtDevice* graphicDevice,
+            MousePointerControl(leviathan::input::IEventProducer& producer, video::GraphicEngine& graphicDevice,
                 leviathan::core::Logger& logger, leviathan::video::Textures& textures);
 
-            ~MousePointerControl() = default;
+            ~MousePointerControl() {};
+
             MousePointerControl() = delete;
             MousePointerControl(const MousePointerControl&) = delete;
             MousePointerControl& operator=(const MousePointerControl&) = delete;
@@ -65,7 +67,7 @@ namespace leviathan {
             uint32_t activeMousePointer_ = 0;
             const irr::video::SColor backgroundColor_ = irr::video::SColor(255, 255, 255, 255);
             irr::core::vector2di position_ = irr::core::vector2di(0, 0);
-            irr::IrrlichtDevice* graphicDevice_ = nullptr;
+            video::GraphicEngine graphicDevice_;
             std::unordered_map<uint32_t, irr::video::ITexture*> baseImage_ =
                 std::unordered_map<uint32_t, irr::video::ITexture*>({{0, nullptr}});
             std::unordered_map<uint32_t, irr::core::recti> imageArea_ = std::unordered_map<uint32_t, irr::core::recti>(

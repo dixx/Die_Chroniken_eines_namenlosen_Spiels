@@ -1,6 +1,8 @@
 #include "../../src/Leviathan/gui/MousePointerControl.h"
+#include "../../src/Leviathan/core/Configuration.h"
 #include "../../src/Leviathan/input/IEventProducer.h"
 #include "../../src/Leviathan/video/Constants.h"
+#include "../../src/Leviathan/video/GraphicEngine.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/FakeitPatches.hpp"
 #include "../helpers/TestHelper.h"
@@ -16,18 +18,18 @@ using namespace fakeit;
         irr::video::SColor, bool)
 #define makeColorKeyTextureArgs void(irr::video::ITexture*, irr::video::SColor, bool)
 
-TEST_CASE("MousePointerControl", "[integration]") {
+TEST_CASE("MousePointerControl", "[unit]") {
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Fake(Method(eventBrokerMock, subscribe));
     Mock<irr::video::ITexture> textureMock;
-    Mock<irr::video::IVideoDriver> videoDriverSpy(*(TestHelper::graphicEngine()->getVideoDriver()));
-    When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
-    leviathan::video::Textures textures(TestHelper::graphicEngine()->getVideoDriver(), TestHelper::Logger());
+    Mock<irr::video::IVideoDriver> videoDriverMock;
+    When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
+    leviathan::video::Textures textures(&videoDriverMock.get(), TestHelper::Logger());
     // FakeIt has a bug (https://github.com/eranpeer/FakeIt/issues/92) where reference arguments are tested way too
     // late, so we have to remember them at call time:
     irr::core::vector2di lastRememberedPosition;
     irr::core::recti lastRememberedImageArea;
-    When(OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs))
+    When(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs))
         .AlwaysDo([&](const irr::video::ITexture* a, const irr::core::vector2di& position,
                       const irr::core::recti& imageArea, const irr::core::recti* d, irr::video::SColor e, bool f) {
             (void)a;
@@ -37,7 +39,18 @@ TEST_CASE("MousePointerControl", "[integration]") {
             lastRememberedPosition = position;
             lastRememberedImageArea = imageArea;
         });
-    Fake(ConstOverloadedMethod(videoDriverSpy, makeColorKeyTexture, makeColorKeyTextureArgs));
+    Fake(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs));
+    Fake(Method(videoDriverMock, setTextureCreationFlag));
+    Mock<irr::IrrlichtDevice> graphicEngineMock;
+    When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&videoDriverMock.get());
+    Mock<irr::gui::ICursorControl> cursorControlMock;
+    Fake(Method(cursorControlMock, setVisible));
+    When(Method(graphicEngineMock, getCursorControl)).AlwaysReturn(&cursorControlMock.get());
+    Fake(Method(graphicEngineMock, setEventReceiver), Method(graphicEngineMock, closeDevice));
+    Mock<irr::IEventReceiver> eventReceiverMock;
+    leviathan::core::Configuration config("idontcare");
+    leviathan::video::GraphicEngine::overrideGraphicEngine(&graphicEngineMock.get());
+    leviathan::video::GraphicEngine graphicEngine(eventReceiverMock.get(), TestHelper::Logger(), config);
     irr::SEvent mouseMovementEvent, mouseButtonEvent, keyboardEvent;
     mouseButtonEvent.EventType = irr::EET_MOUSE_INPUT_EVENT;
     mouseButtonEvent.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;
@@ -50,8 +63,8 @@ TEST_CASE("MousePointerControl", "[integration]") {
     keyboardEvent.EventType = irr::EET_KEY_INPUT_EVENT;
     keyboardEvent.KeyInput.Key = irr::KEY_RETURN;
     keyboardEvent.KeyInput.PressedDown = true;
-    leviathan::gui::MousePointerControl subject(
-        eventBrokerMock.get(), TestHelper::graphicEngine(), TestHelper::Logger(), textures);
+
+    leviathan::gui::MousePointerControl subject(eventBrokerMock.get(), graphicEngine, TestHelper::Logger(), textures);
 
     SECTION("events") {
         SECTION("subscribes to an event producer for movement input events") {
@@ -67,21 +80,21 @@ TEST_CASE("MousePointerControl", "[integration]") {
         }
 
         SECTION("gets updated when the mouse is moved") {
-            videoDriverSpy.ClearInvocationHistory();
+            videoDriverMock.ClearInvocationHistory();
 
             subject.createMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(0, 0));
             subject.setActiveMousPointer(1);
             subject.draw();
-            Verify(
-                OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs).Using(&textureMock.get(), _, _, _, _, _))
+            Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
+                       .Using(&textureMock.get(), _, _, _, _, _))
                 .Exactly(Once);
             REQUIRE(lastRememberedPosition == irr::core::vector2di(0, 0));
 
-            videoDriverSpy.ClearInvocationHistory();
+            videoDriverMock.ClearInvocationHistory();
             subject.onEvent(mouseMovementEvent);
             subject.draw();
-            Verify(
-                OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs).Using(&textureMock.get(), _, _, _, _, _))
+            Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
+                       .Using(&textureMock.get(), _, _, _, _, _))
                 .Exactly(Once);
             REQUIRE(lastRememberedPosition == irr::core::vector2di(123, 234));
         }
@@ -92,18 +105,18 @@ TEST_CASE("MousePointerControl", "[integration]") {
             subject.createMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
 
             SECTION("with color key transparency") {
-                Verify(ConstOverloadedMethod(videoDriverSpy, makeColorKeyTexture, makeColorKeyTextureArgs)
+                Verify(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs)
                            .Using(&textureMock.get(), leviathan::video::COL_MAGICPINK, false))
                     .Once();
             }
 
             SECTION("but will not overwrite an existing mouse pointer") {
-                videoDriverSpy.ClearInvocationHistory();
+                videoDriverMock.ClearInvocationHistory();
                 subject.createMousePointer(
                     1, "test2.png", irr::core::recti(40, 40, 80, 80), irr::core::vector2di(10, 10));
                 subject.setActiveMousPointer(1);
                 subject.draw();
-                Verify(OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs)
+                Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
                            .Using(&textureMock.get(), _, _, _, _, _))
                     .Exactly(Once);
                 REQUIRE(lastRememberedPosition == irr::core::vector2di(-20, -20));
@@ -111,13 +124,13 @@ TEST_CASE("MousePointerControl", "[integration]") {
             }
 
             SECTION("and creates no mouse arrow on error") {
-                videoDriverSpy.ClearInvocationHistory();
-                When(OverloadedMethod(videoDriverSpy, getTexture, getTextureArgs)).Return(nullptr);
+                videoDriverMock.ClearInvocationHistory();
+                When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).Return(nullptr);
                 subject.createMousePointer(
                     2, "unknown_image.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
                 subject.setActiveMousPointer(2);
                 subject.draw();
-                VerifyNoOtherInvocations(OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs));
+                VerifyNoOtherInvocations(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs));
             }
         }
     }
@@ -125,12 +138,12 @@ TEST_CASE("MousePointerControl", "[integration]") {
     SECTION("display") {
         subject.createMousePointer(1, "test.png", irr::core::recti(40, 40, 80, 80), irr::core::vector2di(20, 20));
         subject.createMousePointer(2, "test.png", irr::core::recti(130, 130, 140, 140), irr::core::vector2di(2, 4));
-        videoDriverSpy.ClearInvocationHistory();
+        videoDriverMock.ClearInvocationHistory();
 
         SECTION("draws the current mouse pointer") {
             subject.setActiveMousPointer(1);
             subject.draw();
-            Verify(OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs)
+            Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
                        .Using(&textureMock.get(), _, _, nullptr, irr::video::SColor(255, 255, 255, 255), true))
                 .Exactly(Once);
             REQUIRE(lastRememberedPosition == irr::core::vector2di(-20, -20));
@@ -140,8 +153,8 @@ TEST_CASE("MousePointerControl", "[integration]") {
         SECTION("can switch between mouse pointers") {
             subject.setActiveMousPointer(2);
             subject.draw();
-            Verify(
-                OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs).Using(&textureMock.get(), _, _, _, _, _))
+            Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
+                       .Using(&textureMock.get(), _, _, _, _, _))
                 .Exactly(Once);
             REQUIRE(lastRememberedPosition == irr::core::vector2di(-2, -4));
             REQUIRE(lastRememberedImageArea == irr::core::recti(130, 130, 140, 140));
@@ -150,7 +163,7 @@ TEST_CASE("MousePointerControl", "[integration]") {
         SECTION("defaults to the system mouse arrow on unknown mouse pointer id") {
             subject.setActiveMousPointer(42);
             subject.draw();
-            VerifyNoOtherInvocations(OverloadedMethod(videoDriverSpy, draw2DImage, draw2DImageArgs));
+            VerifyNoOtherInvocations(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs));
         }
     }
 }

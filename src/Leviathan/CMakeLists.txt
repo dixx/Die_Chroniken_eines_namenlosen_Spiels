@@ -24,6 +24,7 @@ target_sources(${PROJECT_NAME}
     input/KeyboardEventActions.cpp
     input/MouseEventActions.cpp
     video/Camera.cpp
+    video/GraphicEngine.cpp
     video/MeshHelper.cpp
     video/Textures.cpp
     video/Vector3DCompatible.cpp

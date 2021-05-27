@@ -13,8 +13,9 @@ TEST_CASE("Camera", "[integration]") {
     When(Method(sceneManagerSpy, addCameraSceneNode)).AlwaysReturn(cameraSample);
 
     SECTION("is created with settings from configuration") {
-        const char* configFileName = "testconfigfile.ini";
-        TestHelper::writeFile(configFileName, "camera:\n  far_value: 123.0\nvideo:\n  screen_x: 4\n  screen_y: 2\n");
+        const char* configFileName = "testconfigfile.yaml";
+        TestHelper::writeFile(
+            configFileName, "---\ncamera:\n  far_value: 123.0\nvideo:\n  screen_x: 4\n  screen_y: 2\n");
         leviathan::core::Configuration config(configFileName);
         leviathan::video::Camera subject(&sceneManagerSpy.get(), config);
 

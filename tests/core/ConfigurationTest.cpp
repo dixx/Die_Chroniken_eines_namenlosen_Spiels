@@ -19,7 +19,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
                               "  # color depth: 16bit, 32bit\n"
                               "  color_depth: 32\n"
                               "  fullscreen: true\n"
-                              "  # drivers: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), BURNINGSVIDEO, NULL\n"
+                              "  # drivers: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), BURNINGSVIDEO, \"NULL\"\n"
                               "  driver: DIRECT3D8\n"
                               "  max_fps: 42\n"
                               "camera:\n"

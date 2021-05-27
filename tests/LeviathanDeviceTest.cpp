@@ -2,17 +2,15 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "helpers/TestHelper.h"
-#include "helpers/TesthelperLeviathanDevice.h"
 #include "irrlicht.h"
 #include <cstdint>
-#include <cstdlib>
 #include <typeinfo>
 
 using namespace fakeit;
 
 TEST_CASE("LeviathanDevice supporter", "[integration]") {
-    const char* configFileName = "testconfigfile.ini";
-    TestHelper::writeFile(configFileName, "video:\n  max_fps: 100\n  driver: NULL\n");
+    const char* configFileName = "testconfigfile.yaml";
+    TestHelper::writeFile(configFileName, "---\nvideo:\n  max_fps: 100\n  driver: \"NULL\"\n");
     leviathan::LeviathanDevice subject(configFileName);
 
     SECTION("it provides instances of usefull tools") {
@@ -43,25 +41,32 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
     }
 }
 
-TEST_CASE("LeviathanDevice main loop", "[integration]") {
-    const char* configFileName = "testconfigfile.ini";
-    TestHelper::writeFile(configFileName, "video:\n  max_fps: 100\n  driver: NULL\n");
-    TesthelperLeviathanDevice::LeviathanDeviceWithIrrlichtMock subject(configFileName);
+TEST_CASE("LeviathanDevice main loop", "[unit]") {
     Mock<irr::ITimer> timerMock;
     When(Method(timerMock, getTime)).AlwaysReturn(0);
     Mock<irr::IrrlichtDevice> graphicEngineMock;
     Mock<irr::video::IVideoDriver> videoDriverMock;
     Mock<irr::scene::ISceneManager> sceneManagerMock;
-    Fake(Method(videoDriverMock, beginScene));
-    Fake(Method(videoDriverMock, endScene));
+    Mock<irr::gui::IGUIEnvironment> guiEnvironmentMock;
+    Mock<irr::scene::IMeshCache> meshCacheMock;
+    irr::scene::ICameraSceneNode* cameraDummy = TestHelper::graphicEngine()->getSceneManager()->addCameraSceneNode();
+    Fake(Method(videoDriverMock, beginScene), Method(videoDriverMock, endScene));
+    Fake(Method(meshCacheMock, clearUnusedMeshes));
     Fake(Method(sceneManagerMock, drawAll));
-    When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&(videoDriverMock.get()));
-    When(Method(graphicEngineMock, getSceneManager)).AlwaysReturn(&(sceneManagerMock.get()));
-    Fake(Method(graphicEngineMock, yield));
-    Fake(Method(graphicEngineMock, closeDevice));
-    When(Method(graphicEngineMock, getTimer)).AlwaysReturn(&(timerMock.get()));
+    When(Method(sceneManagerMock, getMeshCache)).AlwaysReturn(&meshCacheMock.get());
+    When(Method(sceneManagerMock, addCameraSceneNode)).AlwaysReturn(cameraDummy);
+    Fake(Method(guiEnvironmentMock, addEmptySpriteBank));
+    When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&videoDriverMock.get());
+    When(Method(graphicEngineMock, getSceneManager)).AlwaysReturn(&sceneManagerMock.get());
+    When(Method(graphicEngineMock, getGUIEnvironment)).AlwaysReturn(&guiEnvironmentMock.get());
+    When(Method(graphicEngineMock, getTimer)).AlwaysReturn(&timerMock.get());
     When(Method(graphicEngineMock, isWindowActive)).AlwaysReturn(true);
-    subject.injectMockedGraphicEngine(graphicEngineMock.get());
+    Fake(Method(graphicEngineMock, yield), Method(graphicEngineMock, setEventReceiver),
+        Method(graphicEngineMock, closeDevice));
+    leviathan::video::GraphicEngine::overrideGraphicEngine(&graphicEngineMock.get());
+    const char* configFileName = "testconfigfile.yaml";
+    TestHelper::writeFile(configFileName, "---\nvideo:\n  max_fps: 100\n  driver: \"NULL\"\n");
+    leviathan::LeviathanDevice subject(configFileName);
     Mock<leviathan::core::IGameState> gameStateMock;
     Fake(Method(gameStateMock, update), Method(gameStateMock, draw), Method(gameStateMock, setActive),
         Method(gameStateMock, setInactive));

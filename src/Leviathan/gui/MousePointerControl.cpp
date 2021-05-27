@@ -4,7 +4,7 @@
 namespace leviathan {
     namespace gui {
         MousePointerControl::MousePointerControl(leviathan::input::IEventProducer& producer,
-            irr::IrrlichtDevice* graphicDevice, leviathan::core::Logger& logger, leviathan::video::Textures& textures)
+            video::GraphicEngine& graphicDevice, leviathan::core::Logger& logger, leviathan::video::Textures& textures)
         : logger_(logger), textures_(textures), graphicDevice_(graphicDevice) {
             producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
         }
@@ -37,19 +37,19 @@ namespace leviathan {
             activeMousePointer_ = id;
             try {
                 hotSpot_.at(activeMousePointer_);
-                graphicDevice_->getCursorControl()->setVisible(false);
+                graphicDevice_.getCursorControl()->setVisible(false);
             } catch (const std::out_of_range& _) {
                 logger_.text << "[Warning] - MousePointerControl - id " << id << " does not exist!";
                 logger_.write(leviathan::core::Logger::Level::DEBUG);
                 activeMousePointer_ = 0;
-                graphicDevice_->getCursorControl()->setVisible(true);
+                graphicDevice_.getCursorControl()->setVisible(true);
             }
         }
 
         void MousePointerControl::draw() {
             if (activeMousePointer_ == 0) return;
 
-            graphicDevice_->getVideoDriver()->draw2DImage(baseImage_.at(activeMousePointer_),
+            graphicDevice_.getVideoDriver()->draw2DImage(baseImage_.at(activeMousePointer_),
                 position_ - hotSpot_.at(activeMousePointer_),  // upper left corner of mouse pointer image
                 imageArea_.at(activeMousePointer_),
                 nullptr,  // clipping rectangle, not used here

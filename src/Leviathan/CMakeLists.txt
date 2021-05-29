@@ -29,7 +29,7 @@ target_sources(${PROJECT_NAME}
     video/Textures.cpp
     video/Vector3DCompatible.cpp
     world/Ground.cpp
-    world/Node3D.cpp
+    world/GroundTile.cpp
     world/NodeManager.cpp
     LeviathanDevice.cpp
     ${PUBLIC_HEADER_FILES}

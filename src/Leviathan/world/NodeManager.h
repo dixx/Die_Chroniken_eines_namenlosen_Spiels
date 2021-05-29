@@ -6,9 +6,11 @@
 #ifndef LEVIATHAN_WORLD_NODE_MANAGER_H
 #define LEVIATHAN_WORLD_NODE_MANAGER_H
 
-#include "Node3D.h"
+#include "GroundTile.h"
+#include <list>
+#include <memory>
 #include <world/INode3D.h>
-#include <world/INodeManager.h>
+#include <world/Node3DConfiguration.h>
 
 namespace irr {
     namespace scene {
@@ -22,7 +24,7 @@ namespace leviathan {
         /*! \class NodeManager
          *  \brief Erstellt und verwaltet alle geometrischen Objekte und deren Attribute.
          */
-        class NodeManager final : public INodeManager {
+        class NodeManager final {
         public:
             /*! \brief Konstruktor mit Konfiguration.
              *  \param sceneManager: Szenen-Manager des initialisierten Irrlicht Device
@@ -35,18 +37,20 @@ namespace leviathan {
 
             NodeManager() = delete;
             NodeManager(const NodeManager&) = delete;
-            NodeManager(const NodeManager&&) = delete;
+            NodeManager(NodeManager&&) = delete;
             NodeManager& operator=(const NodeManager&) = delete;
-            NodeManager& operator=(const NodeManager&&) = delete;
+            NodeManager& operator=(NodeManager&&) = delete;
 
-            INode3D& add3DNode(const char* fileName, video::Position3D position, video::Vector3D offset,
-                video::Rotation3D rotation, video::Scale3D scale);
+            // void addHeroNode(const Node3DConfiguration& nodeConfig);
 
-            void unload();
+            void addGroundTile(const Node3DConfiguration& nodeConfig);
+
+            void unloadGround();
 
         private:
             irr::scene::ISceneManager* sceneManager_ = nullptr;
-            Node3D node_;
+            // std::list<std::unique_ptr<Node3D>> heroNodes_ = std::list<std::unique_ptr<Node3D>>();
+            std::list<std::unique_ptr<GroundTile>> groundNodes_ = std::list<std::unique_ptr<GroundTile>>();
         };
     }
 }

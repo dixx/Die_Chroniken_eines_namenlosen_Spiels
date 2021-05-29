@@ -1,39 +1,20 @@
 #include "Ground.h"
-#include "../video/MeshHelper.h"
+#include "NodeManager.h"
 
 namespace leviathan {
     namespace world {
-        Ground::Ground(irr::scene::ISceneManager* sceneManager) : sceneManager_(sceneManager) {}
+        Ground::Ground(NodeManager& nodeManager) : nodeManager_(nodeManager) {}
 
-        void Ground::add(const GroundTileConfiguration& tileConfig) {
-            irr::scene::IMesh* mesh = sceneManager_->getMesh(tileConfig.fileName);
-            mesh->grab();
-            transformMesh(mesh, tileConfig);
-            video::MeshHelper::pushMeshToVRAM(mesh);
-            groundTile_ = sceneManager_->addMeshSceneNode(mesh);
-            mesh->drop();
-            groundTile_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            groundTile_->setVisible(true);
+        void Ground::add(const Node3DConfiguration& tileConfig) {
+            nodeManager_.addGroundTile(tileConfig);
         }
 
         Ground::~Ground() {
-            if (groundTile_) unload();
+            unload();
         }
 
         void Ground::unload() {
-            video::MeshHelper::removeMeshFromVRAM(groundTile_->getMesh(), sceneManager_->getVideoDriver());
-            groundTile_->remove();
-            groundTile_ = nullptr;
-            sceneManager_->getMeshCache()->clearUnusedMeshes();
-        }
-
-        void Ground::transformMesh(irr::scene::IMesh* mesh, const GroundTileConfiguration& tileConfig) {
-            irr::core::matrix4 matrix = irr::core::matrix4();
-            matrix.setTranslation(tileConfig.position.toIrrlichtVector());
-            matrix.setRotationDegrees(tileConfig.rotation.toIrrlichtVector());
-            matrix.setScale(tileConfig.scale.toIrrlichtVector());
-            sceneManager_->getMeshManipulator()->transform(mesh, matrix);
-            sceneManager_->getMeshManipulator()->recalculateNormals(mesh, true);
+            nodeManager_.unloadGround();
         }
     }
 }

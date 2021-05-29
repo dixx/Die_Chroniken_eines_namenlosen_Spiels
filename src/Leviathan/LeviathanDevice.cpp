@@ -13,10 +13,11 @@ namespace leviathan {
         mousePointerControl_ = std::make_unique<gui::MousePointerControl>(
             eventReceiver_, graphicEngine_, logger_, *textures_);
         menuControl_ = std::make_unique<gui::MenuControl>(
-        ground_ = std::make_unique<world::Ground>(graphicEngine_->getSceneManager());
             graphicEngine_.getGUIEnvironment(), graphicEngine_.getVideoDriver(), eventReceiver_, *textures_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_.getSceneManager(), configuration_);
+        nodeManager_ = std::make_unique<world::NodeManager>(graphicEngine_.getSceneManager());
         heroes_ = std::make_unique<characters::Heroes>(graphicEngine_.getSceneManager());
+        ground_ = std::make_unique<world::Ground>(*nodeManager_);
     }
 
     void LeviathanDevice::run() {

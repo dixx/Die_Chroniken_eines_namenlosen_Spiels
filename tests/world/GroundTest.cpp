@@ -1,33 +1,44 @@
 #include "../../src/Leviathan/world/Ground.h"
+#include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
+#include <world/Node3DConfiguration.h>
 
 using namespace fakeit;
 
 #define getMeshArgs irr::scene::IAnimatedMesh*(const irr::io::path&)
 
 TEST_CASE("Ground", "[integration]") {
-    Mock<irr::scene::ISceneManager> sceneManagerSpy(*(TestHelper::graphicEngine()->getSceneManager()));
-    sceneManagerSpy.get().addSphereMesh("path/to/meshFile");  // add a test mesh to avoid getting a nullptr
-    leviathan::world::Ground subject(&sceneManagerSpy.get());
+    TestHelper::graphicEngine()->getSceneManager()->addSphereMesh(
+        "path/to/meshFile");  // add a test mesh to avoid getting a nullptr
+    leviathan::world::Node3DConfiguration groundTileConfig({"path/to/meshFile", {}, {}, {}});
+    leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager());
+    leviathan::world::Ground subject(nodeManager);
 
     SECTION("add") {
         SECTION("single ground tile") {
-            leviathan::world::GroundTileConfiguration groundTileConfig(
-                {"path/to/meshFile", {1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
             subject.add(groundTileConfig);
-
-            // FIXME: spying on the mesh results in strange errors
-
-            // FIXME: for whatever reson these calls are not recognized by FakeIt:
-            // Verify(OverloadedMethod(sceneManagerSpy, getMesh, getMeshArgs)).Exactly(Once);
-            // Verify(Method(sceneManagerSpy, addMeshSceneNode)).Exactly(Once);
+            irr::core::array<irr::scene::ISceneNode*> nodes;
+            TestHelper::graphicEngine()->getSceneManager()->getSceneNodesFromType(irr::scene::ESNT_MESH, nodes);
+            REQUIRE(nodes.size() == 1);
         }
 
-        SECTION("multiple ground tiles") {}
+        SECTION("multiple ground tiles") {
+            subject.add(groundTileConfig);
+            subject.add(groundTileConfig);
+            irr::core::array<irr::scene::ISceneNode*> nodes;
+            TestHelper::graphicEngine()->getSceneManager()->getSceneNodesFromType(irr::scene::ESNT_MESH, nodes);
+            REQUIRE(nodes.size() == 2);
+        }
     }
 
-    SECTION("unload all ground tiles") {}
+    SECTION("unload all ground tiles") {
+        subject.add(groundTileConfig);
+        subject.add(groundTileConfig);
+        subject.unload();
+        auto irrlichtNode = TestHelper::graphicEngine()->getSceneManager()->getSceneNodeFromType(irr::scene::ESNT_MESH);
+        REQUIRE(irrlichtNode == nullptr);
+    }
 }

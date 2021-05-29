@@ -21,6 +21,7 @@
 #include "video/GraphicEngine.h"
 #include "video/Textures.h"
 #include "world/Ground.h"
+#include "world/NodeManager.h"
 #include <memory>
 
 #ifndef NDEBUG
@@ -122,6 +123,7 @@ namespace leviathan {
         std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
         std::unique_ptr<gui::MousePointerControl> mousePointerControl_ = nullptr;
         std::unique_ptr<video::Camera> camera_ = nullptr;
+        std::unique_ptr<world::NodeManager> nodeManager_ = nullptr;
         std::unique_ptr<characters::Heroes> heroes_ = nullptr;
         std::unique_ptr<world::Ground> ground_ = nullptr;
 

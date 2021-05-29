@@ -16,7 +16,6 @@ namespace leviathan {
          */
         struct Vector3DCompatible : Vector3D {
             Vector3DCompatible();
-            Vector3DCompatible(float ax, float ay, float az);
             Vector3DCompatible(std::initializer_list<float> list);
             Vector3DCompatible(const Vector3DCompatible& other);
             Vector3DCompatible(const Vector3DCompatible&& other);

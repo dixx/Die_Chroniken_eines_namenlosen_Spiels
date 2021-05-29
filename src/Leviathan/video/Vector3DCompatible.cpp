@@ -10,8 +10,6 @@ namespace leviathan {
             if (list.size() > 2) z = list.begin()[2];
         }
 
-        Vector3DCompatible::Vector3DCompatible(float ax, float ay, float az) : Vector3D({ax, ay, az}) {}
-
         Vector3DCompatible::Vector3DCompatible(const Vector3DCompatible& other) : Vector3D(other) {}
 
         Vector3DCompatible::Vector3DCompatible(const Vector3DCompatible&& other) : Vector3D(other) {}

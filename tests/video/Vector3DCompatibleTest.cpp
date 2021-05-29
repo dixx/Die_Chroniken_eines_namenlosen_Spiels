@@ -13,14 +13,6 @@ TEST_CASE("Vector3DCompatible", "[unit]") {
         REQUIRE(sample.z == Approx(0.f));
     }
 
-    SECTION("construct from values") {
-        leviathan::video::Vector3DCompatible sample(11.f, 22.f, 33.f);
-
-        REQUIRE(sample.x == Approx(11.f));
-        REQUIRE(sample.y == Approx(22.f));
-        REQUIRE(sample.z == Approx(33.f));
-    }
-
     SECTION("construct from initializer list") {
         leviathan::video::Vector3DCompatible sample({11.f, 22.f, 33.f});
 

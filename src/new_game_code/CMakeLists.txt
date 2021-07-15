@@ -1,4 +1,4 @@
-include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}")
+include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}" "${PUBLIC_INTERFACES}")
 
 add_executable(neues_spiel
   GameStateLoadGame.cpp
@@ -6,6 +6,7 @@ add_executable(neues_spiel
   GameStatePlay.cpp
   GameStateShutdown.cpp
   main.cpp
+  ${PUBLIC_HEADER_FILES}
 )
 target_link_libraries(neues_spiel leviathan)
 cotire(neues_spiel)
@@ -20,5 +21,6 @@ install(FILES
   "${RESOURCES_DIR}/GFX/menues1.bmp"
   "${RESOURCES_DIR}/GFX/OBJECTS/sydney.md2"
   "${RESOURCES_DIR}/GFX/sydney.bmp"
+  "${RESOURCES_DIR}/GFX/landtest.png"
   "${RESOURCES_DIR}/GFX/MAP/linksUnten.3ds"
 DESTINATION ./gfx)

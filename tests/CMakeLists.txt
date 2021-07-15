@@ -14,16 +14,19 @@ add_executable(unit_tests
   helpers/CatchPatches.hpp
   helpers/FakeitPatches.hpp
   helpers/TestHelper.cpp
-  helpers/TesthelperLeviathanDevice.cpp
   input/ActionsTest.cpp
   input/EventReceiverTest.cpp
   input/KeyboardEventActionsTest.cpp
   input/MouseEventActionsTest.cpp
   video/CameraTest.cpp
+  video/GraphicEngineTest.cpp
   video/TexturesTest.cpp
+  video/Vector3DCompatibleTest.cpp
   world/GroundTest.cpp
+  world/NodeManagerTest.cpp
   LeviathanDeviceTest.cpp
   unit_tests.cpp
+  ${PUBLIC_HEADER_FILES}
 )
 target_link_libraries(unit_tests "${IRRLICHT_LIBRARY}" leviathan catch fakeit)
 cotire(unit_tests)

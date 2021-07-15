@@ -1,5 +1,6 @@
 #include "GameStateMainMenu.h"
 #include "defines.h"
+#include <characters/CharacterConfiguration.h>
 #include <cstdint>
 
 GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
@@ -13,8 +14,7 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     leviathan::gui::MenuConfiguration menuConfig({menuSize, menuPosition, "gfx/menues1.bmp", {588, 212}, true});
     gameEngine_.MenuControl().addMenu(L"Main Menu", menuConfig);
 
-    leviathan::video::Position2D buttonPosition(
-        {static_cast<int32_t>(screenSize.w - menuSize.w + 80), static_cast<int32_t>(screenSize.h - menuSize.h + 64)});
+    leviathan::video::Position2D buttonPosition({menuPosition.x + 80, menuPosition.y + 64});
     leviathan::gui::ButtonConfiguration buttonConfig(
         {{313, 88}, buttonPosition, "gfx/menues1.bmp", {663, 115}, {654, 22}, true});
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Start Game", buttonConfig);
@@ -22,7 +22,9 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Load Game", buttonConfig);
     buttonConfig.relativePositionInMenu.y += 284;
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Main Menu - Quit", buttonConfig);
-    gameEngine_.Heroes().create("Punk");
+    leviathan::characters::CharacterConfiguration config = {
+        "Anon", "Punk", {"gfx/sydney.md2", "gfx/sydney.bmp", {}, {}, {}, {0.025f, 0.025f, 0.025f}}};
+    gameEngine_.Heroes().create(config);
     gameEngine_.Heroes().activate("Punk");
 }
 

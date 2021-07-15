@@ -2,56 +2,39 @@
 #include "video/constants.h"
 #include <chrono>
 #include <cstdint>
-#include <exception>
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const char* fileName)
     : configuration_(fileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), timeControl_(),
-      gameStateManager_(logger_), randomizer_(), eventReceiver_(), actions_(eventReceiver_, logger_) {
+      gameStateManager_(logger_), randomizer_(), eventReceiver_(), actions_(eventReceiver_, logger_),
+      graphicEngine_(eventReceiver_, logger_, configuration_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
-        initializeGraphicEngine();
-        graphicEngine_->setEventReceiver(&eventReceiver_);
-        textures_ = std::make_unique<video::Textures>(graphicEngine_->getVideoDriver(), logger_);
+        textures_ = std::make_unique<video::Textures>(graphicEngine_.getVideoDriver(), logger_);
         mousePointerControl_ = std::make_unique<gui::MousePointerControl>(
             eventReceiver_, graphicEngine_, logger_, *textures_);
         menuControl_ = std::make_unique<gui::MenuControl>(
-            graphicEngine_->getGUIEnvironment(), graphicEngine_->getVideoDriver(), eventReceiver_, *textures_);
-        camera_ = std::make_unique<video::Camera>(graphicEngine_->getSceneManager(), configuration_);
-        heroes_ = std::make_unique<characters::Heroes>(graphicEngine_->getSceneManager());
-        ground_ = std::make_unique<world::Ground>(graphicEngine_->getSceneManager());
-    }
-
-    void LeviathanDevice::initializeGraphicEngine() {
-        graphicEngine_ = irr::createDeviceEx(configuration_.getGraphicEngineParams());
-        if (graphicEngine_ == nullptr) {
-            logger_.text << "could not initialize Irrlicht Engine!";
-            logger_.write(core::Logger::Level::INFO);
-            throw std::runtime_error("could not initialize Irrlicht Engine!");
-        }
-    }
-
-    LeviathanDevice::~LeviathanDevice() {
-        if (graphicEngine_) {
-            graphicEngine_->drop();
-            graphicEngine_ = nullptr;
-        }
+            graphicEngine_.getGUIEnvironment(), graphicEngine_.getVideoDriver(), eventReceiver_, *textures_);
+        camera_ = std::make_unique<video::Camera>(graphicEngine_.getSceneManager(), configuration_);
+        nodeManager_ = std::make_unique<world::NodeManager>(graphicEngine_.getSceneManager());
+        heroes_ = std::make_unique<characters::Heroes>(*nodeManager_);
+        ground_ = std::make_unique<world::Ground>(*nodeManager_);
     }
 
     void LeviathanDevice::run() {
         const float FRAME_DELTA_TIME = 1.f / static_cast<float>(configuration_.getMaxFPS());
         const uint32_t FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / configuration_.getMaxFPS();  // for performance.
-        uint32_t nextDrawingTime = graphicEngine_->getTimer()->getTime();
+        uint32_t nextDrawingTime = graphicEngine_.getTime();
 
-        while (graphicEngine_->run()) {
+        while (graphicEngine_.run()) {
             handleWindowInactivity();
             uint32_t loops = 0;
             bool drawNextFrame = false;
-            while (graphicEngine_->getTimer()->getTime() > nextDrawingTime
+            while (graphicEngine_.getTime() > nextDrawingTime
                    && loops < 10)  // in-game time will slow down if framerate drops below 10% of maxFPS // FIXME for
                                    // FPS > 250
             {
                 updateGame(FRAME_DELTA_TIME);
-                if (!graphicEngine_->run()) {
+                if (!graphicEngine_.run()) {
                     drawNextFrame = false;
                     break;
                 }
@@ -64,7 +47,7 @@ namespace leviathan {
     }
 
     void LeviathanDevice::handleWindowInactivity() {
-        if (!graphicEngine_->isWindowActive()) graphicEngine_->yield();
+        if (!graphicEngine_.isWindowActive()) graphicEngine_.yield();
     }
 
     void LeviathanDevice::updateGame(const float frameDeltaTime) {
@@ -73,14 +56,14 @@ namespace leviathan {
     }
 
     void LeviathanDevice::drawGame() {
-        graphicEngine_->getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
-        graphicEngine_->getSceneManager()->drawAll();
+        graphicEngine_.getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
+        graphicEngine_.getSceneManager()->drawAll();
         gameStateManager_.draw();
-        graphicEngine_->getVideoDriver()->endScene();
+        graphicEngine_.getVideoDriver()->endScene();
     }
 
     void LeviathanDevice::halt() {
-        graphicEngine_->closeDevice();
+        graphicEngine_.closeDevice();
     }
 
     core::Logger& LeviathanDevice::Logger() {

@@ -39,7 +39,7 @@ namespace leviathan {
             desiredPosition_ = targetPosition;
         }
 
-        void Character::setPostition(const video::Position3D& position) {
+        void Character::setPosition(const video::Position3D& position) {
             characterNode_->setPosition(video::Vector3DCompatible(position).toIrrlichtVector()
                                         + video::Vector3DCompatible(offset_).toIrrlichtVector());
             characterNode_->updateAbsolutePosition();

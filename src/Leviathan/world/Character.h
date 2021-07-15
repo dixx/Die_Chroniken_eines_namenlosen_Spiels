@@ -41,7 +41,7 @@ namespace leviathan {
 
             void setDesiredPostition(const video::Position3D& targetPosition) override;
 
-            void setPostition(const video::Position3D& position);
+            void setPosition(const video::Position3D& position);
 
             void setVisible();
 

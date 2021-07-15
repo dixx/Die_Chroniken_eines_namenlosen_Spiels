@@ -25,7 +25,7 @@ namespace leviathan {
         }
 
         void Hero::setPosition(const video::Position3D& position) {
-            node_.setPostition(position);
+            node_.setPosition(position);
         }
 
         video::Rotation3D Hero::getRotation() const {

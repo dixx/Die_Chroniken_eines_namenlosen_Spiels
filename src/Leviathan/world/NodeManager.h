@@ -6,11 +6,11 @@
 #ifndef LEVIATHAN_WORLD_NODE_MANAGER_H
 #define LEVIATHAN_WORLD_NODE_MANAGER_H
 
+#include "Character.h"
 #include "GroundTile.h"
 #include <list>
 #include <memory>
 #include <world/INode3D.h>
-#include <world/Node3DConfiguration.h>
 
 namespace irr {
     namespace scene {
@@ -19,7 +19,12 @@ namespace irr {
 }
 
 namespace leviathan {
+    namespace characters {
+        struct CharacterConfiguration;
+    }
+
     namespace world {
+        class Node3DConfiguration;
 
         /*! \class NodeManager
          *  \brief Erstellt und verwaltet alle geometrischen Objekte und deren Attribute.
@@ -41,15 +46,17 @@ namespace leviathan {
             NodeManager& operator=(const NodeManager&) = delete;
             NodeManager& operator=(NodeManager&&) = delete;
 
-            // void addHeroNode(const Node3DConfiguration& nodeConfig);
+            Character& addHeroNode(const characters::CharacterConfiguration& characterConfig);
 
             void addGroundTile(const Node3DConfiguration& nodeConfig);
+
+            void unloadHeroes();
 
             void unloadGround();
 
         private:
             irr::scene::ISceneManager* sceneManager_ = nullptr;
-            // std::list<std::unique_ptr<Node3D>> heroNodes_ = std::list<std::unique_ptr<Node3D>>();
+            std::list<std::unique_ptr<Character>> heroNodes_ = std::list<std::unique_ptr<Character>>();
             std::list<std::unique_ptr<GroundTile>> groundNodes_ = std::list<std::unique_ptr<GroundTile>>();
         };
     }

@@ -3,7 +3,9 @@
 
 #include "../../src/Leviathan/characters/Hero.h"
 #include "../../src/Leviathan/input/Action.h"
+#include "catch.hpp"
 #include "irrlicht.h"
+#include <video/Vector3D.h>
 
 // Some of our user-defined types do not have certain operators, because they would only be used in tests.
 
@@ -13,6 +15,10 @@ inline bool operator==(const leviathan::input::Action& lhs, const leviathan::inp
 
 inline bool operator==(const leviathan::characters::Hero& lhs, const leviathan::characters::Hero& rhs) {
     return lhs.getInternalName() == rhs.getInternalName();
+}
+
+inline bool operator==(const leviathan::video::Vector3D& lhs, const leviathan::video::Vector3D& rhs) {
+    return lhs.x == Approx(rhs.x) && lhs.y == Approx(rhs.y) && lhs.z == Approx(rhs.z);
 }
 
 // Some of the Irrlicht types do not have certain operators, because they would only be used in tests.

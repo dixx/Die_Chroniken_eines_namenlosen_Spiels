@@ -14,10 +14,11 @@ namespace leviathan {
         /*! \brief Konfiguration für ein 3D-Objekt.
          */
         struct Node3DConfiguration {
-            std::string meshFileName;
-            video::Position3D position;
-            video::Position3D offset;
-            video::Rotation3D rotation;
+            std::string meshFileName = "";
+            std::string textureFileName = "";
+            video::Position3D position = {0.f, 0.f, 0.f};
+            video::Position3D offset = {0.f, 0.f, 0.f};
+            video::Rotation3D rotation = {0.f, 0.f, 0.f};
             video::Scale3D scale = {1.f, 1.f, 1.f};
         };
     }

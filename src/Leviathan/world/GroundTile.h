@@ -1,10 +1,10 @@
-/*! \file Node3D.h
- *  \brief Ein 3D-Objekt.
+/*! \file GroundTile.h
+ *  \brief Ein Bodenteil.
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_WORLD_NODE3D_H
-#define LEVIATHAN_WORLD_NODE3D_H
+#ifndef LEVIATHAN_WORLD_GROUND_TILE_H
+#define LEVIATHAN_WORLD_GROUND_TILE_H
 
 #include <video/Vector3D.h>
 #include <world/INode3D.h>
@@ -39,7 +39,7 @@ namespace leviathan {
 
         private:
             irr::scene::ISceneManager* sceneManager_ = nullptr;
-            video::Position3D desiredPosition_ = video::Position3D({0, 0, 0});
+            video::Position3D desiredPosition_ = video::Position3D();
             irr::scene::IMeshSceneNode* tileNode_ = nullptr;
 
             void transformMesh(irr::scene::IMesh* mesh, const Node3DConfiguration& tileConfig);

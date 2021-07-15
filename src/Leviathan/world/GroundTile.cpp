@@ -17,6 +17,10 @@ namespace leviathan {
             tileNode_ = sceneManager_->addMeshSceneNode(mesh);
             mesh->drop();
             video::Vector3DCompatible position = tileConfig.position;
+            // TODO: replace with video::Textures.get
+            irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(
+                tileConfig.textureFileName.c_str());
+            tileNode_->setMaterialTexture(0, texture);
             tileNode_->setPosition(position.toIrrlichtVector());
             tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             tileNode_->setVisible(true);

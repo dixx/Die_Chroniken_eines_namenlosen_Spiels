@@ -1,19 +1,31 @@
 #include "../../src/Leviathan/characters/Heroes.h"
+#include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "irrlicht.h"
+#include <characters/CharacterConfiguration.h>
 
 TEST_CASE("Heroes", "[integration]") {
-    leviathan::characters::Heroes subject(TestHelper::graphicEngine()->getSceneManager());
+    leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager());
+    leviathan::characters::Heroes subject(nodeManager);
+    TestHelper::graphicEngine()->getSceneManager()->addSphereMesh(
+        "path/to/meshFile");  // add a test mesh to avoid getting a nullptr
+    irr::core::dimension2du size(1, 1);
+    TestHelper::graphicEngine()->getVideoDriver()->addTexture(
+        size, "path/to/textureFile");  // add a test texture to avoid getting a nullptr
+    leviathan::characters::CharacterConfiguration heroConfig(
+        {"", "", {"path/to/meshFile", "path/to/textureFile", {}, {}, {}, {}}});
 
     SECTION("can create default heroes") {
-        REQUIRE(subject.create().getInternalName() == "");
+        REQUIRE(subject.create(heroConfig).getInternalName() == "");
     }
 
     SECTION("can activate one hero") {
-        auto someHero = subject.create("John Doe");
-        auto anotherHero = subject.create("Jane Doe");
+        heroConfig.internalName = "John Doe";
+        auto someHero = subject.create(heroConfig);
+        heroConfig.internalName = "Jane Doe";
+        auto anotherHero = subject.create(heroConfig);
 
         subject.activate("John Doe");
         REQUIRE(subject.getActiveHero() == someHero);

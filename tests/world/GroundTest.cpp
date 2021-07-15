@@ -13,7 +13,10 @@ using namespace fakeit;
 TEST_CASE("Ground", "[integration]") {
     TestHelper::graphicEngine()->getSceneManager()->addSphereMesh(
         "path/to/meshFile");  // add a test mesh to avoid getting a nullptr
-    leviathan::world::Node3DConfiguration groundTileConfig({"path/to/meshFile", {}, {}, {}});
+    irr::core::dimension2du size(1, 1);
+    TestHelper::graphicEngine()->getVideoDriver()->addTexture(
+        size, "path/to/textureFile");  // add a test texture to avoid getting a nullptr
+    leviathan::world::Node3DConfiguration groundTileConfig({"path/to/meshFile", "path/to/textureFile", {}, {}, {}});
     leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager());
     leviathan::world::Ground subject(nodeManager);
 

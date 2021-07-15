@@ -1,46 +1,39 @@
 #include "Hero.h"
+#include "../world/Character.h"
+#include "../world/NodeManager.h"
+#include <characters/CharacterConfiguration.h>
 
 namespace leviathan {
     namespace characters {
-        Hero::Hero(const std::string& internalName, irr::scene::ISceneManager* sceneManager) {
-            irr::scene::IAnimatedMesh* mesh = sceneManager->getMesh("gfx/sydney.md2");
-            node_ = sceneManager->addAnimatedMeshSceneNode(mesh);
-            node_->setName(internalName.c_str());
-            node_->setScale(irr::core::vector3df(0.025f, 0.025f, 0.025f));
-            irr::video::ITexture* texture = sceneManager->getVideoDriver()->getTexture("gfx/sydney.bmp");
-            node_->setMaterialTexture(0, texture);
-            node_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            node_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
-            node_->setMD2Animation(irr::scene::EMAT_STAND);
-            disablePlayableCharacter();
-        }
+        Hero::Hero(const CharacterConfiguration& characterConfig, world::NodeManager& nodeManager)
+        : node_(nodeManager.addHeroNode(characterConfig)) {}
 
         void Hero::enablePlayableCharacter() {
-            node_->setVisible(true);
+            node_.setVisible();
         }
 
         void Hero::disablePlayableCharacter() {
-            node_->setVisible(false);
+            node_.setInvisible();
         }
 
         const std::string Hero::getInternalName() const {
-            return node_->getName();
+            return node_.getName();
         }
 
-        irr::core::vector3df Hero::getPosition() const {
-            return node_->getPosition();
+        video::Position3D Hero::getPosition() const {
+            return node_.getPosition();
         }
 
-        void Hero::setPosition(const irr::core::vector3df& position) {
-            node_->setPosition(position);
+        void Hero::setPosition(const video::Position3D& position) {
+            node_.setPostition(position);
         }
 
-        irr::core::vector3df Hero::getRotation() const {
-            return node_->getRotation();
+        video::Rotation3D Hero::getRotation() const {
+            return node_.getRotation();
         }
 
-        void Hero::setRotation(const irr::core::vector3df& rotation) {
-            node_->setRotation(rotation);
+        void Hero::setRotation(const video::Rotation3D& rotation) {
+            node_.setRotation(rotation);
         }
     }
 }

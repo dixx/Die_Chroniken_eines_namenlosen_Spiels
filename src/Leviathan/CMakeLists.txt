@@ -28,6 +28,7 @@ target_sources(${PROJECT_NAME}
     video/MeshHelper.cpp
     video/Textures.cpp
     video/Vector3DCompatible.cpp
+    world/Character.cpp
     world/Ground.cpp
     world/GroundTile.cpp
     world/NodeManager.cpp

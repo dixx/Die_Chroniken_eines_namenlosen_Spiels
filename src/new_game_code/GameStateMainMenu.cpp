@@ -1,5 +1,6 @@
 #include "GameStateMainMenu.h"
 #include "defines.h"
+#include <characters/CharacterConfiguration.h>
 #include <cstdint>
 
 GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
@@ -22,7 +23,9 @@ GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : g
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Load Game", buttonConfig);
     buttonConfig.relativePositionInMenu.y += 284;
     gameEngine_.MenuControl().addButton(L"Main Menu", L"Main Menu - Quit", buttonConfig);
-    gameEngine_.Heroes().create("Punk");
+    leviathan::characters::CharacterConfiguration config = {
+        "Punk", "Anon", {"gfx/sydney.md2", "gfx/sydney.bmp", {0.f, 0.f, 0.f}, {}, {}, {0.025f, 0.025f, 0.025f}}};
+    gameEngine_.Heroes().create(config);
     gameEngine_.Heroes().activate("Punk");
 }
 

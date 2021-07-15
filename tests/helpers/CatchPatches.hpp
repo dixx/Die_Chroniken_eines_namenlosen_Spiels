@@ -5,6 +5,7 @@
 #include "irrlicht.h"
 #include <sstream>
 #include <string>
+#include <video/Vector3D.h>
 
 namespace Catch {
     template<>
@@ -21,6 +22,15 @@ namespace Catch {
         static std::string convert(const irr::core::vector3df& obj) {
             std::ostringstream ss;
             ss << "vec(" << obj.X << ", " << obj.Y << ", " << obj.Z << ")";
+            return ss.str();
+        }
+    };
+
+    template<>
+    struct StringMaker<leviathan::video::Vector3D> {
+        static std::string convert(const leviathan::video::Vector3D& obj) {
+            std::ostringstream ss;
+            ss << "vec(" << obj.x << ", " << obj.y << ", " << obj.z << ")";
             return ss.str();
         }
     };

@@ -1,13 +1,15 @@
 #include "Heroes.h"
+#include "../world/NodeManager.h"
 #include "Hero.h"
+#include <characters/CharacterConfiguration.h>
 
 namespace leviathan {
     namespace characters {
-        Heroes::Heroes(irr::scene::ISceneManager* sceneManager) : sceneManager_(sceneManager) {}
+        Heroes::Heroes(world::NodeManager& nodeManager) : nodeManager_(nodeManager) {}
 
-        Hero& Heroes::create(const std::string& internalName) {
-            heroes_[internalName] = std::make_unique<Hero>(internalName, sceneManager_);
-            return *heroes_[internalName];
+        Hero& Heroes::create(const CharacterConfiguration& characterConfig) {
+            heroes_[characterConfig.internalName] = std::make_unique<Hero>(characterConfig, nodeManager_);
+            return *heroes_[characterConfig.internalName];
         }
 
         void Heroes::activate(const std::string& internalName) {

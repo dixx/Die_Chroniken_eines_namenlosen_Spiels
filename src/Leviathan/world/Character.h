@@ -47,11 +47,11 @@ namespace leviathan {
 
             void setInvisible();
 
-            std::string getName();
+            std::string getName() const;
 
-            video::Position3D getPosition();
+            video::Position3D getPosition() const;
 
-            video::Rotation3D getRotation();
+            video::Rotation3D getRotation() const;
 
             void setRotation(const video::Rotation3D& rotation);
 
@@ -59,6 +59,9 @@ namespace leviathan {
             video::Position3D desiredPosition_ = video::Position3D();
             video::Vector3D offset_ = video::Vector3D();
             irr::scene::IAnimatedMeshSceneNode* characterNode_ = nullptr;
+
+            void createNode(const characters::CharacterConfiguration& config, irr::scene::ISceneManager* sceneManager);
+            void setScale(const video::Scale3D& scale);
         };
     }
 }

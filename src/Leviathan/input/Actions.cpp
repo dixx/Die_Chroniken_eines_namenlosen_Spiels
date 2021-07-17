@@ -50,16 +50,16 @@ namespace leviathan {
                 addMapping(action.id, action.primary);
                 addMapping(action.id, action.secondary);
                 _logger.text << "Actions - loaded actions: [" << action.id << "] = " << action.name << "("
-                             << action.primary.id << ", " << action.secondary.id << ")";
+                             << action.primary.code << ", " << action.secondary.code << ")";
                 _logger.write(_logger.Level::DEBUG);
             }
         }
 
         void Actions::addMapping(const uint32_t actionId, const Input& input) {
             if (input.type == "mouse")
-                _mouseConverter.addMapping(input.id, actionId);
+                _mouseConverter.addMapping(input.code, actionId);
             else if (input.type == "keyboard")
-                _keyboardConverter.addMapping(input.id, actionId);
+                _keyboardConverter.addMapping(input.code, actionId);
             else if (input.type == "gui")
                 _guiConverter.addMapping(input.name, actionId);
         }

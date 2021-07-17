@@ -20,11 +20,11 @@ TEST_CASE("Action Mapping", "[integration]") {
                                  "    primary:\n"
                                  "      name: left mouse button\n"
                                  "      type: mouse\n"
-                                 "      id: 0x01\n"
+                                 "      code: 0x01\n"
                                  "    secondary:\n"
                                  "      name: <E>\n"
                                  "      type: keyboard\n"
-                                 "      id: 0x45\n"
+                                 "      code: 0x45\n"
                                  "- name: enable menu item\n"
                                  "  id: 1001\n"
                                  "  description: enable menu item\n"
@@ -32,7 +32,7 @@ TEST_CASE("Action Mapping", "[integration]") {
                                  "    primary:\n"
                                  "      name: <E>\n"
                                  "      type: keyboard\n"
-                                 "      id: 0x45\n"
+                                 "      code: 0x45\n"
                                  "- name: resume game\n"
                                  "  id: 1002\n"
                                  "  description: loads last game\n"
@@ -53,7 +53,7 @@ TEST_CASE("Action Mapping", "[integration]") {
                                  "    primary:\n"
                                  "      name: <SPACE>\n"
                                  "      type: keyboard\n"
-                                 "      id: 0x20\n";
+                                 "      code: 0x20\n";
     TestHelper::writeFile(mappingsFileName, content.c_str());
     Mock<leviathan::input::IEventProducer> eventBrokerMock;
     Mock<leviathan::input::IActionConsumer> consumerMock;

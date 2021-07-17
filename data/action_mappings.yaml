@@ -23,6 +23,66 @@
       name: <1>
       type: keyboard
       code: 0x31
+
+- name: options
+  id: 2002
+  description: bring up the in-game options menu
+  internal: true
+  input_mappings:
+    primary:
+      name: <ESC>
+      type: keyboard
+      code: 0x1B
+
+- name: camera rotate left
+  id: 2008
+  description: rotates the camera to the left
+  input_mappings:
+    primary:
+      name: <Q>
+      type: keyboard
+      code: 0x51
+- name: camera rotate right
+  id: 2009
+  description: rotates the camera to the right
+  input_mappings:
+    primary:
+      name: <E>
+      type: keyboard
+      code: 0x45
+
+- name: move forward
+  id: 2011
+  description: moves the hero forward
+  input_mappings:
+    primary:
+      name: <W>
+      type: keyboard
+      code: 0x57
+- name: move backward
+  id: 2012
+  description: moves the hero backward
+  input_mappings:
+    primary:
+      name: <S>
+      type: keyboard
+      code: 0x53
+- name: move left
+  id: 2013
+  description: moves the hero left
+  input_mappings:
+    primary:
+      name: <A>
+      type: keyboard
+      code: 0x41
+- name: move right
+  id: 2014
+  description: moves the hero right
+  input_mappings:
+    primary:
+      name: <D>
+      type: keyboard
+      code: 0x44
 # - name: execute selection
 #   id: 3
 #   description: execute the selected menu entry
@@ -66,12 +126,3 @@
 #       name: <E>
 #       type: keyboard
 #       code: 0x45
-- name: options
-  id: 2002
-  description: bring up the in-game options menu
-  internal: true
-  input_mappings:
-    primary:
-      name: <ESC>
-      type: keyboard
-      code: 0x1B

@@ -43,7 +43,7 @@ void GameStateMainMenu::draw() {
     gameEngine_.MousePointerControl().draw();
 }
 
-void GameStateMainMenu::onAction(const leviathan::input::Action action) {
+void GameStateMainMenu::onAction(const leviathan::input::Action& action) {
     switch (action.id) {
     case actions::START_NEW_GAME:
         if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_LOADER);

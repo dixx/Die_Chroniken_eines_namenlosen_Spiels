@@ -20,7 +20,7 @@ namespace leviathan {
             /*! \brief Reagiert auf Aktionen.
              *  \param action: Aktion, gesendet vom Producer
              */
-            virtual void onAction(const Action action) = 0;
+            virtual void onAction(const Action& action) = 0;
         };
     }
 }

@@ -32,27 +32,19 @@ void GameStatePlay::onAction(const leviathan::input::Action action) {
     case actions::CAMERA_ROTATE_RIGHT:
         break;
     case actions::HERO_MOVE_FORWARD: {
-        auto position = gameEngine_.Heroes().getActiveHero().getPosition();
-        position.z += 0.2f;
-        gameEngine_.Heroes().getActiveHero().setPosition(position);
+        moveHero(0.0f, 0.2f);
         break;
     }
     case actions::HERO_MOVE_BACKWARD: {
-        auto position = gameEngine_.Heroes().getActiveHero().getPosition();
-        position.z -= 0.2f;
-        gameEngine_.Heroes().getActiveHero().setPosition(position);
+        moveHero(0.0f, -0.2f);
         break;
     }
     case actions::HERO_MOVE_LEFT: {
-        auto position = gameEngine_.Heroes().getActiveHero().getPosition();
-        position.x -= 0.2f;
-        gameEngine_.Heroes().getActiveHero().setPosition(position);
+        moveHero(-0.2f, 0.0f);
         break;
     }
     case actions::HERO_MOVE_RIGHT: {
-        auto position = gameEngine_.Heroes().getActiveHero().getPosition();
-        position.x += 0.2f;
-        gameEngine_.Heroes().getActiveHero().setPosition(position);
+        moveHero(0.2f, 0.0f);
         break;
     }
     }
@@ -75,4 +67,11 @@ void GameStatePlay::setInactive() {
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_BACKWARD);
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_LEFT);
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_RIGHT);
+}
+
+void GameStatePlay::moveHero(float x, float z) {
+    auto position = gameEngine_.Heroes().getActiveHero().getPosition();
+    position.x += x;
+    position.z += z;
+    gameEngine_.Heroes().getActiveHero().setPosition(position);
 }

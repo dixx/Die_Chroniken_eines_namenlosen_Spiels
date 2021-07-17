@@ -32,6 +32,8 @@ public:
 
 private:
     leviathan::LeviathanDevice& gameEngine_;
+
+    void moveHero(float x, float z);
 };
 
 #endif

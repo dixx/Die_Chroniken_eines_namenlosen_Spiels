@@ -21,7 +21,7 @@ namespace leviathan {
             explicit Input(const YAML::Node& node);
             std::string name = "- None -";
             std::string type = "unknown";
-            uint32_t id = 0;
+            uint32_t code = 0;
             bool isActive = false;
             bool wasActive = false;
         };

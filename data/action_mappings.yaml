@@ -10,7 +10,7 @@
     secondary:
       name: <ESC>
       type: keyboard
-      id: 0x1B
+      code: 0x1B
 - name: start new game
   id: 2
   description: starts a new game
@@ -22,7 +22,7 @@
     secondary:
       name: <1>
       type: keyboard
-      id: 0x31
+      code: 0x31
 # - name: execute selection
 #   id: 3
 #   description: execute the selected menu entry
@@ -31,11 +31,11 @@
 #     primary:
 #       name: <left mouse button>
 #       type: mouse
-#       id: 0x01
+#       code: 0x01
 #     secondary:
 #       name: <Space>
 #       type: keyboard
-#       id: 0x20
+#       code: 0x20
 # - name: select next entry
 #   id: 4
 #   description: select the next menu entry
@@ -44,7 +44,7 @@
 #     primary:
 #       name: <Arrow Down>
 #       type: keyboard
-#       id: 0x28
+#       code: 0x28
 # - name: select previous entry
 #   id: 5
 #   description: select the previous menu entry
@@ -53,7 +53,7 @@
 #     primary:
 #       name: <Arrow Up>
 #       type: keyboard
-#       id: 0x26
+#       code: 0x26
 # - name: target selected
 #   id: 2001
 #   description: select a target, may it be a position on the ground, an NPC or an object.
@@ -61,11 +61,11 @@
 #     primary:
 #       name: left mouse button
 #       type: mouse
-#       id: 0x01
+#       code: 0x01
 #     secondary:
 #       name: <E>
 #       type: keyboard
-#       id: 0x45
+#       code: 0x45
 - name: options
   id: 2002
   description: bring up the in-game options menu
@@ -74,4 +74,4 @@
     primary:
       name: <ESC>
       type: keyboard
-      id: 0x1B
+      code: 0x1B

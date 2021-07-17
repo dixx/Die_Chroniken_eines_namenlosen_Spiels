@@ -33,6 +33,7 @@ public:
 private:
     leviathan::LeviathanDevice& gameEngine_;
 
+    void handleHeroMovementActions(const leviathan::input::Action& action);
     void moveHero(float x, float z);
 };
 

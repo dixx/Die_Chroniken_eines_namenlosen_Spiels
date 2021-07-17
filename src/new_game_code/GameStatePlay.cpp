@@ -22,6 +22,7 @@ void GameStatePlay::draw() {
 }
 
 void GameStatePlay::onAction(const leviathan::input::Action& action) {
+    handleHeroMovementActions(action);
     switch (action.id) {
     case actions::OPEN_IN_GAME_OPTIONS: {
         if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_LOADER);
@@ -31,22 +32,6 @@ void GameStatePlay::onAction(const leviathan::input::Action& action) {
         break;
     case actions::CAMERA_ROTATE_RIGHT:
         break;
-    case actions::HERO_MOVE_FORWARD: {
-        moveHero(0.0f, 0.2f);
-        break;
-    }
-    case actions::HERO_MOVE_BACKWARD: {
-        moveHero(0.0f, -0.2f);
-        break;
-    }
-    case actions::HERO_MOVE_LEFT: {
-        moveHero(-0.2f, 0.0f);
-        break;
-    }
-    case actions::HERO_MOVE_RIGHT: {
-        moveHero(0.2f, 0.0f);
-        break;
-    }
     }
 }
 
@@ -67,6 +52,23 @@ void GameStatePlay::setInactive() {
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_BACKWARD);
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_LEFT);
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_RIGHT);
+}
+
+/* private */
+
+void GameStatePlay::handleHeroMovementActions(const leviathan::input::Action& action) {
+    if (action.id == actions::HERO_MOVE_FORWARD && action.isActive) {
+        moveHero(0.0f, 0.2f);
+    }
+    if (action.id == actions::HERO_MOVE_BACKWARD && action.isActive) {
+        moveHero(0.0f, -0.2f);
+    }
+    if (action.id == actions::HERO_MOVE_LEFT && action.isActive) {
+        moveHero(-0.2f, 0.0f);
+    }
+    if (action.id == actions::HERO_MOVE_RIGHT && action.isActive) {
+        moveHero(0.2f, 0.0f);
+    }
 }
 
 void GameStatePlay::moveHero(float x, float z) {

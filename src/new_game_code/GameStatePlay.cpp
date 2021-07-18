@@ -57,16 +57,16 @@ void GameStatePlay::setInactive() {
 /* private */
 
 void GameStatePlay::handleHeroMovementActions(const leviathan::input::Action& action) {
-    if (action.id == actions::HERO_MOVE_FORWARD && action.isActive) {
+    if (action.id == actions::HERO_MOVE_FORWARD) {
         moveHero(0.0f, 0.2f);
     }
-    if (action.id == actions::HERO_MOVE_BACKWARD && action.isActive) {
+    if (action.id == actions::HERO_MOVE_BACKWARD) {
         moveHero(0.0f, -0.2f);
     }
-    if (action.id == actions::HERO_MOVE_LEFT && action.isActive) {
+    if (action.id == actions::HERO_MOVE_LEFT) {
         moveHero(-0.2f, 0.0f);
     }
-    if (action.id == actions::HERO_MOVE_RIGHT && action.isActive) {
+    if (action.id == actions::HERO_MOVE_RIGHT) {
         moveHero(0.2f, 0.0f);
     }
 }

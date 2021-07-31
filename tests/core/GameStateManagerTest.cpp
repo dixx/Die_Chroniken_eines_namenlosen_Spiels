@@ -1,8 +1,8 @@
 #include "../../src/Leviathan/core/GameStateManager.h"
-#include "../../src/Leviathan/core/IGameState.h"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
+#include <core/IGameState.h>
 #include <stdexcept>
 
 using namespace fakeit;

@@ -6,8 +6,8 @@
 #ifndef LEVIATHAN_CORE_GAMESTATEMANAGER_H
 #define LEVIATHAN_CORE_GAMESTATEMANAGER_H
 
-#include "IGameState.h"
 #include "Logger.h"
+#include <core/IGameState.h>
 #include <cstdint>
 #include <list>
 #include <map>

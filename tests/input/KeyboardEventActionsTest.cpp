@@ -1,9 +1,9 @@
 #include "../../src/Leviathan/input/KeyboardEventActions.h"
-#include "../../src/Leviathan/input/Action.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "irrlicht.h"
 #include <cstdint>
+#include <input/Action.h>
 #include <vector>
 
 TEST_CASE("Keyboard events to actions converter", "[unit]") {

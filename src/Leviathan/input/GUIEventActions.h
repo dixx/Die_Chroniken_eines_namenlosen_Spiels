@@ -7,10 +7,10 @@
 #ifndef LEVIATHAN_INPUT_GUI_EVENT_ACTIONS_CONVERTER_H
 #define LEVIATHAN_INPUT_GUI_EVENT_ACTIONS_CONVERTER_H
 
-#include "Action.h"
 #include "EventToActionConverter.h"
 #include "irrlicht.h"
 #include <cstdint>
+#include <input/Action.h>
 #include <list>
 #include <map>
 #include <string>

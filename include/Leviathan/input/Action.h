@@ -3,14 +3,13 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_INPUT_ACTION_H
-#define LEVIATHAN_INPUT_ACTION_H
+#ifndef LEVIATHAN_PUBLIC_INTERFACES_INPUT_ACTION_H
+#define LEVIATHAN_PUBLIC_INTERFACES_INPUT_ACTION_H
 
 #include <cstdint>
 
 namespace leviathan {
     namespace input {
-
         /*! \brief Aktion, welche von registrierten Konsumenten empfangen werden kann.
          */
         struct Action {

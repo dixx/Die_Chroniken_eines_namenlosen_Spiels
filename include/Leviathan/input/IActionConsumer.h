@@ -3,14 +3,13 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_INPUT_IACTIONCONSUMER_H
-#define LEVIATHAN_INPUT_IACTIONCONSUMER_H
+#ifndef LEVIATHAN_PUBLIC_INTERFACES_INPUT_IACTIONCONSUMER_H
+#define LEVIATHAN_PUBLIC_INTERFACES_INPUT_IACTIONCONSUMER_H
 
-#include "Action.h"
+#include <input/Action.h>
 
 namespace leviathan {
     namespace input {
-
         /*! \interface IActionConsumer
          *  \brief Interface für Konsumenten von Aktionen.
          */

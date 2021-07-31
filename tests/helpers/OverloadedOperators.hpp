@@ -2,9 +2,9 @@
 #define OVERLOADED_OPERATORS_H
 
 #include "../../src/Leviathan/characters/Hero.h"
-#include "../../src/Leviathan/input/Action.h"
 #include "catch.hpp"
 #include "irrlicht.h"
+#include <input/Action.h>
 #include <video/Vector3D.h>
 
 // Some of our user-defined types do not have certain operators, because they would only be used in tests.

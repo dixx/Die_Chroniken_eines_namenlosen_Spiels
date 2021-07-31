@@ -41,10 +41,10 @@ namespace leviathan {
             return true;
         }
 
-        void Actions::loadFromFile(const irr::io::path& fileName) {
+        void Actions::loadFromFile(const char* fileName) {
             _mouseConverter.clear();
             _keyboardConverter.clear();
-            YAML::Node actionMap = YAML::LoadFile(fileName.c_str());
+            YAML::Node actionMap = YAML::LoadFile(fileName);
             for (const auto actionNode : actionMap) {
                 ActionMapping action(actionNode);
                 addMapping(action.id, action.primary);

@@ -1,9 +1,9 @@
 #include "../../src/Leviathan/input/MouseEventActions.h"
-#include "../../src/Leviathan/input/Action.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "irrlicht.h"
 #include <cstdint>
+#include <input/Action.h>
 #include <vector>
 
 TEST_CASE("Mouse events to actions converter", "[unit]") {

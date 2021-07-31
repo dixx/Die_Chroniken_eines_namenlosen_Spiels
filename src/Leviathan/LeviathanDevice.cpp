@@ -98,7 +98,7 @@ namespace leviathan {
         return *mousePointerControl_;
     }
 
-    input::Actions& LeviathanDevice::Actions() {
+    input::IActions& LeviathanDevice::Actions() {
         return actions_;
     }
 

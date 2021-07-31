@@ -21,7 +21,7 @@ void GameStatePlay::draw() {
     gameEngine_.MousePointerControl().draw();
 }
 
-void GameStatePlay::onAction(const leviathan::input::Action& action) {
+void GameStatePlay::onAction(const leviathan::input::Action action) {
     handleHeroMovementActions(action);
     switch (action.id) {
     case actions::OPEN_IN_GAME_OPTIONS: {

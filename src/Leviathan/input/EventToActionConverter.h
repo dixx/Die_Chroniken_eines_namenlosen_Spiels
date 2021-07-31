@@ -7,9 +7,9 @@
 #ifndef LEVIATHAN_INPUT_EVENT_TO_ACTION_CONVERTER_H
 #define LEVIATHAN_INPUT_EVENT_TO_ACTION_CONVERTER_H
 
-#include "Action.h"
 #include "irrlicht.h"
 #include <cstdint>
+#include <input/Action.h>
 #include <list>
 #include <map>
 #include <vector>

@@ -96,7 +96,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf Input-Mappings.
          */
-        input::Actions& Actions();
+        input::IActions& Actions();
 
         /*! \brief Zugriff auf Input-Events.
          */

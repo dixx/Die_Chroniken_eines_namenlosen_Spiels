@@ -10,7 +10,6 @@
 
 namespace leviathan {
     namespace world {
-
         /*! \interface INode3D
          *  \brief Interface für ein 3D-Objekt.
          */

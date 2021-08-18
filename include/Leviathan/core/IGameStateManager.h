@@ -3,8 +3,8 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_PUBLIC_INTERFACES_CORE_GAMESTATEMANAGER_H
-#define LEVIATHAN_PUBLIC_INTERFACES_CORE_GAMESTATEMANAGER_H
+#ifndef LEVIATHAN_PUBLIC_INTERFACES_CORE_IGAMESTATEMANAGER_H
+#define LEVIATHAN_PUBLIC_INTERFACES_CORE_IGAMESTATEMANAGER_H
 
 #include <core/IGameState.h>
 #include <cstdint>
@@ -36,15 +36,6 @@ namespace leviathan {
              *  \param id: Identifikator des gewünschten Zustands
              */
             virtual void transitTo(const uint32_t id) = 0;
-
-            /*! \brief Aktualisiert den momentan aktiven Zustand.
-             *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
-             */
-            virtual void update(const float elapsedSeconds) = 0;
-
-            /*! \brief Zeichnet den momentan aktiven Zustand auf den Bildschirm.
-             */
-            virtual void draw() = 0;
         };
     }
 }

@@ -2,8 +2,8 @@
  *  \brief Bietet Zugriff auf die Darstellung des Mauszeigers.
  *  \note Bestandteil der Leviathan Engine
  */
-#ifndef LEVIATHAN_VIDEO_MOUSEPOINTER_H
-#define LEVIATHAN_VIDEO_MOUSEPOINTER_H
+#ifndef LEVIATHAN_GUI_MOUSEPOINTER_H
+#define LEVIATHAN_GUI_MOUSEPOINTER_H
 
 #include "../core/Logger.h"
 #include "../input/IEventConsumer.h"
@@ -12,6 +12,7 @@
 #include "../video/Textures.h"
 #include "irrlicht.h"
 #include <cstdint>
+#include <gui/IMousePointerControl.h>
 #include <unordered_map>
 
 namespace leviathan {
@@ -20,7 +21,7 @@ namespace leviathan {
         /*! \class MousePointerControl
          *  \brief Bietet Zugriff auf die Darstellung des Mauszeigers
          */
-        class MousePointerControl : public leviathan::input::IEventConsumer {
+        class MousePointerControl final : public IMousePointerControl, public input::IEventConsumer {
         public:
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events
@@ -41,7 +42,7 @@ namespace leviathan {
              *  \param event: Input-Event
              *  \return `true` wenn der Event behandelt werden konnte, ansonsten `false`
              */
-            bool onEvent(const irr::SEvent& event) final;
+            bool onEvent(const irr::SEvent& event);
 
             /*! \brief Erstellt einen anzeigbaren Mauszeiger aus einem Bild.
              *  \param id: ID des Mauszeigers

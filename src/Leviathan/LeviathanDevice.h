@@ -24,6 +24,7 @@
 #include "world/NodeManager.h"
 #include <core/IGameStateManager.h>
 #include <memory>
+#include <world/IGround.h>
 
 #ifndef NDEBUG
 #define LOG_FILE_NAME "game.log"
@@ -109,7 +110,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf begehbaren Boden.
          */
-        world::Ground& Ground();
+        world::IGround& Ground();
 
     private:
         core::Configuration configuration_;

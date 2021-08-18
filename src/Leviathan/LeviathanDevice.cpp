@@ -110,7 +110,7 @@ namespace leviathan {
         return *camera_;
     }
 
-    world::Ground& LeviathanDevice::Ground() {
+    world::IGround& LeviathanDevice::Ground() {
         return *ground_;
     }
 }

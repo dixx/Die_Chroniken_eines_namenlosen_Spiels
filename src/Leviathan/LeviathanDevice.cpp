@@ -74,7 +74,7 @@ namespace leviathan {
         return timeControl_;
     }
 
-    core::Configuration& LeviathanDevice::Configuration() {
+    core::IConfiguration& LeviathanDevice::Configuration() {
         return configuration_;
     }
 

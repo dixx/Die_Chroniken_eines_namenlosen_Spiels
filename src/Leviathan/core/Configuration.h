@@ -7,10 +7,10 @@
 #define LEVIATHAN_CORE_CONFIGURATION_H
 
 #include "../support/MapWithDefault.h"
-#include "../video/types.h"
 #include "Logger.h"
 #include "irrlicht.h"
 #include "yaml-cpp/yaml.h"
+#include <core/IConfiguration.h>
 #include <cstdint>
 #include <string>
 
@@ -20,7 +20,7 @@ namespace leviathan {
         /*! \class Configuration Configuration.h "Configuration.h"
          *  \brief Enthält Funktionen zum Lesen und Schreiben von Konfig-Dateien sowie zum Verändern von Werten.
          */
-        class Configuration {
+        class Configuration final : public IConfiguration {
         public:
             /*! \brief Konstruktor mit Konfigurationsdatei.
              *  \param filename: Konfigdateiname

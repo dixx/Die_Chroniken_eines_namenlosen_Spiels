@@ -9,6 +9,7 @@
 #include "../video/types.h"
 #include "irrlicht.h"
 #include <string>
+#include <video/Dimension2D.h>
 
 namespace leviathan {
     namespace gui {

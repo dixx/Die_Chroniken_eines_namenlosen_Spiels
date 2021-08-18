@@ -23,6 +23,7 @@
 #include "world/Ground.h"
 #include "world/NodeManager.h"
 #include <characters/IHeroes.h>
+#include <core/IConfiguration.h>
 #include <core/IGameStateManager.h>
 #include <gui/IMousePointerControl.h>
 #include <memory>
@@ -80,7 +81,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf die aktuelle Konfiguration.
          */
-        core::Configuration& Configuration();
+        core::IConfiguration& Configuration();
 
         /*! \brief Zugriff auf die Verwaltung der Spielzustände.
          */

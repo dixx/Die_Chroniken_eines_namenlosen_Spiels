@@ -11,7 +11,7 @@ int main() {
         leviathan::LeviathanDevice gameEngine("./config.yaml");
         gameEngine.Actions().loadFromFile("./action_mappings.yaml");
 
-        leviathan::core::GameStateManager& game = gameEngine.GameStateManager();
+        leviathan::core::IGameStateManager& game = gameEngine.GameStateManager();
         GameStateMainMenu mainMenu(gameEngine);
         game.add(mainMenu, STATE_MAIN_MENU);
         GameStateLoadGame load(gameEngine);

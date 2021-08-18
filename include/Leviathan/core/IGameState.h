@@ -3,8 +3,8 @@
  *  \note Bestandteil der Leviathan Engine
  */
 
-#ifndef LEVIATHAN_CORE_IGAMESTATE_H
-#define LEVIATHAN_CORE_IGAMESTATE_H
+#ifndef LEVIATHAN_PUBLIC_INTERFACES_CORE_IGAMESTATE_H
+#define LEVIATHAN_PUBLIC_INTERFACES_CORE_IGAMESTATE_H
 
 namespace leviathan {
     namespace core {

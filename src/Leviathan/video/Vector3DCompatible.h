@@ -1,4 +1,4 @@
-/*! \file types.h
+/*! \file Vector3DCompatible.h
  *  \brief Hilfsobjekt für generische 3D-Vektoren, kann sich in Irrlicht-Vektor konvertieren.
  *  \note Bestandteil der Leviathan Engine
  */

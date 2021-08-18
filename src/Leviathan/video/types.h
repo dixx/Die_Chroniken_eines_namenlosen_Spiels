@@ -10,14 +10,6 @@
 
 namespace leviathan {
     namespace video {
-
-        /*! \brief Hilfsobjekt für Ausdehnungen in Länge und Breite.
-         */
-        struct Dimension2D {
-            uint32_t w = 0;  //!< Breite in Pixeln
-            uint32_t h = 0;  //!< Höhe in Pixeln
-        };
-
         /*! \brief Hilfsobjekt für eine pixelbezogene 2D-Position.
          */
         struct Position2D {

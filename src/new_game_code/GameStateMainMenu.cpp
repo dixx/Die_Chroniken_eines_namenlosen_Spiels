@@ -1,7 +1,7 @@
 #include "GameStateMainMenu.h"
 #include "defines.h"
-#include <characters/CharacterConfiguration.h>
 #include <cstdint>
+#include <video/Dimension2D.h>
 
 GameStateMainMenu::GameStateMainMenu(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
     gameEngine_.MousePointerControl().createMousePointer(

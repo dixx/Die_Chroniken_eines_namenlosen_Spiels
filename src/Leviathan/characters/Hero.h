@@ -2,9 +2,10 @@
  *  \brief Ein Held.
  */
 
-#ifndef LEVIATHAN_GAME_HERO_H
-#define LEVIATHAN_GAME_HERO_H
+#ifndef LEVIATHAN_CHARACTERS_HERO_H
+#define LEVIATHAN_CHARACTERS_HERO_H
 
+#include <characters/IHero.h>
 #include <string>
 #include <video/Vector3D.h>
 
@@ -20,7 +21,7 @@ namespace leviathan {
         /*! \class Hero Hero.h "Hero.h"
          *  \brief Diese Klasse bildet einen Helden ab.
          */
-        class Hero {
+        class Hero final : public IHero {
         public:
             /*! \brief Konstruktor
              *  \param characterConfig: Konfiguration des Helden-Szenenknotens

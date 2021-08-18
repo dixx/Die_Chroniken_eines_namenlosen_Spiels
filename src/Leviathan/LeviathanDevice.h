@@ -22,6 +22,7 @@
 #include "video/Textures.h"
 #include "world/Ground.h"
 #include "world/NodeManager.h"
+#include <characters/IHeroes.h>
 #include <core/IGameStateManager.h>
 #include <memory>
 #include <world/IGround.h>
@@ -66,7 +67,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf die Helden.
          */
-        characters::Heroes& Heroes();
+        characters::IHeroes& Heroes();
 
         /*! \brief Zugriff auf die TimeControl Instanz.
          */

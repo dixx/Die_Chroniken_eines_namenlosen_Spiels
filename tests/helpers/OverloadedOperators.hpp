@@ -1,9 +1,9 @@
 #ifndef OVERLOADED_OPERATORS_H
 #define OVERLOADED_OPERATORS_H
 
-#include "../../src/Leviathan/characters/Hero.h"
 #include "catch.hpp"
 #include "irrlicht.h"
+#include <characters/IHero.h>
 #include <input/Action.h>
 #include <video/Vector3D.h>
 
@@ -13,7 +13,7 @@ inline bool operator==(const leviathan::input::Action& lhs, const leviathan::inp
     return lhs.id == rhs.id && lhs.isActive == rhs.isActive;
 }
 
-inline bool operator==(const leviathan::characters::Hero& lhs, const leviathan::characters::Hero& rhs) {
+inline bool operator==(const leviathan::characters::IHero& lhs, const leviathan::characters::IHero& rhs) {
     return lhs.getInternalName() == rhs.getInternalName();
 }
 

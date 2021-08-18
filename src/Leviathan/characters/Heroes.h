@@ -2,10 +2,12 @@
  *  \brief Erstellen und Verwalten von Helden.
  */
 
-#ifndef LEVIATHAN_GAME_HEROES_H
-#define LEVIATHAN_GAME_HEROES_H
+#ifndef LEVIATHAN_CHARACTERS_HEROES_H
+#define LEVIATHAN_CHARACTERS_HEROES_H
 
 #include "Hero.h"
+#include <characters/IHero.h>
+#include <characters/IHeroes.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -21,7 +23,7 @@ namespace leviathan {
         /*! \class Heroes Heroes.h "Heroes.h"
          *  \brief Diese Klasse enthält Funktionen zum Erstellen und Verwalten von Helden.
          */
-        class Heroes {
+        class Heroes final : public IHeroes {
         public:
             /*! \brief Konstruktor
              *  \param nodeManager: Instanz der 3D-Szenenknoten-Verwaltung
@@ -35,7 +37,7 @@ namespace leviathan {
             /*! \brief Erzeugt einen neuen Helden und gibt ihn zurück.
              *  \param characterConfig: Konfiguration des Helden-Szenenknotens
              */
-            Hero& create(const CharacterConfiguration& characterConfig);
+            IHero& create(const CharacterConfiguration& characterConfig);
 
             /*! \brief Aktiviert den gewünschten Helden und deaktiviert den vorher aktiven Helden.
              *  \param internalName: interner Name des neuen Helden
@@ -44,7 +46,7 @@ namespace leviathan {
 
             /*! \brief Gibt den aktiven Helden zurück.
              */
-            Hero& getActiveHero();
+            IHero& getActiveHero();
 
         private:
             world::NodeManager& nodeManager_;

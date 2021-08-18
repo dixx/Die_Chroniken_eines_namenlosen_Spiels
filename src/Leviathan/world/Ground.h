@@ -6,6 +6,7 @@
 #ifndef LEVIATHAN_WORLD_GROUND_H
 #define LEVIATHAN_WORLD_GROUND_H
 
+#include <world/IGround.h>
 #include <world/Node3DConfiguration.h>
 
 namespace leviathan {
@@ -15,7 +16,7 @@ namespace leviathan {
         /*! \class Ground
          *  \brief Bietet Zugriff auf begehbaren Boden
          */
-        class Ground {
+        class Ground final : public IGround {
         public:
             /*! \brief Konstruktor mit Konfiguration.
              *  \param nodeManager: Instanz der 3D-Szenenknoten-Verwaltung

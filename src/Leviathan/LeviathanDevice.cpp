@@ -94,7 +94,7 @@ namespace leviathan {
         return *menuControl_;
     }
 
-    gui::MousePointerControl& LeviathanDevice::MousePointerControl() {
+    gui::IMousePointerControl& LeviathanDevice::MousePointerControl() {
         return *mousePointerControl_;
     }
 

@@ -24,6 +24,7 @@
 #include "world/NodeManager.h"
 #include <characters/IHeroes.h>
 #include <core/IGameStateManager.h>
+#include <gui/IMousePointerControl.h>
 #include <memory>
 #include <world/IGround.h>
 
@@ -95,7 +96,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf Mauszeiger.
          */
-        gui::MousePointerControl& MousePointerControl();
+        gui::IMousePointerControl& MousePointerControl();
 
         /*! \brief Zugriff auf Input-Mappings.
          */

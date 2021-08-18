@@ -5,6 +5,7 @@
 #include "catch.hpp"
 #include "irrlicht.h"
 #include <characters/CharacterConfiguration.h>
+#include <characters/IHero.h>
 
 TEST_CASE("Heroes", "[integration]") {
     leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager());
@@ -23,9 +24,9 @@ TEST_CASE("Heroes", "[integration]") {
 
     SECTION("can activate one hero") {
         heroConfig.internalName = "John Doe";
-        auto someHero = subject.create(heroConfig);
+        leviathan::characters::IHero& someHero = subject.create(heroConfig);
         heroConfig.internalName = "Jane Doe";
-        auto anotherHero = subject.create(heroConfig);
+        leviathan::characters::IHero& anotherHero = subject.create(heroConfig);
 
         subject.activate("John Doe");
         REQUIRE(subject.getActiveHero() == someHero);

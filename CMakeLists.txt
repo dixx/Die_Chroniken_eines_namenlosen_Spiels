@@ -14,6 +14,8 @@ set(RESOURCES_DIR "${PROJECT_SOURCE_DIR}/data")
 set(PUBLIC_INTERFACES "${PROJECT_SOURCE_DIR}/include/Leviathan")
 set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/characters/CharacterConfiguration.h
+  ${PUBLIC_INTERFACES}/characters/IHero.h
+  ${PUBLIC_INTERFACES}/characters/IHeroes.h
   ${PUBLIC_INTERFACES}/core/IGameState.h
   ${PUBLIC_INTERFACES}/core/IGameStateManager.h
   ${PUBLIC_INTERFACES}/input/Action.h

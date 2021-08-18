@@ -86,7 +86,7 @@ namespace leviathan {
         return randomizer_;
     }
 
-    characters::Heroes& LeviathanDevice::Heroes() {
+    characters::IHeroes& LeviathanDevice::Heroes() {
         return *heroes_;
     }
 

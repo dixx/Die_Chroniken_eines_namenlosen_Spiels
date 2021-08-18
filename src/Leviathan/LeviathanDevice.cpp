@@ -78,7 +78,7 @@ namespace leviathan {
         return configuration_;
     }
 
-    core::GameStateManager& LeviathanDevice::GameStateManager() {
+    core::IGameStateManager& LeviathanDevice::GameStateManager() {
         return gameStateManager_;
     }
 

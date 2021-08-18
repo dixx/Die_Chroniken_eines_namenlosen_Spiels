@@ -8,6 +8,7 @@
 
 #include "Logger.h"
 #include <core/IGameState.h>
+#include <core/IGameStateManager.h>
 #include <cstdint>
 #include <list>
 #include <map>
@@ -18,7 +19,7 @@ namespace leviathan {
         /*! \class GameStateManager GameStateManager.h "GameStateManager.h"
          *  \brief Verwaltung der verschiedenen Zustände des Spiels.
          */
-        class GameStateManager {
+        class GameStateManager : public IGameStateManager {
         public:
             /*! \brief Konstruktor.
              *  \param logger: Instanz eines Loggers
@@ -41,7 +42,7 @@ namespace leviathan {
              *  \param gameState: zu verwaltender Spielzustand
              *  \param id: Identifikator für späteren Zugriff auf den Zustand
              */
-            void add(IGameState& gameState, const uint32_t id);
+            void add(IGameState& gameState, const uint32_t id) final;
 
             /*! \brief Wechselt zum Spielzustand welcher unter dieser ID abgelegt wurde.
              *  \note Zustände werden übereinander auf einen Stack gelegt.
@@ -51,16 +52,16 @@ namespace leviathan {
              *        Ist der Zustand bereits aktiv, oder weiter unten im Stack, findet kein Transit statt.
              *  \param id: Identifikator des gewünschten Zustands
              */
-            void transitTo(const uint32_t id);
+            void transitTo(const uint32_t id) final;
 
             /*! \brief Aktualisiert den momentan aktiven Zustand.
              *  \param elapsedSeconds: Dauer des letzten Frames in Sekunden
              */
-            void update(const float elapsedSeconds);
+            void update(const float elapsedSeconds) final;
 
             /*! \brief Zeichnet den momentan aktiven Zustand auf den Bildschirm.
              */
-            void draw();
+            void draw() final;
 
             /*! \brief Gibt die ID des aktiven Zustands zurück.
              *  \note Gibt 0xffffffff zurück wenn kein Zustand aktiv ist.

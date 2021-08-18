@@ -22,6 +22,7 @@
 #include "video/Textures.h"
 #include "world/Ground.h"
 #include "world/NodeManager.h"
+#include <core/IGameStateManager.h>
 #include <memory>
 
 #ifndef NDEBUG
@@ -80,7 +81,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf die Verwaltung der Spielzustände.
          */
-        core::GameStateManager& GameStateManager();
+        core::IGameStateManager& GameStateManager();
 
         /*! \brief Zugriff auf den Zufallszahlengenerator.
          */

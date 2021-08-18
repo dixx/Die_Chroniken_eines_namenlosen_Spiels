@@ -33,7 +33,7 @@ namespace leviathan {
             Heroes& operator=(const Heroes&) = delete;
 
             /*! \brief Erzeugt einen neuen Helden und gibt ihn zurück.
-             *  \param internalName: interner Name des neuen Helden
+             *  \param characterConfig: Konfiguration des Helden-Szenenknotens
              */
             Hero& create(const CharacterConfiguration& characterConfig);
 

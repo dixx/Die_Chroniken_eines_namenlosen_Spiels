@@ -25,6 +25,7 @@
 #include <characters/IHeroes.h>
 #include <core/IConfiguration.h>
 #include <core/IGameStateManager.h>
+#include <gui/IMenuControl.h>
 #include <gui/IMousePointerControl.h>
 #include <memory>
 #include <world/IGround.h>
@@ -93,7 +94,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf Erstellen und Verwalten von Menüs.
          */
-        gui::MenuControl& MenuControl();
+        gui::IMenuControl& MenuControl();
 
         /*! \brief Zugriff auf Mauszeiger.
          */

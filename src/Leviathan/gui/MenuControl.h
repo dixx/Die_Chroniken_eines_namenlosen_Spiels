@@ -11,7 +11,7 @@
 #include "../video/Textures.h"
 #include "Menu.h"
 #include "irrlicht.h"
-#include "types.h"
+#include <gui/IMenuControl.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -22,7 +22,7 @@ namespace leviathan {
         /*! \class MenuControl MenuControl.h "MenuControl.h"
          *  \brief Diese Klasse enthält Funktionen zum Erstellen und Verwalten von Menüs.
          */
-        class MenuControl : public input::IEventConsumer {
+        class MenuControl final : public IMenuControl, public input::IEventConsumer {
         public:
             /*! \brief Konstruktor.
              *  \param guiEnv: Zeiger auf die GUI-Umgebung der Graphic Engine

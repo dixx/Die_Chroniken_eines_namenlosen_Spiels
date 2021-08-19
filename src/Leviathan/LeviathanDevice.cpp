@@ -90,7 +90,7 @@ namespace leviathan {
         return *heroes_;
     }
 
-    gui::MenuControl& LeviathanDevice::MenuControl() {
+    gui::IMenuControl& LeviathanDevice::MenuControl() {
         return *menuControl_;
     }
 

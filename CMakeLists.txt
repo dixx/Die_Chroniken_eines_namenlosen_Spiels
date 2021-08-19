@@ -19,11 +19,13 @@ set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/core/IConfiguration.h
   ${PUBLIC_INTERFACES}/core/IGameState.h
   ${PUBLIC_INTERFACES}/core/IGameStateManager.h
+  ${PUBLIC_INTERFACES}/gui/IMenuControl.h
   ${PUBLIC_INTERFACES}/gui/IMousePointerControl.h
   ${PUBLIC_INTERFACES}/input/Action.h
   ${PUBLIC_INTERFACES}/input/IActionConsumer.h
   ${PUBLIC_INTERFACES}/input/IActions.h
   ${PUBLIC_INTERFACES}/video/Dimension2D.h
+  ${PUBLIC_INTERFACES}/video/Position2D.h
   ${PUBLIC_INTERFACES}/video/Vector3D.h
   ${PUBLIC_INTERFACES}/world/INode3D.h
   ${PUBLIC_INTERFACES}/world/IGround.h

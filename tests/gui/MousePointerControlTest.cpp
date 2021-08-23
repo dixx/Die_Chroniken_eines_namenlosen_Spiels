@@ -82,7 +82,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
         SECTION("gets updated when the mouse is moved") {
             videoDriverMock.ClearInvocationHistory();
 
-            subject.createMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(0, 0));
+            subject.addMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(0, 0));
             subject.setActiveMousPointer(1);
             subject.draw();
             Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
@@ -102,7 +102,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
 
     SECTION("creation") {
         SECTION("can create a mouse pointer from image") {
-            subject.createMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
+            subject.addMousePointer(1, "test.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
 
             SECTION("with color key transparency") {
                 Verify(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs)
@@ -112,7 +112,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
 
             SECTION("but will not overwrite an existing mouse pointer") {
                 videoDriverMock.ClearInvocationHistory();
-                subject.createMousePointer(
+                subject.addMousePointer(
                     1, "test2.png", irr::core::recti(40, 40, 80, 80), irr::core::vector2di(10, 10));
                 subject.setActiveMousPointer(1);
                 subject.draw();
@@ -126,7 +126,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
             SECTION("and creates no mouse arrow on error") {
                 videoDriverMock.ClearInvocationHistory();
                 When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).Return(nullptr);
-                subject.createMousePointer(
+                subject.addMousePointer(
                     2, "unknown_image.png", irr::core::recti(0, 0, 40, 40), irr::core::vector2di(20, 20));
                 subject.setActiveMousPointer(2);
                 subject.draw();
@@ -136,8 +136,8 @@ TEST_CASE("MousePointerControl", "[unit]") {
     }
 
     SECTION("display") {
-        subject.createMousePointer(1, "test.png", irr::core::recti(40, 40, 80, 80), irr::core::vector2di(20, 20));
-        subject.createMousePointer(2, "test.png", irr::core::recti(130, 130, 140, 140), irr::core::vector2di(2, 4));
+        subject.addMousePointer(1, "test.png", irr::core::recti(40, 40, 80, 80), irr::core::vector2di(20, 20));
+        subject.addMousePointer(2, "test.png", irr::core::recti(130, 130, 140, 140), irr::core::vector2di(2, 4));
         videoDriverMock.ClearInvocationHistory();
 
         SECTION("draws the current mouse pointer") {

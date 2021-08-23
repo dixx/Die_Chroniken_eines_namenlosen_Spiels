@@ -4,10 +4,10 @@ namespace leviathan {
     namespace core {
         Configuration::Configuration(const char* fileName) {
             params_.LoggingLevel = irr::ELL_WARNING;
-            readFromFile(fileName);
+            loadFromFile(fileName);
         }
 
-        void Configuration::readFromFile(const char* fileName) {
+        void Configuration::loadFromFile(const char* fileName) {
             YAML::Node content;
             try {
                 content = YAML::LoadFile(fileName);

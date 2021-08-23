@@ -13,7 +13,7 @@ namespace leviathan {
             unloadGround();
         }
 
-        Character& NodeManager::addHeroNode(const characters::CharacterConfiguration& characterConfig) {
+        Character& NodeManager::createHeroNode(const characters::CharacterConfiguration& characterConfig) {
             heroNodes_.emplace_back(std::make_unique<Character>(characterConfig, sceneManager_));
             return *(heroNodes_.back());
         }

@@ -39,7 +39,7 @@ TEST_CASE("Configuration: read values", "[unit]") {
 
         SECTION("reading again overwrites changes") {
             TestHelper::writeFile(configFileName, "---\nvideo:\n  screen_x: 1024\n");
-            subject.readFromFile(configFileName);
+            subject.loadFromFile(configFileName);
             REQUIRE(subject.getGraphicEngineParams().WindowSize.Width == 1024);
         }
     }

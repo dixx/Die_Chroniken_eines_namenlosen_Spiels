@@ -6,7 +6,7 @@
 #include <video/Position2D.h>
 
 GameStateMainMenu::GameStateMainMenu(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
-    gameEngine_.MousePointerControl().createMousePointer(
+    gameEngine_.MousePointerControl().addMousePointer(
         1, "gfx/Mauszeiger.bmp", irr::core::recti(0, 0, 60, 60), irr::core::vector2di(30, 30));
 
     const leviathan::video::Dimension2D screenSize = gameEngine_.Configuration().getScreenSize();

@@ -21,7 +21,7 @@ TEST_CASE("NodeManager", "[integration]") {
     leviathan::world::NodeManager subject(TestHelper::graphicEngine()->getSceneManager());
 
     SECTION("add hero objects") {
-        subject.addHeroNode(heroConfig);
+        subject.createHeroNode(heroConfig);
         auto irrlichtNode = TestHelper::graphicEngine()->getSceneManager()->getSceneNodeFromType(
             irr::scene::ESNT_ANIMATED_MESH);
         REQUIRE(irrlichtNode != nullptr);
@@ -40,7 +40,7 @@ TEST_CASE("NodeManager", "[integration]") {
         }
 
         SECTION("objects are unique") {
-            subject.addHeroNode(heroConfig);
+            subject.createHeroNode(heroConfig);
             irr::core::array<irr::scene::ISceneNode*> nodes;
             TestHelper::graphicEngine()->getSceneManager()->getSceneNodesFromType(
                 irr::scene::ESNT_ANIMATED_MESH, nodes);
@@ -77,7 +77,7 @@ TEST_CASE("NodeManager", "[integration]") {
     }
 
     SECTION("unload all heroes") {
-        subject.addHeroNode(heroConfig);
+        subject.createHeroNode(heroConfig);
         subject.unloadHeroes();
         irr::core::array<irr::scene::ISceneNode*> nodes;
         TestHelper::graphicEngine()->getSceneManager()->getSceneNodesFromType(irr::scene::ESNT_ANIMATED_MESH, nodes);

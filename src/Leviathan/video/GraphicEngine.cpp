@@ -27,7 +27,10 @@ namespace leviathan {
 
         GraphicEngine::~GraphicEngine() {
             if (!useExternalGraphicEngine && graphicEngine_) {
-                graphicEngine_->drop();
+                // With the current static LeviathanDevice instance, when using DIRECT3D driver,
+                // the graphicEngine->drop() call does not return and prevents the application from closing.
+                // TODO: try again with irrlicht > 1.8.4
+                if (getVideoDriver()->getDriverType() != irr::video::EDT_DIRECT3D9) graphicEngine_->drop();
                 graphicEngine_ = nullptr;
             }
         }

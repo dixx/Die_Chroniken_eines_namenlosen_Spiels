@@ -1,11 +1,12 @@
 #ifndef GAMESTATESHUTDOWN_H
 #define GAMESTATESHUTDOWN_H
 
-#include "leviathan.h"
+#include <ILeviathanDevice.h>
+#include <core/IGameState.h>
 
 class GameStateShutdown final : public leviathan::core::IGameState {
 public:
-    explicit GameStateShutdown(leviathan::LeviathanDevice& gameEngine);
+    explicit GameStateShutdown(leviathan::ILeviathanDevice& gameEngine);
     virtual ~GameStateShutdown();
     GameStateShutdown(const GameStateShutdown&) = delete;
     GameStateShutdown& operator=(const GameStateShutdown&) = delete;
@@ -19,7 +20,7 @@ public:
     void setInactive();
 
 private:
-    leviathan::LeviathanDevice& gameEngine_;
+    leviathan::ILeviathanDevice& gameEngine_;
 };
 
 #endif

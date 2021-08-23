@@ -1,7 +1,7 @@
 #include "GameStateLoadGame.h"
 #include "defines.h"
 
-GameStateLoadGame::GameStateLoadGame(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {}
+GameStateLoadGame::GameStateLoadGame(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {}
 
 GameStateLoadGame::~GameStateLoadGame() {}
 

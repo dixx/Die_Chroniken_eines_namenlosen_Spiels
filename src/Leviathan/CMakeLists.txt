@@ -33,6 +33,7 @@ target_sources(${PROJECT_NAME}
     world/GroundTile.cpp
     world/NodeManager.cpp
     LeviathanDevice.cpp
+    leviathan.cpp
     ${PUBLIC_HEADER_FILES}
 )
 target_include_directories(${PROJECT_NAME}

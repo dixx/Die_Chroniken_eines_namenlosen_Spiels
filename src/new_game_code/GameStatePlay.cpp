@@ -1,7 +1,7 @@
 #include "GameStatePlay.h"
 #include "defines.h"
 
-GameStatePlay::GameStatePlay(leviathan::LeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
+GameStatePlay::GameStatePlay(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
     gameEngine_.MousePointerControl().createMousePointer(
         2001, "gfx/Mauszeiger.bmp", irr::core::recti(0, 61, 60, 120), irr::core::vector2di(30, 30));
 

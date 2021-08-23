@@ -1,4 +1,4 @@
-include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}" "${PUBLIC_INTERFACES}")
+include_directories("${PUBLIC_INTERFACES}")
 
 add_executable(neues_spiel
   GameStateLoadGame.cpp

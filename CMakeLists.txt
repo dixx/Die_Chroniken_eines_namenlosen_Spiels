@@ -13,6 +13,8 @@ set(RESOURCES_DIR "${PROJECT_SOURCE_DIR}/data")
 
 set(PUBLIC_INTERFACES "${PROJECT_SOURCE_DIR}/include/Leviathan")
 set(PUBLIC_HEADER_FILES
+  ${PUBLIC_INTERFACES}/leviathan.h
+  ${PUBLIC_INTERFACES}/ILeviathanDevice.h
   ${PUBLIC_INTERFACES}/characters/CharacterConfiguration.h
   ${PUBLIC_INTERFACES}/characters/IHero.h
   ${PUBLIC_INTERFACES}/characters/IHeroes.h

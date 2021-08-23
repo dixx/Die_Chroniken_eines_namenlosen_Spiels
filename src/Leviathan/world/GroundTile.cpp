@@ -11,11 +11,9 @@ namespace leviathan {
         GroundTile::GroundTile(const Node3DConfiguration& tileConfig, irr::scene::ISceneManager* sceneManager)
         : sceneManager_(sceneManager) {
             irr::scene::IMesh* mesh = sceneManager_->getMesh(tileConfig.meshFileName.c_str());
-            mesh->grab();
             transformMesh(mesh, tileConfig);
             video::MeshHelper::pushMeshToVRAM(mesh);
             tileNode_ = sceneManager_->addMeshSceneNode(mesh);
-            mesh->drop();
             video::Vector3DCompatible position = tileConfig.position;
             // TODO: replace with video::Textures.get
             irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(

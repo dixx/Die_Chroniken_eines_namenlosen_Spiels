@@ -22,11 +22,13 @@
 #include "video/Textures.h"
 #include "world/Ground.h"
 #include "world/NodeManager.h"
+#include <ILeviathanDevice.h>
 #include <characters/IHeroes.h>
 #include <core/IConfiguration.h>
 #include <core/IGameStateManager.h>
 #include <gui/IMenuControl.h>
 #include <gui/IMousePointerControl.h>
+#include <input/IActions.h>
 #include <memory>
 #include <world/IGround.h>
 
@@ -41,7 +43,7 @@ namespace leviathan {
     /*! \class LeviathanDevice LeviathanDevice.h "LeviathanDevice.h"
      *  \brief Die eigentliche Engine.
      */
-    class LeviathanDevice {
+    class LeviathanDevice final : public ILeviathanDevice {
     public:
         /*! \brief Konstruktor. Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
          *         der Engine.

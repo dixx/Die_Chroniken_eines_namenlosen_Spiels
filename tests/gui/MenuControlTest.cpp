@@ -57,9 +57,8 @@ TEST_CASE("MenuControl", "[unit]") {
         Fake(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs));
         When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(nullptr);
         When(OverloadedMethod(videoDriverMock, addTexture, addTextureArgs)).AlwaysReturn(nullptr);
-        mocks::IImageMock* image = new mocks::IImageMock();
-        image->grab();
-        When(OverloadedMethod(videoDriverMock, createImage, createImageArgs)).AlwaysReturn(image);
+        mocks::IImageMock image;
+        When(OverloadedMethod(videoDriverMock, createImage, createImageArgs)).AlwaysReturn(&image);
         When(Method(guiEnvironmentMock, addModalScreen)).Return(&menu);
 
         leviathan::gui::MenuControl subject(

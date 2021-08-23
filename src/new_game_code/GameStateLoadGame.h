@@ -15,10 +15,6 @@ public:
 
     void draw();
 
-    void setActive();
-
-    void setInactive();
-
 private:
     leviathan::ILeviathanDevice& gameEngine_;
     bool fullyLoaded = false;

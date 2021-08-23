@@ -24,9 +24,9 @@ public:
 
     void draw();
 
-    void setActive();
+    void setActive() override;
 
-    void setInactive();
+    void setInactive() override;
 
     void onAction(const leviathan::input::Action action);
 

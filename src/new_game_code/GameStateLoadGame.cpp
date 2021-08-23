@@ -19,7 +19,3 @@ void GameStateLoadGame::update(const float elapsedSeconds) {
 }
 
 void GameStateLoadGame::draw() {}
-
-void GameStateLoadGame::setActive() {}
-
-void GameStateLoadGame::setInactive() {}

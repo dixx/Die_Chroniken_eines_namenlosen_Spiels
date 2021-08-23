@@ -11,7 +11,3 @@ void GameStateShutdown::update(const float elapsedSeconds) {
 }
 
 void GameStateShutdown::draw() {}
-
-void GameStateShutdown::setActive() {}
-
-void GameStateShutdown::setInactive() {}

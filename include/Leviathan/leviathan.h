@@ -3,13 +3,16 @@
  *         Dies ist der einzige Header der inkludiert werden muss.
  */
 
-#ifndef LEVIATHAN_H
-#define LEVIATHAN_H
+#ifndef LEVIATHAN_PUBLIC_INTERFACES_LEVIATHAN_H
+#define LEVIATHAN_PUBLIC_INTERFACES_LEVIATHAN_H
 
-#include "LeviathanDevice.h"
+#include <ILeviathanDevice.h>
 
 //! Alle bedienbaren Teile der Leviathan Game Engine findest du hier.
 namespace leviathan {
+
+    //! Hilfsklassen für Helden und NPCs
+    namespace characters {}
 
     //! Grundlegende Bestandteile der Engine.
     namespace core {}
@@ -25,6 +28,12 @@ namespace leviathan {
 
     //! Hilfsklassen für die Spielwelt
     namespace world {}
+
+    /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
+     *         der Engine.
+     *  \param filename: Konfigdateiname
+     */
+    ILeviathanDevice& createDevice(const char* fileName);
 }
 
 #endif

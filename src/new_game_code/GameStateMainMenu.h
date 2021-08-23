@@ -1,7 +1,10 @@
 #ifndef GAMESTATEMAINMENU_H
 #define GAMESTATEMAINMENU_H
 
-#include "leviathan.h"
+#include <ILeviathanDevice.h>
+#include <core/IGameState.h>
+#include <input/Action.h>
+#include <input/IActionConsumer.h>
 
 class GameStateMainMenu final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 public:
@@ -12,7 +15,7 @@ public:
         INVALID  // helpful for looping over all actions
     };
 
-    explicit GameStateMainMenu(leviathan::LeviathanDevice& gameEngine);
+    explicit GameStateMainMenu(leviathan::ILeviathanDevice& gameEngine);
     virtual ~GameStateMainMenu();
     GameStateMainMenu(const GameStateMainMenu&) = delete;
     GameStateMainMenu& operator=(const GameStateMainMenu&) = delete;
@@ -28,7 +31,7 @@ public:
     void onAction(const leviathan::input::Action action);
 
 private:
-    leviathan::LeviathanDevice& gameEngine_;
+    leviathan::ILeviathanDevice& gameEngine_;
 };
 
 #endif

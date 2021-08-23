@@ -1,7 +1,10 @@
 #ifndef GAMESTATEPLAY_H
 #define GAMESTATEPLAY_H
 
-#include "leviathan.h"
+#include <ILeviathanDevice.h>
+#include <core/IGameState.h>
+#include <input/Action.h>
+#include <input/IActionConsumer.h>
 
 class GameStatePlay final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 public:
@@ -15,7 +18,7 @@ public:
         HERO_MOVE_RIGHT
     };
 
-    explicit GameStatePlay(leviathan::LeviathanDevice& gameEngine);
+    explicit GameStatePlay(leviathan::ILeviathanDevice& gameEngine);
     virtual ~GameStatePlay();
     GameStatePlay(const GameStatePlay&) = delete;
     GameStatePlay& operator=(const GameStatePlay&) = delete;
@@ -31,7 +34,7 @@ public:
     void onAction(const leviathan::input::Action action);
 
 private:
-    leviathan::LeviathanDevice& gameEngine_;
+    leviathan::ILeviathanDevice& gameEngine_;
 
     void handleHeroMovementActions(const leviathan::input::Action& action);
     void moveHero(float x, float z);

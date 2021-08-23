@@ -1,11 +1,12 @@
 #ifndef GAMESTATE_LOAD_GAME_H
 #define GAMESTATE_LOAD_GAME_H
 
-#include "leviathan.h"
+#include <ILeviathanDevice.h>
+#include <core/IGameState.h>
 
 class GameStateLoadGame final : public leviathan::core::IGameState {
 public:
-    explicit GameStateLoadGame(leviathan::LeviathanDevice& gameEngine);
+    explicit GameStateLoadGame(leviathan::ILeviathanDevice& gameEngine);
     virtual ~GameStateLoadGame();
     GameStateLoadGame(const GameStateLoadGame&) = delete;
     GameStateLoadGame& operator=(const GameStateLoadGame&) = delete;
@@ -19,7 +20,7 @@ public:
     void setInactive();
 
 private:
-    leviathan::LeviathanDevice& gameEngine_;
+    leviathan::ILeviathanDevice& gameEngine_;
     bool fullyLoaded = false;
 };
 

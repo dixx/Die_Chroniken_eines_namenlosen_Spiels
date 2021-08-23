@@ -3,12 +3,14 @@
 #include "GameStatePlay.h"
 #include "GameStateShutdown.h"
 #include "defines.h"
-#include "leviathan.h"
-#include <exception>
+#include <ILeviathanDevice.h>
+#include <core/IGameStateManager.h>
+#include <leviathan.h>
+#include <stdexcept>
 
 int main() {
     try {
-        leviathan::LeviathanDevice gameEngine("./config.yaml");
+        leviathan::ILeviathanDevice& gameEngine = leviathan::createDevice("./config.yaml");
         gameEngine.Actions().loadFromFile("./action_mappings.yaml");
 
         leviathan::core::IGameStateManager& game = gameEngine.GameStateManager();

@@ -46,7 +46,7 @@ namespace leviathan {
             NodeManager& operator=(const NodeManager&) = delete;
             NodeManager& operator=(NodeManager&&) = delete;
 
-            Character& addHeroNode(const characters::CharacterConfiguration& characterConfig);
+            Character& createHeroNode(const characters::CharacterConfiguration& characterConfig);
 
             void addGroundTile(const Node3DConfiguration& nodeConfig);
 

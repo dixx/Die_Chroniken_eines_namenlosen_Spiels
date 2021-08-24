@@ -6,7 +6,7 @@
 namespace leviathan {
     namespace characters {
         Hero::Hero(const CharacterConfiguration& characterConfig, world::NodeManager& nodeManager)
-        : node_(nodeManager.addHeroNode(characterConfig)) {}
+        : node_(nodeManager.createHeroNode(characterConfig)) {}
 
         void Hero::enablePlayableCharacter() {
             node_.setVisible();

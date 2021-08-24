@@ -38,7 +38,7 @@ namespace leviathan {
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Konfigdateiname
              */
-            void readFromFile(const char* fileName);
+            void loadFromFile(const char* fileName);
 
             /*! \brief Schreibt die Werte aus dem System in eine Konfigdatei.
              *  \param filename: Konfigdateiname

@@ -50,7 +50,7 @@ namespace leviathan {
              *  \param imageArea: zu verwendender Bildausschnitt
              *  \param hotSpot: Punkt innerhalb des resultierenden Bildausschnittes, der als "Mauszeiger-Spitze" dient
              */
-            void createMousePointer(const uint32_t id, const irr::io::path& imageFileName,
+            void addMousePointer(const uint32_t id, const irr::io::path& imageFileName,
                 const irr::core::recti& imageArea, const irr::core::vector2di& hotSpot);
 
             /*! \brief Wählt den anzuzeigenden Mauspfeil aus.

@@ -7,15 +7,24 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_LEVIATHANDEVICE_H
 #define LEVIATHAN_PUBLIC_INTERFACES_LEVIATHANDEVICE_H
 
-#include <characters/IHeroes.h>
-#include <core/IConfiguration.h>
-#include <core/IGameStateManager.h>
-#include <gui/IMenuControl.h>
-#include <gui/IMousePointerControl.h>
-#include <input/IActions.h>
-#include <world/IGround.h>
-
 namespace leviathan {
+    namespace characters {
+        struct IHeroes;
+    }
+    namespace core {
+        struct IConfiguration;
+        struct IGameStateManager;
+    }
+    namespace gui {
+        struct IMenuControl;
+        struct IMousePointerControl;
+    }
+    namespace input {
+        struct IActions;
+    }
+    namespace world {
+        struct IGround;
+    }
 
     /*! \interface ILeviathanDevice
      *  \brief Die eigentliche Engine.

@@ -1,5 +1,5 @@
 #include "GameStateShutdown.h"
-#include "defines.h"
+#include <ILeviathanDevice.h>
 
 GameStateShutdown::GameStateShutdown(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {}
 

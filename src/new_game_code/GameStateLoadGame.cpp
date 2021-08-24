@@ -1,5 +1,6 @@
 #include "GameStateLoadGame.h"
 #include "defines.h"
+#include <ILeviathanDevice.h>
 #include <core/IGameStateManager.h>
 #include <world/IGround.h>
 #include <world/Node3DConfiguration.h>

@@ -1,5 +1,6 @@
 #include "GameStateMainMenu.h"
 #include "defines.h"
+#include <ILeviathanDevice.h>
 #include <characters/CharacterConfiguration.h>
 #include <characters/IHeroes.h>
 #include <core/IConfiguration.h>
@@ -8,6 +9,7 @@
 #include <gui/IMenuControl.h>
 #include <gui/IMousePointerControl.h>
 #include <gui/MousePointerConfiguration.h>
+#include <input/Action.h>
 #include <input/IActions.h>
 #include <video/Dimension2D.h>
 #include <video/Position2D.h>

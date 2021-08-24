@@ -7,7 +7,6 @@
 
 #include <characters/IHero.h>
 #include <string>
-#include <video/Vector3D.h>
 
 namespace leviathan {
     namespace world {

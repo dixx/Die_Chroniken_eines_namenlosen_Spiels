@@ -6,9 +6,14 @@
 #define LEVIATHAN_PUBLIC_INTERFACES_CHARACTERS_IHERO_H
 
 #include <string>
-#include <video/Vector3D.h>
 
 namespace leviathan {
+    namespace video {
+        struct Vector3D;
+        using Position3D = Vector3D;
+        using Rotation3D = Vector3D;
+    }
+
     namespace characters {
         /*! \interface IHero
          *  \brief Diese Schnittstelle bietet Zugriff auf einen Helden.

@@ -5,12 +5,13 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_CHARACTERS_IHEROES_H
 #define LEVIATHAN_PUBLIC_INTERFACES_CHARACTERS_IHEROES_H
 
-#include <characters/CharacterConfiguration.h>
-#include <characters/IHero.h>
 #include <string>
 
 namespace leviathan {
     namespace characters {
+        struct CharacterConfiguration;
+        struct IHero;
+
         /*! \interface IHeroes
          *  \brief Bietet Zugriff auf Funktionen zum Erstellen und Verwalten von Helden.
          */

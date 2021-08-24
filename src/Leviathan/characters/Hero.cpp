@@ -2,6 +2,7 @@
 #include "../world/Character.h"
 #include "../world/NodeManager.h"
 #include <characters/CharacterConfiguration.h>
+#include <video/Vector3D.h>
 
 namespace leviathan {
     namespace characters {

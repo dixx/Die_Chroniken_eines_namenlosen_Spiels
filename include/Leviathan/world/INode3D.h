@@ -6,9 +6,12 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_WORLD_INODE3D_H
 #define LEVIATHAN_PUBLIC_INTERFACES_WORLD_INODE3D_H
 
-#include <video/Vector3D.h>
-
 namespace leviathan {
+    namespace video {
+        struct Vector3D;
+        using Position3D = Vector3D;
+    }
+
     namespace world {
         /*! \interface INode3D
          *  \brief Interface für ein 3D-Objekt.

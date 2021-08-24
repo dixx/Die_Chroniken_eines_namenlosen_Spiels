@@ -6,10 +6,10 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_WORLD_IGROUND_H
 #define LEVIATHAN_PUBLIC_INTERFACES_WORLD_IGROUND_H
 
-#include <world/Node3DConfiguration.h>
-
 namespace leviathan {
     namespace world {
+        struct Node3DConfiguration;
+
         /*! \interface IGround
          *  \brief Bietet Zugriff auf begehbaren Boden
          */

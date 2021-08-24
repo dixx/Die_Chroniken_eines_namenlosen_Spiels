@@ -5,6 +5,7 @@
 #include "defines.h"
 #include <ILeviathanDevice.h>
 #include <core/IGameStateManager.h>
+#include <input/IActions.h>
 #include <leviathan.h>
 #include <stdexcept>
 

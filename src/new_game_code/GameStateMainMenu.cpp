@@ -1,9 +1,14 @@
 #include "GameStateMainMenu.h"
 #include "defines.h"
 #include <characters/CharacterConfiguration.h>
+#include <characters/IHeroes.h>
+#include <core/IConfiguration.h>
+#include <core/IGameStateManager.h>
 #include <cstdint>
 #include <gui/IMenuControl.h>
+#include <gui/IMousePointerControl.h>
 #include <gui/MousePointerConfiguration.h>
+#include <input/IActions.h>
 #include <video/Dimension2D.h>
 #include <video/Position2D.h>
 

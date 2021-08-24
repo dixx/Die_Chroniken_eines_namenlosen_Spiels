@@ -31,9 +31,9 @@ namespace leviathan {
 
     /*! \brief Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
      *         der Engine.
-     *  \param filename: Konfigdateiname
+     *  \param configFileName: Konfigdateiname
      */
-    ILeviathanDevice& createDevice(const char* fileName);
+    ILeviathanDevice& createDevice(const char* configFileName);
 }
 
 #endif

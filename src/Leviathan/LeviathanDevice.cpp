@@ -4,8 +4,8 @@
 #include <cstdint>
 
 namespace leviathan {
-    LeviathanDevice::LeviathanDevice(const char* fileName)
-    : configuration_(fileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), timeControl_(),
+    LeviathanDevice::LeviathanDevice(const char* configFileName)
+    : configuration_(configFileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), timeControl_(),
       gameStateManager_(logger_), randomizer_(), eventReceiver_(), actions_(eventReceiver_, logger_),
       graphicEngine_(eventReceiver_, logger_, configuration_) {
         randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));

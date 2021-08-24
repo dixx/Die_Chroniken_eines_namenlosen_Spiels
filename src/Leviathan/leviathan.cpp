@@ -2,8 +2,8 @@
 #include <leviathan.h>
 
 namespace leviathan {
-    ILeviathanDevice& createDevice(const char* fileName) {
-        static LeviathanDevice instance(fileName);
+    ILeviathanDevice& createDevice(const char* configFileName) {
+        static LeviathanDevice instance(configFileName);
         return instance;
     }
 }

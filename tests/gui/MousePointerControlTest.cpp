@@ -82,7 +82,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
         SECTION("gets updated when the mouse is moved") {
             videoDriverMock.ClearInvocationHistory();
 
-            subject.addMousePointer(1, "test.png", {{0, 0}, {40, 40}}, {0, 0});
+            subject.addMousePointer(1, {"test.png", {{0, 0}, {40, 40}}, {0, 0}});
             subject.setActiveMousPointer(1);
             subject.draw();
             Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
@@ -102,8 +102,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
 
     SECTION("creation") {
         SECTION("can create a mouse pointer from image") {
-            subject.addMousePointer(1, "test.png", {{0, 0}, {40, 40}},
-                {20, 20});
+            subject.addMousePointer(1, {"test.png", {{0, 0}, {40, 40}}, {20, 20}});
 
             SECTION("with color key transparency") {
                 Verify(ConstOverloadedMethod(videoDriverMock, makeColorKeyTexture, makeColorKeyTextureArgs)
@@ -113,8 +112,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
 
             SECTION("but will not overwrite an existing mouse pointer") {
                 videoDriverMock.ClearInvocationHistory();
-                subject.addMousePointer(1, "test2.png", {{40, 40}, {80, 80}},
-                    {10, 10});
+                subject.addMousePointer(1, {"test2.png", {{40, 40}, {80, 80}}, {10, 10}});
                 subject.setActiveMousPointer(1);
                 subject.draw();
                 Verify(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs)
@@ -127,8 +125,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
             SECTION("and creates no mouse arrow on error") {
                 videoDriverMock.ClearInvocationHistory();
                 When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).Return(nullptr);
-                subject.addMousePointer(2, "unknown_image.png", {{0, 0}, {40, 40}},
-                    {20, 20});
+                subject.addMousePointer(2, {"unknown_image.png", {{0, 0}, {40, 40}}, {20, 20}});
                 subject.setActiveMousPointer(2);
                 subject.draw();
                 VerifyNoOtherInvocations(OverloadedMethod(videoDriverMock, draw2DImage, draw2DImageArgs));
@@ -137,8 +134,8 @@ TEST_CASE("MousePointerControl", "[unit]") {
     }
 
     SECTION("display") {
-        subject.addMousePointer(1, "test.png", {{40, 40}, {80, 80}}, {20, 20});
-        subject.addMousePointer(2, "test.png", {{130, 130}, {140, 140}}, {2, 4});
+        subject.addMousePointer(1, {"test.png", {{40, 40}, {80, 80}}, {20, 20}});
+        subject.addMousePointer(2, {"test.png", {{130, 130}, {140, 140}}, {2, 4}});
         videoDriverMock.ClearInvocationHistory();
 
         SECTION("draws the current mouse pointer") {

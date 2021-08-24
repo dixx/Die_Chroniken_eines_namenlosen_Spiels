@@ -6,8 +6,7 @@
 #define LEVIATHAN_PUBLIC_INTERFACES_GUI_IMOUSEPOINTER_H
 
 #include <cstdint>
-#include <video/Position2D.h>
-#include <video/Rectangle2D.h>
+#include <gui/MousePointerConfiguration.h>
 
 namespace leviathan {
     namespace gui {
@@ -20,12 +19,9 @@ namespace leviathan {
 
             /*! \brief Erstellt einen anzeigbaren Mauszeiger aus einem Bild.
              *  \param id: ID des Mauszeigers
-             *  \param imageFileName: Dateiname (mit Pfad) des Ausgangsbildes
-             *  \param imageArea: zu verwendender Bildausschnitt
-             *  \param hotSpot: Punkt innerhalb des resultierenden Bildausschnittes, der als "Mauszeiger-Spitze" dient
+             *  \param configuration: Mauszeiger-Konfiguration
              */
-            virtual void addMousePointer(const uint32_t id, const char* imageFileName,
-                const video::Rectangle2D& imageArea, const video::Position2D& hotSpot) = 0;
+            virtual void addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration) = 0;
 
             /*! \brief Wählt den anzuzeigenden Mauspfeil aus.
              *  \param id: ID des anzuzeigenden Mauszeigers

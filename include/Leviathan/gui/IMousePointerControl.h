@@ -6,10 +6,10 @@
 #define LEVIATHAN_PUBLIC_INTERFACES_GUI_IMOUSEPOINTER_H
 
 #include <cstdint>
-#include <gui/MousePointerConfiguration.h>
 
 namespace leviathan {
     namespace gui {
+        struct MousePointerConfiguration;
 
         /*! \interface IMousePointerControl
          *  \brief Bietet Zugriff auf die Darstellung des Mauszeigers

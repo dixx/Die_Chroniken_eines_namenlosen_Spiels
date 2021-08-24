@@ -13,7 +13,6 @@
 #include "irrlicht.h"
 #include <cstdint>
 #include <gui/IMousePointerControl.h>
-#include <gui/MousePointerConfiguration.h>
 #include <unordered_map>
 #include <video/Position2D.h>
 #include <video/Rectangle2D.h>

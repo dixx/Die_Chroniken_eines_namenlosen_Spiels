@@ -1,4 +1,5 @@
 #include "MousePointerControl.h"
+#include <gui/MousePointerConfiguration.h>
 #include <stdexcept>
 
 namespace leviathan {

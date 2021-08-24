@@ -3,6 +3,7 @@
 #include <characters/CharacterConfiguration.h>
 #include <cstdint>
 #include <gui/IMenuControl.h>
+#include <gui/MousePointerConfiguration.h>
 #include <video/Dimension2D.h>
 #include <video/Position2D.h>
 

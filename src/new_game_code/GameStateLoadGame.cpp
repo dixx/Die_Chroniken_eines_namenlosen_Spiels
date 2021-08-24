@@ -1,5 +1,6 @@
 #include "GameStateLoadGame.h"
 #include "defines.h"
+#include <world/Node3DConfiguration.h>
 
 GameStateLoadGame::GameStateLoadGame(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {}
 

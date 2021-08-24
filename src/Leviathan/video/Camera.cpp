@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "../core/Configuration.h"
 #include "Constants.h"
 #include <stdexcept>
 

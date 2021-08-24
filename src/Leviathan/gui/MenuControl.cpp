@@ -1,4 +1,6 @@
 #include "MenuControl.h"
+#include "../input/IEventProducer.h"
+#include "../video/Textures.h"
 #include <cstdint>
 
 namespace leviathan {

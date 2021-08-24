@@ -1,7 +1,14 @@
 #include "LeviathanDevice.h"
 #include "video/constants.h"
+#include <characters/IHeroes.h>
 #include <chrono>
+#include <core/IConfiguration.h>
+#include <core/IGameStateManager.h>
 #include <cstdint>
+#include <gui/IMenuControl.h>
+#include <gui/IMousePointerControl.h>
+#include <input/IActions.h>
+#include <world/IGround.h>
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const char* configFileName)

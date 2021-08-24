@@ -6,10 +6,13 @@
 #ifndef LEVIATHAN_VIDEO_CAMERA_H
 #define LEVIATHAN_VIDEO_CAMERA_H
 
-#include "../core/Configuration.h"
 #include "irrlicht.h"
 
 namespace leviathan {
+    namespace core {
+        class Configuration;
+    }
+
     namespace video {
 
         /*! \class Camera

@@ -10,11 +10,12 @@
 #include "EventToActionConverter.h"
 #include "irrlicht.h"
 #include <cstdint>
-#include <input/Action.h>
 #include <vector>
 
 namespace leviathan {
     namespace input {
+        struct Action;
+
         class KeyboardEventActions final : public EventToActionConverter {
         public:
             std::vector<Action> actionsFor(const irr::SEvent& event);

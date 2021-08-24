@@ -1,4 +1,5 @@
 #include "GameStateManager.h"
+#include "Logger.h"
 #include <stdexcept>
 
 namespace leviathan {

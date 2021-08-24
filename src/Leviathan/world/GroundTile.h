@@ -8,7 +8,6 @@
 
 #include <video/Vector3D.h>
 #include <world/INode3D.h>
-#include <world/Node3DConfiguration.h>
 
 namespace irr {
     namespace scene {
@@ -20,6 +19,7 @@ namespace irr {
 
 namespace leviathan {
     namespace world {
+        struct Node3DConfiguration;
 
         /*! \class GroundTile
          *  \brief Ein Bodenteil.

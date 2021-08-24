@@ -6,7 +6,6 @@
 #define LEVIATHAN_CHARACTERS_HEROES_H
 
 #include "Hero.h"
-#include <characters/IHero.h>
 #include <characters/IHeroes.h>
 #include <map>
 #include <memory>
@@ -19,6 +18,7 @@ namespace leviathan {
 
     namespace characters {
         struct CharacterConfiguration;
+        struct IHero;
 
         /*! \class Heroes Heroes.h "Heroes.h"
          *  \brief Diese Klasse enthält Funktionen zum Erstellen und Verwalten von Helden.

@@ -1,4 +1,7 @@
 #include "MousePointerControl.h"
+#include "../core/Logger.h"
+#include "../input/IEventProducer.h"
+#include "../video/Textures.h"
 #include <gui/MousePointerConfiguration.h>
 #include <stdexcept>
 

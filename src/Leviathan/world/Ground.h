@@ -7,11 +7,11 @@
 #define LEVIATHAN_WORLD_GROUND_H
 
 #include <world/IGround.h>
-#include <world/Node3DConfiguration.h>
 
 namespace leviathan {
     namespace world {
         class NodeManager;
+        struct Node3DConfiguration;
 
         /*! \class Ground
          *  \brief Bietet Zugriff auf begehbaren Boden

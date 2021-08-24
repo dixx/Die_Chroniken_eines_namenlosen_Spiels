@@ -6,7 +6,6 @@
 #ifndef LEVIATHAN_CORE_GAMESTATEMANAGER_H
 #define LEVIATHAN_CORE_GAMESTATEMANAGER_H
 
-#include "Logger.h"
 #include <core/IGameState.h>
 #include <core/IGameStateManager.h>
 #include <cstdint>
@@ -15,6 +14,7 @@
 
 namespace leviathan {
     namespace core {
+        class Logger;
 
         /*! \class GameStateManager GameStateManager.h "GameStateManager.h"
          *  \brief Verwaltung der verschiedenen Zustände des Spiels.

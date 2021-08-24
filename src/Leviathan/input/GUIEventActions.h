@@ -10,7 +10,6 @@
 #include "EventToActionConverter.h"
 #include "irrlicht.h"
 #include <cstdint>
-#include <input/Action.h>
 #include <list>
 #include <map>
 #include <string>
@@ -18,6 +17,8 @@
 
 namespace leviathan {
     namespace input {
+        struct Action;
+
         class GUIEventActions final : public EventToActionConverter {
         public:
             std::vector<Action> actionsFor(const irr::SEvent& event);

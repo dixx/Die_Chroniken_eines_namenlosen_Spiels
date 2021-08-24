@@ -1,6 +1,7 @@
 #include "Heroes.h"
 #include "../world/NodeManager.h"
 #include <characters/CharacterConfiguration.h>
+#include <characters/IHero.h>
 
 namespace leviathan {
     namespace characters {

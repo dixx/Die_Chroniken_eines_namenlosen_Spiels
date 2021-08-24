@@ -9,6 +9,7 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "irrlicht.h"
+#include <gui/MousePointerConfiguration.h>
 
 using namespace fakeit;
 

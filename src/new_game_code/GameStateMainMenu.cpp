@@ -1,5 +1,6 @@
 #include "GameStateMainMenu.h"
 #include "defines.h"
+#include <characters/CharacterConfiguration.h>
 #include <cstdint>
 #include <gui/IMenuControl.h>
 #include <video/Dimension2D.h>

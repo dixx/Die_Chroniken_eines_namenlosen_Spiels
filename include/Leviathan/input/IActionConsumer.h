@@ -6,10 +6,10 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_INPUT_IACTIONCONSUMER_H
 #define LEVIATHAN_PUBLIC_INTERFACES_INPUT_IACTIONCONSUMER_H
 
-#include <input/Action.h>
-
 namespace leviathan {
     namespace input {
+        struct Action;
+
         /*! \interface IActionConsumer
          *  \brief Interface für Konsumenten von Aktionen.
          */

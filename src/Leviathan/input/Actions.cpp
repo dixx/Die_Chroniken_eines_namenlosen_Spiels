@@ -1,7 +1,11 @@
 #include "Actions.h"
+#include "../core/Logger.h"
 #include "ActionMapping.h"
+#include "IEventProducer.h"
+#include "Input.h"
 #include "yaml-cpp/yaml.h"
 #include <algorithm>
+#include <input/Action.h>
 
 namespace leviathan {
     namespace input {

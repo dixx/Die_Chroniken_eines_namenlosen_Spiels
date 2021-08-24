@@ -6,16 +6,12 @@
 #ifndef LEVIATHAN_INPUT_ACTIONS_H
 #define LEVIATHAN_INPUT_ACTIONS_H
 
-#include "../core/Logger.h"
 #include "GUIEventActions.h"
 #include "IEventConsumer.h"
-#include "IEventProducer.h"
-#include "Input.h"
 #include "KeyboardEventActions.h"
 #include "MouseEventActions.h"
 #include "irrlicht.h"
 #include <cstdint>
-#include <input/Action.h>
 #include <input/IActionConsumer.h>
 #include <input/IActions.h>
 #include <map>
@@ -23,7 +19,15 @@
 #include <vector>
 
 namespace leviathan {
+    namespace core {
+        class Logger;
+    }
+
     namespace input {
+        struct Action;
+        struct IEventProducer;
+        struct Input;
+
         /*! \class Actions
          *  \brief Mapping von Input zu Aktion
          */

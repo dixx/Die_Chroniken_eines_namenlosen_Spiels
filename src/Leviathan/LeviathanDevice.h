@@ -23,14 +23,7 @@
 #include "world/Ground.h"
 #include "world/NodeManager.h"
 #include <ILeviathanDevice.h>
-#include <characters/IHeroes.h>
-#include <core/IConfiguration.h>
-#include <core/IGameStateManager.h>
-#include <gui/IMenuControl.h>
-#include <gui/IMousePointerControl.h>
-#include <input/IActions.h>
 #include <memory>
-#include <world/IGround.h>
 
 #ifndef NDEBUG
 #define LOG_FILE_NAME "game.log"
@@ -39,6 +32,23 @@
 #endif
 
 namespace leviathan {
+    namespace characters {
+        struct IHeroes;
+    }
+    namespace core {
+        struct IConfiguration;
+        struct IGameStateManager;
+    }
+    namespace gui {
+        struct IMenuControl;
+        struct IMousePointerControl;
+    }
+    namespace input {
+        struct IActions;
+    }
+    namespace world {
+        struct IGround;
+    }
 
     /*! \class LeviathanDevice LeviathanDevice.h "LeviathanDevice.h"
      *  \brief Die eigentliche Engine.

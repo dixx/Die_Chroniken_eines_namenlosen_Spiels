@@ -9,13 +9,14 @@
 
 #include "irrlicht.h"
 #include <cstdint>
-#include <input/Action.h>
 #include <list>
 #include <map>
 #include <vector>
 
 namespace leviathan {
     namespace input {
+        struct Action;
+
         class EventToActionConverter {
         public:
             virtual ~EventToActionConverter() {}

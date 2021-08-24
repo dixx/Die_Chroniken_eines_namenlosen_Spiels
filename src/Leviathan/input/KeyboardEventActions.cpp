@@ -1,4 +1,5 @@
 #include "KeyboardEventActions.h"
+#include <input/Action.h>
 
 namespace leviathan {
     namespace input {

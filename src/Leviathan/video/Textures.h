@@ -6,13 +6,16 @@
 #ifndef LEVIATHAN_VIDEO_TEXTURES_H
 #define LEVIATHAN_VIDEO_TEXTURES_H
 
-#include "../core/Logger.h"
 #include "ITexture.h"
 #include "IVideoDriver.h"
 #include <string>
 #include <unordered_map>
 
 namespace leviathan {
+    namespace core {
+        class Logger;
+    }
+
     namespace video {
         /*  \class Textures
          *  \brief Einfaches laden von Texturen

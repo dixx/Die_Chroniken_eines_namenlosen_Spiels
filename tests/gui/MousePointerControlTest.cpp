@@ -3,6 +3,7 @@
 #include "../../src/Leviathan/input/IEventProducer.h"
 #include "../../src/Leviathan/video/Constants.h"
 #include "../../src/Leviathan/video/GraphicEngine.h"
+#include "../../src/Leviathan/video/Textures.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/FakeitPatches.hpp"
 #include "../helpers/TestHelper.h"

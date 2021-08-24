@@ -6,11 +6,11 @@
 #ifndef LEVIATHAN_INPUT_IEVENTPRODUCER_H
 #define LEVIATHAN_INPUT_IEVENTPRODUCER_H
 
-#include "IEventConsumer.h"
 #include "irrlicht.h"
 
 namespace leviathan {
     namespace input {
+        struct IEventConsumer;
 
         /*! \interface IEventProducer
          *  \brief Interface für Verteiler von `irr::SEvent`s.

@@ -5,6 +5,7 @@
 #include <IMesh.h>
 #include <ISceneManager.h>
 #include <matrix4.h>
+#include <world/Node3DConfiguration.h>
 
 namespace leviathan {
     namespace world {

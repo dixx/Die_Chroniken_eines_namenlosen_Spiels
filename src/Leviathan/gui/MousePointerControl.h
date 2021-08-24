@@ -5,19 +5,25 @@
 #ifndef LEVIATHAN_GUI_MOUSEPOINTER_H
 #define LEVIATHAN_GUI_MOUSEPOINTER_H
 
-#include "../core/Logger.h"
 #include "../input/IEventConsumer.h"
-#include "../input/IEventProducer.h"
 #include "../video/GraphicEngine.h"
-#include "../video/Textures.h"
 #include "irrlicht.h"
 #include <cstdint>
 #include <gui/IMousePointerControl.h>
 #include <unordered_map>
-#include <video/Position2D.h>
-#include <video/Rectangle2D.h>
 
 namespace leviathan {
+    namespace core {
+        class Logger;
+    }
+    namespace input {
+        struct IEventProducer;
+    }
+    namespace video {
+        class GraphicEngine;
+        class Textures;
+    }
+
     namespace gui {
 
         /*! \class MousePointerControl

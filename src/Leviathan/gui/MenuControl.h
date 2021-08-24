@@ -7,8 +7,6 @@
 #define LEVIATHAN_GUI_MENUCONTROL_H
 
 #include "../input/IEventConsumer.h"
-#include "../input/IEventProducer.h"
-#include "../video/Textures.h"
 #include "Menu.h"
 #include "irrlicht.h"
 #include <gui/IMenuControl.h>
@@ -17,6 +15,13 @@
 #include <string>
 
 namespace leviathan {
+    namespace input {
+        struct IEventProducer;
+    }
+    namespace video {
+        class Textures;
+    }
+
     namespace gui {
 
         /*! \class MenuControl MenuControl.h "MenuControl.h"

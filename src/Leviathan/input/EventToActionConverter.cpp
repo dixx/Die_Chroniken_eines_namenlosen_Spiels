@@ -1,4 +1,5 @@
 #include "EventToActionConverter.h"
+#include <input/Action.h>
 
 namespace leviathan {
     namespace input {

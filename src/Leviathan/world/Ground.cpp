@@ -1,5 +1,6 @@
 #include "Ground.h"
 #include "NodeManager.h"
+#include <world/Node3DConfiguration.h>
 
 namespace leviathan {
     namespace world {

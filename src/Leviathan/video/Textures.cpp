@@ -1,4 +1,5 @@
 #include "Textures.h"
+#include "../core/Logger.h"
 #include "Constants.h"
 
 namespace leviathan {

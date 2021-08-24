@@ -1,4 +1,5 @@
 #include "MouseEventActions.h"
+#include <input/Action.h>
 
 namespace leviathan {
     namespace input {

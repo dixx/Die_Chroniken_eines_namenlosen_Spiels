@@ -10,7 +10,6 @@
 #include "GroundTile.h"
 #include <list>
 #include <memory>
-#include <world/INode3D.h>
 
 namespace irr {
     namespace scene {

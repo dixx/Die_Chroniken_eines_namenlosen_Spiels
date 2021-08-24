@@ -2,8 +2,7 @@
 #include "defines.h"
 
 GameStatePlay::GameStatePlay(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
-    gameEngine_.MousePointerControl().addMousePointer(
-        2001, "gfx/Mauszeiger.bmp", irr::core::recti(0, 61, 60, 120), irr::core::vector2di(30, 30));
+    gameEngine_.MousePointerControl().addMousePointer(2001, {"gfx/Mauszeiger.bmp", {{0, 61}, {60, 120}}, {30, 30}});
 
     gameEngine_.Heroes().getActiveHero().setRotation({0.f, -90.f, 0.f});
     gameEngine_.Heroes().getActiveHero().setPosition({11.f, 0.f, 11.f});

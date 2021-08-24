@@ -5,8 +5,8 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_GUI_IMOUSEPOINTER_H
 #define LEVIATHAN_PUBLIC_INTERFACES_GUI_IMOUSEPOINTER_H
 
-#include "irrlicht.h"
 #include <cstdint>
+#include <gui/MousePointerConfiguration.h>
 
 namespace leviathan {
     namespace gui {
@@ -19,12 +19,9 @@ namespace leviathan {
 
             /*! \brief Erstellt einen anzeigbaren Mauszeiger aus einem Bild.
              *  \param id: ID des Mauszeigers
-             *  \param imageFileName: Dateiname (mit Pfad) des Ausgangsbildes
-             *  \param imageArea: zu verwendender Bildausschnitt
-             *  \param hotSpot: Punkt innerhalb des resultierenden Bildausschnittes, der als "Mauszeiger-Spitze" dient
+             *  \param configuration: Mauszeiger-Konfiguration
              */
-            virtual void addMousePointer(const uint32_t id, const char* imageFileName,
-                const irr::core::recti& imageArea, const irr::core::vector2di& hotSpot) = 0;
+            virtual void addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration) = 0;
 
             /*! \brief Wählt den anzuzeigenden Mauspfeil aus.
              *  \param id: ID des anzuzeigenden Mauszeigers

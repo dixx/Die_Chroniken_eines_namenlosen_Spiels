@@ -47,9 +47,9 @@ namespace leviathan {
     public:
         /*! \brief Konstruktor. Lädt die Konfiguration aus der angegebenen Datei und initialisiert alle Bestandteile
          *         der Engine.
-         *  \param filename: Konfigdateiname
+         *  \param configFileName: Konfigdateiname
          */
-        explicit LeviathanDevice(const char* fileName);
+        explicit LeviathanDevice(const char* configFileName);
 
         /*! \brief Destruktor.
          */

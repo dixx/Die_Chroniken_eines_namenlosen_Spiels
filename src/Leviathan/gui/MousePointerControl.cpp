@@ -17,7 +17,7 @@ namespace leviathan {
             return true;
         }
 
-        void MousePointerControl::addMousePointer(const uint32_t id, const irr::io::path& imageFileName,
+        void MousePointerControl::addMousePointer(const uint32_t id, const char* imageFileName,
             const irr::core::recti& imageArea, const irr::core::vector2di& hotSpot) {
             if (baseImage_[id] != nullptr) {
                 logger_.text << "[Warning] - MousePointerControl - id " << id << " already exists!";
@@ -25,7 +25,7 @@ namespace leviathan {
                 return;
             }
 
-            irr::video::ITexture* texture = textures_.getWithColorKeyTransparency(imageFileName.c_str());
+            irr::video::ITexture* texture = textures_.getWithColorKeyTransparency(imageFileName);
             if (texture == nullptr) return;
 
             baseImage_[id] = texture;

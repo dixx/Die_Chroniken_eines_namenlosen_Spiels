@@ -1,8 +1,11 @@
 #ifndef GAMESTATE_LOAD_GAME_H
 #define GAMESTATE_LOAD_GAME_H
 
-#include <ILeviathanDevice.h>
 #include <core/IGameState.h>
+
+namespace leviathan {
+    struct ILeviathanDevice;
+}
 
 class GameStateLoadGame final : public leviathan::core::IGameState {
 public:

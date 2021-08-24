@@ -1,10 +1,12 @@
 #include "GameStatePlay.h"
 #include "defines.h"
+#include <ILeviathanDevice.h>
 #include <characters/IHero.h>
 #include <characters/IHeroes.h>
 #include <core/IGameStateManager.h>
 #include <gui/IMousePointerControl.h>
 #include <gui/MousePointerConfiguration.h>
+#include <input/Action.h>
 #include <input/IActions.h>
 #include <world/Node3DConfiguration.h>
 

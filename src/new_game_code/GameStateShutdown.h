@@ -1,8 +1,11 @@
 #ifndef GAMESTATESHUTDOWN_H
 #define GAMESTATESHUTDOWN_H
 
-#include <ILeviathanDevice.h>
 #include <core/IGameState.h>
+
+namespace leviathan {
+    struct ILeviathanDevice;
+}
 
 class GameStateShutdown final : public leviathan::core::IGameState {
 public:

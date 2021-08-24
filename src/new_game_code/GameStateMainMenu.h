@@ -1,10 +1,15 @@
 #ifndef GAMESTATEMAINMENU_H
 #define GAMESTATEMAINMENU_H
 
-#include <ILeviathanDevice.h>
 #include <core/IGameState.h>
-#include <input/Action.h>
 #include <input/IActionConsumer.h>
+
+namespace leviathan {
+    struct ILeviathanDevice;
+    namespace input {
+        struct Action;
+    }
+}
 
 class GameStateMainMenu final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 public:

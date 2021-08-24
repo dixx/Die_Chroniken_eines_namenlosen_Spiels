@@ -29,6 +29,12 @@ namespace leviathan {
              */
             Hero(const CharacterConfiguration& characterConfig, world::NodeManager& nodeManager);
 
+            ~Hero() = default;
+
+            Hero() = delete;
+            Hero(const Hero&) = delete;
+            Hero& operator=(const Hero&) = delete;
+
             /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
              */
             void enablePlayableCharacter();

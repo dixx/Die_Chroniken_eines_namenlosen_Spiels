@@ -31,6 +31,8 @@ namespace leviathan {
             explicit Heroes(world::NodeManager& nodeManager);
 
             ~Heroes() = default;
+
+            Heroes() = delete;
             Heroes(const Heroes&) = delete;
             Heroes& operator=(const Heroes&) = delete;
 

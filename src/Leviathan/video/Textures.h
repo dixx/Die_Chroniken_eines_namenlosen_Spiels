@@ -26,6 +26,7 @@ namespace leviathan {
             Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::Logger& logger);
 
             ~Textures() = default;
+
             Textures() = delete;
             Textures(const Textures&) = delete;
             Textures& operator=(const Textures&) = delete;

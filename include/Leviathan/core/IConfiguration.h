@@ -6,9 +6,11 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_CORE_ICONFIGURATION_H
 #define LEVIATHAN_PUBLIC_INTERFACES_CORE_ICONFIGURATION_H
 
-#include <video/Dimension2D.h>
-
 namespace leviathan {
+    namespace video {
+        struct Dimension2D;
+    }
+
     namespace core {
 
         /*! \interface IConfiguration

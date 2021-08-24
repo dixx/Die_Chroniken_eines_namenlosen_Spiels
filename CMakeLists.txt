@@ -28,6 +28,7 @@ set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/input/IActions.h
   ${PUBLIC_INTERFACES}/video/Dimension2D.h
   ${PUBLIC_INTERFACES}/video/Position2D.h
+  ${PUBLIC_INTERFACES}/video/Rectangle2D.h
   ${PUBLIC_INTERFACES}/video/Vector3D.h
   ${PUBLIC_INTERFACES}/world/INode3D.h
   ${PUBLIC_INTERFACES}/world/IGround.h

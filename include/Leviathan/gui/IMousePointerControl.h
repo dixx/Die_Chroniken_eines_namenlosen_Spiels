@@ -5,8 +5,9 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_GUI_IMOUSEPOINTER_H
 #define LEVIATHAN_PUBLIC_INTERFACES_GUI_IMOUSEPOINTER_H
 
-#include "irrlicht.h"
 #include <cstdint>
+#include <video/Position2D.h>
+#include <video/Rectangle2D.h>
 
 namespace leviathan {
     namespace gui {
@@ -24,7 +25,7 @@ namespace leviathan {
              *  \param hotSpot: Punkt innerhalb des resultierenden Bildausschnittes, der als "Mauszeiger-Spitze" dient
              */
             virtual void addMousePointer(const uint32_t id, const char* imageFileName,
-                const irr::core::recti& imageArea, const irr::core::vector2di& hotSpot) = 0;
+                const video::Rectangle2D& imageArea, const video::Position2D& hotSpot) = 0;
 
             /*! \brief Wählt den anzuzeigenden Mauspfeil aus.
              *  \param id: ID des anzuzeigenden Mauszeigers

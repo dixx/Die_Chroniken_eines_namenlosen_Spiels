@@ -14,6 +14,8 @@
 #include <cstdint>
 #include <gui/IMousePointerControl.h>
 #include <unordered_map>
+#include <video/Position2D.h>
+#include <video/Rectangle2D.h>
 
 namespace leviathan {
     namespace gui {
@@ -50,8 +52,8 @@ namespace leviathan {
              *  \param imageArea: zu verwendender Bildausschnitt
              *  \param hotSpot: Punkt innerhalb des resultierenden Bildausschnittes, der als "Mauszeiger-Spitze" dient
              */
-            void addMousePointer(const uint32_t id, const char* imageFileName, const irr::core::recti& imageArea,
-                const irr::core::vector2di& hotSpot);
+            void addMousePointer(const uint32_t id, const char* imageFileName, const video::Rectangle2D& imageArea,
+                const video::Position2D& hotSpot);
 
             /*! \brief Wählt den anzuzeigenden Mauspfeil aus.
              *  \param id: ID des anzuzeigenden Mauszeigers

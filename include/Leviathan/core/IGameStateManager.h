@@ -6,11 +6,11 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_CORE_IGAMESTATEMANAGER_H
 #define LEVIATHAN_PUBLIC_INTERFACES_CORE_IGAMESTATEMANAGER_H
 
-#include <core/IGameState.h>
 #include <cstdint>
 
 namespace leviathan {
     namespace core {
+        struct IGameState;
 
         /*! \interface IGameStateManager
          *  \brief Verwaltung der verschiedenen Zustände des Spiels.

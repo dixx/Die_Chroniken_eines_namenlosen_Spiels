@@ -7,7 +7,7 @@
 class GameStateShutdown final : public leviathan::core::IGameState {
 public:
     explicit GameStateShutdown(leviathan::ILeviathanDevice& gameEngine);
-    virtual ~GameStateShutdown();
+    ~GameStateShutdown();
     GameStateShutdown(const GameStateShutdown&) = delete;
     GameStateShutdown& operator=(const GameStateShutdown&) = delete;
 

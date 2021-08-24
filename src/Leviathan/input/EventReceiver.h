@@ -18,7 +18,7 @@ namespace leviathan {
         /*! \class EventReceiver EventReceiver.h "EventReceiver.h"
          *  \brief Diese Klasse enthält Funktionen zum Behandeln von Events.
          */
-        class EventReceiver : public irr::IEventReceiver, public leviathan::input::IEventProducer {
+        class EventReceiver final : public irr::IEventReceiver, public leviathan::input::IEventProducer {
         public:
             /*! \brief Konstruktor.
              */
@@ -26,7 +26,7 @@ namespace leviathan {
 
             /*! Destruktor.
              */
-            virtual ~EventReceiver() = default;
+            ~EventReceiver() = default;
 
             EventReceiver(const EventReceiver&) = delete;
             EventReceiver& operator=(const EventReceiver&) = delete;
@@ -38,7 +38,7 @@ namespace leviathan {
              *  \param event: Event vom Betriebssystem oder sonstwo her.
              *  \return `true` wenn Event von mindestens einem Empfänger erfolgreich behandelt wurde, ansonsten `false`
              */
-            bool OnEvent(const irr::SEvent& event) final;
+            bool OnEvent(const irr::SEvent& event);
 
             /*! \brief Anmeldung für Event-Empfänger.
              *
@@ -46,7 +46,7 @@ namespace leviathan {
              *  \param consumer: Empfänger, an den Events weitergeleitet werden sollen
              *  \param eventType: Typ der Events, die weitergeleitet werden sollen
              */
-            void subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
+            void subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
 
             /*! \brief Abmeldung von Event-Empfängern.
              *
@@ -54,7 +54,7 @@ namespace leviathan {
              *  \param consumer: Empfänger, an den Events nicht mehr weitergeleitet werden sollen
              *  \param eventType: Typ der Events, die nicht mehr weitergeleitet werden sollen
              */
-            void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) final;
+            void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
 
         private:
             std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>> _subscriptions =

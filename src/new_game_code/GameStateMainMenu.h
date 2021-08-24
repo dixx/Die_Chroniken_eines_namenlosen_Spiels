@@ -16,7 +16,7 @@ public:
     };
 
     explicit GameStateMainMenu(leviathan::ILeviathanDevice& gameEngine);
-    virtual ~GameStateMainMenu();
+    ~GameStateMainMenu();
     GameStateMainMenu(const GameStateMainMenu&) = delete;
     GameStateMainMenu& operator=(const GameStateMainMenu&) = delete;
 

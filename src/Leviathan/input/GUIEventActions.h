@@ -18,7 +18,7 @@
 
 namespace leviathan {
     namespace input {
-        class GUIEventActions : public EventToActionConverter {
+        class GUIEventActions final : public EventToActionConverter {
         public:
             std::vector<Action> actionsFor(const irr::SEvent& event);
             void addMapping(const std::string inputName, const uint32_t actionId);

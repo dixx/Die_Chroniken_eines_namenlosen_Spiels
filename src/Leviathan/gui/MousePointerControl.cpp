@@ -17,21 +17,20 @@ namespace leviathan {
             return true;
         }
 
-        void MousePointerControl::addMousePointer(const uint32_t id, const char* imageFileName,
-            const video::Rectangle2D& imageArea, const video::Position2D& hotSpot) {
+        void MousePointerControl::addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration) {
             if (baseImage_[id] != nullptr) {
                 logger_.text << "[Warning] - MousePointerControl - id " << id << " already exists!";
                 logger_.write(leviathan::core::Logger::Level::DEBUG);
                 return;
             }
 
-            irr::video::ITexture* texture = textures_.getWithColorKeyTransparency(imageFileName);
+            irr::video::ITexture* texture = textures_.getWithColorKeyTransparency(configuration.imageFileName.c_str());
             if (texture == nullptr) return;
 
             baseImage_[id] = texture;
-            imageArea_[id] = irr::core::recti(
-                imageArea.upperLeft.x, imageArea.upperLeft.y, imageArea.lowerRight.x, imageArea.lowerRight.y);
-            hotSpot_[id] = irr::core::vector2di(hotSpot.x, hotSpot.y);
+            imageArea_[id] = irr::core::recti(configuration.imageArea.upperLeft.x, configuration.imageArea.upperLeft.y,
+                configuration.imageArea.lowerRight.x, configuration.imageArea.lowerRight.y);
+            hotSpot_[id] = irr::core::vector2di(configuration.hotSpot.x, configuration.hotSpot.y);
         }
 
         void MousePointerControl::setActiveMousPointer(const uint32_t id) {

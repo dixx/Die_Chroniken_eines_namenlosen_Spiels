@@ -23,6 +23,7 @@ set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/core/IGameStateManager.h
   ${PUBLIC_INTERFACES}/gui/IMenuControl.h
   ${PUBLIC_INTERFACES}/gui/IMousePointerControl.h
+  ${PUBLIC_INTERFACES}/gui/MousePointerConfiguration.h
   ${PUBLIC_INTERFACES}/input/Action.h
   ${PUBLIC_INTERFACES}/input/IActionConsumer.h
   ${PUBLIC_INTERFACES}/input/IActions.h

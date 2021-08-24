@@ -15,7 +15,7 @@
 
 namespace leviathan {
     namespace input {
-        class MouseEventActions : public EventToActionConverter {
+        class MouseEventActions final : public EventToActionConverter {
         public:
             std::vector<Action> actionsFor(const irr::SEvent& event);
             void addMapping(const uint32_t buttonCode, const uint32_t actionId);

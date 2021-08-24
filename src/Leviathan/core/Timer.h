@@ -24,6 +24,7 @@ namespace leviathan {
              */
             ~Timer() = default;
 
+            Timer() = delete;
             Timer(const Timer&) = delete;
             Timer& operator=(const Timer&) = delete;
 

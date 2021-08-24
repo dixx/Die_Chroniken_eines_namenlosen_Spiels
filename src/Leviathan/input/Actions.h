@@ -27,7 +27,7 @@ namespace leviathan {
         /*! \class Actions
          *  \brief Mapping von Input zu Aktion
          */
-        class Actions : public IEventConsumer, public IActions {
+        class Actions final : public IEventConsumer, public IActions {
         public:
             /*! \brief Konstruktor.
              *  \param producer: produziert (versendet) Events

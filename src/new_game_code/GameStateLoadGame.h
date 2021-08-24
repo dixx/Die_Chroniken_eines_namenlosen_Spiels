@@ -7,7 +7,7 @@
 class GameStateLoadGame final : public leviathan::core::IGameState {
 public:
     explicit GameStateLoadGame(leviathan::ILeviathanDevice& gameEngine);
-    virtual ~GameStateLoadGame();
+    ~GameStateLoadGame();
     GameStateLoadGame(const GameStateLoadGame&) = delete;
     GameStateLoadGame& operator=(const GameStateLoadGame&) = delete;
 

@@ -39,7 +39,6 @@ namespace leviathan {
          */
         class GraphicEngine {
         public:
-            GraphicEngine() = delete;
             explicit GraphicEngine(
                 irr::IEventReceiver& receiver, core::Logger& logger, const core::Configuration& config);
 
@@ -47,6 +46,7 @@ namespace leviathan {
 
             GraphicEngine(const GraphicEngine&) = default;
 
+            GraphicEngine() = delete;
             GraphicEngine(const GraphicEngine&&) = delete;
             GraphicEngine& operator=(const GraphicEngine&) = delete;
             GraphicEngine& operator=(const GraphicEngine&&) = delete;

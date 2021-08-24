@@ -15,7 +15,7 @@
 
 namespace leviathan {
     namespace input {
-        class KeyboardEventActions : public EventToActionConverter {
+        class KeyboardEventActions final : public EventToActionConverter {
         public:
             std::vector<Action> actionsFor(const irr::SEvent& event);
             void addMapping(const uint32_t keyCode, const uint32_t actionId);

@@ -19,7 +19,7 @@ public:
     };
 
     explicit GameStatePlay(leviathan::ILeviathanDevice& gameEngine);
-    virtual ~GameStatePlay();
+    ~GameStatePlay();
     GameStatePlay(const GameStatePlay&) = delete;
     GameStatePlay& operator=(const GameStatePlay&) = delete;
 

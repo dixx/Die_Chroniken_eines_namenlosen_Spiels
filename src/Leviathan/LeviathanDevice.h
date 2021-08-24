@@ -32,23 +32,6 @@
 #endif
 
 namespace leviathan {
-    namespace characters {
-        struct IHeroes;
-    }
-    namespace core {
-        struct IConfiguration;
-        struct IGameStateManager;
-    }
-    namespace gui {
-        struct IMenuControl;
-        struct IMousePointerControl;
-    }
-    namespace input {
-        struct IActions;
-    }
-    namespace world {
-        struct IGround;
-    }
 
     /*! \class LeviathanDevice LeviathanDevice.h "LeviathanDevice.h"
      *  \brief Die eigentliche Engine.

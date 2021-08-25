@@ -8,7 +8,7 @@
 
 #include "IEventConsumer.h"
 #include "IEventProducer.h"
-#include "irrlicht.h"
+#include "IEventReceiver.h"
 #include <map>
 #include <vector>
 

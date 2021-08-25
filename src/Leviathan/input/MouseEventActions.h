@@ -8,9 +8,12 @@
 #define LEVIATHAN_INPUT_MOUSE_EVENT_ACTIONS_CONVERTER_H
 
 #include "EventToActionConverter.h"
-#include "irrlicht.h"
 #include <cstdint>
 #include <vector>
+
+namespace irr {
+    struct SEvent;
+}
 
 namespace leviathan {
     namespace input {

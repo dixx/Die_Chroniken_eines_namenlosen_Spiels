@@ -1,6 +1,8 @@
 #include "Textures.h"
 #include "../core/Logger.h"
 #include "Constants.h"
+#include "ITexture.h"
+#include "IVideoDriver.h"
 
 namespace leviathan {
     namespace video {

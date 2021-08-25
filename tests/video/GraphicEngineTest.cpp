@@ -1,9 +1,11 @@
 #include "../../src/Leviathan/video/GraphicEngine.h"
 #include "../../src/Leviathan/core/Configuration.h"
 #include "../helpers/TestHelper.h"
+#include "IEventReceiver.h"
+#include "IVideoDriver.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 #include <typeinfo>
 
 using namespace fakeit;

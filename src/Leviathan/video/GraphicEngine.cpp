@@ -1,8 +1,14 @@
 #include "GraphicEngine.h"
 #include "../core/Configuration.h"
 #include "../core/Logger.h"
+#include "ICursorControl.h"
+#include "IEventReceiver.h"
+#include "IGUIEnvironment.h"
+#include "ISceneManager.h"
+#include "IVideoDriver.h"
+#include "IrrlichtDevice.h"
+#include "irrlicht.h"
 #include <exception>
-#include <irrlicht.h>
 
 namespace leviathan {
     namespace video {

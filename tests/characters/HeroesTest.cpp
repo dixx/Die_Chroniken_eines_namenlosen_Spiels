@@ -2,8 +2,9 @@
 #include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
+#include "ISceneManager.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
-#include "irrlicht.h"
 #include <characters/CharacterConfiguration.h>
 #include <characters/IHero.h>
 

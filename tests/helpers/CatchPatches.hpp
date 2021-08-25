@@ -2,7 +2,9 @@
 #define CATCH_PATCHES_H
 
 #include "catch.hpp"
-#include "irrlicht.h"
+#include "rect.h"
+#include "vector2d.h"
+#include "vector3d.h"
 #include <sstream>
 #include <string>
 #include <video/Vector3D.h>

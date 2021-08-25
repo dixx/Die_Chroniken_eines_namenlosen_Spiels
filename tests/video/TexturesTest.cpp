@@ -1,9 +1,7 @@
 #include "../../src/Leviathan/video/Textures.h"
 #include "../../src/Leviathan/video/Constants.h"
 #include "../helpers/TestHelper.h"
-#include "IImage.h"
-#include "ITexture.h"
-#include "IVideoDriver.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 

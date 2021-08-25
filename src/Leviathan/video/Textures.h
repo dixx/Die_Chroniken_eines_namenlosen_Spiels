@@ -6,10 +6,15 @@
 #ifndef LEVIATHAN_VIDEO_TEXTURES_H
 #define LEVIATHAN_VIDEO_TEXTURES_H
 
-#include "ITexture.h"
-#include "IVideoDriver.h"
 #include <string>
 #include <unordered_map>
+
+namespace irr {
+    namespace video {
+        class ITexture;
+        class IVideoDriver;
+    }
+}
 
 namespace leviathan {
     namespace core {

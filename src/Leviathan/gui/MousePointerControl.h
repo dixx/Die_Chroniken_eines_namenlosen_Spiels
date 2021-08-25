@@ -7,10 +7,18 @@
 
 #include "../input/IEventConsumer.h"
 #include "../video/GraphicEngine.h"
-#include "irrlicht.h"
+#include "SColor.h"
+#include "rect.h"
+#include "vector2d.h"
 #include <cstdint>
 #include <gui/IMousePointerControl.h>
 #include <unordered_map>
+
+namespace irr {
+    namespace video {
+        class ITexture;
+    }
+}
 
 namespace leviathan {
     namespace core {

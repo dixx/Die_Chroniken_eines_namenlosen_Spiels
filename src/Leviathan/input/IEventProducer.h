@@ -6,7 +6,7 @@
 #ifndef LEVIATHAN_INPUT_IEVENTPRODUCER_H
 #define LEVIATHAN_INPUT_IEVENTPRODUCER_H
 
-#include "irrlicht.h"
+#include "IEventReceiver.h"
 
 namespace leviathan {
     namespace input {

@@ -1,4 +1,9 @@
 #include "TestHelper.h"
+#include "EDriverTypes.h"
+#include "ILogger.h"
+#include "IrrlichtDevice.h"
+#include "SIrrCreationParameters.h"
+#include "irrlicht.h"
 #include <cstdlib>
 #include <stdio.h>
 #include <vector>

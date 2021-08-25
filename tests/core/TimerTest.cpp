@@ -1,6 +1,5 @@
 #include "../../src/Leviathan/core/Timer.h"
 #include "catch.hpp"
-#include "irrlicht.h"
 #include <cfloat>
 
 TEST_CASE("Timer: architecture", "[unit]") {
@@ -15,26 +14,27 @@ TEST_CASE("Timer: architecture", "[unit]") {
 TEST_CASE("Timer: max value", "[unit]") {
     SECTION("zero is not forbidden") {
         leviathan::core::Timer subject(0.0f);
-        REQUIRE(irr::core::equals(subject.getMaxValue(), 0.0f));
+        REQUIRE(subject.getMaxValue() == Approx(0.0f));
         REQUIRE(subject.isFull());
     }
 
     SECTION("negative values are not forbidden") {
         leviathan::core::Timer subject(-10.0f);
-        REQUIRE(irr::core::equals(subject.getMaxValue(), -10.0f));
+        REQUIRE(subject.getMaxValue() == Approx(-10.0f));
         REQUIRE(subject.isFull());
     }
 
     SECTION("values are exactly met") {
+        float roundingError = 0.000001f;
         leviathan::core::Timer subject(1.0f);
         subject.start();
-        REQUIRE(irr::core::equals(subject.getMaxValue(), 1.0f));
+        REQUIRE(subject.getMaxValue() == Approx(1.0f));
         REQUIRE_FALSE(subject.isFull());
 
-        subject.tick(1.0f - irr::core::ROUNDING_ERROR_f32);
+        subject.tick(1.0f - roundingError);
         REQUIRE_FALSE(subject.isFull());
 
-        subject.tick(irr::core::ROUNDING_ERROR_f32);
+        subject.tick(roundingError);
         REQUIRE(subject.isFull());
     }
 

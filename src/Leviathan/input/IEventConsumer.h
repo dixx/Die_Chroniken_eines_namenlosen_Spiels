@@ -6,7 +6,9 @@
 #ifndef LEVIATHAN_INPUT_IEVENTCONSUMER_H
 #define LEVIATHAN_INPUT_IEVENTCONSUMER_H
 
-#include "irrlicht.h"
+namespace irr {
+    struct SEvent;
+}
 
 namespace leviathan {
     namespace input {

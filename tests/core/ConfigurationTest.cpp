@@ -2,7 +2,6 @@
 #include "../../src/Leviathan/core/Logger.h"
 #include "../helpers/TestHelper.h"
 #include "catch.hpp"
-#include "irrlicht.h"
 #include <string>
 
 TEST_CASE("Configuration: read values", "[unit]") {

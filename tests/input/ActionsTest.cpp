@@ -2,9 +2,11 @@
 #include "../../src/Leviathan/input/IEventProducer.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
+#include "EGUIElementTypes.h"
+#include "IGUIElement.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 #include <input/IActionConsumer.h>
 #include <memory>
 

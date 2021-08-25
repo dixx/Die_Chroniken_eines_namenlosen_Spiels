@@ -3,6 +3,8 @@
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
+#include "ISceneManager.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include <characters/CharacterConfiguration.h>
 #include <string>

@@ -4,9 +4,8 @@
 #include "../helpers/IGUIImageMock.hpp"
 #include "../helpers/IImageMock.hpp"
 #include "../helpers/TestHelper.h"
-#include "catch.hpp"
+#include "IVideoDriver.h"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 #include <memory>
 
 using namespace fakeit;

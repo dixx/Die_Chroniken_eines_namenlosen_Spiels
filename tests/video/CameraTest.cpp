@@ -1,9 +1,11 @@
 #include "../../src/Leviathan/video/Camera.h"
 #include "../../src/Leviathan/core/Configuration.h"
 #include "../helpers/TestHelper.h"
+#include "ICameraSceneNode.h"
+#include "ISceneManager.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 
 using namespace fakeit;
 

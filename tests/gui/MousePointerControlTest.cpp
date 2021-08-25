@@ -7,9 +7,11 @@
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/FakeitPatches.hpp"
 #include "../helpers/TestHelper.h"
+#include "ITexture.h"
+#include "IVideoDriver.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 #include <gui/MousePointerConfiguration.h>
 
 using namespace fakeit;

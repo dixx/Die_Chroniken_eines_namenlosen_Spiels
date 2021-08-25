@@ -8,14 +8,20 @@
 #define LEVIATHAN_GUI_MENU_H
 
 #include <memory>
-#include "irrlicht.h"
+
+namespace irr {
+    namespace gui {
+        class IGUIElement;
+        class IGUIEnvironment;
+    }
+}
 
 namespace leviathan {
     namespace gui {
         class Menu {
-          Menu() = delete;
-          Menu(const Menu&) = delete;
-          Menu& operator=(const Menu&) = delete;
+            Menu() = delete;
+            Menu(const Menu&) = delete;
+            Menu& operator=(const Menu&) = delete;
 
         public:
             irr::gui::IGUIElement* menuElement = nullptr;

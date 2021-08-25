@@ -1,8 +1,12 @@
 #include "../src/Leviathan/LeviathanDevice.h"
+#include "IGUIEnvironment.h"
+#include "IMeshCache.h"
+#include "ISceneManager.h"
+#include "ITimer.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include "helpers/TestHelper.h"
-#include "irrlicht.h"
 #include <cstdint>
 #include <typeinfo>
 

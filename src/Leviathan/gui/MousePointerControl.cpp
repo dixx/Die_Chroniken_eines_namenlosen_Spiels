@@ -2,6 +2,9 @@
 #include "../core/Logger.h"
 #include "../input/IEventProducer.h"
 #include "../video/Textures.h"
+#include "ICursorControl.h"
+#include "ITexture.h"
+#include "IVideoDriver.h"
 #include <gui/MousePointerConfiguration.h>
 #include <stdexcept>
 

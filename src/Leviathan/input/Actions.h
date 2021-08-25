@@ -10,13 +10,16 @@
 #include "IEventConsumer.h"
 #include "KeyboardEventActions.h"
 #include "MouseEventActions.h"
-#include "irrlicht.h"
 #include <cstdint>
 #include <input/IActionConsumer.h>
 #include <input/IActions.h>
 #include <map>
 #include <string>
 #include <vector>
+
+namespace irr {
+    struct SEvent;
+}
 
 namespace leviathan {
     namespace core {

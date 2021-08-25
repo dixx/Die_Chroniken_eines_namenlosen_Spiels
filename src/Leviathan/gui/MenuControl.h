@@ -8,11 +8,20 @@
 
 #include "../input/IEventConsumer.h"
 #include "Menu.h"
-#include "irrlicht.h"
 #include <gui/IMenuControl.h>
 #include <map>
 #include <memory>
 #include <string>
+
+namespace irr {
+    namespace gui {
+        class IGUIEnvironment;
+    }
+    namespace video {
+        class ITexture;
+        class IVideoDriver;
+    }
+}
 
 namespace leviathan {
     namespace input {

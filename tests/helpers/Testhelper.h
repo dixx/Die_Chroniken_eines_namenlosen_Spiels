@@ -2,11 +2,14 @@
 #define HELPERS_TESTHELPER_H
 
 #include "../../src/Leviathan/core/Logger.h"
-#include "irrlicht.h"
 #include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <string>
+
+namespace irr {
+    class IrrlichtDevice;
+}
 
 class TestHelper {
 public:

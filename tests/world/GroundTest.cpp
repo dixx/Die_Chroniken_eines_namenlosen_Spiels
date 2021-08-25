@@ -1,9 +1,10 @@
 #include "../../src/Leviathan/world/Ground.h"
 #include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/TestHelper.h"
+#include "ISceneManager.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 #include <world/Node3DConfiguration.h>
 
 using namespace fakeit;

@@ -1,6 +1,5 @@
 #include "../../src/Leviathan/video/Vector3DCompatible.h"
 #include "catch.hpp"
-#include "vector3d.h"
 #include <typeinfo>
 #include <video/Vector3D.h>
 

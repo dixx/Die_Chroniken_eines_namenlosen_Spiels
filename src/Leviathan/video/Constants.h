@@ -1,4 +1,4 @@
-#include "irrlicht.h"
+#include "SColor.h"
 
 namespace leviathan {
     namespace video {

@@ -7,8 +7,9 @@
 #define LEVIATHAN_CORE_CONFIGURATION_H
 
 #include "../support/MapWithDefault.h"
+#include "EDriverTypes.h"
 #include "Logger.h"
-#include "irrlicht.h"
+#include "SIrrCreationParameters.h"
 #include "yaml-cpp/yaml.h"
 #include <core/IConfiguration.h>
 #include <cstdint>

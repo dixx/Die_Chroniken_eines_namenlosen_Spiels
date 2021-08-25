@@ -6,7 +6,12 @@
 #ifndef LEVIATHAN_VIDEO_CAMERA_H
 #define LEVIATHAN_VIDEO_CAMERA_H
 
-#include "irrlicht.h"
+namespace irr {
+    namespace scene {
+        class ICameraSceneNode;
+        class ISceneManager;
+    }
+}
 
 namespace leviathan {
     namespace core {

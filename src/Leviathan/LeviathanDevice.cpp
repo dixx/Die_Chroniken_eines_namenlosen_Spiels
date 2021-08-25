@@ -1,4 +1,6 @@
 #include "LeviathanDevice.h"
+#include "ISceneManager.h"
+#include "IVideoDriver.h"
 #include "video/constants.h"
 #include <characters/IHeroes.h>
 #include <chrono>

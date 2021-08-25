@@ -1,7 +1,6 @@
 #include "../../src/Leviathan/input/KeyboardEventActions.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
-#include "irrlicht.h"
 #include <cstdint>
 #include <input/Action.h>
 #include <vector>

@@ -1,6 +1,6 @@
 #include "NodeManager.h"
-#include <IMeshCache.h>
-#include <ISceneManager.h>
+#include "IMeshCache.h"
+#include "ISceneManager.h"
 #include <characters/CharacterConfiguration.h>
 #include <world/Node3DConfiguration.h>
 

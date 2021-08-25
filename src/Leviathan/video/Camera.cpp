@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include "../core/Configuration.h"
 #include "Constants.h"
+#include "ICameraSceneNode.h"
+#include "ISceneManager.h"
 #include <stdexcept>
 
 namespace leviathan {

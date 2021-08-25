@@ -1,4 +1,6 @@
 #include "GUIEventActions.h"
+#include "IEventReceiver.h"
+#include "IGUIElement.h"
 #include <input/Action.h>
 
 namespace leviathan {

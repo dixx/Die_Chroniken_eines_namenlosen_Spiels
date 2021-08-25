@@ -3,7 +3,6 @@
 #include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"
-#include "irrlicht.h"
 
 using namespace fakeit;
 

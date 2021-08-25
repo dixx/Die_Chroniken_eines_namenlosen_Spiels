@@ -1,6 +1,9 @@
 #include "GroundTile.h"
 #include "../video/MeshHelper.h"
 #include "../video/Vector3DCompatible.h"
+#include "IMeshManipulator.h"
+#include "IMeshSceneNode.h"
+#include "IVideoDriver.h"
 #include <EMaterialFlags.h>
 #include <IMesh.h>
 #include <ISceneManager.h>

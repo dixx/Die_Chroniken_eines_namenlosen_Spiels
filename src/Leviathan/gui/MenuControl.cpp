@@ -1,6 +1,12 @@
 #include "MenuControl.h"
 #include "../input/IEventProducer.h"
 #include "../video/Textures.h"
+#include "IGUIButton.h"
+#include "IGUIEnvironment.h"
+#include "IGUIImage.h"
+#include "IGUISpriteBank.h"
+#include "ITexture.h"
+#include "IVideoDriver.h"
 #include <cstdint>
 
 namespace leviathan {

@@ -7,11 +7,14 @@
 #ifndef LEVIATHAN_INPUT_EVENT_TO_ACTION_CONVERTER_H
 #define LEVIATHAN_INPUT_EVENT_TO_ACTION_CONVERTER_H
 
-#include "irrlicht.h"
 #include <cstdint>
 #include <list>
 #include <map>
 #include <vector>
+
+namespace irr {
+    struct SEvent;
+}
 
 namespace leviathan {
     namespace input {

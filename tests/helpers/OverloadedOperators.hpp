@@ -1,8 +1,8 @@
 #ifndef OVERLOADED_OPERATORS_H
 #define OVERLOADED_OPERATORS_H
 
+#include "IEventReceiver.h"
 #include "catch.hpp"
-#include "irrlicht.h"
 #include <characters/IHero.h>
 #include <input/Action.h>
 #include <video/Vector3D.h>

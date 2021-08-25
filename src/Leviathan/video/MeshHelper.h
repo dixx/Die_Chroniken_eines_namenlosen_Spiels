@@ -6,7 +6,14 @@
 #ifndef LEVIATHAN_VIDEO_MESH_HELPER_H
 #define LEVIATHAN_VIDEO_MESH_HELPER_H
 
-#include "irrlicht.h"
+namespace irr {
+    namespace scene {
+        class IMesh;
+    }
+    namespace video {
+        class IVideoDriver;
+    }
+}
 
 namespace leviathan {
     namespace video {

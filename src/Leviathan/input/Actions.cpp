@@ -2,6 +2,7 @@
 #include "../core/Logger.h"
 #include "ActionMapping.h"
 #include "IEventProducer.h"
+#include "IEventReceiver.h"
 #include "Input.h"
 #include "yaml-cpp/yaml.h"
 #include <algorithm>

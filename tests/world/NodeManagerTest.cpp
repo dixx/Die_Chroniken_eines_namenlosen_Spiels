@@ -1,5 +1,7 @@
 #include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/TestHelper.h"
+#include "ISceneManager.h"
+#include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
 #include <characters/CharacterConfiguration.h>

@@ -1,8 +1,10 @@
 #ifndef FAKEIT_PATCHES_H
 #define FAKEIT_PATCHES_H
 
+#include "SColor.h"
 #include "fakeit.hpp"
-#include "irrlicht.h"
+#include "rect.h"
+#include "vector2d.h"
 #include <sstream>
 #include <string>
 

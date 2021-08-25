@@ -1,4 +1,6 @@
 #include "MeshHelper.h"
+#include "IMesh.h"
+#include "IVideoDriver.h"
 #include <cstdint>
 
 namespace leviathan {

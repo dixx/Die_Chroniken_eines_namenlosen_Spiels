@@ -1,5 +1,8 @@
 #include "SColor.h"
 
+#ifndef LEVIATHAN_VIDEO_CONSTANTS_H
+#define LEVIATHAN_VIDEO_CONSTANTS_H
+
 namespace leviathan {
     namespace video {
         const irr::video::SColor COL_WHITE = irr::video::SColor(255, 255, 255, 255);
@@ -7,3 +10,5 @@ namespace leviathan {
         const irr::video::SColor COL_MAGICPINK = irr::video::SColor(255, 250, 0, 250);
     }
 }
+
+#endif

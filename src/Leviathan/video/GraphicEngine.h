@@ -19,6 +19,7 @@ namespace irr {
 
     namespace scene {
         class ISceneManager;
+        class ISceneCollisionManager;
     }
 
     namespace video {
@@ -58,6 +59,8 @@ namespace leviathan {
             irr::gui::IGUIEnvironment* getGUIEnvironment();
 
             irr::scene::ISceneManager* getSceneManager();
+
+            irr::scene::ISceneCollisionManager* getCollisionManager();
 
             uint32_t getTime();
 

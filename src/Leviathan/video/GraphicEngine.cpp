@@ -57,6 +57,10 @@ namespace leviathan {
             return graphicEngine_->getSceneManager();
         }
 
+        irr::scene::ISceneCollisionManager* GraphicEngine::getCollisionManager() {
+            return getSceneManager()->getSceneCollisionManager();
+        }
+
         uint32_t GraphicEngine::getTime() {
             return graphicEngine_->getTimer()->getTime();
         }

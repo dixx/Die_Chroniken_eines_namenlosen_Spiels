@@ -1,5 +1,6 @@
 #include "Ground.h"
 #include "NodeManager.h"
+#include <video/Vector3D.h>
 #include <world/Node3DConfiguration.h>
 
 namespace leviathan {
@@ -16,6 +17,10 @@ namespace leviathan {
 
         void Ground::unload() {
             nodeManager_.unloadGround();
+        }
+
+        float Ground::getHeight(const video::Vector3D& position) const {
+            return nodeManager_.getWalkableHeight(position);
         }
     }
 }

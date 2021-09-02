@@ -3,7 +3,9 @@
 #include "../video/Vector3DCompatible.h"
 #include "IMeshManipulator.h"
 #include "IMeshSceneNode.h"
+#include "ITriangleSelector.h"
 #include "IVideoDriver.h"
+#include "NodeUsageBitmasks.h"
 #include <EMaterialFlags.h>
 #include <IMesh.h>
 #include <ISceneManager.h>
@@ -18,6 +20,8 @@ namespace leviathan {
             transformMesh(mesh, tileConfig);
             video::MeshHelper::pushMeshToVRAM(mesh);
             tileNode_ = sceneManager_->addMeshSceneNode(mesh);
+            tileNode_->setID(NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
+            tileNode_->setParent(sceneManager_->getSceneNodeFromName("walkableNodes"));
             video::Vector3DCompatible position = tileConfig.position;
             // TODO: replace with video::Textures.get
             irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(
@@ -26,6 +30,10 @@ namespace leviathan {
             tileNode_->setPosition(position.toIrrlichtVector());
             tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             tileNode_->setVisible(true);
+            irr::scene::ITriangleSelector* selector = sceneManager_->createOctreeTriangleSelector(
+                tileNode_->getMesh(), tileNode_, 900);  // TODO find a good way to calculate Polys per Node
+            tileNode_->setTriangleSelector(selector);
+            selector->drop();
         }
 
         GroundTile::~GroundTile() {

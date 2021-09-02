@@ -1,6 +1,7 @@
 include_directories("${LEVIATHAN_INCLUDE_DIRS}" "${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}")
 
 add_executable(unit_tests
+  benchmark/OctTreeBenchmarkTest.cpp
   characters/HeroesTest.cpp
   characters/HeroTest.cpp
   core/ConfigurationTest.cpp

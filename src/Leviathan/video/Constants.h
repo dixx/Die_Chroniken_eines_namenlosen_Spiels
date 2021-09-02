@@ -1,3 +1,8 @@
+/*! \file Constants.h
+ *  \brief Verschiedene vordefinierte Werte für erleichtertes Arbeiten.
+ *  \note Bestandteil der Leviathan Engine
+ */
+
 #include "SColor.h"
 
 #ifndef LEVIATHAN_VIDEO_CONSTANTS_H

@@ -1,6 +1,7 @@
 #include "../src/Leviathan/LeviathanDevice.h"
 #include "IGUIEnvironment.h"
 #include "IMeshCache.h"
+#include "ISceneCollisionManager.h"
 #include "ISceneManager.h"
 #include "ITimer.h"
 #include "IrrlichtDevice.h"
@@ -51,14 +52,18 @@ TEST_CASE("LeviathanDevice main loop", "[unit]") {
     Mock<irr::IrrlichtDevice> graphicEngineMock;
     Mock<irr::video::IVideoDriver> videoDriverMock;
     Mock<irr::scene::ISceneManager> sceneManagerMock;
+    Mock<irr::scene::ISceneCollisionManager> collisionManagerMock;
     Mock<irr::gui::IGUIEnvironment> guiEnvironmentMock;
     Mock<irr::scene::IMeshCache> meshCacheMock;
     irr::scene::ICameraSceneNode* cameraDummy = TestHelper::graphicEngine()->getSceneManager()->addCameraSceneNode();
+    irr::scene::ISceneNode* nodeDummy = TestHelper::graphicEngine()->getSceneManager()->addEmptySceneNode();
     Fake(Method(videoDriverMock, beginScene), Method(videoDriverMock, endScene));
     Fake(Method(meshCacheMock, clearUnusedMeshes));
     Fake(Method(sceneManagerMock, drawAll));
     When(Method(sceneManagerMock, getMeshCache)).AlwaysReturn(&meshCacheMock.get());
+    When(Method(sceneManagerMock, getSceneCollisionManager)).AlwaysReturn(&collisionManagerMock.get());
     When(Method(sceneManagerMock, addCameraSceneNode)).AlwaysReturn(cameraDummy);
+    When(Method(sceneManagerMock, addEmptySceneNode)).AlwaysReturn(nodeDummy);
     Fake(Method(guiEnvironmentMock, addEmptySpriteBank));
     When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&videoDriverMock.get());
     When(Method(graphicEngineMock, getSceneManager)).AlwaysReturn(&sceneManagerMock.get());

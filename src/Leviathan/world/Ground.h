@@ -9,6 +9,10 @@
 #include <world/IGround.h>
 
 namespace leviathan {
+    namespace video {
+        struct Vector3D;
+    }
+
     namespace world {
         class NodeManager;
         struct Node3DConfiguration;
@@ -41,6 +45,8 @@ namespace leviathan {
             /*! \brief Entfernt alle Kartenteile aus dem Spiel und gibt den Speicher frei.
              */
             void unload();
+
+            float getHeight(const video::Vector3D& position) const;
 
         private:
             NodeManager& nodeManager_;

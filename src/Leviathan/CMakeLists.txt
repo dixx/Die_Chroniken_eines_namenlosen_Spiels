@@ -29,6 +29,7 @@ target_sources(${PROJECT_NAME}
     video/Textures.cpp
     video/Vector3DCompatible.cpp
     world/Character.cpp
+    world/Collider.cpp
     world/Ground.cpp
     world/GroundTile.cpp
     world/NodeManager.cpp

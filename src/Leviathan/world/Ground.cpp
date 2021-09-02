@@ -19,7 +19,7 @@ namespace leviathan {
             nodeManager_.unloadGround();
         }
 
-        float Ground::getHeight(const video::Vector3D& position) const {
+        float Ground::getHeight(const video::Position3D& position) const {
             return nodeManager_.getWalkableHeight(position);
         }
     }

@@ -8,13 +8,14 @@
 #include <gui/MousePointerConfiguration.h>
 #include <input/Action.h>
 #include <input/IActions.h>
+#include <world/IGround.h>
 #include <world/Node3DConfiguration.h>
 
 GameStatePlay::GameStatePlay(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
     gameEngine_.MousePointerControl().addMousePointer(2001, {"gfx/Mauszeiger.bmp", {{0, 61}, {60, 120}}, {30, 30}});
 
     gameEngine_.Heroes().getActiveHero().setRotation({0.f, -90.f, 0.f});
-    gameEngine_.Heroes().getActiveHero().setPosition({11.f, 0.f, 11.f});
+    gameEngine_.Heroes().getActiveHero().setPosition({11.f, gameEngine_.Ground().getHeight({11.f, 0.f, 11.f}), 11.f});
 }
 
 GameStatePlay::~GameStatePlay() {
@@ -83,5 +84,6 @@ void GameStatePlay::moveHero(float x, float z) {
     auto position = gameEngine_.Heroes().getActiveHero().getPosition();
     position.x += x;
     position.z += z;
+    position.y = gameEngine_.Ground().getHeight(position);
     gameEngine_.Heroes().getActiveHero().setPosition(position);
 }

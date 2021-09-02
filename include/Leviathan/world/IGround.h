@@ -7,6 +7,11 @@
 #define LEVIATHAN_PUBLIC_INTERFACES_WORLD_IGROUND_H
 
 namespace leviathan {
+    namespace video {
+        struct Vector3D;
+        using Position3D = Vector3D;
+    }
+
     namespace world {
         struct Node3DConfiguration;
 
@@ -24,6 +29,12 @@ namespace leviathan {
             /*! \brief Entfernt alle Kartenteile aus dem Spiel und gibt den Speicher frei.
              */
             virtual void unload() = 0;
+
+            /*! \brief Gibt die Höhe des Bodens (Y-Koordinate, virtuelle Einheiten) an der gegebenen Position an.
+             *  \param position: Position deren Höhe ermittelt werden soll
+             *  \return Höhe des Bodens an der gegebenen Position
+             */
+            virtual float getHeight(const video::Vector3D& position) const = 0;
         };
     }
 }

@@ -25,8 +25,8 @@ namespace leviathan {
             graphicEngine_.getGUIEnvironment(), graphicEngine_.getVideoDriver(), eventReceiver_, *textures_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_.getSceneManager(), configuration_);
         nodeManager_ = std::make_unique<world::NodeManager>(graphicEngine_.getSceneManager());
-        heroes_ = std::make_unique<characters::Heroes>(*nodeManager_);
         ground_ = std::make_unique<world::Ground>(*nodeManager_);
+        heroes_ = std::make_unique<characters::Heroes>(*nodeManager_);
     }
 
     void LeviathanDevice::run() {

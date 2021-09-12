@@ -105,7 +105,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf eine Kamera.
          */
-        video::Camera& Camera();
+        video::ICamera& Camera();
 
         /*! \brief Zugriff auf begehbaren Boden.
          */

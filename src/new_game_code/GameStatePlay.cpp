@@ -8,6 +8,7 @@
 #include <gui/MousePointerConfiguration.h>
 #include <input/Action.h>
 #include <input/IActions.h>
+#include <video/ICamera.h>
 #include <world/IGround.h>
 #include <world/Node3DConfiguration.h>
 
@@ -24,6 +25,7 @@ GameStatePlay::~GameStatePlay() {
 
 void GameStatePlay::update(const float elapsedSeconds) {
     (void)elapsedSeconds;
+    gameEngine_.Camera().update();
 }
 
 void GameStatePlay::draw() {
@@ -86,4 +88,5 @@ void GameStatePlay::moveHero(float x, float z) {
     position.z += z;
     position.y = gameEngine_.Ground().getHeight(position);
     gameEngine_.Heroes().getActiveHero().setPosition(position);
+    gameEngine_.Camera().setTargetPosition(position);
 }

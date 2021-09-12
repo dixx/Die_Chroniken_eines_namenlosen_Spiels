@@ -115,7 +115,7 @@ namespace leviathan {
         return eventReceiver_;
     }
 
-    video::Camera& LeviathanDevice::Camera() {
+    video::ICamera& LeviathanDevice::Camera() {
         return *camera_;
     }
 

@@ -21,6 +21,7 @@ namespace leviathan {
             Vector3DCompatible(const Vector3DCompatible&& other);
             Vector3DCompatible(const Vector3D& other);
             Vector3DCompatible(const Vector3D&& other);
+            Vector3DCompatible& operator=(const Vector3D& other);
 
             irr::core::vector3df toIrrlichtVector() const;
         };

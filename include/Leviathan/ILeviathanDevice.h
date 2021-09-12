@@ -22,6 +22,9 @@ namespace leviathan {
     namespace input {
         struct IActions;
     }
+    namespace video {
+        struct ICamera;
+    }
     namespace world {
         struct IGround;
     }
@@ -66,6 +69,10 @@ namespace leviathan {
         /*! \brief Zugriff auf Input-Mappings.
          */
         virtual input::IActions& Actions() = 0;
+
+        /*! \brief Zugriff auf eine Kamera.
+         */
+        virtual video::ICamera& Camera() = 0;
 
         /*! \brief Zugriff auf begehbaren Boden.
          */

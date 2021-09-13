@@ -37,7 +37,9 @@ namespace leviathan {
             ~Camera() = default;
             Camera() = delete;
             Camera(const Camera&) = delete;
+            Camera(const Camera&&) = delete;
             Camera& operator=(const Camera&) = delete;
+            Camera& operator=(const Camera&&) = delete;
 
             void setTargetPosition(const Position3D& targetPosition) override;
 

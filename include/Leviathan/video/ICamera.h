@@ -25,7 +25,7 @@ namespace leviathan {
             /*! \brief Setzt das Positionsoffset relativ zur Zielposition
              *  \param offset: Positionsoffset relativ zur Zielposition
              */
-            virtual void setOffset(const Position3D& offset) = 0;
+            virtual void setOffset(const Vector3D& offset) = 0;
 
             /*! \brief Positioniert die Kamera und richtet sie aus.
              */

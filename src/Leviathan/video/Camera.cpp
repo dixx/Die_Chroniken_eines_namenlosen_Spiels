@@ -22,7 +22,7 @@ namespace leviathan {
             targetPosition_ = targetPosition;
         }
 
-        void Camera::setOffset(const Position3D& offset) {
+        void Camera::setOffset(const Vector3D& offset) {
             offset_ = offset;
         }
 

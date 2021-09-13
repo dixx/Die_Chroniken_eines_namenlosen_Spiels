@@ -41,7 +41,7 @@ namespace leviathan {
 
             void setTargetPosition(const Position3D& targetPosition) override;
 
-            void setOffset(const Position3D& offset) override;
+            void setOffset(const Vector3D& offset) override;
 
             void update() override;
 

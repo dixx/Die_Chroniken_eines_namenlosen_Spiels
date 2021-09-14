@@ -7,6 +7,7 @@
 #define LEVIATHAN_VIDEO_CAMERA_H
 
 #include "Vector3DCompatible.h"
+#include "vector3d.h"
 #include <video/ICamera.h>
 
 namespace irr {
@@ -43,14 +44,18 @@ namespace leviathan {
 
             void setTargetPosition(const Position3D& targetPosition) override;
 
-            void setOffset(const Vector3D& offset) override;
+            void setRotationSpeed(const float rotationSpeed) override;
 
-            void update() override;
+            void enableRotation(const bool isRotating) override;
+
+            void update(const float elapsedSeconds) override;
 
         private:
             irr::scene::ICameraSceneNode* camera_ = nullptr;
             Vector3DCompatible targetPosition_ = Vector3DCompatible({});
-            Vector3DCompatible offset_ = Vector3DCompatible({-3.f, 15.f, -3.f});
+            irr::core::vector3df offset_ = irr::core::vector3df(-3.f, 15.f, -3.f);
+            float rotationSpeed_ = 100.f;
+            bool isRotating_ = false;
         };
     }
 }

@@ -15,8 +15,11 @@
 GameStatePlay::GameStatePlay(leviathan::ILeviathanDevice& gameEngine) : gameEngine_(gameEngine) {
     gameEngine_.MousePointerControl().addMousePointer(2001, {"gfx/Mauszeiger.bmp", {{0, 61}, {60, 120}}, {30, 30}});
 
+    auto startingPosition = leviathan::video::Position3D(
+        {11.f, gameEngine_.Ground().getHeight({11.f, 0.f, 11.f}), 11.f});
     gameEngine_.Heroes().getActiveHero().setRotation({0.f, -90.f, 0.f});
-    gameEngine_.Heroes().getActiveHero().setPosition({11.f, gameEngine_.Ground().getHeight({11.f, 0.f, 11.f}), 11.f});
+    gameEngine_.Heroes().getActiveHero().setPosition(startingPosition);
+    gameEngine_.Camera().setTargetPosition(startingPosition);
 }
 
 GameStatePlay::~GameStatePlay() {
@@ -24,8 +27,7 @@ GameStatePlay::~GameStatePlay() {
 }
 
 void GameStatePlay::update(const float elapsedSeconds) {
-    (void)elapsedSeconds;
-    gameEngine_.Camera().update();
+    gameEngine_.Camera().update(elapsedSeconds);
 }
 
 void GameStatePlay::draw() {
@@ -34,15 +36,9 @@ void GameStatePlay::draw() {
 
 void GameStatePlay::onAction(const leviathan::input::Action action) {
     handleHeroMovementActions(action);
-    switch (action.id) {
-    case actions::OPEN_IN_GAME_OPTIONS: {
-        if (action.isActive) gameEngine_.GameStateManager().transitTo(STATE_LOADER);
-        break;
-    }
-    case actions::CAMERA_ROTATE_LEFT:
-        break;
-    case actions::CAMERA_ROTATE_RIGHT:
-        break;
+    handleCameraActions(action);
+    if (action.id == actions::OPEN_IN_GAME_OPTIONS && action.isActive) {
+        gameEngine_.GameStateManager().transitTo(STATE_LOADER);
     }
 }
 
@@ -52,6 +48,8 @@ void GameStatePlay::setActive() {
     gameEngine_.Actions().subscribe(*this, actions::HERO_MOVE_BACKWARD);
     gameEngine_.Actions().subscribe(*this, actions::HERO_MOVE_LEFT);
     gameEngine_.Actions().subscribe(*this, actions::HERO_MOVE_RIGHT);
+    gameEngine_.Actions().subscribe(*this, actions::CAMERA_ROTATE_LEFT);
+    gameEngine_.Actions().subscribe(*this, actions::CAMERA_ROTATE_RIGHT);
     gameEngine_.Heroes().getActiveHero().enablePlayableCharacter();
     gameEngine_.MousePointerControl().setActiveMousPointer(2001);
 }
@@ -63,6 +61,8 @@ void GameStatePlay::setInactive() {
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_BACKWARD);
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_LEFT);
     gameEngine_.Actions().unsubscribe(*this, actions::HERO_MOVE_RIGHT);
+    gameEngine_.Actions().unsubscribe(*this, actions::CAMERA_ROTATE_LEFT);
+    gameEngine_.Actions().unsubscribe(*this, actions::CAMERA_ROTATE_RIGHT);
 }
 
 /* private */
@@ -79,6 +79,16 @@ void GameStatePlay::handleHeroMovementActions(const leviathan::input::Action& ac
     }
     if (action.id == actions::HERO_MOVE_RIGHT) {
         moveHero(0.2f, 0.0f);
+    }
+}
+
+void GameStatePlay::handleCameraActions(const leviathan::input::Action& action) {
+    if (action.id == actions::CAMERA_ROTATE_LEFT) {
+        gameEngine_.Camera().setRotationSpeed(100.f);
+        gameEngine_.Camera().enableRotation(action.isActive);
+    } else if (action.id == actions::CAMERA_ROTATE_RIGHT) {
+        gameEngine_.Camera().setRotationSpeed(-100.f);
+        gameEngine_.Camera().enableRotation(action.isActive);
     }
 }
 

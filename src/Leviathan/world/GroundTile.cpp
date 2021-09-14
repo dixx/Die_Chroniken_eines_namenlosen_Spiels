@@ -24,11 +24,15 @@ namespace leviathan {
             tileNode_->setParent(sceneManager_->getSceneNodeFromName("walkableNodes"));
             video::Vector3DCompatible position = tileConfig.position;
             // TODO: replace with video::Textures.get
+            sceneManager_->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
+            sceneManager_->getVideoDriver()->setTextureCreationFlag(
+                irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(
                 tileConfig.textureFileName.c_str());
+            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            tileNode_->setMaterialType(irr::video::EMT_SOLID);
             tileNode_->setMaterialTexture(0, texture);
             tileNode_->setPosition(position.toIrrlichtVector());
-            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             tileNode_->setVisible(true);
             irr::scene::ITriangleSelector* selector = sceneManager_->createOctreeTriangleSelector(
                 tileNode_->getMesh(), tileNode_, 900);  // TODO find a good way to calculate Polys per Node

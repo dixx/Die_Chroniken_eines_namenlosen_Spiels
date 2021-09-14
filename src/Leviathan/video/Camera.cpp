@@ -9,7 +9,7 @@
 namespace leviathan {
     namespace video {
         Camera::Camera(irr::scene::ISceneManager* sceneManager, leviathan::core::Configuration& config)
-        : camera_(sceneManager->addCameraSceneNode(0, offset_.toIrrlichtVector(), irr::core::vector3df())) {
+        : camera_(sceneManager->addCameraSceneNode(0, offset_)) {
             camera_->setFarValue(config.getFarValue());
             camera_->setNearValue(0.1f);
             camera_->setFOV(1.0f);
@@ -22,13 +22,21 @@ namespace leviathan {
             targetPosition_ = targetPosition;
         }
 
-        void Camera::setOffset(const Vector3D& offset) {
-            offset_ = offset;
+        void Camera::setRotationSpeed(const float rotationSpeed) {
+            rotationSpeed_ = rotationSpeed;
         }
 
-        void Camera::update() {
-            camera_->setTarget(targetPosition_.toIrrlichtVector());
-            camera_->setPosition(targetPosition_.toIrrlichtVector() + offset_.toIrrlichtVector());
+        void Camera::enableRotation(const bool isRotating) {
+            isRotating_ = isRotating;
+        }
+
+        void Camera::update(const float elapsedSeconds) {
+            irr::core::vector3df targetPosition = targetPosition_.toIrrlichtVector();
+            camera_->setTarget(targetPosition);
+            if (isRotating_) {
+                offset_.rotateXZBy(rotationSpeed_ * elapsedSeconds);
+            }
+            camera_->setPosition(targetPosition + offset_);
         }
     }
 }

@@ -42,6 +42,7 @@ private:
     leviathan::ILeviathanDevice& gameEngine_;
 
     void handleHeroMovementActions(const leviathan::input::Action& action);
+    void handleCameraActions(const leviathan::input::Action& action);
     void moveHero(float x, float z);
 };
 

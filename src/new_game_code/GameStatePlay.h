@@ -28,9 +28,9 @@ public:
     GameStatePlay(const GameStatePlay&) = delete;
     GameStatePlay& operator=(const GameStatePlay&) = delete;
 
-    void update(const float elapsedSeconds);
+    void update(const float elapsedSeconds) override;
 
-    void draw();
+    void draw() override;
 
     void setActive() override;
 

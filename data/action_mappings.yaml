@@ -51,33 +51,33 @@
       type: keyboard
       code: 0x45
 
-- name: move forward
+- name: camera move forward
   id: 2011
-  description: moves the hero forward
+  description: moves the camera forward
   input_mappings:
     primary:
       name: <W>
       type: keyboard
       code: 0x57
-- name: move backward
+- name: camera move backward
   id: 2012
-  description: moves the hero backward
+  description: moves the camera backward
   input_mappings:
     primary:
       name: <S>
       type: keyboard
       code: 0x53
-- name: move left
+- name: camera strafe left
   id: 2013
-  description: moves the hero left
+  description: strafes the camera left
   input_mappings:
     primary:
       name: <A>
       type: keyboard
       code: 0x41
-- name: move right
+- name: camera strafe right
   id: 2014
-  description: moves the hero right
+  description: strafes the camera right
   input_mappings:
     primary:
       name: <D>

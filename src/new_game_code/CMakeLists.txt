@@ -1,6 +1,7 @@
 include_directories("${PUBLIC_INTERFACES}")
 
 add_executable(neues_spiel
+  CameraMover.cpp
   GameStateLoadGame.cpp
   GameStateMainMenu.cpp
   GameStatePlay.cpp

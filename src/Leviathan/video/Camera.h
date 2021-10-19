@@ -48,14 +48,21 @@ namespace leviathan {
 
             void enableRotation(const bool isRotating) override;
 
+            void setMovementSpeed(const Vector3D& movementSpeed) override;
+
+            void enableMovement(const bool isMoving) override;
+
             void update(const float elapsedSeconds) override;
 
         private:
             irr::scene::ICameraSceneNode* camera_ = nullptr;
-            Vector3DCompatible targetPosition_ = Vector3DCompatible({});
-            irr::core::vector3df offset_ = irr::core::vector3df(-3.f, 15.f, -3.f);
-            float rotationSpeed_ = 100.f;
+            irr::core::vector3df targetPosition_ = irr::core::vector3df();
+            irr::core::vector3df offset_ = irr::core::vector3df(0.f, 15.f, -3.f);
+            float rotation_ = 0.f;
+            float rotationSpeed_ = 0.f;
             bool isRotating_ = false;
+            irr::core::vector3df movementSpeed_ = irr::core::vector3df();
+            bool isMoving_ = false;
         };
     }
 }

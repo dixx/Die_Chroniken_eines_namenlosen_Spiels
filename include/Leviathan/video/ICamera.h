@@ -17,7 +17,7 @@ namespace leviathan {
         struct ICamera {
             virtual ~ICamera() {}
 
-            /*! \brief Setzt die Zielposition, auf welche die Kamera gerichtet sein soll
+            /*! \brief Setzt die Zielposition, auf welche die Kamera gerichtet sein soll.
              *         Wird erst beim nächsten Aufruf von `update` wirksam.
              *  \param targetPosition: Zielposition
              */
@@ -35,6 +35,18 @@ namespace leviathan {
              *  \param isRotating: Kamera rotiert, solange dieser Wert auf `true` gesetzt ist.
              */
             virtual void enableRotation(const bool isRotating) = 0;
+
+            /*! \brief Setzt die Bewegungsgeschwindigkeiten in XYZ-Richtung der Kamera.
+             *         Wird erst beim nächsten Aufruf von `update` wirksam.
+             *  \param movementSpeed: Bewegungsgeschwindigkeiten in XYZ-Richtung, in Virtuelle Einheiten pro Sekunde
+             */
+            virtual void setMovementSpeed(const Vector3D& movementSpeed) = 0;
+
+            /*! \brief Schaltet die Bewegung der Kamera an oder aus.
+             *         Wird erst beim nächsten Aufruf von `update` wirksam.
+             *  \param isMoving: Kamera bewegt sich, solange dieser Wert auf `true` gesetzt ist.
+             */
+            virtual void enableMovement(const bool isMoving) = 0;
 
             /*! \brief Positioniert die Kamera, richtet sie aus und rotiert sie bei Bedarf.
              *  \param elapsedSeconds: Dauer des letzten Frames, in Sekunden

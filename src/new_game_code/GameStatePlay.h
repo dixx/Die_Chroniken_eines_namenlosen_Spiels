@@ -1,6 +1,7 @@
 #ifndef GAMESTATEPLAY_H
 #define GAMESTATEPLAY_H
 
+#include "CameraMover.h"
 #include <core/IGameState.h>
 #include <input/IActionConsumer.h>
 
@@ -13,15 +14,7 @@ namespace leviathan {
 
 class GameStatePlay final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 public:
-    enum actions {
-        OPEN_IN_GAME_OPTIONS = 2002,
-        CAMERA_ROTATE_LEFT = 2008,
-        CAMERA_ROTATE_RIGHT,
-        HERO_MOVE_FORWARD = 2011,
-        HERO_MOVE_BACKWARD,
-        HERO_MOVE_LEFT,
-        HERO_MOVE_RIGHT
-    };
+    enum actions { OPEN_IN_GAME_OPTIONS = 2002 };
 
     explicit GameStatePlay(leviathan::ILeviathanDevice& gameEngine);
     ~GameStatePlay();
@@ -40,6 +33,7 @@ public:
 
 private:
     leviathan::ILeviathanDevice& gameEngine_;
+    CameraMover cameraMover_;
 
     void handleHeroMovementActions(const leviathan::input::Action& action);
     void handleCameraActions(const leviathan::input::Action& action);

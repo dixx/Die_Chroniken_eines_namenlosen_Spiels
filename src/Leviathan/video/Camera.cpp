@@ -12,14 +12,15 @@ namespace leviathan {
         : camera_(sceneManager->addCameraSceneNode(0, offset_)) {
             camera_->setFarValue(config.getFarValue());
             camera_->setNearValue(0.1f);
-            camera_->setFOV(1.0f);
+            camera_->setFOV(1.f);
             camera_->setAspectRatio(
-                static_cast<irr::f32>(config.getScreenSize().w) / static_cast<irr::f32>(config.getScreenSize().h));
+                static_cast<float>(config.getScreenSize().w) / static_cast<float>(config.getScreenSize().h));
+            camera_->bindTargetAndRotation(true);
             camera_->setInputReceiverEnabled(false);
         }
 
         void Camera::setTargetPosition(const Position3D& targetPosition) {
-            targetPosition_ = targetPosition;
+            targetPosition_.set(targetPosition.x, targetPosition.y, targetPosition.z);
         }
 
         void Camera::setRotationSpeed(const float rotationSpeed) {
@@ -30,13 +31,29 @@ namespace leviathan {
             isRotating_ = isRotating;
         }
 
+        void Camera::setMovementSpeed(const Vector3D& movementSpeed) {
+            movementSpeed_.set(movementSpeed.x, movementSpeed.y, movementSpeed.z);
+        }
+
+        void Camera::enableMovement(const bool isMoving) {
+            isMoving_ = isMoving;
+        }
+
         void Camera::update(const float elapsedSeconds) {
-            irr::core::vector3df targetPosition = targetPosition_.toIrrlichtVector();
-            camera_->setTarget(targetPosition);
             if (isRotating_) {
-                offset_.rotateXZBy(rotationSpeed_ * elapsedSeconds);
+                float rotationDelta = rotationSpeed_ * elapsedSeconds;
+                offset_.rotateXZBy(rotationDelta);
+                rotation_ += rotationDelta;
             }
-            camera_->setPosition(targetPosition + offset_);
+            if (isMoving_) {
+                auto direction = movementSpeed_ * elapsedSeconds;
+                direction.rotateXZBy(rotation_);
+                targetPosition_ += direction;
+            }
+
+            camera_->setPosition(targetPosition_ + offset_);
+            camera_->updateAbsolutePosition();
+            camera_->setTarget(targetPosition_);
         }
     }
 }

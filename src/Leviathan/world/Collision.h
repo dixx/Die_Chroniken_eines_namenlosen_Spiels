@@ -15,10 +15,6 @@ namespace leviathan {
         /*! \brief Definition einer Kollision.
          */
         struct Collision {
-            // std::string name = "- None -";
-            // std::string type = "unknown";
-            // uint32_t code = 0;
-            // bool isActive = false;
             video::Position3D collisionPoint = {0.f, 0.f, 0.f};
             bool happened = false;
         };

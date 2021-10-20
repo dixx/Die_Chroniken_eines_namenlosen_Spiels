@@ -1,7 +1,9 @@
 #ifndef CAMERAMOVER_H
 #define CAMERAMOVER_H
 
+#include <cstdint>
 #include <input/IActionConsumer.h>
+#include <unordered_map>
 #include <video/Vector3D.h>
 
 namespace leviathan {
@@ -15,8 +17,6 @@ namespace leviathan {
  */
 class CameraMover final : public leviathan::input::IActionConsumer {
 public:
-    enum cameraActions { ROTATE_LEFT = 2008, ROTATE_RIGHT, MOVE_FORWARD = 2011, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT };
-
     explicit CameraMover(leviathan::input::IActions& actions);
 
     ~CameraMover();
@@ -42,13 +42,12 @@ public:
     void reactToInput();
 
 private:
+    enum cameraActions { ROTATE_LEFT = 2010, ROTATE_RIGHT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT };
+    const float MOVEMENT_SPEED = 15.f;  // virtual units per second
+    const float ROTATION_SPEED = 100.f;  // degree per second
     leviathan::input::IActions& actions_;
-    bool isMovingLeft_ = false;
-    bool isMovingRight_ = false;
-    bool isMovingForward_ = false;
-    bool isMovingBackward_ = false;
-    bool isRotatingLeft_ = false;
-    bool isRotatingRight_ = false;
+    std::unordered_map<uint32_t, bool> actionActiveStates = {{ROTATE_LEFT, false}, {ROTATE_RIGHT, false},
+        {MOVE_FORWARD, false}, {MOVE_BACKWARD, false}, {MOVE_LEFT, false}, {MOVE_RIGHT, false}};
     leviathan::video::Vector3D direction_ = leviathan::video::Vector3D();
 };
 

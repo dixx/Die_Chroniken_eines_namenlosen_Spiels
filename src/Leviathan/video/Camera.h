@@ -42,6 +42,8 @@ namespace leviathan {
             Camera& operator=(const Camera&) = delete;
             Camera& operator=(const Camera&&) = delete;
 
+            Position3D getTargetPosition() override;
+
             void setTargetPosition(const Position3D& targetPosition) override;
 
             void setRotationSpeed(const float rotationSpeed) override;

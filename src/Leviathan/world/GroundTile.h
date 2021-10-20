@@ -43,6 +43,8 @@ namespace leviathan {
             irr::scene::IMeshSceneNode* tileNode_ = nullptr;
 
             void transformMesh(irr::scene::IMesh* mesh, const Node3DConfiguration& tileConfig);
+            void defineAppearance(const char* textureFileName);
+            void addTriangleSelector();
         };
     }
 }

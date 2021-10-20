@@ -23,21 +23,9 @@ namespace leviathan {
             tileNode_->setID(NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
             tileNode_->setParent(sceneManager_->getSceneNodeFromName("walkableNodes"));
             video::Vector3DCompatible position = tileConfig.position;
-            // TODO: replace with video::Textures.get
-            sceneManager_->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
-            sceneManager_->getVideoDriver()->setTextureCreationFlag(
-                irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
-            irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(
-                tileConfig.textureFileName.c_str());
-            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            tileNode_->setMaterialType(irr::video::EMT_SOLID);
-            tileNode_->setMaterialTexture(0, texture);
             tileNode_->setPosition(position.toIrrlichtVector());
-            tileNode_->setVisible(true);
-            irr::scene::ITriangleSelector* selector = sceneManager_->createOctreeTriangleSelector(
-                tileNode_->getMesh(), tileNode_, 900);  // TODO find a good way to calculate Polys per Node
-            tileNode_->setTriangleSelector(selector);
-            selector->drop();
+            defineAppearance(tileConfig.textureFileName.c_str());
+            addTriangleSelector();
         }
 
         GroundTile::~GroundTile() {
@@ -59,6 +47,25 @@ namespace leviathan {
             matrix.setScale(scale.toIrrlichtVector());
             sceneManager_->getMeshManipulator()->transform(mesh, matrix);
             sceneManager_->getMeshManipulator()->recalculateNormals(mesh, true);
+        }
+
+        void GroundTile::defineAppearance(const char* textureFileName) {
+            // TODO: replace with video::Textures.get
+            sceneManager_->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
+            sceneManager_->getVideoDriver()->setTextureCreationFlag(
+                irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
+            irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(textureFileName);
+            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            tileNode_->setMaterialType(irr::video::EMT_SOLID);
+            tileNode_->setMaterialTexture(0, texture);
+            tileNode_->setVisible(true);
+        }
+
+        void GroundTile::addTriangleSelector() {
+            irr::scene::ITriangleSelector* selector = sceneManager_->createOctreeTriangleSelector(
+                tileNode_->getMesh(), tileNode_, 900);  // TODO find a good way to calculate Polys per Node
+            tileNode_->setTriangleSelector(selector);
+            selector->drop();
         }
     }
 }

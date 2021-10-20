@@ -6,6 +6,8 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_VIDEO_ICAMERA_H
 #define LEVIATHAN_PUBLIC_INTERFACES_VIDEO_ICAMERA_H
 
+#include <video/IPositionable.h>
+
 namespace leviathan {
     namespace video {
         struct Vector3D;
@@ -14,12 +16,8 @@ namespace leviathan {
         /*! \interface ICamera
          *  \brief Bietet Zugriff auf eine Vogelperspektiven-Kamera.
          */
-        struct ICamera {
+        struct ICamera : IPositionable {
             virtual ~ICamera() {}
-
-            /*! \brief Gibt die Zielposition zurück, auf welche die Kamera gerichtet ist.
-             */
-            virtual Position3D getTargetPosition() = 0;
 
             /*! \brief Setzt die Zielposition, auf welche die Kamera gerichtet sein soll.
              *         Wird erst beim nächsten Aufruf von `update` wirksam.

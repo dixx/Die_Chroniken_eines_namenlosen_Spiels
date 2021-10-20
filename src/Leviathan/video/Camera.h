@@ -42,8 +42,6 @@ namespace leviathan {
             Camera& operator=(const Camera&) = delete;
             Camera& operator=(const Camera&&) = delete;
 
-            Position3D getTargetPosition() override;
-
             void setTargetPosition(const Position3D& targetPosition) override;
 
             void setRotationSpeed(const float rotationSpeed) override;
@@ -55,6 +53,10 @@ namespace leviathan {
             void enableMovement(const bool isMoving) override;
 
             void update(const float elapsedSeconds) override;
+
+            Position3D getPosition() const override;
+
+            void setPosition(const Position3D& position) override;
 
         private:
             irr::scene::ICameraSceneNode* camera_ = nullptr;

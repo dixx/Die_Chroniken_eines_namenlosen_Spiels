@@ -6,6 +6,8 @@
 #ifndef LEVIATHAN_PUBLIC_INTERFACES_WORLD_IGROUND_H
 #define LEVIATHAN_PUBLIC_INTERFACES_WORLD_IGROUND_H
 
+#include <video/IPositionable.h>
+
 namespace leviathan {
     namespace video {
         struct Vector3D;
@@ -35,6 +37,11 @@ namespace leviathan {
              *  \return Höhe des Bodens an der gegebenen Position
              */
             virtual float getHeight(const video::Vector3D& position) const = 0;
+
+            /*! \brief Passt die Höhe der aktuellen Position an die Höhe des Bodens an.
+             *  \param object: Object, dessen Position angepasst werden soll.
+             */
+            virtual void adjustHeight(video::IPositionable& object) const = 0;
         };
     }
 }

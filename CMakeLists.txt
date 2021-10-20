@@ -27,8 +27,9 @@ set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/input/Action.h
   ${PUBLIC_INTERFACES}/input/IActionConsumer.h
   ${PUBLIC_INTERFACES}/input/IActions.h
-  ${PUBLIC_INTERFACES}/video/ICamera.h
   ${PUBLIC_INTERFACES}/video/Dimension2D.h
+  ${PUBLIC_INTERFACES}/video/ICamera.h
+  ${PUBLIC_INTERFACES}/video/IPositionable.h
   ${PUBLIC_INTERFACES}/video/Position2D.h
   ${PUBLIC_INTERFACES}/video/Rectangle2D.h
   ${PUBLIC_INTERFACES}/video/Vector3D.h

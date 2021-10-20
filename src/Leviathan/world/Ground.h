@@ -36,6 +36,8 @@ namespace leviathan {
 
             float getHeight(const video::Position3D& position) const override;
 
+            void adjustHeight(video::IPositionable& object) const override;
+
         private:
             NodeManager& nodeManager_;
         };

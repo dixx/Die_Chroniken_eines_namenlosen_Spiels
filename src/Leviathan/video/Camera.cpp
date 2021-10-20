@@ -19,10 +19,6 @@ namespace leviathan {
             camera_->setInputReceiverEnabled(false);
         }
 
-        Position3D Camera::getTargetPosition() {
-            return Position3D({targetPosition_.X, targetPosition_.Y, targetPosition_.Z});
-        }
-
         void Camera::setTargetPosition(const Position3D& targetPosition) {
             targetPosition_.set(targetPosition.x, targetPosition.y, targetPosition.z);
         }
@@ -58,6 +54,14 @@ namespace leviathan {
             camera_->setPosition(targetPosition_ + offset_);
             camera_->updateAbsolutePosition();
             camera_->setTarget(targetPosition_);
+        }
+
+        Position3D Camera::getPosition() const {
+            return Position3D({targetPosition_.X, targetPosition_.Y, targetPosition_.Z});
+        }
+
+        void Camera::setPosition(const Position3D& position) {
+            setTargetPosition(position);
         }
     }
 }

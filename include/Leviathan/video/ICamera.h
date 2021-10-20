@@ -17,6 +17,10 @@ namespace leviathan {
         struct ICamera {
             virtual ~ICamera() {}
 
+            /*! \brief Gibt die Zielposition zurück, auf welche die Kamera gerichtet ist.
+             */
+            virtual Position3D getTargetPosition() = 0;
+
             /*! \brief Setzt die Zielposition, auf welche die Kamera gerichtet sein soll.
              *         Wird erst beim nächsten Aufruf von `update` wirksam.
              *  \param targetPosition: Zielposition

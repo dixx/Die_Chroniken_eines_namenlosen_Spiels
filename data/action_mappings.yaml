@@ -35,7 +35,7 @@
       code: 0x1B
 
 - name: camera rotate left
-  id: 2008
+  id: 2010
   description: rotates the camera to the left
   input_mappings:
     primary:
@@ -43,7 +43,7 @@
       type: keyboard
       code: 0x51
 - name: camera rotate right
-  id: 2009
+  id: 2011
   description: rotates the camera to the right
   input_mappings:
     primary:
@@ -52,7 +52,7 @@
       code: 0x45
 
 - name: camera move forward
-  id: 2011
+  id: 2012
   description: moves the camera forward
   input_mappings:
     primary:
@@ -60,7 +60,7 @@
       type: keyboard
       code: 0x57
 - name: camera move backward
-  id: 2012
+  id: 2013
   description: moves the camera backward
   input_mappings:
     primary:
@@ -68,7 +68,7 @@
       type: keyboard
       code: 0x53
 - name: camera strafe left
-  id: 2013
+  id: 2014
   description: strafes the camera left
   input_mappings:
     primary:
@@ -76,7 +76,7 @@
       type: keyboard
       code: 0x41
 - name: camera strafe right
-  id: 2014
+  id: 2015
   description: strafes the camera right
   input_mappings:
     primary:

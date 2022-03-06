@@ -6,6 +6,8 @@
 #ifndef LEVIATHAN_WORLD_COLLIDER_H
 #define LEVIATHAN_WORLD_COLLIDER_H
 
+#include <world/ICollider.h>
+
 namespace irr {
     namespace scene {
         class ISceneCollisionManager;
@@ -27,11 +29,20 @@ namespace leviathan {
         /*! \class Collider Collider.h "Collider.h"
          *  \brief Bietet Zugriff auf Kollisionserkennung.
          */
-        class Collider {
+        class Collider final : public ICollider {
         public:
             explicit Collider(irr::scene::ISceneManager* sceneManager);
 
-            Collision getCollision(irr::scene::ISceneNode* rootNode, const video::Position3D& position) const;
+            Collider() = delete;
+            Collider(const Collider&) = delete;
+            Collider(const Collider&&) = delete;
+            Collider& operator=(const Collider&) = delete;
+            Collider& operator=(const Collider&&) = delete;
+
+            Collision getCollisionTopDown(irr::scene::ISceneNode* rootNode, const video::Position3D& position,
+                const float heightOffset = 200.f) const;
+
+            Collision getCollisionFromScreenCoordinates(const video::Position2D& screenCoordinates) const;
 
         private:
             irr::scene::ISceneManager* sceneManager_ = nullptr;

@@ -23,7 +23,7 @@ namespace leviathan {
             return nodeManager_.getWalkableHeight(position);
         }
 
-        void Ground::adjustHeight(video::IPositionable& object) const {
+        void Ground::adjustHeightOf(video::IPositionable& object) const {
             video::Position3D position = object.getPosition();
             position.y = getHeight(position);
             object.setPosition(position);

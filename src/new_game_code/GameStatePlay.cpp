@@ -33,7 +33,7 @@ void GameStatePlay::update(const float elapsedSeconds) {
     gameEngine_.Camera().setRotationSpeed(cameraMover_.getRotationSpeed());
     gameEngine_.Camera().enableRotation(cameraMover_.isRotating());
     gameEngine_.Camera().update(elapsedSeconds);
-    gameEngine_.Ground().adjustHeight(gameEngine_.Camera());
+    gameEngine_.Ground().adjustHeightOf(gameEngine_.Camera());
 }
 
 void GameStatePlay::draw() {

@@ -1,10 +1,10 @@
 #include "NodeManager.h"
-#include "Collision.h"
 #include "IMeshCache.h"
 #include "ISceneManager.h"
 #include "NodeUsageBitmasks.h"
 #include <characters/CharacterConfiguration.h>
 #include <video/Vector3D.h>
+#include <world/Collision.h>
 #include <world/Node3DConfiguration.h>
 
 namespace leviathan {
@@ -43,7 +43,7 @@ namespace leviathan {
         }
 
         float NodeManager::getWalkableHeight(const video::Position3D& position) const {
-            return collider_.getCollision(walkableNodes_, position).collisionPoint.y;
+            return collider_.getCollisionTopDown(walkableNodes_, position).collisionPoint.y;
         }
 
         void NodeManager::addNodeTree() {

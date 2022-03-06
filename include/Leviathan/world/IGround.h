@@ -38,10 +38,10 @@ namespace leviathan {
              */
             virtual float getHeight(const video::Vector3D& position) const = 0;
 
-            /*! \brief Passt die Höhe der aktuellen Position an die Höhe des Bodens an.
+            /*! \brief Passt die Höhe der aktuellen Position des übergebenen Objekts an die Höhe des Bodens an.
              *  \param object: Object, dessen Position angepasst werden soll.
              */
-            virtual void adjustHeight(video::IPositionable& object) const = 0;
+            virtual void adjustHeightOf(video::IPositionable& object) const = 0;
         };
     }
 }

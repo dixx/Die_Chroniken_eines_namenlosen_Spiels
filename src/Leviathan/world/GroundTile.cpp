@@ -55,9 +55,10 @@ namespace leviathan {
             sceneManager_->getVideoDriver()->setTextureCreationFlag(
                 irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(textureFileName);
-            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            tileNode_->setMaterialType(irr::video::EMT_SOLID);
             tileNode_->setMaterialTexture(0, texture);
+            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            tileNode_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);
+            tileNode_->setMaterialType(irr::video::EMT_SOLID);
             tileNode_->setVisible(true);
         }
 

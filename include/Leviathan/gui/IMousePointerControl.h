@@ -8,6 +8,10 @@
 #include <cstdint>
 
 namespace leviathan {
+    namespace video {
+        struct Position2D;
+    }
+
     namespace gui {
         struct MousePointerConfiguration;
 
@@ -28,7 +32,12 @@ namespace leviathan {
              */
             virtual void setActiveMousPointer(const uint32_t id) = 0;
 
-            /*! \brief Zeichnet den Mauszeiger auf den Bildschirm
+            /*! \brief Gibt die aktuelle Bildschirmposition des Mauszeigers zurück.
+             *  \return Bildschirm-Koordinaten in Pixel
+             */
+            virtual const video::Position2D getPosition() const = 0;
+
+            /*! \brief Zeichnet den Mauszeiger auf den Bildschirm.
              */
             virtual void draw() = 0;
         };

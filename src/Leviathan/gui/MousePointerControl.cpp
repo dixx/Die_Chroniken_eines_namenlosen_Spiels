@@ -53,6 +53,10 @@ namespace leviathan {
             }
         }
 
+        const video::Position2D MousePointerControl::getPosition() const {
+            return {position_.X, position_.Y};
+        }
+
         void MousePointerControl::draw() {
             if (activeMousePointer_ == 0) return;
 

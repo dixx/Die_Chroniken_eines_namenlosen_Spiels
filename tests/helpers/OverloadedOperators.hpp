@@ -5,6 +5,7 @@
 #include "catch.hpp"
 #include <characters/IHero.h>
 #include <input/Action.h>
+#include <video/Position2D.h>
 #include <video/Vector3D.h>
 
 // Some of our user-defined types do not have certain operators, because they would only be used in tests.
@@ -19,6 +20,10 @@ inline bool operator==(const leviathan::characters::IHero& lhs, const leviathan:
 
 inline bool operator==(const leviathan::video::Vector3D& lhs, const leviathan::video::Vector3D& rhs) {
     return lhs.x == Approx(rhs.x) && lhs.y == Approx(rhs.y) && lhs.z == Approx(rhs.z);
+}
+
+inline bool operator==(const leviathan::video::Position2D& lhs, const leviathan::video::Position2D& rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
 // Some of the Irrlicht types do not have certain operators, because they would only be used in tests.

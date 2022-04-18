@@ -16,11 +16,15 @@ namespace leviathan {
             setScale(characterConfig.playableFigurineConfiguration.scale);
             setPosition(characterConfig.playableFigurineConfiguration.position);
             // TODO: replace with video::Textures.get
+            sceneManager->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
+            sceneManager->getVideoDriver()->setTextureCreationFlag(
+                irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = sceneManager->getVideoDriver()->getTexture(
                 characterConfig.playableFigurineConfiguration.textureFileName.c_str());
             characterNode_->setMaterialTexture(0, texture);
             characterNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            characterNode_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
+            characterNode_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);
+            characterNode_->setMaterialType(irr::video::EMT_SOLID);
             characterNode_->setMD2Animation(irr::scene::EMAT_STAND);
             setInvisible();
         }

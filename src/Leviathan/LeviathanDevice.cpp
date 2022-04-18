@@ -10,6 +10,7 @@
 #include <gui/IMenuControl.h>
 #include <gui/IMousePointerControl.h>
 #include <input/IActions.h>
+#include <world/ICollider.h>
 #include <world/IGround.h>
 
 namespace leviathan {
@@ -24,6 +25,7 @@ namespace leviathan {
         menuControl_ = std::make_unique<gui::MenuControl>(
             graphicEngine_.getGUIEnvironment(), graphicEngine_.getVideoDriver(), eventReceiver_, *textures_);
         camera_ = std::make_unique<video::Camera>(graphicEngine_.getSceneManager(), configuration_);
+        collider_ = std::make_unique<world::Collider>(graphicEngine_.getSceneManager());
         nodeManager_ = std::make_unique<world::NodeManager>(graphicEngine_.getSceneManager());
         ground_ = std::make_unique<world::Ground>(*nodeManager_);
         heroes_ = std::make_unique<characters::Heroes>(*nodeManager_);
@@ -117,6 +119,10 @@ namespace leviathan {
 
     video::ICamera& LeviathanDevice::Camera() {
         return *camera_;
+    }
+
+    world::ICollider& LeviathanDevice::Collider() {
+        return *collider_;
     }
 
     world::IGround& LeviathanDevice::Ground() {

@@ -17,6 +17,7 @@
 namespace irr {
     namespace video {
         class ITexture;
+        struct PPosition2D;
     }
 }
 
@@ -62,13 +63,10 @@ namespace leviathan {
 
             void addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration);
 
-            /*! \brief Wählt den anzuzeigenden Mauspfeil aus.
-             *  \param id: ID des anzuzeigenden Mauszeigers
-             */
             void setActiveMousPointer(const uint32_t id);
 
-            /*! \brief Zeichnet den Mauszeiger auf den Bildschirm
-             */
+            const video::Position2D getPosition() const;
+
             void draw();
 
         private:

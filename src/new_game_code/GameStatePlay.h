@@ -14,7 +14,7 @@ namespace leviathan {
 
 class GameStatePlay final : public leviathan::core::IGameState, leviathan::input::IActionConsumer {
 public:
-    enum actions { OPEN_IN_GAME_OPTIONS = 2002 };
+    enum actions { OPEN_IN_GAME_OPTIONS = 2002, TARGET_SELECTED = 3001 };
 
     explicit GameStatePlay(leviathan::ILeviathanDevice& gameEngine);
     ~GameStatePlay();
@@ -37,6 +37,7 @@ private:
 
     void handleHeroMovementActions(const leviathan::input::Action& action);
     void handleCameraActions(const leviathan::input::Action& action);
+    void moveCamera(const float elapsedSeconds);
     void moveHero(float x, float z);
 };
 

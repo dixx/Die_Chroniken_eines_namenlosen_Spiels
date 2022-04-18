@@ -114,15 +114,11 @@
 #       name: <Arrow Up>
 #       type: keyboard
 #       code: 0x26
-# - name: target selected
-#   id: 2001
-#   description: select a target, may it be a position on the ground, an NPC or an object.
-#   input_mappings:
-#     primary:
-#       name: left mouse button
-#       type: mouse
-#       code: 0x01
-#     secondary:
-#       name: <E>
-#       type: keyboard
-#       code: 0x45
+- name: target selected
+  id: 3001
+  description: select a target, may it be a position on the ground, an NPC or an object.
+  input_mappings:
+    primary:
+      name: left mouse button
+      type: mouse
+      code: 0x01

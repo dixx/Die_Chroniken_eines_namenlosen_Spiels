@@ -41,6 +41,8 @@ TEST_CASE("LeviathanDevice supporter", "[integration]") {
         REQUIRE(&subject.TimeControl() != nullptr);
         REQUIRE(typeid(subject.Heroes()) == typeid(leviathan::characters::Heroes));
         REQUIRE(&subject.Heroes() != nullptr);
+        REQUIRE(typeid(subject.Collider()) == typeid(leviathan::world::Collider));
+        REQUIRE(&subject.Collider() != nullptr);
         REQUIRE(typeid(subject.Ground()) == typeid(leviathan::world::Ground));
         REQUIRE(&subject.Ground() != nullptr);
     }

@@ -12,6 +12,7 @@ namespace leviathan {
         irr::video::ITexture* Textures::get(const char* fileName) {
             if (textures_.find(fileName) != textures_.end()) return textures_[fileName].irrTexture;
 
+            videoDriver_->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
             videoDriver_->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             Texture tex;
             tex.irrTexture = videoDriver_->getTexture(fileName);

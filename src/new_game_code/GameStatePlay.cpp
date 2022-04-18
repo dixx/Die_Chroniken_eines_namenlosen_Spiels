@@ -28,12 +28,7 @@ GameStatePlay::~GameStatePlay() {
 }
 
 void GameStatePlay::update(const float elapsedSeconds) {
-    gameEngine_.Camera().setMovementSpeed(cameraMover_.getMovementSpeed());
-    gameEngine_.Camera().enableMovement(cameraMover_.isMoving());
-    gameEngine_.Camera().setRotationSpeed(cameraMover_.getRotationSpeed());
-    gameEngine_.Camera().enableRotation(cameraMover_.isRotating());
-    gameEngine_.Camera().update(elapsedSeconds);
-    gameEngine_.Ground().adjustHeightOf(gameEngine_.Camera());
+    moveCamera(elapsedSeconds);
 }
 
 void GameStatePlay::draw() {
@@ -41,7 +36,9 @@ void GameStatePlay::draw() {
 }
 
 void GameStatePlay::onAction(const leviathan::input::Action action) {
-    handleHeroMovementActions(action);
+    // handleHeroMovementActions(action);
+    if (action.id == actions::TARGET_SELECTED && action.isActive) {
+    }
     if (action.id == actions::OPEN_IN_GAME_OPTIONS && action.isActive) {
         gameEngine_.GameStateManager().transitTo(STATE_LOADER);
     }
@@ -63,6 +60,7 @@ void GameStatePlay::setInactive() {
 /* private */
 
 void GameStatePlay::handleHeroMovementActions(const leviathan::input::Action& action) {
+    // TODO: add mouse to ground collision
     (void)action;
     // if (action.id == actions::CAMERA_MOVE_FORWARD) {
     //     moveHero(0.0f, 0.2f);
@@ -73,6 +71,15 @@ void GameStatePlay::handleHeroMovementActions(const leviathan::input::Action& ac
     // } else if (action.id == actions::CAMERA_MOVE_RIGHT) {
     //     moveHero(0.2f, 0.0f);
     // }
+}
+
+void GameStatePlay::moveCamera(const float elapsedSeconds) {
+    gameEngine_.Camera().setMovementSpeed(cameraMover_.getMovementSpeed());
+    gameEngine_.Camera().enableMovement(cameraMover_.isMoving());
+    gameEngine_.Camera().setRotationSpeed(cameraMover_.getRotationSpeed());
+    gameEngine_.Camera().enableRotation(cameraMover_.isRotating());
+    gameEngine_.Camera().update(elapsedSeconds);
+    gameEngine_.Ground().adjustHeightOf(gameEngine_.Camera());
 }
 
 void GameStatePlay::moveHero(float x, float z) {

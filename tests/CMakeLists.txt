@@ -23,6 +23,7 @@ add_executable(unit_tests
   video/GraphicEngineTest.cpp
   video/TexturesTest.cpp
   video/Vector3DCompatibleTest.cpp
+  world/ColliderTest.cpp
   world/GroundTest.cpp
   world/NodeManagerTest.cpp
   LeviathanDeviceTest.cpp

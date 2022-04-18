@@ -22,6 +22,6 @@ install(FILES
   "${RESOURCES_DIR}/GFX/menues1.bmp"
   "${RESOURCES_DIR}/GFX/OBJECTS/sydney.md2"
   "${RESOURCES_DIR}/GFX/sydney.bmp"
-  "${RESOURCES_DIR}/GFX/landtest.png"
-  "${RESOURCES_DIR}/GFX/MAP/linksUnten.3ds"
+  "${RESOURCES_DIR}/GFX/brushed_terrain.png"
+  "${RESOURCES_DIR}/GFX/MAP/landscape_river_10.obj"
 DESTINATION ./gfx)

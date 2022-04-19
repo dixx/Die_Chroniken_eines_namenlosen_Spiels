@@ -35,10 +35,8 @@ private:
     leviathan::ILeviathanDevice& gameEngine_;
     CameraMover cameraMover_;
 
-    void handleHeroMovementActions(const leviathan::input::Action& action);
     void handleCameraActions(const leviathan::input::Action& action);
     void moveCamera(const float elapsedSeconds);
-    void moveHero(float x, float z);
 };
 
 #endif

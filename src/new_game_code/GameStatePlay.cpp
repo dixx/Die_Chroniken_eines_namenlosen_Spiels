@@ -9,6 +9,8 @@
 #include <input/Action.h>
 #include <input/IActions.h>
 #include <video/ICamera.h>
+#include <world/Collision.h>
+#include <world/ICollider.h>
 #include <world/IGround.h>
 #include <world/Node3DConfiguration.h>
 
@@ -25,6 +27,7 @@ GameStatePlay::GameStatePlay(leviathan::ILeviathanDevice& gameEngine)
 
 GameStatePlay::~GameStatePlay() {
     gameEngine_.Actions().unsubscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
+    gameEngine_.Actions().unsubscribe(*this, actions::TARGET_SELECTED);
 }
 
 void GameStatePlay::update(const float elapsedSeconds) {
@@ -36,8 +39,12 @@ void GameStatePlay::draw() {
 }
 
 void GameStatePlay::onAction(const leviathan::input::Action action) {
-    // handleHeroMovementActions(action);
     if (action.id == actions::TARGET_SELECTED && action.isActive) {
+        leviathan::world::Collision collision = gameEngine_.Collider().getCollisionFromScreenCoordinates(
+            gameEngine_.MousePointerControl().getPosition());
+        if (collision.happened) {
+            gameEngine_.Heroes().getActiveHero().setPosition(collision.collisionPoint);
+        }
     }
     if (action.id == actions::OPEN_IN_GAME_OPTIONS && action.isActive) {
         gameEngine_.GameStateManager().transitTo(STATE_LOADER);
@@ -46,6 +53,7 @@ void GameStatePlay::onAction(const leviathan::input::Action action) {
 
 void GameStatePlay::setActive() {
     gameEngine_.Actions().subscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
+    gameEngine_.Actions().subscribe(*this, actions::TARGET_SELECTED);
     gameEngine_.Heroes().getActiveHero().enablePlayableCharacter();
     gameEngine_.MousePointerControl().setActiveMousPointer(2001);
     cameraMover_.reactToInput();
@@ -54,24 +62,11 @@ void GameStatePlay::setActive() {
 void GameStatePlay::setInactive() {
     gameEngine_.Heroes().getActiveHero().disablePlayableCharacter();
     gameEngine_.Actions().unsubscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
+    gameEngine_.Actions().unsubscribe(*this, actions::TARGET_SELECTED);
     cameraMover_.ignoreInput();
 }
 
 /* private */
-
-void GameStatePlay::handleHeroMovementActions(const leviathan::input::Action& action) {
-    // TODO: add mouse to ground collision
-    (void)action;
-    // if (action.id == actions::CAMERA_MOVE_FORWARD) {
-    //     moveHero(0.0f, 0.2f);
-    // } else if (action.id == actions::CAMERA_MOVE_BACKWARD) {
-    //     moveHero(0.0f, -0.2f);
-    // } else if (action.id == actions::CAMERA_MOVE_LEFT) {
-    //     moveHero(-0.2f, 0.0f);
-    // } else if (action.id == actions::CAMERA_MOVE_RIGHT) {
-    //     moveHero(0.2f, 0.0f);
-    // }
-}
 
 void GameStatePlay::moveCamera(const float elapsedSeconds) {
     gameEngine_.Camera().setMovementSpeed(cameraMover_.getMovementSpeed());
@@ -80,13 +75,4 @@ void GameStatePlay::moveCamera(const float elapsedSeconds) {
     gameEngine_.Camera().enableRotation(cameraMover_.isRotating());
     gameEngine_.Camera().update(elapsedSeconds);
     gameEngine_.Ground().adjustHeightOf(gameEngine_.Camera());
-}
-
-void GameStatePlay::moveHero(float x, float z) {
-    auto position = gameEngine_.Heroes().getActiveHero().getPosition();
-    position.x += x;
-    position.z += z;
-    position.y = gameEngine_.Ground().getHeight(position);
-    gameEngine_.Heroes().getActiveHero().setPosition(position);
-    gameEngine_.Camera().setTargetPosition(position);
 }

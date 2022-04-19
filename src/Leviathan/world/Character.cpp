@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "../video/Textures.h"
 #include "../video/Vector3DCompatible.h"
 #include <EMaterialFlags.h>
 #include <IAnimatedMesh.h>
@@ -8,18 +9,14 @@
 
 namespace leviathan {
     namespace world {
-        Character::Character(
-            const characters::CharacterConfiguration& characterConfig, irr::scene::ISceneManager* sceneManager) {
+        Character::Character(const characters::CharacterConfiguration& characterConfig, video::Textures& textures,
+            irr::scene::ISceneManager* sceneManager) {
             mOffset = characterConfig.playableFigurineConfiguration.offset;
             createNode(characterConfig, sceneManager);
             mCharacterNode->setName(characterConfig.internalName.c_str());
             setScale(characterConfig.playableFigurineConfiguration.scale);
             setPosition(characterConfig.playableFigurineConfiguration.position);
-            // TODO: replace with video::Textures.get
-            sceneManager->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
-            sceneManager->getVideoDriver()->setTextureCreationFlag(
-                irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
-            irr::video::ITexture* texture = sceneManager->getVideoDriver()->getTexture(
+            irr::video::ITexture* texture = textures.get(
                 characterConfig.playableFigurineConfiguration.textureFileName.c_str());
             mCharacterNode->setMaterialTexture(0, texture);
             mCharacterNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);

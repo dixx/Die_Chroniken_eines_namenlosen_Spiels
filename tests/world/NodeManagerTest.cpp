@@ -1,6 +1,8 @@
 #include "../../src/Leviathan/world/NodeManager.h"
+#include "../../src/Leviathan/video/Textures.h"
 #include "../helpers/TestHelper.h"
 #include "ISceneManager.h"
+#include "ITexture.h"
 #include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
@@ -8,6 +10,8 @@
 #include <world/INode3D.h>
 
 using namespace fakeit;
+
+#define getTextureArgs irr::video::ITexture*(const irr::io::path&)
 
 TEST_CASE("NodeManager", "[integration]") {
     TestHelper::graphicEngine()->getSceneManager()->addSphereMesh(
@@ -20,7 +24,12 @@ TEST_CASE("NodeManager", "[integration]") {
             {2.f, 3.f, 4.f}}});
     leviathan::world::Node3DConfiguration tileConfig({"path/to/meshFile", "path/to/textureFile", {1.f, 2.f, 3.f},
         {11.f, 22.f, 33.f}, {0.f, 0.f, 0.f}, {2.f, 3.f, 4.f}});
-    leviathan::world::NodeManager subject(TestHelper::graphicEngine()->getSceneManager());
+    Mock<irr::video::ITexture> textureMock;
+    Mock<irr::video::IVideoDriver> videoDriverMock;
+    When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
+    Fake(Method(videoDriverMock, setTextureCreationFlag));
+    leviathan::video::Textures textures(&videoDriverMock.get(), TestHelper::Logger());
+    leviathan::world::NodeManager subject(TestHelper::graphicEngine()->getSceneManager(), textures);
 
     SECTION("add hero objects") {
         subject.createHeroNode(heroConfig);

@@ -1,15 +1,27 @@
 #include "../../src/Leviathan/characters/Heroes.h"
+#include "../../src/Leviathan/video/Textures.h"
 #include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "ISceneManager.h"
+#include "ITexture.h"
 #include "IrrlichtDevice.h"
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include <characters/CharacterConfiguration.h>
 #include <characters/IHero.h>
 
+using namespace fakeit;
+
+#define getTextureArgs irr::video::ITexture*(const irr::io::path&)
+
 TEST_CASE("Heroes", "[integration]") {
-    leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager());
+    Mock<irr::video::ITexture> textureMock;
+    Mock<irr::video::IVideoDriver> videoDriverMock;
+    When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
+    Fake(Method(videoDriverMock, setTextureCreationFlag));
+    leviathan::video::Textures textures(&videoDriverMock.get(), TestHelper::Logger());
+    leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager(), textures);
     leviathan::characters::Heroes subject(nodeManager);
     TestHelper::graphicEngine()->getSceneManager()->addSphereMesh(
         "path/to/meshFile");  // add a test mesh to avoid getting a nullptr

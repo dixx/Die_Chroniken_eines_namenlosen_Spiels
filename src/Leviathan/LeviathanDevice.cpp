@@ -26,7 +26,7 @@ namespace leviathan {
             mGraphicEngine.getGUIEnvironment(), mGraphicEngine.getVideoDriver(), mEventReceiver, *mTextures);
         mCamera = std::make_unique<video::Camera>(mGraphicEngine.getSceneManager(), mConfiguration);
         mCollider = std::make_unique<world::Collider>(mGraphicEngine.getSceneManager());
-        mNodeManager = std::make_unique<world::NodeManager>(mGraphicEngine.getSceneManager());
+        mNodeManager = std::make_unique<world::NodeManager>(mGraphicEngine.getSceneManager(), *mTextures);
         mGround = std::make_unique<world::Ground>(*mNodeManager);
         mHeroes = std::make_unique<characters::Heroes>(*mNodeManager);
     }

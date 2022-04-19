@@ -24,6 +24,7 @@ namespace leviathan {
         struct CharacterConfiguration;
     }
     namespace video {
+        class Textures;
         struct Vector3D;
         using Position3D = Vector3D;
     }
@@ -38,8 +39,9 @@ namespace leviathan {
         public:
             /*! \brief Konstruktor mit Konfiguration.
              *  \param sceneManager: Szenen-Manager des initialisierten Irrlicht Device
+             *  \param textures: Instanz der Texturenverwaltung
              */
-            explicit NodeManager(irr::scene::ISceneManager* sceneManager);
+            NodeManager(irr::scene::ISceneManager* sceneManager, video::Textures& textures);
 
             /*! \brief Destruktor.
              */
@@ -63,6 +65,7 @@ namespace leviathan {
 
         private:
             Collider mCollider;
+            video::Textures& mTextures;
             irr::scene::ISceneManager* mSceneManager = nullptr;
             std::list<std::unique_ptr<Character>> mHeroNodes = std::list<std::unique_ptr<Character>>();
             std::list<std::unique_ptr<GroundTile>> mGroundNodes = std::list<std::unique_ptr<GroundTile>>();

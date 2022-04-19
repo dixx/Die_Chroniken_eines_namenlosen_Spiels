@@ -43,7 +43,7 @@ namespace leviathan {
                     true  // Debug-Objekte nicht behandeln
                 );
 
-            return {{0.f, 0.f, 0.f}, collisionNode != 0};
+            return {{collisionPoint.X, collisionPoint.Y, collisionPoint.Z}, collisionNode != 0};
         }
     }
 }

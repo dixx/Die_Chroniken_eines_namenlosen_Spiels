@@ -67,7 +67,7 @@ namespace leviathan {
     }
 
     void LeviathanDevice::drawGame() {
-        mGraphicEngine.getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
+        mGraphicEngine.getVideoDriver()->beginScene(true, true, video::COL_GREEN);
         mGraphicEngine.getSceneManager()->drawAll();
         mGameStateManager.draw();
         mGraphicEngine.getVideoDriver()->endScene();

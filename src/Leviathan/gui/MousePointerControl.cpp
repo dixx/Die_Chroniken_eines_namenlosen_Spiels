@@ -10,8 +10,8 @@
 
 namespace leviathan {
     namespace gui {
-        MousePointerControl::MousePointerControl(leviathan::input::IEventProducer& producer,
-            video::GraphicEngine& graphicDevice, leviathan::core::ILogger& logger, leviathan::video::Textures& textures)
+        MousePointerControl::MousePointerControl(input::IEventProducer& producer, video::GraphicEngine& graphicDevice,
+            core::ILogger& logger, video::Textures& textures)
         : mLogger(logger), mTextures(textures), mGraphicDevice(graphicDevice) {
             producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
         }

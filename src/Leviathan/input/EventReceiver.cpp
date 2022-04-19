@@ -9,19 +9,25 @@ namespace leviathan {
             bool processed = false;
             // we iterate in reverse, because mSubscriptions can shrink while being iterated
             for (uint32_t it = mSubscriptions[event.EventType].size(); it != 0; it--) {
-                if (mSubscriptions[event.EventType][it - 1]->onEvent(event)) { processed = true; }
+                if (mSubscriptions[event.EventType][it - 1]->onEvent(event)) {
+                    processed = true;
+                }
             }
             return processed;
         }
 
-        void EventReceiver::subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
+        void EventReceiver::subscribe(input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
             auto found = std::find(mSubscriptions[eventType].begin(), mSubscriptions[eventType].end(), &consumer);
-            if (found == mSubscriptions[eventType].end()) { mSubscriptions[eventType].push_back(&consumer); }
+            if (found == mSubscriptions[eventType].end()) {
+                mSubscriptions[eventType].push_back(&consumer);
+            }
         }
 
-        void EventReceiver::unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
+        void EventReceiver::unsubscribe(input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType) {
             auto found = std::find(mSubscriptions[eventType].begin(), mSubscriptions[eventType].end(), &consumer);
-            if (found != mSubscriptions[eventType].end()) { mSubscriptions[eventType].erase(found); }
+            if (found != mSubscriptions[eventType].end()) {
+                mSubscriptions[eventType].erase(found);
+            }
         }
     }
 }

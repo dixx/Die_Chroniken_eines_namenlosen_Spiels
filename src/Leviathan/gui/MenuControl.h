@@ -45,7 +45,7 @@ namespace leviathan {
              *  \param textures: Instanz der Texturenverwaltung
              */
             MenuControl(irr::gui::IGUIEnvironment* guiEnv, irr::video::IVideoDriver* videoDriver,
-                input::IEventProducer& producer, leviathan::video::Textures& textures);
+                input::IEventProducer& producer, video::Textures& textures);
 
             ~MenuControl();
 
@@ -94,7 +94,7 @@ namespace leviathan {
             irr::gui::IGUIEnvironment* mGuiEnv = nullptr;
             irr::video::IVideoDriver* mVideoDriver = nullptr;
             input::IEventProducer& mProducer;
-            leviathan::video::Textures& mTextures;
+            video::Textures& mTextures;
             std::map<std::wstring, std::unique_ptr<Menu>> mMenues = std::map<std::wstring, std::unique_ptr<Menu>>();
 
             irr::video::ITexture* loadTexture(const std::string& filename, bool makeTransparent);

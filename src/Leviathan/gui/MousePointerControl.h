@@ -46,8 +46,8 @@ namespace leviathan {
              *  \param logger: Instanz eines Loggers
              *  \param textures: Instanz der Texturenverwaltung
              */
-            MousePointerControl(leviathan::input::IEventProducer& producer, video::GraphicEngine& graphicDevice,
-                leviathan::core::ILogger& logger, leviathan::video::Textures& textures);
+            MousePointerControl(input::IEventProducer& producer, video::GraphicEngine& graphicDevice,
+                core::ILogger& logger, video::Textures& textures);
 
             ~MousePointerControl() = default;
 
@@ -72,8 +72,8 @@ namespace leviathan {
             void draw() override;
 
         private:
-            leviathan::core::ILogger& mLogger;
-            leviathan::video::Textures& mTextures;
+            core::ILogger& mLogger;
+            video::Textures& mTextures;
             uint32_t mActiveMousePointer = 0;
             const irr::video::SColor mBackgroundColor = irr::video::SColor(255, 255, 255, 255);
             irr::core::vector2di mPosition = irr::core::vector2di(0, 0);

@@ -8,7 +8,7 @@
 
 namespace leviathan {
     namespace video {
-        Camera::Camera(irr::scene::ISceneManager* sceneManager, leviathan::core::Configuration& config)
+        Camera::Camera(irr::scene::ISceneManager* sceneManager, core::Configuration& config)
         : mCamera(sceneManager->addCameraSceneNode(0, mOffset)) {
             mCamera->setFarValue(config.getFarValue());
             mCamera->setNearValue(0.1f);

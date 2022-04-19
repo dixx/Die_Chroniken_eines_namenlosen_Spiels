@@ -18,7 +18,7 @@ namespace leviathan {
         /*! \class EventReceiver EventReceiver.h "EventReceiver.h"
          *  \brief Diese Klasse enthält Funktionen zum Behandeln von Events.
          */
-        class EventReceiver final : public irr::IEventReceiver, public leviathan::input::IEventProducer {
+        class EventReceiver final : public irr::IEventReceiver, public IEventProducer {
         public:
             /*! \brief Konstruktor.
              */
@@ -48,7 +48,7 @@ namespace leviathan {
              *  \param consumer: Empfänger, an den Events weitergeleitet werden sollen
              *  \param eventType: Typ der Events, die weitergeleitet werden sollen
              */
-            void subscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
+            void subscribe(IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
 
             /*! \brief Abmeldung von Event-Empfängern.
              *
@@ -56,11 +56,11 @@ namespace leviathan {
              *  \param consumer: Empfänger, an den Events nicht mehr weitergeleitet werden sollen
              *  \param eventType: Typ der Events, die nicht mehr weitergeleitet werden sollen
              */
-            void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
+            void unsubscribe(IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
 
         private:
-            std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>> mSubscriptions =
-                std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>>();
+            std::map<irr::EEVENT_TYPE, std::vector<IEventConsumer*>> mSubscriptions =
+                std::map<irr::EEVENT_TYPE, std::vector<IEventConsumer*>>();
         };
     }
 }

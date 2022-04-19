@@ -61,13 +61,13 @@ namespace leviathan {
              */
             bool onEvent(const irr::SEvent& event);
 
-            void addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration);
+            void addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration) override;
 
-            void setActiveMousPointer(const uint32_t id);
+            void setActiveMousPointer(const uint32_t id) override;
 
-            const video::Position2D getPosition() const;
+            const video::Position2D getPosition() const override;
 
-            void draw();
+            void draw() override;
 
         private:
             leviathan::core::ILogger& logger_;

@@ -38,13 +38,7 @@ namespace leviathan {
             Logger(const Logger&) = delete;
             Logger& operator=(const Logger&) = delete;
 
-            /*! \brief Schreibt eine Zeile Text in die Logdatei
-             *  \note Schreibt eine Zeichenkette inklusive "Zeitstempel [LogLevel] " und abschließendem
-             *        Zeilenumbruch in die Logdatei, sofern das globalLogLevel größer oder gleich dem angegebenen
-             *        LogLevel ist.
-             *  \param logLevel: logLevel ab welchem der Text tatsächlich in die Logdatei geschrieben wird
-             */
-            void write(const Level logLevel = Level::INFO);
+            void write(const Level logLevel = Level::INFO) override;
 
         private:
             std::fstream logFile_;

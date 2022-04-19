@@ -52,13 +52,13 @@ namespace leviathan {
              *  \param consumer: Konsument welcher bei seinen gewünschten Aktionen benachrichtigt werden soll
              *  \param id: ID der Aktion auf die der Konsument wartet
              */
-            void subscribe(IActionConsumer& consumer, const uint32_t id);
+            void subscribe(IActionConsumer& consumer, const uint32_t id) override;
 
             /*! \brief Konsumenten von Aktionen können sich hier abmelden
              *  \param consumer: Konsument welcher sich abmelden möchte
              *  \param id: ID der Aktion von welcher der Konsument sich abmelden möchte
              */
-            void unsubscribe(IActionConsumer& consumer, const uint32_t id);
+            void unsubscribe(IActionConsumer& consumer, const uint32_t id) override;
 
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event
@@ -73,7 +73,7 @@ namespace leviathan {
              *        https://docs.microsoft.com/en-gb/windows/win32/inputdev/virtual-key-codes?redirectedfrom=MSDN
              *  \param fileName: Mapping-Dateiname
              */
-            void loadFromFile(const char* fileName);
+            void loadFromFile(const char* fileName) override;
 
         private:
             core::ILogger& _logger;

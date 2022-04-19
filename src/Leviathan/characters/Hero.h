@@ -36,33 +36,33 @@ namespace leviathan {
 
             /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
              */
-            void enablePlayableCharacter();
+            void enablePlayableCharacter() override;
 
             /*! \brief Macht den spielbaren Szenenknoten des Helden unsichtbar.
              */
-            void disablePlayableCharacter();
+            void disablePlayableCharacter() override;
 
             /*! \brief Gibt den internen Namen des Helden zurück.
              */
-            const std::string getInternalName() const;
+            const std::string getInternalName() const override;
 
             /*! \brief Gibt die aktuelle Position zurück, relativ zum Welt-Hauptknoten.
              */
-            video::Position3D getPosition() const;
+            video::Position3D getPosition() const override;
 
             /*! \brief Setzt die Position neu, relativ zum Welt-Hauptknoten.
              *  \param position: gewünschte neue Position
              */
-            void setPosition(const video::Position3D& position);
+            void setPosition(const video::Position3D& position) override;
 
             /*! \brief Gibt den aktuellen Rotationsvektor zurück.
              */
-            video::Rotation3D getRotation() const;
+            video::Rotation3D getRotation() const override;
 
             /*! \brief Setzt den Rotationsvektor neu.
              *  \param rotation: gewünschte neue Rotation
              */
-            void setRotation(const video::Rotation3D& rotation);
+            void setRotation(const video::Rotation3D& rotation) override;
 
         private:
             world::Character& node_;

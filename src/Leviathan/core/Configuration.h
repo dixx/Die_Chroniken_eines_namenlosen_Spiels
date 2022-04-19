@@ -70,7 +70,7 @@ namespace leviathan {
             /*! \brief Gibt die Größe des anzuzeigenden Fensters in Pixel zurück.
              *  \return Größe des anzuzeigenden Fensters in Pixel
              */
-            const video::Dimension2D& getScreenSize() const;
+            const video::Dimension2D& getScreenSize() const override;
 
         private:
             irr::SIrrlichtCreationParameters params_ = irr::SIrrlichtCreationParameters();

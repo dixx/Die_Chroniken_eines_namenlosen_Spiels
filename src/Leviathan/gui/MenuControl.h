@@ -64,28 +64,29 @@ namespace leviathan {
              *  \param name: Bezeichner/Identifikator für das neue Menü
              *  \param config: Definition des Erscheinungsbildes des neuen Menüs
              */
-            void addMenu(const wchar_t* name, const MenuConfiguration& config);
+            void addMenu(const wchar_t* name, const MenuConfiguration& config) override;
 
             /*! \brief Fügt einem Menü einen neuen Button hinzu.
              *  \param menuName: Bezeichner/Identifikator für das Menü
              *  \param buttonName: Bezeichner/Identifikator für den neuen Button
              *  \param config: Definition des Erscheinungsbildes des neuen Buttons
              */
-            void addButton(const wchar_t* menuName, const wchar_t* buttonName, const ButtonConfiguration& config);
+            void addButton(
+                const wchar_t* menuName, const wchar_t* buttonName, const ButtonConfiguration& config) override;
 
             /*! \brief Macht das Menü sichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü
              */
-            void enable(const wchar_t* name);
+            void enable(const wchar_t* name) override;
 
             /*! \brief Macht das Menü unsichtbar für Anzeige und Interaktionen.
              *  \param name: Bezeichner/Identifikator für das neue Menü
              */
-            void disable(const wchar_t* name);
+            void disable(const wchar_t* name) override;
 
             /*! \brief Zeichnet alle aktiven Menüs auf den Bildschirm.
              */
-            void draw();
+            void draw() override;
 
         private:
             irr::gui::IGUIEnvironment* _guiEnv = nullptr;

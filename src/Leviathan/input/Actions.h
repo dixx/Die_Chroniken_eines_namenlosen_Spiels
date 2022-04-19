@@ -78,13 +78,13 @@ namespace leviathan {
             void loadFromFile(const char* fileName) override;
 
         private:
-            core::ILogger& _logger;
-            input::IEventProducer& _producer;
-            std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
+            core::ILogger& mLogger;
+            input::IEventProducer& mProducer;
+            std::map<uint32_t, std::vector<IActionConsumer*>> mSubscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();
-            MouseEventActions _mouseConverter = MouseEventActions();
-            KeyboardEventActions _keyboardConverter = KeyboardEventActions();
-            GUIEventActions _guiConverter = GUIEventActions();
+            MouseEventActions mMouseConverter = MouseEventActions();
+            KeyboardEventActions mKeyboardConverter = KeyboardEventActions();
+            GUIEventActions mGuiConverter = GUIEventActions();
 
             void addMapping(const uint32_t actionId, const Input& input);
             void dispatchActions(const std::vector<Action>& actions);

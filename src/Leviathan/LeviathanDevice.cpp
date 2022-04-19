@@ -15,37 +15,37 @@
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const char* configFileName)
-    : configuration_(configFileName), logger_(LOG_FILE_NAME, configuration_.getLoggingLevel()), timeControl_(),
-      gameStateManager_(logger_), randomizer_(), eventReceiver_(), actions_(eventReceiver_, logger_),
-      graphicEngine_(eventReceiver_, logger_, configuration_) {
-        randomizer_.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
-        textures_ = std::make_unique<video::Textures>(graphicEngine_.getVideoDriver(), logger_);
-        mousePointerControl_ = std::make_unique<gui::MousePointerControl>(
-            eventReceiver_, graphicEngine_, logger_, *textures_);
-        menuControl_ = std::make_unique<gui::MenuControl>(
-            graphicEngine_.getGUIEnvironment(), graphicEngine_.getVideoDriver(), eventReceiver_, *textures_);
-        camera_ = std::make_unique<video::Camera>(graphicEngine_.getSceneManager(), configuration_);
-        collider_ = std::make_unique<world::Collider>(graphicEngine_.getSceneManager());
-        nodeManager_ = std::make_unique<world::NodeManager>(graphicEngine_.getSceneManager());
-        ground_ = std::make_unique<world::Ground>(*nodeManager_);
-        heroes_ = std::make_unique<characters::Heroes>(*nodeManager_);
+    : mConfiguration(configFileName), mLogger(LOG_FILE_NAME, mConfiguration.getLoggingLevel()), mTimeControl(),
+      mGameStateManager(mLogger), mRandomizer(), mEventReceiver(), mActions(mEventReceiver, mLogger),
+      mGraphicEngine(mEventReceiver, mLogger, mConfiguration) {
+        mRandomizer.start(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
+        mTextures = std::make_unique<video::Textures>(mGraphicEngine.getVideoDriver(), mLogger);
+        mMousePointerControl = std::make_unique<gui::MousePointerControl>(
+            mEventReceiver, mGraphicEngine, mLogger, *mTextures);
+        mMenuControl = std::make_unique<gui::MenuControl>(
+            mGraphicEngine.getGUIEnvironment(), mGraphicEngine.getVideoDriver(), mEventReceiver, *mTextures);
+        mCamera = std::make_unique<video::Camera>(mGraphicEngine.getSceneManager(), mConfiguration);
+        mCollider = std::make_unique<world::Collider>(mGraphicEngine.getSceneManager());
+        mNodeManager = std::make_unique<world::NodeManager>(mGraphicEngine.getSceneManager());
+        mGround = std::make_unique<world::Ground>(*mNodeManager);
+        mHeroes = std::make_unique<characters::Heroes>(*mNodeManager);
     }
 
     void LeviathanDevice::run() {
-        const float FRAME_DELTA_TIME = 1.f / static_cast<float>(configuration_.getMaxFPS());
-        const uint32_t FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / configuration_.getMaxFPS();  // for performance.
-        uint32_t nextDrawingTime = graphicEngine_.getTime();
+        const float FRAME_DELTA_TIME = 1.f / static_cast<float>(mConfiguration.getMaxFPS());
+        const uint32_t FRAME_DELTA_TIME_IN_MILLISECONDS = 1000 / mConfiguration.getMaxFPS();  // for performance.
+        uint32_t nextDrawingTime = mGraphicEngine.getTime();
 
-        while (graphicEngine_.run()) {
+        while (mGraphicEngine.run()) {
             handleWindowInactivity();
             uint32_t loops = 0;
             bool drawNextFrame = false;
-            while (graphicEngine_.getTime() > nextDrawingTime
+            while (mGraphicEngine.getTime() > nextDrawingTime
                    && loops < 10)  // in-game time will slow down if framerate drops below 10% of maxFPS // FIXME for
                                    // FPS > 250
             {
                 updateGame(FRAME_DELTA_TIME);
-                if (!graphicEngine_.run()) {
+                if (!mGraphicEngine.run()) {
                     drawNextFrame = false;
                     break;
                 }
@@ -58,74 +58,74 @@ namespace leviathan {
     }
 
     void LeviathanDevice::handleWindowInactivity() {
-        if (!graphicEngine_.isWindowActive()) graphicEngine_.yield();
+        if (!mGraphicEngine.isWindowActive()) mGraphicEngine.yield();
     }
 
     void LeviathanDevice::updateGame(const float frameDeltaTime) {
-        timeControl_.tick(frameDeltaTime);
-        gameStateManager_.update(frameDeltaTime);
+        mTimeControl.tick(frameDeltaTime);
+        mGameStateManager.update(frameDeltaTime);
     }
 
     void LeviathanDevice::drawGame() {
-        graphicEngine_.getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
-        graphicEngine_.getSceneManager()->drawAll();
-        gameStateManager_.draw();
-        graphicEngine_.getVideoDriver()->endScene();
+        mGraphicEngine.getVideoDriver()->beginScene(true, true, leviathan::video::COL_GREEN);
+        mGraphicEngine.getSceneManager()->drawAll();
+        mGameStateManager.draw();
+        mGraphicEngine.getVideoDriver()->endScene();
     }
 
     void LeviathanDevice::halt() {
-        graphicEngine_.closeDevice();
+        mGraphicEngine.closeDevice();
     }
 
     core::ILogger& LeviathanDevice::Logger() {
-        return logger_;
+        return mLogger;
     }
 
     core::TimeControl& LeviathanDevice::TimeControl() {
-        return timeControl_;
+        return mTimeControl;
     }
 
     core::IConfiguration& LeviathanDevice::Configuration() {
-        return configuration_;
+        return mConfiguration;
     }
 
     core::IGameStateManager& LeviathanDevice::GameStateManager() {
-        return gameStateManager_;
+        return mGameStateManager;
     }
 
     core::Randomizer& LeviathanDevice::Randomizer() {
-        return randomizer_;
+        return mRandomizer;
     }
 
     characters::IHeroes& LeviathanDevice::Heroes() {
-        return *heroes_;
+        return *mHeroes;
     }
 
     gui::IMenuControl& LeviathanDevice::MenuControl() {
-        return *menuControl_;
+        return *mMenuControl;
     }
 
     gui::IMousePointerControl& LeviathanDevice::MousePointerControl() {
-        return *mousePointerControl_;
+        return *mMousePointerControl;
     }
 
     input::IActions& LeviathanDevice::Actions() {
-        return actions_;
+        return mActions;
     }
 
     input::EventReceiver& LeviathanDevice::EventReceiver() {
-        return eventReceiver_;
+        return mEventReceiver;
     }
 
     video::ICamera& LeviathanDevice::Camera() {
-        return *camera_;
+        return *mCamera;
     }
 
     world::ICollider& LeviathanDevice::Collider() {
-        return *collider_;
+        return *mCollider;
     }
 
     world::IGround& LeviathanDevice::Ground() {
-        return *ground_;
+        return *mGround;
     }
 }

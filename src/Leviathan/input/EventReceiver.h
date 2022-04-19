@@ -59,7 +59,7 @@ namespace leviathan {
             void unsubscribe(leviathan::input::IEventConsumer& consumer, const irr::EEVENT_TYPE eventType);
 
         private:
-            std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>> _subscriptions =
+            std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>> mSubscriptions =
                 std::map<irr::EEVENT_TYPE, std::vector<leviathan::input::IEventConsumer*>>();
         };
     }

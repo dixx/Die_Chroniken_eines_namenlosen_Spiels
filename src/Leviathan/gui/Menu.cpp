@@ -4,9 +4,9 @@
 
 namespace leviathan {
     namespace gui {
-        Menu::Menu(irr::gui::IGUIEnvironment* guiEnv) : _guiEnv(guiEnv) {
+        Menu::Menu(irr::gui::IGUIEnvironment* guiEnv) : mGuiEnv(guiEnv) {
             // this only acts as a root element for a menu
-            menuElement = _guiEnv->addModalScreen(_guiEnv->getRootGUIElement());
+            menuElement = mGuiEnv->addModalScreen(mGuiEnv->getRootGUIElement());
             menuElement->setEnabled(false);  // ignore clicks and buttons
         }
 

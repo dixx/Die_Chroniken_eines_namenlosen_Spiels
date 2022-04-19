@@ -9,9 +9,9 @@ namespace leviathan {
         }
 
         void KeyboardEventActions::addMapping(const uint32_t keyCode, const uint32_t actionId) {
-            _actionsForInput[keyCode].push_back(actionId);
-            _actionsForInput[keyCode].sort();
-            _actionsForInput[keyCode].unique();
+            mActionsForInput[keyCode].push_back(actionId);
+            mActionsForInput[keyCode].sort();
+            mActionsForInput[keyCode].unique();
         }
     }
 }

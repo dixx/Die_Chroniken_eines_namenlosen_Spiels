@@ -12,14 +12,14 @@
 
 namespace leviathan {
     namespace video {
-        irr::IrrlichtDevice* GraphicEngine::graphicEngine_;
-        bool GraphicEngine::useExternalGraphicEngine;
+        irr::IrrlichtDevice* GraphicEngine::mGraphicEngine;
+        bool GraphicEngine::mUseExternalGraphicEngine;
 
         GraphicEngine::GraphicEngine(
             irr::IEventReceiver& receiver, core::ILogger& logger, const core::Configuration& config) {
-            if (!useExternalGraphicEngine && graphicEngine_ == nullptr) {
-                graphicEngine_ = irr::createDeviceEx(config.getGraphicEngineParams());
-                if (graphicEngine_ == nullptr) {
+            if (!mUseExternalGraphicEngine && mGraphicEngine == nullptr) {
+                mGraphicEngine = irr::createDeviceEx(config.getGraphicEngineParams());
+                if (mGraphicEngine == nullptr) {
                     logger.text << "could not initialize Irrlicht Engine!";
                     logger.write(logger.Level::INFO);
                     throw std::runtime_error("could not initialize Irrlicht Engine!");
@@ -28,33 +28,33 @@ namespace leviathan {
                 logger.text << "using external Irrlicht Engine.";
                 logger.write(logger.Level::INFO);
             }
-            graphicEngine_->setEventReceiver(&receiver);
+            mGraphicEngine->setEventReceiver(&receiver);
         }
 
         GraphicEngine::~GraphicEngine() {
-            if (!useExternalGraphicEngine && graphicEngine_) {
+            if (!mUseExternalGraphicEngine && mGraphicEngine) {
                 // With the current static LeviathanDevice instance, when using DIRECT3D driver,
                 // the graphicEngine->drop() call does not return and prevents the application from closing.
                 // TODO: try again with irrlicht > 1.8.4
-                if (getVideoDriver()->getDriverType() != irr::video::EDT_DIRECT3D9) graphicEngine_->drop();
-                graphicEngine_ = nullptr;
+                if (getVideoDriver()->getDriverType() != irr::video::EDT_DIRECT3D9) mGraphicEngine->drop();
+                mGraphicEngine = nullptr;
             }
         }
 
         void GraphicEngine::closeDevice() {
-            graphicEngine_->closeDevice();
+            mGraphicEngine->closeDevice();
         }
 
         irr::gui::ICursorControl* GraphicEngine::getCursorControl() {
-            return graphicEngine_->getCursorControl();
+            return mGraphicEngine->getCursorControl();
         }
 
         irr::gui::IGUIEnvironment* GraphicEngine::getGUIEnvironment() {
-            return graphicEngine_->getGUIEnvironment();
+            return mGraphicEngine->getGUIEnvironment();
         }
 
         irr::scene::ISceneManager* GraphicEngine::getSceneManager() {
-            return graphicEngine_->getSceneManager();
+            return mGraphicEngine->getSceneManager();
         }
 
         irr::scene::ISceneCollisionManager* GraphicEngine::getCollisionManager() {
@@ -62,33 +62,33 @@ namespace leviathan {
         }
 
         uint32_t GraphicEngine::getTime() {
-            return graphicEngine_->getTimer()->getTime();
+            return mGraphicEngine->getTimer()->getTime();
         }
 
         irr::video::IVideoDriver* GraphicEngine::getVideoDriver() {
-            return graphicEngine_->getVideoDriver();
+            return mGraphicEngine->getVideoDriver();
         }
 
         bool GraphicEngine::isWindowActive() {
-            return graphicEngine_->isWindowActive();
+            return mGraphicEngine->isWindowActive();
         }
 
         bool GraphicEngine::run() {
-            return graphicEngine_->run();
+            return mGraphicEngine->run();
         }
 
         void GraphicEngine::yield() {
-            graphicEngine_->yield();
+            mGraphicEngine->yield();
         }
 
         void GraphicEngine::overrideGraphicEngine(irr::IrrlichtDevice* otherEngine) {
-            if (graphicEngine_ == nullptr && otherEngine != nullptr) {
-                graphicEngine_ = otherEngine;
-                useExternalGraphicEngine = true;
+            if (mGraphicEngine == nullptr && otherEngine != nullptr) {
+                mGraphicEngine = otherEngine;
+                mUseExternalGraphicEngine = true;
             }
-            if (useExternalGraphicEngine && otherEngine == nullptr) {
-                graphicEngine_ = nullptr;
-                useExternalGraphicEngine = false;
+            if (mUseExternalGraphicEngine && otherEngine == nullptr) {
+                mGraphicEngine = nullptr;
+                mUseExternalGraphicEngine = false;
             }
         }
     }

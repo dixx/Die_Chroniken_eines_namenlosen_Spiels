@@ -45,7 +45,7 @@ namespace leviathan {
             Collision getCollisionFromScreenCoordinates(const video::Position2D& screenCoordinates) const override;
 
         private:
-            irr::scene::ISceneManager* sceneManager_ = nullptr;
+            irr::scene::ISceneManager* mSceneManager = nullptr;
         };
     }
 }

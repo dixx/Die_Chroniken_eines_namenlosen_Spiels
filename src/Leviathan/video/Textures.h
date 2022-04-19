@@ -59,9 +59,9 @@ namespace leviathan {
                 irr::video::ITexture* irrTexture = nullptr;
             };
 
-            irr::video::IVideoDriver* videoDriver_ = nullptr;
-            leviathan::core::ILogger& logger_;
-            std::unordered_map<std::string, Texture> textures_ = std::unordered_map<std::string, Texture>();
+            irr::video::IVideoDriver* mVideoDriver = nullptr;
+            leviathan::core::ILogger& mLogger;
+            std::unordered_map<std::string, Texture> mTextures = std::unordered_map<std::string, Texture>();
         };
     }
 }

@@ -15,26 +15,26 @@
 namespace leviathan {
     namespace world {
         GroundTile::GroundTile(const Node3DConfiguration& tileConfig, irr::scene::ISceneManager* sceneManager)
-        : sceneManager_(sceneManager) {
-            irr::scene::IMesh* mesh = sceneManager_->getMesh(tileConfig.meshFileName.c_str());
+        : mSceneManager(sceneManager) {
+            irr::scene::IMesh* mesh = mSceneManager->getMesh(tileConfig.meshFileName.c_str());
             transformMesh(mesh, tileConfig);
             video::MeshHelper::pushMeshToVRAM(mesh);
-            tileNode_ = sceneManager_->addMeshSceneNode(mesh);
-            tileNode_->setID(NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
-            tileNode_->setParent(sceneManager_->getSceneNodeFromName("walkableNodes"));
+            mTileNode = mSceneManager->addMeshSceneNode(mesh);
+            mTileNode->setID(NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
+            mTileNode->setParent(mSceneManager->getSceneNodeFromName("walkableNodes"));
             video::Vector3DCompatible position = tileConfig.position;
-            tileNode_->setPosition(position.toIrrlichtVector());
+            mTileNode->setPosition(position.toIrrlichtVector());
             defineAppearance(tileConfig.textureFileName.c_str());
             addTriangleSelector();
         }
 
         GroundTile::~GroundTile() {
-            video::MeshHelper::removeMeshFromVRAM(tileNode_->getMesh(), sceneManager_->getVideoDriver());
-            tileNode_->remove();
+            video::MeshHelper::removeMeshFromVRAM(mTileNode->getMesh(), mSceneManager->getVideoDriver());
+            mTileNode->remove();
         }
 
         void GroundTile::setDesiredPostition(const video::Position3D& targetPosition) {
-            desiredPosition_ = targetPosition;
+            mDesiredPosition = targetPosition;
         }
 
         void GroundTile::transformMesh(irr::scene::IMesh* mesh, const Node3DConfiguration& tileConfig) {
@@ -45,27 +45,27 @@ namespace leviathan {
             matrix.setTranslation(offset.toIrrlichtVector());
             matrix.setRotationDegrees(rotation.toIrrlichtVector());
             matrix.setScale(scale.toIrrlichtVector());
-            sceneManager_->getMeshManipulator()->transform(mesh, matrix);
-            sceneManager_->getMeshManipulator()->recalculateNormals(mesh, true);
+            mSceneManager->getMeshManipulator()->transform(mesh, matrix);
+            mSceneManager->getMeshManipulator()->recalculateNormals(mesh, true);
         }
 
         void GroundTile::defineAppearance(const char* textureFileName) {
             // TODO: replace with video::Textures.get
-            sceneManager_->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
-            sceneManager_->getVideoDriver()->setTextureCreationFlag(
+            mSceneManager->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
+            mSceneManager->getVideoDriver()->setTextureCreationFlag(
                 irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
-            irr::video::ITexture* texture = sceneManager_->getVideoDriver()->getTexture(textureFileName);
-            tileNode_->setMaterialTexture(0, texture);
-            tileNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            tileNode_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);
-            tileNode_->setMaterialType(irr::video::EMT_SOLID);
-            tileNode_->setVisible(true);
+            irr::video::ITexture* texture = mSceneManager->getVideoDriver()->getTexture(textureFileName);
+            mTileNode->setMaterialTexture(0, texture);
+            mTileNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            mTileNode->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);
+            mTileNode->setMaterialType(irr::video::EMT_SOLID);
+            mTileNode->setVisible(true);
         }
 
         void GroundTile::addTriangleSelector() {
-            irr::scene::ITriangleSelector* selector = sceneManager_->createOctreeTriangleSelector(
-                tileNode_->getMesh(), tileNode_, 900);  // TODO find a good way to calculate Polys per Node
-            tileNode_->setTriangleSelector(selector);
+            irr::scene::ITriangleSelector* selector = mSceneManager->createOctreeTriangleSelector(
+                mTileNode->getMesh(), mTileNode, 900);  // TODO find a good way to calculate Polys per Node
+            mTileNode->setTriangleSelector(selector);
             selector->drop();
         }
     }

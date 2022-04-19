@@ -5,22 +5,22 @@
 namespace leviathan {
     namespace core {
         Logger::Logger(const char* fileName, const Level globalLogLevel, const bool append)
-        : logFile_(), globalLogLevel_(globalLogLevel) {
+        : mLogFile(), mGlobalLogLevel(globalLogLevel) {
             openLogFile(fileName, append);
-            text << "LogLevel: " << logLevelName(globalLogLevel_);
+            text << "LogLevel: " << logLevelName(mGlobalLogLevel);
             write();
         }
 
         Logger::~Logger() {
-            if (logFile_.is_open()) logFile_.close();
+            if (mLogFile.is_open()) mLogFile.close();
         }
 
         void Logger::write(const Level logLevel) {
-            if (logLevel <= globalLogLevel_) {
+            if (logLevel <= mGlobalLogLevel) {
                 std::ostringstream loglinePrefix;
                 addTimeStamp(loglinePrefix);
                 loglinePrefix << " [" << logLevelName(logLevel) << "] ";
-                logFile_ << loglinePrefix.str() << text.str() << std::endl;
+                mLogFile << loglinePrefix.str() << text.str() << std::endl;
             }
             text.str(std::string());
         }
@@ -30,8 +30,8 @@ namespace leviathan {
         void Logger::openLogFile(const char* fileName, const bool append) {
             std::ios_base::openmode mode = std::fstream::out;
             if (append) mode |= std::fstream::app;
-            logFile_.open(fileName, mode);
-            if (!logFile_.is_open()) exit(1);
+            mLogFile.open(fileName, mode);
+            if (!mLogFile.is_open()) exit(1);
         }
 
         std::string Logger::logLevelName(const Level logLevel) {

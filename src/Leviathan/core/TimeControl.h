@@ -56,7 +56,7 @@ namespace leviathan {
             void tick(const float seconds);
 
         private:
-            std::list<Timer*> timers_ = std::list<Timer*>();
+            std::list<Timer*> mTimers = std::list<Timer*>();
         };
     }
 }

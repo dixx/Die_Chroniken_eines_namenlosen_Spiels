@@ -10,9 +10,9 @@ namespace leviathan {
     namespace world {
         Character::Character(
             const characters::CharacterConfiguration& characterConfig, irr::scene::ISceneManager* sceneManager) {
-            offset_ = characterConfig.playableFigurineConfiguration.offset;
+            mOffset = characterConfig.playableFigurineConfiguration.offset;
             createNode(characterConfig, sceneManager);
-            characterNode_->setName(characterConfig.internalName.c_str());
+            mCharacterNode->setName(characterConfig.internalName.c_str());
             setScale(characterConfig.playableFigurineConfiguration.scale);
             setPosition(characterConfig.playableFigurineConfiguration.position);
             // TODO: replace with video::Textures.get
@@ -21,52 +21,52 @@ namespace leviathan {
                 irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             irr::video::ITexture* texture = sceneManager->getVideoDriver()->getTexture(
                 characterConfig.playableFigurineConfiguration.textureFileName.c_str());
-            characterNode_->setMaterialTexture(0, texture);
-            characterNode_->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-            characterNode_->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);
-            characterNode_->setMaterialType(irr::video::EMT_SOLID);
-            characterNode_->setMD2Animation(irr::scene::EMAT_STAND);
+            mCharacterNode->setMaterialTexture(0, texture);
+            mCharacterNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+            mCharacterNode->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);
+            mCharacterNode->setMaterialType(irr::video::EMT_SOLID);
+            mCharacterNode->setMD2Animation(irr::scene::EMAT_STAND);
             setInvisible();
         }
 
         Character::~Character() {
-            characterNode_->remove();
+            mCharacterNode->remove();
         }
 
         void Character::setDesiredPostition(const video::Position3D& targetPosition) {
-            desiredPosition_ = targetPosition;
+            mDesiredPosition = targetPosition;
         }
 
         void Character::setPosition(const video::Position3D& position) {
-            characterNode_->setPosition(video::Vector3DCompatible(position).toIrrlichtVector()
-                                        + video::Vector3DCompatible(offset_).toIrrlichtVector());
-            characterNode_->updateAbsolutePosition();
+            mCharacterNode->setPosition(video::Vector3DCompatible(position).toIrrlichtVector()
+                                        + video::Vector3DCompatible(mOffset).toIrrlichtVector());
+            mCharacterNode->updateAbsolutePosition();
         }
 
         void Character::setVisible() {
-            characterNode_->setVisible(true);
+            mCharacterNode->setVisible(true);
         }
 
         void Character::setInvisible() {
-            characterNode_->setVisible(false);
+            mCharacterNode->setVisible(false);
         }
 
         std::string Character::getName() const {
-            return characterNode_->getName();
+            return mCharacterNode->getName();
         }
 
         video::Position3D Character::getPosition() const {
-            auto position = characterNode_->getAbsolutePosition();
+            auto position = mCharacterNode->getAbsolutePosition();
             return {position.X, position.Y, position.Z};
         }
 
         video::Rotation3D Character::getRotation() const {
-            auto rotation = characterNode_->getRotation();
+            auto rotation = mCharacterNode->getRotation();
             return {rotation.X, rotation.Y, rotation.Z};
         }
 
         void Character::setRotation(const video::Rotation3D& rotation) {
-            characterNode_->setRotation(video::Vector3DCompatible(rotation).toIrrlichtVector());
+            mCharacterNode->setRotation(video::Vector3DCompatible(rotation).toIrrlichtVector());
         }
 
         /* private */
@@ -75,11 +75,11 @@ namespace leviathan {
             const characters::CharacterConfiguration& config, irr::scene::ISceneManager* sceneManager) {
             irr::scene::IAnimatedMesh* mesh = sceneManager->getMesh(
                 config.playableFigurineConfiguration.meshFileName.c_str());
-            characterNode_ = sceneManager->addAnimatedMeshSceneNode(mesh);
+            mCharacterNode = sceneManager->addAnimatedMeshSceneNode(mesh);
         }
 
         void Character::setScale(const video::Scale3D& scale) {
-            characterNode_->setScale(video::Vector3DCompatible(scale).toIrrlichtVector());
+            mCharacterNode->setScale(video::Vector3DCompatible(scale).toIrrlichtVector());
         }
     }
 }

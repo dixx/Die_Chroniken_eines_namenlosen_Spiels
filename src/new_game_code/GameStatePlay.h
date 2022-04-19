@@ -36,8 +36,8 @@ public:
     void onAction(const leviathan::input::Action action) override;
 
 private:
-    leviathan::ILeviathanDevice& gameEngine_;
-    CameraMover cameraMover_;
+    leviathan::ILeviathanDevice& mGameEngine;
+    CameraMover mCameraMover;
 
     void handleCameraActions(const leviathan::input::Action& action);
     void moveCamera(const float elapsedSeconds);

@@ -72,17 +72,17 @@ namespace leviathan {
             void draw() override;
 
         private:
-            leviathan::core::ILogger& logger_;
-            leviathan::video::Textures& textures_;
-            uint32_t activeMousePointer_ = 0;
-            const irr::video::SColor backgroundColor_ = irr::video::SColor(255, 255, 255, 255);
-            irr::core::vector2di position_ = irr::core::vector2di(0, 0);
-            video::GraphicEngine graphicDevice_;
-            std::unordered_map<uint32_t, irr::video::ITexture*> baseImage_ =
+            leviathan::core::ILogger& mLogger;
+            leviathan::video::Textures& mTextures;
+            uint32_t mActiveMousePointer = 0;
+            const irr::video::SColor mBackgroundColor = irr::video::SColor(255, 255, 255, 255);
+            irr::core::vector2di mPosition = irr::core::vector2di(0, 0);
+            video::GraphicEngine mGraphicDevice;
+            std::unordered_map<uint32_t, irr::video::ITexture*> mBaseImage =
                 std::unordered_map<uint32_t, irr::video::ITexture*>({{0, nullptr}});
-            std::unordered_map<uint32_t, irr::core::recti> imageArea_ = std::unordered_map<uint32_t, irr::core::recti>(
+            std::unordered_map<uint32_t, irr::core::recti> mImageArea = std::unordered_map<uint32_t, irr::core::recti>(
                 {{0, irr::core::recti(0, 0, 0, 0)}});
-            std::unordered_map<uint32_t, irr::core::vector2di> hotSpot_ =
+            std::unordered_map<uint32_t, irr::core::vector2di> mHotSpot =
                 std::unordered_map<uint32_t, irr::core::vector2di>({{0, irr::core::vector2di(0, 0)}});
         };
     }

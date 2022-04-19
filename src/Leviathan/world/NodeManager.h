@@ -62,13 +62,13 @@ namespace leviathan {
             float getWalkableHeight(const video::Vector3D& position) const;
 
         private:
-            Collider collider_;
-            irr::scene::ISceneManager* sceneManager_ = nullptr;
-            std::list<std::unique_ptr<Character>> heroNodes_ = std::list<std::unique_ptr<Character>>();
-            std::list<std::unique_ptr<GroundTile>> groundNodes_ = std::list<std::unique_ptr<GroundTile>>();
-            irr::scene::ISceneNode* worldNode_ = nullptr;
-            irr::scene::ISceneNode* responsiveNodes_ = nullptr;
-            irr::scene::ISceneNode* walkableNodes_ = nullptr;
+            Collider mCollider;
+            irr::scene::ISceneManager* mSceneManager = nullptr;
+            std::list<std::unique_ptr<Character>> mHeroNodes = std::list<std::unique_ptr<Character>>();
+            std::list<std::unique_ptr<GroundTile>> mGroundNodes = std::list<std::unique_ptr<GroundTile>>();
+            irr::scene::ISceneNode* mWorldNode = nullptr;
+            irr::scene::ISceneNode* mResponsiveNodes = nullptr;
+            irr::scene::ISceneNode* mWalkableNodes = nullptr;
 
             void addNodeTree();
             void addNodeNames();

@@ -9,55 +9,55 @@
 namespace leviathan {
     namespace video {
         Camera::Camera(irr::scene::ISceneManager* sceneManager, leviathan::core::Configuration& config)
-        : camera_(sceneManager->addCameraSceneNode(0, offset_)) {
-            camera_->setFarValue(config.getFarValue());
-            camera_->setNearValue(0.1f);
-            camera_->setFOV(1.f);
-            camera_->setAspectRatio(
+        : mCamera(sceneManager->addCameraSceneNode(0, mOffset)) {
+            mCamera->setFarValue(config.getFarValue());
+            mCamera->setNearValue(0.1f);
+            mCamera->setFOV(1.f);
+            mCamera->setAspectRatio(
                 static_cast<float>(config.getScreenSize().w) / static_cast<float>(config.getScreenSize().h));
-            camera_->bindTargetAndRotation(true);
-            camera_->setInputReceiverEnabled(false);
+            mCamera->bindTargetAndRotation(true);
+            mCamera->setInputReceiverEnabled(false);
         }
 
         void Camera::setTargetPosition(const Position3D& targetPosition) {
-            targetPosition_.set(targetPosition.x, targetPosition.y, targetPosition.z);
+            mTargetPosition.set(targetPosition.x, targetPosition.y, targetPosition.z);
         }
 
         void Camera::setRotationSpeed(const float rotationSpeed) {
-            rotationSpeed_ = rotationSpeed;
+            mRotationSpeed = rotationSpeed;
         }
 
         void Camera::enableRotation(const bool isRotating) {
-            isRotating_ = isRotating;
+            mIsRotating = isRotating;
         }
 
         void Camera::setMovementSpeed(const Vector3D& movementSpeed) {
-            movementSpeed_.set(movementSpeed.x, movementSpeed.y, movementSpeed.z);
+            mMovementSpeed.set(movementSpeed.x, movementSpeed.y, movementSpeed.z);
         }
 
         void Camera::enableMovement(const bool isMoving) {
-            isMoving_ = isMoving;
+            mIsMoving = isMoving;
         }
 
         void Camera::update(const float elapsedSeconds) {
-            if (isRotating_) {
-                float rotationDelta = rotationSpeed_ * elapsedSeconds;
-                offset_.rotateXZBy(rotationDelta);
-                rotation_ += rotationDelta;
+            if (mIsRotating) {
+                float rotationDelta = mRotationSpeed * elapsedSeconds;
+                mOffset.rotateXZBy(rotationDelta);
+                mRotation += rotationDelta;
             }
-            if (isMoving_) {
-                auto direction = movementSpeed_ * elapsedSeconds;
-                direction.rotateXZBy(rotation_);
-                targetPosition_ += direction;
+            if (mIsMoving) {
+                auto direction = mMovementSpeed * elapsedSeconds;
+                direction.rotateXZBy(mRotation);
+                mTargetPosition += direction;
             }
 
-            camera_->setPosition(targetPosition_ + offset_);
-            camera_->updateAbsolutePosition();
-            camera_->setTarget(targetPosition_);
+            mCamera->setPosition(mTargetPosition + mOffset);
+            mCamera->updateAbsolutePosition();
+            mCamera->setTarget(mTargetPosition);
         }
 
         Position3D Camera::getPosition() const {
-            return Position3D({targetPosition_.X, targetPosition_.Y, targetPosition_.Z});
+            return Position3D({mTargetPosition.X, mTargetPosition.Y, mTargetPosition.Z});
         }
 
         void Camera::setPosition(const Position3D& position) {

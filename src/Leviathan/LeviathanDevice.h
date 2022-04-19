@@ -117,22 +117,22 @@ namespace leviathan {
         world::ICollider& Collider() override;
 
     private:
-        core::Configuration configuration_;
-        core::Logger logger_;
-        core::TimeControl timeControl_;
-        core::GameStateManager gameStateManager_;
-        core::Randomizer randomizer_;
-        input::EventReceiver eventReceiver_;
-        input::Actions actions_;
-        video::GraphicEngine graphicEngine_;
-        std::unique_ptr<video::Textures> textures_ = nullptr;
-        std::unique_ptr<gui::MenuControl> menuControl_ = nullptr;
-        std::unique_ptr<gui::MousePointerControl> mousePointerControl_ = nullptr;
-        std::unique_ptr<video::Camera> camera_ = nullptr;
-        std::unique_ptr<world::Collider> collider_ = nullptr;
-        std::unique_ptr<world::NodeManager> nodeManager_ = nullptr;
-        std::unique_ptr<characters::Heroes> heroes_ = nullptr;
-        std::unique_ptr<world::Ground> ground_ = nullptr;
+        core::Configuration mConfiguration;
+        core::Logger mLogger;
+        core::TimeControl mTimeControl;
+        core::GameStateManager mGameStateManager;
+        core::Randomizer mRandomizer;
+        input::EventReceiver mEventReceiver;
+        input::Actions mActions;
+        video::GraphicEngine mGraphicEngine;
+        std::unique_ptr<video::Textures> mTextures = nullptr;
+        std::unique_ptr<gui::MenuControl> mMenuControl = nullptr;
+        std::unique_ptr<gui::MousePointerControl> mMousePointerControl = nullptr;
+        std::unique_ptr<video::Camera> mCamera = nullptr;
+        std::unique_ptr<world::Collider> mCollider = nullptr;
+        std::unique_ptr<world::NodeManager> mNodeManager = nullptr;
+        std::unique_ptr<characters::Heroes> mHeroes = nullptr;
+        std::unique_ptr<world::Ground> mGround = nullptr;
 
         void handleWindowInactivity();
         void updateGame(const float frameDeltaTime);

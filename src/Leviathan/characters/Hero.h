@@ -67,7 +67,7 @@ namespace leviathan {
             void setRotation(const video::Rotation3D& rotation) override;
 
         private:
-            world::Character& node_;
+            world::Character& mNode;
         };
     }
 }

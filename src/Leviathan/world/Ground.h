@@ -39,7 +39,7 @@ namespace leviathan {
             void adjustHeightOf(video::IPositionable& object) const override;
 
         private:
-            NodeManager& nodeManager_;
+            NodeManager& mNodeManager;
         };
     }
 }

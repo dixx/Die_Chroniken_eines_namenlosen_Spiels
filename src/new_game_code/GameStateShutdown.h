@@ -23,7 +23,7 @@ public:
     void draw();
 
 private:
-    leviathan::ILeviathanDevice& gameEngine_;
+    leviathan::ILeviathanDevice& mGameEngine;
 };
 
 #endif

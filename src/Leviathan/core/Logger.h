@@ -43,8 +43,8 @@ namespace leviathan {
             void write(const Level logLevel = Level::INFO) override;
 
         private:
-            std::fstream logFile_;
-            Level globalLogLevel_;
+            std::fstream mLogFile;
+            Level mGlobalLogLevel;
 
             inline void openLogFile(const char* fileName, const bool append = true);
             inline static std::string logLevelName(const Level logLevel);

@@ -5,10 +5,10 @@
 
 namespace leviathan {
     namespace world {
-        Ground::Ground(NodeManager& nodeManager) : nodeManager_(nodeManager) {}
+        Ground::Ground(NodeManager& nodeManager) : mNodeManager(nodeManager) {}
 
         void Ground::add(const Node3DConfiguration& tileConfig) {
-            nodeManager_.addGroundTile(tileConfig);
+            mNodeManager.addGroundTile(tileConfig);
         }
 
         Ground::~Ground() {
@@ -16,11 +16,11 @@ namespace leviathan {
         }
 
         void Ground::unload() {
-            nodeManager_.unloadGround();
+            mNodeManager.unloadGround();
         }
 
         float Ground::getHeight(const video::Position3D& position) const {
-            return nodeManager_.getWalkableHeight(position);
+            return mNodeManager.getWalkableHeight(position);
         }
 
         void Ground::adjustHeightOf(video::IPositionable& object) const {

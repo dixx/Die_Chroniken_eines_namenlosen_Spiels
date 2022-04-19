@@ -23,8 +23,8 @@ public:
     void draw();
 
 private:
-    leviathan::ILeviathanDevice& gameEngine_;
-    bool fullyLoaded = false;
+    leviathan::ILeviathanDevice& mGameEngine;
+    bool mFullyLoaded = false;
 };
 
 #endif

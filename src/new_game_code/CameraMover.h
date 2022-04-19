@@ -42,13 +42,13 @@ public:
     void reactToInput();
 
 private:
-    enum cameraActions { ROTATE_LEFT = 2010, ROTATE_RIGHT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT };
+    enum mCameraActions { ROTATE_LEFT = 2010, ROTATE_RIGHT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_LEFT, MOVE_RIGHT };
     const float MOVEMENT_SPEED = 15.f;  // virtual units per second
     const float ROTATION_SPEED = 100.f;  // degree per second
-    leviathan::input::IActions& actions_;
-    std::unordered_map<uint32_t, bool> actionActiveStates = {{ROTATE_LEFT, false}, {ROTATE_RIGHT, false},
+    leviathan::input::IActions& mActions;
+    std::unordered_map<uint32_t, bool> mActionActiveStates = {{ROTATE_LEFT, false}, {ROTATE_RIGHT, false},
         {MOVE_FORWARD, false}, {MOVE_BACKWARD, false}, {MOVE_LEFT, false}, {MOVE_RIGHT, false}};
-    leviathan::video::Vector3D direction_ = leviathan::video::Vector3D();
+    leviathan::video::Vector3D mDirection = leviathan::video::Vector3D();
 };
 
 #endif

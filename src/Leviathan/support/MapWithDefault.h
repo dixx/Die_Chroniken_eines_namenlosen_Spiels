@@ -22,7 +22,7 @@ namespace leviathan {
              *  \note Der erste angegebene Wert wird als Defaultwert genutzt.
              */
             explicit MapWithDefault(std::initializer_list<std::pair<const Key, Value>> init)
-            : map_(init), defaultValue_(init.begin()->second) {}
+            : mMap(init), mDefaultValue(init.begin()->second) {}
 
             /*! \brief Zugriffsoperator.
              *  \attention Anders als die std::map-Implementation liefert dieser Operator bei unbekanntem Key einen
@@ -31,13 +31,13 @@ namespace leviathan {
              *  \return Referenz auf den gefundenen Eintrag oder den Defaultwert
              */
             const Value& operator[](const Key& key) {
-                typename std::map<Key, Value>::const_iterator it = map_.find(key);
-                return it == map_.end() ? defaultValue_ : it->second;
+                typename std::map<Key, Value>::const_iterator it = mMap.find(key);
+                return it == mMap.end() ? mDefaultValue : it->second;
             };
 
         private:
-            std::map<Key, Value> map_;
-            Value defaultValue_;
+            std::map<Key, Value> mMap;
+            Value mDefaultValue;
         };
     }
 }

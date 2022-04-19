@@ -3,30 +3,30 @@
 namespace leviathan {
     namespace core {
         void TimeControl::add(Timer& timer) {
-            timers_.push_back(&timer);
+            mTimers.push_back(&timer);
         }
 
         void TimeControl::remove(Timer& timer) {
-            for (auto& item : timers_) {
+            for (auto& item : mTimers) {
                 if (item == &timer) {
-                    timers_.remove(item);
+                    mTimers.remove(item);
                     break;
                 }
             }
         }
 
         void TimeControl::pause() {
-            for (auto& timer : timers_)
+            for (auto& timer : mTimers)
                 timer->pause();
         }
 
         void TimeControl::resume() {
-            for (auto& timer : timers_)
+            for (auto& timer : mTimers)
                 timer->resume();
         }
 
         void TimeControl::tick(const float seconds) {
-            for (auto& timer : timers_)
+            for (auto& timer : mTimers)
                 timer->tick(seconds);
         }
     }

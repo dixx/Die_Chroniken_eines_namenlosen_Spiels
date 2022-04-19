@@ -10,29 +10,29 @@
 
 namespace leviathan {
     namespace input {
-        Actions::Actions(IEventProducer& producer, core::ILogger& logger) : _logger(logger), _producer(producer) {
-            _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
-            _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
-            _producer.subscribe(*this, irr::EET_GUI_EVENT);
+        Actions::Actions(IEventProducer& producer, core::ILogger& logger) : mLogger(logger), mProducer(producer) {
+            mProducer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
+            mProducer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
+            mProducer.subscribe(*this, irr::EET_GUI_EVENT);
         }
 
         Actions::~Actions() {
-            _producer.unsubscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
-            _producer.unsubscribe(*this, irr::EET_KEY_INPUT_EVENT);
-            _producer.unsubscribe(*this, irr::EET_GUI_EVENT);
+            mProducer.unsubscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
+            mProducer.unsubscribe(*this, irr::EET_KEY_INPUT_EVENT);
+            mProducer.unsubscribe(*this, irr::EET_GUI_EVENT);
         }
 
         void Actions::subscribe(IActionConsumer& consumer, const uint32_t id) {
-            auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
-            if (found == _subscriptions[id].end()) {
-                _subscriptions[id].push_back(&consumer);
+            auto found = std::find(mSubscriptions[id].begin(), mSubscriptions[id].end(), &consumer);
+            if (found == mSubscriptions[id].end()) {
+                mSubscriptions[id].push_back(&consumer);
             }
         }
 
         void Actions::unsubscribe(IActionConsumer& consumer, const uint32_t id) {
-            auto found = std::find(_subscriptions[id].begin(), _subscriptions[id].end(), &consumer);
-            if (found != _subscriptions[id].end()) {
-                _subscriptions[id].erase(found);
+            auto found = std::find(mSubscriptions[id].begin(), mSubscriptions[id].end(), &consumer);
+            if (found != mSubscriptions[id].end()) {
+                mSubscriptions[id].erase(found);
             }
         }
 
@@ -47,35 +47,35 @@ namespace leviathan {
         }
 
         void Actions::loadFromFile(const char* fileName) {
-            _mouseConverter.clear();
-            _keyboardConverter.clear();
+            mMouseConverter.clear();
+            mKeyboardConverter.clear();
             YAML::Node actionMap = YAML::LoadFile(fileName);
             for (const auto actionNode : actionMap) {
                 ActionMapping action(actionNode);
                 addMapping(action.id, action.primary);
                 addMapping(action.id, action.secondary);
-                _logger.text << "Actions - loaded actions: [" << action.id << "] = " << action.name << "("
+                mLogger.text << "Actions - loaded actions: [" << action.id << "] = " << action.name << "("
                              << action.primary.code << ", " << action.secondary.code << ")";
-                _logger.write(_logger.Level::DEBUG);
+                mLogger.write(mLogger.Level::DEBUG);
             }
         }
 
         void Actions::addMapping(const uint32_t actionId, const Input& input) {
             if (input.type == "mouse")
-                _mouseConverter.addMapping(input.code, actionId);
+                mMouseConverter.addMapping(input.code, actionId);
             else if (input.type == "keyboard")
-                _keyboardConverter.addMapping(input.code, actionId);
+                mKeyboardConverter.addMapping(input.code, actionId);
             else if (input.type == "gui")
-                _guiConverter.addMapping(input.name, actionId);
+                mGuiConverter.addMapping(input.name, actionId);
         }
 
         void Actions::dispatchActions(const std::vector<Action>& actions) {
             for (auto action : actions) {
-                if (_subscriptions[action.id].size() == 0) continue;
+                if (mSubscriptions[action.id].size() == 0) continue;
 
-                // we iterate in reverse, because _subscriptions can shrink while being iterated
-                for (uint32_t it = _subscriptions[action.id].size(); it != 0; it--) {
-                    _subscriptions[action.id][it - 1]->onAction(action);
+                // we iterate in reverse, because mSubscriptions can shrink while being iterated
+                for (uint32_t it = mSubscriptions[action.id].size(); it != 0; it--) {
+                    mSubscriptions[action.id][it - 1]->onAction(action);
                 }
             }
         }
@@ -83,11 +83,11 @@ namespace leviathan {
         EventToActionConverter* Actions::converter(const uint32_t eventType) {
             switch (eventType) {
             case irr::EET_MOUSE_INPUT_EVENT:
-                return &_mouseConverter;
+                return &mMouseConverter;
             case irr::EET_KEY_INPUT_EVENT:
-                return &_keyboardConverter;
+                return &mKeyboardConverter;
             case irr::EET_GUI_EVENT:
-                return &_guiConverter;
+                return &mGuiConverter;
             default:
                 return nullptr;
             }

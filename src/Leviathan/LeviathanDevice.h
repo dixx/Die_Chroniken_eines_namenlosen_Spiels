@@ -57,16 +57,16 @@ namespace leviathan {
          *         Diese Methode kümmert sich um das Aktualisieren und Zeichnen des aktuellen Spielzustandes,
          *         Berechnen der Zeit, Entscheiden ob die KI aktualisiert werden muss usw.
          */
-        void run();
+        void run() override;
 
         /*! /brief Stoppt den Game-Loop und fährt die Engine herunter.
          *  /note Der aktuelle Game-Loop läuft noch zu Ende durch.
          */
-        void halt();
+        void halt() override;
 
         /*! \brief Zugriff auf die Helden.
          */
-        characters::IHeroes& Heroes();
+        characters::IHeroes& Heroes() override;
 
         /*! \brief Zugriff auf die TimeControl Instanz.
          */
@@ -74,15 +74,15 @@ namespace leviathan {
 
         /*! \brief Zugriff auf den Logger.
          */
-        core::ILogger& Logger();
+        core::ILogger& Logger() override;
 
         /*! \brief Zugriff auf die aktuelle Konfiguration.
          */
-        core::IConfiguration& Configuration();
+        core::IConfiguration& Configuration() override;
 
         /*! \brief Zugriff auf die Verwaltung der Spielzustände.
          */
-        core::IGameStateManager& GameStateManager();
+        core::IGameStateManager& GameStateManager() override;
 
         /*! \brief Zugriff auf den Zufallszahlengenerator.
          */
@@ -90,15 +90,15 @@ namespace leviathan {
 
         /*! \brief Zugriff auf Erstellen und Verwalten von Menüs.
          */
-        gui::IMenuControl& MenuControl();
+        gui::IMenuControl& MenuControl() override;
 
         /*! \brief Zugriff auf Mauszeiger.
          */
-        gui::IMousePointerControl& MousePointerControl();
+        gui::IMousePointerControl& MousePointerControl() override;
 
         /*! \brief Zugriff auf Input-Mappings.
          */
-        input::IActions& Actions();
+        input::IActions& Actions() override;
 
         /*! \brief Zugriff auf Input-Events.
          */
@@ -106,15 +106,15 @@ namespace leviathan {
 
         /*! \brief Zugriff auf eine Kamera.
          */
-        video::ICamera& Camera();
+        video::ICamera& Camera() override;
 
         /*! \brief Zugriff auf begehbaren Boden.
          */
-        world::IGround& Ground();
+        world::IGround& Ground() override;
 
         /*! \brief Zugriff auf die Kollisionserkennung
          */
-        world::ICollider& Collider();
+        world::ICollider& Collider() override;
 
     private:
         core::Configuration configuration_;

@@ -33,7 +33,7 @@ public:
 
     void setInactive() override;
 
-    void onAction(const leviathan::input::Action action);
+    void onAction(const leviathan::input::Action action) override;
 
 private:
     leviathan::ILeviathanDevice& gameEngine_;

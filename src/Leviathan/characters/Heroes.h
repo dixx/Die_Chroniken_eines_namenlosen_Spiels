@@ -39,16 +39,16 @@ namespace leviathan {
             /*! \brief Erzeugt einen neuen Helden und gibt ihn zurück.
              *  \param characterConfig: Konfiguration des Helden-Szenenknotens
              */
-            IHero& create(const CharacterConfiguration& characterConfig);
+            IHero& create(const CharacterConfiguration& characterConfig) override;
 
             /*! \brief Aktiviert den gewünschten Helden und deaktiviert den vorher aktiven Helden.
              *  \param internalName: interner Name des neuen Helden
              */
-            void activate(const std::string& internalName);
+            void activate(const std::string& internalName) override;
 
             /*! \brief Gibt den aktiven Helden zurück.
              */
-            IHero& getActiveHero();
+            IHero& getActiveHero() override;
 
         private:
             world::NodeManager& nodeManager_;

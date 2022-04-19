@@ -42,7 +42,7 @@ namespace leviathan {
             Collision getCollisionTopDown(irr::scene::ISceneNode* rootNode, const video::Position3D& position,
                 const float heightOffset = 200.f) const;
 
-            Collision getCollisionFromScreenCoordinates(const video::Position2D& screenCoordinates) const;
+            Collision getCollisionFromScreenCoordinates(const video::Position2D& screenCoordinates) const override;
 
         private:
             irr::scene::ISceneManager* sceneManager_ = nullptr;

@@ -1,7 +1,6 @@
 #include "Logger.h"
 #include <chrono>
 #include <ctime>
-#include <string>
 
 namespace leviathan {
     namespace core {
@@ -46,7 +45,7 @@ namespace leviathan {
             case Level::ALL:
                 return "All";
             default:
-                return "unknown log level!";
+                return "custom log level";
             }
         }
 

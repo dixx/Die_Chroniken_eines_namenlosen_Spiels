@@ -74,7 +74,7 @@ namespace leviathan {
 
         /*! \brief Zugriff auf den Logger.
          */
-        core::Logger& Logger();
+        core::ILogger& Logger();
 
         /*! \brief Zugriff auf die aktuelle Konfiguration.
          */

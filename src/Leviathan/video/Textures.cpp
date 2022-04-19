@@ -1,12 +1,12 @@
 #include "Textures.h"
-#include "../core/Logger.h"
 #include "Constants.h"
 #include "ITexture.h"
 #include "IVideoDriver.h"
+#include <core/ILogger.h>
 
 namespace leviathan {
     namespace video {
-        Textures::Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::Logger& logger)
+        Textures::Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::ILogger& logger)
         : videoDriver_(videoDriver), logger_(logger) {}
 
         irr::video::ITexture* Textures::get(const char* fileName) {
@@ -18,7 +18,7 @@ namespace leviathan {
             tex.irrTexture = videoDriver_->getTexture(fileName);
             if (tex.irrTexture == nullptr) {
                 logger_.text << "[Warning] - cannot load texture " << fileName << "!";
-                logger_.write(core::Logger::Level::DEBUG);
+                logger_.write(logger_.Level::DEBUG);
             }
             textures_[fileName] = tex;
             return tex.irrTexture;

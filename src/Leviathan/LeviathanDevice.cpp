@@ -77,7 +77,7 @@ namespace leviathan {
         graphicEngine_.closeDevice();
     }
 
-    core::Logger& LeviathanDevice::Logger() {
+    core::ILogger& LeviathanDevice::Logger() {
         return logger_;
     }
 

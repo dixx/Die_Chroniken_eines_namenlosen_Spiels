@@ -1,6 +1,5 @@
 #include "GraphicEngine.h"
 #include "../core/Configuration.h"
-#include "../core/Logger.h"
 #include "ICursorControl.h"
 #include "IEventReceiver.h"
 #include "IGUIEnvironment.h"
@@ -8,6 +7,7 @@
 #include "IVideoDriver.h"
 #include "IrrlichtDevice.h"
 #include "irrlicht.h"
+#include <core/ILogger.h>
 #include <exception>
 
 namespace leviathan {
@@ -16,17 +16,17 @@ namespace leviathan {
         bool GraphicEngine::useExternalGraphicEngine;
 
         GraphicEngine::GraphicEngine(
-            irr::IEventReceiver& receiver, core::Logger& logger, const core::Configuration& config) {
+            irr::IEventReceiver& receiver, core::ILogger& logger, const core::Configuration& config) {
             if (!useExternalGraphicEngine && graphicEngine_ == nullptr) {
                 graphicEngine_ = irr::createDeviceEx(config.getGraphicEngineParams());
                 if (graphicEngine_ == nullptr) {
                     logger.text << "could not initialize Irrlicht Engine!";
-                    logger.write(core::Logger::Level::INFO);
+                    logger.write(logger.Level::INFO);
                     throw std::runtime_error("could not initialize Irrlicht Engine!");
                 }
             } else {
                 logger.text << "using external Irrlicht Engine.";
-                logger.write(core::Logger::Level::INFO);
+                logger.write(logger.Level::INFO);
             }
             graphicEngine_->setEventReceiver(&receiver);
         }

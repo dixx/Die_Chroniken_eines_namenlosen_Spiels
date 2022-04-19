@@ -14,6 +14,7 @@ namespace leviathan {
     namespace core {
         struct IConfiguration;
         struct IGameStateManager;
+        struct ILogger;
     }
     namespace gui {
         struct IMenuControl;
@@ -27,6 +28,7 @@ namespace leviathan {
     }
     namespace world {
         struct IGround;
+        struct ICollider;
     }
 
     /*! \interface ILeviathanDevice
@@ -45,6 +47,10 @@ namespace leviathan {
          *  /note Der aktuelle Game-Loop-Durchlauf läuft noch zu Ende durch.
          */
         virtual void halt() = 0;
+
+        /*! \brief Zugriff auf den Logger.
+         */
+        virtual core::ILogger& Logger() = 0;
 
         /*! \brief Zugriff auf die Helden.
          */
@@ -77,6 +83,10 @@ namespace leviathan {
         /*! \brief Zugriff auf begehbaren Boden.
          */
         virtual world::IGround& Ground() = 0;
+
+        /*! \brief Zugriff auf die Kollisionserkennung
+         */
+        virtual world::ICollider& Collider() = 0;
     };
 }
 

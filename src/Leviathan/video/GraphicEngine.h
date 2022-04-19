@@ -30,7 +30,7 @@ namespace irr {
 namespace leviathan {
     namespace core {
         class Configuration;
-        class Logger;
+        struct ILogger;
     }
 
     namespace video {
@@ -41,7 +41,7 @@ namespace leviathan {
         class GraphicEngine {
         public:
             explicit GraphicEngine(
-                irr::IEventReceiver& receiver, core::Logger& logger, const core::Configuration& config);
+                irr::IEventReceiver& receiver, core::ILogger& logger, const core::Configuration& config);
 
             ~GraphicEngine();
 

@@ -18,7 +18,7 @@ namespace irr {
 
 namespace leviathan {
     namespace core {
-        class Logger;
+        struct ILogger;
     }
 
     namespace video {
@@ -31,7 +31,7 @@ namespace leviathan {
              *  \param videoDriver: Zeiger auf den Videotreiber der Graphic Engine
              *  \param logger: Instanz eines Loggers
              */
-            Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::Logger& logger);
+            Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::ILogger& logger);
 
             ~Textures() = default;
 
@@ -58,7 +58,7 @@ namespace leviathan {
             };
 
             irr::video::IVideoDriver* videoDriver_ = nullptr;
-            leviathan::core::Logger& logger_;
+            leviathan::core::ILogger& logger_;
             std::unordered_map<std::string, Texture> textures_ = std::unordered_map<std::string, Texture>();
         };
     }

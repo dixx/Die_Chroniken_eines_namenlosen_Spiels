@@ -8,10 +8,10 @@
 
 #include "../support/MapWithDefault.h"
 #include "EDriverTypes.h"
-#include "Logger.h"
 #include "SIrrCreationParameters.h"
 #include "yaml-cpp/yaml.h"
 #include <core/IConfiguration.h>
+#include <core/ILogger.h>
 #include <cstdint>
 #include <string>
 #include <video/Dimension2D.h>
@@ -60,7 +60,7 @@ namespace leviathan {
             /*! \brief Gibt den Loglevel zurück.
              *  \return Loglevel
              */
-            const Logger::Level& getLoggingLevel() const;
+            const ILogger::Level& getLoggingLevel() const;
 
             /*! \brief Gibt die Anzahl der maximal anzuzeigenden Bilder pro Sekunde zurück.
              *  \return Anzahl der maximal anzuzeigenden Bilder pro Sekunde
@@ -75,15 +75,15 @@ namespace leviathan {
         private:
             irr::SIrrlichtCreationParameters params_ = irr::SIrrlichtCreationParameters();
             float farValue_ = 300.0f;  // Sichtweite der Kamera
-            Logger::Level loggingLevel_ = Logger::Level::INFO;
+            ILogger::Level loggingLevel_ = ILogger::Level::INFO;
             uint32_t maxFPS_ = 60;
             video::Dimension2D screenSize_ = {800, 600};
             MapWithDefault<std::string, irr::video::E_DRIVER_TYPE> driverMap_ {{"OPENGL", irr::video::EDT_OPENGL},
                 {"DIRECT3D9", irr::video::EDT_DIRECT3D9}, {"DIRECT3D8", irr::video::EDT_DIRECT3D8},
                 {"SOFTWARE", irr::video::EDT_SOFTWARE}, {"BURNINGSVIDEO", irr::video::EDT_BURNINGSVIDEO},
                 {"NULL", irr::video::EDT_NULL}};
-            MapWithDefault<std::string, Logger::Level> logLevelMap {{"INFO", Logger::Level::INFO},
-                {"ALL", Logger::Level::ALL}, {"DEBUG", Logger::Level::DEBUG}, {"DETAIL", Logger::Level::DETAIL}};
+            MapWithDefault<std::string, ILogger::Level> logLevelMap {{"INFO", ILogger::Level::INFO},
+                {"ALL", ILogger::Level::ALL}, {"DEBUG", ILogger::Level::DEBUG}, {"DETAIL", ILogger::Level::DETAIL}};
 
             void setCameraValues(YAML::Node& content);
             void setGeneralValues(YAML::Node& content);

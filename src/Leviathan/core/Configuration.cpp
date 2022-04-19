@@ -29,7 +29,7 @@ namespace leviathan {
             return farValue_;
         }
 
-        const Logger::Level& Configuration::getLoggingLevel() const {
+        const ILogger::Level& Configuration::getLoggingLevel() const {
             return loggingLevel_;
         }
 

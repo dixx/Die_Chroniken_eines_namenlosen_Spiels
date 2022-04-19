@@ -1,14 +1,22 @@
 #include "../../src/Leviathan/characters/Hero.h"
+#include "../../src/Leviathan/video/Textures.h"
 #include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "ISceneManager.h"
+#include "ITexture.h"
+#include "IVideoDriver.h"
 #include "IrrlichtDevice.h"
 #include "catch.hpp"
+#include "fakeit.hpp"
 #include <characters/CharacterConfiguration.h>
 #include <string>
 #include <video/Vector3D.h>
+
+using namespace fakeit;
+
+#define getTextureArgs irr::video::ITexture*(const irr::io::path&)
 
 TEST_CASE("Hero", "[integration]") {
     auto name = std::to_string(TestHelper::getUniqueId()).c_str();
@@ -19,7 +27,13 @@ TEST_CASE("Hero", "[integration]") {
         size, "path/to/textureFile");  // add a test texture to avoid getting a nullptr
     leviathan::characters::CharacterConfiguration heroConfig(
         {"name", name, {"path/to/meshFile", "path/to/textureFile", {}, {}, {}, {}}});
-    leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager());
+    Mock<irr::video::ITexture> textureMock;
+    Mock<irr::video::IVideoDriver> videoDriverMock;
+    When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());
+    Fake(Method(videoDriverMock, setTextureCreationFlag));
+    leviathan::video::Textures textures(&videoDriverMock.get(), TestHelper::Logger());
+
+    leviathan::world::NodeManager nodeManager(TestHelper::graphicEngine()->getSceneManager(), textures);
     leviathan::characters::Hero subject(heroConfig, nodeManager);
     auto sceneNode = TestHelper::graphicEngine()->getSceneManager()->getSceneNodeFromName(name);
 

@@ -21,6 +21,9 @@ namespace leviathan {
     namespace characters {
         struct CharacterConfiguration;
     }
+    namespace video {
+        class Textures;
+    }
 
     namespace world {
 
@@ -29,8 +32,8 @@ namespace leviathan {
          */
         class Character : public INode3D {
         public:
-            Character(
-                const characters::CharacterConfiguration& characterConfig, irr::scene::ISceneManager* sceneManager);
+            Character(const characters::CharacterConfiguration& characterConfig, video::Textures& textures,
+                irr::scene::ISceneManager* sceneManager);
 
             ~Character();
 

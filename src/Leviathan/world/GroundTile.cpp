@@ -1,5 +1,6 @@
 #include "GroundTile.h"
 #include "../video/MeshHelper.h"
+#include "../video/Textures.h"
 #include "../video/Vector3DCompatible.h"
 #include "IMeshManipulator.h"
 #include "IMeshSceneNode.h"
@@ -14,8 +15,9 @@
 
 namespace leviathan {
     namespace world {
-        GroundTile::GroundTile(const Node3DConfiguration& tileConfig, irr::scene::ISceneManager* sceneManager)
-        : mSceneManager(sceneManager) {
+        GroundTile::GroundTile(
+            const Node3DConfiguration& tileConfig, video::Textures& textures, irr::scene::ISceneManager* sceneManager)
+        : mTextures(textures), mSceneManager(sceneManager) {
             irr::scene::IMesh* mesh = mSceneManager->getMesh(tileConfig.meshFileName.c_str());
             transformMesh(mesh, tileConfig);
             video::MeshHelper::pushMeshToVRAM(mesh);
@@ -50,11 +52,7 @@ namespace leviathan {
         }
 
         void GroundTile::defineAppearance(const char* textureFileName) {
-            // TODO: replace with video::Textures.get
-            mSceneManager->getVideoDriver()->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
-            mSceneManager->getVideoDriver()->setTextureCreationFlag(
-                irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
-            irr::video::ITexture* texture = mSceneManager->getVideoDriver()->getTexture(textureFileName);
+            irr::video::ITexture* texture = mTextures.get(textureFileName);
             mTileNode->setMaterialTexture(0, texture);
             mTileNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
             mTileNode->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, false);

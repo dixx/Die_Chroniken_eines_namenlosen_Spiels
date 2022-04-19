@@ -9,8 +9,8 @@
 
 namespace leviathan {
     namespace world {
-        NodeManager::NodeManager(irr::scene::ISceneManager* sceneManager)
-        : mCollider(sceneManager), mSceneManager(sceneManager) {
+        NodeManager::NodeManager(irr::scene::ISceneManager* sceneManager, video::Textures& textures)
+        : mCollider(sceneManager), mTextures(textures), mSceneManager(sceneManager) {
             addNodeTree();
             addNodeNames();
         }
@@ -23,12 +23,12 @@ namespace leviathan {
         }
 
         Character& NodeManager::createHeroNode(const characters::CharacterConfiguration& characterConfig) {
-            mHeroNodes.emplace_back(std::make_unique<Character>(characterConfig, mSceneManager));
+            mHeroNodes.emplace_back(std::make_unique<Character>(characterConfig, mTextures, mSceneManager));
             return *(mHeroNodes.back());
         }
 
         void NodeManager::addGroundTile(const Node3DConfiguration& nodeConfig) {
-            mGroundNodes.emplace_back(std::make_unique<GroundTile>(nodeConfig, mSceneManager));
+            mGroundNodes.emplace_back(std::make_unique<GroundTile>(nodeConfig, mTextures, mSceneManager));
         }
 
         void NodeManager::unloadHeroes() {

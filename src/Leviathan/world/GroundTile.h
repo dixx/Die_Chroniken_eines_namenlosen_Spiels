@@ -18,6 +18,10 @@ namespace irr {
 }
 
 namespace leviathan {
+    namespace video {
+        class Textures;
+    }
+
     namespace world {
         struct Node3DConfiguration;
 
@@ -26,7 +30,8 @@ namespace leviathan {
          */
         class GroundTile : public INode3D {
         public:
-            GroundTile(const Node3DConfiguration& tileConfig, irr::scene::ISceneManager* sceneManager);
+            GroundTile(const Node3DConfiguration& tileConfig, video::Textures& textures,
+                irr::scene::ISceneManager* sceneManager);
 
             ~GroundTile();
 
@@ -38,6 +43,7 @@ namespace leviathan {
             void setDesiredPostition(const video::Position3D& targetPosition) override;
 
         private:
+            video::Textures& mTextures;
             irr::scene::ISceneManager* mSceneManager = nullptr;
             video::Position3D mDesiredPosition = video::Position3D();
             irr::scene::IMeshSceneNode* mTileNode = nullptr;

@@ -19,15 +19,19 @@ namespace irr {
 namespace leviathan {
     namespace gui {
         class Menu {
-            Menu() = delete;
-            Menu(const Menu&) = delete;
-            Menu& operator=(const Menu&) = delete;
-
         public:
             irr::gui::IGUIElement* menuElement = nullptr;
 
             explicit Menu(irr::gui::IGUIEnvironment* guiEnv);
-            ~Menu() {};
+
+            ~Menu() = default;
+
+            Menu() = delete;
+            Menu(const Menu&) = delete;
+            Menu(const Menu&&) = delete;
+            Menu& operator=(const Menu&) = delete;
+            Menu& operator=(const Menu&&) = delete;
+
             void enable();
             void disable();
             void draw();

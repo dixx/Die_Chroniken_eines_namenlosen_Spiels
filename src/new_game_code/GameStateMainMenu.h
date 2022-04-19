@@ -22,8 +22,12 @@ public:
 
     explicit GameStateMainMenu(leviathan::ILeviathanDevice& gameEngine);
     ~GameStateMainMenu();
+
+    GameStateMainMenu() = delete;
     GameStateMainMenu(const GameStateMainMenu&) = delete;
+    GameStateMainMenu(const GameStateMainMenu&&) = delete;
     GameStateMainMenu& operator=(const GameStateMainMenu&) = delete;
+    GameStateMainMenu& operator=(const GameStateMainMenu&&) = delete;
 
     void update(const float elapsedSeconds);
 

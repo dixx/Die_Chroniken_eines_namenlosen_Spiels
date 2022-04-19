@@ -23,7 +23,9 @@ namespace leviathan {
 
             ~Randomizer() = default;
             Randomizer(const Randomizer&) = delete;
+            Randomizer(const Randomizer&&) = delete;
             Randomizer& operator=(const Randomizer&) = delete;
+            Randomizer& operator=(const Randomizer&&) = delete;
 
             /*! \brief Initialisiert den Zufallsgenerator.
              *  \attention Muss vor dem Benutzen der anderen Methoden aufgerufen werden,

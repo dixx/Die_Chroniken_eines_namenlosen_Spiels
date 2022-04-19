@@ -27,7 +27,9 @@ namespace leviathan {
             ~TimeControl() = default;
 
             TimeControl(const TimeControl&) = delete;
+            TimeControl(const TimeControl&&) = delete;
             TimeControl& operator=(const TimeControl&) = delete;
+            TimeControl& operator=(const TimeControl&&) = delete;
 
             /*! \brief Fügt einen vorhandenen Timer zur zentralen Steuerung hinzu.
              *  \param timer: Referenz auf den Timer

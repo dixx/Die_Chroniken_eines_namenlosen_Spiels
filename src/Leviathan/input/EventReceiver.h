@@ -29,7 +29,9 @@ namespace leviathan {
             ~EventReceiver() = default;
 
             EventReceiver(const EventReceiver&) = delete;
+            EventReceiver(const EventReceiver&&) = delete;
             EventReceiver& operator=(const EventReceiver&) = delete;
+            EventReceiver& operator=(const EventReceiver&&) = delete;
 
             /*! \brief Event-Handler.
              *

@@ -32,7 +32,9 @@ namespace leviathan {
 
             Hero() = delete;
             Hero(const Hero&) = delete;
+            Hero(const Hero&&) = delete;
             Hero& operator=(const Hero&) = delete;
+            Hero& operator=(const Hero&&) = delete;
 
             /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
              */

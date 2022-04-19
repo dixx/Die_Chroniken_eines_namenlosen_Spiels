@@ -11,8 +11,12 @@ class GameStateShutdown final : public leviathan::core::IGameState {
 public:
     explicit GameStateShutdown(leviathan::ILeviathanDevice& gameEngine);
     ~GameStateShutdown();
+
+    GameStateShutdown() = delete;
     GameStateShutdown(const GameStateShutdown&) = delete;
+    GameStateShutdown(const GameStateShutdown&&) = delete;
     GameStateShutdown& operator=(const GameStateShutdown&) = delete;
+    GameStateShutdown& operator=(const GameStateShutdown&&) = delete;
 
     void update(const float elapsedSeconds);
 

@@ -18,8 +18,12 @@ public:
 
     explicit GameStatePlay(leviathan::ILeviathanDevice& gameEngine);
     ~GameStatePlay();
+
+    GameStatePlay() = delete;
     GameStatePlay(const GameStatePlay&) = delete;
+    GameStatePlay(const GameStatePlay&&) = delete;
     GameStatePlay& operator=(const GameStatePlay&) = delete;
+    GameStatePlay& operator=(const GameStatePlay&&) = delete;
 
     void update(const float elapsedSeconds) override;
 

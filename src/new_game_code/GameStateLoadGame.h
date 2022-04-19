@@ -11,8 +11,12 @@ class GameStateLoadGame final : public leviathan::core::IGameState {
 public:
     explicit GameStateLoadGame(leviathan::ILeviathanDevice& gameEngine);
     ~GameStateLoadGame();
+
+    GameStateLoadGame() = delete;
     GameStateLoadGame(const GameStateLoadGame&) = delete;
+    GameStateLoadGame(const GameStateLoadGame&&) = delete;
     GameStateLoadGame& operator=(const GameStateLoadGame&) = delete;
+    GameStateLoadGame& operator=(const GameStateLoadGame&&) = delete;
 
     void update(const float elapsedSeconds);
 

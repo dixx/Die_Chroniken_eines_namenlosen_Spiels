@@ -49,11 +49,13 @@ namespace leviathan {
             MousePointerControl(leviathan::input::IEventProducer& producer, video::GraphicEngine& graphicDevice,
                 leviathan::core::ILogger& logger, leviathan::video::Textures& textures);
 
-            ~MousePointerControl() {};
+            ~MousePointerControl() = default;
 
             MousePointerControl() = delete;
             MousePointerControl(const MousePointerControl&) = delete;
+            MousePointerControl(const MousePointerControl&&) = delete;
             MousePointerControl& operator=(const MousePointerControl&) = delete;
+            MousePointerControl& operator=(const MousePointerControl&&) = delete;
 
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event

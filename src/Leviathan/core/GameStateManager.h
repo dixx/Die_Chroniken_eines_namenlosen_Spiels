@@ -33,7 +33,9 @@ namespace leviathan {
 
             GameStateManager() = delete;
             GameStateManager(const GameStateManager&) = delete;
+            GameStateManager(const GameStateManager&&) = delete;
             GameStateManager& operator=(const GameStateManager&) = delete;
+            GameStateManager& operator=(const GameStateManager&&) = delete;
 
             /*! \brief Fügt einen Spielzustand zur Verwaltung hinzu.
              *  \note Existiert die ID wird der existierende Zustand nicht mit dem neuen ersetzt.

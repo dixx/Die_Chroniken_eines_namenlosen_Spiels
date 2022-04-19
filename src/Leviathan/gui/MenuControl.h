@@ -51,7 +51,9 @@ namespace leviathan {
 
             MenuControl() = delete;
             MenuControl(const MenuControl&) = delete;
+            MenuControl(const MenuControl&&) = delete;
             MenuControl& operator=(const MenuControl&) = delete;
+            MenuControl& operator=(const MenuControl&&) = delete;
 
             /*! \brief Reagiert auf Events vom Producer.
              *  \param event: Input-Event

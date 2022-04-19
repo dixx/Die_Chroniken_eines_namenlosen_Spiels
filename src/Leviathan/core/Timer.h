@@ -26,7 +26,9 @@ namespace leviathan {
 
             Timer() = delete;
             Timer(const Timer&) = delete;
+            Timer(const Timer&&) = delete;
             Timer& operator=(const Timer&) = delete;
+            Timer& operator=(const Timer&&) = delete;
 
             /*! \brief Erhöht den Timer um bestimmten Wert (in Sekunden).
              *  \param seconds: Zeit (in Sekunden)

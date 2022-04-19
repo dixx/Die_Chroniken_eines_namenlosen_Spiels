@@ -21,7 +21,14 @@ namespace leviathan {
 
         class MouseEventActions final : public EventToActionConverter {
         public:
-            std::vector<Action> actionsFor(const irr::SEvent& event);
+            MouseEventActions() = default;
+            ~MouseEventActions() = default;
+            MouseEventActions(const MouseEventActions&) = delete;
+            MouseEventActions(MouseEventActions&&) = default;
+            MouseEventActions& operator=(const MouseEventActions&) = delete;
+            MouseEventActions& operator=(const MouseEventActions&&) = delete;
+
+            std::vector<Action> actionsFor(const irr::SEvent& event) override;
             void addMapping(const uint32_t buttonCode, const uint32_t actionId);
 
         private:

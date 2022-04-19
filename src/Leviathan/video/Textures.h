@@ -37,7 +37,9 @@ namespace leviathan {
 
             Textures() = delete;
             Textures(const Textures&) = delete;
+            Textures(const Textures&&) = delete;
             Textures& operator=(const Textures&) = delete;
+            Textures& operator=(const Textures&&) = delete;
 
             /*  \brief Lädt eine Textur, ohne weitere Features.
              *  \note Ist die Textur bereits geladen, wird sie nicht noch einmal geladen.

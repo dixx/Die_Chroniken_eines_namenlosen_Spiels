@@ -34,7 +34,9 @@ namespace leviathan {
 
             Heroes() = delete;
             Heroes(const Heroes&) = delete;
+            Heroes(const Heroes&&) = delete;
             Heroes& operator=(const Heroes&) = delete;
+            Heroes& operator=(const Heroes&&) = delete;
 
             /*! \brief Erzeugt einen neuen Helden und gibt ihn zurück.
              *  \param characterConfig: Konfiguration des Helden-Szenenknotens

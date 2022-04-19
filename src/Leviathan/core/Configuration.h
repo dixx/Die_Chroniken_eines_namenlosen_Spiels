@@ -35,7 +35,9 @@ namespace leviathan {
 
             Configuration() = delete;
             Configuration(const Configuration&) = delete;
+            Configuration(const Configuration&&) = delete;
             Configuration& operator=(const Configuration&) = delete;
+            Configuration& operator=(const Configuration&&) = delete;
 
             /*! \brief Liest eine Konfigdatei aus und schreibt die Werte ins System.
              *  \param filename: Konfigdateiname

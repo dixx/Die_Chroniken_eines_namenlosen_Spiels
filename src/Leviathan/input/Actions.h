@@ -46,7 +46,9 @@ namespace leviathan {
 
             Actions() = delete;
             Actions(const Actions&) = delete;
+            Actions(const Actions&&) = delete;
             Actions& operator=(const Actions&) = delete;
+            Actions& operator=(const Actions&&) = delete;
 
             /*! \brief Konsumenten von Aktionen können sich hier anmelden
              *  \param consumer: Konsument welcher bei seinen gewünschten Aktionen benachrichtigt werden soll

@@ -24,7 +24,14 @@ namespace leviathan {
 
         class GUIEventActions final : public EventToActionConverter {
         public:
-            std::vector<Action> actionsFor(const irr::SEvent& event);
+            GUIEventActions() = default;
+            ~GUIEventActions() = default;
+            GUIEventActions(const GUIEventActions&) = delete;
+            GUIEventActions(GUIEventActions&&) = default;
+            GUIEventActions& operator=(const GUIEventActions&) = delete;
+            GUIEventActions& operator=(const GUIEventActions&&) = delete;
+
+            std::vector<Action> actionsFor(const irr::SEvent& event) override;
             void addMapping(const std::string inputName, const uint32_t actionId);
 
         private:

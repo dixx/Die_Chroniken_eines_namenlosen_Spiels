@@ -21,7 +21,14 @@ namespace leviathan {
 
         class KeyboardEventActions final : public EventToActionConverter {
         public:
-            std::vector<Action> actionsFor(const irr::SEvent& event);
+            KeyboardEventActions() = default;
+            ~KeyboardEventActions() = default;
+            KeyboardEventActions(const KeyboardEventActions&) = delete;
+            KeyboardEventActions(KeyboardEventActions&&) = default;
+            KeyboardEventActions& operator=(const KeyboardEventActions&) = delete;
+            KeyboardEventActions& operator=(const KeyboardEventActions&&) = delete;
+
+            std::vector<Action> actionsFor(const irr::SEvent& event) override;
             void addMapping(const uint32_t keyCode, const uint32_t actionId);
         };
     }

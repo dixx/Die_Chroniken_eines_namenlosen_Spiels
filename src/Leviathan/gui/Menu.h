@@ -37,7 +37,7 @@ namespace leviathan {
             void draw();
 
         private:
-            irr::gui::IGUIEnvironment* _guiEnv = nullptr;
+            irr::gui::IGUIEnvironment* mGuiEnv = nullptr;
         };
     }
 }

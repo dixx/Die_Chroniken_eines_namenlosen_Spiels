@@ -14,16 +14,16 @@ namespace leviathan {
 
         std::list<uint32_t>& GUIEventActions::actionIdsFor(const std::string& inputName) {
             try {
-                return _actionsForInput.at(inputName);
+                return mActionsForInput.at(inputName);
             } catch (const std::out_of_range& e) {
-                return _emptyList;
+                return mEmptyList;
             }
         }
 
         void GUIEventActions::addMapping(const std::string inputName, const uint32_t actionId) {
-            _actionsForInput[inputName].push_back(actionId);
-            _actionsForInput[inputName].sort();
-            _actionsForInput[inputName].unique();
+            mActionsForInput[inputName].push_back(actionId);
+            mActionsForInput[inputName].sort();
+            mActionsForInput[inputName].unique();
         }
 
         std::vector<Action> GUIEventActions::createActions(const std::string& inputName, const bool isActive) {

@@ -78,11 +78,11 @@ namespace leviathan {
             float getMaxValue() const;
 
         private:
-            float maxValue_;
-            float currentValue_ = 0.0f;
-            bool timerIsRunning_ = false;
-            bool timerIsPaused_ = false;
-            bool timerIsFull_ = false;
+            float mMaxValue;
+            float mCurrentValue = 0.0f;
+            bool mIsRunning = false;
+            bool mIsPaused = false;
+            bool mIsFull = false;
         };
 
         /*! \class AlwaysRunningTimer
@@ -96,8 +96,13 @@ namespace leviathan {
              */
             explicit AlwaysRunningTimer(const float maxValue) : Timer(maxValue) {}
 
+            ~AlwaysRunningTimer() = default;
+
+            AlwaysRunningTimer() = delete;
             AlwaysRunningTimer(const AlwaysRunningTimer&) = delete;
+            AlwaysRunningTimer(const AlwaysRunningTimer&&) = delete;
             AlwaysRunningTimer& operator=(const AlwaysRunningTimer&) = delete;
+            AlwaysRunningTimer& operator=(const AlwaysRunningTimer&&) = delete;
 
             /*! \brief Timer reagiert nicht auf stop.
              */

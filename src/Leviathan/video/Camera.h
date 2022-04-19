@@ -59,14 +59,14 @@ namespace leviathan {
             void setPosition(const Position3D& position) override;
 
         private:
-            irr::scene::ICameraSceneNode* camera_ = nullptr;
-            irr::core::vector3df targetPosition_ = irr::core::vector3df();
-            irr::core::vector3df offset_ = irr::core::vector3df(0.f, 15.f, -3.f);
-            float rotation_ = 0.f;
-            float rotationSpeed_ = 0.f;
-            bool isRotating_ = false;
-            irr::core::vector3df movementSpeed_ = irr::core::vector3df();
-            bool isMoving_ = false;
+            irr::scene::ICameraSceneNode* mCamera = nullptr;
+            irr::core::vector3df mTargetPosition = irr::core::vector3df();
+            irr::core::vector3df mOffset = irr::core::vector3df(0.f, 15.f, -3.f);
+            float mRotation = 0.f;
+            float mRotationSpeed = 0.f;
+            bool mIsRotating = false;
+            irr::core::vector3df mMovementSpeed = irr::core::vector3df();
+            bool mIsMoving = false;
         };
     }
 }

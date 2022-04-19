@@ -38,9 +38,9 @@ namespace leviathan {
             void setDesiredPostition(const video::Position3D& targetPosition) override;
 
         private:
-            irr::scene::ISceneManager* sceneManager_ = nullptr;
-            video::Position3D desiredPosition_ = video::Position3D();
-            irr::scene::IMeshSceneNode* tileNode_ = nullptr;
+            irr::scene::ISceneManager* mSceneManager = nullptr;
+            video::Position3D mDesiredPosition = video::Position3D();
+            irr::scene::IMeshSceneNode* mTileNode = nullptr;
 
             void transformMesh(irr::scene::IMesh* mesh, const Node3DConfiguration& tileConfig);
             void defineAppearance(const char* textureFileName);

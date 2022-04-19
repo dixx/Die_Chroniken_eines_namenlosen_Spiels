@@ -4,15 +4,15 @@
 namespace leviathan {
     namespace core {
         void Randomizer::start(const uint32_t seed) {
-            seed_ = seed;
-            if (seed_ > 100) {
-                seed2_ = seed_ / 2 - 1;
-                seed3_ = seed2_ / 2 - 3;
-                seed4_ = seed3_ / 2 - 8;
+            mSeed = seed;
+            if (mSeed > 100) {
+                mSeed2 = mSeed / 2 - 1;
+                mSeed3 = mSeed2 / 2 - 3;
+                mSeed4 = mSeed3 / 2 - 8;
             } else {
-                seed2_ = seed_ * 2 + 1;
-                seed3_ = seed2_ * 2 + 3;
-                seed4_ = seed3_ * 2 + 8;
+                mSeed2 = mSeed * 2 + 1;
+                mSeed3 = mSeed2 * 2 + 3;
+                mSeed4 = mSeed3 * 2 + 8;
             }
         }
 
@@ -31,12 +31,12 @@ namespace leviathan {
         }
 
         uint32_t Randomizer::getInt() {
-            tmp_ = (seed_ ^ (seed_ << 15));
-            seed_ = seed2_;
-            seed2_ = seed3_;
-            seed3_ = seed4_;
-            seed4_ = (seed4_ ^ (seed4_ >> 21)) ^ (tmp_ ^ (tmp_ >> 4));
-            return seed4_;
+            mTemp = (mSeed ^ (mSeed << 15));
+            mSeed = mSeed2;
+            mSeed2 = mSeed3;
+            mSeed3 = mSeed4;
+            mSeed4 = (mSeed4 ^ (mSeed4 >> 21)) ^ (mTemp ^ (mTemp >> 4));
+            return mSeed4;
         }
 
         uint32_t Randomizer::getInt(const uint32_t min, const uint32_t max) {

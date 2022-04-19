@@ -53,9 +53,9 @@ namespace leviathan {
             IHero& getActiveHero() override;
 
         private:
-            world::NodeManager& nodeManager_;
-            std::map<std::string, std::unique_ptr<Hero>> heroes_ = std::map<std::string, std::unique_ptr<Hero>>();
-            std::string activeHeroName_ = "";
+            world::NodeManager& mNodeManager;
+            std::map<std::string, std::unique_ptr<Hero>> mHeroes = std::map<std::string, std::unique_ptr<Hero>>();
+            std::string mActiveHeroName = "";
         };
     }
 }

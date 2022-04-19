@@ -4,14 +4,14 @@
 namespace leviathan {
     namespace input {
         void EventToActionConverter::clear() {
-            _actionsForInput.clear();
+            mActionsForInput.clear();
         }
 
         std::list<uint32_t>& EventToActionConverter::actionIdsFor(const uint32_t inputId) {
             try {
-                return _actionsForInput.at(inputId);
+                return mActionsForInput.at(inputId);
             } catch (const std::out_of_range& e) {
-                return _emptyList;
+                return mEmptyList;
             }
         }
 

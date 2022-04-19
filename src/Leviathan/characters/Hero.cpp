@@ -7,34 +7,34 @@
 namespace leviathan {
     namespace characters {
         Hero::Hero(const CharacterConfiguration& characterConfig, world::NodeManager& nodeManager)
-        : node_(nodeManager.createHeroNode(characterConfig)) {}
+        : mNode(nodeManager.createHeroNode(characterConfig)) {}
 
         void Hero::enablePlayableCharacter() {
-            node_.setVisible();
+            mNode.setVisible();
         }
 
         void Hero::disablePlayableCharacter() {
-            node_.setInvisible();
+            mNode.setInvisible();
         }
 
         const std::string Hero::getInternalName() const {
-            return node_.getName();
+            return mNode.getName();
         }
 
         video::Position3D Hero::getPosition() const {
-            return node_.getPosition();
+            return mNode.getPosition();
         }
 
         void Hero::setPosition(const video::Position3D& position) {
-            node_.setPosition(position);
+            mNode.setPosition(position);
         }
 
         video::Rotation3D Hero::getRotation() const {
-            return node_.getRotation();
+            return mNode.getRotation();
         }
 
         void Hero::setRotation(const video::Rotation3D& rotation) {
-            node_.setRotation(rotation);
+            mNode.setRotation(rotation);
         }
     }
 }

@@ -5,19 +5,19 @@
 
 namespace leviathan {
     namespace characters {
-        Heroes::Heroes(world::NodeManager& nodeManager) : nodeManager_(nodeManager) {}
+        Heroes::Heroes(world::NodeManager& nodeManager) : mNodeManager(nodeManager) {}
 
         IHero& Heroes::create(const CharacterConfiguration& characterConfig) {
-            heroes_[characterConfig.internalName] = std::make_unique<Hero>(characterConfig, nodeManager_);
-            return *heroes_[characterConfig.internalName];
+            mHeroes[characterConfig.internalName] = std::make_unique<Hero>(characterConfig, mNodeManager);
+            return *mHeroes[characterConfig.internalName];
         }
 
         void Heroes::activate(const std::string& internalName) {
-            if (heroes_.count(internalName) == 1) activeHeroName_ = std::string(internalName);
+            if (mHeroes.count(internalName) == 1) mActiveHeroName = std::string(internalName);
         }
 
         IHero& Heroes::getActiveHero() {
-            return *heroes_[activeHeroName_];
+            return *mHeroes[mActiveHeroName];
         }
     }
 }

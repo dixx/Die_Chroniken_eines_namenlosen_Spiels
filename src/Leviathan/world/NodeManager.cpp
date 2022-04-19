@@ -10,7 +10,7 @@
 namespace leviathan {
     namespace world {
         NodeManager::NodeManager(irr::scene::ISceneManager* sceneManager)
-        : collider_(sceneManager), sceneManager_(sceneManager) {
+        : mCollider(sceneManager), mSceneManager(sceneManager) {
             addNodeTree();
             addNodeNames();
         }
@@ -18,45 +18,45 @@ namespace leviathan {
         NodeManager::~NodeManager() {
             unloadHeroes();
             unloadGround();
-            worldNode_->removeAll();
-            worldNode_->remove();
+            mWorldNode->removeAll();
+            mWorldNode->remove();
         }
 
         Character& NodeManager::createHeroNode(const characters::CharacterConfiguration& characterConfig) {
-            heroNodes_.emplace_back(std::make_unique<Character>(characterConfig, sceneManager_));
-            return *(heroNodes_.back());
+            mHeroNodes.emplace_back(std::make_unique<Character>(characterConfig, mSceneManager));
+            return *(mHeroNodes.back());
         }
 
         void NodeManager::addGroundTile(const Node3DConfiguration& nodeConfig) {
-            groundNodes_.emplace_back(std::make_unique<GroundTile>(nodeConfig, sceneManager_));
+            mGroundNodes.emplace_back(std::make_unique<GroundTile>(nodeConfig, mSceneManager));
         }
 
         void NodeManager::unloadHeroes() {
-            heroNodes_.clear();
-            sceneManager_->getMeshCache()->clearUnusedMeshes();
+            mHeroNodes.clear();
+            mSceneManager->getMeshCache()->clearUnusedMeshes();
         }
 
         void NodeManager::unloadGround() {
-            groundNodes_.clear();
-            walkableNodes_->removeAll();
-            sceneManager_->getMeshCache()->clearUnusedMeshes();
+            mGroundNodes.clear();
+            mWalkableNodes->removeAll();
+            mSceneManager->getMeshCache()->clearUnusedMeshes();
         }
 
         float NodeManager::getWalkableHeight(const video::Position3D& position) const {
-            return collider_.getCollisionTopDown(walkableNodes_, position).collisionPoint.y;
+            return mCollider.getCollisionTopDown(mWalkableNodes, position).collisionPoint.y;
         }
 
         void NodeManager::addNodeTree() {
-            worldNode_ = sceneManager_->addEmptySceneNode(0, ID_WORLD_ROOT);
-            responsiveNodes_ = sceneManager_->addEmptySceneNode(worldNode_, ID_RESPONSIVE_ROOT + NODE_FLAG_RESPONSIVE);
-            walkableNodes_ = sceneManager_->addEmptySceneNode(
-                responsiveNodes_, ID_WALKABLE_ROOT + NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
+            mWorldNode = mSceneManager->addEmptySceneNode(0, ID_WORLD_ROOT);
+            mResponsiveNodes = mSceneManager->addEmptySceneNode(mWorldNode, ID_RESPONSIVE_ROOT + NODE_FLAG_RESPONSIVE);
+            mWalkableNodes = mSceneManager->addEmptySceneNode(
+                mResponsiveNodes, ID_WALKABLE_ROOT + NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
         }
 
         void NodeManager::addNodeNames() {
-            worldNode_->setName("worldNode");
-            responsiveNodes_->setName("responsiveNodes");
-            walkableNodes_->setName("walkableNodes");
+            mWorldNode->setName("worldNode");
+            mResponsiveNodes->setName("responsiveNodes");
+            mWalkableNodes->setName("walkableNodes");
         }
     }
 }

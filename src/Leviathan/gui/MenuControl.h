@@ -91,11 +91,11 @@ namespace leviathan {
             void draw() override;
 
         private:
-            irr::gui::IGUIEnvironment* _guiEnv = nullptr;
-            irr::video::IVideoDriver* _videoDriver = nullptr;
-            input::IEventProducer& _producer;
-            leviathan::video::Textures& textures_;
-            std::map<std::wstring, std::unique_ptr<Menu>> _menus = std::map<std::wstring, std::unique_ptr<Menu>>();
+            irr::gui::IGUIEnvironment* mGuiEnv = nullptr;
+            irr::video::IVideoDriver* mVideoDriver = nullptr;
+            input::IEventProducer& mProducer;
+            leviathan::video::Textures& mTextures;
+            std::map<std::wstring, std::unique_ptr<Menu>> mMenues = std::map<std::wstring, std::unique_ptr<Menu>>();
 
             irr::video::ITexture* loadTexture(const std::string& filename, bool makeTransparent);
         };

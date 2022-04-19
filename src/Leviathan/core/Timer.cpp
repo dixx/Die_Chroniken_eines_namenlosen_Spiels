@@ -3,56 +3,56 @@
 namespace leviathan {
     namespace core {
 
-        Timer::Timer(const float maxValue) : maxValue_(maxValue) {}
+        Timer::Timer(const float maxValue) : mMaxValue(maxValue) {}
 
         Timer& Timer::tick(const float seconds) {
-            if (timerIsRunning_ && !timerIsPaused_) currentValue_ += seconds;
+            if (mIsRunning && !mIsPaused) mCurrentValue += seconds;
             return *this;
         }
 
         void Timer::start() {
-            timerIsPaused_ = false;
-            timerIsRunning_ = true;
-            currentValue_ = 0.0f;
+            mIsPaused = false;
+            mIsRunning = true;
+            mCurrentValue = 0.0f;
         }
 
         void Timer::restart() {
-            timerIsFull_ = false;
+            mIsFull = false;
             start();
         }
 
         void Timer::stop() {
-            timerIsPaused_ = false;
-            timerIsRunning_ = false;
-            currentValue_ = 0.0f;
+            mIsPaused = false;
+            mIsRunning = false;
+            mCurrentValue = 0.0f;
         }
 
         void Timer::pause() {
-            if (timerIsRunning_) timerIsPaused_ = true;
+            if (mIsRunning) mIsPaused = true;
         }
 
         void Timer::resume() {
-            if (timerIsPaused_) {
-                timerIsRunning_ = true;
-                timerIsPaused_ = false;
+            if (mIsPaused) {
+                mIsRunning = true;
+                mIsPaused = false;
             }
         }
 
         bool Timer::isRunning() const {
-            return timerIsRunning_;
+            return mIsRunning;
         }
 
         bool Timer::isPaused() const {
-            return timerIsPaused_;
+            return mIsPaused;
         }
 
         bool Timer::isFull() {
-            if (currentValue_ >= maxValue_) timerIsFull_ = true;
-            return timerIsFull_;
+            if (mCurrentValue >= mMaxValue) mIsFull = true;
+            return mIsFull;
         }
 
         float Timer::getMaxValue() const {
-            return maxValue_;
+            return mMaxValue;
         }
     }
 }

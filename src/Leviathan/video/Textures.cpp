@@ -7,28 +7,28 @@
 namespace leviathan {
     namespace video {
         Textures::Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::ILogger& logger)
-        : videoDriver_(videoDriver), logger_(logger) {}
+        : mVideoDriver(videoDriver), mLogger(logger) {}
 
         irr::video::ITexture* Textures::get(const char* fileName) {
-            if (textures_.find(fileName) != textures_.end()) return textures_[fileName].irrTexture;
+            if (mTextures.find(fileName) != mTextures.end()) return mTextures[fileName].irrTexture;
 
-            videoDriver_->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
-            videoDriver_->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
+            mVideoDriver->setTextureCreationFlag(irr::video::ETCF_OPTIMIZED_FOR_QUALITY, true);
+            mVideoDriver->setTextureCreationFlag(irr::video::ETCF_CREATE_MIP_MAPS, false);  // don't create LOD textures
             Texture tex;
-            tex.irrTexture = videoDriver_->getTexture(fileName);
+            tex.irrTexture = mVideoDriver->getTexture(fileName);
             if (tex.irrTexture == nullptr) {
-                logger_.text << "[Warning] - cannot load texture " << fileName << "!";
-                logger_.write(logger_.Level::DEBUG);
+                mLogger.text << "[Warning] - cannot load texture " << fileName << "!";
+                mLogger.write(mLogger.Level::DEBUG);
             }
-            textures_[fileName] = tex;
+            mTextures[fileName] = tex;
             return tex.irrTexture;
         }
 
         irr::video::ITexture* Textures::getWithColorKeyTransparency(const char* fileName) {
             irr::video::ITexture* texture = get(fileName);
-            if (!textures_[fileName].alreadyColorKeyed) {
-                videoDriver_->makeColorKeyTexture(texture, video::COL_MAGICPINK);
-                textures_[fileName].alreadyColorKeyed = true;
+            if (!mTextures[fileName].alreadyColorKeyed) {
+                mVideoDriver->makeColorKeyTexture(texture, video::COL_MAGICPINK);
+                mTextures[fileName].alreadyColorKeyed = true;
             }
             return texture;
         }

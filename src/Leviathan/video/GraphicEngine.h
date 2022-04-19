@@ -73,8 +73,8 @@ namespace leviathan {
             static void overrideGraphicEngine(irr::IrrlichtDevice* otherEngine);
 
         private:
-            static irr::IrrlichtDevice* graphicEngine_;
-            static bool useExternalGraphicEngine;
+            static irr::IrrlichtDevice* mGraphicEngine;
+            static bool mUseExternalGraphicEngine;
         };
     }
 }

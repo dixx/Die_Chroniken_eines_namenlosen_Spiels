@@ -35,7 +35,7 @@ namespace leviathan {
             void addMapping(const std::string inputName, const uint32_t actionId);
 
         private:
-            std::map<std::string, std::list<uint32_t>> _actionsForInput = std::map<std::string, std::list<uint32_t>>();
+            std::map<std::string, std::list<uint32_t>> mActionsForInput = std::map<std::string, std::list<uint32_t>>();
 
             std::vector<Action> createActions(const std::string& inputName, const bool isActive);
             std::list<uint32_t>& actionIdsFor(const std::string& inputName);

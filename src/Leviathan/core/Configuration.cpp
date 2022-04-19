@@ -3,7 +3,7 @@
 namespace leviathan {
     namespace core {
         Configuration::Configuration(const char* fileName) {
-            params_.LoggingLevel = irr::ELL_WARNING;
+            mParams.LoggingLevel = irr::ELL_WARNING;
             loadFromFile(fileName);
         }
 
@@ -22,23 +22,23 @@ namespace leviathan {
         }
 
         const irr::SIrrlichtCreationParameters& Configuration::getGraphicEngineParams() const {
-            return params_;
+            return mParams;
         }
 
         const float& Configuration::getFarValue() const {
-            return farValue_;
+            return mFarValue;
         }
 
         const ILogger::Level& Configuration::getLoggingLevel() const {
-            return loggingLevel_;
+            return mLoggingLevel;
         }
 
         const uint32_t& Configuration::getMaxFPS() const {
-            return maxFPS_;
+            return mMaxFPS;
         }
 
         const video::Dimension2D& Configuration::getScreenSize() const {
-            return screenSize_;
+            return mScreenSize;
         }
 
         void Configuration::setCameraValues(YAML::Node& content) {
@@ -47,7 +47,7 @@ namespace leviathan {
                 return;
             }
 
-            farValue_ = content["camera"]["far_value"].as<float>(300.0f);
+            mFarValue = content["camera"]["far_value"].as<float>(300.0f);
         }
 
         void Configuration::setGeneralValues(YAML::Node& content) {
@@ -56,38 +56,38 @@ namespace leviathan {
                 return;
             }
 
-            loggingLevel_ = logLevelMap[content["general"]["logging_level"].as<std::string>("INFO")];
+            mLoggingLevel = mLogLevelMap[content["general"]["logging_level"].as<std::string>("INFO")];
         }
 
         void Configuration::setVideoValues(YAML::Node& content) {
             if (!content["video"]) {
                 setVideoDefaults();
             } else {
-                params_.WindowSize.Width = content["video"]["screen_x"].as<uint32_t>(800);
-                params_.WindowSize.Height = content["video"]["screen_y"].as<uint32_t>(600);
-                params_.Bits = content["video"]["color_depth"].as<uint8_t>(16) == 32 ? 32 : 16;
-                params_.Fullscreen = content["video"]["fullscreen"].as<bool>(false);
-                params_.DriverType = driverMap_[content["video"]["driver"].as<std::string>("OPENGL")];
-                maxFPS_ = content["video"]["max_fps"].as<uint32_t>(60);
+                mParams.WindowSize.Width = content["video"]["screen_x"].as<uint32_t>(800);
+                mParams.WindowSize.Height = content["video"]["screen_y"].as<uint32_t>(600);
+                mParams.Bits = content["video"]["color_depth"].as<uint8_t>(16) == 32 ? 32 : 16;
+                mParams.Fullscreen = content["video"]["fullscreen"].as<bool>(false);
+                mParams.DriverType = mDriverMap[content["video"]["driver"].as<std::string>("OPENGL")];
+                mMaxFPS = content["video"]["max_fps"].as<uint32_t>(60);
             }
-            screenSize_ = {params_.WindowSize.Width, params_.WindowSize.Height};
+            mScreenSize = {mParams.WindowSize.Width, mParams.WindowSize.Height};
         }
 
         void Configuration::setCameraDefaults() {
-            farValue_ = 300.0f;
+            mFarValue = 300.0f;
         }
 
         void Configuration::setGeneralDefaults() {
-            loggingLevel_ = logLevelMap["INFO"];
+            mLoggingLevel = mLogLevelMap["INFO"];
         }
 
         void Configuration::setVideoDefaults() {
-            params_.WindowSize.Width = 800;
-            params_.WindowSize.Height = 600;
-            params_.Bits = 16;
-            params_.Fullscreen = false;
-            params_.DriverType = driverMap_["OPENGL"];
-            maxFPS_ = 60;
+            mParams.WindowSize.Width = 800;
+            mParams.WindowSize.Height = 600;
+            mParams.Bits = 16;
+            mParams.Fullscreen = false;
+            mParams.DriverType = mDriverMap["OPENGL"];
+            mMaxFPS = 60;
         }
     }
 }

@@ -40,7 +40,7 @@ public:
     void onAction(const leviathan::input::Action action) override;
 
 private:
-    leviathan::ILeviathanDevice& gameEngine_;
+    leviathan::ILeviathanDevice& mGameEngine;
 };
 
 #endif

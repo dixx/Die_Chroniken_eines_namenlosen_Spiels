@@ -23,7 +23,7 @@ namespace irr {
 
 namespace leviathan {
     namespace core {
-        class Logger;
+        struct ILogger;
     }
     namespace input {
         struct IEventProducer;
@@ -47,7 +47,7 @@ namespace leviathan {
              *  \param textures: Instanz der Texturenverwaltung
              */
             MousePointerControl(leviathan::input::IEventProducer& producer, video::GraphicEngine& graphicDevice,
-                leviathan::core::Logger& logger, leviathan::video::Textures& textures);
+                leviathan::core::ILogger& logger, leviathan::video::Textures& textures);
 
             ~MousePointerControl() {};
 
@@ -70,7 +70,7 @@ namespace leviathan {
             void draw();
 
         private:
-            leviathan::core::Logger& logger_;
+            leviathan::core::ILogger& logger_;
             leviathan::video::Textures& textures_;
             uint32_t activeMousePointer_ = 0;
             const irr::video::SColor backgroundColor_ = irr::video::SColor(255, 255, 255, 255);

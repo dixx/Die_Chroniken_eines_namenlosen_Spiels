@@ -1,16 +1,16 @@
 #include "Actions.h"
-#include "../core/Logger.h"
 #include "ActionMapping.h"
 #include "IEventProducer.h"
 #include "IEventReceiver.h"
 #include "Input.h"
 #include "yaml-cpp/yaml.h"
 #include <algorithm>
+#include <core/ILogger.h>
 #include <input/Action.h>
 
 namespace leviathan {
     namespace input {
-        Actions::Actions(IEventProducer& producer, core::Logger& logger) : _logger(logger), _producer(producer) {
+        Actions::Actions(IEventProducer& producer, core::ILogger& logger) : _logger(logger), _producer(producer) {
             _producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_KEY_INPUT_EVENT);
             _producer.subscribe(*this, irr::EET_GUI_EVENT);

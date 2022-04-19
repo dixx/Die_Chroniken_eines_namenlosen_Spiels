@@ -1,17 +1,17 @@
 #include "MousePointerControl.h"
-#include "../core/Logger.h"
 #include "../input/IEventProducer.h"
 #include "../video/Textures.h"
 #include "ICursorControl.h"
 #include "ITexture.h"
 #include "IVideoDriver.h"
+#include <core/ILogger.h>
 #include <gui/MousePointerConfiguration.h>
 #include <stdexcept>
 
 namespace leviathan {
     namespace gui {
         MousePointerControl::MousePointerControl(leviathan::input::IEventProducer& producer,
-            video::GraphicEngine& graphicDevice, leviathan::core::Logger& logger, leviathan::video::Textures& textures)
+            video::GraphicEngine& graphicDevice, leviathan::core::ILogger& logger, leviathan::video::Textures& textures)
         : logger_(logger), textures_(textures), graphicDevice_(graphicDevice) {
             producer.subscribe(*this, irr::EET_MOUSE_INPUT_EVENT);
         }
@@ -27,7 +27,7 @@ namespace leviathan {
         void MousePointerControl::addMousePointer(const uint32_t id, const MousePointerConfiguration& configuration) {
             if (baseImage_[id] != nullptr) {
                 logger_.text << "[Warning] - MousePointerControl - id " << id << " already exists!";
-                logger_.write(leviathan::core::Logger::Level::DEBUG);
+                logger_.write(logger_.Level::DEBUG);
                 return;
             }
 
@@ -47,7 +47,7 @@ namespace leviathan {
                 graphicDevice_.getCursorControl()->setVisible(false);
             } catch (const std::out_of_range& _) {
                 logger_.text << "[Warning] - MousePointerControl - id " << id << " does not exist!";
-                logger_.write(leviathan::core::Logger::Level::DEBUG);
+                logger_.write(logger_.Level::DEBUG);
                 activeMousePointer_ = 0;
                 graphicDevice_.getCursorControl()->setVisible(true);
             }

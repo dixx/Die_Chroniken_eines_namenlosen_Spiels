@@ -23,7 +23,7 @@ namespace irr {
 
 namespace leviathan {
     namespace core {
-        class Logger;
+        struct ILogger;
     }
 
     namespace input {
@@ -40,7 +40,7 @@ namespace leviathan {
              *  \param producer: produziert (versendet) Events
              *  \param logger: Instanz eines Loggers
              */
-            Actions(IEventProducer& producer, core::Logger& logger);
+            Actions(IEventProducer& producer, core::ILogger& logger);
 
             ~Actions();
 
@@ -76,7 +76,7 @@ namespace leviathan {
             void loadFromFile(const char* fileName);
 
         private:
-            core::Logger& _logger;
+            core::ILogger& _logger;
             input::IEventProducer& _producer;
             std::map<uint32_t, std::vector<IActionConsumer*>> _subscriptions =
                 std::map<uint32_t, std::vector<IActionConsumer*>>();

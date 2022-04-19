@@ -21,6 +21,7 @@ set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/core/IConfiguration.h
   ${PUBLIC_INTERFACES}/core/IGameState.h
   ${PUBLIC_INTERFACES}/core/IGameStateManager.h
+  ${PUBLIC_INTERFACES}/core/ILogger.h
   ${PUBLIC_INTERFACES}/gui/IMenuControl.h
   ${PUBLIC_INTERFACES}/gui/IMousePointerControl.h
   ${PUBLIC_INTERFACES}/gui/MousePointerConfiguration.h

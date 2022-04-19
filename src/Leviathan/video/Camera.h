@@ -33,7 +33,7 @@ namespace leviathan {
              *  \param sceneManager: Szenen-Manager des initialisierten Irrlicht Device
              *  \param config: zu verwendende Konfiguration
              */
-            Camera(irr::scene::ISceneManager* sceneManager, leviathan::core::Configuration& config);
+            Camera(irr::scene::ISceneManager* sceneManager, core::Configuration& config);
 
             ~Camera() = default;
             Camera() = delete;

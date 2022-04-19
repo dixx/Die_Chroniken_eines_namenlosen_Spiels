@@ -6,7 +6,7 @@
 
 namespace leviathan {
     namespace video {
-        Textures::Textures(irr::video::IVideoDriver* videoDriver, leviathan::core::ILogger& logger)
+        Textures::Textures(irr::video::IVideoDriver* videoDriver, core::ILogger& logger)
         : mVideoDriver(videoDriver), mLogger(logger) {}
 
         irr::video::ITexture* Textures::get(const char* fileName) {

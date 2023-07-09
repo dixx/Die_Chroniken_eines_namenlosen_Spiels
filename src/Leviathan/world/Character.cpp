@@ -16,6 +16,7 @@ namespace leviathan {
             mCharacterNode->setName(characterConfig.internalName.c_str());
             setScale(characterConfig.playableFigurineConfiguration.scale);
             setPosition(characterConfig.playableFigurineConfiguration.position);
+            mRotationOffset = characterConfig.playableFigurineConfiguration.rotationOffset;
             irr::video::ITexture* texture = textures.get(
                 characterConfig.playableFigurineConfiguration.textureFileName.c_str());
             mCharacterNode->setMaterialTexture(0, texture);
@@ -35,8 +36,7 @@ namespace leviathan {
         }
 
         void Character::setPosition(const video::Position3D& position) {
-            mCharacterNode->setPosition(video::Vector3DCompatible(position).toIrrlichtVector()
-                                        + video::Vector3DCompatible(mOffset).toIrrlichtVector());
+            mCharacterNode->setPosition(video::Vector3DCompatible(position + mOffset).toIrrlichtVector());
             mCharacterNode->updateAbsolutePosition();
         }
 
@@ -54,16 +54,16 @@ namespace leviathan {
 
         video::Position3D Character::getPosition() const {
             auto position = mCharacterNode->getAbsolutePosition();
-            return {position.X, position.Y, position.Z};
+            return {position.X - mOffset.x, position.Y - mOffset.y, position.Z - mOffset.z};
         }
 
         video::Rotation3D Character::getRotation() const {
             auto rotation = mCharacterNode->getRotation();
-            return {rotation.X, rotation.Y, rotation.Z};
+            return {rotation.X - mRotationOffset.x, rotation.Y - mRotationOffset.y, rotation.Z - mRotationOffset.z};
         }
 
         void Character::setRotation(const video::Rotation3D& rotation) {
-            mCharacterNode->setRotation(video::Vector3DCompatible(rotation).toIrrlichtVector());
+            mCharacterNode->setRotation(video::Vector3DCompatible(rotation + mRotationOffset).toIrrlichtVector());
         }
 
         /* private */

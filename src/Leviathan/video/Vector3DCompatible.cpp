@@ -18,6 +18,12 @@ namespace leviathan {
 
         Vector3DCompatible::Vector3DCompatible(const Vector3D&& other) : Vector3D(other) {}
 
+        Vector3DCompatible::Vector3DCompatible(const irr::core::vector3df& other)
+        : Vector3D({other.X, other.Y, other.Z}) {}
+
+        Vector3DCompatible::Vector3DCompatible(const irr::core::vector3df&& other)
+        : Vector3D({other.X, other.Y, other.Z}) {}
+
         Vector3DCompatible& Vector3DCompatible::operator=(const Vector3D& other) {
             x = other.x;
             y = other.y;

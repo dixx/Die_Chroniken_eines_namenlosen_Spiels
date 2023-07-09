@@ -21,8 +21,9 @@ namespace leviathan {
             irr::core::vector3df collisionPoint;
             irr::core::triangle3df collisionTriangle;
             irr::scene::ISceneNode* collisionNode =
-                mSceneManager->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(ray, collisionPoint,
-                    collisionTriangle, BITMASK_WALKABLE,  // Nur Szenenknoten mit entsprechenden Flags werden geprüft
+                mSceneManager->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(
+                    ray, collisionPoint, collisionTriangle,
+                    BITMASK_WALKABLE,  // Nur Szenenknoten mit entsprechenden Flags werden geprüft
                     rootNode,  // Nur dieser Szenenknoten und alle darunterliegenden werden geprüft
                     true  // Debug-Objekte nicht behandeln
                 );

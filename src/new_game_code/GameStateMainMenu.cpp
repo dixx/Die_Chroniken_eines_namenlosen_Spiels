@@ -32,8 +32,8 @@ GameStateMainMenu::GameStateMainMenu(leviathan::ILeviathanDevice& gameEngine) : 
     mGameEngine.MenuControl().addButton(L"Main Menu", L"Load Game", buttonConfig);
     buttonConfig.relativePositionInMenu.y += 284;
     mGameEngine.MenuControl().addButton(L"Main Menu", L"Main Menu - Quit", buttonConfig);
-    leviathan::characters::CharacterConfiguration config = {
-        "Anon", "Punk", {"gfx/sydney.md2", "gfx/sydney.bmp", {}, {0.f, 0.4f, 0.f}, {}, {0.025f, 0.025f, 0.025f}}};
+    leviathan::characters::CharacterConfiguration config = {"Anon", "Punk",
+        {"gfx/sydney.md2", "gfx/sydney.bmp", {}, {0.f, 0.4f, 0.f}, {}, {0.f, -90.f, 0.f}, {0.025f, 0.025f, 0.025f}}};
     mGameEngine.Heroes().create(config);
     mGameEngine.Heroes().activate("Punk");
 }

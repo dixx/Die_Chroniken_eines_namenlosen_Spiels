@@ -16,6 +16,14 @@ namespace leviathan {
             float z = 0;
         };
 
+        inline Vector3D operator+(Vector3D const& lhs, Vector3D const& rhs) {
+            return {lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z};
+        }
+
+        inline Vector3D operator-(Vector3D const& lhs, Vector3D const& rhs) {
+            return {lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z};
+        }
+
         /*! \brief Alias für eine 3D-Position.
          */
         using Position3D = Vector3D;

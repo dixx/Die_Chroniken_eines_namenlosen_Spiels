@@ -7,6 +7,8 @@
 
 #include <characters/IHero.h>
 #include <string>
+#include <video/Vector3D.h>
+#include <video/Vector3DCompatible.h>
 
 namespace leviathan {
     namespace world {
@@ -36,38 +38,30 @@ namespace leviathan {
             Hero& operator=(const Hero&) = delete;
             Hero& operator=(const Hero&&) = delete;
 
-            /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
-             */
             void enablePlayableCharacter() override;
 
-            /*! \brief Macht den spielbaren Szenenknoten des Helden unsichtbar.
-             */
             void disablePlayableCharacter() override;
 
-            /*! \brief Gibt den internen Namen des Helden zurück.
-             */
             const std::string getInternalName() const override;
 
-            /*! \brief Gibt die aktuelle Position zurück, relativ zum Welt-Hauptknoten.
-             */
             video::Position3D getPosition() const override;
 
-            /*! \brief Setzt die Position neu, relativ zum Welt-Hauptknoten.
-             *  \param position: gewünschte neue Position
-             */
             void setPosition(const video::Position3D& position) override;
 
-            /*! \brief Gibt den aktuellen Rotationsvektor zurück.
-             */
             video::Rotation3D getRotation() const override;
 
-            /*! \brief Setzt den Rotationsvektor neu.
-             *  \param rotation: gewünschte neue Rotation
-             */
             void setRotation(const video::Rotation3D& rotation) override;
+
+            void moveTo(const video::Position3D& position) override;
+
+            void update(const float elapsedSeconds) override;
 
         private:
             world::Character& mNode;
+            float mLocomotionSpeed = 3.2f;
+            video::Position3D mTargetPosition = video::Position3D({});
+            video::Vector3DCompatible mRotationOffset = video::Vector3DCompatible({});
+            bool mIsMoving = false;
         };
     }
 }

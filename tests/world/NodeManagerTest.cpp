@@ -21,9 +21,9 @@ TEST_CASE("NodeManager", "[integration]") {
         size, "path/to/textureFile");  // add a test texture to avoid getting a nullptr
     leviathan::characters::CharacterConfiguration heroConfig({"name", "internal name",
         {"path/to/meshFile", "path/to/textureFile", {1.f, 2.f, 3.f}, {11.f, 22.f, 33.f}, {0.f, 0.f, 0.f},
-            {2.f, 3.f, 4.f}}});
+            {0.f, 0.f, 0.f}, {2.f, 3.f, 4.f}}});
     leviathan::world::Node3DConfiguration tileConfig({"path/to/meshFile", "path/to/textureFile", {1.f, 2.f, 3.f},
-        {11.f, 22.f, 33.f}, {0.f, 0.f, 0.f}, {2.f, 3.f, 4.f}});
+        {11.f, 22.f, 33.f}, {0.f, 0.f, 0.f}, {0.f, 0.f, 0.f}, {2.f, 3.f, 4.f}});
     Mock<irr::video::ITexture> textureMock;
     Mock<irr::video::IVideoDriver> videoDriverMock;
     When(OverloadedMethod(videoDriverMock, getTexture, getTextureArgs)).AlwaysReturn(&textureMock.get());

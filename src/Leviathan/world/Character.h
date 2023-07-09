@@ -8,6 +8,7 @@
 
 #include <string>
 #include <video/Vector3D.h>
+#include <video/Vector3DCompatible.h>
 #include <world/INode3D.h>
 
 namespace irr {
@@ -61,6 +62,7 @@ namespace leviathan {
         private:
             video::Position3D mDesiredPosition = video::Position3D();
             video::Vector3D mOffset = video::Vector3D();
+            video::Rotation3DCompatible mRotationOffset = video::Rotation3DCompatible();
             irr::scene::IAnimatedMeshSceneNode* mCharacterNode = nullptr;
 
             void createNode(const characters::CharacterConfiguration& config, irr::scene::ISceneManager* sceneManager);

@@ -19,6 +19,7 @@ namespace leviathan {
             video::Position3D position = {0.f, 0.f, 0.f};
             video::Position3D offset = {0.f, 0.f, 0.f};
             video::Rotation3D rotation = {0.f, 0.f, 0.f};
+            video::Rotation3D rotationOffset = {0.f, 0.f, 0.f};
             video::Scale3D scale = {1.f, 1.f, 1.f};
         };
     }

@@ -50,6 +50,16 @@ namespace leviathan {
              *  \param rotation: gewünschte neue Rotationen in °
              */
             virtual void setRotation(const video::Rotation3D& rotation) = 0;
+
+            /*! \brief Setzt die Zielposition neu, relativ zum Welt-Hauptknoten.
+             *  \param position: gewünschte neue Position, zu welcher der Held sich bewegen soll
+             */
+            virtual void moveTo(const video::Position3D& position) = 0;
+
+            /*! \brief Aktualisiert Position des Helden, falls dieser sich bewegt.
+             *  \param elapsedSeconds: Dauer des letzten Frames, in Sekunden
+             */
+            virtual void update(const float elapsedSeconds) = 0;
         };
     }
 }

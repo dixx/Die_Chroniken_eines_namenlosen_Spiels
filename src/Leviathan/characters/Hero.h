@@ -59,8 +59,8 @@ namespace leviathan {
         private:
             world::Character& mNode;
             float mLocomotionSpeed = 3.2f;
-            video::Position3D mTargetPosition = video::Position3D({});
-            video::Vector3DCompatible mRotationOffset = video::Vector3DCompatible({});
+            video::Position3DCompatible mTargetPosition = video::Position3DCompatible({});
+            video::Rotation3DCompatible mRotationOffset = video::Rotation3DCompatible({});
             bool mIsMoving = false;
         };
     }

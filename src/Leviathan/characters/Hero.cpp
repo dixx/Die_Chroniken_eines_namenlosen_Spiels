@@ -41,8 +41,8 @@ namespace leviathan {
         void Hero::update(const float elapsedSeconds) {
             if (!mIsMoving) return;
 
-            video::Vector3D position = mNode.getPosition();
-            auto distanceLeft = video::Vector3DCompatible(mTargetPosition - position).toIrrlichtVector();
+            video::Position3DCompatible position = mNode.getPosition();
+            auto distanceLeft = (mTargetPosition - position).toIrrlichtVector();
             if (distanceLeft.equals({0.0f, 0.0f, 0.0f}, 0.3f)) {
                 mIsMoving = false;
                 mTargetPosition = position;
@@ -50,7 +50,7 @@ namespace leviathan {
             } else {
                 // move
                 auto nextStep = distanceLeft.setLength(mLocomotionSpeed * elapsedSeconds);
-                mNode.setPosition(position + video::Vector3DCompatible(nextStep));
+                mNode.setPosition(position + nextStep);
             }
         }
 
@@ -58,11 +58,11 @@ namespace leviathan {
             mTargetPosition = position;
             mIsMoving = true;
             // mNode.setMD2Animation( irr::scene::EMAT_RUN );
-            video::Vector3D currentPosition = mNode.getPosition();
-            auto direction = video::Vector3DCompatible(mTargetPosition - currentPosition).toIrrlichtVector();
+            video::Position3DCompatible currentPosition = mNode.getPosition();
+            auto direction = (mTargetPosition - currentPosition).toIrrlichtVector();
             direction.Y = 0.0f;
             auto rotation = direction.getHorizontalAngle();
-            mNode.setRotation(video::Vector3DCompatible(rotation));
+            mNode.setRotation(video::Rotation3DCompatible(rotation));
         }
     }
 }

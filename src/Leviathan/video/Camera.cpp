@@ -9,7 +9,7 @@
 namespace leviathan {
     namespace video {
         Camera::Camera(irr::scene::ISceneManager* sceneManager, core::Configuration& config)
-        : mCamera(sceneManager->addCameraSceneNode(0, mOffset)) {
+        : mCamera(sceneManager->addCameraSceneNode(0, mOffset.toIrrlichtVector())) {
             mCamera->setFarValue(config.getFarValue());
             mCamera->setNearValue(0.1f);
             mCamera->setFOV(1.f);
@@ -20,7 +20,7 @@ namespace leviathan {
         }
 
         void Camera::setTargetPosition(const Position3D& targetPosition) {
-            mTargetPosition.set(targetPosition.x, targetPosition.y, targetPosition.z);
+            mTargetPosition = targetPosition;
         }
 
         void Camera::setRotationSpeed(const float rotationSpeed) {
@@ -32,7 +32,7 @@ namespace leviathan {
         }
 
         void Camera::setMovementSpeed(const Vector3D& movementSpeed) {
-            mMovementSpeed.set(movementSpeed.x, movementSpeed.y, movementSpeed.z);
+            mMovementSpeed = movementSpeed;
         }
 
         void Camera::enableMovement(const bool isMoving) {
@@ -51,13 +51,13 @@ namespace leviathan {
                 mTargetPosition += direction;
             }
 
-            mCamera->setPosition(mTargetPosition + mOffset);
+            mCamera->setPosition((mTargetPosition + mOffset).toIrrlichtVector());
             mCamera->updateAbsolutePosition();
-            mCamera->setTarget(mTargetPosition);
+            mCamera->setTarget(mTargetPosition.toIrrlichtVector());
         }
 
         Position3D Camera::getPosition() const {
-            return Position3D({mTargetPosition.X, mTargetPosition.Y, mTargetPosition.Z});
+            return mTargetPosition;
         }
 
         void Camera::setPosition(const Position3D& position) {

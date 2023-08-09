@@ -7,62 +7,62 @@
 namespace leviathan {
     namespace characters {
         Hero::Hero(const CharacterConfiguration& characterConfig, world::NodeManager& nodeManager)
-        : mNode(nodeManager.createHeroNode(characterConfig)) {}
+        : mCharacterNode(nodeManager.createHeroNode(characterConfig)) {}
 
         void Hero::enablePlayableCharacter() {
-            mNode.setVisible();
+            mCharacterNode.setVisible();
         }
 
         void Hero::disablePlayableCharacter() {
-            mNode.setInvisible();
+            mCharacterNode.setInvisible();
         }
 
         const std::string Hero::getInternalName() const {
-            return mNode.getName();
+            return mCharacterNode.getName();
         }
 
         video::Position3D Hero::getPosition() const {
-            return mNode.getPosition();
+            return mCharacterNode.getPosition();
         }
 
         void Hero::setPosition(const video::Position3D& position) {
-            mNode.setPosition(position);
+            mCharacterNode.setPosition(position);
             mTargetPosition = position;
         }
 
         video::Rotation3D Hero::getRotation() const {
-            return mNode.getRotation();
+            return mCharacterNode.getRotation();
         }
 
         void Hero::setRotation(const video::Rotation3D& rotation) {
-            mNode.setRotation(rotation);
+            mCharacterNode.setRotation(rotation);
         }
 
         void Hero::update(const float elapsedSeconds) {
             if (!mIsMoving) return;
 
-            video::Position3DCompatible position = mNode.getPosition();
+            video::Position3DCompatible position = mCharacterNode.getPosition();
             auto distanceLeft = (mTargetPosition - position).toIrrlichtVector();
             if (distanceLeft.equals({0.0f, 0.0f, 0.0f}, 0.3f)) {
                 mIsMoving = false;
                 mTargetPosition = position;
-                // mNode.setMD2Animation( irr::scene::EMAT_STAND );
+                // mCharacterNode.setMD2Animation( irr::scene::EMAT_STAND );
             } else {
                 // move
                 auto nextStep = distanceLeft.setLength(mLocomotionSpeed * elapsedSeconds);
-                mNode.setPosition(position + nextStep);
+                mCharacterNode.setPosition(position + nextStep);
             }
         }
 
         void Hero::moveTo(const video::Position3D& position) {
             mTargetPosition = position;
             mIsMoving = true;
-            // mNode.setMD2Animation( irr::scene::EMAT_RUN );
-            video::Position3DCompatible currentPosition = mNode.getPosition();
+            // mCharacterNode.setMD2Animation( irr::scene::EMAT_RUN );
+            video::Position3DCompatible currentPosition = mCharacterNode.getPosition();
             auto direction = (mTargetPosition - currentPosition).toIrrlichtVector();
             direction.Y = 0.0f;
             auto rotation = direction.getHorizontalAngle();
-            mNode.setRotation(video::Rotation3DCompatible(rotation));
+            mCharacterNode.setRotation(video::Rotation3DCompatible(rotation));
         }
     }
 }

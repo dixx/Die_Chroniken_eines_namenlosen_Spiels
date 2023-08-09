@@ -27,6 +27,7 @@ target_sources(${PROJECT_NAME}
     video/GraphicEngine.cpp
     video/MeshHelper.cpp
     video/Textures.cpp
+    video/Vector3D.cpp
     video/Vector3DCompatible.cpp
     world/Character.cpp
     world/Collider.cpp

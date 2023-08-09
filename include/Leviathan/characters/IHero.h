@@ -6,6 +6,7 @@
 #define LEVIATHAN_PUBLIC_INTERFACES_CHARACTERS_IHERO_H
 
 #include <string>
+#include <video/IPositionable.h>
 
 namespace leviathan {
     namespace video {
@@ -18,7 +19,7 @@ namespace leviathan {
         /*! \interface IHero
          *  \brief Diese Schnittstelle bietet Zugriff auf einen Helden.
          */
-        struct IHero {
+        struct IHero : video::IPositionable {
             virtual ~IHero() {}
 
             /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
@@ -32,15 +33,6 @@ namespace leviathan {
             /*! \brief Gibt den internen Namen des Helden zurück.
              */
             virtual const std::string getInternalName() const = 0;
-
-            /*! \brief Gibt die aktuelle Position zurück, relativ zum Welt-Hauptknoten.
-             */
-            virtual video::Position3D getPosition() const = 0;
-
-            /*! \brief Setzt die Position neu, relativ zum Welt-Hauptknoten.
-             *  \param position: gewünschte neue Position
-             */
-            virtual void setPosition(const video::Position3D& position) = 0;
 
             /*! \brief Gibt die aktuellen Rotationswerte zurück.
              */

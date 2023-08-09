@@ -19,11 +19,11 @@ namespace leviathan {
         struct IPositionable {
             virtual ~IPositionable() {}
 
-            /*! \brief Gibt die aktuelle Position des Objeckts zurück.
+            /*! \brief Gibt die aktuelle Position des Objeckts zurück, relativ zum Welt-Hauptknoten.
              */
             virtual Position3D getPosition() const = 0;
 
-            /*! \brief Setzt die neue Position des Objekts.
+            /*! \brief Setzt die neue Position des Objekts, relativ zum Welt-Hauptknoten.
              *  \param position: neue Position
              */
             virtual void setPosition(const Position3D& position) = 0;

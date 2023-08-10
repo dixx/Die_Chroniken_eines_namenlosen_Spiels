@@ -7,62 +7,49 @@
 namespace leviathan {
     namespace characters {
         Hero::Hero(const CharacterConfiguration& characterConfig, world::NodeManager& nodeManager)
-        : mNode(nodeManager.createHeroNode(characterConfig)) {}
+        : mCharacterNode(nodeManager.createHeroNode(characterConfig)) {}
 
         void Hero::enablePlayableCharacter() {
-            mNode.setVisible();
+            mCharacterNode.setVisible();
         }
 
         void Hero::disablePlayableCharacter() {
-            mNode.setInvisible();
+            mCharacterNode.setInvisible();
         }
 
         const std::string Hero::getInternalName() const {
-            return mNode.getName();
+            return mCharacterNode.getName();
         }
 
         video::Position3D Hero::getPosition() const {
-            return mNode.getPosition();
+            return mCharacterNode.getPosition();
         }
 
         void Hero::setPosition(const video::Position3D& position) {
-            mNode.setPosition(position);
-            mTargetPosition = position;
+            mCharacterNode.setPosition(position);
         }
 
         video::Rotation3D Hero::getRotation() const {
-            return mNode.getRotation();
+            return mCharacterNode.getRotation();
         }
 
         void Hero::setRotation(const video::Rotation3D& rotation) {
-            mNode.setRotation(rotation);
+            mCharacterNode.setRotation(rotation);
         }
 
-        void Hero::update(const float elapsedSeconds) {
-            if (!mIsMoving) return;
-
-            video::Vector3D position = mNode.getPosition();
-            auto distanceLeft = video::Vector3DCompatible(mTargetPosition - position).toIrrlichtVector();
-            if (distanceLeft.equals({0.0f, 0.0f, 0.0f}, 0.3f)) {
+        void Hero::setIsMoving(const bool isMoving) {
+            if (isMoving && !mIsMoving) {
+                mCharacterNode.setRunningAnimation();
+                mIsMoving = true;
+            }
+            if (!isMoving && mIsMoving) {
+                mCharacterNode.setStandingAnimation();
                 mIsMoving = false;
-                mTargetPosition = position;
-                // mNode.setMD2Animation( irr::scene::EMAT_STAND );
-            } else {
-                // move
-                auto nextStep = distanceLeft.setLength(mLocomotionSpeed * elapsedSeconds);
-                mNode.setPosition(position + video::Vector3DCompatible(nextStep));
             }
         }
 
-        void Hero::moveTo(const video::Position3D& position) {
-            mTargetPosition = position;
-            mIsMoving = true;
-            // mNode.setMD2Animation( irr::scene::EMAT_RUN );
-            video::Vector3D currentPosition = mNode.getPosition();
-            auto direction = video::Vector3DCompatible(mTargetPosition - currentPosition).toIrrlichtVector();
-            direction.Y = 0.0f;
-            auto rotation = direction.getHorizontalAngle();
-            mNode.setRotation(video::Vector3DCompatible(rotation));
+        void Hero::update(const float elapsedSeconds) {
+            (void)elapsedSeconds;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace leviathan {
             mTileNode = mSceneManager->addMeshSceneNode(mesh);
             mTileNode->setID(NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
             mTileNode->setParent(mSceneManager->getSceneNodeFromName("walkableNodes"));
-            video::Vector3DCompatible position = tileConfig.position;
+            video::Position3DCompatible position = tileConfig.position;
             mTileNode->setPosition(position.toIrrlichtVector());
             defineAppearance(tileConfig.textureFileName.c_str());
             addTriangleSelector();
@@ -41,8 +41,8 @@ namespace leviathan {
 
         void GroundTile::transformMesh(irr::scene::IMesh* mesh, const Node3DConfiguration& tileConfig) {
             video::Vector3DCompatible offset = tileConfig.offset;
-            video::Vector3DCompatible rotation = tileConfig.rotation;
-            video::Vector3DCompatible scale = tileConfig.scale;
+            video::Rotation3DCompatible rotation = tileConfig.rotation;
+            video::Scale3DCompatible scale = tileConfig.scale;
             irr::core::matrix4 matrix = irr::core::matrix4();
             matrix.setTranslation(offset.toIrrlichtVector());
             matrix.setRotationDegrees(rotation.toIrrlichtVector());

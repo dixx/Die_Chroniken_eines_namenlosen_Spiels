@@ -36,7 +36,7 @@ namespace leviathan {
         }
 
         void Character::setPosition(const video::Position3D& position) {
-            mCharacterNode->setPosition(video::Vector3DCompatible(position + mOffset).toIrrlichtVector());
+            mCharacterNode->setPosition(video::Position3DCompatible(position + mOffset).toIrrlichtVector());
             mCharacterNode->updateAbsolutePosition();
         }
 
@@ -63,7 +63,15 @@ namespace leviathan {
         }
 
         void Character::setRotation(const video::Rotation3D& rotation) {
-            mCharacterNode->setRotation(video::Vector3DCompatible(rotation + mRotationOffset).toIrrlichtVector());
+            mCharacterNode->setRotation(video::Rotation3DCompatible(rotation + mRotationOffset).toIrrlichtVector());
+        }
+
+        void Character::setRunningAnimation() {
+            mCharacterNode->setMD2Animation(irr::scene::EMAT_RUN);
+        }
+
+        void Character::setStandingAnimation() {
+            mCharacterNode->setMD2Animation(irr::scene::EMAT_STAND);
         }
 
         /* private */
@@ -76,7 +84,7 @@ namespace leviathan {
         }
 
         void Character::setScale(const video::Scale3D& scale) {
-            mCharacterNode->setScale(video::Vector3DCompatible(scale).toIrrlichtVector());
+            mCharacterNode->setScale(video::Scale3DCompatible(scale).toIrrlichtVector());
         }
     }
 }

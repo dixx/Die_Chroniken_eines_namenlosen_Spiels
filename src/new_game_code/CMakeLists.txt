@@ -6,6 +6,7 @@ add_executable(neues_spiel
   GameStateMainMenu.cpp
   GameStatePlay.cpp
   GameStateShutdown.cpp
+  HeroMover.cpp
   main.cpp
   ${PUBLIC_HEADER_FILES}
 )

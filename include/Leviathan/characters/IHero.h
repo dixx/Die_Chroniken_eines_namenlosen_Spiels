@@ -6,11 +6,11 @@
 #define LEVIATHAN_PUBLIC_INTERFACES_CHARACTERS_IHERO_H
 
 #include <string>
+#include <video/IPositionable.h>
 
 namespace leviathan {
     namespace video {
         struct Vector3D;
-        using Position3D = Vector3D;
         using Rotation3D = Vector3D;
     }
 
@@ -18,7 +18,7 @@ namespace leviathan {
         /*! \interface IHero
          *  \brief Diese Schnittstelle bietet Zugriff auf einen Helden.
          */
-        struct IHero {
+        struct IHero : video::IPositionable {
             virtual ~IHero() {}
 
             /*! \brief Macht den spielbaren Szenenknoten des Helden sichtbar.
@@ -33,15 +33,6 @@ namespace leviathan {
              */
             virtual const std::string getInternalName() const = 0;
 
-            /*! \brief Gibt die aktuelle Position zurück, relativ zum Welt-Hauptknoten.
-             */
-            virtual video::Position3D getPosition() const = 0;
-
-            /*! \brief Setzt die Position neu, relativ zum Welt-Hauptknoten.
-             *  \param position: gewünschte neue Position
-             */
-            virtual void setPosition(const video::Position3D& position) = 0;
-
             /*! \brief Gibt die aktuellen Rotationswerte zurück.
              */
             virtual video::Rotation3D getRotation() const = 0;
@@ -51,12 +42,12 @@ namespace leviathan {
              */
             virtual void setRotation(const video::Rotation3D& rotation) = 0;
 
-            /*! \brief Setzt die Zielposition neu, relativ zum Welt-Hauptknoten.
-             *  \param position: gewünschte neue Position, zu welcher der Held sich bewegen soll
+            /*! \brief Setzt den Bewegungszustand des Helden.
+             *  \param isMoving: Held bewegt sich, solange dieser Wert auf `true` gesetzt ist.
              */
-            virtual void moveTo(const video::Position3D& position) = 0;
+            virtual void setIsMoving(const bool isMoving) = 0;
 
-            /*! \brief Aktualisiert Position des Helden, falls dieser sich bewegt.
+            /*! \brief Aktualisiert den Helden.
              *  \param elapsedSeconds: Dauer des letzten Frames, in Sekunden
              */
             virtual void update(const float elapsedSeconds) = 0;

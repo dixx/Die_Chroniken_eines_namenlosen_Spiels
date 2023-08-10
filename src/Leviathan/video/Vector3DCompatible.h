@@ -23,7 +23,25 @@ namespace leviathan {
             Vector3DCompatible(const Vector3D&& other);
             Vector3DCompatible(const irr::core::vector3df& other);
             Vector3DCompatible(const irr::core::vector3df&& other);
+
+            Vector3DCompatible& operator=(const Vector3DCompatible& other);
             Vector3DCompatible& operator=(const Vector3D& other);
+            Vector3DCompatible& operator=(const irr::core::vector3df& other);
+
+            Vector3DCompatible operator+(const Vector3DCompatible& other);
+            Vector3DCompatible operator+(const Vector3D& other);
+            Vector3DCompatible operator+(const irr::core::vector3df& other);
+            Vector3DCompatible& operator+=(const Vector3DCompatible& other);
+            Vector3DCompatible& operator+=(const Vector3D& other);
+            Vector3DCompatible& operator+=(const irr::core::vector3df& other);
+
+            Vector3DCompatible operator-(const Vector3DCompatible& other);
+            Vector3DCompatible operator-(const Vector3D& other);
+            Vector3DCompatible operator-(const irr::core::vector3df& other);
+
+            Vector3DCompatible operator*(float multiplier);
+
+            void rotateXZBy(float angle);
 
             irr::core::vector3df toIrrlichtVector() const;
         };

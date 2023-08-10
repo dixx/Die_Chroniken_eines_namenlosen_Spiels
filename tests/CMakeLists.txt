@@ -22,6 +22,7 @@ add_executable(unit_tests
   video/CameraTest.cpp
   video/GraphicEngineTest.cpp
   video/TexturesTest.cpp
+  video/Vector3DTest.cpp
   video/Vector3DCompatibleTest.cpp
   world/ColliderTest.cpp
   world/GroundTest.cpp

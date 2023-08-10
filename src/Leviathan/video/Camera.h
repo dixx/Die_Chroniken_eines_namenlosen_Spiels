@@ -60,12 +60,12 @@ namespace leviathan {
 
         private:
             irr::scene::ICameraSceneNode* mCamera = nullptr;
-            irr::core::vector3df mTargetPosition = irr::core::vector3df();
-            irr::core::vector3df mOffset = irr::core::vector3df(0.f, 15.f, -3.f);
+            video::Position3DCompatible mTargetPosition = video::Position3DCompatible({});
+            video::Vector3DCompatible mOffset = video::Vector3DCompatible({0.f, 15.f, -3.f});
             float mRotation = 0.f;
             float mRotationSpeed = 0.f;
             bool mIsRotating = false;
-            irr::core::vector3df mMovementSpeed = irr::core::vector3df();
+            video::Vector3DCompatible mMovementSpeed = video::Vector3DCompatible({});
             bool mIsMoving = false;
         };
     }

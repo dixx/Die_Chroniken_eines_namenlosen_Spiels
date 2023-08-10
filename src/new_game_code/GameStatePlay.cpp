@@ -15,18 +15,17 @@
 #include <world/Node3DConfiguration.h>
 
 GameStatePlay::GameStatePlay(leviathan::ILeviathanDevice& gameEngine)
-: mGameEngine(gameEngine), mCameraMover(mGameEngine.Actions()) {
+: mGameEngine(gameEngine), mCameraMover(mGameEngine.Actions()), mHeroMover(mGameEngine) {
     mGameEngine.MousePointerControl().addMousePointer(2001, {"gfx/Mauszeiger.bmp", {{0, 61}, {60, 120}}, {30, 30}});
 }
 
 GameStatePlay::~GameStatePlay() {
     mGameEngine.Actions().unsubscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
-    mGameEngine.Actions().unsubscribe(*this, actions::TARGET_SELECTED);
 }
 
 void GameStatePlay::update(const float elapsedSeconds) {
     moveCamera(elapsedSeconds);
-    mGameEngine.Heroes().getActiveHero().update(elapsedSeconds);
+    moveHero(elapsedSeconds);
 }
 
 void GameStatePlay::draw() {
@@ -34,18 +33,6 @@ void GameStatePlay::draw() {
 }
 
 void GameStatePlay::onAction(const leviathan::input::Action action) {
-    if (action.id == actions::TARGET_SELECTED) {
-        if (action.isActive) {
-            // action started
-            leviathan::world::Collision collision = mGameEngine.Collider().getCollisionFromScreenCoordinates(
-                mGameEngine.MousePointerControl().getPosition());
-            if (collision.happened) {
-                mGameEngine.Heroes().getActiveHero().moveTo(collision.collisionPoint);
-            }
-        } else {
-            // action ended
-        }
-    }
     if (action.id == actions::OPEN_IN_GAME_OPTIONS && action.isActive) {
         mGameEngine.GameStateManager().transitTo(STATE_LOADER);
     }
@@ -53,17 +40,17 @@ void GameStatePlay::onAction(const leviathan::input::Action action) {
 
 void GameStatePlay::setActive() {
     mGameEngine.Actions().subscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
-    mGameEngine.Actions().subscribe(*this, actions::TARGET_SELECTED);
     mGameEngine.Heroes().getActiveHero().enablePlayableCharacter();
     mGameEngine.MousePointerControl().setActiveMousPointer(2001);
     mCameraMover.reactToInput();
+    mHeroMover.reactToInput();
 }
 
 void GameStatePlay::setInactive() {
     mGameEngine.Heroes().getActiveHero().disablePlayableCharacter();
     mGameEngine.Actions().unsubscribe(*this, actions::OPEN_IN_GAME_OPTIONS);
-    mGameEngine.Actions().unsubscribe(*this, actions::TARGET_SELECTED);
     mCameraMover.ignoreInput();
+    mHeroMover.ignoreInput();
 }
 
 /* private */
@@ -77,4 +64,13 @@ void GameStatePlay::moveCamera(const float elapsedSeconds) {
         mGameEngine.Camera().update(elapsedSeconds);
         mGameEngine.Ground().adjustHeightOf(mGameEngine.Camera());
     }
+}
+
+void GameStatePlay::moveHero(const float elapsedSeconds) {
+    leviathan::characters::IHero& hero = mGameEngine.Heroes().getActiveHero();
+    mHeroMover.update(elapsedSeconds, hero.getPosition());
+    hero.setPosition(mHeroMover.getPosition());
+    hero.setRotation(mHeroMover.getRotation());
+    hero.setIsMoving(mHeroMover.isMoving());
+    hero.update(elapsedSeconds);
 }

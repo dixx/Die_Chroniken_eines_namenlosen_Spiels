@@ -5,9 +5,11 @@
 #include <video/Position2D.h>
 #include <world/Collision.h>
 #include <world/ICollider.h>
+#include <world/IGround.h>
 
 HeroMover::HeroMover(leviathan::ILeviathanDevice& gameEngine)
-: mActions(gameEngine.Actions()), mCollider(gameEngine.Collider()), mMousePointer(gameEngine.MousePointerControl()) {}
+: mActions(gameEngine.Actions()), mCollider(gameEngine.Collider()), mGround(gameEngine.Ground()),
+  mMousePointer(gameEngine.MousePointerControl()) {}
 
 HeroMover::~HeroMover() {
     ignoreInput();
@@ -42,6 +44,7 @@ void HeroMover::update(const float elapsedSeconds, const leviathan::video::Posit
         // move
         distanceLeft.setLength(mLocomotionSpeed * elapsedSeconds);
         mPosition = currentPosition + distanceLeft;
+        mPosition.y = mGround.getHeight(mPosition);
         distanceLeft.y = 0.0f;  // Hero should not lean away from the target
         mRotation = distanceLeft.getHorizontalAngle();
     }

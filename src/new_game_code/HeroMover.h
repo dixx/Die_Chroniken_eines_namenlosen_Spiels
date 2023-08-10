@@ -14,6 +14,7 @@ namespace leviathan {
     }
     namespace world {
         struct ICollider;
+        struct IGround;
     }
 }
 
@@ -49,6 +50,7 @@ private:
     float mLocomotionSpeed = 3.2f;  // virtual units per second
     leviathan::input::IActions& mActions;
     leviathan::world::ICollider& mCollider;
+    leviathan::world::IGround& mGround;
     leviathan::gui::IMousePointerControl& mMousePointer;
     leviathan::video::Position3D mPosition = leviathan::video::Position3D({});
     leviathan::video::Position3D mTargetPosition = leviathan::video::Position3D({});

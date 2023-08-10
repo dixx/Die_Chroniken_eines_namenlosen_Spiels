@@ -52,11 +52,14 @@ namespace leviathan {
 
             void setRotation(const video::Rotation3D& rotation) override;
 
+            void setIsMoving(const bool isMoving) override;
+
             void update(const float elapsedSeconds) override;
 
         private:
             world::Character& mCharacterNode;
             video::Rotation3DCompatible mRotationOffset = video::Rotation3DCompatible({});
+            bool mIsMoving = false;
         };
     }
 }

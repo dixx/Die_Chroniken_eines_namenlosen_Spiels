@@ -66,6 +66,14 @@ namespace leviathan {
             mCharacterNode->setRotation(video::Rotation3DCompatible(rotation + mRotationOffset).toIrrlichtVector());
         }
 
+        void Character::setRunningAnimation() {
+            mCharacterNode->setMD2Animation(irr::scene::EMAT_RUN);
+        }
+
+        void Character::setStandingAnimation() {
+            mCharacterNode->setMD2Animation(irr::scene::EMAT_STAND);
+        }
+
         /* private */
 
         void Character::createNode(

@@ -71,5 +71,6 @@ void GameStatePlay::moveHero(const float elapsedSeconds) {
     mHeroMover.update(elapsedSeconds, hero.getPosition());
     hero.setPosition(mHeroMover.getPosition());
     hero.setRotation(mHeroMover.getRotation());
+    hero.setIsMoving(mHeroMover.isMoving());
     hero.update(elapsedSeconds);
 }

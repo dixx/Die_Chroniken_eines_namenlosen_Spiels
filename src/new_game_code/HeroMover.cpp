@@ -58,6 +58,10 @@ leviathan::video::Rotation3D HeroMover::getRotation() const {
     return mRotation;
 }
 
+bool HeroMover::isMoving() const {
+    return mIsMoving;
+}
+
 void HeroMover::ignoreInput() {
     mActions.unsubscribe(*this, TARGET_SELECTED);
 }

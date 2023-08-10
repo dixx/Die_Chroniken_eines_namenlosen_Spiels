@@ -59,6 +59,10 @@ namespace leviathan {
 
             void setRotation(const video::Rotation3D& rotation);
 
+            void setRunningAnimation();
+
+            void setStandingAnimation();
+
         private:
             video::Position3DCompatible mDesiredPosition = video::Position3DCompatible();
             video::Vector3DCompatible mOffset = video::Vector3DCompatible();

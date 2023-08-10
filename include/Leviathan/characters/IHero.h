@@ -42,7 +42,12 @@ namespace leviathan {
              */
             virtual void setRotation(const video::Rotation3D& rotation) = 0;
 
-            /*! \brief Aktualisiert Position des Helden, falls dieser sich bewegt.
+            /*! \brief Setzt den Bewegungszustand des Helden.
+             *  \param isMoving: Held bewegt sich, solange dieser Wert auf `true` gesetzt ist.
+             */
+            virtual void setIsMoving(const bool isMoving) = 0;
+
+            /*! \brief Aktualisiert den Helden.
              *  \param elapsedSeconds: Dauer des letzten Frames, in Sekunden
              */
             virtual void update(const float elapsedSeconds) = 0;

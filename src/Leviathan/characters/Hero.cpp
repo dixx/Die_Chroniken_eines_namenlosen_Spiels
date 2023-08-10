@@ -37,10 +37,19 @@ namespace leviathan {
             mCharacterNode.setRotation(rotation);
         }
 
+        void Hero::setIsMoving(const bool isMoving) {
+            if (isMoving && !mIsMoving) {
+                mCharacterNode.setRunningAnimation();
+                mIsMoving = true;
+            }
+            if (!isMoving && mIsMoving) {
+                mCharacterNode.setStandingAnimation();
+                mIsMoving = false;
+            }
+        }
+
         void Hero::update(const float elapsedSeconds) {
             (void)elapsedSeconds;
-            //     // mCharacterNode.setMD2Animation( irr::scene::EMAT_STAND );
-            //     // mCharacterNode.setMD2Animation( irr::scene::EMAT_RUN );
         }
     }
 }

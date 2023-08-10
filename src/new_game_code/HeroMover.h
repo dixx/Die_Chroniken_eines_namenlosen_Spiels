@@ -41,6 +41,8 @@ public:
 
     leviathan::video::Rotation3D getRotation() const;
 
+    bool isMoving() const;
+
     void ignoreInput();
 
     void reactToInput();

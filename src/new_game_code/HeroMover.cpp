@@ -19,14 +19,11 @@ void HeroMover::onAction(const leviathan::input::Action action) {
     if (action.id == TARGET_SELECTED) {
         if (action.isActive) {
             // action started
-            leviathan::world::Collision collision = mCollider.getCollisionFromScreenCoordinates(
-                mMousePointer.getPosition());
-            if (collision.happened) {
-                mTargetPosition = collision.collisionPoint;
-                mIsMoving = true;
-            }
+            mIsActionOngoing = true;
+            mIsMoving = true;
         } else {
             // action ended
+            mIsActionOngoing = false;
         }
     }
 }
@@ -34,6 +31,14 @@ void HeroMover::onAction(const leviathan::input::Action action) {
 void HeroMover::update(const float elapsedSeconds, const leviathan::video::Position3D& currentPosition) {
     mPosition = currentPosition;
     if (!mIsMoving) return;
+
+    if (mIsActionOngoing) {
+        leviathan::world::Collision collision = mCollider.getCollisionFromScreenCoordinates(
+            mMousePointer.getPosition());
+        if (collision.happened) {
+            mTargetPosition = collision.collisionPoint;
+        }
+    }
 
     auto distanceLeft = mTargetPosition - currentPosition;
     if (distanceLeft.equals({0.0f, 0.0f, 0.0f}, 0.3f)) {

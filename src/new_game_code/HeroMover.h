@@ -58,6 +58,7 @@ private:
     leviathan::video::Position3D mTargetPosition = leviathan::video::Position3D({});
     leviathan::video::Rotation3D mRotation = leviathan::video::Rotation3D({});
     bool mIsMoving = false;
+    bool mIsActionOngoing = false;
 };
 
 #endif

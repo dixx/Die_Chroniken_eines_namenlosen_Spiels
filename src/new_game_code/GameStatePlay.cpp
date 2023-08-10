@@ -26,7 +26,6 @@ GameStatePlay::~GameStatePlay() {
 void GameStatePlay::update(const float elapsedSeconds) {
     moveCamera(elapsedSeconds);
     moveHero(elapsedSeconds);
-    mGameEngine.Heroes().getActiveHero().update(elapsedSeconds);
 }
 
 void GameStatePlay::draw() {
@@ -71,5 +70,7 @@ void GameStatePlay::moveHero(const float elapsedSeconds) {
     leviathan::characters::IHero& hero = mGameEngine.Heroes().getActiveHero();
     mHeroMover.update(elapsedSeconds, hero.getPosition());
     hero.setPosition(mHeroMover.getPosition());
+    mGameEngine.Ground().adjustHeightOf(hero);
     hero.setRotation(mHeroMover.getRotation());
+    hero.update(elapsedSeconds);
 }

@@ -17,7 +17,6 @@
 using namespace fakeit;
 
 #define getTextureArgs irr::video::ITexture*(const irr::io::path&)
-#define MAX_ROUNDING_ERROR 0.000001
 
 TEST_CASE("Hero", "[integration]") {
     auto name = std::to_string(TestHelper::getUniqueId()).c_str();
@@ -63,22 +62,5 @@ TEST_CASE("Hero", "[integration]") {
         REQUIRE(sceneNode->isVisible());
         subject.disablePlayableCharacter();
         REQUIRE_FALSE(sceneNode->isVisible());
-    }
-    SECTION("can move towards a set position") {
-        subject.setPosition({0.0f, 0.0f, 0.0f});
-        subject.setRotation({0.0f, 0.0f, 0.0f});
-        subject.moveTo({1.0f, 0.0f, 1.0f});
-
-        REQUIRE(subject.getPosition() == leviathan::video::Position3D({0.0f, 0.0f, 0.0f}));
-        REQUIRE_THAT(subject.getRotation().x, Catch::Matchers::WithinAbs(0.0, MAX_ROUNDING_ERROR));
-        REQUIRE_THAT(subject.getRotation().y, Catch::Matchers::WithinAbs(45.0, MAX_ROUNDING_ERROR));
-        REQUIRE_THAT(subject.getRotation().z, Catch::Matchers::WithinAbs(0.0, MAX_ROUNDING_ERROR));
-
-        SECTION("when updated") {
-            subject.update(1.0f);
-            REQUIRE_THAT(subject.getPosition().x, Catch::Matchers::WithinAbs(2.2627416, MAX_ROUNDING_ERROR));
-            REQUIRE_THAT(subject.getPosition().y, Catch::Matchers::WithinAbs(0.0, MAX_ROUNDING_ERROR));
-            REQUIRE_THAT(subject.getPosition().z, Catch::Matchers::WithinAbs(2.2627416, MAX_ROUNDING_ERROR));
-        }
     }
 }

@@ -4,8 +4,8 @@ set(IRRLICHT_SOURCES_DIR "${IRRLICHT_DIR}/src/Irrlicht") # this is a workaround 
 set(IRRLICHT_INCLUDE_DIRS ${IRRLICHT_INCLUDE_DIR} ${IRRLICHT_SOURCES_DIR})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES Windows)
-  set(IRRLICHT_LIBRARY "${IRRLICHT_DIR}/lib/Win32-gcc/libIrrlicht.a")
-  set(IRRLICHT_BINARY_LIBRARY "${IRRLICHT_DIR}/bin/Win32-gcc/Irrlicht.dll")
+  set(IRRLICHT_LIBRARY "${IRRLICHT_DIR}/lib/Win64-visualStudio/Irrlicht.lib")
+  set(IRRLICHT_BINARY_LIBRARY "${IRRLICHT_DIR}/bin/Win64-VisualStudio/Irrlicht.dll")
 endif(${CMAKE_SYSTEM_NAME} MATCHES Windows)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES Linux)

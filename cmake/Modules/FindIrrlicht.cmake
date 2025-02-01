@@ -1,4 +1,4 @@
-set(IRRLICHT_DIR "${3RDPARTY_DIR}/irrlicht-1.8.4")
+set(IRRLICHT_DIR "${3RDPARTY_DIR}/irrlicht-1.8.5")
 set(IRRLICHT_INCLUDE_DIR "${IRRLICHT_DIR}/include")
 set(IRRLICHT_SOURCES_DIR "${IRRLICHT_DIR}/src/Irrlicht") # this is a workaround for an Irrlicht issue with ShadowVolumeSceneNodes
 set(IRRLICHT_INCLUDE_DIRS ${IRRLICHT_INCLUDE_DIR} ${IRRLICHT_SOURCES_DIR})

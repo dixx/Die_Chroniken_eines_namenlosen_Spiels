@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9.2)
+cmake_minimum_required(VERSION 3.31.0)
 project("Die Chroniken eines namenlosen Spiels" VERSION 0.5.1 LANGUAGES CXX)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -8,7 +8,7 @@ message("Build mode: ${CMAKE_BUILD_TYPE}")
 set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
 set(CMAKE_INSTALL_MESSAGE LAZY)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake" "${PROJECT_SOURCE_DIR}/cmake/Modules")
-set(3RDPARTY_DIR "${PROJECT_SOURCE_DIR}/external")
+set(3RDPARTY_DIR "${PROJECT_SOURCE_DIR}/../external_libs")
 set(RESOURCES_DIR "${PROJECT_SOURCE_DIR}/data")
 
 set(PUBLIC_INTERFACES "${PROJECT_SOURCE_DIR}/include/Leviathan")

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9.2)
+cmake_minimum_required(VERSION 3.31.0)
 project(leviathan DESCRIPTION "The Leviathan game engine." VERSION 0.5.1 LANGUAGES CXX)
 include_directories("${IRRLICHT_INCLUDE_DIRS}" "${YAML_INCLUDE_DIRS}" "${PUBLIC_INTERFACES}")
 add_library(${PROJECT_NAME} SHARED)

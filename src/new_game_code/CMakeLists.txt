@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.31.0)
 include_directories("${PUBLIC_INTERFACES}")
 
 add_executable(neues_spiel

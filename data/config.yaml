@@ -9,7 +9,7 @@ video:
   color_depth: 32
   fullscreen: False
   # drivers: DIRECT3D8, DIRECT3D9, OPENGL, SOFTWARE (slow!), BURNINGSVIDEO, NULL
-  driver: DIRECT3D9
+  driver: OPENGL
   max_fps: 60
 
 camera:

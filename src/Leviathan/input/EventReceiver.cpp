@@ -8,7 +8,7 @@ namespace leviathan {
             if (mSubscriptions[event.EventType].size() == 0) return false;
             bool processed = false;
             // we iterate in reverse, because mSubscriptions can shrink while being iterated
-            for (uint32_t it = mSubscriptions[event.EventType].size(); it != 0; it--) {
+            for (auto it = mSubscriptions[event.EventType].size(); it != 0; it--) {
                 if (mSubscriptions[event.EventType][it - 1]->onEvent(event)) {
                     processed = true;
                 }

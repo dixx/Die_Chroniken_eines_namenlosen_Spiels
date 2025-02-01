@@ -74,7 +74,7 @@ namespace leviathan {
                 if (mSubscriptions[action.id].size() == 0) continue;
 
                 // we iterate in reverse, because mSubscriptions can shrink while being iterated
-                for (uint32_t it = mSubscriptions[action.id].size(); it != 0; it--) {
+                for (auto it = mSubscriptions[action.id].size(); it != 0; it--) {
                     mSubscriptions[action.id][it - 1]->onAction(action);
                 }
             }

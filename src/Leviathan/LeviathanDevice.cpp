@@ -69,6 +69,7 @@ namespace leviathan {
     }
 
     void LeviathanDevice::drawGame() {
+        mDebugWindow->addEntry("FPS", mGraphicEngine.getVideoDriver()->getFPS());
         mGraphicEngine.getVideoDriver()->beginScene(true, true, video::COL_GREEN);
         mGraphicEngine.getSceneManager()->drawAll();
         mGameStateManager.draw();

@@ -8,6 +8,7 @@
 #define LEVIATHAN_GUI_DEBUG_WINDOW_H
 
 #include "Menu.h"
+#include <string>
 
 namespace irr {
     namespace gui {
@@ -33,6 +34,18 @@ namespace leviathan {
             DebugWindow& operator=(const DebugWindow&&) = delete;
 
             void draw();
+
+            template<typename T>
+            void addEntry(const std::string& label, T value) {
+                irr::core::stringw message = L"";
+                message += label.c_str();
+                message += ": ";
+                message += value;
+                auto text = mGuiEnv->addStaticText(
+                    message.c_str(), irr::core::recti(10, 10, 50, 50), true, true, mWindow.menuElement, -1, true);
+                text->setBackgroundColor(irr::video::SColor(100, 0, 0, 0));
+                text->setOverrideColor(irr::video::SColor(255, 247, 139, 7));
+            }
 
         private:
             irr::gui::IGUIEnvironment* mGuiEnv = nullptr;

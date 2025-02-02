@@ -22,6 +22,8 @@ namespace leviathan {
         mTextures = std::make_unique<video::Textures>(mGraphicEngine.getVideoDriver(), mLogger);
         mMousePointerControl = std::make_unique<gui::MousePointerControl>(
             mEventReceiver, mGraphicEngine, mLogger, *mTextures);
+        mDebugWindow = std::make_unique<gui::DebugWindow>(
+            mGraphicEngine.getGUIEnvironment(), mGraphicEngine.getVideoDriver());
         mMenuControl = std::make_unique<gui::MenuControl>(
             mGraphicEngine.getGUIEnvironment(), mGraphicEngine.getVideoDriver(), mEventReceiver, *mTextures);
         mCamera = std::make_unique<video::Camera>(mGraphicEngine.getSceneManager(), mConfiguration);
@@ -67,9 +69,11 @@ namespace leviathan {
     }
 
     void LeviathanDevice::drawGame() {
+        mDebugWindow->addEntry("FPS", mGraphicEngine.getVideoDriver()->getFPS());
         mGraphicEngine.getVideoDriver()->beginScene(true, true, video::COL_GREEN);
         mGraphicEngine.getSceneManager()->drawAll();
         mGameStateManager.draw();
+        mDebugWindow->draw();
         mGraphicEngine.getVideoDriver()->endScene();
     }
 

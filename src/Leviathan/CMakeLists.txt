@@ -12,6 +12,7 @@ target_sources(${PROJECT_NAME}
     core/Randomizer.cpp
     core/TimeControl.cpp
     core/Timer.cpp
+    gui/DebugWindow.cpp
     gui/Menu.cpp
     gui/MenuControl.cpp
     gui/MousePointerControl.cpp

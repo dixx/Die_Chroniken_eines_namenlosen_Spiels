@@ -13,6 +13,7 @@
 #include "core/Logger.h"
 #include "core/Randomizer.h"
 #include "core/TimeControl.h"
+#include "gui/DebugWindow.h"
 #include "gui/MenuControl.h"
 #include "gui/MousePointerControl.h"
 #include "input/Actions.h"
@@ -126,6 +127,7 @@ namespace leviathan {
         input::Actions mActions;
         video::GraphicEngine mGraphicEngine;
         std::unique_ptr<video::Textures> mTextures = nullptr;
+        std::unique_ptr<gui::DebugWindow> mDebugWindow = nullptr;
         std::unique_ptr<gui::MenuControl> mMenuControl = nullptr;
         std::unique_ptr<gui::MousePointerControl> mMousePointerControl = nullptr;
         std::unique_ptr<video::Camera> mCamera = nullptr;

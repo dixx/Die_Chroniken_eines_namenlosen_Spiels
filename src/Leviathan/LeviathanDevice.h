@@ -22,6 +22,7 @@
 #include "video/GraphicEngine.h"
 #include "video/Textures.h"
 #include "world/Collider.h"
+#include "world/Decorations.h"
 #include "world/Ground.h"
 #include "world/Level.h"
 #include "world/NodeManager.h"
@@ -110,6 +111,10 @@ namespace leviathan {
          */
         video::ICamera& Camera() override;
 
+        /*! \brief Zugriff auf rein dekorative Elemente.
+         */
+        world::IDecorations& Decorations() override;
+
         /*! \brief Zugriff auf begehbaren Boden.
          */
         world::IGround& Ground() override;
@@ -141,6 +146,7 @@ namespace leviathan {
         std::unique_ptr<characters::Heroes> mHeroes = nullptr;
         std::unique_ptr<world::Ground> mGround = nullptr;
         std::unique_ptr<world::Level> mLevel = nullptr;
+        std::unique_ptr<world::Decorations> mDecorations = nullptr;
 
         void handleWindowInactivity();
         void updateGame(const float frameDeltaTime);

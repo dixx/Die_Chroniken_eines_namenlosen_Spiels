@@ -32,6 +32,8 @@ target_sources(${PROJECT_NAME}
     video/Vector3DCompatible.cpp
     world/Character.cpp
     world/Collider.cpp
+    world/Decoration.cpp
+    world/Decorations.cpp
     world/Ground.cpp
     world/GroundTile.cpp
     world/Level.cpp

@@ -27,6 +27,7 @@ namespace leviathan {
         struct ICamera;
     }
     namespace world {
+        struct IDecorations;
         struct IGround;
         struct ICollider;
         struct ILevel;
@@ -80,6 +81,10 @@ namespace leviathan {
         /*! \brief Zugriff auf eine Kamera.
          */
         virtual video::ICamera& Camera() = 0;
+
+        /*! \brief Zugriff auf rein dekorative Elemente.
+         */
+        virtual world::IDecorations& Decorations() = 0;
 
         /*! \brief Zugriff auf begehbaren Boden.
          */

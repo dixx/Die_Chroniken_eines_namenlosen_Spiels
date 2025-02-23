@@ -30,6 +30,7 @@ namespace leviathan {
         mCollider = std::make_unique<world::Collider>(mGraphicEngine.getSceneManager());
         mNodeManager = std::make_unique<world::NodeManager>(mGraphicEngine.getSceneManager(), *mTextures);
         mGround = std::make_unique<world::Ground>(*mNodeManager);
+        mDecorations = std::make_unique<world::Decorations>(*mNodeManager);
         mHeroes = std::make_unique<characters::Heroes>(*mNodeManager);
     }
 
@@ -127,6 +128,10 @@ namespace leviathan {
 
     world::ICollider& LeviathanDevice::Collider() {
         return *mCollider;
+    }
+
+    world::IDecorations& LeviathanDevice::Decorations() {
+        return *mDecorations;
     }
 
     world::IGround& LeviathanDevice::Ground() {

@@ -8,6 +8,7 @@
 
 #include "Character.h"
 #include "Collider.h"
+#include "Decoration.h"
 #include "GroundTile.h"
 #include <list>
 #include <memory>
@@ -57,9 +58,13 @@ namespace leviathan {
 
             void addGroundTile(const Node3DConfiguration& nodeConfig);
 
+            void addDecoration(const Node3DConfiguration& nodeConfig);
+
             void unloadHeroes();
 
             void unloadGround();
+
+            void unloadDecorations();
 
             float getWalkableHeight(const video::Vector3D& position) const;
 
@@ -69,9 +74,11 @@ namespace leviathan {
             irr::scene::ISceneManager* mSceneManager = nullptr;
             std::list<std::unique_ptr<Character>> mHeroNodes = std::list<std::unique_ptr<Character>>();
             std::list<std::unique_ptr<GroundTile>> mGroundNodes = std::list<std::unique_ptr<GroundTile>>();
+            std::list<std::unique_ptr<Decoration>> mDecorativeNodes = std::list<std::unique_ptr<Decoration>>();
             irr::scene::ISceneNode* mWorldNode = nullptr;
-            irr::scene::ISceneNode* mResponsiveNodes = nullptr;
-            irr::scene::ISceneNode* mWalkableNodes = nullptr;
+            irr::scene::ISceneNode* mResponsiveNodesRootNode = nullptr;
+            irr::scene::ISceneNode* mWalkableNodesRootNode = nullptr;
+            irr::scene::ISceneNode* mDecorativeNodesRootNode = nullptr;
 
             void addNodeTree();
             void addNodeNames();

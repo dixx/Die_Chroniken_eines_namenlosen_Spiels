@@ -31,6 +31,10 @@ namespace leviathan {
             mGroundNodes.emplace_back(std::make_unique<GroundTile>(nodeConfig, mTextures, mSceneManager));
         }
 
+        void NodeManager::addDecoration(const Node3DConfiguration& nodeConfig) {
+            mDecorativeNodes.emplace_back(std::make_unique<Decoration>(nodeConfig, mTextures, mSceneManager));
+        }
+
         void NodeManager::unloadHeroes() {
             mHeroNodes.clear();
             mSceneManager->getMeshCache()->clearUnusedMeshes();
@@ -38,25 +42,34 @@ namespace leviathan {
 
         void NodeManager::unloadGround() {
             mGroundNodes.clear();
-            mWalkableNodes->removeAll();
+            mWalkableNodesRootNode->removeAll();
+            mSceneManager->getMeshCache()->clearUnusedMeshes();
+        }
+
+        void NodeManager::unloadDecorations() {
+            mDecorativeNodes.clear();
+            mDecorativeNodesRootNode->removeAll();
             mSceneManager->getMeshCache()->clearUnusedMeshes();
         }
 
         float NodeManager::getWalkableHeight(const video::Position3D& position) const {
-            return mCollider.getCollisionTopDown(mWalkableNodes, position).collisionPoint.y;
+            return mCollider.getCollisionTopDown(mWalkableNodesRootNode, position).collisionPoint.y;
         }
 
         void NodeManager::addNodeTree() {
             mWorldNode = mSceneManager->addEmptySceneNode(0, ID_WORLD_ROOT);
-            mResponsiveNodes = mSceneManager->addEmptySceneNode(mWorldNode, ID_RESPONSIVE_ROOT + NODE_FLAG_RESPONSIVE);
-            mWalkableNodes = mSceneManager->addEmptySceneNode(
-                mResponsiveNodes, ID_WALKABLE_ROOT + NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
+            mResponsiveNodesRootNode = mSceneManager->addEmptySceneNode(
+                mWorldNode, ID_RESPONSIVE_ROOT + NODE_FLAG_RESPONSIVE);
+            mWalkableNodesRootNode = mSceneManager->addEmptySceneNode(
+                mResponsiveNodesRootNode, ID_WALKABLE_ROOT + NODE_FLAG_WALKABLE + NODE_FLAG_RESPONSIVE);
+            mDecorativeNodesRootNode = mSceneManager->addEmptySceneNode(mWorldNode);
         }
 
         void NodeManager::addNodeNames() {
             mWorldNode->setName("worldNode");
-            mResponsiveNodes->setName("responsiveNodes");
-            mWalkableNodes->setName("walkableNodes");
+            mResponsiveNodesRootNode->setName("responsiveNodes");
+            mWalkableNodesRootNode->setName("walkableNodes");
+            mDecorativeNodesRootNode->setName("decorativeNodes");
         }
     }
 }

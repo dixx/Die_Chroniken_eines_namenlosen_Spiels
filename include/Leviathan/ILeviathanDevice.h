@@ -29,6 +29,7 @@ namespace leviathan {
     namespace world {
         struct IGround;
         struct ICollider;
+        struct ILevel;
     }
 
     /*! \interface ILeviathanDevice
@@ -83,6 +84,10 @@ namespace leviathan {
         /*! \brief Zugriff auf begehbaren Boden.
          */
         virtual world::IGround& Ground() = 0;
+
+        /*! \brief Zugriff auf ein Level.
+         */
+        virtual world::ILevel& Level() = 0;
 
         /*! \brief Zugriff auf die Kollisionserkennung
          */

@@ -6,6 +6,7 @@
 #include <core/IGameStateManager.h>
 #include <video/ICamera.h>
 #include <world/IGround.h>
+#include <world/ILevel.h>
 #include <world/Node3DConfiguration.h>
 
 GameStateLoadGame::GameStateLoadGame(leviathan::ILeviathanDevice& gameEngine) : mGameEngine(gameEngine) {}
@@ -15,8 +16,7 @@ GameStateLoadGame::~GameStateLoadGame() {}
 void GameStateLoadGame::update(const float elapsedSeconds) {
     (void)elapsedSeconds;
     if (!mFullyLoaded) {
-        mGameEngine.Ground().add(
-            {"gfx/landscape_river_10.obj", "gfx/brushed_terrain.png", {}, {}, {}, {}, {100.001f, 100.0f, 100.001f}});
+        mGameEngine.Level().loadFromFile("gfx/levels/Level_Y.yaml");
         auto startingPosition = leviathan::video::Position3D(
             {11.f, mGameEngine.Ground().getHeight({11.f, 0.f, 11.f}), 11.f});
         mGameEngine.Heroes().getActiveHero().setRotation({0.f, 0.f, 0.f});

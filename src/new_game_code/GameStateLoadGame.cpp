@@ -17,12 +17,13 @@ void GameStateLoadGame::update(const float elapsedSeconds) {
     (void)elapsedSeconds;
     if (!mFullyLoaded) {
         mGameEngine.Level().loadFromFile("gfx/levels/Level_Y.yaml");
-        auto startingPosition = leviathan::video::Position3D(
-            {11.f, mGameEngine.Ground().getHeight({11.f, 0.f, 11.f}), 11.f});
+
+        mGameEngine.Heroes().getActiveHero().setPosition(mGameEngine.Level().getSpawnPosition());
         mGameEngine.Heroes().getActiveHero().setRotation({0.f, 0.f, 0.f});
-        mGameEngine.Heroes().getActiveHero().setPosition(startingPosition);
-        mGameEngine.Camera().setTargetPosition(startingPosition);
-        mGameEngine.Camera().update(0.f);
+
+        mGameEngine.Camera().setTargetPosition(mGameEngine.Level().getSpawnPosition());
+        mGameEngine.Camera().update(0.f);  // TODO: why?
+
         mGameEngine.GameStateManager().transitTo(STATE_PLAY);
         mFullyLoaded = true;
     } else {

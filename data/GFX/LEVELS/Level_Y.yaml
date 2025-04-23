@@ -14,7 +14,7 @@ map:
 
 objects:
     # position XYZ: If y-coordinate should be calculated from ground height, omit the third value (treat it as position XZ)
-    # scale in XYZ direction: If all three are equal, one scale value instead of an array is sufficient
+    # scale in XYZ direction: If all three values are equal, one scale value instead of an array is sufficient
   - model: "gfx/Fliegenpilz.3ds"
     texture: "gfx/Fliegenpilz_Color.png"
     position: [10.8, 10.8]

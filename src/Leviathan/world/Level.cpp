@@ -1,10 +1,12 @@
 #include "Level.h"
 #include "NodeManager.h"
+#include <world/Ground.h>
 #include <world/Node3DConfiguration.h>
 
 namespace leviathan {
     namespace world {
-        Level::Level(NodeManager& nodeManager) : mNodeManager(nodeManager) {}
+        Level::Level(NodeManager& nodeManager, Ground& ground)
+        : mNodeManager(nodeManager), mGround(ground), mSpawnPosition() {}
 
         void Level::loadFromFile(const char* fileName) {
             YAML::Node content;
@@ -16,8 +18,12 @@ namespace leviathan {
             if (!content) content = YAML::Load("---");
 
             loadGroundTiles(content);
-            // get spawn position
+            loadSpawnPosition(content);
             // load objects
+        }
+
+        const leviathan::video::Position3D& Level::getSpawnPosition() const {
+            return mSpawnPosition;
         }
 
         void Level::loadGroundTiles(YAML::Node& content) {
@@ -41,9 +47,19 @@ namespace leviathan {
                     }
                 }
 
-                // TODO: maybe use mGround.add() instead
-                mNodeManager.addGroundTile(tileConfig);
+                mGround.add(tileConfig);
             }
+        }
+
+        void Level::loadSpawnPosition(YAML::Node& content) {
+            if (!content["hero"] || !content["hero"].IsMap() || !content["hero"]["position"]) return;
+
+            auto values = content["hero"]["position"];
+            if (!values.IsSequence() || values.size() != 2) return;
+
+            mSpawnPosition.x = values.as<float>(mSpawnPosition.x);
+            mSpawnPosition.z = values.as<float>(mSpawnPosition.z);
+            mSpawnPosition.y = mGround.getHeight({mSpawnPosition.x, 0.f, mSpawnPosition.z});
         }
     }
 }

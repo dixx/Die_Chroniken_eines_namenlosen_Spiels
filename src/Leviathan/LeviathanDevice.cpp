@@ -31,7 +31,7 @@ namespace leviathan {
         mCollider = std::make_unique<world::Collider>(mGraphicEngine.getSceneManager());
         mNodeManager = std::make_unique<world::NodeManager>(mGraphicEngine.getSceneManager(), *mTextures);
         mGround = std::make_unique<world::Ground>(*mNodeManager);
-        mLevel = std::make_unique<world::Level>(*mNodeManager);
+        mLevel = std::make_unique<world::Level>(*mNodeManager, *mGround);
         mHeroes = std::make_unique<characters::Heroes>(*mNodeManager);
     }
 

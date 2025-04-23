@@ -16,6 +16,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
   -Wsign-conversion \
   -Wcast-align \
   -Wno-aggregate-return \
+  -Wmismatched-tags \
   -Woverloaded-virtual \
   -Wold-style-cast \
   -Wnon-virtual-dtor \

@@ -2,7 +2,6 @@
 #include "../../src/Leviathan/video/Textures.h"
 #include "../../src/Leviathan/world/NodeManager.h"
 #include "../helpers/CatchPatches.hpp"
-#include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "ISceneManager.h"
 #include "ITexture.h"
@@ -44,14 +43,14 @@ TEST_CASE("Hero", "[integration]") {
         REQUIRE(subject.getInternalName() == name);
     }
     SECTION("has 3D attributes") {
-        REQUIRE(subject.getPosition() == leviathan::video::Position3D({0.0f, 0.0f, 0.0f}));
-        REQUIRE(subject.getRotation() == leviathan::video::Rotation3D({0.0f, 0.0f, 0.0f}));
+        CHECK_THAT(subject.getPosition(), Vector3DEqual(leviathan::video::Position3D({0.0f, 0.0f, 0.0f})));
+        CHECK_THAT(subject.getRotation(), Vector3DEqual(leviathan::video::Rotation3D({0.0f, 0.0f, 0.0f})));
 
         SECTION("which can be changed") {
             subject.setPosition({1.0f, 2.0f, 3.0f});
             subject.setRotation({4.0f, 5.0f, 6.0f});
-            REQUIRE(subject.getPosition() == leviathan::video::Position3D({1.0f, 2.0f, 3.0f}));
-            REQUIRE(subject.getRotation() == leviathan::video::Rotation3D({4.0f, 5.0f, 6.0f}));
+            CHECK_THAT(subject.getPosition(), Vector3DEqual(leviathan::video::Position3D({1.0f, 2.0f, 3.0f})));
+            CHECK_THAT(subject.getRotation(), Vector3DEqual(leviathan::video::Rotation3D({4.0f, 5.0f, 6.0f})));
         }
     }
     SECTION("is not visible after creation") {

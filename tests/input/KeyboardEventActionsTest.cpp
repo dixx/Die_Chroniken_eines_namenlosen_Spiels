@@ -1,5 +1,5 @@
 #include "../../src/Leviathan/input/KeyboardEventActions.h"
-#include "../helpers/OverloadedOperators.hpp"
+#include "../helpers/CatchPatches.hpp"
 #include "catch.hpp"
 #include <cstdint>
 #include <input/Action.h>
@@ -18,11 +18,15 @@ TEST_CASE("Keyboard events to actions converter", "[unit]") {
         subject.addMapping(irr::KEY_SPACE, 2);
         subject.addMapping(irr::KEY_SPACE, 4);
 
-        REQUIRE(subject.actionsFor(event) == expectedActions);
+        CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
+        CHECK_THAT(subject.actionsFor(event)[1], ActionEqual(expectedActions[1]));
+        CHECK_THAT(subject.actionsFor(event)[2], ActionEqual(expectedActions[2]));
 
         SECTION("and keeps the list unique") {
             subject.addMapping(irr::KEY_SPACE, 2);
-            REQUIRE(subject.actionsFor(event) == expectedActions);
+            CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
+            CHECK_THAT(subject.actionsFor(event)[1], ActionEqual(expectedActions[1]));
+            CHECK_THAT(subject.actionsFor(event)[2], ActionEqual(expectedActions[2]));
         }
     }
 
@@ -45,28 +49,28 @@ TEST_CASE("Keyboard events to actions converter", "[unit]") {
                 std::vector<leviathan::input::Action> expectedActions({{1, true}});
                 event.KeyInput.Key = irr::KEY_SPACE;
                 event.KeyInput.PressedDown = true;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("E pressed down") {
                 std::vector<leviathan::input::Action> expectedActions({{2, true}});
                 event.KeyInput.Key = irr::KEY_KEY_E;
                 event.KeyInput.PressedDown = true;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("left keyboard button left up") {
                 std::vector<leviathan::input::Action> expectedActions({{1, false}});
                 event.KeyInput.Key = irr::KEY_SPACE;
                 event.KeyInput.PressedDown = false;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("middle keyboard button left up") {
                 std::vector<leviathan::input::Action> expectedActions({{2, false}});
                 event.KeyInput.Key = irr::KEY_KEY_E;
                 event.KeyInput.PressedDown = false;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
         }
     }

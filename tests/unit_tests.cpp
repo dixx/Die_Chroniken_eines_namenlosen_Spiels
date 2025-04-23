@@ -4,7 +4,7 @@
 #include "catch.hpp"
 
 struct MyTestEventListener : Catch::TestEventListenerBase {
-    using TestEventListenerBase::TestEventListenerBase;  // inherit constructor
+    using Catch::TestEventListenerBase::TestEventListenerBase;  // inherit constructor
 
     void sectionEnded(Catch::SectionStats const&) override {
         // reset overridden graphic engine after each single test

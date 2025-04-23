@@ -1,7 +1,7 @@
 #include "../../src/Leviathan/characters/Heroes.h"
 #include "../../src/Leviathan/video/Textures.h"
 #include "../../src/Leviathan/world/NodeManager.h"
-#include "../helpers/OverloadedOperators.hpp"
+#include "../helpers/CatchPatches.hpp"
 #include "../helpers/TestHelper.h"
 #include "ISceneManager.h"
 #include "ITexture.h"
@@ -42,10 +42,10 @@ TEST_CASE("Heroes", "[integration]") {
         leviathan::characters::IHero& anotherHero = subject.create(heroConfig);
 
         subject.activate("John Doe");
-        REQUIRE(subject.getActiveHero() == someHero);
+        CHECK_THAT(subject.getActiveHero(), HeroEqual(someHero));
         subject.activate("Jane Doe");
-        REQUIRE(subject.getActiveHero() == anotherHero);
+        CHECK_THAT(subject.getActiveHero(), HeroEqual(anotherHero));
         subject.activate("Jean Doe");
-        REQUIRE(subject.getActiveHero() == anotherHero);
+        CHECK_THAT(subject.getActiveHero(), HeroEqual(anotherHero));
     }
 }

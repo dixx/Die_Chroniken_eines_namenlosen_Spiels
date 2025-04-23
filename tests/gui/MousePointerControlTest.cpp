@@ -6,7 +6,6 @@
 #include "../../src/Leviathan/video/Textures.h"
 #include "../helpers/CatchPatches.hpp"
 #include "../helpers/FakeitPatches.hpp"
-#include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "ITexture.h"
 #include "IVideoDriver.h"
@@ -95,7 +94,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
                 .Exactly(Once);
             REQUIRE(lastRememberedPosition == irr::core::vector2di(0, 0));
             const leviathan::video::Position2D pos({0, 0});
-            REQUIRE(subject.getPosition() == pos);
+            CHECK_THAT(subject.getPosition(), Position2DEqual(pos));
 
             videoDriverMock.ClearInvocationHistory();
             subject.onEvent(mouseMovementEvent);
@@ -105,7 +104,7 @@ TEST_CASE("MousePointerControl", "[unit]") {
                 .Exactly(Once);
             REQUIRE(lastRememberedPosition == irr::core::vector2di(123, 234));
             const leviathan::video::Position2D newPos({123, 234});
-            REQUIRE(subject.getPosition() == newPos);
+            CHECK_THAT(subject.getPosition(), Position2DEqual(newPos));
         }
     }
 

@@ -36,6 +36,7 @@ set(PUBLIC_HEADER_FILES
   ${PUBLIC_INTERFACES}/video/Vector3D.h
   ${PUBLIC_INTERFACES}/world/Collision.h
   ${PUBLIC_INTERFACES}/world/ICollider.h
+  ${PUBLIC_INTERFACES}/world/ILevel.h
   ${PUBLIC_INTERFACES}/world/INode3D.h
   ${PUBLIC_INTERFACES}/world/IGround.h
   ${PUBLIC_INTERFACES}/world/Node3DConfiguration.h

@@ -27,3 +27,6 @@ install(FILES
   "${RESOURCES_DIR}/GFX/brushed_terrain.png"
   "${RESOURCES_DIR}/GFX/MAP/landscape_river_10.obj"
 DESTINATION ./gfx)
+install(FILES
+  "${RESOURCES_DIR}/GFX/LEVELS/Level_Y.yaml"
+DESTINATION ./gfx/levels)

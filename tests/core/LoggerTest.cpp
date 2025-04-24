@@ -61,7 +61,7 @@ TEST_CASE("Logger", "[unit]") {
                 subject.text << "another line.";
                 subject.write();
                 content = TestHelper::readFile(logFileName);
-                uint32_t firstIndex = content.find("line.");
+                auto firstIndex = content.find("line.");
                 REQUIRE(firstIndex != std::string::npos);
                 REQUIRE(content.find("line.", firstIndex + 1) != std::string::npos);
             }

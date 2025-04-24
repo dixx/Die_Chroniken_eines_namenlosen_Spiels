@@ -23,6 +23,7 @@
 #include "video/Textures.h"
 #include "world/Collider.h"
 #include "world/Ground.h"
+#include "world/Level.h"
 #include "world/NodeManager.h"
 #include <ILeviathanDevice.h>
 #include <memory>
@@ -113,6 +114,10 @@ namespace leviathan {
          */
         world::IGround& Ground() override;
 
+        /*! \brief Zugriff auf ein Level.
+         */
+        world::ILevel& Level() override;
+
         /*! \brief Zugriff auf die Kollisionserkennung
          */
         world::ICollider& Collider() override;
@@ -135,6 +140,7 @@ namespace leviathan {
         std::unique_ptr<world::NodeManager> mNodeManager = nullptr;
         std::unique_ptr<characters::Heroes> mHeroes = nullptr;
         std::unique_ptr<world::Ground> mGround = nullptr;
+        std::unique_ptr<world::Level> mLevel = nullptr;
 
         void handleWindowInactivity();
         void updateGame(const float frameDeltaTime);

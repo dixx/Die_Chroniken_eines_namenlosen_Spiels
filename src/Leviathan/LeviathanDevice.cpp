@@ -12,6 +12,7 @@
 #include <input/IActions.h>
 #include <world/ICollider.h>
 #include <world/IGround.h>
+#include <world/ILevel.h>
 
 namespace leviathan {
     LeviathanDevice::LeviathanDevice(const char* configFileName)
@@ -30,6 +31,7 @@ namespace leviathan {
         mCollider = std::make_unique<world::Collider>(mGraphicEngine.getSceneManager());
         mNodeManager = std::make_unique<world::NodeManager>(mGraphicEngine.getSceneManager(), *mTextures);
         mGround = std::make_unique<world::Ground>(*mNodeManager);
+        mLevel = std::make_unique<world::Level>(*mNodeManager, *mGround);
         mHeroes = std::make_unique<characters::Heroes>(*mNodeManager);
     }
 
@@ -131,5 +133,9 @@ namespace leviathan {
 
     world::IGround& LeviathanDevice::Ground() {
         return *mGround;
+    }
+
+    world::ILevel& LeviathanDevice::Level() {
+        return *mLevel;
     }
 }

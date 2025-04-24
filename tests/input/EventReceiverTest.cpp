@@ -1,8 +1,8 @@
 #include "../../src/Leviathan/input/EventReceiver.h"
 #include "../../src/Leviathan/input/IEventConsumer.h"
-#include "../helpers/OverloadedOperators.hpp"
 #include "catch.hpp"
 #include "fakeit.hpp"
+#include <input/action.h>
 
 using namespace fakeit;
 
@@ -17,6 +17,12 @@ TEST_CASE("Event Receiver", "[unit]") {
     spaceBarEvent.EventType = irr::EET_KEY_INPUT_EVENT;
     spaceBarEvent.KeyInput.Key = irr::KEY_SPACE;
     spaceBarEvent.KeyInput.PressedDown = false;
+    auto isLMBEvent = [](auto other) {
+        return other.EventType == irr::EET_MOUSE_INPUT_EVENT && other.MouseInput.Event == irr::EMIE_LMOUSE_PRESSED_DOWN;
+    };
+    auto isSpacebarEvent = [](auto other) {
+        return other.EventType == irr::EET_KEY_INPUT_EVENT && other.KeyInput.Key == irr::KEY_SPACE;
+    };
 
     SECTION("consumers can subscribe to certain event types") {
         subject.subscribe(consumerMock.get(), irr::EET_KEY_INPUT_EVENT);
@@ -24,7 +30,7 @@ TEST_CASE("Event Receiver", "[unit]") {
         SECTION("and receive only subscribed events") {
             subject.OnEvent(leftMouseButtonEvent);
             subject.OnEvent(spaceBarEvent);
-            Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            Verify(Method(consumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
             VerifyNoOtherInvocations(Method(consumerMock, onEvent));
         }
 
@@ -32,7 +38,7 @@ TEST_CASE("Event Receiver", "[unit]") {
             subject.subscribe(consumerMock.get(), irr::EET_KEY_INPUT_EVENT);
             subject.OnEvent(leftMouseButtonEvent);
             subject.OnEvent(spaceBarEvent);
-            Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            Verify(Method(consumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
             VerifyNoOtherInvocations(Method(consumerMock, onEvent));
         }
     }
@@ -43,14 +49,14 @@ TEST_CASE("Event Receiver", "[unit]") {
 
         subject.OnEvent(spaceBarEvent);
         subject.OnEvent(leftMouseButtonEvent);
-        Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
-        Verify(Method(consumerMock, onEvent).Using(leftMouseButtonEvent)).Exactly(Once);
+        Verify(Method(consumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
+        Verify(Method(consumerMock, onEvent).Matching(isLMBEvent)).Exactly(Once);
         consumerMock.ClearInvocationHistory();
 
         subject.unsubscribe(consumerMock.get(), irr::EET_MOUSE_INPUT_EVENT);
         subject.OnEvent(spaceBarEvent);
         subject.OnEvent(leftMouseButtonEvent);
-        Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+        Verify(Method(consumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
         VerifyNoOtherInvocations(Method(consumerMock, onEvent));
         consumerMock.ClearInvocationHistory();
 
@@ -58,7 +64,7 @@ TEST_CASE("Event Receiver", "[unit]") {
             subject.unsubscribe(consumerMock.get(), irr::EET_MOUSE_INPUT_EVENT);
             subject.OnEvent(spaceBarEvent);
             subject.OnEvent(leftMouseButtonEvent);
-            Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            Verify(Method(consumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
             VerifyNoOtherInvocations(Method(consumerMock, onEvent));
         }
     }
@@ -73,12 +79,12 @@ TEST_CASE("Event Receiver", "[unit]") {
         SECTION("which receive only subscribed events") {
             subject.OnEvent(leftMouseButtonEvent);
             VerifyNoOtherInvocations(Method(consumerMock, onEvent));
-            Verify(Method(anotherConsumerMock, onEvent).Using(leftMouseButtonEvent)).Exactly(Once);
+            Verify(Method(anotherConsumerMock, onEvent).Matching(isLMBEvent)).Exactly(Once);
             VerifyNoOtherInvocations(Method(consumerMock, onEvent), Method(anotherConsumerMock, onEvent));
 
             subject.OnEvent(spaceBarEvent);
-            Verify(Method(consumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
-            Verify(Method(anotherConsumerMock, onEvent).Using(spaceBarEvent)).Exactly(Once);
+            Verify(Method(consumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
+            Verify(Method(anotherConsumerMock, onEvent).Matching(isSpacebarEvent)).Exactly(Once);
             VerifyNoOtherInvocations(Method(consumerMock, onEvent), Method(anotherConsumerMock, onEvent));
         }
     }

@@ -30,7 +30,7 @@ namespace leviathan {
     }
 
     namespace world {
-        class Node3DConfiguration;
+        struct Node3DConfiguration;
 
         /*! \class NodeManager
          *  \brief Erstellt und verwaltet alle geometrischen Objekte und deren Attribute.

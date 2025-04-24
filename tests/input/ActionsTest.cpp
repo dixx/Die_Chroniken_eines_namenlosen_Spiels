@@ -1,12 +1,12 @@
 #include "../../src/Leviathan/input/Actions.h"
 #include "../../src/Leviathan/input/IEventProducer.h"
-#include "../helpers/OverloadedOperators.hpp"
 #include "../helpers/TestHelper.h"
 #include "EGUIElementTypes.h"
 #include "IGUIElement.h"
 #include "IrrlichtDevice.h"
 #include "catch.hpp"
 #include "fakeit.hpp"
+#include <input/Action.h>
 #include <input/IActionConsumer.h>
 #include <memory>
 
@@ -80,6 +80,15 @@ TEST_CASE("Action Mapping", "[integration]") {
     resumeButtonEvent.GUIEvent.Caller = buttonElement.get();
     enum { TALK = 1, ATTACK, SELECT = 100, ENABLE = 1001, RESUME_GAME = 1002 };
     leviathan::input::Actions subject(eventBrokerMock.get(), TestHelper::Logger());
+    auto isTalkAction = [](auto other) {
+        return other.id == TALK && other.isActive;
+    };
+    auto isDeselectAction = [](auto other) {
+        return other.id == SELECT && !other.isActive;
+    };
+    auto isEnableAction = [](auto other) {
+        return other.id == ENABLE && other.isActive;
+    };
 
     SECTION("subscribes to an event producer for certain input event types") {
         // FIXME issue with the mock when .Using(subject, ...) instead of .Using(_, ...)
@@ -97,7 +106,7 @@ TEST_CASE("Action Mapping", "[integration]") {
             VerifyNoOtherInvocations(Method(consumerMock, onAction));
             subject.loadFromFile(mappingsFileName);
             subject.onEvent(leftMouseButtonEvent);
-            Verify(Method(consumerMock, onAction).Using({TALK, true})).Exactly(Once);
+            Verify(Method(consumerMock, onAction).Matching(isTalkAction)).Exactly(Once);
             consumerMock.ClearInvocationHistory();
 
             SECTION("and receive only their subscribed actions") {
@@ -107,19 +116,19 @@ TEST_CASE("Action Mapping", "[integration]") {
                 subject.subscribe(anotherConsumerMock.get(), SELECT);
 
                 subject.onEvent(leftMouseButtonEvent);
-                Verify(Method(consumerMock, onAction).Using({TALK, true})).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Matching(isTalkAction)).Exactly(Once);
                 VerifyNoOtherInvocations(Method(anotherConsumerMock, onAction), Method(consumerMock, onAction));
 
                 subject.onEvent(spaceBarEvent);
-                Verify(Method(anotherConsumerMock, onAction).Using({SELECT, false})).Exactly(Once);
+                Verify(Method(anotherConsumerMock, onAction).Matching(isDeselectAction)).Exactly(Once);
                 VerifyNoOtherInvocations(Method(consumerMock, onAction), Method(anotherConsumerMock, onAction));
             }
 
             SECTION("with same input for multiple actions") {
                 subject.subscribe(consumerMock.get(), ENABLE);
                 subject.onEvent(eKeyEvent);
-                Verify(Method(consumerMock, onAction).Using({TALK, true})).Exactly(Once);
-                Verify(Method(consumerMock, onAction).Using({ENABLE, true})).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Matching(isTalkAction)).Exactly(Once);
+                Verify(Method(consumerMock, onAction).Matching(isEnableAction)).Exactly(Once);
             }
 
             SECTION("consumers can unsubscribe from certain actions") {

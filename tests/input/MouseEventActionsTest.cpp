@@ -1,5 +1,5 @@
 #include "../../src/Leviathan/input/MouseEventActions.h"
-#include "../helpers/OverloadedOperators.hpp"
+#include "../helpers/CatchPatches.hpp"
 #include "catch.hpp"
 #include <cstdint>
 #include <input/Action.h>
@@ -18,11 +18,15 @@ TEST_CASE("Mouse events to actions converter", "[unit]") {
         subject.addMapping(irr::EMBSM_LEFT, 2);
         subject.addMapping(irr::EMBSM_LEFT, 4);
 
-        REQUIRE(subject.actionsFor(event) == expectedActions);
+        CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
+        CHECK_THAT(subject.actionsFor(event)[1], ActionEqual(expectedActions[1]));
+        CHECK_THAT(subject.actionsFor(event)[2], ActionEqual(expectedActions[2]));
 
         SECTION("and keeps the list unique") {
             subject.addMapping(irr::EMBSM_LEFT, 2);
-            REQUIRE(subject.actionsFor(event) == expectedActions);
+            CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
+            CHECK_THAT(subject.actionsFor(event)[1], ActionEqual(expectedActions[1]));
+            CHECK_THAT(subject.actionsFor(event)[2], ActionEqual(expectedActions[2]));
         }
     }
 
@@ -46,49 +50,49 @@ TEST_CASE("Mouse events to actions converter", "[unit]") {
                 std::vector<leviathan::input::Action> expectedActions({{1, true}});
                 event.MouseInput.Event = irr::EMIE_LMOUSE_PRESSED_DOWN;
                 event.MouseInput.ButtonStates = irr::EMBSM_LEFT;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("middle mouse button pressed down") {
                 std::vector<leviathan::input::Action> expectedActions({{2, true}});
                 event.MouseInput.Event = irr::EMIE_MMOUSE_PRESSED_DOWN;
                 event.MouseInput.ButtonStates = irr::EMBSM_MIDDLE;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("right mouse button pressed down") {
                 std::vector<leviathan::input::Action> expectedActions({{4, true}});
                 event.MouseInput.Event = irr::EMIE_RMOUSE_PRESSED_DOWN;
                 event.MouseInput.ButtonStates = irr::EMBSM_RIGHT;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("left mouse button left up") {
                 std::vector<leviathan::input::Action> expectedActions({{1, false}});
                 event.MouseInput.Event = irr::EMIE_LMOUSE_LEFT_UP;
                 event.MouseInput.ButtonStates = 0;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("middle mouse button left up") {
                 std::vector<leviathan::input::Action> expectedActions({{2, false}});
                 event.MouseInput.Event = irr::EMIE_MMOUSE_LEFT_UP;
                 event.MouseInput.ButtonStates = 0;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("right mouse button left up") {
                 std::vector<leviathan::input::Action> expectedActions({{4, false}});
                 event.MouseInput.Event = irr::EMIE_RMOUSE_LEFT_UP;
                 event.MouseInput.ButtonStates = 0;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
 
             SECTION("can handle multistate mouse events") {
                 std::vector<leviathan::input::Action> expectedActions({{1, false}});
                 event.MouseInput.Event = irr::EMIE_LMOUSE_LEFT_UP;
                 event.MouseInput.ButtonStates = irr::EMBSM_MIDDLE | irr::EMBSM_RIGHT;
-                REQUIRE(subject.actionsFor(event) == expectedActions);
+                CHECK_THAT(subject.actionsFor(event)[0], ActionEqual(expectedActions[0]));
             }
         }
     }

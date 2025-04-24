@@ -1,0 +1,29 @@
+# Representation of a level.
+# If attribute is left empty, engine default values will be used.
+
+---
+
+hero:
+  # position XZ: spawn position of the hero. y-coordinate is calculated from ground height at that point
+  position: [11.0, 11.0]
+
+map:
+  - model: "gfx/landscape_river_10.obj"
+    texture: "gfx/brushed_terrain.png"
+    scale: [100.001, 100.0, 100.001]
+
+objects:
+    # position XYZ: If y-coordinate should be calculated from ground height, omit the third value (treat it as position XZ)
+    # scale in XYZ direction: If all three values are equal, one scale value instead of an array is sufficient
+  - model: "gfx/Fliegenpilz.3ds"
+    texture: "gfx/Fliegenpilz_Color.png"
+    position: [10.8, 10.8]
+    scale: 0.08
+  - model: "gfx/Fliegenpilz.3ds"
+    texture: "gfx/Fliegenpilz_Color.png"
+    position: [11.2, 10.8]
+    scale: 0.09
+  - model: "gfx/Fliegenpilz.3ds"
+    texture: "gfx/Fliegenpilz_Color.png"
+    position: [10.8, 11.2]
+    scale: 0.07

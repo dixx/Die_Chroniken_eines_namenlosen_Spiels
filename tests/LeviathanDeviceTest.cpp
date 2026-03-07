@@ -9,6 +9,7 @@
 #include "fakeit.hpp"
 #include "helpers/TestHelper.h"
 #include <cstdint>
+#include <irrString.h>  // stringw for DebugWindow, needs to come first
 #include <typeinfo>
 
 using namespace fakeit;
@@ -60,6 +61,7 @@ TEST_CASE("LeviathanDevice main loop", "[unit]") {
     irr::scene::ICameraSceneNode* cameraDummy = TestHelper::graphicEngine()->getSceneManager()->addCameraSceneNode();
     irr::scene::ISceneNode* nodeDummy = TestHelper::graphicEngine()->getSceneManager()->addEmptySceneNode();
     Fake(Method(videoDriverMock, beginScene), Method(videoDriverMock, endScene));
+    When(Method(videoDriverMock, getFPS)).AlwaysReturn(60);
     Fake(Method(meshCacheMock, clearUnusedMeshes));
     Fake(Method(sceneManagerMock, drawAll));
     When(Method(sceneManagerMock, getMeshCache)).AlwaysReturn(&meshCacheMock.get());
@@ -67,6 +69,9 @@ TEST_CASE("LeviathanDevice main loop", "[unit]") {
     When(Method(sceneManagerMock, addCameraSceneNode)).AlwaysReturn(cameraDummy);
     When(Method(sceneManagerMock, addEmptySceneNode)).AlwaysReturn(nodeDummy);
     Fake(Method(guiEnvironmentMock, addEmptySpriteBank));
+    When(Method(guiEnvironmentMock, getRootGUIElement)).AlwaysReturn(nullptr);
+    When(Method(guiEnvironmentMock, addModalScreen)).AlwaysReturn(nullptr);
+    When(Method(guiEnvironmentMock, addStaticText)).AlwaysReturn(nullptr);
     When(Method(graphicEngineMock, getVideoDriver)).AlwaysReturn(&videoDriverMock.get());
     When(Method(graphicEngineMock, getSceneManager)).AlwaysReturn(&sceneManagerMock.get());
     When(Method(graphicEngineMock, getGUIEnvironment)).AlwaysReturn(&guiEnvironmentMock.get());

@@ -1,9 +1,11 @@
 #include "../../src/Leviathan/input/MouseEventActions.h"
 #include "../helpers/CatchPatches.hpp"
 #include "catch.hpp"
+#include <IEventReceiver.h>  // define irr::SEvent
 #include <cstdint>
 #include <input/Action.h>
 #include <vector>
+
 
 TEST_CASE("Mouse events to actions converter", "[unit]") {
     irr::SEvent event;

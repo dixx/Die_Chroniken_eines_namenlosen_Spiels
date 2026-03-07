@@ -8,12 +8,14 @@
 #define LEVIATHAN_GUI_DEBUG_WINDOW_H
 
 #include "Menu.h"
+#include <IGUIEnvironment.h>
+#include <IGUIStaticText.h>
+#include <SColor.h>
+#include <irrString.h>
+#include <rect.h>
 #include <string>
 
 namespace irr {
-    namespace gui {
-        class IGUIEnvironment;
-    }
     namespace video {
         class IVideoDriver;
     }
@@ -43,8 +45,10 @@ namespace leviathan {
                 message += value;
                 auto text = mGuiEnv->addStaticText(
                     message.c_str(), irr::core::recti(10, 10, 50, 50), true, true, mWindow.menuElement, -1, true);
-                text->setBackgroundColor(irr::video::SColor(100, 0, 0, 0));
-                text->setOverrideColor(irr::video::SColor(255, 247, 139, 7));
+                if (text) {
+                    text->setBackgroundColor(irr::video::SColor(100, 0, 0, 0));
+                    text->setOverrideColor(irr::video::SColor(255, 247, 139, 7));
+                }
             }
 
         private:

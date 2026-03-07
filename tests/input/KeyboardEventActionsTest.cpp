@@ -1,9 +1,11 @@
 #include "../../src/Leviathan/input/KeyboardEventActions.h"
 #include "../helpers/CatchPatches.hpp"
 #include "catch.hpp"
+#include <IEventReceiver.h>  // for irr::SEvent definition
 #include <cstdint>
 #include <input/Action.h>
 #include <vector>
+
 
 TEST_CASE("Keyboard events to actions converter", "[unit]") {
     irr::SEvent event;

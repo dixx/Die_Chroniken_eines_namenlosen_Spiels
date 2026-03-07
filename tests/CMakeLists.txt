@@ -32,6 +32,12 @@ add_executable(unit_tests
   ${PUBLIC_HEADER_FILES}
 )
 target_link_libraries(unit_tests "${IRRLICHT_LIBRARY}" leviathan catch fakeit)
-cotire(unit_tests)
+# We deliberately do _not_ cotire the unit_tests target.
+# Catch.hpp has to be included with CATCH_CONFIG_MAIN defined, and
+# cotire would build its precompiled header without those macros which
+# causes the mysterious "expected class-name" error.  Keeping the
+# configuration next to the source is easier than inventing a special
+# prefix header just for the tests.
+# cotire(unit_tests)
 
 install(TARGETS unit_tests DESTINATION .)

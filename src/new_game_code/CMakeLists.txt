@@ -25,7 +25,9 @@ install(FILES
   "${RESOURCES_DIR}/GFX/OBJECTS/sydney.md2"
   "${RESOURCES_DIR}/GFX/sydney.bmp"
   "${RESOURCES_DIR}/GFX/brushed_terrain.png"
+  "${RESOURCES_DIR}/GFX/Fliegenpilz_Color.png"
   "${RESOURCES_DIR}/GFX/MAP/landscape_river_10.obj"
+  "${RESOURCES_DIR}/GFX/OBJECTS/Fliegenpilz.3ds"
 DESTINATION ./gfx)
 install(FILES
   "${RESOURCES_DIR}/GFX/LEVELS/Level_Y.yaml"
